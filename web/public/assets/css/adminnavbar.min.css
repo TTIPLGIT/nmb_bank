@@ -1,0 +1,899 @@
+.form-control,
+.form-control-sm,
+#text {
+    border-radius: 5px !important;
+    border-color: #bec4d0 !important;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+    border-style: outset;
+    color:black !important;
+}
+
+#align td,
+#align th,
+#tableExport td,
+#tableExport th,
+#tableExport1 td,
+#tableExport1 th,
+#align1 td,
+#align1 th,
+#align2 td,
+#align2 th #align3 td,
+#align3 th,
+#align4 td,
+#align4 th {
+    /* / border: 1px solid#343a405c !important; / */
+    padding: 7px !important;
+}
+
+#align tr:nth-child(odd),
+#align1 tr:nth-child(odd),
+#align2 tr:nth-child(odd),
+#align3 tr:nth-child(odd),
+#align4 tr:nth-child(odd),
+#tableExport tr:nth-child(odd),
+#tableExport1 tr:nth-child(odd) {
+    background-color: #f5f5f5;
+}
+
+#align tr:nth-child(even),
+#align1 tr:nth-child(even),
+#align2 tr:nth-child(even),
+#align3 tr:nth-child(even),
+#align4 tr:nth-child(even),
+#tableExport tr:nth-child(even),
+#tableExport1 tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+#align tr:hover,
+#align1 tr:hover,
+#align2 tr:hover,
+#align3 tr:hover,
+#align4 tr:hover,
+#tableExport tr:hover,
+#tableExport1 tr:hover {
+    background-color: #ddd;
+}
+
+#align th,
+#align1 th,
+#align2 th,
+#align3 th,
+#align4 th,
+#tableExport th,
+#tableExport1 th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: rgb(0, 34, 102);
+    color: #000000 !important;
+}
+
+.text-muted {
+    color: #2183b4 !important;
+}
+
+/* .navbar {
+  background-color: #00aaff;
+  background-image:url('assets/images/sel.jpg');
+} */
+
+.nav-link {
+    color: black !important;
+}
+.dropdown-menu.active li a.nav-link::before,
+.dropdown-menu.active li a.nav-link {
+    background-color:#ffffff !important;
+}
+.main-wrapper.main-wrapper-1 .navbar-bg {
+    z-index: 5 !important;
+}
+.main-sidebar.sidebar-style-2 {
+    z-index: 10 !important;
+}
+
+thead {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    text-align: center !important;
+    text-transform: capitalize !important;
+}
+
+td {
+    text-align: center !important;
+    text-transform: capitalize !important;
+}
+
+.error-star {
+    color: red;
+}
+
+table.table-bordered {
+    border: 1px solid white !important;
+    margin-top: 20px;
+}
+
+table.table-bordered > thead > tr > th {
+    border: 1px solid white !important;
+}
+
+table.table-bordered > tbody > tr > td {
+    border: 1px solid white !important;
+}
+
+.dt-buttons {
+    display: none;
+}
+
+/* / tab / */
+.tab {
+    font-family: "Nunito", sans-serif;
+}
+
+.tab .panel-tabs {
+    background-color: #fff !important;
+    border-width: 1px;
+    border-style: ridge;
+    border-color: #7a10eb;
+    /* / width:90%; / */
+    padding: 7px 4px 4px;
+    margin: 0 0 10px;
+
+    border-radius: 30px;
+}
+
+.tab .panel-tabs li a {
+    color: #555;
+    background: #fff !important;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 20px 6px;
+    /* / padding: 8px 28px 6px; / */
+    margin: 0 5px 0 0;
+    border: none;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease 0.3s;
+}
+
+.tab .panel-tabs li.active a,
+.tab .panel-tabs li a:hover,
+.tab .panel-tabs li.active a:hover {
+    color: #fff;
+    background: linear-gradient(to right, #1890e0, #7a10eb) !important;
+    border: none;
+}
+
+.tab .panel-tabs li a:before,
+.tab .panel-tabs li a:after {
+    content: "";
+    background-color: #1890e0 !important;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    opacity: 0.5;
+    transform: scaleX(0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all 0.4s ease 0s;
+}
+
+.tab .panel-tabs li a:after {
+    background-color: #7a10eb !important;
+    transform: scaleX(0);
+    transition: all 0.4s ease 0.2s;
+}
+
+.tab .panel-tabs li.active a:before,
+.tab .panel-tabs li a:hover:before {
+    opacity: 0;
+    transform: scaleX(1);
+}
+
+.tab .panel-tabs li.active a:after,
+.tab .panel-tabs li a:hover:after {
+    opacity: 1;
+    transform: scaleX(1);
+    background: linear-gradient(to right, #1890e0, #7a10eb) !important;
+}
+
+.tab .tab-content {
+    color: #999;
+    background-color: #fff;
+    font-size: 17px;
+    letter-spacing: 1px;
+    line-height: 30px;
+    padding: 20px;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    position: relative;
+}
+
+@media only screen and (max-width: 479px) {
+    .tab .panel-tabs {
+        padding: 0;
+        border-radius: 20px;
+    }
+
+    .tab .panel-tabs li {
+        width: 100%;
+        text-align: center;
+        margin: 0 0 5px;
+    }
+
+    .tab .panel-tabs li:last-child {
+        margin-bottom: 0;
+    }
+
+    .tab .panel-tabs li a {
+        margin: 0;
+    }
+}
+
+.sweet-alert p {
+    color: #cf3140 !important;
+    font-size: 18px !important;
+}
+
+.sweet-alert button {
+    background-color: rgb(58 172 224 / 91%) !important;
+}
+
+.sweet-alert {
+    border-radius: 5px;
+    border: 2px solid #00aaff !important;
+}
+
+.sweet-alert .icon.error {
+    border-color: #cf3140 !important;
+}
+
+.sweet-alert .icon.error .line {
+    background-color: #cf3140 !important;
+}
+
+.sweet-alert .icon.success .placeholder {
+    border: 4px solid #1c91378f !important;
+}
+
+.sweet-alert .icon.info {
+    border-color: #14a6e3 !important;
+}
+
+.sweet-alert .icon.info .line {
+    background-color: #14a6e3 !important;
+}
+
+hr {
+    margin-top: 0rem !important;
+    margin-bottom: 0rem !important;
+}
+
+body,
+.main-footer {
+    background: #ecedf0 !important;
+}
+
+.card {
+    /* / box-shadow: -4px 4px 4px rgb(0 0 0 / 50%), inset 1px 0px 0px rgb(255 255 255 / 40%) !important; / */
+    /* box-shadow: 0 0 5px #000 !important;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
+    /* background-color: #eef0f2;
+
+  border-width: 3px; */
+    border-radius: 0px !important;
+    /* / margin-top: 15px / */
+}
+
+.card-body {
+    background-color: #f8f8f8;
+}
+
+.badge {
+    position: absolute;
+    top: -6px;
+    right: 66px !important;
+    padding: 4px 4px !important;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    font-size: 8px !important;
+}
+
+#bell {
+    position: absolute;
+    top: 3px !important;
+    right: 11px;
+}
+
+.badges {
+    /* background: #f00; */
+    width: 40px;
+    height: 40px !important;
+    border-radius: 50%;
+    /* background-color: #064799 !important; */
+    color: white;
+}
+
+/* /  / */
+
+.form-control {
+    text-transform: capitalize !important;
+    color:#000 !important;
+}
+
+.label,
+#item_no_label {
+    text-transform: capitalize !important;
+}
+
+.danger {
+    background-color: #ffdddd;
+    border-left: 1px solid #f44336;
+}
+
+.dropdown-list .dropdown-list-content:not(.is-end):after {
+    background-image: none !important;
+    height: 50px !important;
+}
+
+.document_ifarme_view {
+    height: 400px;
+    width: 100%;
+    border: 1px black solid;
+}
+ul.dropdown-menu.active {
+    background-color: #ffffff;
+}
+.dropdown-menu.active li a::before,
+.dropdown-menu.active li a {
+    color: black !important;
+}
+ul.dropdown-menu.active1 {
+    background-color: #4a8bd0ad;
+}
+ul.dropdown-menu.active2 {
+    background-color: #545da1;
+}
+ul.dropdown-menu.active3 {
+    background-color: #7091afd9;
+}
+
+.main-sidebar .sidebar-menu li ul.dropdown-menu li ul.dropdown-menu {
+    padding: 8px !important;
+}
+.main-sidebar .sidebar-menu li ul.dropdown-menu.active li a:before {
+    color: white;
+}
+
+/* .main-sidebar .sidebar-menu li ul.dropdown-menu .active3 li a:before{
+
+  background-image: linear-gradient(to right, #2c847a, #2c847a, #2c847a, #2c847a, #2c847a) !important;
+
+} */
+
+.save_btn {
+    background: green !important;
+    border-color: green !important;
+    color: white !important;
+}
+
+.info_btn {
+    background: rgb(45, 109, 194) !important;
+    border-color: rgb(45, 109, 194);
+    color: white !important;
+}
+
+.back_btn {
+    background: red !important;
+    border-color: red !important;
+    color: white !important;
+}
+
+.add_btn {
+    background: #329504 !important;
+    border-color: #a9ca !important;
+    color: white !important;
+}
+
+.submit_btn,
+.edit_btn {
+    background: orange !important;
+    border-color: orange !important;
+    color: white !important;
+}
+
+.fz {
+    font-size: 13px !important;
+}
+.fs {
+    font-size: 15px !important;
+    padding: 8px !important;
+}
+.heading {
+    color: darkblue !important;
+}
+
+.indent {
+    text-align: right !important;
+}
+
+
+
+.list {
+    background: #ea54ca38 !important;
+}
+
+.amount {
+    background: #fecf4280 !important;
+}
+
+#card_header {
+    background-color: #e5ebec !important;
+    padding: 2em;
+    position: relative;
+    z-index: 2;
+    border-radius: 0 5px 5px 5px;
+    box-shadow: -4px 4px 4px rgb(0 0 0 / 50%),
+        inset 1px 0px 0px rgb(255 255 255 / 40%);
+}
+
+/* .dataTable>thead>tr>th[class*="sort"]:before,
+.dataTable>thead>tr>th[class*="sort"]:after {
+  content: "" !important;
+} */
+
+#attachments {
+    color: #34395e;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 65px;
+    height: 25px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 20px;
+    left: 10px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #2196f3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* / Rounded sliders / */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+#rev {
+    width: 10px !important;
+}
+
+.list {
+    background: #ea54ca38 !important;
+    color: black !important;
+}
+
+.default {
+    background: #ffffff !important;
+    color: #0a0000 !important;
+}
+
+#card_header {
+    background-color: #ffffff !important;
+    padding: 2em;
+    position: relative;
+    z-index: 2;
+    border-radius: 0 5px 5px 5px;
+    box-shadow: -4px 4px 4px rgb(0 0 0 / 50%),
+        inset 1px 0px 0px rgb(255 255 255 / 40%);
+}
+
+.btn-label {
+    position: relative;
+    left: -12px;
+    display: inline-block;
+    padding: 3px 8px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 3px 0 0 3px;
+}
+.btn {
+    font-weight: 600;
+    font-size: 14px !important;
+}
+
+.btn-labeled {
+    padding-top: 0;
+    padding-bottom: 0;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.btn:active {
+    transform: scale(0.98);
+    /* / Scaling button to 0.98 to its original size / */
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+    /* / Lowering the shadow / */
+}
+
+.dataTables_length,
+.dataTables_info,
+.dataTables_filter,
+div.dataTables_wrapper div.dataTables_length label,
+div.dataTables_wrapper div.dataTables_filter label {
+    font-size: 15px !important;
+    font-weight: bolder !important;
+    color: #000000 !important;
+}
+
+.page-item.disabled .page-link {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    opacity: 3.6 !important;
+}
+
+.input-group-text,
+select.form-control:not([size]):not([multiple]),
+.form-control:not(.form-control-sm):not(.form-control-lg) {
+    padding: 8px 10px !important;
+    margin-bottom: 10px;
+    color:black !important;
+}
+
+.form-group .control-label,
+.form-group > label,
+#attach {
+    font-weight: 800 !important;
+    color:black !important;
+    font-size: 15px !important;
+}
+
+/* .card {
+box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px !important;
+} */
+
+.card-body {
+    background-color: #f8f8f8 !important;
+}
+
+.dropzone .dz-preview .dz-remove {
+    background: green !important;
+    color: white !important;
+}
+
+.dropzone .dz-preview .dz-image {
+    border-radius: 0px !important;
+    background: grey !important;
+}
+
+#align td,
+#align th,
+#tableExport td,
+#tableExport th,
+#tableExport1 td,
+#tableExport1 th,
+#align1 td,
+#align1 th,
+#align2 td,
+#align2 th,
+#align3 td,
+#align3 th,
+#align4 td,
+#align4 th {
+    /* / border: 1px solid#343a405c !important; / */
+    padding: 8px !important;
+}
+
+.insert {
+    background: white !important;
+}
+
+.default {
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+.lowercase {
+    text-transform: lowercase !important;
+}
+
+.mh {
+    /* / background-image: linear-gradient(to right, #179f6c, #2daa87, #47b59f, #63bfb4, #81c8c6); / */
+    background-color: #ecedf0;
+}
+
+/* .main-sidebar {
+
+  background-image: linear-gradient(to right, #2c847a, #2c847a, #2c847a, #2c847a, #2c847a) !important;
+} */
+
+.main-sidebar .sidebar-menu li ul.dropdown-menu {
+    padding: 0;
+    /* / background-image: linear-gradient(to right, rgb(58, 163, 160), rgb(58, 163, 160), rgb(58, 163, 160), rgb(58, 163, 160), rgb(58, 163, 160)); / */
+    margin: 0;
+    display: none;
+    position: static;
+    float: none;
+    width: 100%;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+#align th,
+#align1 th,
+#align2 th,
+#align3 th,
+#align4 th,
+#tableExport th,
+#tableExport1 th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    /* / background-color: rgb(0, 34, 102); / */
+    /* background-image: linear-gradient(to right, #1c645c, #1c645c, #1c645c, #1c645c, #1c645c);
+  background-image: linear-gradient(to right, #2b9780, #289380, #268f7f, #258a7e, #25867d); */
+    background-color: #ffffff;
+    color:#000000 !important;
+}
+
+.nav-justified {
+    display: flex !important;
+    align-items: center !important;
+    background-image: linear-gradient(
+        to right,
+        #2b9780,
+        #289380,
+        #268f7f,
+        #258a7e,
+        #25867d
+    );
+}
+
+.nav-tabs .nav-item .nav-link.active {
+    background-image: linear-gradient(
+        to right,
+        #2a675a,
+        #2a675a,
+        #2a675a,
+        #2a675a,
+        #2a675a
+    );
+}
+
+.check {
+    display: inline-block;
+    transform: rotate(50deg);
+    height: var(--height);
+    width: var(--width);
+    border-bottom: var(--borderWidth) solid #52baff;
+    border-right: var(--borderWidth) solid #36e9fb;
+}
+/* .nav11{
+  background-image: linear-gradient(to right, #3f9a9d, #3f9a9d, #3f9a9d, #3f9a9d, #3f9a9d);
+} */
+.navheading {
+    color: #000000;
+}
+
+ul.dropdown-menu:link > ul.dropdown-menu {
+    opacity: 1;
+    display: block !important;
+}
+
+.breadcrumb {
+    /*centering*/
+    display: inline-block !important;
+    overflow: hidden !important;
+    border-radius: 5px !important;
+    /*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
+    counter-reset: flag !important;
+}
+
+.breadcrumb li {
+    text-decoration: none !important;
+    outline: none !important;
+    display: block !important;
+    float: left !important;
+    font-size: 12px !important;
+    line-height: 36px !important;
+    color: white !important;
+    /*need more margin on the left of links to accomodate the numbers*/
+    padding: 0 10px 0 60px !important;
+    background: rgb(125, 123, 123) !important;
+    background: linear-gradient(rgb(125, 123, 123), #333) !important;
+    position: relative !important;
+}
+/*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
+.breadcrumb li:first-child {
+    padding-left: 46px !important;
+    border-radius: 5px 0 0 5px !important; /*to match with the parent's radius*/
+}
+.breadcrumb li:first-child:before {
+    left: 14px !important;
+}
+.breadcrumb li:last-child {
+    border-radius: 0 5px 5px 0 !important; /*this was to prevent glitches on hover*/
+    padding-right: 20px !important;
+}
+
+/*hover/active styles*/
+.breadcrumb li.active,
+.breadcrumb li:hover {
+    background: #333 !important;
+    background: linear-gradient(#333, #000) !important;
+}
+.breadcrumb li.active:after,
+.breadcrumb li:hover:after {
+    background: #333 !important;
+    background: linear-gradient(135deg, #333, #000) !important;
+}
+
+/*adding the arrows for the breadcrumbs using rotated pseudo elements*/
+.breadcrumb li:after {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    right: -18px !important; /*half of square's length*/
+    /*same dimension as the line-height of .breadcrumb a */
+    width: 36px !important;
+    height: 36px !important;
+    /*as you see the rotated square takes a larger height. which makes it tough to position it properly. So we are going to scale it down so that the diagonals become equal to the line-height of the link. We scale it to 70.7% because if square's: 
+	length = 1; diagonal = (1^2 + 1^2)^0.5 = 1.414 (pythagoras theorem)
+	if diagonal required = 1; length = 1/1.414 = 0.707 */
+    transform: scale(0.707) rotate(45deg) !important;
+    /*we need to prevent the arrows from getting buried under the next link*/
+    z-index: 1 !important;
+    /*background same as links but the gradient will be rotated to compensate with the transform applied*/
+    background: #777 !important;
+    background: linear-gradient(135deg, #777, #333) !important;
+    /*stylish arrow design using box shadow*/
+    box-shadow: 2px -2px 0 2px rgba(0, 0, 0, 0.4),
+        3px -3px 0 2px rgba(255, 255, 255, 0.1) !important;
+    /*
+		5px - for rounded arrows and 
+		50px - to prevent hover glitches on the border created using shadows*/
+    border-radius: 0 5px 0 50px !important;
+}
+/*we dont need an arrow after the last link*/
+.breadcrumb li:last-child:after {
+    content: none !important;
+}
+/*we will use the :before element to show numbers*/
+.breadcrumb li:before {
+    content: counter(flag) !important;
+    counter-increment: flag !important;
+    /*some styles now*/
+    border-radius: 100% !important;
+    display: grid !important;
+    place-items: end !important;
+
+    width: 20px !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    margin: 8px 0 !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 30px !important;
+    background: #444 !important;
+    background: linear-gradient(#444, #222) !important;
+    font-weight: bold !important;
+}
+.breadcrumb:active li:before {
+    content: counter(flag) !important;
+    counter-increment: flag !important;
+    /*some styles now*/
+    border-radius: 100% !important;
+    display: grid !important;
+    place-items: end !important;
+
+    width: 20px !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    margin: 8px 0 !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 30px !important;
+
+    font-weight: bold !important;
+}
+.breadcrumb li:first-child::before {
+    content: counter(flag) !important;
+    counter-increment: flag !important;
+    /*some styles now*/
+    border-radius: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+
+    width: 20px !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    margin: 8px 6px !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+
+    font-weight: bold !important;
+}
+.breadcrumb:active li:first-child::before {
+    content: counter(flag) !important;
+    counter-increment: flag !important;
+    /*some styles now*/
+    border-radius: 100% !important;
+    display: grid !important;
+    place-items: end !important;
+
+    width: 20px !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    margin: 8px 0 !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    font-weight: bold !important;
+}
+
+.breadcrumb li,
+.breadcrumb li:after {
+    background: white !important;
+    color: black !important;
+    transition: all 0.5s !important;
+}
+.breadcrumb li:before {
+    background: white !important;
+    box-shadow: 0 0 0 1px #ccc !important;
+}
+.breadcrumb li:hover,
+.breadcrumb li.active,
+.breadcrumb li:hover:after,
+.breadcrumb li.active:after {
+    background: #d8ddd3 !important;
+}
+
+/* / multiple select / */
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    color: #495057;
+    /* background-color: #25867d !important; */
+}

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="valuer certification" language="groovy" pageWidth="595" pageHeight="610" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d4d5ffeb-9e9c-4bf2-9765-1a4c2b0ead5c">
+	<property name="ireport.zoom" value="1.2100000000000009"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.background.image" value="C:\Users\USER\Desktop\MLHUD DOCUMENTATION\image2-2.png"/>
+	<property name="ireport.background.image.properties" value="false,true,0.25,0,0,0,0,0,0"/>
+	<queryString language="SQL">
+		<![CDATA[select * from users]]>
+	</queryString>
+	<field name="id" class="java.math.BigInteger">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="user_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email_verified_at" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="password" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remember_token" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="array_dashboard_list" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="array_roles" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="created_at_u" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="updated_at" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="phone_number" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="signature_attachment" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="designation_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="active_flag" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_role_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="delete_status" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Column 18" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="role" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="mobile_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dor" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isu_membership_number" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="r_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="c_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="eflag" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="570" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<rectangle radius="10">
+				<reportElement x="15" y="17" width="525" height="531" uuid="f3e4a4fb-9879-472d-8872-314ef6244105"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="102" y="181" width="327" height="33" uuid="3a581f74-9fe2-4fa9-b0f0-5e7b69cb5752"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="22" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Cetificate of Registration]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="230" width="125" height="20" uuid="71de6e32-b59e-4f11-bd6e-80a279f1c888"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Valuer Registration No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="264" width="442" height="17" uuid="41694d2e-aa41-45e3-bf69-7cff41bb6bd9"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[1.     In Exercise of the powers conferred by section 247 of the Companies]]></text>
+			</staticText>
+			<image>
+				<reportElement x="235" y="44" width="81" height="89" uuid="028ce795-29b4-4ecd-8450-9eee64db2038"/>
+				<imageExpression><![CDATA["C:\\Apache24\\htdocs\\MLHUDv2\\web\\public\\assets\\images\\MLHUD-IMG (1).png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="70" y="301" width="442" height="20" uuid="4007afc9-8165-49d4-bb5d-60438aa7682d"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Valuers and Valuation) Rules, 2017, the Authority hereby grants a  Certificate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="321" width="442" height="20" uuid="602938a7-1bf5-4759-94db-8b296bbc95ec"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[of registration no VR0892012 Name Rajesh to act as a Registerd Valuer.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="383" width="61" height="20" uuid="0991c2ca-febb-4608-909c-1f1cd64c1fef"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[assets]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="403" width="149" height="20" uuid="e10da33e-2743-4e60-bbdb-803c6498a057"/>
+				<text><![CDATA[in accordance with these rules]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="433" width="442" height="20" uuid="58ed6b27-355b-45e1-a74c-f442979235a0"/>
+				<textElement>
+					<font size="12" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[2.This certificate shall be valid from 08/11/2023 to 08/11/2023.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="473" width="100" height="20" uuid="0901d761-9247-49d4-acef-8222347c676d"/>
+				<text><![CDATA[Date   : 08/11/2022]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="493" width="100" height="20" uuid="245262a2-e050-4eba-91d0-8aa6062194be"/>
+				<text><![CDATA[Place:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="473" width="126" height="20" uuid="6130001a-2e34-4ec6-a780-7a8f7f1588b6"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Deputy General Manager]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="493" width="164" height="20" uuid="87002909-733f-4250-bf46-7d2d8233323b"/>
+				<text><![CDATA[ For and on behalf of the Authority]]></text>
+			</staticText>
+			<image>
+				<reportElement x="235" y="133" width="81" height="24" uuid="4f1cd03b-94d0-4898-9ab8-6d6c9a086382"/>
+				<imageExpression><![CDATA["C:\\Apache24\\htdocs\\MLHUDv2\\web\\public\\assets\\images\\udandaflag.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="160" y="157" width="310" height="20" uuid="5cdbf04b-a534-4acc-9e1f-450f71f2e34b"/>
+				<text><![CDATA[Ministry Of Lands,Housing And Urban Development]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="232" width="100" height="20" uuid="606c543c-f7cc-4b57-8386-3d7580c65620"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VR/L/0019]]></text>
+			</staticText>
+			<image>
+				<reportElement x="450" y="44" width="80" height="71" uuid="dc7af57a-dab1-4b06-a8f7-4e3ee8441b02"/>
+				<imageExpression><![CDATA["C:\\Apache24\\htdocs\\MLHUDv2\\web\\public\\asset\\image\\certificateAchieved.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="70" y="281" width="420" height="20" uuid="8de8185a-21b9-4206-bb13-f65f068c996f"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Act,2013 read with sub-value (6) of rule 6 of the Companies ('Registered]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

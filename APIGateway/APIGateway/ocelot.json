@@ -1,0 +1,20 @@
+{
+  "Routes": [
+    // api-authentication
+    {
+      "DownstreamPathTemplate": "/api/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60152
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/service/token",
+      "UpstreamHttpMethod": [ "Post" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:3011"
+  }
+}

@@ -1,0 +1,16 @@
+web/vendor
+api/vendor
+*.log
+web/composer.lock
+api/composer.lock
+web/public/documents/pdfview/
+web/public/userdocuments/
+*setting.php
+web/public/instruction_file/
+web/public/particulars/
+web/public/uploads/
+web/public/validcertifi/
+web/public/approved/
+*.env
+web/public/user_signature/
+web/storage/*.pdf

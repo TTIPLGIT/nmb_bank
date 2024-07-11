@@ -1,0 +1,83 @@
+/**
+*
+* -----------------------------------------------------------------------------
+*Template : Planteo | Gardening, Landscaping HTML Template
+* Author : rs-theme
+* Author URI : http://www.rstheme.com/
+*
+* -----------------------------------------------------------------------------
+*
+**/
+
+/*Pulse Border Animation*/
+@keyframes pulse-border {
+    0% {
+        transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1.5);
+        opacity: 0;
+    }
+}
+
+.animate1 {
+    animation: animate1 4s both;
+    -webkit-animation: animate1 4s both;
+
+    animation-direction: alternate;
+    -webkit-animation-direction: alternate;
+
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+}
+@keyframes animate1 {
+    from {
+        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+    }
+    to {
+        transform: translate3d(0, -20px, 0);
+        -webkit-transform: translate3d(0, -20px, 0);
+    }
+}
+@-webkit-keyframes animate1 {
+    from {
+        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+    }
+    to {
+        transform: translate3d(0, -20px, 0);
+        -webkit-transform: translate3d(0, -20px, 0);
+    }
+}
+.animate2 {
+    animation: animate2 4s both;
+    -webkit-animation: animate2 4s both;
+
+    animation-direction: alternate;
+    -webkit-animation-direction: alternate;
+
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+}
+@keyframes animate2 {
+    from {
+        transform: translate3d(0, 0, 0) translateX(-50%);
+        -webkit-transform: translate3d(0, 0, 0) translateX(-50%);
+    }
+    to {
+        transform: translate3d(0, 20px, 0) translateX(-50%);
+        -webkit-transform: translate3d(0, 20px, 0) translateX(-50%);
+    }
+}
+@-webkit-keyframes animate2 {
+    from {
+        transform: translate3d(0, 0, 0) translateX(-50%);
+        -webkit-transform: translate3d(0, 0, 0) translateX(-50%);
+    }
+    to {
+        transform: translate3d(0, 20px, 0) translateX(-50%);
+        -webkit-transform: translate3d(0, 20px, 0) translateX(-50%);
+    }
+}
