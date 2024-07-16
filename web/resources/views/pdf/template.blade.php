@@ -59,13 +59,12 @@
         }
 
         .sampleImg {
-            width: 100px;
-            height: 100px;
+            width:35%;
+            margin-left:5%
         }
 
         .sampleImg1 {
-            width: 50px;
-            height: 50px;
+            margin-right:30%
         }
 
         .text {
@@ -84,38 +83,91 @@
             margin: 0;
             padding: 0;
         }
+        .logo{
+            display:flex;
+            align-items:center;
+            width:100%;
+            align-items:baseline;
+            margin-top:8%
+        }
+        .talent-logo{
+            display:flex;
+            flex-direction:row-reverse;
+        } 
+        .certificate-head{
+            text-align:center;
+            margin-top:4%;
+        }
+        .certificate-head-span{
+            text-align:center;
+            font-size:30px;
+            font-weight:bold;
+        }
+        .presented{
+            margin-top:5%;
+            font-size:18px;
+            margin-left:5%;
+            text-align:center;
+        }
+        .presented-span{
+            font-weight:bold;
+            font-size:30px;
+            color:blue;
+        }
+        .sentence{
+            margin-top:5%;
+            font-size:18px;
+            margin-left:5%;
+            text-align:center;
+        }
+        .sentence-span{
+            font-weight:bold;
+        }
+        .provided{
+            margin-top:5%;
+            font-size:18px;
+            margin-left:5%;
+            text-align:center;
+        }
+        .provided-span{
+            font-size:15px;
+        }
+        .companyname{
+            font-weight:bold;
+            padding:30px;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="card" style="padding:12px;">
-            <div style="display:flex;align-items:center;width:100%;align-items:baseline;margin-top:8%">
+            <div class="logo">
                 <div class="col-md-6">
-                    <img class="sampleImg" src="{{asset('assets/images/logocnt.png')}}" style="width:35%;margin-left:5%">
+                    <img class="sampleImg" src="{{asset('assets/images/ttipl_logo.jpg')}}">
                 </div>
-                <div class="col-md-6" style="display:flex;flex-direction:row-reverse">
-                    <img class="sampleImg" src="{{asset('assets/images/logocnt.png')}}" style="margin-right:30%">
+                <div class="col-md-6 talent-logo">
+                    <img class="sampleImg1" src="{{asset('assets/images/Talentra.jpg')}}">
                 </div>
             </div>
-            <div style="text-align:center;margin-top:4%">
-                <span style="text-align:center;font-size:30px;font-weight:bold">CERTIFICATE OF COMPLETION</span><bR>
+            <div class="certificate-head">
+                <span class="certificate-head-span">CERTIFICATE OF COMPLETION</span><bR>
 
             </div>
-            <div style="margin-top:5%;font-size:18px;margin-left:5%;text-align:center">
+            <div class="presented">
                 <span> Presented to </span><br>
-                <span style="font-weight:bold;font-size:30px;color:blue">{{$name}}</span><br>
+                <span class="presented-span">{{$name}}</span><br>
 
             </div>
-            <div style="margin-top:5%;font-size:18px;margin-left:5%;text-align:center">
+            <div class="sentence">
                 <span>For successfully completing the online course</span><br>
-                <span style="font-weight:bold">{{$course_name}}</span>
+                <span class="sentence-span">{{$course_name}}</span>
             </div>
-            <div style="margin-top:5%;font-size:18px;margin-left:5%;text-align:center">
-                <span style="font-size:15px">Provided By</span><br>
-                <span style="font-weight:bold;padding:30px;">Talent Takeaways Infotech Private Limited</span><br>
-                <span style="font-size:15px"> (on July 2024)</span>
-            </div>
+            <div class="provided">
+                <span class="provided-span">Provided By</span><br>
+                <span class="companyname">Talent Takeaways Infotech Private Limited</span><br>
+                <span class="provided-span"> (on July 2024)</span>
+            </div> 
         </div>
         <!-- <img src="{{asset('assets/images/medal.png')}}" alt="" class="medal" />
         <div class="certificate">

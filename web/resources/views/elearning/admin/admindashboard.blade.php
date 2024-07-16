@@ -58,7 +58,7 @@
     }
 
     .overview_body .card-header {
-        color: #40c2b2 !important;
+        color: #680EDA !important;
         background-color: white !important;
         font-weight: 600 !important;
         padding-left: 1rem !important;
@@ -105,7 +105,7 @@
     }
 
     .course_heading {
-        color: #000;
+        color: #680EDA;
         font-weight: 900;
         font-size: 1rem !important;
         width: fit-content !important;
@@ -129,10 +129,11 @@
     .course .card-header {
         width: 100% !important;
         height: 50px !important;
-        //* padding: 0px 0px 7px 0px !important;*//
-        background-color: #f8f9fc !important;
+        /* padding: 0px 0px 7px 0px !important;*/
+        background-color: #ffff !important;
         border-top-left-radius: 5px !important;
         border-top-right-radius: 5px !important;
+        
     }
 
     .course .card-body {
@@ -163,7 +164,7 @@
     }
 
     .schedule_heading {
-        color: #000;
+        color: #FF8B4F;
         font-weight: 900;
         font-size: 1rem !important;
         width: fit-content !important;
@@ -173,7 +174,7 @@
         width: 100% !important;
         height: 50px !important;
         padding: 0px 0px 7px 0px !important;
-        background-color: #f8f9fc !important;
+        background-color: #ffff !important;
         border-top-left-radius: 5px !important;
         border-top-right-radius: 5px !important;
     }
@@ -206,11 +207,11 @@
     .notice_board_list .card-header {
         width: 100% !important;
         height: 75px !important;
-        color: #000;
+        color: #680EDA;
         font-weight: 900;
         font-size: 1.5rem !important;
         /* padding: 10px 0px 7px 0px !important;*/
-        background-color: #f8f9fc !important;
+        background-color: #ffff !important;
         border-top-left-radius: 5px !important;
         border-top-right-radius: 5px !important;
     }
@@ -309,12 +310,12 @@
 
     .recommended_course_name {
         margin-bottom: 0px !important;
-        color: #38aa9c;
+        color: #FF8B4F;
     }
 
     .recommended_course_instructor {
         padding-left: 1%;
-        color: #48dbc9;
+        color: #FF8B4F;
     }
 
     .recommended_course_footer {
@@ -358,12 +359,12 @@
 
     .notice_board_event_name {
         margin-bottom: 0px !important;
-        color: #38aa9c;
+        color: #FF8B4F;
     }
 
     .notice_board_event_organiser {
         padding-left: 0%;
-        color: #48dbc9;
+        color: #FF8B4F;
     }
 
     .notice_board_footer {
@@ -383,11 +384,11 @@
     }
 
     .group_lesson_author {
-        color: #38aa9c;
+        color: #FF8B4F;
     }
 
     .group_lesson_course_name {
-        color: #48dbc9;
+        color: #FF8B4F;
     }
 
     .group_lesson_footer {
@@ -401,12 +402,12 @@
     }
 
     .group_lesson_link a {
-        color: #48dbc9 !important;
+        color: #FF8B4F !important;
         font-weight: 800;
     }
 
     .group_lesson_link i {
-        color: #48dbc9 !important;
+        color: #FF8B4F !important;
     }
 
     .group_participants_container {
@@ -656,7 +657,7 @@
 
     @media (min-width:1024.96px) {
         .main-content {
-            padding-left: 280px !important;
+            padding-left: 200px !important;
         }
 
         .sidebar-mini .main-content {
@@ -769,7 +770,7 @@
 
     #dycalendar table tr:first-child td {
         color: #fff;
-        background-color: #0ef3d8;
+        background-color: #680EDA;
         font-weight: 700;
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px #fff;
     }
@@ -786,7 +787,7 @@
     .dycalendar-today-date,
     .dycalendar-today-date:hover {
         background-color: white !important;
-        color: #0ef3d8 !important;
+        color: #680EDA !important;
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
             -5px -5px 10px rgba(255, 255, 255, 1) !important;
         border: none !important;
@@ -825,19 +826,19 @@
     }
 
     .dycalendar-prev-next-btn.prev-btn:active {
-        color: #0ef3d8;
-        text-shadow: -3px 0px 5px #0ef3d880;
+        color: #680EDA;
+        text-shadow: -3px 0px 5px #680EDA80;
     }
 
     .dycalendar-prev-next-btn.next-btn:active {
-        color: #0ef3d8;
-        text-shadow: 3px 0px 5px #0ef3d880;
+        color: #680EDA;
+        text-shadow: 3px 0px 5px #680EDA80;
     }
 
     .dycalendar-span-month-year {
         font-size: 1.3rem;
         font-weight: 600;
-        color: #0ef3d8;
+        color: #680EDA;
     }
 
     /* events */
@@ -945,7 +946,7 @@
         }
 
         .main-content {
-            padding-top: 80px !important;
+            padding-top: 60px !important;
             padding-left: 5px !important;
         }
 
@@ -970,9 +971,7 @@
         font-size: 22px;
         font-weight: 600;
         height: 300px !important;
-
-
-
+        color:#FF8B4F;
     }
 
     .events_today_wrapper a {
@@ -1178,14 +1177,14 @@
             <div class="overview_container container-fluid">
                 <div class="overview_header d-flex flex-row justify-content-between align-items-center">
 
-                    <h2 class="overview_heading">
+                    <!-- <h2 class="overview_heading">
                         Admin Overview
                         <div class="path">
                             <span>E-Learning</span>
                             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                             <span>Admin Dashboard</span>
                         </div>
-                    </h2>
+                    </h2> -->
                 </div>
                 <div class="d-flex flex-row justify-content-center justify-content-sm-start overview_body">
                     <div class="card noShadow">
@@ -1272,11 +1271,11 @@
 
                 </div>
             </div>
-            <div class="row noticess">
-                <div class="col-md-10 noticesss">
+            <div class="container-fluid noticess">
+                <div class="d-flex flex-row course_and_schedule_body w-100 noticesss">
 
                     <div class="card noShadow notice_board_list" style="">
-                        <div class="card-header">
+                        <div class="card-header" style="justify-content:center">
                             Notice Board
                         </div>
                         @php $class_list=count ($rows)== 0 ? "d-flex justify-content-center align-items-center" : '' @endphp
@@ -1351,7 +1350,7 @@
                     <div class="col-12 col-sm-6 col-lg-6">
                         <div class="card noShadow recommended_courses_list">
                             <div class="card-header">
-                                Recommended Courses
+                                Top Courses
                             </div>
                             <div class="card-body">
 

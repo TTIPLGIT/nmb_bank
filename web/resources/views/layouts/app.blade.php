@@ -340,8 +340,8 @@
 
 </head>
 
-<body class="footer_direction">
-    <div id="app" style="flex-grow:1">
+<body class="">
+    <div id="app">
         <!-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">

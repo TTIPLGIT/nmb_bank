@@ -88,8 +88,8 @@ class ElearningNoticeBoardController extends BaseController
             $role_id = $rows[0]->role_id;
 
             $rows['user_category'] = array(
-                'Graduate Trainee' => config('setting.roles.Graduate Trainee'),
-                'Professional Member' => config('setting.roles.professional_member'),
+                'Student' => config('setting.roles.Student'),
+                'Teacher' => config('setting.roles.Teacher'),
                 'All' => 0
             );
             // INNER JOIN uam_roles AS ur ON ur.role_id = et.user_category

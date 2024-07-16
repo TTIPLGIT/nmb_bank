@@ -199,6 +199,17 @@ samp {
   font-size: 1em;
 }
 
+/* saranya */
+
+.bg-image{
+
+  background-image: url(http://localhost:6061/assets/images/login-image.PNG);
+  background-size: cover; 
+  background-repeat: no-repeat;
+  height:100vh;
+}
+
+
 pre {
   margin-top: 0;
   margin-bottom: 1rem;

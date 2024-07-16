@@ -367,7 +367,7 @@
             }
 
             .navnotify {
-                padding-right: 90px !important;
+                padding-right: 10px !important;
             }
         }
     </style>
@@ -596,7 +596,7 @@
         }
 
         .badges {
-            background-color: #085a7e !important;
+            /* background-color: #085a7e !important; */
         }
 
         .dark-sidebar .main-sidebar {
@@ -1060,7 +1060,7 @@
         }
 
         .badges {
-            background: #f00;
+            /* background: #f00; */
             width: 40px;
             height: 40px !important;
             border-radius: 50%;
@@ -1236,7 +1236,7 @@
             <div class="navbar-bg"></div>
             <nav class="navbar nav11 navbar-expand-lg main-navbar">
                 <div class="sidebar-brand" style=" background-color:white!important;">
-                    <img src="{{asset('asset/image/logo-mlhud.png')}}" alt="logo" class="logo" width="180px">
+                    <img src="{{asset('assets/images/Talentra.jpg')}}" alt="logo" class="logo" width="180px">
                 </div>
                 <div class="form-inline mr-auto">
                     <ul class="navbar-nav mr-3">
@@ -1253,7 +1253,7 @@
                         </li> -->
                         <li class="d-none d-md-block portal_name">
                             <span>
-                                VALUATION PROFESSIONAL PORTAL
+                                <!-- VALUATION PROFESSIONAL PORTAL -->
                             </span>
                         </li>
                     </ul>

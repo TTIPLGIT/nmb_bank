@@ -206,7 +206,7 @@
     .notice_board_list .card-header {
         width: 100% !important;
         height: 71px !important;
-        color: #680EDA;
+        color: #FF8B4F;
         font-weight: 900;
         font-size: 1.5rem !important;
         /* padding: 10px 0px 7px 0px !important; */
