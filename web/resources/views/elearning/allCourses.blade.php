@@ -310,7 +310,7 @@
                     <h2 class="all_courses_main_header">
                         All Courses
                         <div class="path">
-                            <span>E-Learning</span>
+                            <span>Home</span>
                             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                             <span>All Courses</span>
                         </div>

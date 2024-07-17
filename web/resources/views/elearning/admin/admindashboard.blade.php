@@ -535,7 +535,7 @@
         .calendar-container {
             position: relative;
             border-radius: 10px;
-            box-shadow: 5px 5px 15px rgb(0 0 0 / 10%), -5px -5px 15px #edf1f4;
+            /* box-shadow: 5px 5px 15px rgb(0 0 0 / 10%), -5px -5px 15px #edf1f4; */
             width: 100%;
             min-height: 326px;
         }
@@ -730,7 +730,7 @@
     .calendar-container {
         position: relative;
         border-radius: 10px;
-        box-shadow: 5px 5px 15px rgb(0 0 0 / 10%), -5px -5px 15px #edf1f4;
+        /* box-shadow: 5px 5px 15px rgb(0 0 0 / 10%), -5px -5px 15px #edf1f4; */
         width: 50%;
         min-height: 344px;
     }
@@ -899,7 +899,7 @@
         .calendar-container {
             position: relative;
             border-radius: 10px;
-            box-shadow: 5px 5px 15px rgb(0 0 0 / 10%), -5px -5px 15px #edf1f4;
+            /* box-shadow: 5px 5px 15px rgb(0 0 0 / 10%), -5px -5px 15px #edf1f4; */
             width: 100%;
             min-height: 326px;
         }
@@ -1249,7 +1249,7 @@
                     <div class="card noShadow schedule" style="width: 100% !important;">
                         <div class="card-header d-flex flex-row justify-content-center align-items-center">
                             <h2 class="schedule_heading">
-                                Upcoming Events
+                                Events
                             </h2>
                         </div>
                         <div class="card-body">
@@ -1281,7 +1281,7 @@
                         @php $class_list=count ($rows)== 0 ? "d-flex justify-content-center align-items-center" : '' @endphp
                         <div class="card-body {{$class_list}}">
                             @if(count ($rows)== 0)
-                            <div class="nonotice">No Notice Found</div>
+                            <div class="nonotice">No notice was found on this date</div>
                             @endif
                             @foreach($rows as $key=>$row)
 
@@ -1605,7 +1605,7 @@
                 var count = 1;
                 $('.events_today_wrapper').children().remove();
                 if (data.rows.length == 0) {
-                    const nodata = '<div class="noevents">No Events Found</div>'
+                    const nodata = '<div class="noevents">No Events was found on this date</div>'
                     $('.no_event').append(nodata);
 
                 } else {

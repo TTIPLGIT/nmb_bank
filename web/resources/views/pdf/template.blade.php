@@ -9,13 +9,12 @@
         }
 
         .container {
-            text-align: center;
             height: 40vh;
         }
 
         .certificate {
             position: relative;
-            width: 780px;
+            width: 680px;
             /* Adjust the width for landscape view */
             height: 450px;
             /* Adjust the height as needed */
@@ -60,11 +59,11 @@
 
         .sampleImg {
             width:35%;
-            margin-left:5%
+            margin-right: 50%;
         }
 
         .sampleImg1 {
-            margin-right:30%
+           text-align: left;
         }
 
         .text {
@@ -136,19 +135,28 @@
             font-weight:bold;
             padding:30px;
         }
+        .border{
+            background-image:url('assets/images/certificate-img.jpg');
+        }
+        .card-page{
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="card" style="padding:12px;">
+    <div class="container certificate">
+    <img class="sampleImg1" src="{{asset('assets/images/Talentra.jpg')}}">
+        <div class="card card-page" style="padding:12px;">
             <div class="logo">
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <img class="sampleImg" src="{{asset('assets/images/ttipl_logo.jpg')}}">
-                </div>
-                <div class="col-md-6 talent-logo">
-                    <img class="sampleImg1" src="{{asset('assets/images/Talentra.jpg')}}">
-                </div>
+                </div> -->
+                <!-- <div class="col-md-6 talent-logo">
+                    
+                </div> -->
+            <!-- <img class="sampleImg" src="{{asset('assets/images/medal.png')}}" alt="" class="medal" /> -->
+
             </div>
             <div class="certificate-head">
                 <span class="certificate-head-span">CERTIFICATE OF COMPLETION</span><bR>

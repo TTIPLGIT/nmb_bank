@@ -76,7 +76,7 @@
     <link href="{{asset('assets/css/adminnavbar.min.css')}}" rel="stylesheet" type="text/css" />
 
     <link href="{{asset('assets/css/calender.css')}}" rel="stylesheet" type="text/css" />
-    <link rel="icon" href="{{ url('css/favicon.png') }}" sizes="32x32">
+    <!-- <link rel="icon" href="{{ url('css/favicon.png') }}" sizes="32x32"> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts_family.css') }}" />
@@ -1388,20 +1388,20 @@
 
                         @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member" || $menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" || $menus['alter_name'] == "student")
 
-                        <li>
+                        <!-- <li>
                             <a href="{{ route('ethictest.list') }}" class="nav-link sidebar_links">
                                 <i class="sidebar-icons fa fa-pencil-square-o" aria-hidden="true"></i>
                                 <span>Ethic Test</span>
                             </a>
-                        </li>
+                        </li> -->
                         @endif
                         @if($menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" || $menus['alter_name'] == "student")
-                        <li>
+                        <!-- <li>
                             <a href="{{ route('localadaptation.list') }}" class="nav-link sidebar_links">
                                 <i class="sidebar-icons fa fa-globe" aria-hidden="true"></i>
                                 <span>Local Adaptation Test</span>
                             </a>
-                        </li>
+                        </li> -->
                         @endif
                         <!-- @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member")
 

@@ -209,7 +209,12 @@ samp {
   height:100vh;
 }
 
-
+.toggle-password {
+  float: right;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-top: -25px;
+}
 pre {
   margin-top: 0;
   margin-bottom: 1rem;

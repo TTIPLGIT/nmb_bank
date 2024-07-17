@@ -1299,7 +1299,7 @@
                         @php $class_list=count ($rows)== 0 ? "d-flex justify-content-center align-items-center" : '' @endphp
                         <div class="card-body {{$class_list}}">
                             @if(count ($rows)== 0)
-                            <div class="nonotice" style="color:#680EDA">No Notice Found</div>
+                            <div class="nonotice" style="color:#680EDA">No notice was found on this date</div>
                             @endif
                             @foreach($rows as $key=>$row)
                             <div class="d-flex flex-row justify-content-around notice_board">
@@ -1407,13 +1407,13 @@
                                             <span class="recommended_course_time">
                                                 {{$row['duration']}}
                                             </span>
-                                            <span class="recommended_course_divider">
+                                            <!-- <span class="recommended_course_divider">
                                                 -
-                                            </span>
-                                            <span class="recommended_course_learners">
+                                            </span> -->
+                                            <!-- <span class="recommended_course_learners">
                                                 @php $exist=$row['total_student']==0 ? "No Students Enrolled" : "Students" @endphp
                                                 @if($row['total_student'] !=0){{$row['total_student']}}@endif {{$exist}}
-                                            </span>
+                                            </span> -->
                                         </div>
 
                                     </div>
@@ -1659,7 +1659,7 @@
                 var count = 1;
                 $('.events_today_wrapper').children().remove();
                 if (data.rows.length == 0) {
-                    const nodata = '<div class="noevents">No Events Found</div>'
+                    const nodata = '<div class="noevents">No Events was found on this date</div>'
                     $('.no_event').append(nodata);
 
                 }

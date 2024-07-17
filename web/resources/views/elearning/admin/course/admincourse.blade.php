@@ -482,9 +482,9 @@
                                                         <th>Course Name</th>
                                                         <th>Category</th>
                                                         <th>Course Banner</th>
-                                                        <th>Start Date</th>
-                                                        <th>End Date</th>
-                                                        <th>Price</th>
+                                                        <!-- <th>Start Date</th> -->
+                                                        <!-- <th>End Date</th> -->
+                                                        <th>Type</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -497,9 +497,9 @@
                                                         <td>{{$data->course_name}}</td>
 
                                                         @if($data->course_category =="27")
-                                                        <td>Graduate Trainee</td>
+                                                        <td>Student</td>
                                                         @elseif($data->course_category =="34")
-                                                        <td>Professional Member</td>
+                                                        <td>Teacher</td>
 
                                                         @else
                                                         <td>All</td>
@@ -513,14 +513,14 @@
                                                         <?php } else { ?>
                                                             <td> <img src="uploads/class/126/empty.jpg" width="50px" height="50px" alt="..."></td>
                                                         <?php } ?>
-                                                        <td>{{$data->course_start_period}}</td>
-                                                        <td>{{$data->course_end_period}}</td>
+                                                        <!-- <td>{{$data->course_start_period}}</td> -->
+                                                        <!-- <td>{{$data->course_end_period}}</td> -->
                                                         @if(!empty($data->course_price))
 
-                                                        <td>{{$data->course_price}} Ush</td>
+                                                        <td>Paid</td>
 
                                                         @else
-                                                        <td>0 Ush</td>
+                                                        <td>Free</td>
 
                                                         @endif
                                                         <td>

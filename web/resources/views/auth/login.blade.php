@@ -115,16 +115,22 @@
 
                                 <div class="row mb-3">
                                     <!-- <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label> -->
-
-                                    <div class="input-group form-label-group col-12">
+                                    <!-- <div class="form-group" style="text-align:left">
+                                        <label class="control-label required" style="color:white">Password :</label>
+                                        <input class="form-control" type="password" name="password" id="exampleInputPassword1" class="form-control" placeholder="Password">
+                                        <i class="fa fa-lock toggle-password" id="toggle" onclick="passlock_show();"></i>
+                                    </div> -->
+                                    <div class="form-group col-12">
+                                        <!-- <label class="control-label required">Password :</label> -->
                                         <input id="password" type="password" class="form-control login_pass @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="off" style="border-radius:15px;background-color:white">
+                                        
                                         <!-- <div class="input-group-append">
                                             <span class="input-group-text rounded-halfpillrightside" id="basic-addon1" style="background: transparent;">
                                                 <i class="fa fa-lock login_pass_icon" id="toggle" onclick="passlock_show();"></i>
-
-                                            </span>
+                                            </span> 
                                         </div> -->
-                                        <sapn class="caplock-indicator invalid-warning" style="display: none;">WARNING! Caps lock is ON.</sapn>
+                                        <sapn class="caplock-indicator invalid-warning" style="display: none;">WARNING! Caps lock is ON.</sapn><br>
+                                        <input type="checkbox" id="toggle" onclick="passlock_show();" style="margin-left:8px"> Show Password
 
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -289,13 +295,13 @@
             const toggle = document.getElementById('toggle');
             if (pass.getAttribute('type') == "password") {
                 pass.setAttribute('type', 'text');
-                toggle.classList.remove('fa-lock');
-                toggle.classList.add('fa-unlock');
+                // toggle.classList.remove('fa-lock');
+                // toggle.classList.add('fa-unlock');
 
             } else {
                 pass.setAttribute('type', 'password');
-                toggle.classList.remove('fa-unlock');
-                toggle.classList.add('fa-lock');
+                // toggle.classList.remove('fa-unlock');
+                // toggle.classList.add('fa-lock');
 
 
             }

@@ -513,8 +513,8 @@ class LoginController extends BaseController
               exit;
               return "2";
             }
-            if($role_id == '1' && $role_id == '41'){
-              return redirect(route('elearningDashboard'));
+            if($role_id == '1' || $role_id == '43'){
+              return redirect(route('admindashboard'));
             }
             else{
               return redirect(route('elearningDashboard'));

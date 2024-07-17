@@ -50,7 +50,7 @@
   <!-- <script type="text/javascript" src="{{ asset('js/select2.js') }}"></script> -->
 
   <link href="{{asset('assets/css/adminnavbar.min.css')}}" rel="stylesheet" type="text/css" />
-  <link rel="icon" href="{{ url('css/favicon.png') }}" sizes="32x32">
+  <!-- <link rel="icon" href="{{ url('css/favicon.png') }}" sizes="32x32"> -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
