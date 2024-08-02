@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2b9442ce-c54d-482a-850d-bd05960fa410">
+	<property name="ireport.zoom" value="1.0000000000000044"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Wed Nov 02 21:24:19 IST 2022"/>
+	<queryString language="SQL">
+		<![CDATA[select * from valuer_list]]>
+	</queryString>
+	<field name="valuer_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="user_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valuer_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="v_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="created_at" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="updated_at" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="assigned_to_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="approval_doc_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="approval_doc_path" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="s_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="active_flag" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="31" y="0" width="125" height="79" uuid="9902d91c-c542-442d-87ac-273974228968"/>
+				<imageExpression><![CDATA["C:\\Apache24\\htdocs\\MLHUDv2\\web\\public\\assets\\images\\main.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="166" y="22" width="463" height="57" uuid="aeff64d8-7915-4b0d-baf1-6147bdb5ac97"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MLHUD-VALUATION PROFESSIONAL PORTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="59" width="316" height="20" uuid="864409ee-90f6-4f92-8741-4057e2d6f6c9"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Ministry of Lands, Housing and Urban Development]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<image>
+				<reportElement x="342" y="0" width="100" height="35" uuid="ca491db0-d646-43f5-867c-7be66b651d74"/>
+				<imageExpression><![CDATA["C:\\Apache24\\htdocs\\MLHUDv2\\web\\public\\assets\\images\\udandaflag.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="156" y="0" width="477" height="61" uuid="0acc49a7-3316-4402-a1de-cb2f56dbf1ea"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Certificate Of Registration]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="240" y="0" width="132" height="17" uuid="ec630b66-ab8d-4fba-a956-502e4a38a9a3"/>
+				<textElement>
+					<font fontName="Perpetua" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valuer Registration No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="0" width="100" height="20" uuid="2e60f1d4-7151-4906-aa61-889ee7d555e1"/>
+				<text><![CDATA[VAL/001]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

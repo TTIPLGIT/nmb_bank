@@ -1,0 +1,194 @@
+
+.modalbackground_img{
+    background-image: url("../images/modal_background.jpg") !important;
+    background-size: 1000px !important;
+      background-repeat: no-repeat !important;
+}
+.modalheaderbackground_img{
+    background-image: url("../images/modal_background.jpg") !important;
+    background-size: 200px !important;
+      background-repeat: no-repeat !important;
+}
+
+.td_element {
+    color: #141414 !important;
+    padding: 3px !important;
+}
+.notes {
+    border-top: 1px dashed #DEDEDE !important ;
+    border-bottom: 1px dashed #DEDEDE;
+    background-color: #FAFAFA;
+    color: #AD3737;
+    font-family: tahoma;
+    font-size: 11px;
+    padding: 2px;
+    padding-left: 5px;
+}
+
+.customButton {
+    background: #fac999;
+    background-color: #fac999;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;border-radius: 30px;border: 1px solid #ebb077;
+    display: inline-block;
+    cursor: pointer;
+    color: #1e1d1d;
+    font-family: arial;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 18px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffee66;
+}
+a.customButton_link {
+    background: #fac999;
+    background-color: #fac999;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    border: 1px solid #ebb077;
+    display: inline-block;
+    cursor: pointer;
+    color: #1e1d1d !important;
+    font-family: arial;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 18px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffee66;
+}
+a.customButton_link:hover {
+    color: #1e1d1d;
+    font-family: arial;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+}
+table {
+    border: 0px
+ solid #0000001f;
+}
+
+
+.td_caption {
+    PADDING-RIGHT: 5px;
+    PADDING-LEFT: 5px
+;
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 11px;
+    PADDING-BOTTOM: 2px
+;
+    COLOR: #000000;
+    PADDING-TOP: 2px
+;
+    FONT-FAMILY: tahoma;
+    HEIGHT: 20px
+;
+    BACKGROUND-COLOR: #F0F0F0;
+}
+.td_field {
+    PADDING-RIGHT: 5px
+;
+    PADDING-LEFT: 5px
+;
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 11px;
+    PADDING-BOTTOM: 2px
+;
+    COLOR: #000000;
+    PADDING-TOP: 2px
+;
+    FONT-FAMILY: tahoma;
+    HEIGHT: 20px
+;
+    BACKGROUND-COLOR: #FCFCFC;
+}
+.list_table {
+    border: 1px solid #DEDEDE;
+}
+.tablebg {
+    border: 1px solid #CC3300;
+}
+.textbold1 {
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 12px;
+    color: #9B3501 !important;
+    FONT-FAMILY: tahoma, arial, verdana, helvetica;
+    TEXT-DECORATION: none;
+}
+.pageheader {
+    color: white !important; background: rgb(255, 136, 77) !important;
+     font-size: 15px !important; border-radius: 10px 10px 0px 0px !important; 
+    border-color: rgb(241, 241, 241) !important; 
+    padding: 5px !important;
+}
+td {
+    font-family: tahoma;
+    font-size: 11px;
+    color: #252525;
+}
+.td_space {
+    padding: 5px;
+}
+.page_content {
+    padding: 6px;
+    background: white !important;
+}
+a.customButton_link:hover {
+    color: #1e1d1d;
+    font-family: arial;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.list_header td {
+    padding: 5px;
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 11px;
+    COLOR: #822C00;
+    FONT-FAMILY: tahoma;
+    BACKGROUND-COLOR: #F1F1F1;
+    border-bottom: 1px solid #E3E3E3;
+}
+.tableborder{
+    border: 1px solid #353c48;
+    border-top-color: rgb(53, 60, 72);
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-right-color: rgb(53, 60, 72);
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-bottom-color: rgb(53, 60, 72);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-color: rgb(53, 60, 72);
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+}
+
+.tendrinfo{font-size: 13px !important; cursor:pointer !important; color: black;}
+
+
+.icon_size{
+    font-size: 35px !important;
+    color: #40345e !important;
+}
+
+.loginbtn{
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,81,121,1) 39%, rgba(0,212,255,1) 100%);
+}
+.buttons{
+font-weight: 600;
+    font-size: 12px;
+    line-height: 24px;
+    padding: 0.3rem 0.8rem
+;
+}
+
+

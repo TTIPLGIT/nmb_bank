@@ -1,0 +1,789 @@
+@extends('layouts.adminnav')
+@section('content')
+
+
+
+<title>Payment</title>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+
+<style>
+    #firmerror {
+        color: red;
+    }
+
+    #descriptionerror {
+        color: red;
+    }
+
+    #certifierror {
+        color: red;
+    }
+
+
+
+
+
+    a:hover,
+    a:focus {
+        text-decoration: none;
+        outline: none;
+    }
+
+    .danger {
+        background-color: #ffdddd;
+        border-left: 6px solid #f44336;
+    }
+
+    #align {
+        border-collapse: collapse !important;
+    }
+
+    #tabs {
+        overflow: hidden;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 16px !important;
+    }
+
+    .nav-tabs .nav-item.show .nav-link,
+    .nav-tabs .nav-link.active {
+        background: #25867d !important;
+
+    }
+
+    .nav-tabs {
+        padding: 5px !important;
+    }
+
+    #tabs li {
+        float: left;
+        margin: 0 .5em 0 0;
+    }
+
+    .questions {
+        color: #34395e !important;
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    #tabs a {
+        color: #000000 !important;
+        position: relative;
+        background: #25867d;
+        /* background-image: linear-gradient(to bottom, #1c92d2, #f2fcfe); */
+        padding: .4em 1.5em;
+        float: left;
+        text-decoration: none;
+        color: #444;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+        border-radius: 5px 0 0 0;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, .4);
+    }
+
+    #tabs a:hover,
+    #tabs a:hover::after,
+    #tabs a:focus,
+    #tabs a:focus::after {
+        background: #25867d;
+    }
+
+    #tabs a:focus {
+        outline: 0;
+    }
+
+    #tabs a::after {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: -.5em;
+        bottom: 0;
+        width: 1em;
+        background: #25867d;
+        /* background-image: linear-gradient(to bottom, #1c92d2, #f2fcfe); */
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, .4);
+        transform: skew(10deg);
+        border-radius: 0 5px 0 0;
+    }
+
+    .nav-justified {
+        background-image: none;
+    }
+
+    #tabs #addition-tab::after {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: -.5em;
+        bottom: 0;
+        width: 1em;
+        background: #25867d;
+        /* background-image: linear-gradient(to bottom, #1c92d2, #f2fcfe); */
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, .4);
+        transform: skew(10deg);
+        border-radius: 0 5px 0 0;
+    }
+
+    #tabs #current a,
+    #tabs #current a::after {
+        background: #25867d;
+        z-index: 3;
+        color: white !important;
+    }
+
+    .tabs {
+        overflow: hidden;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 16px !important;
+    }
+
+    .tabs li {
+        float: left;
+        margin: 0 .5em 0 0;
+    }
+
+    .questions {
+        color: #34395e !important;
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    .tabs a {
+        color: white !important;
+        position: relative;
+        background: #25867d;
+        /* background-image: linear-gradient(to bottom, #1c92d2, #f2fcfe); */
+        padding: .4em 1.5em;
+        float: left;
+        text-decoration: none;
+        color: #444;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+        border-radius: 5px 0 0 0;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, .4);
+    }
+
+    .tabs a:hover,
+    .tabs a:hover::after,
+    .tabs a:focus,
+    .tabs a:focus::after {
+        background: #25867d !important;
+    }
+
+    .tabs a:focus {
+        outline: 0;
+    }
+
+    .tabs a::after {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: -.5em;
+        bottom: 0;
+        width: 1em;
+        background: #25867d;
+        /* background-image: linear-gradient(to bottom, #1c92d2, #f2fcfe); */
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, .4);
+        transform: skew(10deg);
+        border-radius: 0 5px 0 0;
+    }
+
+    .nav-justified {
+        background-image: none;
+    }
+
+    .tabs #addition-tab::after {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: -.5em;
+        bottom: 0;
+        width: 1em;
+        background: #25867d;
+        /* background-image: linear-gradient(to bottom, #1c92d2, #f2fcfe); */
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, .4);
+        transform: skew(10deg);
+        border-radius: 0 5px 0 0;
+    }
+
+    .tabs #current a,
+    .tabs #current a::after {
+        background: #25867d;
+        z-index: 3;
+        color: white !important;
+    }
+
+    .ad {
+        background-color: green !important;
+        display: flex;
+        align-items: center;
+        margin-top: 35px;
+        border-radius: 26px;
+    }
+
+
+    .mi {
+        background-color: red !important;
+        display: flex;
+        align-items: center;
+        margin-top: 35px;
+        border-radius: 26px;
+    }
+
+    .sub {
+        pointer-events: none;
+    }
+
+    .cert {
+        height: 40px;
+    }
+</style>
+
+
+
+
+<div class="main-content">
+    @if (session('success'))
+
+    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+    <script type="text/javascript">
+        window.onload = function() {
+            var message = $('#session_data').val();
+            swal.fire({
+                title: "Success",
+                text: message,
+                icon: "success", // Specify the success icon
+            });
+
+
+        }
+    </script>
+    @elseif(session('error'))
+
+    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
+    <script type="text/javascript">
+        window.onload = function() {
+            var message = $('#session_data1').val();
+            swal.fire({
+                title: "Info",
+                text: message,
+                icon: "info", // Specify the info icon
+            });
+
+
+        }
+    </script>
+    @endif
+
+
+
+    <section class="section">
+
+        <div class="col-lg-12 text-center">
+
+            <h4 style="color:darkblue;">Firm Registraion</h4>
+        </div>
+
+        <div class="tile" id="tile-1" style="margin-top:10px !important;">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-justified " id="tabs" role="tablist">
+                <li class="nav-items navv" class="active" style="flex-basis: 1 !important;">
+                    <a class="nav-link  " id="home-tab" name="tab1" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true"><i class="fa fa-user"></i><b>Firm Registraion</b> <input type="checkbox" class="checkg" id="firmregis" name="nationality" readonly value="0" onchange="submitval(this)" readonly style="background-color:solid green !important; color:green !important; visibility:hidden !important; ">
+                        <div class="check"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div id="content">
+            <div id="tab1">
+                <section class="section">
+                    <div class="section-body mt-1">
+                        <form action="{{ route('firmregistration_update') }}" method="POST" id="firmedit_form" enctype="multipart/form-data">
+                            @csrf
+
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Firm Name<span style="color: red;font-size: 16px;">*</span></label>
+                                        <input class="form-control" type="text" id="firm_name" name="firm_name" value="{{$rows['firmregister_show'][0]['firm_name']}}" autocomplete="off">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Description</label>
+
+                                        <textarea class="form-control" type="text" id="description" name="description" autocomplete="off">{{$rows['firmregister_show'][0]['description']}}</textarea>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-6 d-flex flex-column">
+                                    <label><b>URSB:</b>
+                                        <span class="error-star" style="color:red;">*</span></label>
+                                    <span class="file_color d-flex align-items-baseline" id="document" name="graduationcertifiname" value="" accept=".pdf,.png," disabled autocomplete="off"><b>{{$rows['firmregister_show'][0]['certificate_name']}}</b>
+                                        <div class="form-group">
+                                            <div class="dropdown show">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" title="URSB" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    ...
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" title="view Document" data-toggle="modal" data-target="#templates" onClick="getproposaldocument('{{$rows['firmregister_show'][0]['certificate_path']}}/{{$rows['firmregister_show'][0]['certificate_name']}}')">View</a>
+                                                    <a type="button" class="dropdown-item " title="Download Documents" href="{{$rows['firmregister_show'][0]['certificate_path']}}/{{$rows['firmregister_show'][0]['certificate_name']}}" download>Download</a>
+                                                    <a type="button" class="dropdown-item  change_documents" id="graduatec2" title="change Documents" value="1" onclick="graduatechangefile1(this)">Change file</a>
+                                                    <input type="hidden" id="graduatec1" name="graduatec2" value="1">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <div class="d-none" id="firm_reg1">
+                                        <input class="form-control  mb-0" type="file" accept=".pdf, .png," id="ursb_refile" name="ursb_update" value="" autocomplete="off">
+                                        <strong style="color: red;">Following files could be uploaded pdf,png</strong>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-6 d-flex flex-column">
+                                    <label><b>Proof Of Location:</b>
+                                        <span class="error-star" style="color:red;">*</span></label>
+                                    <span class="file_color d-flex align-items-baseline" id="document" name="graduationcertifiname" value="" accept=".pdf, .png," disabled autocomplete="off"><b>{{$rows['firmregister_show'][0]['location_proof']}}</b>
+                                        <div class="form-group">
+                                            <div class="dropdown show">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" title="Proof Of Location" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    ...
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" title="view Document" data-toggle="modal" data-target="#templates" onClick="getproposaldocument('{{$rows['firmregister_show'][0]['location_proofpath']}}/{{$rows['firmregister_show'][0]['location_proof']}}')">View</a>
+                                                    <a type="button" class="dropdown-item " title="Download Documents" href="{{$rows['firmregister_show'][0]['location_proofpath']}}{{$rows['firmregister_show'][0]['location_proof']}}" download>Download</a>
+                                                    <a type="button" class="dropdown-item  change_documents" id="file2" title="change Documents" value="PROOF" value_type="0" onclick="graduatechangefile2(this)">Change file</a>
+                                                    <input type="hidden" id="filep2" name="file2" value="1">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <div class="d-none" id="firm_reg2">
+                                        <input class="form-control  mb-0" type="file" accept=".pdf, .png," id="proof_refile" name="proof_update" value="" autocomplete="off">
+                                        <strong style="color: red;">Following files could be uploaded pdf,png</strong>
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+
+
+                                @foreach($rows['firmregister_show'] as $key=>$rows)
+
+                                <div class="row list_partners">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Partner Name<span style="color: red;font-size: 16px;">*</span></label>
+                                            <select name="partner" id="partner" class="form-control">
+                                                <option value="{{$rows['partner_id']}}" selected>{{$rows['name']}}</option>
+                                            </select>
+                                            <span class="span_message" id="selectfirmerror"></span>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-5">
+                                        <label><b>Valid Practising Certificate:</b>
+                                            <span class="error-star" style="color:red;">*</span></label>
+                                        <span class="file_color d-flex align-items-baseline" id="document" name="graduationcertifiname" value="" accept=".pdf,.png," disabled autocomplete="off"><b>{{$rows['validpractisingcertificate_name']}}</b>
+                                            <div class="form-group">
+                                                <div class="dropdown show">
+                                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" title="Valid Practising Certificate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        ...
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item" title="view Document" data-toggle="modal" data-target="#templates" onClick="getproposaldocument('{{$rows['validpractisingcertificate_path']}}/{{$rows['validpractisingcertificate_name']}}')">View</a>
+                                                        <a type="button" class="dropdown-item " title="Download Documents" href="{{$rows['validpractisingcertificate_path']}}{{$rows['validpractisingcertificate_name']}}" download>Download</a>
+                                                        <a type="button" class="dropdown-item  change_documents" id="practise2" title="change Documents" value="PRACTISE" value_type="0" onclick="graduatechangefile3(this)">Change file</a>
+                                                        <input type="hidden" id="practisep3" name="practise3" value="1">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </span>
+                                        <div class="d-none" id="firm_reg3">
+                                            <input class="form-control  mb-0" type="file" accept=".pdf, .png," id="practise_refile" name="practise_update-{{$rows['partner_id']}}" value="" autocomplete="off">
+                                            <strong style="color: red;">Following files could be uploaded pdf,png</strong>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-5">
+                                        <label><b>Particulars Directors:</b>
+                                            <span class="error-star" style="color:red;">*</span></label>
+                                        <span class="file_color d-flex align-items-baseline" id="document" name="graduationcertifiname" value="" accept=".pdf,.png," disabled autocomplete="off"><b>{{$rows['particulardirectorscertificate_name']}}</b>
+                                            <div class="form-group">
+                                                <div class="dropdown show">
+                                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" title="Particulars Directors" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        ...
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item" title="view Document" data-toggle="modal" data-target="#templates" onClick="getproposaldocument('{{$rows['particulardirectorscertificate_path']}}/{{$rows['particulardirectorscertificate_name']}}')">View</a>
+                                                        <a type="button" class="dropdown-item " title="Download Documents" href="{{$rows['particulardirectorscertificate_path']}}{{$rows['particulardirectorscertificate_name']}}" download>Download</a>
+                                                        <a type="button" class="dropdown-item  change_documents" id="particulars4" title="change Documents" value="PARTICULARS" value_type="0" onclick="graduatechangefile4(this)">Change file</a>
+                                                        <input type="hidden" id="particularsp5" name="particulars5" value="1">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </span>
+                                        <div class="d-none" id="firm_reg4">
+                                            <input class="form-control  mb-0" type="file" accept=".pdf,.png," id="practise_refile" name="particulars_update-{{$rows['partner_id']}}" value="" autocomplete="off">
+                                            <strong style="color: red;">Following files could be uploaded pdf,png</strong>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                @endforeach
+
+                                <div class="row justify-content-center mb-4">
+                                    <a type="button" class="btn btn-labeled btn-info" href="/firm_index?tab=home-tab2" title="next" style="background: red !important; border-color:red !important; color:white !important; margin-top:15px !important;">
+                                        <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span>Back</a>
+                                    <button type="submit" onclick="firm_update();" id="updatebutton" class="btn btn-labeled btn-info" title="Update" style="background: green !important; border-color:green !important; color:white !important; margin-top:15px !important; margin-left: 15px;">
+                                        <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Update</button>
+                                </div>
+                        </form>
+
+
+                    </div>
+
+
+
+
+            </div>
+
+        </div>
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+</section>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.razorpay-payment-button').hide();
+
+        $("#content").find("[id^='tab']").hide(); // Hide all content
+        $("#tabs li:first").addClass("active"); // Activate the first tab
+        $("#tab1").fadeIn(); // Show first tab's content
+
+
+
+        $('#tabs a').click(function(e) {
+
+            e.preventDefault();
+            if ($(this).closest("li").attr("id") == "current") { //detection for current tab
+
+                return;
+            } else {
+
+                $("#content").find("[id^='tab']").hide(); // Hide all content
+                $("#tabs li").removeClass("active"); //Reset id's
+                $(this).parent().addClass("active"); // Activate this
+                $('#' + $(this).attr('name')).fadeIn(); // Show content for the current tab
+
+
+            }
+        });
+
+
+    });
+
+
+
+
+    $(document).ready(function() {
+
+        let url = new URL(window.location.href)
+        let message = url.searchParams.get("message");
+        if (message != null) {
+            window.history.pushState("object or string", "Title", "/firm_index");
+            swal.fire({
+                title: "Success",
+                text: "Firm Registered Successfully",
+                icon: "success", // Specify the success icon
+            });
+
+        }
+
+    })
+</script>
+<script>
+    function graduatechangefile1(a) {
+        if ($(a).hasClass("change_documents")) {
+            $(a).text("Stay same");
+            $(a).removeClass("change_documents");
+            $(a).addClass("stay_same");
+            $('#firm_reg1').removeClass('d-none');
+        } else {
+            $(a).text("Change file");
+            $(a).removeClass("stay_same");
+            $(a).addClass("change_documents");
+            $('#firm_reg1').addClass('d-none');
+
+
+        }
+    };
+
+    function graduatechangefile2(a) {
+        if ($(a).hasClass("change_documents")) {
+            $(a).text("Stay same");
+            $(a).removeClass("change_documents");
+            $(a).addClass("stay_same");
+            $('#firm_reg2').removeClass('d-none');
+        } else {
+            $(a).text("Change file");
+            $(a).removeClass("stay_same");
+            $(a).addClass("change_documents");
+            $('#firm_reg2').addClass('d-none');
+
+
+        }
+    };
+
+    function graduatechangefile3(a) {
+        if ($(a).hasClass("change_documents")) {
+            $(a).text("Stay same");
+            $(a).removeClass("change_documents");
+            $(a).addClass("stay_same");
+            $('#firm_reg3').removeClass('d-none');
+        } else {
+            $(a).text("Change file");
+            $(a).removeClass("stay_same");
+            $(a).addClass("change_documents");
+            $('#firm_reg3').addClass('d-none');
+
+
+        }
+    };
+
+    function graduatechangefile4(a) {
+        if ($(a).hasClass("change_documents")) {
+            $(a).text("Stay same");
+            $(a).removeClass("change_documents");
+            $(a).addClass("stay_same");
+            $('#firm_reg4').removeClass('d-none');
+        } else {
+            $(a).text("Change file");
+            $(a).removeClass("stay_same");
+            $(a).addClass("change_documents");
+            $('#firm_reg4').addClass('d-none');
+
+
+        }
+    };
+</script>
+
+
+
+
+<script>
+    function firm_update() {
+
+
+        const firm_name = document.getElementById("firm_name");
+        const description = document.getElementById("description");
+        const certifi = document.getElementById("certifi");
+        const location = document.getElementById("location");
+        const validpractising = document.getElementById("validpractising");
+
+
+        e.preventDefault();
+
+        if (firm_name.value == "") {
+
+            document.getElementById("firmerror").innerHTML = "**Please Enter the Firm name**";
+
+        } else {
+            document.getElementById("firmerror").innerText = "";
+        }
+
+
+        if (description.value == "") {
+            document.getElementById("descriptionerror").innerHTML =
+                "**Please Enter the Discription**";
+            return;
+        } else {
+            document.getElementById("descriptionerror").innerText = "";
+        }
+
+        if (certifi.value == "") {
+            document.getElementById("certifierror").innerHTML =
+                "**Please Upload the certification**";
+            return;
+        } else {
+            document.getElementById("certifierror").innerText = "";
+        }
+
+        if (certifi.value == "") {
+            document.getElementById("locationerror").innerHTML =
+                "**Please Upload the Proof of Location**";
+            return;
+        } else {
+            document.getElementById("locationerror").innerText = "";
+        }
+
+        if (validpractising.value == "") {
+            document.getElementById("validpractisingerror").innerHTML =
+                "**Please Upload the valid practising certificate**";
+            return;
+        } else {
+            document.getElementById("validpractisingerror").innerText = "";
+        }
+        $("#firmedit_form").submit();
+
+
+    }
+</script>
+
+
+<script>
+    function getproposaldocument(id) {
+
+        var data = (id);
+        $('#modalviewdiv').html('');
+        $("#loading_gif").show();
+        console.log(id);
+
+        $("#loading_gif").hide();
+        var proposaldocuments = "<div class='removeclass' id='modalviewdiv' style=' height:100%'><iframe src='" + data + "' class='document_ifarme_view' style='width:100%; height:100%'></iframe></div>";
+        $('.removeclass').remove();
+        var document = $('#template').append(proposaldocuments);
+
+    };
+</script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        document.getElementById('ursbf1').style.display = "none";
+        document.getElementById('ursbf').removeAttribute('required');
+
+
+    });
+
+
+    function changeupload1(e) {
+
+        if (e.target.value == "URSB" && e.target.getAttribute('value_type') == 0) {
+            $('#ursb_refile').removeClass('d-none');
+            e.target.setAttribute('value_type', 1);
+            e.target.children[0].addClass = "d-none";
+
+            e.target.children[0].innerText = "X";
+            document.getElementById();
+        } else if (e.target.value == "URSB" && e.target.getAttribute('value_type') == 1) {
+            $('#ursb_refile').addClass('d-none');
+            e.target.setAttribute('value_type', 0);
+            e.target.children[0].innerText = "";
+
+
+        }
+    };
+
+
+    function changeupload2(e) {
+
+        if (e.target.value == "PROOF" && e.target.getAttribute('value_type') == 0) {
+            $('#proof_refile').removeClass('d-none');
+            e.target.setAttribute('value_type', 1);
+            e.target.children[0].addClass = "d-none";
+
+            e.target.children[0].innerText = "X";
+            document.getElementById();
+        } else if (e.target.value == "PROOF" && e.target.getAttribute('value_type') == 1) {
+            $('#proof_refile').addClass('d-none');
+            e.target.setAttribute('value_type', 0);
+            e.target.children[0].innerText = "";
+
+
+        }
+    };
+
+    function changeupload3(e) {
+
+        if (e.target.value == "PRACTISE" && e.target.getAttribute('value_type') == 0) {
+
+            e.target.parentElement.parentElement.parentElement.nextElementSibling.classList.remove('d-none');
+            e.target.setAttribute('value_type', 1);
+            e.target.children[0].addClass = "d-none";
+
+            e.target.children[0].innerText = "X";
+            document.getElementById();
+        } else if (e.target.value == "PRACTISE" && e.target.getAttribute('value_type') == 1) {
+            e.target.parentElement.parentElement.parentElement.nextElementSibling.classList.add('d-none');
+
+            e.target.setAttribute('value_type', 0);
+            e.target.children[0].innerText = "";
+
+
+        }
+    };
+
+    function changeupload4(e) {
+
+        if (e.target.value == "PARTICULARS" && e.target.getAttribute('value_type') == 0) {
+            e.target.parentElement.parentElement.parentElement.nextElementSibling.classList.remove('d-none');
+
+            e.target.setAttribute('value_type', 1);
+            e.target.children[0].addClass = "d-none";
+
+            e.target.children[0].innerText = "X";
+            document.getElementById();
+        } else if (e.target.value == "PARTICULARS" && e.target.getAttribute('value_type') == 1) {
+            e.target.parentElement.parentElement.parentElement.nextElementSibling.classList.remove('d-none');
+
+            e.target.setAttribute('value_type', 0);
+            e.target.children[0].innerText = "";
+
+
+        }
+    };
+</script>
+
+
+
+@include('Registration.formmodal')
+@endsection

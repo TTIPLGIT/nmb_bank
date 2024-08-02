@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<!-- code by webdevtrick ( https://webdevtrick.com ) -->
+<html>
+ 
+<head>
+  <meta charset="UTF-8">
+  <title>HTML CSS JavaScript Calender | Webdevtrick.com</title>
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+      <link rel="stylesheet" href="style.css">
+      <style>
+        /* for elearning changes */
+        body{
+          margin: 0px !important;
+          background-color: white !important;
+        }
+        .main{
+          width: 100% !important;
+          height: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
+        }
+        .main .sideb{
+          padding: 1% !important;
+          width: 100% !important;
+          justify-content: space-around !important;
+          background-color: white !important;
+        }
+        .main .header{
+          padding: 3% 0% 3% 0% !important;
+        }
+        .main .header i{
+          margin: 0% auto !important;
+          padding: 0% 0% !important;
+        }
+        .main .header span{
+          font-size: 0.9rem !important;
+          margin: 0% auto !important;
+        }
+        .main .header .month{
+          margin-right: 5px !important;
+        }
+        .main .sideb table th{
+          color: #40c2b2 !important;
+          font-size: 0.5rem !important;
+        }
+        tr.days{
+          line-height: 0px !important;
+        }
+        .main .sideb table td{
+          font-size: 0.7em !important;
+        }
+        .calender table{
+          margin: 0px !important;
+          width: 100% !important;
+        }
+        .main .sideb .showDate{
+          margin-top: -1.5rem !important;
+        }
+        .main .sideb .showDate i{
+          padding: 5px !important;
+          background-color: #141ad8 !important;
+        }
+        .main .right-wrapper{
+          width: 100% !important;
+          padding: 0px !important;
+          flex-direction: column !important;
+          justify-content: center !important;
+          align-items: baseline !important;
+          background-color: white !important;
+        }
+        .main .right-wrapper .header{
+          width: fit-content !important;
+          display: inline-block !important;
+        }
+        .main .right-wrapper .header span{
+          margin: 0px 5px !important;
+          display: inline-block !important;
+        }
+        .main .right-wrapper .day{
+          font-size: 1rem !important;
+          padding: 3% !important;
+          text-indent: 0px !important;
+          display: inline-block !important;
+        }
+        .main .right-wrapper .month{
+          font-size: 1rem !important;
+          padding: 3% !important;
+          display: inline-block !important;
+        }
+        .main .sideb table td::before{
+          background-color: #f69135 !important;
+          border-radius: 20% !important;
+        }
+        .main .sideb table td.active, 
+        .main .sideb table td:hover{
+          background-color: #f69135 !important;
+          border-radius: 20% !important;
+        }
+        .main .sideb table td.active, 
+        .main .sideb table td.hover{
+          background: #f69135 !important;
+        }
+
+        /* newly added */
+        /* .date_wrapper{
+          width: 100% !important;
+          height: 15% !important;
+          text-align: center !important;
+        } */
+        .events_today_wrapper{
+          width: 100% !important;
+          height: 100% !important;
+          text-align: center !important;
+          overflow: auto !important;
+        }
+        .events_today_wrapper span{
+          text-align: left !important; 
+        }
+
+        .event_type_1{
+          background-color: #fef4ec !important;
+          border-left: 5px solid #f0a880 !important;
+          margin: 10px !important;
+          padding: 10px 5px !important;
+          color: black !important;
+        }
+        .event_type_2{
+          background-color: #fef6d2 !important;
+          border-left: 5px solid #e8cf57 !important;
+          margin: 10px !important;
+          padding: 10px 5px !important;
+          color: black !important;
+        }
+        .event_type_3{
+          background-color: #e9f8ff !important;
+          border-left: 5px solid #67c8e2 !important;
+          margin: 10px !important;
+          padding: 10px 5px !important;
+          color: black !important;
+        }
+        .event_type_4{
+          background-color: #e4efff !important;
+          border-left: 5px solid #4688e4 !important;
+          margin: 10px !important;
+          padding: 10px 5px !important;
+          color: black !important;
+        }
+        .has_event{
+          position: relative !important;
+        }
+        .main .sideb table td.has_event::before {
+          content: "";
+          display: block;
+          width: 6px;
+          height: 6px;
+          border-radius: 50% !important;
+          position: absolute;
+          left: 75%;
+          top: 50%;
+          transform: translate(-50%, -8px);
+          background-color: #F61e31 !important;
+        }
+        @media (min-width:309.96px) {
+          .main {
+            display: flex !important;
+            flex-direction: row !important;
+          }
+          .main .sideb {
+            width: 40% !important;
+          }
+          .main .right-wrapper {
+            width: 60% !important;
+          }
+        }
+      </style>
+</head>
+<body>
+ 
+  <div class="main">
+  <div class="sideb">
+    <div class="header"><i class="fa fa-angle-left" aria-hidden="true"></i><span><span class="month"> </span><span class="year"></span></span><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+    <div class="calender">
+      <table>
+        <thead>
+          <tr class="weedays">
+            <th data-weekday="sun" data-column="0">Sun</th>
+            <th data-weekday="mon" data-column="1">Mon</th>
+            <th data-weekday="tue" data-column="2">Tue</th>
+            <th data-weekday="wed" data-column="3">Wed</th>
+            <th data-weekday="thu" data-column="4">Thu</th>
+            <th data-weekday="fri" data-column="5">Fri</th>
+            <th data-weekday="sat" data-column="6">Sat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="days" data-row="0">
+            <td class="event_checker" data-column="0"></td>
+            <td class="event_checker" data-column="1"></td>
+            <td class="event_checker" data-column="2"></td>
+            <td class="event_checker" data-column="3"></td>
+            <td class="event_checker" data-column="4"></td>
+            <td class="event_checker" data-column="5"></td>
+            <td class="event_checker1" data-column="6"></td>
+          </tr>
+          <tr class="days" data-row="1">
+            <td class="event_checker" data-column="0"></td>
+            <td class="event_checker" data-column="1"></td>
+            <td class="event_checker" data-column="2"></td>
+            <td class="event_checker" data-column="3"></td>
+            <td class="event_checker1" data-column="4"></td>
+            <td class="event_checker" data-column="5"></td>
+            <td class="event_checker" data-column="6"></td>
+          </tr>
+          <tr class="days" data-row="2">
+            <td class="event_checker" data-column="0"></td>
+            <td class="event_checker" data-column="1"></td>
+            <td class="event_checker" data-column="2"></td>
+            <td class="event_checker1" data-column="3"></td>
+            <td class="event_checker" data-column="4"></td>
+            <td class="event_checker1" data-column="5"></td>
+            <td class="event_checker" data-column="6"></td>
+          </tr>
+          <tr class="days" data-row="3">
+            <td class="event_checker1" data-column="0"></td>
+            <td class="event_checker" data-column="1"></td>
+            <td class="event_checker" data-column="2"></td>
+            <td class="event_checker" data-column="3"></td>
+            <td class="event_checker" data-column="4"></td>
+            <td class="event_checker" data-column="5"></td>
+            <td class="event_checker" data-column="6"></td>
+          </tr>
+          <tr class="days" data-row="4">
+            <td class="event_checker" data-column="0"></td>
+            <td class="event_checker" data-column="1"></td>
+            <td class="event_checker" data-column="2"></td>
+            <td class="event_checker" data-column="3"></td>
+            <td class="event_checker" data-column="4"></td>
+            <td class="event_checker" data-column="5"></td>
+            <td class="event_checker" data-column="6"></td>
+          </tr>
+          <tr class="days" data-row="5">
+            <td class="event_checker" data-column="0"></td>
+            <td class="event_checker" data-column="1"></td>
+            <td class="event_checker" data-column="2"></td>
+            <td class="event_checker" data-column="3"></td>
+            <td class="event_checker" data-column="4"></td>
+            <td class="event_checker" data-column="5"></td>
+            <td class="event_checker" data-column="6"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <div class="showDate"><i class="fa fa-angle-double-right" aria-hidden="true"></i></div> -->
+  </div>
+  <div class="right-wrapper">
+    <!-- <div class="date_wrapper">
+      <div class="header"><span></span></div><span class="day"></span><span class="month"></span>
+    </div> -->
+    <!-- <div class="events_today_wrapper">
+      <h3>Events Today</h3>
+      <span>
+        There are no events scheduled for the day.
+      </span>
+    </div> -->
+    <div class="events_today_wrapper">
+      <div class="card event_type_1">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Voluptate natus odio nobis dolorum est beatae iure iusto ipsa!.
+      </div>
+      <div class="card event_type_2">
+        quod impedit vel animi reiciendis fugiat ex odio, a expedita? 
+        Esse minus, numquam voluptas cumque corrupti in harum.
+      </div>
+      <div class="card event_type_3">
+        Ducimus vel nesciunt beatae, dolorum molestiae, animi quasi
+        error voluptas, architecto similique explicabo est autem ad.
+      </div>
+      <div class="card event_type_4">
+        Voluptatem sequi sint vitae expedita eos?
+        Iste, sit eum? Alias inventore illum, reprehenderit molestias!
+      </div>
+      <div class="card event_type_1">
+        culpa fugiat hic eligendi perspiciatis consequatur quod tempore
+        atque, voluptatum rerum! Ut, dignissimos nam.
+      </div>
+    </div>
+  </div>
+</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ 
+    <script  src="function.js"></script>
+    <!-- newly added -->
+    <script>
+      $( document ).ready(function() {
+        for(i=0;i<=35;i++){
+        let list = document.getElementsByClassName("event_checker1")[i].classList;
+        //condition will come here
+        list.add("has_event");
+      }
+      });
+    </script>
+</body>
+ 
+</html>

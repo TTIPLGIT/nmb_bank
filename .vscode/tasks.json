@@ -1,0 +1,37 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run php artisan optimize",
+            "type": "shell",
+            "command": "php",
+            "args": [
+                "artisan",
+                "optimize"
+            ],
+            "options": {
+                "cwd": "C:/Apache24/htdocs/MLHUDV3/web"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run php artisan optimize (api-mlhud)",
+            "type": "shell",
+            "command": "php",
+            "args": [
+                "artisan",
+                "optimize"
+            ],
+            "options": {
+                "cwd": "C:/Apache24/htdocs/MLHUDV3/api-mlhud"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
