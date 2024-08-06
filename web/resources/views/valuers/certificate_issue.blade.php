@@ -936,7 +936,7 @@
                                 <div class="col" style="display: flex; align-items:center;">
                                     <input type="checkbox" class="_checkbox" id="_checkbox1"><label class="chl pr-3 tick_btn" for="_checkbox1">
                                         <div class="tick_mark" id="tick_mark"></div>
-                                    </label><b class="ml-3 font" style="font-size:15px ;">I hereby declare this valuer as a Certified valuer of MLHUD Valuation Professional Portal Of Uganda.</b>
+                                    </label><b class="ml-3 font" style="font-size:15px ;">I hereby declare this valuer as a Certified valuer of TALENTRA Valuation Professional Portal Of Uganda.</b>
                                 </div>
 
                                 <div class="issue-btn" style="display:flex; justify-content:center; align-items:baseline; width:100%">
