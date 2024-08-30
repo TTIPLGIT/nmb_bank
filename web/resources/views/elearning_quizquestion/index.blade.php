@@ -508,7 +508,7 @@
 
     }
 
-    
+
 
     @media (min-width: 992px) {
         .true_quistion {
@@ -679,7 +679,7 @@
                             <div class="col-sm-2 addquizmodal">
                                 <a type="button" style="font-size:15px;margin: 0px 0px 7px 0px;" class="btn btn-success btn-lg" title="Create" id="gcb" href="" data-toggle="modal" data-target="#addModal1">Add Quiz <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="quizlist">
 
                                 <div class="card mt-0">
                                     <div class="card-body">
@@ -763,6 +763,7 @@
                 </section>
             </form>
             <br>
+
             <div class="row" style="display: flex;justify-content: space-between;">
                 <div class="col-sm-3" style="margin-bottom: 9px !important;">
                     <a type="button" style="font-size:15px;margin: 0px 0px 0px 0px;" class="btn btn-success btn-lg question" title="Create" href="" data-toggle="modal" data-target="#addModal">Add Question <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
@@ -770,10 +771,10 @@
                 <div class="col-sm-3" style="margin-bottom: 6px !important;">
                     <select class="form-control default" id="result1" name="result1">
                         <option value="">Quiz Type</option>
-                        <option value="LongQuestionlist">Long Question</option>
+                        <option value="LongQuestionlist" selected>Long Question</option>
                         <option value="MCQlist">Multiple Choice Question(MCQ)</option>
                         <option value="ShortAnswerlist">Short Answer</option>
-                        <option value="True/Falselist" selected>True/False</option>
+                        <option value="True/Falselist">True/False</option>
                     </select>
                 </div>
             </div>
@@ -782,18 +783,52 @@
 
 
                 <div class="section-body mt-0">
+                    @if (session('type'))
+                    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('type') }}">
+
+                    <script type="text/javascript">
+                        window.onload = function() {
+
+                            var value = $('#session_data').val();
+                            $('#result1').val(value).change()
+                        }
+                    </script>
+
+                    @endif
                     @if (session('success'))
 
                     <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
                     <script type="text/javascript">
                         window.onload = function() {
                             var message = $('#session_data').val();
+                            alert(message);
                             swal.fire({
                                 title: "Success",
                                 text: message,
                                 icon: "success",
                                 type: "success",
                             });
+                            if (message == 'Quiz Created Successfully') {
+                                setTimeout(function() {
+                                    document.getElementById('quizlist').scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }, 500);
+                            } else if (message == 'Quiz Updated Successfully') {
+                                setTimeout(function() {
+                                    document.getElementById('quizlist').scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }, 500);
+                            } else {
+                                alert("ASdae");
+                                setTimeout(function() {
+                                    document.getElementById('truelist').scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }, 500);
+                            }
+
 
                         }
                     </script>
@@ -1174,7 +1209,7 @@
             </form>
 
             <!-- Long question -->
-
+            <div id="question-row"></div>
             <div class="card longquestion" id="longquestion" style="display:none">
                 <h4 class="modal-title long">Long Question:</h4>
                 <form method="post" action="{{route('elearningquestion.long_store')}}" id="longcreateform" enctype="multipart/form-data" class="reset">
@@ -1195,7 +1230,7 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="long_quistion" class="long_quistion" name="long_quistion" autocomplete="off"></textarea>
+                                <textarea id="long_quistion" class="long_quistion" name="long_quistion" autocomplete="off" placeholder="Please Enter the Long Question name"></textarea>
 
                             </div>
                         </div>
@@ -1217,11 +1252,17 @@
 
                                                 <td>
                                                     <input type="text" class="form-control default" id="keyword_long" name="keyword_long[]" autocomplete="off">
+
                                                 </td>
                                                 <td>
                                                     <div class="action_container">
                                                         <button class="danger" onclick="remove_tr(this)">
                                                             <i class="fa fa-close"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="action_container" width="50px">
+                                                        <button class="success" type="button" onclick="create_tr('table_body')">
+                                                            <i class="fa fa-plus"></i>
                                                         </button>
                                                     </div>
 
@@ -1235,11 +1276,7 @@
 
                                     </table>
 
-                                    <div class="action_container" width="50px">
-                                        <button class="success" type="button" onclick="create_tr('table_body')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+
 
                                 </div>
                             </div>
@@ -1297,7 +1334,7 @@
 
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="mcq_quistion" class="mcq_quistion" name="mcq_quistion" rows="4" cols="81" autocomplete="off"></textarea>
+                                <textarea id="mcq_quistion" class="mcq_quistion" name="mcq_quistion" rows="4" cols="81" autocomplete="off" placeholder="Please Enter the Mcq Question name"></textarea>
 
                             </div>
                         </div>
@@ -1325,6 +1362,11 @@
                                                             <i class="fa fa-close"></i>
                                                         </button>
                                                     </div>
+                                                    <div class="action_container3">
+                                                        <button class="success" type="button" onclick="create_tr('mcq_body')">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
 
                                                 </td>
 
@@ -1335,11 +1377,7 @@
 
 
                                     </table>
-                                    <div class="action_container3">
-                                        <button class="success" type="button" onclick="create_tr('mcq_body')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -1404,7 +1442,7 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="short_quistion" class="short_quistion" name="short_quistion" rows="4" cols="81" autocomplete="off"></textarea>
+                                <textarea id="short_quistion" class="short_quistion" name="short_quistion" rows="4" cols="81" autocomplete="off" placeholder="Please Enter the Short Question name"></textarea>
 
                             </div>
                         </div>
@@ -1434,6 +1472,11 @@
                                                             <i class="fa fa-close"></i>
                                                         </button>
                                                     </div>
+                                                    <div class="action_container">
+                                                        <button class="success" type="button" onclick="create_tr('short_body')">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
 
                                                 </td>
 
@@ -1444,11 +1487,7 @@
 
 
                                     </table>
-                                    <div class="action_container4">
-                                        <button class="success" type="button" onclick="create_tr('short_body')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -1497,7 +1536,7 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="true_quistion" class="true_quistion" name="true_quistion" rows="4" cols="81" autocomplete="off"></textarea>
+                                <textarea id="true_quistion" class="true_quistion" name="true_quistion" rows="4" cols="81" autocomplete="off" placeholder="Please Enter the T/F Question name"></textarea>
 
                             </div>
                         </div>
@@ -1577,10 +1616,10 @@
     }
 
     .action_container3 {
-        float: right;
+        /* float: right; */
         position: relative;
-        left: 5px;
-        top: 3px;
+        /* left: 5px;
+        top: 3px; */
         z-index: 999;
     }
 
@@ -1787,11 +1826,19 @@
 
 
 
-    function remove_tr(This) {
-        if (This.closest('tbody').childElementCount == 1) {
-            alert("You Don't have Permission to Delete This ?");
+    // function remove_tr(This) {
+    //     if (This.closest('tbody').childElementCount == 1) {
+    //         alert("You Don't have Permission to Delete This ?");
+    //     } else {
+    //         This.closest('tr').remove();
+    //     }
+    // }
+    function remove_tr(button) {
+        const row = button.closest('tr');
+        if (document.querySelectorAll('#table_body tr').length > 1) {
+            row.remove();
         } else {
-            This.closest('tr').remove();
+            swal.fire("At least one row must remain", "", "warning");
         }
     }
 </script>
@@ -1892,13 +1939,65 @@
                 swal.fire("Please Enter the Question Keywords", "", "error");
                 return false;
             } else {
-                let table_body2 = document.getElementById(table_id),
-                    first_tr = table_body2.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
+                // let table_body2 = document.getElementById(table_id),
+                //     first_tr = table_body2.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
 
-                table_body2.append(tr_clone);
+                // table_body2.append(tr_clone);
 
-                clean_first_tr(table_body2.firstElementChild);
+                // clean_first_tr(table_body2.firstElementChild);
+                // const tableBody = document.getElementById(table_id);
+                // const firstRow = tableBody.firstElementChild;
+                // const newRow = firstRow.cloneNode(true);
+                // // Remove the "Add" button from the cloned row
+                // const addButton = newRow.querySelector('.success');
+                // if (addButton) {
+                //     addButton.remove();
+                // }
+
+                // // Clear the value of the input in the new row
+                // newRow.querySelector('input').value = '';
+
+                // tableBody.appendChild(newRow);
+                const tableBody = document.getElementById(table_id);
+                const rows = tableBody.querySelectorAll('tr');
+                let isValid = true;
+
+                // Validate all input fields in the table
+                rows.forEach(row => {
+                    const input = row.querySelector('input');
+                    if (input && input.value.trim() === '') {
+                        isValid = false;
+                    }
+                });
+
+                // If any input field is empty, show an error and do not add a new row
+                if (!isValid) {
+                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                    return;
+                }
+
+                // Proceed to add a new row if validation passes
+                const firstRow = tableBody.firstElementChild;
+                const newRow = firstRow.cloneNode(true);
+
+                // Remove the "Add" button from the cloned row
+                const addButton = newRow.querySelector('.success');
+                if (addButton) {
+                    addButton.remove();
+                }
+
+                // Clear the value of the input in the new row
+                newRow.querySelector('input').value = '';
+
+                // Add the "Add" button back to the original row if needed
+                const originalAddButton = tableBody.querySelector('.success');
+                if (originalAddButton) {
+                    originalAddButton.style.display = 'inline';
+                }
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
             }
         } else if (table_id == "table_long_edit") {
             let table_body2 = document.getElementById(table_id),
@@ -1918,14 +2017,57 @@
                 swal.fire("Please Enter the Question Keywords", "", "error");
                 return false;
             } else {
-                let table_body3 = document.getElementById(table_id),
-                    first_tr = table_body3.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
+                // let table_body3 = document.getElementById(table_id),
+                //     first_tr = table_body3.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
 
-                table_body3.append(tr_clone);
+                // table_body3.append(tr_clone);
 
+                // clean_first_tr(table_body3.firstElementChild);
+                // document.querySelector('#short_body').parentElement.previousElementSibling.classList.add('custom');
+
+                const tableBody = document.getElementById(table_id);
+                const rows = tableBody.querySelectorAll('tr');
+                let isValid = true;
+
+                // Validate all input fields in the table
+                rows.forEach(row => {
+                    const input = row.querySelector('input');
+                    if (input && input.value.trim() === '') {
+                        isValid = false;
+                    }
+                });
+
+                // If any input field is empty, show an error and do not add a new row
+                if (!isValid) {
+                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                    return;
+                }
+
+                // Proceed to add a new row if validation passes
+                const firstRow = tableBody.firstElementChild;
+                const newRow = firstRow.cloneNode(true);
+
+                // Remove the "Add" button from the cloned row
+                const addButton = newRow.querySelector('.success');
+                if (addButton) {
+                    addButton.remove();
+                }
+
+                // Clear the value of the input in the new row
+                newRow.querySelector('input').value = '';
+
+                // Add the "Add" button back to the original row if needed
+                const originalAddButton = tableBody.querySelector('.success');
+                if (originalAddButton) {
+                    originalAddButton.style.display = 'inline';
+                }
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
                 clean_first_tr(table_body3.firstElementChild);
                 document.querySelector('#short_body').parentElement.previousElementSibling.classList.add('custom');
+
 
             }
         } else if (table_id == "table_short_edit") {
@@ -1947,12 +2089,54 @@
                 swal.fire("Please Enter the Choices", "", "error");
                 return false;
             } else {
-                let table_body3 = document.getElementById(table_id),
-                    first_tr = table_body3.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
-                tr_clone.querySelector('input').setAttribute("readonly", "");
-                table_body3.append(tr_clone);
+                // let table_body3 = document.getElementById(table_id),
+                //     first_tr = table_body3.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
+                // tr_clone.querySelector('input').setAttribute("readonly", "");
+                // table_body3.append(tr_clone);
 
+                // clean_first_tr(table_body3.firstElementChild);
+                // document.querySelector('#mcq_body').parentElement.previousElementSibling.classList.add('custom');
+
+                const tableBody = document.getElementById(table_id);
+                const rows = tableBody.querySelectorAll('tr');
+                let isValid = true;
+
+                // Validate all input fields in the table
+                rows.forEach(row => {
+                    const input = row.querySelector('input');
+                    if (input && input.value.trim() === '') {
+                        isValid = false;
+                    }
+                });
+
+                // If any input field is empty, show an error and do not add a new row
+                if (!isValid) {
+                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                    return;
+                }
+
+                // Proceed to add a new row if validation passes
+                const firstRow = tableBody.firstElementChild;
+                const newRow = firstRow.cloneNode(true);
+
+                // Remove the "Add" button from the cloned row
+                const addButton = newRow.querySelector('.success');
+                if (addButton) {
+                    addButton.remove();
+                }
+
+                // Clear the value of the input in the new row
+                newRow.querySelector('input').value = '';
+
+                // Add the "Add" button back to the original row if needed
+                const originalAddButton = tableBody.querySelector('.success');
+                if (originalAddButton) {
+                    originalAddButton.style.display = 'inline';
+                }
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
                 clean_first_tr(table_body3.firstElementChild);
                 document.querySelector('#mcq_body').parentElement.previousElementSibling.classList.add('custom');
 
@@ -2104,7 +2288,7 @@
 <script>
     $('#result1').on('change', function() {
 
-
+        alert('asda');
         if ($(this).val() === 'LongQuestionlist') {
             $('#longquestionlist').css('display', 'block');
             $('#truelist').css('display', 'none');
@@ -2159,7 +2343,7 @@
 
     function gencre(id) {
 
-
+        // event.preventDefault(); // Prevent default form action
         if (id == "1") {
             var long_qname = $("#long_qname").val();
             if (long_qname == '') {
@@ -2184,6 +2368,10 @@
                 //$('#savebutton').css('pointer-events', 'none');
                 $('#savebutton').prop('disabled', true);
                 document.getElementById('longcreateform').submit();
+                document.getElementById('truelist').scrollIntoView({
+                    behavior: 'smooth'
+                }); // Scroll to the question-row
+
             }
 
 
@@ -2505,6 +2693,11 @@
                                                                 <i class="fa fa-close"></i>
                                                             </button>
                                                         </div>
+                                                        <div class="action_container" width="50px">
+                                                            <button class="success" type="button" onclick="create_tr('table_long_edit')">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
 
                                                     </td>
 
@@ -2516,11 +2709,7 @@
 
                                         </table>
 
-                                        <div class="action_container" width="50px">
-                                            <button class="success" type="button" onclick="create_tr('table_long_edit')">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
+
 
                                     </div>
                                 </div>
@@ -3060,11 +3249,6 @@
 
                                         <tbody id="table_mcq_edit">
                                             <tr>
-
-                                                <td>
-                                                    <input type="text" class="form-control default" id="keyword_mcqedit" name="keyword_mcqedit[]" autocomplete="off">
-                                                </td>
-
                                                 <td>
                                                     <div class="action_container">
                                                         <button class="danger" onclick="remove_tr(this)">
@@ -3074,6 +3258,15 @@
 
                                                 </td>
 
+                                                <td>
+                                                    <input type="text" class="form-control default" id="keyword_mcqedit" name="keyword_mcqedit[]" autocomplete="off">
+
+                                                </td>
+                                                <div class="action_container3">
+                                                    <button class="success" type="button" onclick="create_tr('table_mcq_edit')">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
 
                                             </tr>
 
@@ -3081,11 +3274,7 @@
 
 
                                     </table>
-                                    <div class="action_container3">
-                                        <button class="success" type="button" onclick="create_tr('table_mcq_edit')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -3692,6 +3881,11 @@
                             Swal.fire("Success!", data['message_cus'], "success").then((result) => {
 
                                 location.replace(`/elearningquestion`);
+                                setTimeout(function() {
+                                    document.getElementById('quizlist').scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }, 500); // Delay before scrolling
 
                             })
                         }

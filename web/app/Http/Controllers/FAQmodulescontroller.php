@@ -14,13 +14,12 @@ class FAQmodulesController extends BaseController
     public function index(Request $request)
     {
 
-
+        $method = 'Method => FAQmodulesController => index';
         $permission_data = $this->FillScreensByUser();
         $screen_permission = $permission_data[0];
 
         if (strpos($screen_permission['permissions'], 'View') !== false) {
             try {
-                $method = 'Method => FAQmodulesController => index';
                 $gatewayURL = config('setting.api_gateway_url') . '/FAQ_modules/get_data';
                 $serviceResponse = array();
                 $serviceResponse['rows'] = $request['rows'];
@@ -58,7 +57,7 @@ class FAQmodulesController extends BaseController
 
     public function create()
     {
-      
+
 
         $permission_data = $this->FillScreensByUser();
         $screen_permission = $permission_data[0];
@@ -228,7 +227,7 @@ class FAQmodulesController extends BaseController
             $messages = [
                 'module_name.required' => 'Module name is required',
 
-           ];
+            ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
 
@@ -294,6 +293,43 @@ class FAQmodulesController extends BaseController
             }
         } else {
             return redirect()->route('not_allow');
+        }
+    }
+    public function index1($id2)
+    {
+        $id = $this->decryptData($id2);
+
+        $method = 'Method => FAQmodulesController => index1';
+
+        if ($id == "Failure") {
+
+            return abort(404);
+        }
+
+        try {
+            $gatewayURL = config('setting.api_gateway_url') . '/privacy/update/' . $id;
+            $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+            $response = json_decode($response);
+            if ($response->Status == 200 && $response->Success) {
+                $objData = json_decode($this->decryptData($response->Data));
+                if ($objData->Code == 200) {
+                    $parant_data = json_decode(json_encode($objData->Data), true);
+                    $rows =  $parant_data['rows'];
+                    // $one_row =  $parant_data['one_rows'];
+
+                    $menus = $this->FillMenu();
+                    $screens = $menus['screens'];
+                    $modules = $menus['modules'];
+                    return view('privacy.publish', compact('rows', 'modules', 'screens'));
+                }
+            } else {
+                $objData = json_decode($this->decryptData($response->Data));
+                echo json_encode($objData->Code);
+                exit;
+            }
+        } catch (\Exception $exc) {
+
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
 }

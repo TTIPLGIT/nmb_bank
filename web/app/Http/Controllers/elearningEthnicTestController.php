@@ -517,8 +517,9 @@ class elearningEthnicTestController extends BaseController
             $tags3 = array_unique(explode(", ", $tags2));
             // sorting array indices properly
             $availableTags = array_values($tags3);
-            // dd($search);
+         
             // Search
+
             if ($search == "false") {
                 $availableCourses = course::whereIn('course_id', $availableCourseIds)->paginate(8);
                 $searched = false;
@@ -1223,11 +1224,12 @@ class elearningEthnicTestController extends BaseController
             } else {
                 $average_ratting['three_star'] = 0;
             }
+           
             $twostar = DB::Select("SELECT COUNT(*) as twostar_count FROM elearning_ratings where course_id=$id and (rating_point >= 1.5 AND rating_point <= 2.4)");
             // $five_star = (int) $fivestar[0]->fivestar_count;
             // dd($fivestar);
             if ($twostar[0]->twostar_count != 0) {
-                $average_ratting['two_star'] = (int)($threestar[0]->twostar_count) / ($total_starcount[0]->star_count) * 100;
+                $average_ratting['two_star'] = (int)($twostar[0]->twostar_count) / ($total_starcount[0]->star_count) * 100;
             } else {
                 $average_ratting['two_star'] = 0;
             }

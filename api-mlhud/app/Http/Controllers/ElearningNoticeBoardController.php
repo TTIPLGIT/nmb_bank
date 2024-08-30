@@ -86,15 +86,14 @@ class ElearningNoticeBoardController extends BaseController
             $rows = array();
             $rows = DB::select("SELECT role_id from uam_user_roles  where user_id=$userID");
             $role_id = $rows[0]->role_id;
-
             $rows['user_category'] = array(
-                'Graduate Trainee' => config('setting.roles.Graduate Trainee'),
-                'Professional Member' => config('setting.roles.professional_member'),
+                'Student' => config('setting.roles.Student'),
+                'Teacher' => config('setting.roles.Teacher'),
                 'All' => 0
             );
             // INNER JOIN uam_roles AS ur ON ur.role_id = et.user_category
 
-            $rows['quiz_list'] =  DB::select("SELECT notice_id,notice_name,notice_banner,notice_date,notice_author,user_category from elearning_noticeboard as en where notice_status=0");
+            $rows['quiz_list'] =  DB::select("SELECT notice_id,notice_name,notice_banner,notice_date,notice_author,user_category from elearning_noticeboard as en where notice_status=0 ORDER BY created_at DESC");
 
 
             $response = [

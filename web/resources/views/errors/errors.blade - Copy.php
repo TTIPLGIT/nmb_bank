@@ -13,7 +13,7 @@
 
     <section class="page_404 ">
         <div class="container ">
-            <img class="bg_image" src="images\MLHUD-IMG (1).png" alt="">
+            <img class="bg_image" src="images\TALENTRA-IMG (1).png" alt="">
             <div class="row">
                 <div class="col-md-12 width-0  text-center">
                     <div class="contant_box_404">

@@ -131,7 +131,7 @@
                 <br>
                 <img src="{{asset('assets/images/logocnt.png')}}" class="logo" style="width: 200px !important" />
             </div>
-            <img src="{{asset('assets/images/MLHUD-IMG (1).png')}}" alt="" class="profile-image" />
+            <img src="{{asset('assets/images/TALENTRA-IMG (1).png')}}" alt="" class="profile-image" />
 
         </div> -->
     </div>

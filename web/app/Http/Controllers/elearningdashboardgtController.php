@@ -14,13 +14,15 @@ class elearningdashboardgtController extends BaseController
 {
     public function dashboard(Request $request)
     {
+      
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return view('auth.login');
         }
+        $method = 'Method => elearningController => dashboard';
         try {
 
-            $method = 'Method => elearningController => dashboard';
+            // dd($user_id);
             $request =  array();
             $request['mlhud_id'] = $user_id;
 
@@ -28,7 +30,7 @@ class elearningdashboardgtController extends BaseController
             $gatewayURL = config('setting.api_gateway_url') . '/elearningDashboard';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
-            //dd($response);
+           
             $objData = json_decode($this->decryptData($response->Data));
             $code = $objData->Code;
             if ($code == "401") {
@@ -42,7 +44,7 @@ class elearningdashboardgtController extends BaseController
             $screens = $menus['screens'];
             $modules = $menus['modules'];
 
-            //dd($response);
+            
             if ($response->Status == 200 && $response->Success) {
                 $objData = json_decode($this->decryptData($response->Data));
                 if ($objData->Code == 200) {
@@ -64,11 +66,9 @@ class elearningdashboardgtController extends BaseController
     }
     public function events_fetch(Request $request)
     {
+        $method = 'Method => elearningController => events_fetch';
 
         try {
-          
-
-            $method = 'Method => elearningController => events_fetch';
             // $user_id = $request->session()->get("userID");
             // if ($user_id == null) {
             //     return view('auth.login');
@@ -92,7 +92,7 @@ class elearningdashboardgtController extends BaseController
                 // $this->WriteFileLog($filePath);
 
                 $filePath = substr($filePath, 1);
-                // $this->WriteFileLog('$rows');
+                 $this->WriteFileLog('$rows');
                 //     $this->WriteFileLog('uploads/notice/126/Screenshot-(4).png');
                 if (file_exists($filePath)) {
                 } else {
@@ -101,6 +101,7 @@ class elearningdashboardgtController extends BaseController
                 }
                 //  $this->WriteFileLog("grfdtgh", file_exists(substr($filePath, 1)));
             }
+            $this->WriteFileLog('$rows');
             return $rows;
         } catch (\Exception $exc) {
             echo $exc;

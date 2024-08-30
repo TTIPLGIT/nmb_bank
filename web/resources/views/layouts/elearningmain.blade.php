@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>MLHUD</title>
+    <title>TALENTRA</title>
 
     <!-- General CSS Files -->
     <link href="{{asset('asset/css/app.min.css')}}" rel="stylesheet" type="text/css" />
@@ -1424,7 +1424,7 @@
                     </break>
                     <ul class="second_Menu sidebar-menu sidebar-secondary-menu">
                         <li>
-                            <a href="/home" class="nav-link">
+                            <a href="/admindashboard" class="nav-link">
                                 <i class="sidebar-icons fa fa-arrow-left" aria-hidden="true"></i>
                                 <span>Home</span>
                             </a>

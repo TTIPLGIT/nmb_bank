@@ -125,16 +125,19 @@ class tryController extends BaseController
             $rows['elearning_classes'] = DB::table('elearning_classes')
                 ->select('*')
                 ->where('elearning_classes.drop_class', '0')
+                ->orderBy('class_id', 'desc') // Replace 'created_at' with the column you want to order by
                 ->get();
 
             $rows1 = array();
             $rows1['elearning_courses'] = DB::table('elearning_courses')
                 ->select('*')
                 ->where('elearning_courses.drop_course', '0')
+                ->orderBy('course_id', 'desc') // Replace 'created_at' with the column you want to order by
                 ->get();
             $rows1['exam_list'] = DB::table('elearning_exam')
                 ->select('*')
                 ->where('elearning_exam.active_flag', '0')
+                ->orderBy('id', 'desc') // Replace 'created_at' with the column you want to order by
                 ->get();
 
             $rows1['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz  AS e left join elearning_localadaptation AS l ON e.quiz_id=l.quiz_id left join elearning_ethnictest AS et ON e.quiz_id=et.quiz_id left join elearning_exam AS el ON e.quiz_id=el.quiz_id WHERE l.quiz_id IS NULL AND et.quiz_id IS NULL and el.quiz_id IS NULL AND e.drop_quiz=0');
@@ -787,7 +790,7 @@ class tryController extends BaseController
 
     public function course_store(Request $request)
     {
-        //dd($request);
+        // dd($request);
 
         $validator = Validator::make($request->all(), [
             'course_banner' => 'required|image|mimes:jpeg,png,jpg,gif',

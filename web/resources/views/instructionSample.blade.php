@@ -38,7 +38,7 @@
 
     <div class="qr-code">
         <!-- Replace 'your.qr.code.route' with the actual route or URL to generate the QR code -->
-        <img src="C:\Apache24\htdocs\MLHUDV3\web\public\userdocuments\qrcode\{{$government_task_id}}\qrcode.svg" alt="QR Code" width="150">
+        <img src="C:\Apache24\htdocs\TALENTRAV3\web\public\userdocuments\qrcode\{{$government_task_id}}\qrcode.svg" alt="QR Code" width="150">
         <p>Scan QR Code for more information</p>
     </div>
 

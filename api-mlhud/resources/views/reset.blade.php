@@ -15,13 +15,13 @@
 	}
 </style>
 <body>
-	<h4 class="text-uppercase">Welcome To Our MLHUD </h4>
+	<h4 class="text-uppercase">Welcome To Our TALENTRA </h4>
 
 	<a href="{{ config('setting.document_storage_path')}}reset/{{ $data['token'] }}" class="btn btn-success"> Reset Password </a>
 	 <h4>Above link will be expire with in 24 hours or 1 day.
 	 </h4>
 	<p>Thanks & Regards,</p>
-	<p>MLHUD TEAM...</p>
+	<p>TALENTRA TEAM...</p>
 
 </body>
 </html>

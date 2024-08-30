@@ -19,7 +19,7 @@
         <div class="col-10 offset-1 col-sm-7 col-md-6 col-lg-4 col-xl-3 col-xxl-3 col-2560">
             <div class="card border border-4 border-243c92 rounded-3">
                 <div class="row justify-content-center">
-                    <img class="col-6 m-3 col-sm-6 col-md-6 col-lg-4 col-xl-5 col-xxl-5" src="{{asset('assets/images/MLHUD-IMG (1).png')}}" alt="logo">
+                    <img class="col-6 m-3 col-sm-6 col-md-6 col-lg-4 col-xl-5 col-xxl-5" src="{{asset('assets/images/TALENTRA-IMG (1).png')}}" alt="logo">
                 </div>
 
                 @if (session('success'))

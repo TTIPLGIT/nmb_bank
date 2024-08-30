@@ -480,7 +480,7 @@
                                                     <tr>
                                                         <th>S.No</th>
                                                         <th>Course Name</th>
-                                                        <th>Category</th>
+                                                        <!-- <th>Category</th> -->
                                                         <th>Course Banner</th>
                                                         <th>Start Date</th>
                                                         <th>End Date</th>
@@ -496,7 +496,7 @@
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$data->course_name}}</td>
 
-                                                        @if($data->course_category =="27")
+                                                        <!-- @if($data->course_category =="27")
                                                         <td>Graduate Trainee</td>
                                                         @elseif($data->course_category =="34")
                                                         <td>Professional Member</td>
@@ -504,7 +504,7 @@
                                                         @else
                                                         <td>All</td>
 
-                                                        @endif
+                                                        @endif -->
 
                                                         <?php if (!empty($data->course_banner)) { ?>
 
@@ -1009,7 +1009,7 @@
                         <div class="col-md-6" id="free" style="display:none;">
                             <div class="form-group">
                                 <label>Course Price:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" readonly class="form-control " value="0" id="" name="course_price" autocomplete="off">
+                                <input type="number" readonly class="form-control " id="" name="course_price" autocomplete="off">
                             </div>
 
                         </div>
@@ -1127,6 +1127,11 @@
                                                             <i class="fa fa-close"></i>
                                                         </button>
                                                     </div>
+                                                    <div class="action_container" width="50px">
+                                                        <button class="success" type="button" onclick="create_tr('table_body')">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
 
                                                 </td>
 
@@ -1138,11 +1143,7 @@
 
                                     </table>
 
-                                    <div class="action_container" width="50px">
-                                        <button class="success" type="button" onclick="create_tr('table_body')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+
 
                                 </div>
                             </div>
@@ -1171,6 +1172,12 @@
                                                             <i class="fa fa-close"></i>
                                                         </button>
                                                     </div>
+                                                    <div class="action_container" width="50px">
+                                                        <button class="success" type="button" onclick="create_tr1('table_body1')">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+
 
                                                 </td>
 
@@ -1182,11 +1189,6 @@
 
                                     </table>
 
-                                    <div class="action_container" width="50px">
-                                        <button class="success" type="button" onclick="create_tr1('table_body1')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
 
                                 </div>
                             </div>
@@ -1213,6 +1215,11 @@
                                                             <i class="fa fa-close"></i>
                                                         </button>
                                                     </div>
+                                                    <div class="action_container" width="50px">
+                                                        <button class="success" type="button" onclick="create_tr3('table_body3')">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
 
                                                 </td>
 
@@ -1224,11 +1231,7 @@
 
                                     </table>
 
-                                    <div class="action_container" width="50px">
-                                        <button class="success" type="button" onclick="create_tr3('table_body3')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+
 
                                 </div>
                             </div>
@@ -1863,13 +1866,55 @@
                 return false;
             } else {
 
-                let table_body = document.getElementById(table_id),
-                    first_tr = table_body.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
+                // let table_body = document.getElementById(table_id),
+                //     first_tr = table_body.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
 
-                table_body.append(tr_clone);
+                // table_body.append(tr_clone);
 
-                clean_first_tr(table_body.firstElementChild);
+                // clean_first_tr(table_body.firstElementChild);
+                const tableBody = document.getElementById(table_id);
+                const rows = tableBody.querySelectorAll('tr');
+                let isValid = true;
+
+                // Validate all input fields in the table
+                rows.forEach(row => {
+                    const input = row.querySelector('input');
+                    if (input && input.value.trim() === '') {
+                        isValid = false;
+                    }
+                });
+
+                // If any input field is empty, show an error and do not add a new row
+                if (!isValid) {
+                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                    return;
+                }
+
+                // Proceed to add a new row if validation passes
+                const firstRow = tableBody.firstElementChild;
+                const newRow = firstRow.cloneNode(true);
+
+                // Remove the "Add" button from the cloned row
+                const addButton = newRow.querySelector('.success');
+                if (addButton) {
+                    addButton.remove();
+                }
+
+                // Clear the value of the input in the new row
+                newRow.querySelector('input').value = '';
+
+                // Add the "Add" button back to the original row if needed
+                const originalAddButton = tableBody.querySelector('.success');
+                if (originalAddButton) {
+                    originalAddButton.style.display = 'inline';
+                }
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
+                //clean_first_tr(table_body.firstElementChild);
+
+
             }
         }
     }
@@ -1941,13 +1986,52 @@
                 return false;
             } else {
 
-                let table_body1 = document.getElementById(table_id),
-                    first_tr = table_body1.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
+                // let table_body1 = document.getElementById(table_id),
+                //     first_tr = table_body1.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
 
-                table_body1.append(tr_clone);
+                // table_body1.append(tr_clone);
 
-                clean_first_tr(table_body1.firstElementChild);
+                // clean_first_tr(table_body1.firstElementChild);
+                const tableBody = document.getElementById(table_id);
+                const rows = tableBody.querySelectorAll('tr');
+                let isValid = true;
+
+                // Validate all input fields in the table
+                rows.forEach(row => {
+                    const input = row.querySelector('input');
+                    if (input && input.value.trim() === '') {
+                        isValid = false;
+                    }
+                });
+
+                // If any input field is empty, show an error and do not add a new row
+                if (!isValid) {
+                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                    return;
+                }
+
+                // Proceed to add a new row if validation passes
+                const firstRow = tableBody.firstElementChild;
+                const newRow = firstRow.cloneNode(true);
+
+                // Remove the "Add" button from the cloned row
+                const addButton = newRow.querySelector('.success');
+                if (addButton) {
+                    addButton.remove();
+                }
+
+                // Clear the value of the input in the new row
+                newRow.querySelector('input').value = '';
+
+                // Add the "Add" button back to the original row if needed
+                const originalAddButton = tableBody.querySelector('.success');
+                if (originalAddButton) {
+                    originalAddButton.style.display = 'inline';
+                }
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
             }
         }
     }
@@ -1987,13 +2071,52 @@
             } else {
 
 
-                let table_body3 = document.getElementById(table_id),
-                    first_tr = table_body3.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
+                // let table_body3 = document.getElementById(table_id),
+                //     first_tr = table_body3.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
 
-                table_body3.append(tr_clone);
+                // table_body3.append(tr_clone);
 
-                clean_first_tr(table_body3.firstElementChild);
+                // clean_first_tr(table_body3.firstElementChild);
+                const tableBody = document.getElementById(table_id);
+                const rows = tableBody.querySelectorAll('tr');
+                let isValid = true;
+
+                // Validate all input fields in the table
+                rows.forEach(row => {
+                    const input = row.querySelector('input');
+                    if (input && input.value.trim() === '') {
+                        isValid = false;
+                    }
+                });
+
+                // If any input field is empty, show an error and do not add a new row
+                if (!isValid) {
+                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                    return;
+                }
+
+                // Proceed to add a new row if validation passes
+                const firstRow = tableBody.firstElementChild;
+                const newRow = firstRow.cloneNode(true);
+
+                // Remove the "Add" button from the cloned row
+                const addButton = newRow.querySelector('.success');
+                if (addButton) {
+                    addButton.remove();
+                }
+
+                // Clear the value of the input in the new row
+                newRow.querySelector('input').value = '';
+
+                // Add the "Add" button back to the original row if needed
+                const originalAddButton = tableBody.querySelector('.success');
+                if (originalAddButton) {
+                    originalAddButton.style.display = 'inline';
+                }
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
             }
         }
     }
@@ -2313,6 +2436,7 @@
 
         if ($(this).val() === 'paid') {
             $('#paid1').css('display', 'block');
+
         }
         if ($(this).val() === 'free') {
             $('#free1').css('display', 'block');
@@ -2333,6 +2457,45 @@
         }
 
     });
+    $(document).ready(function() {
+        // Handle the visibility of the paid/free sections and input values
+        $('#course_pay').on('change', function() {
+            $('#paid').css('display', 'none');
+            $('#free').css('display', 'none');
+
+            const selectedValue = $(this).val();
+
+            if (selectedValue === 'paid') {
+                $('#paid').css('display', 'block');
+                $('#free').css('display', 'none');
+                $('#course_price').val(''); // Clear the course_price input
+
+            } else if (selectedValue === 'free') {
+                $('#free').css('display', 'block');
+                $('#paid').css('display', 'none');
+                $('#course_price').val('0'); // Set course_price to 0
+            }
+        });
+
+    });
+
+    // $('#course_pay').on('change', function() {
+    //     $('#paid').css('display', 'none');
+    //     $('#free').css('display', 'none');
+
+
+    //     if ($(this).val() == 'paid') {
+    //         $('#paid').css('display', 'block');
+    //         $('#free').css('display', 'none');
+    //         $('#course_price').val('');
+    //     }
+    //     if ($(this).val() === 'free') {
+    //         $('#free').css('display', 'block');
+    //         $('#paid').css('display', 'none');
+    //         document.getElementById('course_price').value = "0";
+    //     }
+
+    // });
 </script>
 
 <!-- Deepika -->
@@ -2379,7 +2542,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Class Resource:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="file" class="form-control default" id="cresource" required name="resource_name" accept=".pdf, .mp3,.mp4">
+                                <input type="file" class="form-control default" id="cresource" required name="resource_name" accept=".pdf,.mp3,.mp4">
                                 <span class="input-Message" id="resourceerror" style="color:red;"></span>
                                 <span style="color:red !important"><strong>Following files could be uploaded as pdf,mp3,mp4</strong></span>
 
@@ -3288,6 +3451,7 @@
 
         if (id == "1") {
             var course_category = $("#course_category").val();
+
             if (course_category == '') {
                 swal.fire("Please Select the Course Category", "", "error");
                 return false;
@@ -3843,15 +4007,15 @@
 </script>
 
 <!-- saranya -->
- <script>
+<script>
     function toggleButton() {
-            var selectBox = document.getElementById("result");
-            var button = document.getElementById("addClassButton");
-            if (selectBox.value === "classlist") {
-                button.style.display = "block";
-            } else {
-                button.style.display = "none";
-            }
+        var selectBox = document.getElementById("result");
+        var button = document.getElementById("addClassButton");
+        if (selectBox.value === "classlist") {
+            button.style.display = "block";
+        } else {
+            button.style.display = "none";
         }
- </script>
+    }
+</script>
 @endsection

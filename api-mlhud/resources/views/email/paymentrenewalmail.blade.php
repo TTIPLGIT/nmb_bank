@@ -37,7 +37,7 @@
 	<br /><br />
 	Regards,
 	<br /><br />
-	Team MLHUD
+	Team TALENTRA
 </body>
 
 </html>

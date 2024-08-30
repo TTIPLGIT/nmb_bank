@@ -17,9 +17,9 @@
 <body>
 	<h4 class="text-uppercase">Dear  {{ $data['name'] }} , </h4>
 <br/><br/>
-	<p>Welcome To MLHUD </p>
+	<p>Welcome To TALENTRA </p>
 
-	<p>Your access to MLHUD granted with below User Id & PWD</p>
+	<p>Your access to TALENTRA granted with below User Id & PWD</p>
 
 	<p>User Name :  {{ $data['email'] }} </p>
 
@@ -30,7 +30,7 @@
 	<a href="{{ config('setting.document_storage_path')}}" class="btn btn-success">{{ config('setting.document_storage_path')}}/login  </a>
 	
 	<p>Thanks & Regards,</p>
-	<p>MLHUD Admin</p>
+	<p>TALENTRA Admin</p>
 
 </body>
 </html>

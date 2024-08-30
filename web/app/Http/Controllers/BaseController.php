@@ -297,9 +297,8 @@ class BaseController extends Controller
 
     public function FillMenu()
     {
-
+        $method = 'uam => BaseController => FillMenu';
         try {
-            $method = 'uam => BaseController => FillMenu';
             $gatewayURL = config('setting.api_gateway_url') . '/uam_data/menu_data';
             $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
             $response = json_decode($response);
@@ -329,11 +328,11 @@ class BaseController extends Controller
 
         $url =  request()->segment(1);
 
+        $method = 'Method => BaseController => FillScreensByUser';
 
         try {
             $screenurl = $this->encryptData($url);
 
-            $method = 'Method => BaseController => FillScreensByUser';
 
             $gatewayURL = config('setting.api_gateway_url') . '/uam_data/fillscreensbasedonuser/' . $screenurl;
             $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
@@ -365,10 +364,9 @@ class BaseController extends Controller
     public function FillDyanamiclist()
     {
         $url =  request()->segment(1);
-
+        $method = 'Method => BaseController => FillScreensByUser';
         try {
             $screenurl = $this->encryptData($url);
-            $method = 'Method => BaseController => FillScreensByUser';
             $gatewayURL = config('setting.api_gateway_url') . '/uam_data/filldynamiclist/' . $screenurl;
             $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
             $response = json_decode($response);
@@ -400,10 +398,9 @@ class BaseController extends Controller
         $url = $seg1 . '/' . $seg2;
 
         // $this->WriteFileLog($url);
-
+        $method = 'Method => BaseController => FillScreensByUser';
         try {
             $screenurl = $this->encryptData($url);
-            $method = 'Method => BaseController => FillScreensByUser';
             $gatewayURL = config('setting.api_gateway_url') . '/uam_data/filldynamiclist/' . $screenurl;
             $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
             $response = json_decode($response);
@@ -432,9 +429,9 @@ class BaseController extends Controller
     public function FillScreensByDash()
     {
         $url =  request()->segment(1);
+        $method = 'Method => BaseController => FillScreensByDash';
         try {
             $screenurl = $this->encryptData($url);
-            $method = 'Method => BaseController => FillScreensByDash';
             $gatewayURL = config('setting.api_gateway_url') . '/uam_data/fillscreensbasedondash/' . $screenurl;
             $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
             $response = json_decode($response);
@@ -461,7 +458,7 @@ class BaseController extends Controller
 
     public function FillScreensByUserScreen()
     {
-
+        $method = 'Method => BaseController => FillScreensByUserScreen';
         $seg1 = request()->segment(1);
         $seg2 = request()->segment(2);
         // $seg3 = request()->segment(3);
@@ -472,7 +469,6 @@ class BaseController extends Controller
         //$url =  request()->segment(1);
         try {
             $screenurl = $this->encryptData($url);
-            $method = 'Method => BaseController => FillScreensByUserScreen';
             $gatewayURL = config('setting.api_gateway_url') . '/uam_data/fillscreensbasedonuser/' . $screenurl;
             $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
             $response = json_decode($response);
@@ -505,12 +501,12 @@ class BaseController extends Controller
         $seg3 = request()->segment(3);
 
         $url = $seg1 . '/' . $seg2 . '/' . $seg3;
+        $method = 'Method => BaseController => FillScreensByDocument';
 
 
         //$url =  request()->segment(1);
         try {
             $screenurl = $this->encryptData($url);
-            $method = 'Method => BaseController => FillScreensByDocument';
             $gatewayURL = config('setting.api_gateway_url') . '/uam_data/fillscreensbasedondocument/' . $screenurl;
             $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
             $response = json_decode($response);
@@ -543,11 +539,10 @@ class BaseController extends Controller
 
         $url = "folder/file/index";
 
-
+        $method = 'Method => BaseController => FillScreensByDocument';
         //$url =  request()->segment(1);
         try {
             $screenurl = $this->encryptData($url);
-            $method = 'Method => BaseController => FillScreensByDocument';
             $gatewayURL = config('setting.api_gateway_url') . '/uam_data/fillscreensbasedondocument/' . $screenurl;
             $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
             $response = json_decode($response);
@@ -570,7 +565,7 @@ class BaseController extends Controller
         }
     }
 
-    // MLHUD TEAM
+    // TALENTRA TEAM
 
     public function getusermail($id)
     {

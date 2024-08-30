@@ -1144,6 +1144,13 @@
         font-size: 12px;
         font-weight: bold;
     }
+
+    .highlighted-date {
+        background-color: #ffeb3b;
+        /* Yellow background for highlighted dates */
+        color: #000;
+        /* Optional: change text color for better contrast */
+    }
 </style>
 
 <link href="{{asset('assets/css/jquery.fancybox.min.css')}}" type="text/css" rel="stylesheet" />
@@ -1341,7 +1348,7 @@
                 </div>
             </div>
 
-            <div class="course_and_schedule_container" style="margin-top:2%">
+            <div class="course_and_schedule_container" style="margin-top:2%;display:none;">
                 <div class="col-12 d-flex">
                     <div class="col-6 pl-0">
                         <div class="card noShadow course">
@@ -1642,6 +1649,7 @@
 
     }
 
+
     function get_event(eventsdate) {
 
         $.ajax({
@@ -1663,6 +1671,7 @@
                     $('.no_event').append(nodata);
 
                 }
+                const eventDates = new Set();
                 for (const row of data.rows) {
                     if (count == 5) {
                         count = 1;
@@ -1680,6 +1689,7 @@
 
 
                     $('.events_today_wrapper').append(new_event);
+                    highlightDates(eventDates);
 
                 }
                 var eventNames = document.querySelectorAll(".event-name");
@@ -1688,7 +1698,21 @@
 
                 }
 
+                function highlightDates(dates) {
+                    alert("DSc");
+                    // Remove any existing highlight classes
+                    document.querySelectorAll('.dycalendar-body table td').forEach(td => {
+                        td.classList.remove('highlighted-date');
+                    });
 
+                    // Apply the highlight class to dates with events
+                    dates.forEach(date => {
+                        const td = document.querySelector(`.dycalendar-body table td[data-date="${date}"]`);
+                        if (td) {
+                            td.classList.add('highlighted-date');
+                        }
+                    });
+                }
 
 
 
@@ -1700,6 +1724,8 @@
         });
 
     }
+
+
     //today calendar - with skin and shadow
     dycalendar.draw({
         target: "#dycalendar",

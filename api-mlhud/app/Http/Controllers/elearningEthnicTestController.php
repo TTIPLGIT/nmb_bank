@@ -26,8 +26,9 @@ class elearningEthnicTestController extends BaseController
             $method = 'Method => elearningEthnicTestController => index';
             $rows['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz  AS e left join elearning_localadaptation AS l ON e.quiz_id=l.quiz_id left join elearning_exam AS el ON e.quiz_id=el.quiz_id left join elearning_classes AS ec ON e.quiz_id=ec.quiz_id WHERE l.quiz_id IS NULL and el.quiz_id IS NULL and ec.quiz_id IS NULL AND e.drop_quiz=0');
             $rows['user_category'] = array(
-                'Graduate Trainee' => config('setting.roles.Graduate Trainee'),
-                'Professional Member' => config('setting.roles.professional_member'),
+                'Student' => config('setting.roles.Student'),
+                'Teacher' => config('setting.roles.Teacher'),
+                'All' => 0
             );
 
 

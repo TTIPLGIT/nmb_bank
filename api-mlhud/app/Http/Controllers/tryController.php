@@ -62,7 +62,7 @@ class tryController extends BaseController
                     ]);
             });
 
-            $this->notifications_insert(null, auth()->user()->id, "Class Created Successfully", "/admincourse");
+            $this->notifications_insert(null, auth()->user()->id, "Class Name has been Created Successfully", "/admincourse");
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_classes', $update_id, 'Create', 'Class Creation', auth()->user()->id, NOW(), $role_name_fetch);
@@ -972,8 +972,8 @@ class tryController extends BaseController
                 ->get();
 
             $rows2['course_category'] = array(
-                'Student' => config('setting.roles.Graduate Trainee'),
-                'Teacher' => config('setting.roles.professional_member'),
+                'Student' => config('setting.roles.Student'),
+                'Teacher' => config('setting.roles.Teacher'),
                 'All' => 0
             );
 

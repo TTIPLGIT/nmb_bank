@@ -404,9 +404,9 @@ class UserController extends BaseController
 
 			$rows = DB::table('uam_roles')
 				->select('*')
-    			// ->whereIn('alter_name', ['admin', 'professional_member', 'registrar', 'pristake', 'gtstake'])
-    			->where('active_flag', 0)
-    			->get();
+				// ->whereIn('alter_name', ['admin', 'professional_member', 'registrar', 'pristake', 'gtstake'])
+				->where('active_flag', 0)
+				->get();
 
 			$project_roles = DB::table('project_roles')
 				->select('*')
@@ -1371,13 +1371,13 @@ $this->WriteFileLog($input);
 
 	public function forget_password(Request $request)
 	{
+
 		$method = 'Method => UserController => forget_password';
 		try {
-
-
-			//$id = $this->decryptData($id);
-			$input = $this->decryptData($request->requestData);
-			//  return $input;
+			$inputArray = $this->decryptData($request->requestData);
+			$input = [
+				'email' => $inputArray['email'],
+			];
 			$id = $input['email'];
 			//echo json_encode($id);exit;
 			$rows =  DB::select("select * from users where email ='$id'");
@@ -1408,13 +1408,15 @@ $this->WriteFileLog($input);
 					'token' => $token,
 				];
 
-
+				$this->WriteFileLog($data);
 				Mail::to($rows[0]->email)->send(new SendResetMail($data));
 				$response_status = 200;
 				$email_encrypt = $this->encryptData($email);
 				$response = [
 					'response_status' => $response_status
 				];
+				$this->WriteFileLog($response);
+
 				//KD
 				$remember_ps_audit = DB::table('remember_ps_audit')
 					->insertGetId([
@@ -1471,17 +1473,6 @@ $this->WriteFileLog($input);
 
 		$method = 'Method => UserController => reset';
 		try {
-
-
-
-
-
-
-
-
-
-
-
 			$rows =  DB::select("select * from forget_password_token_list where token = '$id' ");
 
 			if ($rows == []) {

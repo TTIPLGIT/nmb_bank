@@ -41,7 +41,7 @@
     }
 
 
-   
+
 
     .col-8 {
         flex: 0 0 66.6666666667%;
@@ -67,8 +67,8 @@
 
 
             <h1 class="text-center fwcolor">
-                <a type="button" href="{{url('http://mlhud-uganda-portal.com/home')}}" class="btn btn-primary bg-243c92 font-weight-bold rounded-halfpill ml-3"><i class="fa fa-arrow-circle-left" aria-hidden="true" style="    font-size: 2rem; display: flex;align-items: center;"></i></a>
-                <span class="mx-auto">VALUATION PROFESSIONAL PORTAL</span>
+                <a type="button" href="{{ config('setting.base_url') }}" src="{{asset('asset/image/Talentra-1.svg')}}" class="btn btn-primary bg-243c92 font-weight-bold rounded-halfpill ml-3"><i class="fa fa-arrow-circle-left" aria-hidden="true" style="    font-size: 2rem; display: flex;align-items: center;"></i></a>
+                <span class="mx-auto">TTIPL - Learning Management System</span>
 
 
 
@@ -111,11 +111,11 @@
     <div class="row justify-content-center">
         <div class=" col-sm-7 col-md-6 col-lg-4 col-xl-4 col-xxl-3 col-2560">
             <div class=" custom card border border-4 border-243c92 rounded-3 mb-4">
-                <img class="logo-center" src="images\MLHUD-IMG (1).png">
+                <img class="logo-center" src="images\TALENTRA-IMG (1).png">
                 <div class="row justify-content-center mt-2" style="display: flex; flex-wrap: wrap;  flex-direction: column; align-content:center; ">
-                    <!-- <img class="col-4 mi-3 mt-3 col-sm-5 col-md-4 col-lg-4 col-xl-4 col-xxl-4" src="images\MLHUD-IMG (1).png" alt="logo"> -->
+                    <!-- <img class="col-4 mi-3 mt-3 col-sm-5 col-md-4 col-lg-4 col-xl-4 col-xxl-4" src="images\TALENTRA-IMG (1).png" alt="logo"> -->
                     <h4 class="color" style="align-self:center;">Create an Account</h4>
-                    <h6 class="account_text">Already have an Account?<a href="/"><b class="login">Login here </b></a></h6>
+                    <h6 class="account_text">Already have an Account?<a href="{{ config('setting.base_url') }}"><b class="login">Login here </b></a></h6>
                 </div>
                 @if (session('success'))
                 <div class="alert alert-success">
@@ -148,7 +148,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <label class="custom_label" for="Surname">Surname</label>
-                                <span class="error-star" id="spanname" style="color:red;     position: absolute;top: 1px;left: 78px;">*</span>
+                                <span class="error-star" id="spanname" style="color:red;position: absolute;top: 1px;left: 78px;">*</span>
                                 <input type="text" id="surname" name="surname" value="" placeholder="Enter Surname" class="form-control">
                                 <div class="row d-flex justify-content-center">
                                     <span class="error_message" id="surnameerror"></span>
@@ -235,8 +235,8 @@
                         <div class="row">
                             <div class="col">
                                 <label class="custom_label" for="">Country</label>
-                                <select class="form-control" id="country" name="country" placeholder="Select Country" value="">
-
+                                <select class="form-control" id="country" name="country" placeholder="Select Country">
+                                    <option value="">Select the Country</option>
 
                                     <option value="uganda" selected>Uganda</option>
 
@@ -304,7 +304,7 @@
         for (const check_value of check_values) {
             if (check_value.checked == true) {
                 if (check_value.value != "trainee") {
-                    $('.gener').hide(); 
+                    $('.gener').hide();
                 } else {
                     $('.gener').show();
 
@@ -882,10 +882,10 @@
 
 <script>
     const preventSubmitButton = (cl) => {
-    $(`.${cl}`).attr('disabled',true);
-    $(`.${cl}`).text('Submitting...');
-    
-  }
+        $(`.${cl}`).attr('disabled', true);
+        $(`.${cl}`).text('Submitting...');
+
+    }
 </script>
 
 
