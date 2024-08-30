@@ -37,6 +37,7 @@ Route::get('/FAQ_questions_ans/get_faq_data', [\App\Http\Controllers\FAQmodulesC
 Route::post('/FAQ_questions_ans/get_search_ques', [\App\Http\Controllers\FAQmodulesController::class, 'get_search_ques']);
 Route::post('/FAQ_questions_ans/get_search_ans', [\App\Http\Controllers\FAQmodulesController::class, 'get_search_ans']);
 Route::get('/privacy/policy_screen', [\App\Http\Controllers\PrivacyPolicyController::class, 'policy_screen']);
+Route::get('/privacy/update/{id}', [\App\Http\Controllers\PrivacyPolicyController::class, 'index']);
 
 //
 
