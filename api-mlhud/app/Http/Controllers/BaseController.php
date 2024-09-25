@@ -86,7 +86,7 @@ class BaseController extends Controller
             return 'Failure';
         }
     }
-    // MLHUD TEAM
+    // TALENTRA TEAM
 
     public function getusermail($id)
     {

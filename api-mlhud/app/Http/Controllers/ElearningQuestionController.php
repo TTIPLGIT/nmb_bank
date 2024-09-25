@@ -26,12 +26,12 @@ class ElearningQuestionController extends BaseController
 
 
 
-            $rows['long'] = DB::select('SELECT question_id as id ,question_name,question,points from elearning_questions_long_answer where drop_question=0');
-            $rows['short'] = DB::select('SELECT question_id as id ,question_name,question,points from elearning_questions_short_answer where drop_question=0');
-            $rows['mcq'] = DB::select('SELECT question_id as id ,question_name,question,points from elearning_questions_mcq where drop_question=0');
-            $rows['true'] = DB::select('SELECT question_id as id ,question_name,question,points from elearning_questions_true_false where drop_question=0');
+            $rows['long'] = DB::select('SELECT question_id as id ,question_name,question,points from elearning_questions_long_answer where drop_question=0 ORDER BY created_at DESC ');
+            $rows['short'] = DB::select('SELECT question_id as id ,question_name,question,points from elearning_questions_short_answer where drop_question=0 ORDER BY created_at DESC');
+            $rows['mcq'] = DB::select('SELECT question_id as id ,question_name,question,points from elearning_questions_mcq where drop_question=0 ORDER BY created_at DESC');
+            $rows['true'] = DB::select('SELECT question_id as id ,question_name,question,points from elearning_questions_true_false where drop_question=0 ORDER BY created_at DESC');
             $rows['quiz_question'] = DB::select('SELECT concat(lng.question_id,"-",lng.question_type) as question_id,concat(lng.question_name,"    ","[",lng.question_type,"]") as name from elearning_questions_long_answer AS lng WHERE drop_question=0 UNION ALL  SELECT  concat(srt.question_id,"-",srt.question_type) as question_id, concat(srt.question_name,"    ","[",srt.question_type,"]") as name FROM elearning_questions_short_answer AS srt WHERE drop_question=0 UNION ALL  SELECT  concat(tru.question_id,"-",tru.question_type) as question_id,concat(tru.question_name,"  ","[","T/F","]")as name FROM elearning_questions_true_false AS tru WHERE drop_question=0 UNION ALL  SELECT  concat(mcq.question_id,"-",mcq.question_type) as question_id ,concat(mcq.question_name,"    ","[",mcq.question_type,"]") as name FROM elearning_questions_mcq AS mcq WHERE drop_question=0 ');
-            $rows['quiz'] = DB::select('SELECT q.* from elearning_practice_quiz as q where q.drop_quiz=0');
+            $rows['quiz'] = DB::select('SELECT q.* from elearning_practice_quiz as q where q.drop_quiz=0 ORDER BY created_at DESC');
 
             foreach ($rows['quiz'] as $key => $row) {
                 $new_value = explode(',', $row->quiz_questions);
@@ -1038,7 +1038,7 @@ class ElearningQuestionController extends BaseController
                     ]);
             });
 
-            $this->notifications_insert(null, auth()->user()->id, "Quiz Created Successfully", "/elearningquestion");
+            $this->notifications_insert(null, auth()->user()->id, "Quiz Name Created Successfully", "/elearningquestion");
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_practice_quiz', $update_id, 'Create', 'Quiz Creation', auth()->user()->id, NOW(), $role_name_fetch);

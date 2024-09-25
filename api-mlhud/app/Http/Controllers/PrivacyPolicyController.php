@@ -21,10 +21,10 @@ class PrivacyPolicyController extends BaseController
 
 public function index($id)
 {
-    
+    $method = 'Method => PrivacyPolicyController => index';
+
     try{
 
-        $method = 'Method => PrivacyPolicyController => index';
         $rows = DB::table('policy_publish')
         ->select('*')
         ->where('id', $id)

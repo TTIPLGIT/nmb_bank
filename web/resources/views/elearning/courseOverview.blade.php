@@ -525,14 +525,14 @@
                                     <button class="btn btn-info buyNow">
                                         Buy Now
                                     </button>
-                                    <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ config('setting.RAZORPAY_KEY') }}" data-amount="{{$courseDetail->course_price*100}}" data-button='false' data-name="MLHUD Payment" data-description="Payment" data-prefill.name="name" data-prefill.email="email" data-theme.color="#ff7529">
+                                    <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ config('setting.RAZORPAY_KEY') }}" data-amount="{{$courseDetail->course_price*100}}" data-button='false' data-name="TALENTRA Payment" data-description="Payment" data-prefill.name="name" data-prefill.email="email" data-theme.color="#ff7529">
                                     </script>
                                     @else
                                     @php $id=Crypt::encrypt($courseDetail->course_id); @endphp
                                     <a href="{{ route('elearningCourse/class',$id) }}" class="btn btn-info buyNow">
                                         Take Now
                                     </a>
-                                    <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ config('setting.RAZORPAY_KEY') }}" data-amount="{{$courseDetail->course_price*100}}" data-button='false' data-name="MLHUD Payment" data-description="Payment" data-prefill.name="name" data-prefill.email="email" data-theme.color="#ff7529">
+                                    <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ config('setting.RAZORPAY_KEY') }}" data-amount="{{$courseDetail->course_price*100}}" data-button='false' data-name="TALENTRA Payment" data-description="Payment" data-prefill.name="name" data-prefill.email="email" data-theme.color="#ff7529">
                                     </script>
                                     <input type="hidden" name="_token" value="{!!csrf_token()!!}">
                                     @endif

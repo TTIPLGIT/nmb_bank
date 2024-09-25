@@ -53,9 +53,8 @@
 
 
             <h1 class="text-center fwcolor">
-                <a type="button" href="{{url('http://mlhud-uganda-portal.com/home')}}" class="btn btn-primary bg-243c92 font-weight-bold rounded-halfpill ml-3"><i class="fa fa-arrow-circle-left" aria-hidden="true" style="    font-size: 2rem; display: flex;align-items: center;"></i></a>
-                <span class="mx-auto">VALUATION PROFESSIONAL PORTAL</span>
-
+                <a type="button" href="{{ config('setting.base_url') }}" src="{{asset('asset/image/Talentra-1.svg')}}" class="btn btn-primary bg-243c92 font-weight-bold rounded-halfpill ml-3"><i class="fa fa-arrow-circle-left" aria-hidden="true" style="font-size: 2rem; display: flex;align-items: center;"></i></a>
+                <span class="mx-auto">TTIPL - Learning Management System</span>
 
 
             </h1>
@@ -100,9 +99,9 @@
     <div class="row justify-content-center">
         <div class="col-sm-7 col-md-6 col-lg-4 col-xl-4 col-xxl-3 col-2560">
             <div class=" custom card border border-4 border-243c92 rounded-3 mb-4">
-                <img class="logo-center" src="images\MLHUD-IMG (1).png">
+                <img class="logo-center" src="images\TALENTRA-IMG (1).png">
                 <div class="row justify-content-center mt-2" style="display: flex; flex-wrap: wrap;  flex-direction: column; align-content:center; ">
-                    <!-- <img class="col-4 mi-3 mt-3 col-sm-5 col-md-4 col-lg-4 col-xl-4 col-xxl-4" src="images\MLHUD-IMG (1).png" alt="logo"> -->
+                    <!-- <img class="col-4 mi-3 mt-3 col-sm-5 col-md-4 col-lg-4 col-xl-4 col-xxl-4" src="images\TALENTRA-IMG (1).png" alt="logo"> -->
                     <h4 class="color" style="align-self:center;">Create an Account</h4>
                     <h6 class="account_text">Already have an Account?<a href="/"><b class="login">Login here </b></a></h6>
                 </div>
@@ -206,10 +205,7 @@
                                 <label class="custom_label" for="">Current Country(Practising)</label>
                                 <select class="form-control search_dropdown" id="country" name="country" value="">
                                     <option value="">Select the Country</option>
-                                    @foreach($rows['country'] as $key=>$rows)
-
-                                    <option value="{{$rows['iso']}}">{{$rows['nicename']}}</option>
-                                    @endforeach
+                                    <option value="uganda" selected>Uganda</option>
 
                                 </select>
                                 <span class="span_message" id="countryerror"></span>
@@ -268,19 +264,22 @@
 </div>
 </div>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://unpkg.com/libphonenumber-js/bundle/libphonenumber-js.min.js"></script>
 <script>
-     const preventSubmitButton = (cl) => {
-    $(`.${cl}`).attr('disabled',true);
-    $(`.${cl}`).text('Submitting...');
-    
-  }
+    const preventSubmitButton = (cl) => {
+        $(`.${cl}`).attr('disabled', true);
+        $(`.${cl}`).text('Submitting...');
+
+    }
 </script>
 <script>
     function validatePhoneNumber() {
@@ -311,9 +310,9 @@
 
 
 
-    $(document).on('change', '#country', function() {
-        validatePhoneNumber();
-    })
+    // $(document).on('change', '#country', function() {
+    //     validatePhoneNumber();
+    // })
 
 
 
@@ -358,64 +357,94 @@
     function validate(e)
 
     {
-
-        const surname = document.getElementById("surname");
-        const givenname = document.getElementById("givenname");
-        const email = document.getElementById("email");
-        const mobile = document.getElementById("mobile");
-        const password = document.getElementById("password");
-        const confirmpassword = document.getElementById("confirmpassword");
-        const cleave_date = document.getElementById("cleave_date");
-        const country = document.getElementById("country");
-        if (mobile.value != '') {
+        //alert(e);
+        const mobile = document.getElementById("mobile").value;
+        const password = document.getElementById("password").value;
+        const confirmpassword = document.getElementById("confirmpassword").value;
+        const cleave_date = document.getElementById("cleave_date").value;
+        const country = document.getElementById("country").value;
+        if (mobile != '') {
             validatePhoneNumber();
         }
 
+        const surname = document.getElementById("surname").value;
 
-
-
-
-        if (surname.value == "") {
+        if (surname == '') {
+            swal.fire("Please Enter the Surname", "", "error");
+            return false;
+        } else if (!surname.match(letters)) {
             $('#surname').addClass('is-invalid');
             document.getElementById("surnameerror").innerHTML =
-                "**Please Enter the Surname**";
-
-        } else if (!surname.value.match(letters)) {
-            $('#surname').addClass('is-invalid');
-            document.getElementById("surnameerror").innerHTML =
-                "**Please enter a valid Surname**";
-
+                swal.fire("Please Enter the valid Surname", "", "error");
+            return false;
         } else {
             document.getElementById("surnameerror").innerText = "";
             $('#surname').removeClass('is-invalid');
         }
 
 
-        if (givenname.value == "") {
+
+        // if (surname.value == "") {
+        //     $('#surname').addClass('is-invalid');
+        //     document.getElementById("surnameerror").innerHTML =
+        //         "**Please Enter the Surname**";
+
+        // } 
+        // else if (!surname.value.match(letters)) {
+        //     $('#surname').addClass('is-invalid');
+        //     document.getElementById("surnameerror").innerHTML =
+        //         "**Please enter a valid Surname**";
+
+        // } 
+        const givenname = document.getElementById("givenname").value;
+        if (givenname == '') {
+            swal.fire("Please Enter the Given Name", "", "error");
+            return false;
+        } else if (!givenname.match(letters)) {
             $('#givenname').addClass('is-invalid');
             document.getElementById("givennameerror").innerHTML =
-                "**Please Enter the Given Name**";
+                swal.fire("Please Enter the valid Given name", "", "error");
+            return false;
 
-        } else if (!givenname.value.match(letters)) {
-            $('#givenname').addClass('is-invalid');
-            document.getElementById("givennameerror").innerHTML =
-                "**Please enter a valid Givenname**";
-
+            //"**Please enter a valid Givenname**";
         } else {
             $('#givenname').removeClass('is-invalid');
             document.getElementById("givennameerror").innerText = "";
         }
 
+        // if (givenname.value == "") {
+        //     $('#givenname').addClass('is-invalid');
+        //     document.getElementById("givennameerror").innerHTML =
+        //         "**Please Enter the Given Name**";
 
-        if (email.value == "") {
-            $('#email').addClass('is-invalid');
-            document.getElementById("emailerror").innerHTML =
-                "**Please Enter the Email**";
+        // } 
+        // else if (!givenname.value.match(letters)) {
+        //     $('#givenname').addClass('is-invalid');
+        //     document.getElementById("givennameerror").innerHTML =
+        //         "**Please enter a valid Givenname**";
 
-        } else if (!filter.test(email.value)) {
+        // } else {
+        // $('#givenname').removeClass('is-invalid');
+        // document.getElementById("givennameerror").innerText = "";
+
+
+        const email = document.getElementById("email").value;
+
+        if (email == "") {
             $('#email').addClass('is-invalid');
-            document.getElementById("emailerror").innerHTML =
-                "**Please Enter the Valid Email Id**";
+
+            swal.fire("Please Enter the Email", "", "error");
+            return false;
+            // $('#email').addClass('is-invalid');
+            // document.getElementById("emailerror").innerHTML =
+            //     "**Please Enter the Email**";
+
+        } else if (!filter.test(email)) {
+            $('#email').addClass('is-invalid');
+            swal.fire("Please Enter the Email", "", "error");
+            return false;
+            // document.getElementById("emailerror").innerHTML =
+            //     "**Please Enter the Valid Email Id**";
 
         } else {
             $('#email').removeClass('is-invalid');
@@ -424,9 +453,11 @@
 
 
 
-        if (country.value == "") {
+        if (country == "") {
             $('#country').addClass('is-invalid');
-            document.getElementById("countryerror").innerHTML = "**Please select the Country**";
+            swal.fire("Please select the Country", "", "error");
+            return false;
+            //document.getElementById("countryerror").innerHTML = "**Please select the Country**";
 
         } else {
             $('#country').removeClass('is-invalid');
@@ -436,25 +467,31 @@
 
 
         // Mobile number validation
+        // const mobile = document.getElementById("mobile").value;
 
-        if (mobile.value == "") {
+        if (mobile == "") {
             $('#mobile').addClass('is-invalid');
-
-            document.getElementById("mobileerror").innerHTML =
-                "**Please Enter the Mobile Number**";
+            swal.fire("Please Enter the Mobile Number", "", "error");
+            return false;
+            // document.getElementById("mobileerror").innerHTML =
+            //     "**Please Enter the Mobile Number**";
 
         } else {
             $('#mobile').removeClass('is-invalid');
             document.getElementById("mobileerror").innerText = "";
         }
 
-        if (password.value == "") {
-            document.getElementById("passworderror").innerHTML =
-                "**Please Enter the Password**";
+        if (password == "") {
+            swal.fire("Please Enter the Password", "", "error");
+            return false;
+            // document.getElementById("passworderror").innerHTML =
+            //     "**Please Enter the Password**";
 
-        } else if (!passw.test(password.value)) {
+        } else if (!passw.test(password)) {
             document.getElementById("passworderror").innerHTML =
-                "**Password must be atleast 8 characters long and alteast one lower and uppercase character and atleast one digit **";
+                swal.fire("Password must be atleast 8 characters long and alteast one lower and uppercase character and atleast one digit", "", "error");
+            return false;
+            // "**Password must be atleast 8 characters long and alteast one lower and uppercase character and atleast one digit **";
 
         } else {
             document.getElementById("passworderror").innerText = "";
@@ -463,9 +500,12 @@
 
 
 
-        if (confirmpassword.value == "") {
+        if (confirmpassword == "") {
             document.getElementById("confirmpassworderror").innerHTML =
-                "**Please Enter the Confirm Password**";
+                swal.fire("Please Enter the Confirm Password", "", "error");
+            return false;
+            // document.getElementById("confirmpassworderror").innerHTML =
+            //     "**Please Enter the Confirm Password**";
 
         } else {
             document.getElementById("confirmpassworderror").innerText = "";
@@ -474,7 +514,7 @@
 
 
 
-        if (confirmpassword.value != (password.value)) {
+        if (confirmpassword != (password.value)) {
             document.getElementById("confirmpassworderror").innerHTML =
                 "**Password is not same**";
 
@@ -486,12 +526,16 @@
 
         if (cleave_date.value == "") {
             document.getElementById("doberror").innerHTML =
-                "**Please Enter the DOB**";
+                swal.fire("Please Select the DOB", "", "error");
+            return false;
+            //   "**Please Enter the DOB**";
         } else if (getAge(cleave_date.value) < 18) {
             document.getElementById("doberror").innerHTML =
-                "**User is not allowed to enter the site at this time, the user must be ablove 18.**";
-            cleave_date.focus();
+                swal.fire("User is not allowed to enter the site at this time, the user must be above 18.", "", "error");
             return false;
+            // "**User is not allowed to enter the site at this time, the user must be ablove 18.**";
+            cleave_date.focus();
+            //return false;
         } else {
             document.getElementById("doberror").innerText = "";
         }
@@ -500,8 +544,10 @@
 
         if (check.checked == false) {
             document.getElementById("checkederror").innerHTML =
-                "**Please Agree the Terms & Conditions**";
-            return;
+            swal.fire("Please Agree the Terms & Conditions", "", "error");
+            return false;
+            //     "**Please Agree the Terms & Conditions**";
+            // return;
         } else {
             document.getElementById("checkederror").innerText = "";
         }

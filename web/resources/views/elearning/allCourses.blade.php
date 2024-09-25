@@ -377,7 +377,9 @@
 
 
                 <div class="row">
+
                     @foreach($availableCourses as $key => $value)
+
 
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-3" id="course_{{$value->course_id}}">
                         <div class="card noShadow all_courses_courselist">
@@ -388,11 +390,14 @@
                                 </span>
                                 @php $id=Crypt::encrypt($value->course_id); @endphp
                                 <a href="{{ route('elearningCourse',$id) }}">
-                                    <?php if ($value->course_banner != '') { ?>
-                                        <img src="{{config('setting.base_url')}}uploads/course/126/{{$value->course_banner}}" alt="" class="course_image">
-                                    <?php } elseif ($value->course_banner == '') { ?>
-                                        <img src="{{asset('assets/images/main.png')}}" alt="" class="course_image">
-                                    <?php } ?>
+                                    @php
+                                    $imageUrl = config('setting.base_url') . 'uploads/course/126/' . $value->course_banner;
+                                    @endphp
+                                    @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
+                                    <img src="{{ $imageUrl }}" alt="Course Image" class="course_image">
+                                    @else
+                                    <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image" class="course_image">
+                                    @endif
                                 </a>
                             </div>
                             <div class="card-body">

@@ -98,7 +98,6 @@ Route::get('/', function () {
 
 Route::get('/token', function (Request $request) {
     $token = $request->session()->token();
-
     $token = csrf_token();
     return $token;
 });
@@ -374,6 +373,7 @@ Route::get('/FAQ_question/delete/{id}', [\App\Http\Controllers\FAQquestionContro
 Route::post('/FAQ_question/update_data', [\App\Http\Controllers\FAQquestionController::class, 'update_data'])->name('FAQ_question.update_data');
 Route::post('/FAQ_question/update_toggle', [\App\Http\Controllers\FAQquestionController::class, 'update_toggle'])->name('FAQ_question.update_toggle');
 Route::get('/valuer/show/{id}', [\App\Http\Controllers\ValuerController::class, 'show'])->name('valuer.show');
+Route::get('/privacy/update/{id}', [\App\Http\Controllers\FAQmodulesController::class, 'index1'])->name('privacy.update');
 
 //elearning
 

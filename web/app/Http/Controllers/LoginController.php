@@ -43,7 +43,7 @@ class LoginController extends BaseController
 
           return view('auth.login', compact('rows'));
         }
-      } 
+      }
     } catch (\Exception $exc) {
       return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
     }
@@ -52,7 +52,7 @@ class LoginController extends BaseController
 
   public function register_member(Request $request)
 
-  { 
+  {
     $method = 'Method => LoginController => Registermember_screen';
     try {
       $gatewayURL = config('setting.api_gateway_url') . '/Register/member';
@@ -85,72 +85,69 @@ class LoginController extends BaseController
   public function register_memberstore(Request $request)
   {
     try {
-        $method = 'Method => LoginController => Registermember_screen';
+      $method = 'Method => LoginController => Registermember_screen';
 
-    $data = array();
+      $data = array();
 
-    $data['name'] = $request->name;
-    $data['surname'] = $request->surname;
-    $data['othername'] = $request->othername;
-    $data['email'] = $request->email;
-    $data['dob'] = $request->dob;
-    $data['gender_value'] = $request->gender_value;
-    $data['country'] = $request->country;
-    $data['Mobile_no'] = $request->Mobile_no;
-    $data['password'] = bcrypt($request->password);
-    $data['password_confirmation'] = $request->password_confirmation;
-    $mobile = 0;
-    if (isset($request->mobile)) {
-      $mobile = 1;
-    }
-
-
-    // $data['dor'] = $request->dor;
-    // $data['isu_membership_number'] = $request->isu_membership_number;
-    $encryptArray = $this->encryptData($data);
-    $request = array();
-    $request['requestData'] = $encryptArray;
-
-    $gatewayURL = config('setting.api_gateway_url') . '/Registermember/store';
-
-
-    $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-
-
-    $response1 = json_decode($response);
-    if ($response1->Status == 200 && $response1->Success) {
-      $objData = json_decode($this->decryptData($response1->Data));
-      if ($objData->Code == 200) {
-        if ($mobile == 1) {
-          return $objData->Code;
-        }
-        return redirect(url('/'))->with('success', 'Professional Member NRU Registered Successfully');
+      $data['name'] = $request->name;
+      $data['surname'] = $request->surname;
+      $data['othername'] = $request->othername;
+      $data['email'] = $request->email;
+      $data['dob'] = $request->dob;
+      $data['gender_value'] = $request->gender_value;
+      $data['country'] = $request->country;
+      $data['Mobile_no'] = $request->Mobile_no;
+      $data['password'] = bcrypt($request->password);
+      $data['password_confirmation'] = $request->password_confirmation;
+      $mobile = 0;
+      if (isset($request->mobile)) {
+        $mobile = 1;
       }
 
-      // if ($objData->Code == 400) {
-      //   return Redirect::back()->with('error', 'Email-Id Already Exists');
+
+      // $data['dor'] = $request->dor;
+      // $data['isu_membership_number'] = $request->isu_membership_number;
+      $encryptArray = $this->encryptData($data);
+      $request = array();
+      $request['requestData'] = $encryptArray;
+
+      $gatewayURL = config('setting.api_gateway_url') . '/Registermember/store';
+
+
+      $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+
+
+      $response1 = json_decode($response);
+      if ($response1->Status == 200 && $response1->Success) {
+        $objData = json_decode($this->decryptData($response1->Data));
+        if ($objData->Code == 200) {
+          if ($mobile == 1) {
+            return $objData->Code;
+          }
+          return redirect(url('/'))->with('success', 'Professional Member NRU Registered Successfully');
+        }
+
+        // if ($objData->Code == 400) {
+        //   return Redirect::back()->with('error', 'Email-Id Already Exists');
+        // }
+        if ($objData->Code == 400) {
+          if ($mobile == 1) {
+            return ['code' => $objData->Code, 'Message' => "Email-Id Already Exists"];
+          }
+          return redirect()->back()->with('error', 'Email-Id Already Exists');
+          // return Redirect::back()->with('error', 'Email-Id Already Exists'); 
+        }
+      }
+      //  else {
+      //     $objData = json_decode($this->decryptData($response1->Data));
+      //     if ($objData->Code == 408) {
+      //       return Redirect::back()->with('error', 'Email Not Verified');
+      //       }
+      //     echo json_encode($objData->Code);exit;                            
       // }
-      if ($objData->Code == 400) {
-        if ($mobile == 1) {
-          return ['code'=>$objData->Code,'Message'=>"Email-Id Already Exists"];
-        }
-        return redirect()->back()->with('error', 'Email-Id Already Exists');
-        // return Redirect::back()->with('error', 'Email-Id Already Exists'); 
-      }
-      
-    }
-    //  else {
-    //     $objData = json_decode($this->decryptData($response1->Data));
-    //     if ($objData->Code == 408) {
-    //       return Redirect::back()->with('error', 'Email Not Verified');
-    //       }
-    //     echo json_encode($objData->Code);exit;                            
-    // }
-    }
-    catch (\Exception $exc) {
+    } catch (\Exception $exc) {
       return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
     }
-
   }
 
 
@@ -186,10 +183,10 @@ class LoginController extends BaseController
       $data['password'] = bcrypt($request->password);
       $data['password_confirmation'] = $request->password_confirmation;
 
-        $mobile = 0;
-        if (isset($request->mobile)) {
-          $mobile = 1;
-        }
+      $mobile = 0;
+      if (isset($request->mobile)) {
+        $mobile = 1;
+      }
 
       // $data['dor'] = $request->dor;
       // $data['isu_membership_number'] = $request->isu_membership_number;
@@ -213,10 +210,10 @@ class LoginController extends BaseController
           }
           return redirect(url('/'))->with('success', 'Graduate Trainee Registered Successfully');
         }
-        
+
         if ($objData->Code == 400) {
           if ($mobile == 1) {
-            return ['code'=>$objData->Code,'Message'=>"Email-Id Already Exists"];
+            return ['code' => $objData->Code, 'Message' => "Email-Id Already Exists"];
           }
 
           return redirect()->back()->with('error', 'Email-Id Already Exists');
@@ -224,7 +221,7 @@ class LoginController extends BaseController
         }
         if ($objData->Code == 500) {
           if ($mobile == 1) {
-            return ['code'=>$objData->Code,'Message'=>"Something went wrong. Please try again later"];
+            return ['code' => $objData->Code, 'Message' => "Something went wrong. Please try again later"];
           }
 
           return redirect()->back()->with('error', 'Something went wrong. Please try again later');
@@ -271,7 +268,7 @@ class LoginController extends BaseController
     Mail::send('email.emailotpverify', ["data1" => $data], function ($message) use ($data, $email) {
 
       $message->to($email)
-        ->subject('MLHUD  -  Email Verfication');
+        ->subject('TALENTRA  -  Email Verfication');
     });
 
     $encryptArray = $this->encryptData($data);
@@ -452,17 +449,21 @@ class LoginController extends BaseController
         $tokenResponse = $this->setToken($input['email'], $input['password'],);
         if ($tokenResponse == 'Failure') {
           if (isset($request->mobile)) {
-            return ['code'=>401,
-                    'Message'=>"Invalid user name or password"];
+            return [
+              'code' => 401,
+              'Message' => "Invalid user name or password"
+            ];
           }
           return back()->withErrors(['recaptcha' => ['Invalid user name or password']]);
         } else if ($tokenResponse == 'Disabled') {
           if (isset($request->mobile)) {
-            return ['code'=>401,
-                    'Message'=>"User disabled contact MLHUD Administrator"];
+            return [
+              'code' => 401,
+              'Message' => "User disabled contact TALENTRA Administrator"
+            ];
           }
 
-          return back()->withErrors(['recaptcha' => ['User disabled contact MLHUD Administrator']]);
+          return back()->withErrors(['recaptcha' => ['User disabled contact TALENTRA Administrator']]);
         }
 
         $gatewayURL = config('setting.api_gateway_url') . '/login/user';
@@ -474,8 +475,10 @@ class LoginController extends BaseController
 
         if ($response->Status == 401) {
           if (isset($request->mobile)) {
-            return ['code'=>$response->Status,
-                    'Message'=>"Invalid user name or password"];
+            return [
+              'code' => $response->Status,
+              'Message' => "Invalid user name or password"
+            ];
           }
           // echo "fjhg";exit;
           return back()->withErrors(['recaptcha' => ['Invalid user name or password']]);
@@ -513,10 +516,9 @@ class LoginController extends BaseController
               exit;
               return "2";
             }
-            if($role_id == '1' && $role_id == '41'){
+            if ($role_id == '1' && $role_id == '41') {
               return redirect(route('elearningDashboard'));
-            }
-            else{
+            } else {
               return redirect(route('elearningDashboard'));
             }
 
@@ -790,42 +792,47 @@ class LoginController extends BaseController
 
   public function forgot_password(Request $request)
   {
-
-
+    $method = 'Method => LoginController => forgot_password';
+   
     try {
-      $method = 'Method => LoginController => forgot_password';
-      $input = [
-        'email' => $request->email,
-      ];
-      $rules = [
-        'email' => 'required',
-      ];
-      $messages = [
+      // Validate the request
+      $validator = Validator::make($request->all(), [
+        'email' => 'required|email'
+      ], [
         'email.required' => 'Email is required',
-      ];
-      $validator = Validator::make($request->all(), $rules, $messages);
+        'email.email' => 'Email must be a valid email address',
+      ]);
+
       if ($validator->fails()) {
         return Redirect::back()->withErrors($validator);
-      } else {
-        $userRow = array();
-        $userRow['email'] = $request->email;
-        $gatewayURL = config('setting.api_gateway_url') . '/user/forget_password';
-        $encryptArray = $this->encryptData($userRow);
-        $request = array();
-        $request['requestData'] = $encryptArray;
-        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-        $response = json_decode($response);
-        if ($response->Status == 200 && $response->Success) {
-          $objData = json_decode($this->decryptData($response->Data));
-          if ($objData->Code == 200) {
-            $parant_data = json_decode(json_encode($objData->Data), true);
-            $response_status =  $parant_data['response_status'];
-            if ($response_status == "200") {
-              return redirect(route('forgot'))->with('success', 'Reset password link sent your mail id');
-            }
-            if ($response_status == "300") {
-              return redirect(route('forgot'))->with('success', 'User Mail id not found please check');
-            }
+      }
+     
+      // Prepare data for API request
+      $userRow['email'] = $request->email;
+      $encryptArray = $this->encryptData($userRow);
+      $request = array();
+      $request['requestData'] = $encryptArray;
+     
+      $gatewayURL = config('setting.api_gateway_url') . '/user/forget_password';
+
+      // Make API request
+      $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+      $response = json_decode($response);
+
+      
+      if ($response->Status == 200 && $response->Success) {
+        $objData = json_decode($this->decryptData($response->Data));
+        dd($objData);
+        if ($objData->Code == 200) {
+          $parant_data = json_decode(json_encode($objData->Data), true);
+          $response_status = $parant_data['response_status'];
+
+          if ($response_status == "200") {
+            return redirect(route('forgot'))->with('success', 'Reset password link sent to your email');
+          }
+
+          if ($response_status == "300") {
+            return redirect(route('forgot'))->with('success', 'User email not found. Please check');
           }
         }
       }

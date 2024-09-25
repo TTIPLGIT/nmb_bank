@@ -11,7 +11,7 @@
 	Hello {{$data['name']}},
 
 	<br /><br /><br />
-	A New Graduate Trainee {{$data['user_name']}} , has been Registered with MLHUD and the Trainee selected you as a suprevsior or counselor, kindly click the below link to review the application.
+	A New Graduate Trainee {{$data['user_name']}} , has been Registered with TALENTRA and the Trainee selected you as a suprevsior or counselor, kindly click the below link to review the application.
 	<br /><br />
 	Graduate Trainee has been registered and is awaiting for your approval. <br /><br /><br />
 	<b>Access Link:</b>
@@ -22,7 +22,7 @@
 	<br /><br />
 	Regards,
 	<br /><br />
-	Team MLHUD
+	Team TALENTRA
 </body>
 
 </html>

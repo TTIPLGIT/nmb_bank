@@ -12,8 +12,8 @@
 	Hello {{$data['name']}},
 
 	<br /><br /><br />
-	You has been Registered with MLHUD .<br /><br />
-    We are pleased to inform you that your account for the MLHUD Professional Member Program has been successfully created. Welcome aboard! This email contains the necessary information to access your account and begin your journey with us.
+	You has been Registered with TALENTRA .<br /><br />
+    We are pleased to inform you that your account for the TALENTRA Professional Member Program has been successfully created. Welcome aboard! This email contains the necessary information to access your account and begin your journey with us.
 	<br /><br />
 	<b>Access Link:</b>
 	<br /><br />
@@ -24,7 +24,7 @@
     <br/><br/>
 	Regards,
 	<br /><br />
-	Team MLHUD
+	Team TALENTRA
 </body>
 
 </html>

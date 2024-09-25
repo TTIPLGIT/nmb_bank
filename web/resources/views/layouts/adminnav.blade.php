@@ -12,6 +12,8 @@
   <link href="{{asset('asset/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
 
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
   <!--dropzone css -->
   <!-- jQuery -->
   <!-- <script src="//code.jquery.com/jquery-1.11.3.min.js"></script> -->
@@ -68,6 +70,7 @@
   <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
 
   <!-- <script src="{{asset('asset/js/owl.carousel.min.js')}}"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
   <style>
     .stamp {
@@ -1087,7 +1090,7 @@
                     <i class="fa fa-bell notify"></i><span class="badge badge-light bell_notification"></span>
                   </a>
                   <ul class="dropdown" name="notificationMenu" style="top: 80%;">
-                    <li class="notification-group">
+                    <!-- <li class="notification-group">
                       <div class="notification-tab">
                         <i class="fa fa-list-alt "></i>
 
@@ -1095,7 +1098,6 @@
                         <h4 style="font-size:15px" class="">Registration</h4>
                         <span class="user_name_alert"></span>
                       </div>
-                      <!-- tab -->
                       <ul class="notification-list registration_data_list">
 
 
@@ -1104,21 +1106,20 @@
 
 
                       </ul>
-                    </li>
-                    <li class="notification-group">
+                    </li> -->
+                    <!-- <li class="notification-group">
                       <div class="notification-tab">
                         <i class="fa fa-users "></i>
                         <h4 style="font-size:15px" class="">General Notifications</h4>
                         <span class="user_name_alert1"></span>
                       </div>
-                      <!-- tab -->
                       <ul class="notification-list user_alert_list">
 
 
 
 
                       </ul>
-                    </li>
+                    </li> -->
                     <li class="notification-group">
                       <div class="notification-tab">
                         <i class="fa fa-graduation-cap" aria-hidden="true"></i>

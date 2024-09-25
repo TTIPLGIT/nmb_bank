@@ -89,13 +89,13 @@ class ElearningEventController extends BaseController
             $role_id = $rows[0]->role_id;
 
             $rows['user_category'] = array(
-                'Graduate Trainee' => config('setting.roles.Graduate Trainee'),
-                'Professional Member' => config('setting.roles.professional_member'),
+                'Student' => config('setting.roles.Student'),
+                'Teacher' => config('setting.roles.Teacher'),
                 'All' => 0
             );
             // INNER JOIN uam_roles AS ur ON ur.role_id = et.user_category
 
-            $rows['quiz_list'] =  DB::select("SELECT event_id,event_name,event_image,event_date,user_category from elearning_events as en  where event_status=0");
+            $rows['quiz_list'] =  DB::select("SELECT event_id,event_name,event_image,event_date,user_category from elearning_events as en  where event_status=0 ORDER BY created_at DESC");
 
 
             $response = [

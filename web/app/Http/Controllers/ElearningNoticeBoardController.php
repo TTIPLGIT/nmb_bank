@@ -17,6 +17,7 @@ class ElearningNoticeBoardController extends BaseController
 
     public function notice_store(Request $request)
     {
+       
         $validator = Validator::make($request->all(), [
             'notice_banner' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
@@ -39,8 +40,7 @@ class ElearningNoticeBoardController extends BaseController
             $data['notice_author'] = $request->notice_author;
             $data['notice_date'] = $request->notice_date;
 
-
-
+           
             $encryptArray = $data;
 
             $storagepath_ursb_old = public_path() . '/uploads/notice/' . $user_id; //system_store_pdf
@@ -49,6 +49,7 @@ class ElearningNoticeBoardController extends BaseController
                 File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
             }
             $data['notice_path'] = $storagepath_ursb;
+            
             $documentsb =  $request['notice_banner'];
             $files = $documentsb->getClientOriginalName();
             $findspace = array(' ', '&', "'", '"');

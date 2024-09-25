@@ -32,7 +32,7 @@ class SendUserCreateMail extends Mailable
         $email_id = config('setting.email_id');
 
 
-        return $this->from($email_id)->subject('MLHUD User Id and Pwd Created')->view('create')->with('data',$this->data);
+        return $this->from($email_id)->subject('TALENTRA User Id and Pwd Created')->view('create')->with('data',$this->data);
     }
 
 }

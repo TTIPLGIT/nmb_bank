@@ -133,8 +133,8 @@
                     <div class="col-md-12">
 
                       <button onclick="update_validation()" class="btn btn-success" id="update_button" disabled type="submit"><i class="fa fa-check"></i> Update </button>&nbsp;
-                      <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button>&nbsp;
-                      <a class="btn btn-danger footer_btn_cancel footer_btn_top" href="{{ route('home') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
+                      <!-- <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button>&nbsp; -->
+                      <a class="btn btn-danger footer_btn_cancel footer_btn_top" href="{{ route('admindashboard') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
                     </div>
                   </div>
               </form>
@@ -267,12 +267,10 @@
       processData: false,
       success: (response) => {
         if (response) {
-
-          swal({
-            html: true,
-            title: "Profile Settings Uploaded Succesfully",
-            // text: "<h5><b>Please click 'Yes' and check your mail id used during the registration for the User id and password to log-in into the Integrated Solution Management System (ISMS) for Enrollment process. Once Enrolled, Consent form will be sent to your registered mail id. Next step will be a payment process for the ISMS Registration.</b></h5>",
-            type: "success",
+          Swal.fire({
+            title: "Profile Settings Uploaded Successfully",
+            html: "<h5><b>Please click 'Ok' and check your mail for further instructions. Your User ID and password for the Integrated Solution Management System (ISMS) will be sent to your registered email. Follow the instructions for enrollment, consent form submission, and payment process.</b></h5>",
+            icon: "success",
             customClass: 'swalalerttext',
             showCancelButton: false,
             confirmButtonColor: '#00a2ed',
@@ -283,18 +281,22 @@
             closeOnCancel: true,
             showLoaderOnConfirm: true,
             width: '850px'
-          }).then(() => {
-            location.reload();
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = '/admindashboard';
+            }
           });
-
-
         }
       },
-      error: function(response) {
-
-        $('#image-input-error').text(response.responseJSON.errors.file);
+      error: (response) => {
+        if (response.responseJSON && response.responseJSON.errors && response.responseJSON.errors.file) {
+          $('#image-input-error').text(response.responseJSON.errors.file);
+        } else {
+          $('#image-input-error').text("An error occurred. Please try again.");
+        }
       }
     });
+
   });
 </script>
 

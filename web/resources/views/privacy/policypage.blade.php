@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
          <link rel="stylesheet" 
           href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
-          <title>MLHUD</title>
-<link rel="icon" href="{{ asset('images/MLHUD-IMG (1).png') }}" type="image/gif" sizes="16x16">
+          <title>TALENTRA</title>
+<link rel="icon" href="{{ asset('images/TALENTRA-IMG (1).png') }}" type="image/gif" sizes="16x16">
         <!-- Fonts -->
         <link href="{{ asset('css/login.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">

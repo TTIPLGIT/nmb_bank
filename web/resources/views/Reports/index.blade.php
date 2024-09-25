@@ -407,7 +407,7 @@
 <script>
     let reportURL = "{{url('report_fetch')}}";
     let token = "{{csrf_token()}}";
-    let image = "{{asset('images/MLHUD-IMG (1).png')}}";
+    let image = "{{asset('images/TALENTRA-IMG (1).png')}}";
 </script>
 <script src="{{ asset('js/table.js') }}"></script>
 

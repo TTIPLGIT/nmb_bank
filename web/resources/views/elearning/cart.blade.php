@@ -878,7 +878,7 @@
                                     <table class=' order-table'>
                                         <tbody>
                                             <tr>
-                                                <td><img src='http://localhost:10/MLHUDV3/web/resources/views/elearning/admin/noticeboard/image/images.jpeg' class='full-width'></img>
+                                                <td><img src='http://localhost:10/TALENTRAV3/web/resources/views/elearning/admin/noticeboard/image/images.jpeg' class='full-width'></img>
                                                 </td>
                                                 <td>
                                                     <br> <span class='thin'>CGM/GM</span>
@@ -896,7 +896,7 @@
                                     <table class='order-table'>
                                         <tbody>
                                             <tr>
-                                                <td><img src='http://localhost:10/MLHUDV3/web/resources/views/elearning/admin/noticeboard/image/article-3.jpeg' class='full-width'></img>
+                                                <td><img src='http://localhost:10/TALENTRAV3/web/resources/views/elearning/admin/noticeboard/image/article-3.jpeg' class='full-width'></img>
                                                 </td>
                                                 <td>
                                                     <br> <span class='thin'>CGM/GM/DGM</span>
@@ -931,7 +931,7 @@
                                     <form action="{!!route('course_summary.payment')!!}" method="POST">
                                         @csrf
                                         <input type="hidden" id="course_id" name="course_id" value="{{isset($rows['rows']['cart_list'][0]['course_id']) ? $rows['rows']['cart_list'][0]['course_id'] : 0 }}">
-                                        <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ config('setting.RAZORPAY_KEY') }}" data-amount="{{ number_format($totalPrice * 100, 2, '.', '') }}" data-button='false' data-name="MLHUD Payment" data-description="Payment" data-prefill.name="name" data-prefill.email="email" data-theme.color="#ff7529">
+                                        <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ config('setting.RAZORPAY_KEY') }}" data-amount="{{ number_format($totalPrice * 100, 2, '.', '') }}" data-button='false' data-name="TALENTRA Payment" data-description="Payment" data-prefill.name="name" data-prefill.email="email" data-theme.color="#ff7529">
                                         </script>
                                         <input type="hidden" name="_token" value="{!!csrf_token()!!}">
                                         <button style="font-size:15px;" type="submit" class="btn btn-success btn-lg question">Proceed to Pay</button>
@@ -961,7 +961,7 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <img src='http://localhost:10/MLHUDV3/web/resources/views/elearning/admin/noticeboard/image/visa_logo.png' height='80' class='credit-card-image' id='credit-card-image'></img>
+                                    <img src='http://localhost:10/TALENTRAV3/web/resources/views/elearning/admin/noticeboard/image/visa_logo.png' height='80' class='credit-card-image' id='credit-card-image'></img>
                                     Card Number
                                     <input class='input-field'></input>
                                     Card Holder
