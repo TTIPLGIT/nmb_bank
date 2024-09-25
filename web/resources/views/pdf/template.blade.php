@@ -90,7 +90,7 @@
 <body>
     <div class="container">
         <div class="card" style="padding:12px;">
-            <div style="display:flex;align-items:center;width:100%;align-items:baseline;margin-top:8%">
+            <!-- <div style="display:flex;align-items:center;width:100%;align-items:baseline;margin-top:8%">
                 <div class="col-md-6">
                     <img class="sampleImg" src="{{asset('assets/images/logocnt.png')}}" style="width:35%;margin-left:5%">
                 </div>
@@ -115,25 +115,25 @@
                 <span style="font-size:15px">Provided By</span><br>
                 <span style="font-weight:bold;padding:30px;">Talent Takeaways Infotech Private Limited</span><br>
                 <span style="font-size:15px"> (on July 2024)</span>
-            </div>
-        </div>
-        <!-- <img src="{{asset('assets/images/medal.png')}}" alt="" class="medal" />
+            </div> -->
+        <img src="{{asset('assets/images/medal.png')}}" alt="" class="medal" />
         <div class="certificate">
             <h1>Certificate of Completion</h1>
-            <div class="certi_div">
-                <span class="presented" style="font-weight: 600;">Presented to</span><br />
-                <span style="font-weight: 900; font-size: 20px !important;">{{$name}}</span>
-                <br /><br /><br />
-                <span class="success_message">For successfully completing this course </span><br />
-                <span><b>{{$course_name}}</b> <b>on {{$date}}</b></span>
-                <br /><br /><br />
-                <span style="font-weight: 600">Presented by</span>
-                <br>
-                <img src="{{asset('assets/images/logocnt.png')}}" class="logo" style="width: 200px !important" />
+                <div class="certi_div">
+                    <span class="presented" style="font-weight: 600;">Presented to</span><br />
+                    <span style="font-weight: 900; font-size: 20px !important;">{{$name}}</span>
+                    <br /><br /><br />
+                    <span class="success_message">For successfully completing this course </span><br />
+                    <span><b>{{$course_name}}</b> <b>on {{$date}}</b></span>
+                    <br /><br /><br />
+                    <span style="font-weight: 600">Presented by</span>
+                    <br>
+                    <img src="{{asset('assets/images/Talentra.jpg')}}" class="logo" style="width: 200px !important" />
+                </div>
+                <img src="{{asset('assets/images/Talentra.jpg')}}" alt="" class="profile-image" />
             </div>
-            <img src="{{asset('assets/images/TALENTRA-IMG (1).png')}}" alt="" class="profile-image" />
+        </div>
 
-        </div> -->
     </div>
 </body>
 

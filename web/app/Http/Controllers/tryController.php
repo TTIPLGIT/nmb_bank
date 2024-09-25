@@ -263,7 +263,6 @@ class tryController extends BaseController
 
     public function class_store(Request $request)
     {
-
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return view('auth.login');
@@ -285,7 +284,6 @@ class tryController extends BaseController
             $data['class_description'] = $request->class_description;
             $data['quiz_id'] = $request->quiz_id;
             $data['class_quiz'] = $request->class_quiz;
-
 
             $encryptArray = $data;
 
@@ -309,7 +307,6 @@ class tryController extends BaseController
 
 
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/class/store';
-
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
 
             $menus = $this->FillMenu();
