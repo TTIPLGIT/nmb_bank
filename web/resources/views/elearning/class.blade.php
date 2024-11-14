@@ -1238,7 +1238,7 @@
     <div class="col-md-8" style="display:flex;justify-content: space-between;align-items: center;">
 
         <a href="/elearning/allCourses?sorted=Recently%20Added&tag=false&progress=false&q=false" class="btn btn-primary">Back</a>
-        <h5>Course Contents</h5>
+        <h4>Course Contents</h4>
     </div>
     <br>
     @if(isset($course_certificate[0]->get_certified) && $course_certificate[0]->get_certified == 1)

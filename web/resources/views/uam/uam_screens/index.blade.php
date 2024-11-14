@@ -38,8 +38,9 @@
     <div class="section-body mt-2">
 
       @if(strpos($screen_permission['permissions'], 'Create') !== false)
-      <a type="button" style="font-size:15px;" class="btn btn-success btn-lg" href="{{ route('uam_screens.create') }}">Add Screens</a>
-      @endif
+      <a type="button" style="font-size:15px;" class="btn btn-success btn-lg"
+      href="{{ route('uam_screens.create') }}">Add Screens</a>
+    @endif
       <style>
         .section {
           margin-top: 20px;
@@ -62,33 +63,35 @@
               </div>
               @if (session('success'))
 
-              <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-              <script type="text/javascript">
-                window.onload = function() {
-                  var message = $('#session_data').val();
-                  swal({
-                    title: "Success",
-                    text: message,
-                    type: "success",
-                  });
+          <input type="hidden" name="session_data" id="session_data" class="session_data"
+          value="{{ session('success') }}">
+          <script type="text/javascript">
+          window.onload = function () {
+            var message = $('#session_data').val();
+            swal({
+            title: "Success",
+            text: message,
+            type: "success",
+            });
 
-                }
-              </script>
-              @elseif(session('error'))
+          }
+          </script>
+        @elseif(session('error'))
 
-              <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-              <script type="text/javascript">
-                window.onload = function() {
-                  var message = $('#session_data1').val();
-                  swal({
-                    title: "Info",
-                    text: message,
-                    type: "info",
-                  });
+        <input type="hidden" name="session_data" id="session_data1" class="session_data"
+        value="{{ session('error') }}">
+        <script type="text/javascript">
+        window.onload = function () {
+          var message = $('#session_data1').val();
+          swal({
+          title: "Info",
+          text: message,
+          type: "info",
+          });
 
-                }
-              </script>
-              @endif
+        }
+        </script>
+      @endif
 
 
 
@@ -97,7 +100,7 @@
                   <table class="table table-bordered align_button" id="align">
                     <thead>
                       <tr>
-                        <th width="50px">Sl. No.</th>
+                        <th>S.No</th>
                         <th>Screen Name</th>
                         <th>Route URL</th>
                         <th>Display Order</th>
@@ -106,37 +109,44 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($rows as $key=>$row)
-                      <tr>
-                        <td>{{ ++$key }}</td>
-                        <td>{{ $row['screen_name']}}</td>
-                        <td>{{ $row['route_url'] }}</td>
-                        <td>{{ $row['display_order'] }}</td>
-                        <td class="text-center">
+                      @foreach($rows as $key => $row)
+              <tr>
+              <td>{{ ++$key }}</td>
+              <td>{{ $row['screen_name']}}</td>
+              <td>{{ $row['route_url'] }}</td>
+              <td>{{ $row['display_order'] }}</td>
+              <td class="text-center">
 
-                          <form action="{{ route('uam_screens.destroy', \Crypt::encrypt($row['screen_id'])) }}" method="POST">
-                            @if(strpos($screen_permission['permissions'], 'Show') !== false)
-                            <a class="btn btn-link" href="{{ route('uam_screens.show', \Crypt::encrypt($row['screen_id'])) }}"><i class="fas fa-eye" style="color:blue"></i></a>
+                <form action="{{ route('uam_screens.destroy', \Crypt::encrypt($row['screen_id'])) }}"
+                method="POST">
+                @if(strpos($screen_permission['permissions'], 'Show') !== false)
+          <a class="btn btn-link"
+            href="{{ route('uam_screens.show', \Crypt::encrypt($row['screen_id'])) }}"><i
+            class="fas fa-eye" style="color:blue"></i></a>
 
 
-                            @endif
+        @endif
 
-                            @if(strpos($screen_permission['permissions'], 'Edit') !== false)
-                            <a class="btn btn-link" href="{{ route('uam_screens.edit', \Crypt::encrypt($row['screen_id'])) }}"><i class="fas fa-pencil-alt" style="color:darkblue"></i></a>
+                @if(strpos($screen_permission['permissions'], 'Edit') !== false)
+          <a class="btn btn-link"
+            href="{{ route('uam_screens.edit', \Crypt::encrypt($row['screen_id'])) }}"><i
+            class="fas fa-pencil-alt" style="color:darkblue"></i></a>
 
-                            @endif
+        @endif
 
-                            @csrf
-                            @method('DELETE')
-                            @if(strpos($screen_permission['permissions'], 'Delete') !== false)
-                            <a class="btn btn-link" type="submit" title="Delete" onclick="return confirm('Are you sure you want to delete this data ?');"><i class="far fa-trash-alt" style="color:red"></i></a>
-                            
-                            @endif
-                          </form>
+                @csrf
+                @method('DELETE')
+                @if(strpos($screen_permission['permissions'], 'Delete') !== false)
+          <a class="btn btn-link" type="submit" title="Delete"
+            onclick="return confirm('Are you sure you want to delete this data ?');"><i
+            class="far fa-trash-alt" style="color:red"></i></a>
 
-                        </td>
-                      </tr>
-                      @endforeach
+        @endif
+                </form>
+
+              </td>
+              </tr>
+            @endforeach
                     </tbody>
 
                   </table>
@@ -187,7 +197,7 @@
           className: 'btn-danger'
         }
       },
-      callback: function(result) {
+      callback: function (result) {
         if (result == true) {
           var url = $('#' + id).val();
           window.location.href = url;

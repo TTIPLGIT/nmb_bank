@@ -677,7 +677,10 @@
                     <div class="section-body mt-1">
                         <div class="row">
                             <div class="col-sm-2 addquizmodal">
-                                <a type="button" style="font-size:15px;margin: 0px 0px 7px 0px;" class="btn btn-success btn-lg" title="Create" id="gcb" href="" data-toggle="modal" data-target="#addModal1">Add Quiz <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
+                                <a type="button" style="font-size:15px;margin: 0px 0px 7px 0px;"
+                                    class="btn btn-success btn-lg" title="Create" id="gcb" href="" data-toggle="modal"
+                                    data-target="#addModal1">Add Quiz <span><i class="fa fa-plus"
+                                            aria-hidden="true"></i></span></a>
                             </div>
                             <div class="col-12" id="quizlist">
 
@@ -703,48 +706,60 @@
                                                 <table class="table table-bordered" id="align1">
                                                     <thead>
                                                         <tr>
-                                                            <th>SI.No</th>
+                                                            <th>S.No</th>
                                                             <th>quiz Name</th>
-                                                            <th class="ellipsis">quiz Question</th>
+                                                            <th class="ellipsis">quiz Questions</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody style="background-color: #cfe0e8;">
                                                         @foreach($rows['rows']['quiz'] as $data)
-                                                        <tr>
-                                                            <td>{{$loop->iteration}}</td>
-                                                            <td>{{$data['quiz_name']}}</td>
-                                                            <td>
-                                                                @foreach($rows['rows']['quiz_question'] as $row)
-                                                                @foreach($data['quiz_questions'] as $key=>$new_row)
-                                                                @if($new_row==$row['question_id'])
-                                                                @if($key==0)
-                                                                {{$row['name']}}
-                                                                @else
-                                                                ,{{$row['name']}}
-                                                                @endif
+                                                            <tr>
+                                                                <td>{{$loop->iteration}}</td>
+                                                                <td>{{$data['quiz_name']}}</td>
+                                                                <td>
+                                                                    @foreach($rows['rows']['quiz_question'] as $row)
+                                                                        @foreach($data['quiz_questions'] as $key => $new_row)
+                                                                            @if($new_row == $row['question_id'])
+                                                                                @if($key == 0)
+                                                                                    {{$row['name']}}
+                                                                                @else
+                                                                                    ,{{$row['name']}}
+                                                                                @endif
 
 
 
-                                                                @endif
-                                                                @endforeach
-                                                                @endforeach
-                                                            </td>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endforeach
+                                                                </td>
 
 
 
-                                                            <td style="">
-                                                                <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModaleditquiz" onclick="fetch_update({{$data['quiz_id']}},'quizedit')" style="margin-top: 6px !important;"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                                <a class="" title="show" data-toggle="modal" data-target="#addModalshowquiz" onclick="fetch_update({{$data['quiz_id']}},'quizshow')"><i class="fas fa-eye" style="color:green"></i></a>
+                                                                <td style="">
+                                                                    <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                        data-toggle="modal" data-target="#addModaleditquiz"
+                                                                        onclick="fetch_update({{$data['quiz_id']}},'quizedit')"
+                                                                        style="margin-top: 0px !important;"><i
+                                                                            class="fas fa-pencil-alt"
+                                                                            style="color: blue !important"></i></a>
 
-                                                                @csrf
+                                                                    <a class="btn btn-link" title="show" data-toggle="modal"
+                                                                        data-target="#addModalshowquiz"
+                                                                        onclick="fetch_update({{$data['quiz_id']}},'quizshow')"><i
+                                                                            class="fas fa-eye" style="color:green"></i></a>
 
-                                                                <button type="submit" title="Delete" onclick="delete1({{$data['quiz_id']}},'5')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button>
+                                                                    @csrf
+
+                                                                    <button type="submit" title="Delete"
+                                                                        onclick="delete1({{$data['quiz_id']}},'5')"
+                                                                        class="btn btn-link"><i class="far fa-trash-alt"
+                                                                            style="color:red"></i></button>
 
 
-                                                            </td>
+                                                                </td>
 
-                                                        </tr>
+                                                            </tr>
                                                         @endforeach
 
                                                     </tbody>
@@ -766,15 +781,18 @@
 
             <div class="row" style="display: flex;justify-content: space-between;">
                 <div class="col-sm-3" style="margin-bottom: 9px !important;">
-                    <a type="button" style="font-size:15px;margin: 0px 0px 0px 0px;" class="btn btn-success btn-lg question" title="Create" href="" data-toggle="modal" data-target="#addModal">Add Question <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
+                    <a type="button" style="font-size:15px;margin: 0px 0px 0px 0px;"
+                        class="btn btn-success btn-lg question" title="Create" href="" data-toggle="modal"
+                        data-target="#addModal">Add Question <span><i class="fa fa-plus"
+                                aria-hidden="true"></i></span></a>
                 </div>
                 <div class="col-sm-3" style="margin-bottom: 6px !important;">
                     <select class="form-control default" id="result1" name="result1">
-                        <option value="">Quiz Type</option>
-                        <option value="LongQuestionlist" selected>Long Question</option>
+                        <!-- <option value="" >Question Type</option> -->
+                        <option value="LongQuestionlist">Long Question</option>
                         <option value="MCQlist">Multiple Choice Question(MCQ)</option>
-                        <option value="ShortAnswerlist">Short Answer</option>
-                        <option value="True/Falselist">True/False</option>
+                        <option value="ShortAnswerlist">Short Question</option>
+                        <option value="True/Falselist" selected>True/False</option>
                     </select>
                 </div>
             </div>
@@ -784,69 +802,72 @@
 
                 <div class="section-body mt-0">
                     @if (session('type'))
-                    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('type') }}">
+                        <input type="hidden" name="session_data" id="session_data" class="session_data"
+                            value="{{ session('type') }}">
 
-                    <script type="text/javascript">
-                        window.onload = function() {
+                        <script type="text/javascript">
+                            window.onload = function () {
 
-                            var value = $('#session_data').val();
-                            $('#result1').val(value).change()
-                        }
-                    </script>
+                                var value = $('#session_data').val();
+                                $('#result1').val(value).change()
+                            }
+                        </script>
 
                     @endif
                     @if (session('success'))
 
-                    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-                    <script type="text/javascript">
-                        window.onload = function() {
-                            var message = $('#session_data').val();
-                            alert(message);
-                            swal.fire({
-                                title: "Success",
-                                text: message,
-                                icon: "success",
-                                type: "success",
-                            });
-                            if (message == 'Quiz Created Successfully') {
-                                setTimeout(function() {
-                                    document.getElementById('quizlist').scrollIntoView({
-                                        behavior: 'smooth'
-                                    });
-                                }, 500);
-                            } else if (message == 'Quiz Updated Successfully') {
-                                setTimeout(function() {
-                                    document.getElementById('quizlist').scrollIntoView({
-                                        behavior: 'smooth'
-                                    });
-                                }, 500);
-                            } else {
-                                alert("ASdae");
-                                setTimeout(function() {
-                                    document.getElementById('truelist').scrollIntoView({
-                                        behavior: 'smooth'
-                                    });
-                                }, 500);
+                        <input type="hidden" name="session_data" id="session_data" class="session_data"
+                            value="{{ session('success') }}">
+                        <script type="text/javascript">
+                            window.onload = function () {
+                                var message = $('#session_data').val();
+                                // alert(message);
+                                swal.fire({
+                                    title: "Success",
+                                    text: message,
+                                    icon: "success",
+                                    type: "success",
+                                });
+                                if (message == 'Quiz Created Successfully') {
+                                    setTimeout(function () {
+                                        document.getElementById('quizlist').scrollIntoView({
+                                            behavior: 'smooth'
+                                        });
+                                    }, 500);
+                                } else if (message == 'Quiz Updated Successfully') {
+                                    setTimeout(function () {
+                                        document.getElementById('quizlist').scrollIntoView({
+                                            behavior: 'smooth'
+                                        });
+                                    }, 500);
+                                } else {
+                                    // alert("ASdae");
+                                    setTimeout(function () {
+                                        document.getElementById('truelist').scrollIntoView({
+                                            behavior: 'smooth'
+                                        });
+                                    }, 500);
+                                }
+
+
                             }
-
-
-                        }
-                    </script>
+                        </script>
                     @elseif(session('error'))
 
-                    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-                    <script type="text/javascript">
-                        window.onload = function() {
-                            var message = $('#session_data1').val();
-                            swal.fire({
-                                title: "Info",
-                                text: message,
-                                icon: "info",
-                                type: "info",
-                            });
+                        <input type="hidden" name="session_data" id="session_data1" class="session_data"
+                            value="{{ session('error') }}">
+                        <script type="text/javascript">
+                            window.onload = function () {
+                                var message = $('#session_data1').val();
+                                swal.fire({
+                                    title: "Info",
+                                    text: message,
+                                    icon: "info",
+                                    type: "info",
+                                });
 
-                        }
-                    </script>
+                            }
+                        </script>
                     @endif
 
                     <div class="row">
@@ -860,9 +881,9 @@
                                             <table class="table  table-bordered table-striped" id="tableExport">
                                                 <thead>
                                                     <tr>
-                                                        <th>SI.No</th>
-                                                        <th>question Name</th>
-                                                        <th class="ellipsis">question</th>
+                                                        <th>S.No</th>
+                                                        <th>question Tag</th>
+                                                        <th class="ellipsis">questions</th>
                                                         <th>Points</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -870,28 +891,35 @@
                                                 <tbody>
 
                                                     @foreach($rows['rows']['long'] as $data)
-                                                    <tr>
-                                                        <td>{{$loop->iteration}}</td>
-                                                        <td>{{$data['question_name']}}</td>
-                                                        <td>{{$data['question']}}</td>
-                                                        <td>{{$data['points']}}</td>
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$data['question_name']}}</td>
+                                                            <td>{{$data['question']}}</td>
+                                                            <td>{{$data['points']}}</td>
 
-                                                        <td style="">
-
-
-
-                                                            <a class="" title="Edit" id="gcb" href="" onclick="fetch_update({{$data['id']}},'longedit')" data-toggle="modal" data-target="#addModal3" style="margin-top:6px;"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" title="show" id="gcb" href="" onclick="fetch_update({{$data['id']}},'longshow')" data-toggle="modal" data-target="#addModal4"><i class="fas fa-eye" style="color:green"></i></a>
-
-                                                            @csrf
-
-                                                            <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'1')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
-                                                        </td>
-
-                                                    </tr>
+                                                            <td style="">
 
 
-                                                    <input type="hidden" class="cfn" id="fn" value="0">
+
+                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                    onclick="fetch_update({{$data['id']}},'longedit')"
+                                                                    data-toggle="modal" data-target="#addModal3"
+                                                                    style="margin-top:0px;"><i class="fas fa-pencil-alt"
+                                                                        style="color: blue !important"></i></a>
+                                                                <a class="btn btn-link" title="show" id="gcb" href=""
+                                                                    onclick="fetch_update({{$data['id']}},'longshow')"
+                                                                    data-toggle="modal" data-target="#addModal4"><i
+                                                                        class="fas fa-eye" style="color:green"></i></a>
+
+                                                                @csrf
+
+                                                                <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'1')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
+                                                            </td>
+
+                                                        </tr>
+
+
+                                                        <input type="hidden" class="cfn" id="fn" value="0">
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -923,37 +951,44 @@
                                             <table class="table  table-bordered table-striped" id="align2">
                                                 <thead>
                                                     <tr>
-                                                        <th>SI.No</th>
-                                                        <th>Question Name</th>
-                                                        <th class="ellipsis">Question</th>
+                                                        <th>S.No</th>
+                                                        <th>Question Tag</th>
+                                                        <th class="ellipsis">Questions</th>
                                                         <th>Points</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach($rows['rows']['mcq'] as $data)
-                                                    <tr>
-                                                        <td>{{$loop->iteration}}</td>
-                                                        <td>{{$data['question_name']}}</td>
-                                                        <td>{{$data['question']}}</td>
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$data['question_name']}}</td>
+                                                            <td>{{$data['question']}}</td>
 
-                                                        <td>{{$data['points']}}</td>
+                                                            <td>{{$data['points']}}</td>
 
-                                                        <td style="">
+                                                            <td style="">
 
-                                                            <a class="" title="Edit" id="gcb" href="" onclick="fetch_update({{$data['id']}},'mcqedit')" data-toggle="modal" data-target="#addModalmcqedit" style="margin-top:6px;"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" title="show" id="gcb" href="" onclick="fetch_update({{$data['id']}},'mcqshow')" data-toggle="modal" data-target="#addModalmcqshow"><i class="fas fa-eye" style="color:green"></i></a>
+                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                    onclick="fetch_update({{$data['id']}},'mcqedit')"
+                                                                    data-toggle="modal" data-target="#addModalmcqedit"
+                                                                    style="margin-top:0px;"><i class="fas fa-pencil-alt"
+                                                                        style="color: blue !important"></i></a>
+                                                                <a class="btn btn-link" title="show" id="gcb" href=""
+                                                                    onclick="fetch_update({{$data['id']}},'mcqshow')"
+                                                                    data-toggle="modal" data-target="#addModalmcqshow"><i
+                                                                        class="fas fa-eye" style="color:green"></i></a>
 
-                                                            @csrf
+                                                                @csrf
 
-                                                            <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'3')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
+                                                                <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'3')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
 
-                                                        </td>
+                                                            </td>
 
-                                                    </tr>
+                                                        </tr>
 
 
-                                                    <input type="hidden" class="cfn" id="fn" value="0">
+                                                        <input type="hidden" class="cfn" id="fn" value="0">
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -985,34 +1020,41 @@
                                             <table class="table  table-bordered table-striped" id="align3">
                                                 <thead>
                                                     <tr>
-                                                        <th>SI.No</th>
-                                                        <th>Question Name</th>
-                                                        <th class="ellipsis">Question</th>
+                                                        <th>S.No</th>
+                                                        <th>Question Tag</th>
+                                                        <th class="ellipsis">Questions</th>
                                                         <th>Points</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach($rows['rows']['short'] as $data)
-                                                    <tr>
-                                                        <td>{{$loop->iteration}}</td>
-                                                        <td>{{$data['question_name']}}</td>
-                                                        <td>{{$data['question']}}</td>
-                                                        <td>{{$data['points']}}</td>
-                                                        <td style="">
-                                                            <a class="" title="Edit" id="gcb" href="" onclick="fetch_update({{$data['id']}},'shortedit')" data-toggle="modal" data-target="#addModalshortedit" style="margin-top:6px;"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" title="show" id="gcb" href="" onclick="fetch_update({{$data['id']}},'shortshow')" data-toggle="modal" data-target="#addModalshortshow"><i class="fas fa-eye" style="color:green"></i></a>
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$data['question_name']}}</td>
+                                                            <td>{{$data['question']}}</td>
+                                                            <td>{{$data['points']}}</td>
+                                                            <td style="">
+                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                    onclick="fetch_update({{$data['id']}},'shortedit')"
+                                                                    data-toggle="modal" data-target="#addModalshortedit"
+                                                                    style="margin-top:0px;"><i class="fas fa-pencil-alt"
+                                                                        style="color: blue !important"></i></a>
+                                                                <a class="btn btn-link" title="show" id="gcb" href=""
+                                                                    onclick="fetch_update({{$data['id']}},'shortshow')"
+                                                                    data-toggle="modal" data-target="#addModalshortshow"><i
+                                                                        class="fas fa-eye" style="color:green"></i></a>
 
-                                                            @csrf
+                                                                @csrf
 
-                                                            <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'2')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
+                                                                <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'2')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
 
-                                                        </td>
+                                                            </td>
 
-                                                    </tr>
+                                                        </tr>
 
 
-                                                    <input type="hidden" class="cfn" id="fn" value="0">
+                                                        <input type="hidden" class="cfn" id="fn" value="0">
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -1045,33 +1087,41 @@
                                                 <thead>
                                                     <tr>
                                                         <th>S.No</th>
-                                                        <th>question Name</th>
-                                                        <th class="ellipsis">question</th>
+                                                        <th>question Tag</th>
+                                                        <th class="ellipsis">questions</th>
                                                         <th>Points</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach($rows['rows']['true'] as $data)
-                                                    <tr>
-                                                        <td>{{$loop->iteration}}</td>
-                                                        <td>{{$data['question_name']}}</td>
-                                                        <td>{{$data['question']}}</td>
-                                                        <td>{{$data['points']}}</td>
-                                                        <td style="">
-                                                            <a class="" title="Edit" id="gcb" href="" data-toggle="modal" onclick="fetch_update({{$data['id']}},'trueedit')" data-target="#addModaltrueedit"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="" title="show" data-toggle="modal" onclick="fetch_update({{$data['id']}},'trueshow')" data-target="#addModaltrueshow"><i class="fas fa-eye" style="color:green"></i></a>
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$data['question_name']}}</td>
+                                                            <td>{{$data['question']}}</td>
+                                                            <td>{{$data['points']}}</td>
+                                                            <td style="">
+                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                    data-toggle="modal"
+                                                                    onclick="fetch_update({{$data['id']}},'trueedit')"
+                                                                    data-target="#addModaltrueedit"><i
+                                                                        class="fas fa-pencil-alt"
+                                                                        style="color: blue !important"></i></a>
+                                                                <a class="btn btn-link" title="show" data-toggle="modal"
+                                                                    onclick="fetch_update({{$data['id']}},'trueshow')"
+                                                                    data-target="#addModaltrueshow"><i class="fas fa-eye"
+                                                                        style="color:green"></i></a>
 
-                                                            @csrf
+                                                                @csrf
 
-                                                            <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'4')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
+                                                                <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'4')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
 
-                                                        </td>
+                                                            </td>
 
-                                                    </tr>
+                                                        </tr>
 
 
-                                                    <input type="hidden" class="cfn" id="fn" value="0">
+                                                        <input type="hidden" class="cfn" id="fn" value="0">
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -1111,7 +1161,8 @@
 
         <div class="modal-content">
 
-            <form method="POST" id="quizcreate_form" action="{{route('elearning.quiz_store')}}" enctype="multipart/form-data" class="reset">
+            <form method="POST" id="quizcreate_form" action="{{route('elearning.quiz_store')}}"
+                enctype="multipart/form-data" class="reset">
                 {{ csrf_field() }}
 
                 <div class="modal-header mh">
@@ -1127,17 +1178,19 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quiz Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="q_name" name="q_name" autocomplete="off" placeholder="Enter the Quiz Name">
+                                <input type="text" class="form-control default comma" id="q_name" name="q_name"
+                                    autocomplete="off" placeholder="Enter the Quiz Name">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quiz Question:<span class="error-star" style="color:red;">*</span></label>
-                                <select class="js-select1" id="quiz_question" name="quiz_question[]" multiple="multiple" onchange="data();">
-                                    <option value="" data-badge="">Select Quiz Question</option>
-                                    @foreach($rows['rows']['quiz_question'] as $key=>$row)
+                                <select class="js-select1" id="quiz_question" name="quiz_question[]" multiple="multiple"
+                                    onchange="data();" placeholder="Select Quiz Question">
 
-                                    <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
+                                    @foreach($rows['rows']['quiz_question'] as $key => $row)
+
+                                        <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
                                     @endforeach
 
                                 </select>
@@ -1146,7 +1199,8 @@
                         <div class="col-md-6 quizpoints" style="display:none;">
                             <div class="form-group">
                                 <label>Total Points:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="q_points" name="q_points" autocomplete="off">
+                                <input type="text" class="form-control default" id="q_points" name="q_points"
+                                    autocomplete="off">
                             </div>
                         </div>
 
@@ -1154,8 +1208,10 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre(5)" id="savebutton">Submit</button>
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel" onclick="resetSelect2()">
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre(5)"
+                                id="savebutton">Submit</button>
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel"
+                                onclick="resetSelect2()">
                         </div>
                     </div>
                 </div>
@@ -1176,7 +1232,8 @@
 
         <div class="modal-content">
 
-            <form method="POST" id="create_form" onsubmit="return validateForm()" enctype="multipart/form-data" class="reset">
+            <form method="POST" id="create_form" onsubmit="return validateForm()" enctype="multipart/form-data"
+                class="reset">
                 {{ csrf_field() }}
 
                 <div class="modal-header mh">
@@ -1193,7 +1250,7 @@
                                     <option value="">Question Type</option>
                                     <option value="Long Question">Long Question</option>
                                     <option value="MCQ">Multiple Choice Question(MCQ)</option>
-                                    <option value="ShortAnswer">Short Answer</option>
+                                    <option value="ShortAnswer">Short Question</option>
                                     <option value="True/False">True/False</option>
                                 </select>
 
@@ -1212,14 +1269,16 @@
             <div id="question-row"></div>
             <div class="card longquestion" id="longquestion" style="display:none">
                 <h4 class="modal-title long">Long Question:</h4>
-                <form method="post" action="{{route('elearningquestion.long_store')}}" id="longcreateform" enctype="multipart/form-data" class="reset">
+                <form method="post" action="{{route('elearningquestion.long_store')}}" id="longcreateform"
+                    enctype="multipart/form-data" class="reset">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="long_qname" name="long_qname" autocomplete="off" placeholder="Please Enter the Long Question name">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="long_qname" name="long_qname"
+                                    autocomplete="off" placeholder="Enter the Long Question Tag">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1230,7 +1289,8 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="long_quistion" class="long_quistion" name="long_quistion" autocomplete="off" placeholder="Please Enter the Long Question name"></textarea>
+                                <textarea id="long_quistion" class="long_quistion" name="long_quistion"
+                                    autocomplete="off" placeholder="Please Enter the Long Question name"></textarea>
 
                             </div>
                         </div>
@@ -1251,7 +1311,8 @@
                                             <tr>
 
                                                 <td>
-                                                    <input type="text" class="form-control default" id="keyword_long" name="keyword_long[]" autocomplete="off">
+                                                    <input type="text" class="form-control default" id="keyword_long"
+                                                        name="keyword_long[]" autocomplete="off">
 
                                                 </td>
                                                 <td>
@@ -1261,7 +1322,8 @@
                                                         </button>
                                                     </div>
                                                     <div class="action_container" width="50px">
-                                                        <button class="success" type="button" onclick="create_tr('table_body')">
+                                                        <button class="success" type="button"
+                                                            onclick="create_tr('table_body')">
                                                             <i class="fa fa-plus"></i>
                                                         </button>
                                                     </div>
@@ -1292,7 +1354,8 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="long_points" name="long_points" autocomplete="off" placeholder="Enter The Points">
+                                <input type="number" class="form-control default" id="long_points" name="long_points"
+                                    autocomplete="off" placeholder="Enter The Points">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1302,8 +1365,10 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre(1)" id="savebutton">Submit</button>
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel" onclick="resetSelect2()">
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre(1)"
+                                id="savebutton">Submit</button>
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel"
+                                onclick="resetSelect2()">
                         </div>
                     </div>
                 </form>
@@ -1314,14 +1379,16 @@
 
             <div class="card mcqquestion" id="mcq" style="display:none">
                 <h4 class="modal-title mcq">Multiple Choice Question(MCQ):</h4>
-                <form method="post" action="{{route('elearningquestion.mcq_store')}}" id="mcqcreateform" enctype="multipart/form-data" class="reset">
+                <form method="post" action="{{route('elearningquestion.mcq_store')}}" id="mcqcreateform"
+                    enctype="multipart/form-data" class="reset">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="mcq_qname" name="mcq_qname" autocomplete="off" placeholder="Enter the Question Name">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="mcq_qname" name="mcq_qname"
+                                    autocomplete="off" placeholder="Enter the Question Tag">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1334,7 +1401,8 @@
 
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="mcq_quistion" class="mcq_quistion" name="mcq_quistion" rows="4" cols="81" autocomplete="off" placeholder="Please Enter the Mcq Question name"></textarea>
+                                <textarea id="mcq_quistion" class="mcq_quistion" name="mcq_quistion" rows="4" cols="81"
+                                    autocomplete="off" placeholder="Please Enter the Mcq Question name"></textarea>
 
                             </div>
                         </div>
@@ -1353,7 +1421,8 @@
                                             <tr>
 
                                                 <td>
-                                                    <input type="text" class="form-control default" id="keyword_mcq" name="keyword_mcq[]" autocomplete="off">
+                                                    <input type="text" class="form-control default" id="keyword_mcq"
+                                                        name="keyword_mcq[]" autocomplete="off">
                                                 </td>
 
                                                 <td>
@@ -1363,7 +1432,8 @@
                                                         </button>
                                                     </div>
                                                     <div class="action_container3">
-                                                        <button class="success" type="button" onclick="create_tr('mcq_body')">
+                                                        <button class="success" type="button"
+                                                            onclick="create_tr('mcq_body')">
                                                             <i class="fa fa-plus"></i>
                                                         </button>
                                                     </div>
@@ -1390,7 +1460,8 @@
                             <div class="form-group">
                                 <label>Correct Choices:<span class="error-star" style="color:red;">*</span></label>
                                 <br>
-                                <select class="js-select2" id="mcq_correct_choices" name="mcq_correct_choices[]" multiple="multiple">
+                                <select class="js-select2" id="mcq_correct_choices" name="mcq_correct_choices[]"
+                                    multiple="multiple">
                                     <option value="" data-badge="">Select Correct Choices</option>
 
 
@@ -1404,7 +1475,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="mcq_points" name="mcq_points" autocomplete="off" placeholder="Enter the Points">
+                                <input type="number" class="form-control default" id="mcq_points" name="mcq_points"
+                                    autocomplete="off" placeholder="Enter the Points">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1414,8 +1486,10 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre(3)" id="savebutton">Submit</button>
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel" onclick="resetSelect2()">
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre(3)"
+                                id="savebutton">Submit</button>
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel"
+                                onclick="resetSelect2()">
                         </div>
                     </div>
                 </form>
@@ -1424,15 +1498,17 @@
             <!-- Short answer -->
 
             <div class="card shortquestion" id="shortanswer" style="display:none">
-                <h4 class="modal-title short">Add Short Answer:</h4>
-                <form method="post" action="{{route('elearningquestion.short_store')}}" id="shortcreateform" enctype="multipart/form-data" class="reset">
+                <h4 class="modal-title short">Short Question:</h4>
+                <form method="post" action="{{route('elearningquestion.short_store')}}" id="shortcreateform"
+                    enctype="multipart/form-data" class="reset">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="short_qname" name="short_qname" autocomplete="off" placeholder="Enter the Question Name">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="short_qname"
+                                    name="short_qname" autocomplete="off" placeholder="Enter the Short Question Tag">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1442,7 +1518,9 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="short_quistion" class="short_quistion" name="short_quistion" rows="4" cols="81" autocomplete="off" placeholder="Please Enter the Short Question name"></textarea>
+                                <textarea id="short_quistion" class="short_quistion" name="short_quistion" rows="4"
+                                    cols="81" autocomplete="off"
+                                    placeholder="Please Enter the Short Question name"></textarea>
 
                             </div>
                         </div>
@@ -1461,7 +1539,8 @@
                                             <tr>
 
                                                 <td>
-                                                    <input type="text" class="form-control default" id="keyword_short" name="keyword_short[]" autocomplete="off">
+                                                    <input type="text" class="form-control default" id="keyword_short"
+                                                        name="keyword_short[]" autocomplete="off">
 
                                                 </td>
 
@@ -1473,7 +1552,8 @@
                                                         </button>
                                                     </div>
                                                     <div class="action_container">
-                                                        <button class="success" type="button" onclick="create_tr('short_body')">
+                                                        <button class="success" type="button"
+                                                            onclick="create_tr('short_body')">
                                                             <i class="fa fa-plus"></i>
                                                         </button>
                                                     </div>
@@ -1498,7 +1578,8 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="short_points" name="short_points" autocomplete="off" placeholder="Enter the Points">
+                                <input type="number" class="form-control default" id="short_points" name="short_points"
+                                    autocomplete="off" placeholder="Enter the Points">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1506,8 +1587,10 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre(2)" id="savebutton">Submit</button>
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel" onclick="resetSelect2()">
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre(2)"
+                                id="savebutton">Submit</button>
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel"
+                                onclick="resetSelect2()">
                         </div>
                     </div>
                 </form>
@@ -1518,15 +1601,17 @@
 
             <div class="card truequestion" id="true" style="display:none">
                 <h4 class="modal-title true">True/false:</h4>
-                <form method="post" action="{{route('elearningquestion.true_store')}}" id="truecreateform" enctype="multipart/form-data" class="reset">
+                <form method="post" action="{{route('elearningquestion.true_store')}}" id="truecreateform"
+                    enctype="multipart/form-data" class="reset">
                     {{ csrf_field() }}
 
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="true_qname" name="true_qname" autocomplete="off" placeholder="Enter the Question Name">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="true_qname" name="true_qname"
+                                    autocomplete="off" placeholder="Enter the Question Tag">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1536,7 +1621,9 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="true_quistion" class="true_quistion" name="true_quistion" rows="4" cols="81" autocomplete="off" placeholder="Please Enter the T/F Question name"></textarea>
+                                <textarea id="true_quistion" class="true_quistion" name="true_quistion" rows="4"
+                                    cols="81" autocomplete="off"
+                                    placeholder="Please Enter the T/F Question name"></textarea>
 
                             </div>
                         </div>
@@ -1562,7 +1649,8 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="true_points" name="true_points" autocomplete="off" placeholder="Enter the Points">
+                                <input type="number" class="form-control default" id="true_points" name="true_points"
+                                    autocomplete="off" placeholder="Enter the Points">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1570,8 +1658,10 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre(4)" id="savebutton">Submit</button>
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel" onclick="resetSelect2()">
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre(4)"
+                                id="savebutton">Submit</button>
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel"
+                                onclick="resetSelect2()">
                         </div>
                     </div>
                 </form>
@@ -1753,7 +1843,7 @@
 <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 <script>
-    document.querySelector("[type='number']").addEventListener("keypress", function(evt) {
+    document.querySelector("[type='number']").addEventListener("keypress", function (evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
@@ -1776,7 +1866,7 @@
         }
 
     }
-    $(document).on('focusout', '#keyword_mcq', function(e) {
+    $(document).on('focusout', '#keyword_mcq', function (e) {
         choice_callback();
     });
     const correct_choices = [];
@@ -2169,7 +2259,7 @@
 
     }
 
-    $(document).on('change', '#keyword_mcqedit', function() {
+    $(document).on('change', '#keyword_mcqedit', function () {
         var new_value = $('#keyword_mcqedit').val();
         var new_valuecount = document.querySelectorAll('#keyword_mcqedit').length;
         var new_correctcount = document.querySelector('#mcq_correct_choicesedit').children.length;
@@ -2280,15 +2370,15 @@
             $('#true').css('display', 'none');
         }
     }
-    $('#result').on('change', function(e) {
+    $('#result').on('change', function (e) {
         calcQuestionType(e.target.id);
     });
 </script>
 
 <script>
-    $('#result1').on('change', function() {
+    $('#result1').on('change', function () {
 
-        alert('asda');
+        // alert('asda');
         if ($(this).val() === 'LongQuestionlist') {
             $('#longquestionlist').css('display', 'block');
             $('#truelist').css('display', 'none');
@@ -2321,8 +2411,8 @@
 
 <!-- Deepika -->
 <script>
-    $(document).ready(function() {
-        $(document).on('hidden.bs.modal', function() {
+    $(document).ready(function () {
+        $(document).on('hidden.bs.modal', function () {
             // const form = this.querySelector('.reset');
 
             // form.reset();
@@ -2628,7 +2718,8 @@
 
         <div class="modal-content">
 
-            <form method="POST" id="longedit_form" action="{{route('elearningquestion.long_update',1)}}" enctype="multipart/form-data" class="reset">
+            <form method="POST" id="longedit_form" action="{{route('elearningquestion.long_update', 1)}}"
+                enctype="multipart/form-data" class="reset">
                 @csrf
 
                 <input type="hidden" name="eid" class="eid" id="eid">
@@ -2641,14 +2732,15 @@
                 <!-- Long question -->
 
                 <div class=" container edit  longquestion">
-                    <h4 class="modal-title long">Edit Long Question:</h4>
+                    <h4 class="modal-title long">Long Question:</h4>
 
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="long_qnameedit" name="long_qnameedit" autocomplete="off">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="long_qnameedit"
+                                    name="long_qnameedit" autocomplete="off">
                             </div>
                             <div class="col-md-1"></div>
                         </div>
@@ -2663,7 +2755,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="long_quistionedit" class="long_quistionedit" name="long_quistionedit" autocomplete="off"></textarea>
+                                    <textarea id="long_quistionedit" class="long_quistionedit" name="long_quistionedit"
+                                        autocomplete="off"></textarea>
                                 </div>
 
                             </div>
@@ -2677,6 +2770,7 @@
                             <div class="col-md-10">
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
+
                                     <div class="wordquestion">
 
                                         <table class="_table">
@@ -2685,7 +2779,9 @@
                                                 <tr>
 
                                                     <td>
-                                                        <input type="text" class="form-control default" id="keyword_longedit" name="keyword_longedit[]" autocomplete="off">
+                                                        <input type="text" class="form-control default"
+                                                            id="keyword_longedit" name="keyword_longedit[]"
+                                                            autocomplete="off">
                                                     </td>
                                                     <td>
                                                         <div class="action_container">
@@ -2694,7 +2790,8 @@
                                                             </button>
                                                         </div>
                                                         <div class="action_container" width="50px">
-                                                            <button class="success" type="button" onclick="create_tr('table_long_edit')">
+                                                            <button class="success" type="button"
+                                                                onclick="create_tr('table_long_edit')">
                                                                 <i class="fa fa-plus"></i>
                                                             </button>
                                                         </div>
@@ -2725,7 +2822,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                    <input type="text" class="form-control default" id="long_pointsedit" name="long_pointsedit" autocomplete="off">
+                                    <input type="text" class="form-control default" id="long_pointsedit"
+                                        name="long_pointsedit" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-1"></div>
@@ -2734,7 +2832,8 @@
 
                     <div class="row">
                         <div class="col-lg-12 text-center">
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre('longedit')" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre('longedit')"
+                                id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -2773,15 +2872,16 @@
             <!-- Long question -->
 
             <div class=" container show  longquestion">
-                <h4 class="modal-title long">Show Long Question:</h4>
+                <h4 class="modal-title long">Long Question:</h4>
                 <form method="POST" class="longqustionsform">
 
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="long_qnameshow" name="long_qnameshow" style="background-color: #e9ecef !important;">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="long_qnameshow"
+                                    name="long_qnameshow" style="background-color: #e9ecef !important;">
                             </div>
                             <div class="col-md-1"></div>
                         </div>
@@ -2795,7 +2895,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div>
-                                    <textarea id="long_quistionshow" class="long_quistionshow" name="long_quistionshow" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea id="long_quistionshow" class="long_quistionshow" name="long_quistionshow"
+                                        style="background-color: #e9ecef !important;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2808,7 +2909,9 @@
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
                                     <div class="wordquestion">
-                                        <textarea class="form-control default" id="keyword_longshow" name="keyword_longshow" style="background-color: #e9ecef !important;"></textarea>
+                                        <textarea class="form-control default" id="keyword_longshow"
+                                            name="keyword_longshow"
+                                            style="background-color: #e9ecef !important;"></textarea>
 
                                     </div>
                                 </div>
@@ -2818,7 +2921,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Points:<span class="error-star" style="color:red;">*</span></label>
-                                    <input type="text" class="form-control default" id="long_pointsshow" name="long_pointsshow" style="background-color: #e9ecef !important;">
+                                    <input type="text" class="form-control default" id="long_pointsshow"
+                                        name="long_pointsshow" style="background-color: #e9ecef !important;">
                                 </div>
                             </div>
 
@@ -2865,14 +2969,15 @@
             <!-- Long question -->
 
             <div class=" container show  longquestion">
-                <h4 class="modal-title long">Show Short Question:</h4>
+                <h4 class="modal-title long">Short Question:</h4>
                 <form method="POST" class="longqustionsform">
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="short_qnameshow" name="short_qnameshow" style="background-color: #e9ecef !important;">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default" id="short_qnameshow"
+                                    name="short_qnameshow" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
 
@@ -2885,7 +2990,9 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div classs="col-md-10">
-                                    <textarea id="short_quistionshow" class="short_quistionshow" name="short_quistionshow" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea id="short_quistionshow" class="short_quistionshow"
+                                        name="short_quistionshow"
+                                        style="background-color: #e9ecef !important;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2899,7 +3006,9 @@
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
                                     <div class="wordquestion">
-                                        <textarea class="form-control default" id="keyword_shortshow" name="keyword_shortshow" style="background-color: #e9ecef !important;"></textarea>
+                                        <textarea class="form-control default" id="keyword_shortshow"
+                                            name="keyword_shortshow"
+                                            style="background-color: #e9ecef !important;"></textarea>
 
 
                                     </div>
@@ -2910,7 +3019,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Points:<span class="error-star" style="color:red;">*</span></label>
-                                    <input type="text" class="form-control default" id="short_pointsshow" name="short_pointsshow" style="background-color: #e9ecef !important;">
+                                    <input type="text" class="form-control default" id="short_pointsshow"
+                                        name="short_pointsshow" style="background-color: #e9ecef !important;">
                                 </div>
                             </div>
 
@@ -2936,7 +3046,8 @@
 
         <div class="modal-content">
 
-            <form method="POST" id="quizedit_form" action="{{route('elearning.quiz_update',1)}}" enctype="multipart/form-data">
+            <form method="POST" id="quizedit_form" action="{{route('elearning.quiz_update', 1)}}"
+                enctype="multipart/form-data">
                 {{ csrf_field() }}
 
                 <input type="hidden" name="quiz_edit" class="quiz_edit" id="quiz_edit">
@@ -2960,11 +3071,12 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quiz Question:<span class="error-star" style="color:red;">*</span></label>
-                                <select class="js-select1 quizq_edit quiz_questionedit" id="quiz_questionedit" name="quiz_questionedit[]" multiple="multiple" onchange="dataedit();">
+                                <select class="js-select1 quizq_edit quiz_questionedit" id="quiz_questionedit"
+                                    name="quiz_questionedit[]" multiple="multiple" onchange="dataedit();">
                                     <option value="" data-badge="">Select Quiz Question</option>
-                                    @foreach($rows['rows']['quiz_question'] as $key=>$row)
+                                    @foreach($rows['rows']['quiz_question'] as $key => $row)
 
-                                    <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
+                                        <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
                                     @endforeach
 
                                 </select>
@@ -2974,7 +3086,8 @@
                         <div class="col-md-6 ">
                             <div class="form-group">
                                 <label>Total Points:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="q_pointsedit" name="q_pointsedit" autocomplete="off">
+                                <input type="text" class="form-control default" id="q_pointsedit" name="q_pointsedit"
+                                    autocomplete="off">
                             </div>
                         </div>
 
@@ -2982,7 +3095,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre('quizedit')" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre('quizedit')"
+                                id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -3025,17 +3139,20 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quiz Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="q_nameshow" name="q_nameshow" style="background-color: #e9ecef !important;">
+                                <input type="text" class="form-control default" id="q_nameshow" name="q_nameshow"
+                                    style="background-color: #e9ecef !important;">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quiz Question:<span class="error-star" style="color:red;">*</span></label>
-                                <select class="js-select1 quiz_questionshow" id="quiz_questionshow" name="quiz_questionshow[]" multiple="multiple" style="background-color: #e9ecef !important;">
+                                <select class="js-select1 quiz_questionshow" id="quiz_questionshow"
+                                    name="quiz_questionshow[]" multiple="multiple"
+                                    style="background-color: #e9ecef !important;">
                                     <option value="" data-badge="">Select Quiz Question</option>
-                                    @foreach($rows['rows']['quiz_question'] as $key=>$row)
+                                    @foreach($rows['rows']['quiz_question'] as $key => $row)
 
-                                    <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
+                                        <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
                                     @endforeach
 
                                 </select>
@@ -3045,7 +3162,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Total Points:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="q_pointsshow" name="q_pointsshow" autocomplete="off" style="background-color: #e9ecef !important;">
+                                <input type="text" class="form-control default" id="q_pointsshow" name="q_pointsshow"
+                                    autocomplete="off" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
 
@@ -3074,12 +3192,13 @@
 
         <div class="modal-content">
 
-            <form method="POST" id="shortedit_form" action="{{route('elearningquestion.short_update',1)}}" enctype="multipart/form-data">
+            <form method="POST" id="shortedit_form" action="{{route('elearningquestion.short_update', 1)}}"
+                enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="short_edit" class="short_edit" id="short_edit">
 
                 <div class="modal-header mh">
-                    <h4 class="modal-title">Edit Short Answer</h4>
+                    <h4 class="modal-title">Edit Short Question</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
 
@@ -3087,14 +3206,15 @@
 
                 <!-- short answer -->
                 <div class="card longquestion">
-                    <h4 class="modal-title short">Short Answer:</h4>
+                    <h4 class="modal-title short">Short Question:</h4>
 
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="short_qnameedit" name="short_qnameedit" autocomplete="off">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="short_qnameedit"
+                                    name="short_qnameedit" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3105,7 +3225,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="short_quistionedit" class="short_quistionedit" name="short_quistionedit" autocomplete="off"></textarea>
+                                    <textarea id="short_quistionedit" class="short_quistionedit"
+                                        name="short_quistionedit" autocomplete="off"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -3126,7 +3247,9 @@
                                                 <tr>
 
                                                     <td>
-                                                        <input type="text" class="form-control default" id="keyword_shortedit" name="keyword_shortedit[]" autocomplete="off">
+                                                        <input type="text" class="form-control default"
+                                                            id="keyword_shortedit" name="keyword_shortedit[]"
+                                                            autocomplete="off">
                                                     </td>
                                                     <td>
                                                         <div class="action_container">
@@ -3146,7 +3269,8 @@
                                         </table>
 
                                         <div class="action_container">
-                                            <button class="success" type="button" onclick="create_tr('table_short_edit')">
+                                            <button class="success" type="button"
+                                                onclick="create_tr('table_short_edit')">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
@@ -3169,7 +3293,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Points:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="short_pointsedit" name="short_pointsedit" autocomplete="off">
+                                <input type="text" class="form-control default" id="short_pointsedit"
+                                    name="short_pointsedit" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3177,7 +3302,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre('shortedit')" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre('shortedit')"
+                                id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -3197,7 +3323,8 @@
 
         <div class="modal-content">
 
-            <form method="POST" id="mcqedit_form" action="{{route('elearningquestion.mcq_update',1)}}" enctype="multipart/form-data">
+            <form method="POST" id="mcqedit_form" action="{{route('elearningquestion.mcq_update', 1)}}"
+                enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="mcq_edit" class="mcq_edit" id="mcq_edit">
 
@@ -3218,8 +3345,9 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="mcq_qnameedit" name="mcq_qnameedit" autocomplete="off">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="mcq_qnameedit"
+                                    name="mcq_qnameedit" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3230,7 +3358,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="mcq_quistionedit" class="mcq_quistionedit" name="mcq_quistionedit" autocomplete="off"></textarea>
+                                    <textarea id="mcq_quistionedit" class="mcq_quistionedit" name="mcq_quistionedit"
+                                        autocomplete="off"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -3250,6 +3379,11 @@
                                         <tbody id="table_mcq_edit">
                                             <tr>
                                                 <td>
+                                                    <input type="text" class="form-control default" id="keyword_mcqedit"
+                                                        name="keyword_mcqedit[]" autocomplete="off">
+
+                                                </td>
+                                                <td>
                                                     <div class="action_container">
                                                         <button class="danger" onclick="remove_tr(this)">
                                                             <i class="fa fa-close"></i>
@@ -3258,12 +3392,9 @@
 
                                                 </td>
 
-                                                <td>
-                                                    <input type="text" class="form-control default" id="keyword_mcqedit" name="keyword_mcqedit[]" autocomplete="off">
-
-                                                </td>
-                                                <div class="action_container3">
-                                                    <button class="success" type="button" onclick="create_tr('table_mcq_edit')">
+                                                <div class="action_container" width="50px">
+                                                    <button class="success" type="button"
+                                                        onclick="create_tr('table_mcq_edit')">
                                                         <i class="fa fa-plus"></i>
                                                     </button>
                                                 </div>
@@ -3286,7 +3417,8 @@
                             <div class="form-group">
                                 <label>Correct Choices:<span class="error-star" style="color:red;">*</span></label>
                                 <br>
-                                <select class="js-select2 mcq_correct_choicesedit" id="mcq_correct_choicesedit" name="mcq_correct_choicesedit[]" multiple="multiple" autocomplete="off">
+                                <select class="js-select2 mcq_correct_choicesedit" id="mcq_correct_choicesedit"
+                                    name="mcq_correct_choicesedit[]" multiple="multiple" autocomplete="off">
 
                                     <option value="" data-badge="">Select Correct Choices</option>
                                     <!-- <option value="Valuation always depends on the fact that who is valuing what" data-badge="">crt</option> -->
@@ -3300,7 +3432,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="mcq_pointsedit" name="mcq_pointsedit" autocomplete="off">
+                                <input type="number" class="form-control default" id="mcq_pointsedit"
+                                    name="mcq_pointsedit" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3310,7 +3443,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre('mcqedit')" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre('mcqedit')"
+                                id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -3348,8 +3482,9 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="mcq_qnameshow" name="mcq_qnameshow" autocomplete="off" style="background-color: #e9ecef !important;">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default" id="mcq_qnameshow" name="mcq_qnameshow"
+                                    autocomplete="off" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3361,7 +3496,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="mcq_quistionshow" class="mcq_quistionshow" name="mcq_quistionshow" autocomplete="off" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea id="mcq_quistionshow" class="mcq_quistionshow" name="mcq_quistionshow"
+                                        autocomplete="off" style="background-color: #e9ecef !important;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -3374,7 +3510,8 @@
                             <div class="form-group">
                                 <label>Choices:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="wordquestion">
-                                    <textarea class="form-control default" id="keyword_mcqshow" name="keyword_mcqshow" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea class="form-control default" id="keyword_mcqshow" name="keyword_mcqshow"
+                                        style="background-color: #e9ecef !important;"></textarea>
 
                                 </div>
                             </div>
@@ -3387,7 +3524,9 @@
                             <div class="form-group">
                                 <label>Correct Choices:<span class="error-star" style="color:red;">*</span></label>
                                 <br>
-                                <textarea type="text" class="form-control default mcq_correct_choicesshow" id="mcq_correct_choicesshow" name="mcq_correct_choicesshow" style="background-color: #e9ecef !important;"></textarea>
+                                <textarea type="text" class="form-control default mcq_correct_choicesshow"
+                                    id="mcq_correct_choicesshow" name="mcq_correct_choicesshow"
+                                    style="background-color: #e9ecef !important;"></textarea>
 
                             </div>
                         </div>
@@ -3395,7 +3534,9 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="mcq_pointsshow" name="mcq_pointsshow" autocomplete="off" style="background-color: #e9ecef !important;">
+                                <input type="number" class="form-control default" id="mcq_pointsshow"
+                                    name="mcq_pointsshow" autocomplete="off"
+                                    style="background-color: #e9ecef !important;">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3424,7 +3565,8 @@
         <div class="modal-content">
 
 
-            <form method="POST" id="trueedit_form" action="{{route('elearningquestion.true_update',1)}}" enctype="multipart/form-data">
+            <form method="POST" id="trueedit_form" action="{{route('elearningquestion.true_update', 1)}}"
+                enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="true_edit" class="true_edit" id="true_edit">
 
@@ -3444,8 +3586,9 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="true_qnameedit" name="true_qnameedit" autocomplete="off">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="true_qnameedit"
+                                    name="true_qnameedit" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3456,7 +3599,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="true_quistionedit" class="true_quistionedit" name="true_quistionedit" autocomplete="off"></textarea>
+                                    <textarea id="true_quistionedit" class="true_quistionedit" name="true_quistionedit"
+                                        autocomplete="off"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -3471,11 +3615,13 @@
 
                                 <!-- <input type="text" class="form-control default" id="answer" name="answer"> -->
                                 <div>
-                                    <input type="radio" class="answer_edit_on" id="answer_edit" value="on" name="answer_edit" required />
+                                    <input type="radio" class="answer_edit_on" id="answer_edit" value="on"
+                                        name="answer_edit" required />
                                     <label for="answer">True</label>
                                 </div>
                                 <div>
-                                    <input type="radio" class="answer_edit_off" id="answer_edit" value="off" name="answer_edit" required />
+                                    <input type="radio" class="answer_edit_off" id="answer_edit" value="off"
+                                        name="answer_edit" required />
                                     <label for="answer">False</label>
                                 </div>
                             </div>
@@ -3484,7 +3630,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="true_pointsedit" name="true_pointsedit" autocomplete="off">
+                                <input type="text" class="form-control default" id="true_pointsedit"
+                                    name="true_pointsedit" autocomplete="off">
                             </div>
                         </div>
 
@@ -3492,7 +3639,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre('truedit')" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre('truedit')"
+                                id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -3530,8 +3678,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="true_qnameshow" name="true_qnameshow" style="background-color: #e9ecef !important;">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default" id="true_qnameshow"
+                                    name="true_qnameshow" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
 
@@ -3541,7 +3690,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="true_quistionshow" class="true_quistionshow" name="true_quistionshow" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea id="true_quistionshow" class="true_quistionshow" name="true_quistionshow"
+                                        style="background-color: #e9ecef !important;"></textarea>
                                 </div>
 
                             </div>
@@ -3556,11 +3706,13 @@
 
                                 <!-- <input type="text" class="form-control default" id="answer" name="answer"> -->
                                 <div>
-                                    <input type="radio" class="answer_show_on" id="answer_show" name="answer_show" required />
+                                    <input type="radio" class="answer_show_on" id="answer_show" name="answer_show"
+                                        required />
                                     <label for="answer">True</label>
                                 </div>
                                 <div>
-                                    <input type="radio" class="answer_show_off" id="answer_show" name="answer_show" required />
+                                    <input type="radio" class="answer_show_off" id="answer_show" name="answer_show"
+                                        required />
                                     <label for="answer">False</label>
                                 </div>
                             </div>
@@ -3569,7 +3721,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="true_pointsshow" name="true_pointsshow" style="background-color: #e9ecef !important;">
+                                <input type="text" class="form-control default" id="true_pointsshow"
+                                    name="true_pointsshow" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
 
@@ -3607,7 +3760,7 @@
 
             },
 
-            success: function(data) {
+            success: function (data) {
                 // correct_choices = data.rows[0]['correct_choices'].split(',');
 
                 console.log(data.rows);
@@ -3869,7 +4022,7 @@
                     },
 
 
-                    success: function(data) {
+                    success: function (data) {
                         console.log(data);
                         //exit();
                         if (data['data'] == 0) {
@@ -3881,7 +4034,7 @@
                             Swal.fire("Success!", data['message_cus'], "success").then((result) => {
 
                                 location.replace(`/elearningquestion`);
-                                setTimeout(function() {
+                                setTimeout(function () {
                                     document.getElementById('quizlist').scrollIntoView({
                                         behavior: 'smooth'
                                     });
@@ -4034,7 +4187,7 @@
         allowClear: true,
         tags: true, // создает новые опции на лету
         language: {
-            noResults: function() {
+            noResults: function () {
                 return "No Choices Added";
             }
         }
@@ -4054,7 +4207,7 @@
             allowClear: true,
             tags: true,
             language: {
-                noResults: function() {
+                noResults: function () {
                     return "No Question Added";
                 }
             }
@@ -4062,9 +4215,9 @@
     }
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Call the reinitialization function after the select2 library is loaded
-        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function() {
+        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function () {
             reinitializeSelect2(".js-select1");
         });
     });
@@ -4093,7 +4246,7 @@
                 _token: '{{csrf_token()}}'
 
             },
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 if (id == "") {
                     $('.quizpoints').css('display', 'none');
@@ -4114,7 +4267,7 @@
             }
 
         })
-        $('.select2-selection__clear').on('click', function() {
+        $('.select2-selection__clear').on('click', function () {
             $('.quizpoints').css('display', 'none');
 
         });
@@ -4135,7 +4288,7 @@
                 _token: '{{csrf_token()}}'
 
             },
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
 
                 $('#q_pointsedit').val(data);
@@ -4146,7 +4299,7 @@
             }
 
         })
-        $('.select2-selection__clear').on('click', function() {
+        $('.select2-selection__clear').on('click', function () {
             $('.quizpoints').css('display', 'none');
 
         });
@@ -4164,57 +4317,57 @@
 
 
     }
-    $('.close').on('click', function() {
+    $('.close').on('click', function () {
         resetSelect2();
     });
 </script>
 
 <script>
-    document.querySelector("[name='short_points']").addEventListener("keypress", function(evt) {
+    document.querySelector("[name='short_points']").addEventListener("keypress", function (evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
     });
-    document.querySelector("[name='short_pointsedit']").addEventListener("keypress", function(evt) {
+    document.querySelector("[name='short_pointsedit']").addEventListener("keypress", function (evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
     });
 
 
-    document.querySelector("[name='long_points']").addEventListener("keypress", function(evt) {
+    document.querySelector("[name='long_points']").addEventListener("keypress", function (evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)) {
             evt.preventDefault();
         }
     });
-    document.querySelector("[name='long_pointsedit']").addEventListener("keypress", function(evt) {
+    document.querySelector("[name='long_pointsedit']").addEventListener("keypress", function (evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)) {
             evt.preventDefault();
         }
     });
 
-    document.querySelector("[name='true_points']").addEventListener("keypress", function(evt) {
+    document.querySelector("[name='true_points']").addEventListener("keypress", function (evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
     });
-    document.querySelector("[name='true_pointsedit']").addEventListener("keypress", function(evt) {
+    document.querySelector("[name='true_pointsedit']").addEventListener("keypress", function (evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
     });
 
-    document.querySelector("[name='mcq_points']").addEventListener("keypress", function(evt) {
+    document.querySelector("[name='mcq_points']").addEventListener("keypress", function (evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
     });
-    document.querySelector("[name='mcq_pointsedit']").addEventListener("keypress", function(evt) {
+    document.querySelector("[name='mcq_pointsedit']").addEventListener("keypress", function (evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
     });
-    document.querySelector(".comma").addEventListener("keypress", function(evt) {
+    document.querySelector(".comma").addEventListener("keypress", function (evt) {
         var charCode = evt.which || evt.keyCode;
         var charStr = String.fromCharCode(charCode);
 

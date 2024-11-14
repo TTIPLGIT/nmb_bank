@@ -1194,7 +1194,8 @@
                         </div>
                         <div class="card-body d-flex flex-row justify-content-between align-items-center">
                             <span class="overview_count">{{$count['total_course'][0]['numberofcourses']}}</span>
-                            <img class="overview_img" src="{{asset('asset/image/progresscourse.png')}}" alt="Course in Progress" width="40%">
+                            <img class="overview_img" src="{{asset('asset/image/progresscourse.png')}}"
+                                alt="Course in Progress" width="40%">
                         </div>
                     </div>
                     <div class="card noShadow">
@@ -1203,7 +1204,8 @@
                         </div>
                         <div class="card-body d-flex flex-row justify-content-between align-items-center">
                             <span class="overview_count">{{$count['free_course'][0]['numberofcourses']}}</span>
-                            <img class="overview_img" src="{{asset('asset/image/completed.png')}}" alt="Course Completed" width="40%">
+                            <img class="overview_img" src="{{asset('asset/image/completed.png')}}"
+                                alt="Course Completed" width="40%">
                         </div>
                     </div>
                     <div class="card noShadow">
@@ -1212,16 +1214,19 @@
                         </div>
                         <div class="card-body d-flex flex-row justify-content-between align-items-center">
                             <span class="overview_count">{{$count['paid_course'][0]['numberofcourses']}}</span>
-                            <img class="overview_img" src="{{asset('asset/image/paid-ads.png')}}" alt="Watching Time" width="40%">
+                            <img class="overview_img" src="{{asset('asset/image/paid-ads.png')}}" alt="Watching Time"
+                                width="40%">
                         </div>
                     </div>
                     <div class="card noShadow">
                         <div class="card-header">
                             <span>Certificate Course</span>
                         </div>
-                        <div class="card-body d-flex flex-row justify-content-between align-items-center" style="height: 92px;">
+                        <div class="card-body d-flex flex-row justify-content-between align-items-center"
+                            style="height: 92px;">
                             <span class="overview_count">{{$count['certificate_course'][0]['numberofcourses']}}</span>
-                            <img class="overview_img" id="overview_img_exception" src="{{asset('asset/image/awards.png')}}" alt="Certificates Achieved" width="40%">
+                            <img class="overview_img" id="overview_img_exception"
+                                src="{{asset('asset/image/awards.png')}}" alt="Certificates Achieved" width="40%">
                         </div>
                     </div>
 
@@ -1279,47 +1284,50 @@
                         <div class="card-header">
                             Notice Board
                         </div>
-                        @php $class_list=count ($rows)== 0 ? "d-flex justify-content-center align-items-center" : '' @endphp
+                        @php $class_list = count($rows) == 0 ? "d-flex justify-content-center align-items-center" : '' @endphp
                         <div class="card-body {{$class_list}}">
-                            @if(count ($rows)== 0)
-                            <div class="nonotice">No Notice Found</div>
+                            @if(count($rows) == 0)
+                                <div class="nonotice">No Notice Found</div>
                             @endif
-                            @foreach($rows as $key=>$row)
+                            @foreach($rows as $key => $row)
 
-                            <div class="d-flex flex-row justify-content-around notice_board">
-                                @php $path=$row['notice_path'].'/'.$row['notice_banner'];@endphp
-                                @if(file_exists(substr($path, 1)))
-                                <img class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/{{$row['notice_banner']}}" alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')">
-                                <!-- <span class="caption">{{$row['notice_description']}}</span> -->
-                                <span class="caption">{!!html_entity_decode($row['notice_description'])!!}</span>
+                                <div class="d-flex flex-row justify-content-around notice_board">
+                                    @php    $path = $row['notice_path'] . '/' . $row['notice_banner'];@endphp
+                                    @if(file_exists(substr($path, 1)))
+                                        <img class="notice_board_poster noticeHasFancy"
+                                            src="{{$row['notice_path']}}/{{$row['notice_banner']}}" alt="Notice Board"
+                                            onclick="makeFancy(event, 'noticeHasFancy')">
+                                        <!-- <span class="caption">{{$row['notice_description']}}</span> -->
+                                        <span class="caption">{!!html_entity_decode($row['notice_description'])!!}</span>
 
 
-                                @else
-                                <img class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/empty.jpg" alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')">
-                                <span class="caption">{!!html_entity_decode($row['notice_description'])!!}</span>
+                                    @else
+                                        <img class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/empty.jpg"
+                                            alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')">
+                                        <span class="caption">{!!html_entity_decode($row['notice_description'])!!}</span>
 
-                                @endif
+                                    @endif
 
-                                <!-- <img style="height:200px !important;width:300" class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/{{$row['notice_banner']}}" data-caption="{{$row['notice_description']}}" alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')"> -->
+                                    <!-- <img style="height:200px !important;width:300" class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/{{$row['notice_banner']}}" data-caption="{{$row['notice_description']}}" alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')"> -->
 
-                                <div class="hover_plus_wrapper">
-                                    <div class="hover_plus">
+                                    <div class="hover_plus_wrapper">
+                                        <div class="hover_plus">
 
-                                        <i class="bi bi-plus" aria-hidden="true"></i>
+                                            <i class="bi bi-plus" aria-hidden="true"></i>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="d-flex flex-column justify-content-around notice_board_heading">
-                                    <h6 class="notice_board_event_name event-name ellipsis">
-                                        {{$row['notice_name']}}
-                                    </h6>
-                                    <span class="notice_board_event_organiser">
-                                        {{$row['name']}}
-                                    </span>
-                                </div>
-                                <br>
+                                    <div class="d-flex flex-column justify-content-around notice_board_heading">
+                                        <h6 class="notice_board_event_name event-name ellipsis">
+                                            {{$row['notice_name']}}
+                                        </h6>
+                                        <span class="notice_board_event_organiser">
+                                            {{$row['name']}}
+                                        </span>
+                                    </div>
+                                    <br>
 
-                            </div>
+                                </div>
                             @endforeach
 
                         </div>
@@ -1355,54 +1363,59 @@
                             </div>
                             <div class="card-body">
 
-                                @if(count($recommended)==0)
-                                <div class="d-flex flex-row justify-content-around recommended_courses">
+                                @if(count($recommended) == 0)
+                                    <div class="d-flex flex-row justify-content-around recommended_courses">
 
-                                    <span style="margin-top: 48px;font-weight: 600;font-size: 22px !important;">No Recommended Courses</span>
-                                </div>
+                                        <span style="margin-top: 48px;font-weight: 600;font-size: 22px !important;">No
+                                            Recommended Courses</span>
+                                    </div>
 
                                 @endif
 
-                                @foreach($recommended as $key=>$row)
-                                <div class="d-flex flex-row justify-content-around recommended_courses">
-                                    <!--  -->
-                                    @if(file_exists('uploads/class/126/'.$row['course_banner']))
-                                    <img class="recommended_courses_poster recommendedfancy" src="uploads/class/126/{{$row['course_banner']}}" alt="Recommended Course" onclick="makeFancy(event, 'recommendedfancy')">
-                                    <span class="caption">{!!html_entity_decode($row['course_description'])!!}</span>
+                                @foreach($recommended as $key => $row)
+                                    <div class="d-flex flex-row justify-content-around recommended_courses">
 
-                                    @else
-                                    <img class="recommended_courses_poster recommendedfancy" src="uploads/class/126/empty.jpg" alt="Recommended Course" onclick="makeFancy(event, 'recommendedfancy')">
-                                    <span class="caption">{!!html_entity_decode($row['course_description'])!!}</span>
+                                        @if(file_exists('uploads/class/126/' . $row['course_banner']))
+                                            <img class="recommended_courses_poster recommendedfancy"
+                                                src="uploads/class/126/{{$row['course_banner']}}" alt="Recommended Course"
+                                                onclick="makeFancy(event, 'recommendedfancy')">
+                                            <span class="caption">{!!html_entity_decode($row['course_description'])!!}</span>
 
-                                    @endif
+                                        @else
+                                            <img class="recommended_courses_poster recommendedfancy"
+                                                src="{{ asset('css/talentra-image.jpg') }}" alt="Recommended Course"
+                                                onclick="makeFancy(event, 'recommendedfancy')">
+                                            <span class="caption">{!!html_entity_decode($row['course_description'])!!}</span>
+
+                                        @endif
 
 
 
 
-                                    <div class="d-flex flex-column justify-content-between recommended_course_details">
-                                        <div class="recommended_course_header">
-                                            <h6 class="recommended_course_name">
-                                                {{$row['course_name']}}
-                                            </h6>
-                                            <span class="recommended_course_instructor">
-                                                {{$row['course_instructor']}}
-                                            </span>
+                                        <div class="d-flex flex-column justify-content-between recommended_course_details">
+                                            <div class="recommended_course_header">
+                                                <h6 class="recommended_course_name">
+                                                    {{$row['course_name']}}
+                                                </h6>
+                                                <span class="recommended_course_instructor">
+                                                    {{$row['course_instructor']}}
+                                                </span>
+                                            </div>
+                                            <div class="recommended_course_footer">
+                                                <span class="recommended_course_time">
+                                                    {{$row['duration']}}
+                                                </span>
+                                                <span class="recommended_course_divider">
+                                                    -
+                                                </span>
+                                                <span class="recommended_course_learners">
+                                                    @php    $exist = $row['total_student'] == 0 ? "No Students Enrolled" : "Students" @endphp
+                                                    @if($row['total_student'] != 0){{$row['total_student']}}@endif {{$exist}}
+                                                </span>
+                                            </div>
+
                                         </div>
-                                        <div class="recommended_course_footer">
-                                            <span class="recommended_course_time">
-                                                {{$row['duration']}}
-                                            </span>
-                                            <span class="recommended_course_divider">
-                                                -
-                                            </span>
-                                            <span class="recommended_course_learners">
-                                                @php $exist=$row['total_student']==0 ? "No Students Enrolled" : "Students" @endphp
-                                                @if($row['total_student'] !=0){{$row['total_student']}}@endif {{$exist}}
-                                            </span>
-                                        </div>
-
                                     </div>
-                                </div>
                                 @endforeach
 
                             </div>
@@ -1416,7 +1429,8 @@
     </section>
 </div>
 <!-- Vertically centered modal -->
-<div class="modal fade" id="event_poster_modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="event_poster_modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -1437,13 +1451,15 @@
 </div>
 
 <!-- fancy box modal start-->
-<div class="modal fade" id="fancyContainer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="fancyContainerLabel" aria-hidden="true">
+<div class="modal fade" id="fancyContainer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="fancyContainerLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <!-- <h5 class="modal-title" id="fancyContainerLabel">Modal title</h5> -->
                 <div class="col-md-12" style="display: flex;justify-content: flex-end;">
-                    <button class="closefancy" onclick="removefancy()"><span aria-hidden="true"><i class="fa fa-times" aria-hidden="true" style="pointer-events: none !important;"></i></span></button>
+                    <button class="closefancy" onclick="removefancy()"><span aria-hidden="true"><i class="fa fa-times"
+                                aria-hidden="true" style="pointer-events: none !important;"></i></span></button>
                 </div>
 
             </div>
@@ -1451,11 +1467,13 @@
 
                 <div id="fancyControls" class="carousel slide" data-bs-ride="carousel">
                     <!-- js code -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#fancyControls" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#fancyControls"
+                        data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <!-- <span class="visually-hidden">Previous</span> -->
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#fancyControls" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#fancyControls"
+                        data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <!-- <span class="visually-hidden">Next</span> -->
                     </button>
@@ -1600,7 +1618,7 @@
 
             },
 
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 console.log(data.rows.length);
                 var count = 1;
@@ -1710,7 +1728,7 @@
 
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         const currentDate = new Date();
         const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0');
         const currentYear = currentDate.getFullYear().toString();
@@ -1722,12 +1740,12 @@
         // ...
 
         // Trigger previous slide
-        $('.carousel-control-prev').click(function() {
+        $('.carousel-control-prev').click(function () {
             $('#fancyControls').carousel('prev');
         });
 
         // Trigger next slide
-        $('.carousel-control-next').click(function() {
+        $('.carousel-control-next').click(function () {
             $('#fancyControls').carousel('next');
         });
     });

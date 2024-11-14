@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="{{ asset('assets/css/mediaquery.css') }}" rel="stylesheet" type="text/css" />
   <title>Talentra</title>
-  <link rel="icon" href="{{ asset('images/fia_logo.png') }}" type="image/gif" sizes="16x16">
+  <link rel="icon" href="{{asset('css/talentra-image.jpg')}}" sizes="40x40">
   <!-- Fonts -->
   <link href="{{ asset('css/login.css') }}" rel="stylesheet">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -242,8 +242,8 @@
 
     <div class="col-3 col-sm-3"><a href="{{url('/')}}">
         <picture>
-          <source media="(max-width:558px)" srcset="{{asset('asset/image/Talentra-1.svg')}}"><img class="faq_image" style="width: 260%;
-display: block;margin: 15px;text-align: center;align-items: center;" src="{{asset('asset/image/Talentra-1.svg')}}">
+          <source media="(max-width:558px)" srcset="{{asset('asset/image/Talentra-1.svg')}}"><img class="faq_image" style="width: 250%;
+display: block;margin: 5px;text-align: center;align-items: center;" src="{{asset('asset/image/Talentra-1.svg')}}">
       </a></div>
 
     <div class="col-9  col-sm-9" style="justify-content: center;
@@ -259,7 +259,7 @@ display: flex;align-items: center;">
     margin-top: -10px;
     margin-bottom: -10px;
     margin-left: -35px;
-    " src="{{ asset('images/faq.png') }}"></div>
+    "src="{{ asset('images/faq.png') }}"></div>
 
 
     <div class="col-lg-4 mr-lg-4">

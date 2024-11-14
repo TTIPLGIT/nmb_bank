@@ -36,7 +36,7 @@ class LoginController extends BaseController
         $objData = json_decode($this->decryptData($response->Data));
         if ($objData->Code == 200) {
           $parant_data = json_decode(json_encode($objData->Data), true);
-          $rows =  $parant_data['rows'];
+          $rows = $parant_data['rows'];
           // echo json_encode($rows);exit;
           // $one_row =  $parant_data['one_rows'];
 
@@ -51,7 +51,6 @@ class LoginController extends BaseController
 
 
   public function register_member(Request $request)
-
   {
     $method = 'Method => LoginController => Registermember_screen';
     try {
@@ -64,7 +63,7 @@ class LoginController extends BaseController
       if ($response1->Status == 200 && $response1->Success) {
         $objData = json_decode($this->decryptData($response1->Data));
         $parant_data = json_decode(json_encode($objData->Data), true);
-        $rows['country'] =  $parant_data['country'];
+        $rows['country'] = $parant_data['country'];
 
         if ($objData->Code == 200) {
           if (isset($request->mobile)) {
@@ -88,14 +87,13 @@ class LoginController extends BaseController
       $method = 'Method => LoginController => Registermember_screen';
 
       $data = array();
-
       $data['name'] = $request->name;
       $data['surname'] = $request->surname;
       $data['othername'] = $request->othername;
       $data['email'] = $request->email;
       $data['dob'] = $request->dob;
       $data['gender_value'] = $request->gender_value;
-      $data['country'] = $request->country;
+      // $data['country'] = $request->country;
       $data['Mobile_no'] = $request->Mobile_no;
       $data['password'] = bcrypt($request->password);
       $data['password_confirmation'] = $request->password_confirmation;
@@ -113,7 +111,7 @@ class LoginController extends BaseController
 
       $gatewayURL = config('setting.api_gateway_url') . '/Registermember/store';
 
-
+      // dd(request());
       $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
 
 
@@ -124,7 +122,7 @@ class LoginController extends BaseController
           if ($mobile == 1) {
             return $objData->Code;
           }
-          return redirect(url('/'))->with('success', 'Professional Member NRU Registered Successfully');
+          return redirect(url('/'))->with('success', 'New User Registered Successfully');
         }
 
         // if ($objData->Code == 400) {
@@ -177,8 +175,8 @@ class LoginController extends BaseController
       $data['email'] = $request->email;
       $data['dob'] = $request->dob;
       $data['gender_value'] = $request->gender;
-      $data['interest'] = $request->interest;
-      $data['country'] = $request->country;
+      // $data['interest'] = $request->interest;
+      // $data['country'] = $request->country;
       $data['Mobile_no'] = $request->Mobile_no;
       $data['password'] = bcrypt($request->password);
       $data['password_confirmation'] = $request->password_confirmation;
@@ -251,12 +249,12 @@ class LoginController extends BaseController
     $data['email'] = $request->email;
     $email = $request->email;
 
-    $otp1 =  rand(0, 9);
-    $otp2 =  rand(0, 9);
-    $otp3 =  rand(0, 9);
-    $otp4 =  rand(0, 9);
-    $otp5 =  rand(0, 9);
-    $otp6 =  rand(0, 9);
+    $otp1 = rand(0, 9);
+    $otp2 = rand(0, 9);
+    $otp3 = rand(0, 9);
+    $otp4 = rand(0, 9);
+    $otp5 = rand(0, 9);
+    $otp6 = rand(0, 9);
 
     $data['otp1'] = $otp1;
     $data['otp2'] = $otp2;
@@ -357,7 +355,7 @@ class LoginController extends BaseController
         $objData = json_decode($this->decryptData($response->Data));
         if ($objData->Code == 200) {
           $parant_data = json_decode(json_encode($objData->Data), true);
-          $rows =  $parant_data['rows'];
+          $rows = $parant_data['rows'];
           // echo json_encode($rows);exit;
           // $one_row =  $parant_data['one_rows'];
 
@@ -384,7 +382,6 @@ class LoginController extends BaseController
 
 
   public function login(Request $request)
-
   {
     // $remember_me = $request->has('remember_me') ? true : false; 
 
@@ -446,7 +443,7 @@ class LoginController extends BaseController
 
 
 
-        $tokenResponse = $this->setToken($input['email'], $input['password'],);
+        $tokenResponse = $this->setToken($input['email'], $input['password'], );
         if ($tokenResponse == 'Failure') {
           if (isset($request->mobile)) {
             return [
@@ -516,8 +513,8 @@ class LoginController extends BaseController
               exit;
               return "2";
             }
-            if ($role_id == '1' && $role_id == '41') {
-              return redirect(route('elearningDashboard'));
+            if ($role_id == '1') {
+              return redirect(route('admindashboard'));
             } else {
               return redirect(route('elearningDashboard'));
             }
@@ -618,7 +615,7 @@ class LoginController extends BaseController
         $objData = json_decode($this->decryptData($response->Data));
         if ($objData->Code == 200) {
           $parant_data = json_decode(json_encode($objData->Data), true);
-          $one_row =  $parant_data['user'];
+          $one_row = $parant_data['user'];
 
           //echo json_encode($one_row);exit;
 
@@ -661,7 +658,7 @@ class LoginController extends BaseController
         $objData = json_decode($this->decryptData($response->Data));
         if ($objData->Code == 200) {
           $parant_data = json_decode(json_encode($objData->Data), true);
-          $rows =  $parant_data['rows'];
+          $rows = $parant_data['rows'];
 
           $gatewayURL = config('setting.api_gateway_url') . '/login/background';
           $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
@@ -670,7 +667,7 @@ class LoginController extends BaseController
             $objData = json_decode($this->decryptData($response->Data));
             if ($objData->Code == 200) {
               $parant_data = json_decode(json_encode($objData->Data), true);
-              $rows1 =  $parant_data['rows'];
+              $rows1 = $parant_data['rows'];
               // $one_row =  $parant_data['one_rows'];
 
 
@@ -792,47 +789,49 @@ class LoginController extends BaseController
 
   public function forgot_password(Request $request)
   {
-    $method = 'Method => LoginController => forgot_password';
-   
-    try {
-      // Validate the request
-      $validator = Validator::make($request->all(), [
-        'email' => 'required|email'
-      ], [
-        'email.required' => 'Email is required',
-        'email.email' => 'Email must be a valid email address',
-      ]);
 
+
+    try {
+      $method = 'Method => LoginController => forgot_password';
+      $input = [
+        'email' => $request->email,
+      ];
+
+      $rules = [
+        'email' => 'required',
+      ];
+      $messages = [
+        'email.required' => 'Email is required',
+      ];
+      $validator = Validator::make($request->all(), $rules, $messages);
       if ($validator->fails()) {
         return Redirect::back()->withErrors($validator);
-      }
-     
-      // Prepare data for API request
-      $userRow['email'] = $request->email;
-      $encryptArray = $this->encryptData($userRow);
-      $request = array();
-      $request['requestData'] = $encryptArray;
-     
-      $gatewayURL = config('setting.api_gateway_url') . '/user/forget_password';
+      } else {
+        $userRow = array();
+        $userRow['email'] = $request->email;
 
-      // Make API request
-      $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-      $response = json_decode($response);
+        $gatewayURL = config('setting.api_gateway_url') . '/user/forget_password';
 
-      
-      if ($response->Status == 200 && $response->Success) {
-        $objData = json_decode($this->decryptData($response->Data));
-        dd($objData);
-        if ($objData->Code == 200) {
-          $parant_data = json_decode(json_encode($objData->Data), true);
-          $response_status = $parant_data['response_status'];
+        $encryptArray = $this->encryptData($userRow);
+        $request = array();
 
-          if ($response_status == "200") {
-            return redirect(route('forgot'))->with('success', 'Reset password link sent to your email');
-          }
+        $request['requestData'] = $encryptArray;
 
-          if ($response_status == "300") {
-            return redirect(route('forgot'))->with('success', 'User email not found. Please check');
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+
+        $response = json_decode($response);
+        // dd($response);
+        if ($response->Status == 200 && $response->Success) {
+          $objData = json_decode($this->decryptData($response->Data));
+          if ($objData->Code == 200) {
+            $parant_data = json_decode(json_encode($objData->Data), true);
+            $response_status = $parant_data['response_status'];
+            if ($response_status == "200") {
+              return redirect(route('forgot'))->with('success', 'Reset password link sent your mail id');
+            }
+            if ($response_status == "300") {
+              return redirect(route('forgot'))->with('success', 'User Mail id not found please check');
+            }
           }
         }
       }
@@ -850,7 +849,7 @@ class LoginController extends BaseController
 
       if ($request->file('signature_attachment')) {
 
-        $galleryId =  $request->user_id;
+        $galleryId = $request->user_id;
         $path = public_path() . '/user_signature/' . $galleryId;
         File::makeDirectory($path, $mode = 0777, true, true);
         $storagePath = $path;
@@ -858,7 +857,7 @@ class LoginController extends BaseController
         $imageName = base64_encode($request->file('signature_attachment')->getClientOriginalName()) . '.' . $request->file('signature_attachment')->extension();
         $imageNamecheck = str_replace(' ', '_', $imageName);
         $imageFile->move($storagePath, $imageNamecheck);
-        $galleryId =  $request->user_id;
+        $galleryId = $request->user_id;
         $path1 = '/user_signature/' . $galleryId;
         $imageorgname = $path1 . '/' . $imageNamecheck;
         $userRow = array();
@@ -881,7 +880,7 @@ class LoginController extends BaseController
         $objData = json_decode($this->decryptData($response->Data));
         if ($objData->Code == 200) {
           $parant_data = json_decode(json_encode($objData->Data), true);
-          $response_status =  $parant_data['response_status'];
+          $response_status = $parant_data['response_status'];
           echo json_encode($response_status);
         }
         if ($response_status == "300") {

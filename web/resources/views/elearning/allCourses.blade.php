@@ -315,7 +315,8 @@
                             <span>All Courses</span>
                         </div>
                     </h2>
-                    <a class="text-uppercase all_courses_filters_popper filter_align" href="#" data-toggle="modal" data-target="#filters">
+                    <a class="text-uppercase all_courses_filters_popper filter_align" href="#" data-toggle="modal"
+                        data-target="#filters">
                         filters
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </a>
@@ -330,7 +331,8 @@
                     </span>
                 </div>
 
-                <form class="d-flex flex-row flex-wrap justify-content-start all_courses_filter_block2" action="{{ route('elearningAllCourses') }}" method="POST">
+                <form class="d-flex flex-row flex-wrap justify-content-start all_courses_filter_block2"
+                    action="{{ route('elearningAllCourses') }}" method="POST">
                     @csrf
                     @method('GET')
                     <select class="form-control all_courses_sort_select" name="all_courses_sort_select">
@@ -343,7 +345,7 @@
                         <select class="form-control all_courses_filter_select" name="all_courses_filter_select">
                             <option value="false" selected>Tags</option>
                             @foreach($availableTags as $availableTag)
-                            <option value="{{$availableTag}}">{{$availableTag}}</option>
+                                <option value="{{$availableTag}}">{{$availableTag}}</option>
                             @endforeach
                         </select>
                         <select class="form-control all_courses_filter_select" name="all_courses_filter_select">
@@ -358,7 +360,8 @@
                     </div>
                     <div class="all_courses_search_container">
                         <div class="d-flex flex-row justify-content-center align-items-center">
-                            <input type="search" class="form-control" id="courseSearch" name="courseSearch" placeholder="Search">
+                            <input type="search" class="form-control" id="courseSearch" name="courseSearch"
+                                placeholder="Search">
                             <button type="submit" id="courseSearchButton">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
@@ -381,56 +384,64 @@
                     @foreach($availableCourses as $key => $value)
 
 
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3" id="course_{{$value->course_id}}">
-                        <div class="card noShadow all_courses_courselist">
-                            <div class="card-header">
-
-                                <span class="btn btn-outline-danger wishList-badge" title="Add to Wishlist ❤️" id="wish_{{$value->course_id}}">
-                                    <i class="fa fa-heart" aria-hidden="true" id="wishHeart_{{$value->course_id}}"></i>
-                                </span>
-                                @php $id=Crypt::encrypt($value->course_id); @endphp
-                                <a href="{{ route('elearningCourse',$id) }}">
-                                    @php
-                                    $imageUrl = config('setting.base_url') . 'uploads/course/126/' . $value->course_banner;
-                                    @endphp
-                                    @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
-                                    <img src="{{ $imageUrl }}" alt="Course Image" class="course_image">
-                                    @else
-                                    <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image" class="course_image">
-                                    @endif
-                                </a>
-                            </div>
-                            <div class="card-body">
-                                <div class="card-title" title="{{$value->course_name}}">
-                                    <h5>
-                                        {{$value->course_name}}
-                                    </h5>
-                                </div>
-                                <div class="card-text">
-                                    <h6>
-                                        {{$value->course_instructor}}
-                                        <?php if ($value->course_pay == 'paid') { ?>
-                                            <span style="background-color: #1d33d3;" class="course_paid">{{$value->course_pay}}</span>
-                                        <?php } elseif ($value->course_pay == 'free') { ?>
-                                            <span style="background-color: #0ecf26;" class="course_paid">{{$value->course_pay}}</span>
-                                        <?php } ?>
-                                    </h6>
-                                </div>
-                                <div class="progress course_total_progress">
-                                    <div class="progress-bar" role="progressbar" style="width: {{isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0'}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <span class="text-uppercase">{{isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0'}}% completed</span>
-                                <!-- <input type="hidden" class="courseStartPeriod" id="startPeriod_{{$value->course_id}}" value="{{$value->course_start_period}}">
-                                <input type="hidden" class="courseEndPeriod" id="endPeriod_{{$value->course_id}}" value="{{$value->course_end_period}}">
-                                <input type="hidden" class="coursePay" id="pay_{{$value->course_id}}" value="{{$value->course_pay}}">
-                                <input type="hidden" class="courseDescription" id="description_{{$value->course_id}}" value="{{$value->course_description}}">
-                                <input type="hidden" class="courseIntroduction" id="introduction_{{$value->course_id}}" value="{{$value->course_introduction}}">
-                                <input type="hidden" name="courseTags" id="tags_{{$value->course_id}}" value="{{$value->course_tags}}" />
-                                <input type="hidden" class="courseSkillsRequired" id="skills_required_{{$value->course_id}}" value="{{$value->course_skills_required}}">
-                                <input type="hidden" class="courseGainSkills" id="gain_skills_{{$value->course_id}}" value="{{$value->course_gain_skills}}"> -->
-                            </div>
-                        </div>
-                    </div>
+                                        <div class="col-12 col-sm-6 col-lg-4 col-xl-3" id="course_{{$value->course_id}}">
+                                            <div class="card noShadow all_courses_courselist">
+                                                <div class="card-header">
+                                                    @php $isWishlisted = in_array($value->course_id, $wishlistedCourseIds);@endphp
+                                                    <span class="btn btn-outline-danger wishList-badge" title="{{$isWishlisted  ? 'Added to Wishlist' : 'Add to Wishlist ❤️'}}"
+                                                        id="wish_{{$value->course_id}}">
+                                                        <i class="{{$isWishlisted ? 'fa fa-heart':'fa fa-heart-o'}}" aria-hidden="true" id="wishHeart_{{$value->course_id}}"></i>
+                                                    </span>
+                                                    @php    $id = Crypt::encrypt($value->course_id); @endphp
+                                                    <a href="{{ route('elearningCourse', $id) }}">
+                                                        @php
+                                                            $imageUrl = config('setting.base_url') . 'uploads/course/126/' . $value->course_banner;
+                                                        @endphp
+                                                        @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
+                                                            <img src="{{ $imageUrl }}" alt="Course Image" class="course_image">
+                                                        @else
+                                                            <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image"
+                                                                class="course_image">
+                                                        @endif
+                                                    </a>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="card-title" title="{{$value->course_name}}">
+                                                        <h5>
+                                                            {{$value->course_name}}
+                                                        </h5>
+                                                    </div>
+                                                    <div class="card-text">
+                                                        <h6>
+                                                            {{$value->course_instructor}}
+                                                            <?php    if ($value->course_pay == 'paid') { ?>
+                                                            <span style="background-color: #1d33d3;"
+                                                                class="course_paid">{{$value->course_pay}}</span>
+                                                            <?php    } elseif ($value->course_pay == 'free') { ?>
+                                                            <span style="background-color: #0ecf26;"
+                                                                class="course_paid">{{$value->course_pay}}</span>
+                                                            <?php    } ?>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="progress course_total_progress">
+                                                        <div class="progress-bar" role="progressbar"
+                                                            style="width: {{isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0'}}%"
+                                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <span
+                                                        class="text-uppercase">{{isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0'}}%
+                                                        completed</span>
+                                                    <!-- <input type="hidden" class="courseStartPeriod" id="startPeriod_{{$value->course_id}}" value="{{$value->course_start_period}}">
+                                                    <input type="hidden" class="courseEndPeriod" id="endPeriod_{{$value->course_id}}" value="{{$value->course_end_period}}">
+                                                    <input type="hidden" class="coursePay" id="pay_{{$value->course_id}}" value="{{$value->course_pay}}">
+                                                    <input type="hidden" class="courseDescription" id="description_{{$value->course_id}}" value="{{$value->course_description}}">
+                                                    <input type="hidden" class="courseIntroduction" id="introduction_{{$value->course_id}}" value="{{$value->course_introduction}}">
+                                                    <input type="hidden" name="courseTags" id="tags_{{$value->course_id}}" value="{{$value->course_tags}}" />
+                                                    <input type="hidden" class="courseSkillsRequired" id="skills_required_{{$value->course_id}}" value="{{$value->course_skills_required}}">
+                                                    <input type="hidden" class="courseGainSkills" id="gain_skills_{{$value->course_id}}" value="{{$value->course_gain_skills}}"> -->
+                                                </div>
+                                            </div>
+                                        </div>
                     @endforeach
                 </div>
                 <div class="d-flex flex-row justify-content-center allCoursePagination">
@@ -569,10 +580,10 @@
                                     'id': id,
                                     _token: '{{csrf_token()}}'
                                 },
-                                success: function(data) {
+                                success: function (data) {
                                     // $('#submitSuccess').modal('show');
                                     console.log(data);
-                                    //alert(data);
+                                    //alert(data);                                                                                                                  
                                     if (data == "wishlist added") {
                                         swal.fire({
                                             title: "Success",
@@ -628,7 +639,8 @@
                         <option value="Land Administration">Land Administration</option>
                         <option value="Valuation">Valuation</option>
                     </select>
-                    <select class="form-control all_courses_filter_select w-50 m-0 mb-3" name="all_courses_filter_select">
+                    <select class="form-control all_courses_filter_select w-50 m-0 mb-3"
+                        name="all_courses_filter_select">
                         <option selected>Progress</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Completed">Completed</option>

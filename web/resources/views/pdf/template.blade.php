@@ -16,9 +16,9 @@
         .certificate {
             position: relative;
             width: 780px;
-            /* Adjust the width for landscape view */
+            / Adjust the width for landscape view /
             height: 450px;
-            /* Adjust the height as needed */
+            / Adjust the height as needed /
             margin: 0 auto;
             border: 2px solid #1a4011;
             text-align: center;
@@ -124,7 +124,7 @@
                     <span style="font-weight: 900; font-size: 20px !important;">{{$name}}</span>
                     <br /><br /><br />
                     <span class="success_message">For successfully completing this course </span><br />
-                    <span><b>{{$course_name}}</b> <b>on {{$date}}</b></span>
+                    <span><b>{{$course_name}}</b> <b>on 17-10-2024</b></span>
                     <br /><br /><br />
                     <span style="font-weight: 600">Presented by</span>
                     <br>

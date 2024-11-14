@@ -4,15 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>TALENTRA</title>
+    <title>Talentra</title>
+    <link rel="icon" href="{{asset('css/talentra-image.jpg')}}">
 
     <!-- General CSS Files -->
     <link href="{{asset('asset/css/app.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('asset/bundles/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('asset/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('asset/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}"
+        rel="stylesheet" />
 
     <!-- Bootstrap v4.3.1 CSS File -->
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css"
+        rel="stylesheet" />
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
 
@@ -21,7 +24,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-icons.1.8.2.css') }}" />
 
     <!-- Font-Awesome v4.2.0 -->
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css"
+        rel="stylesheet" />
 
     <!--dropzone css -->
     <!-- jQuery -->
@@ -41,7 +45,8 @@
     <link href="{{asset('asset/css/custom.css')}}" type="text/css" rel="stylesheet" />
     <link type="text/css" href="{{ asset('css/smoothness_jquery-ui.css') }}" rel="stylesheet">
 
-    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" type="text/css"
+        rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/hummingbird_v1.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/hummingbird_treeview.css') }}">
@@ -76,7 +81,7 @@
     <link href="{{asset('assets/css/adminnavbar.min.css')}}" rel="stylesheet" type="text/css" />
 
     <link href="{{asset('assets/css/calender.css')}}" rel="stylesheet" type="text/css" />
-    <link rel="icon" href="{{ url('css/favicon.png') }}" sizes="32x32">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts_family.css') }}" />
@@ -1219,9 +1224,11 @@
             z-index: 0 !important;
 
         }
-        .nav-link i{
-            color:#680EDA !important;
+
+        .nav-link i {
+            color: #680EDA !important;
         }
+
         @media (min-width:1024.96px) {
             .main-sidebar.sidebar-style-2 {
                 z-index: 0 !important;
@@ -1261,7 +1268,7 @@
     <div class="loader"></div>
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
-            <nav class="navbar nav11 navbar-expand-lg main-navbar">
+            <nav class="navbar nav11 navbar-expand-lg main-navbar" style="top:0px;">
                 <div class="form-inline mr-auto">
                     <ul class="navbar-nav mr-3">
                         <li class="collapse_btn">
@@ -1276,25 +1283,29 @@
                         </li>
                     </ul>
                 </div>
-                <div class="form-inline mr-auto d-md-inline-block d-none" style="color: #2a0245!important; font-weight: 500; font-size: 23px">
-                    <!-- <span style="color:black; padding: 10px;" class="nav_heading"><b class="">Talentra - Learning Management System</b> -->
-                        <span style="color: #9958ae; right: -90px;position: relative;" class="user_name_nav"></span></span>
+                <div class="form-inline mr-auto d-md-inline-block d-none" style="color: #2a0245!important; font-weight: 500; font-size: 26px;>
+                    <span style=" color:black; padding: 10px;" class="nav_heading"><b class="">Learning Management
+                        System</b>
+                    <span style="color: #9958ae; right: -90px;position: relative;" class="user_name_nav"></span></span>
                 </div>
                 <ul class="navbar-nav navbar-right">
                     <nav class="navigation">
-                        <span class="badge badge-light badgeworkflow" style="position: absolute; left: 51px; width:2%;margin-left:auto;"></span>
+                        <span class="badge badge-light badgeworkflow"
+                            style="position: absolute; left: 51px; width:2%;margin-left:auto;"></span>
                         <ul class="inner-navigation navnotify">
 
                             <li class="left">
                                 <div class="dropdown-container">
-                                    <a href="#" id="eleaning_notification" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg badges">
+                                    <a href="#" id="eleaning_notification" data-toggle="dropdown"
+                                        class="nav-link notification-toggle nav-link-lg badges">
                                         <i id="bell" class="far fa-bell notify"></i>
                                         <span class="badge badge-light bell_notification"></span>
                                         <!-- <span id="notifier"></span> -->
                                         <span class="badge badge-danger badge-counter"></span>
 
                                     </a>
-                                    <ul class="dropdown" name="notificationMenu" style="top: 110%;border-radius: 15px !important;">
+                                    <ul class="dropdown" name="notificationMenu"
+                                        style="top: 110%;border-radius: 10px !important;">
                                         <li class="notification-group">
                                             <div class="notification-tab p-0 m-0">
                                                 <span class="user_name_alertelearning"></span>
@@ -1325,7 +1336,8 @@
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand" style=" background-color:white!important;">
 
-                        <img src="{{asset('assets/images/Talentra.jpg')}}" class="logo" style="  width: 70% !important;">
+                        <img src="{{asset('asset/image/Talentra-1.svg')}}" class="logo"
+                            style=" width: 70% !important; ">
                         </a>
                     </div>
                     <ul class="sidebar-menu">
@@ -1336,48 +1348,49 @@
                             </a>
                         </li>
                         @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member" || $menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" || $menus['alter_name'] == "student")
-                        <li>
-                            <a href="{{ route('elearning.allCourses') }}?sorted=Recently Added&tag=false&progress=false&q=false" class="nav-link sidebar_links">
-                                <i class="sidebar-icons fa fa-graduation-cap" aria-hidden="true"></i>
-                                <span>All Courses</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('elearning.cpt_index') }}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons bi bi-patch-question-fill" aria-hidden="true"></i>
-                                <span>CPD Points</span>
-                            </a>
-                        </li>
-                        <!-- <li>
-                            <a href="" class="nav-link">
-                                <i class="sidebar-icons fa fa-spinner" aria-hidden="true"></i>
-                                <span>Progress</span>
-                            </a>
-                        </li> -->
-                        <li>
-                            <a href="{{ route('elearning.wishlist') }}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons bi bi-heart-fill" aria-hidden="true"></i>
-                                <span>Wish List</span>
-                            </a>
-                        </li>
+                            <li>
+                                <a href="{{ route('elearning.allCourses') }}?sorted=Recently Added&tag=false&progress=false&q=false"
+                                    class="nav-link sidebar_links">
+                                    <i class="sidebar-icons fa fa-graduation-cap" aria-hidden="true"></i>
+                                    <span>All Courses</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('elearning.cpt_index') }}" class="nav-link sidebar_links">
+                                    <i class="sidebar-icons bi bi-patch-question-fill" aria-hidden="true"></i>
+                                    <span>CPD Points</span>
+                                </a>
+                            </li>
+                            <!-- <li>
+                                                                                                                                            <a href="" class="nav-link">
+                                                                                                                                                <i class="sidebar-icons fa fa-spinner" aria-hidden="true"></i>
+                                                                                                                                                <span>Progress</span>
+                                                                                                                                            </a>
+                                                                                                                                        </li> -->
+                            <li>
+                                <a href="{{ route('elearning.wishlist') }}" class="nav-link sidebar_links">
+                                    <i class="sidebar-icons bi bi-heart-fill" aria-hidden="true"></i>
+                                    <span>Wish List</span>
+                                </a>
+                            </li>
 
-                        <li>
+                            <li>
 
-                            @php $id=Crypt::encrypt("all"); @endphp
-                            <a href="{{ route('elearningCart',$id)}}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons bi bi-cart4" aria-hidden="true"></i>
-                                <span>Cart</span>
-                            </a>
-                        </li>
+                                @php    $id = Crypt::encrypt("all"); @endphp
+                                <a href="{{ route('elearningCart', $id)}}" class="nav-link sidebar_links">
+                                    <i class="sidebar-icons bi bi-cart4" aria-hidden="true"></i>
+                                    <span>Cart</span>
+                                </a>
+                            </li>
                         @endif
                         @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member" || $menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" || $menus['alter_name'] == "student")
 
-                        <li>
-                            <a href="{{ route('elearning.userquiz') }}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons bi bi-patch-question-fill" aria-hidden="true"></i>
-                                <span>Quiz</span>
-                            </a>
-                        </li>
+                            <li>
+                                <a href="{{ route('elearning.userquiz') }}" class="nav-link sidebar_links">
+                                    <i class="sidebar-icons bi bi-patch-question-fill" aria-hidden="true"></i>
+                                    <span>Quiz</span>
+                                </a>
+                            </li>
                         @endif
                         <!-- <li>
                             <a href="{{ route('elearningAssessment') }}" class="nav-link sidebar_links">
@@ -1386,15 +1399,15 @@
                             </a>
                         </li> -->
 
-                        @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member" || $menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" || $menus['alter_name'] == "student")
+                        <!-- @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member" || $menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" || $menus['alter_name'] == "student") -->
 
-                        <li>
+                        <!-- <li>
                             <a href="{{ route('ethictest.list') }}" class="nav-link sidebar_links">
                                 <i class="sidebar-icons fa fa-pencil-square-o" aria-hidden="true"></i>
                                 <span>Ethic Test</span>
                             </a>
-                        </li>
-                        @endif
+                        </li> -->
+                        <!-- @endif
                         @if($menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" || $menus['alter_name'] == "student")
                         <li>
                             <a href="{{ route('localadaptation.list') }}" class="nav-link sidebar_links">
@@ -1402,7 +1415,7 @@
                                 <span>Local Adaptation Test</span>
                             </a>
                         </li>
-                        @endif
+                        @endif -->
                         <!-- @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member")
 
                         <li>
@@ -1479,7 +1492,7 @@
 </html>
 <script>
     //Dropdown collapsile tabs
-    $('.notification-toggle').click(function(e) {
+    $('.notification-toggle').click(function (e) {
 
         $('#eleaning_notification').parent().toggleClass('expanded');
 
@@ -1536,7 +1549,7 @@
                 id: id,
                 _token: '{{csrf_token()}}'
             },
-            success: function(data) {
+            success: function (data) {
                 //alert("das");
                 console.log(data);
                 var count = data['Elearning_usernotifications_count'][0].countflow;
@@ -1573,7 +1586,7 @@
     }
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         //alert('fefe');
 
         notification_fetch();
@@ -1607,7 +1620,7 @@
                 id: id,
                 _token: '{{csrf_token()}}'
             },
-            success: function(data) {
+            success: function (data) {
 
                 var url = data['notify_link'][0].notification_url;
                 window.location.href = url;
