@@ -41,15 +41,17 @@ class ElearningEventController extends BaseController
             $data['event_date'] = $request->event_date;
 
 
-
             $encryptArray = $data;
 
             $storagepath_ursb_old = public_path() . '/uploads/notice/' . $user_id; //system_store_pdf
+            
             $storagepath_ursb = '/uploads/notice/' . $user_id; //database_location
+
             if (!File::exists($storagepath_ursb_old)) {
                 File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
             }
             $data['event_path'] = $storagepath_ursb;
+
             $documentsb =  $request['event_image'];
             $files = $documentsb->getClientOriginalName();
             $findspace = array(' ', '&', "'", '"');

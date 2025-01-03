@@ -367,6 +367,7 @@
 
                                 </select>
                             </div>
+                            <div class="col-md-6"></div>
 
                             <div class="col-md-2 addquizmodal" id="addClassButton">
                                 <a type="button" style="font-size:15px;margin-bottom: 15px;"
@@ -374,7 +375,6 @@
                                     data-target="#addModal1">Add Class <span><i class="fa fa-plus"
                                             aria-hidden="true"></i></span></a>
                             </div>
-                            <div class="col-md-6"></div>
 
                             <div class="col-md-2" id="addCourseButton">
                                 <a type="button" style="font-size:15px;margin-bottom: 15px;"

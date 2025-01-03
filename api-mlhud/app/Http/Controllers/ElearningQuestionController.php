@@ -1038,7 +1038,7 @@ class ElearningQuestionController extends BaseController
                     ]);
             });
 
-            $this->notifications_insert(null, auth()->user()->id, "Quiz Name Created Successfully", "/elearningquestion");
+            $this->notifications_insert(null, auth()->user()->id, $input['quiz_name'] . "Quiz Name Created Successfully", "/elearningquestion");
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_practice_quiz', $update_id, 'Create', 'Quiz Creation', auth()->user()->id, NOW(), $role_name_fetch);

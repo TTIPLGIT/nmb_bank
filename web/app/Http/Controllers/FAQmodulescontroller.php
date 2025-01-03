@@ -49,9 +49,10 @@ class FAQmodulesController extends BaseController
                 echo $exc;
                 return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
             }
-        } else {
-            return redirect()->route('not_allow');
-        }
+        } 
+        // else {
+        //     return redirect()->route('not_allow');
+        // }
     }
 
 
@@ -86,9 +87,10 @@ class FAQmodulesController extends BaseController
                 echo $exc;
                 return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
             }
-        } else {
-            return redirect()->route('not_allow');
         }
+        //  else {
+        //     return redirect()->route('not_allow');
+        // }
     }
 
 
@@ -169,9 +171,10 @@ class FAQmodulesController extends BaseController
             } catch (\Exception $exc) {
                 return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
             }
-        } else {
-            return redirect()->route('not_allow');
-        }
+        } 
+        // else {
+        //     return redirect()->route('not_allow');
+        // }
     }
 
 
@@ -208,9 +211,10 @@ class FAQmodulesController extends BaseController
             } catch (\Exception $exc) {
                 return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
             }
-        } else {
-            return redirect()->route('not_allow');
         }
+        //  else {
+        //     return redirect()->route('not_allow');
+        // }
     }
 
 

@@ -828,7 +828,7 @@ class ElearningQuestionController extends BaseController
 
 
                 if ($objData->Code == 200) {
-                    return redirect(route('elearningquestion.index'))->with('success', 'Quiz Created Successfully');
+                    return redirect(route('elearningquestion.index'))->with('success', ' Quiz Created Successfully');
                 }
 
                 if ($objData->Code == 400) {

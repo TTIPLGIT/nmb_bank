@@ -133,7 +133,9 @@ Route::get('/clear-all', function () {
         return redirect(url()->previous());
     }
 })->name('clear-all');
-
+Route::get('/clearCache', function () {
+    opcache_reset();
+})->name('clearCache');
 // GT
 Route::get('register', [App\Http\Controllers\LoginController::class, 'register'])->name('register');
 Route::post('registerstore', [App\Http\Controllers\LoginController::class, 'registerstore'])->name('registerstore');

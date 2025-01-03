@@ -714,52 +714,52 @@
                                                     </thead>
                                                     <tbody style="background-color: #cfe0e8;">
                                                         @foreach($rows['rows']['quiz'] as $data)
-                                                            <tr>
-                                                                <td>{{$loop->iteration}}</td>
-                                                                <td>{{$data['quiz_name']}}</td>
-                                                                <td>
-                                                                    @foreach($rows['rows']['quiz_question'] as $row)
-                                                                        @foreach($data['quiz_questions'] as $key => $new_row)
-                                                                            @if($new_row == $row['question_id'])
-                                                                                @if($key == 0)
-                                                                                    {{$row['name']}}
-                                                                                @else
-                                                                                    ,{{$row['name']}}
-                                                                                @endif
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$data['quiz_name']}}</td>
+                                                            <td>
+                                                                @foreach($rows['rows']['quiz_question'] as $row)
+                                                                @foreach($data['quiz_questions'] as $key => $new_row)
+                                                                @if($new_row == $row['question_id'])
+                                                                @if($key == 0)
+                                                                {{$row['name']}}
+                                                                @else
+                                                                ,{{$row['name']}}
+                                                                @endif
 
 
 
-                                                                            @endif
-                                                                        @endforeach
-                                                                    @endforeach
-                                                                </td>
+                                                                @endif
+                                                                @endforeach
+                                                                @endforeach
+                                                            </td>
 
 
 
-                                                                <td style="">
-                                                                    <a class="btn btn-link" title="Edit" id="gcb" href=""
-                                                                        data-toggle="modal" data-target="#addModaleditquiz"
-                                                                        onclick="fetch_update({{$data['quiz_id']}},'quizedit')"
-                                                                        style="margin-top: 0px !important;"><i
-                                                                            class="fas fa-pencil-alt"
-                                                                            style="color: blue !important"></i></a>
+                                                            <td style="">
+                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                    data-toggle="modal" data-target="#addModaleditquiz"
+                                                                    onclick="fetch_update({{$data['quiz_id']}},'quizedit')"
+                                                                    style="margin-top: 0px !important;"><i
+                                                                        class="fas fa-pencil-alt"
+                                                                        style="color: blue !important"></i></a>
 
-                                                                    <a class="btn btn-link" title="show" data-toggle="modal"
-                                                                        data-target="#addModalshowquiz"
-                                                                        onclick="fetch_update({{$data['quiz_id']}},'quizshow')"><i
-                                                                            class="fas fa-eye" style="color:green"></i></a>
+                                                                <a class="btn btn-link" title="show" data-toggle="modal"
+                                                                    data-target="#addModalshowquiz"
+                                                                    onclick="fetch_update({{$data['quiz_id']}},'quizshow')"><i
+                                                                        class="fas fa-eye" style="color:green"></i></a>
 
-                                                                    @csrf
+                                                                @csrf
 
-                                                                    <button type="submit" title="Delete"
-                                                                        onclick="delete1({{$data['quiz_id']}},'5')"
-                                                                        class="btn btn-link"><i class="far fa-trash-alt"
-                                                                            style="color:red"></i></button>
+                                                                <button type="submit" title="Delete"
+                                                                    onclick="delete1({{$data['quiz_id']}},'5')"
+                                                                    class="btn btn-link"><i class="far fa-trash-alt"
+                                                                        style="color:red"></i></button>
 
 
-                                                                </td>
+                                                            </td>
 
-                                                            </tr>
+                                                        </tr>
                                                         @endforeach
 
                                                     </tbody>
@@ -802,72 +802,72 @@
 
                 <div class="section-body mt-0">
                     @if (session('type'))
-                        <input type="hidden" name="session_data" id="session_data" class="session_data"
-                            value="{{ session('type') }}">
+                    <input type="hidden" name="session_data" id="session_data" class="session_data"
+                        value="{{ session('type') }}">
 
-                        <script type="text/javascript">
-                            window.onload = function () {
+                    <script type="text/javascript">
+                        window.onload = function() {
 
-                                var value = $('#session_data').val();
-                                $('#result1').val(value).change()
-                            }
-                        </script>
+                            var value = $('#session_data').val();
+                            $('#result1').val(value).change()
+                        }
+                    </script>
 
                     @endif
                     @if (session('success'))
 
-                        <input type="hidden" name="session_data" id="session_data" class="session_data"
-                            value="{{ session('success') }}">
-                        <script type="text/javascript">
-                            window.onload = function () {
-                                var message = $('#session_data').val();
-                                // alert(message);
-                                swal.fire({
-                                    title: "Success",
-                                    text: message,
-                                    icon: "success",
-                                    type: "success",
-                                });
-                                if (message == 'Quiz Created Successfully') {
-                                    setTimeout(function () {
-                                        document.getElementById('quizlist').scrollIntoView({
-                                            behavior: 'smooth'
-                                        });
-                                    }, 500);
-                                } else if (message == 'Quiz Updated Successfully') {
-                                    setTimeout(function () {
-                                        document.getElementById('quizlist').scrollIntoView({
-                                            behavior: 'smooth'
-                                        });
-                                    }, 500);
-                                } else {
-                                    // alert("ASdae");
-                                    setTimeout(function () {
-                                        document.getElementById('truelist').scrollIntoView({
-                                            behavior: 'smooth'
-                                        });
-                                    }, 500);
-                                }
-
-
+                    <input type="hidden" name="session_data" id="session_data" class="session_data"
+                        value="{{ session('success') }}">
+                    <script type="text/javascript">
+                        window.onload = function() {
+                            var message = $('#session_data').val();
+                            // alert(message);
+                            swal.fire({
+                                title: "Success",
+                                text: message,
+                                icon: "success",
+                                type: "success",
+                            });
+                            if (message == 'Quiz Created Successfully') {
+                                setTimeout(function() {
+                                    document.getElementById('quizlist').scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }, 500);
+                            } else if (message == 'Quiz Updated Successfully') {
+                                setTimeout(function() {
+                                    document.getElementById('quizlist').scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }, 500);
+                            } else {
+                                // alert("ASdae");
+                                setTimeout(function() {
+                                    document.getElementById('truelist').scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }, 500);
                             }
-                        </script>
+
+
+                        }
+                    </script>
                     @elseif(session('error'))
 
-                        <input type="hidden" name="session_data" id="session_data1" class="session_data"
-                            value="{{ session('error') }}">
-                        <script type="text/javascript">
-                            window.onload = function () {
-                                var message = $('#session_data1').val();
-                                swal.fire({
-                                    title: "Info",
-                                    text: message,
-                                    icon: "info",
-                                    type: "info",
-                                });
+                    <input type="hidden" name="session_data" id="session_data1" class="session_data"
+                        value="{{ session('error') }}">
+                    <script type="text/javascript">
+                        window.onload = function() {
+                            var message = $('#session_data1').val();
+                            swal.fire({
+                                title: "Info",
+                                text: message,
+                                icon: "info",
+                                type: "info",
+                            });
 
-                            }
-                        </script>
+                        }
+                    </script>
                     @endif
 
                     <div class="row">
@@ -891,35 +891,35 @@
                                                 <tbody>
 
                                                     @foreach($rows['rows']['long'] as $data)
-                                                        <tr>
-                                                            <td>{{$loop->iteration}}</td>
-                                                            <td>{{$data['question_name']}}</td>
-                                                            <td>{{$data['question']}}</td>
-                                                            <td>{{$data['points']}}</td>
+                                                    <tr>
+                                                        <td>{{$loop->iteration}}</td>
+                                                        <td>{{$data['question_name']}}</td>
+                                                        <td>{{$data['question']}}</td>
+                                                        <td>{{$data['points']}}</td>
 
-                                                            <td style="">
-
-
-
-                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
-                                                                    onclick="fetch_update({{$data['id']}},'longedit')"
-                                                                    data-toggle="modal" data-target="#addModal3"
-                                                                    style="margin-top:0px;"><i class="fas fa-pencil-alt"
-                                                                        style="color: blue !important"></i></a>
-                                                                <a class="btn btn-link" title="show" id="gcb" href=""
-                                                                    onclick="fetch_update({{$data['id']}},'longshow')"
-                                                                    data-toggle="modal" data-target="#addModal4"><i
-                                                                        class="fas fa-eye" style="color:green"></i></a>
-
-                                                                @csrf
-
-                                                                <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'1')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
-                                                            </td>
-
-                                                        </tr>
+                                                        <td style="">
 
 
-                                                        <input type="hidden" class="cfn" id="fn" value="0">
+
+                                                            <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                onclick="fetch_update({{$data['id']}},'longedit')"
+                                                                data-toggle="modal" data-target="#addModal3"
+                                                                style="margin-top:0px;"><i class="fas fa-pencil-alt"
+                                                                    style="color: blue !important"></i></a>
+                                                            <a class="btn btn-link" title="show" id="gcb" href=""
+                                                                onclick="fetch_update({{$data['id']}},'longshow')"
+                                                                data-toggle="modal" data-target="#addModal4"><i
+                                                                    class="fas fa-eye" style="color:green"></i></a>
+
+                                                            @csrf
+
+                                                            <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'1')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    <input type="hidden" class="cfn" id="fn" value="0">
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -960,35 +960,35 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach($rows['rows']['mcq'] as $data)
-                                                        <tr>
-                                                            <td>{{$loop->iteration}}</td>
-                                                            <td>{{$data['question_name']}}</td>
-                                                            <td>{{$data['question']}}</td>
+                                                    <tr>
+                                                        <td>{{$loop->iteration}}</td>
+                                                        <td>{{$data['question_name']}}</td>
+                                                        <td>{{$data['question']}}</td>
 
-                                                            <td>{{$data['points']}}</td>
+                                                        <td>{{$data['points']}}</td>
 
-                                                            <td style="">
+                                                        <td style="">
 
-                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
-                                                                    onclick="fetch_update({{$data['id']}},'mcqedit')"
-                                                                    data-toggle="modal" data-target="#addModalmcqedit"
-                                                                    style="margin-top:0px;"><i class="fas fa-pencil-alt"
-                                                                        style="color: blue !important"></i></a>
-                                                                <a class="btn btn-link" title="show" id="gcb" href=""
-                                                                    onclick="fetch_update({{$data['id']}},'mcqshow')"
-                                                                    data-toggle="modal" data-target="#addModalmcqshow"><i
-                                                                        class="fas fa-eye" style="color:green"></i></a>
+                                                            <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                onclick="fetch_update({{$data['id']}},'mcqedit')"
+                                                                data-toggle="modal" data-target="#addModalmcqedit"
+                                                                style="margin-top:0px;"><i class="fas fa-pencil-alt"
+                                                                    style="color: blue !important"></i></a>
+                                                            <a class="btn btn-link" title="show" id="gcb" href=""
+                                                                onclick="fetch_update({{$data['id']}},'mcqshow')"
+                                                                data-toggle="modal" data-target="#addModalmcqshow"><i
+                                                                    class="fas fa-eye" style="color:green"></i></a>
 
-                                                                @csrf
+                                                            @csrf
 
-                                                                <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'3')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
+                                                            <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'3')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
 
-                                                            </td>
+                                                        </td>
 
-                                                        </tr>
+                                                    </tr>
 
 
-                                                        <input type="hidden" class="cfn" id="fn" value="0">
+                                                    <input type="hidden" class="cfn" id="fn" value="0">
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -1029,32 +1029,32 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach($rows['rows']['short'] as $data)
-                                                        <tr>
-                                                            <td>{{$loop->iteration}}</td>
-                                                            <td>{{$data['question_name']}}</td>
-                                                            <td>{{$data['question']}}</td>
-                                                            <td>{{$data['points']}}</td>
-                                                            <td style="">
-                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
-                                                                    onclick="fetch_update({{$data['id']}},'shortedit')"
-                                                                    data-toggle="modal" data-target="#addModalshortedit"
-                                                                    style="margin-top:0px;"><i class="fas fa-pencil-alt"
-                                                                        style="color: blue !important"></i></a>
-                                                                <a class="btn btn-link" title="show" id="gcb" href=""
-                                                                    onclick="fetch_update({{$data['id']}},'shortshow')"
-                                                                    data-toggle="modal" data-target="#addModalshortshow"><i
-                                                                        class="fas fa-eye" style="color:green"></i></a>
+                                                    <tr>
+                                                        <td>{{$loop->iteration}}</td>
+                                                        <td>{{$data['question_name']}}</td>
+                                                        <td>{{$data['question']}}</td>
+                                                        <td>{{$data['points']}}</td>
+                                                        <td style="">
+                                                            <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                onclick="fetch_update({{$data['id']}},'shortedit')"
+                                                                data-toggle="modal" data-target="#addModalshortedit"
+                                                                style="margin-top:0px;"><i class="fas fa-pencil-alt"
+                                                                    style="color: blue !important"></i></a>
+                                                            <a class="btn btn-link" title="show" id="gcb" href=""
+                                                                onclick="fetch_update({{$data['id']}},'shortshow')"
+                                                                data-toggle="modal" data-target="#addModalshortshow"><i
+                                                                    class="fas fa-eye" style="color:green"></i></a>
 
-                                                                @csrf
+                                                            @csrf
 
-                                                                <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'2')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
+                                                            <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'2')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
 
-                                                            </td>
+                                                        </td>
 
-                                                        </tr>
+                                                    </tr>
 
 
-                                                        <input type="hidden" class="cfn" id="fn" value="0">
+                                                    <input type="hidden" class="cfn" id="fn" value="0">
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -1095,33 +1095,33 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach($rows['rows']['true'] as $data)
-                                                        <tr>
-                                                            <td>{{$loop->iteration}}</td>
-                                                            <td>{{$data['question_name']}}</td>
-                                                            <td>{{$data['question']}}</td>
-                                                            <td>{{$data['points']}}</td>
-                                                            <td style="">
-                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
-                                                                    data-toggle="modal"
-                                                                    onclick="fetch_update({{$data['id']}},'trueedit')"
-                                                                    data-target="#addModaltrueedit"><i
-                                                                        class="fas fa-pencil-alt"
-                                                                        style="color: blue !important"></i></a>
-                                                                <a class="btn btn-link" title="show" data-toggle="modal"
-                                                                    onclick="fetch_update({{$data['id']}},'trueshow')"
-                                                                    data-target="#addModaltrueshow"><i class="fas fa-eye"
-                                                                        style="color:green"></i></a>
+                                                    <tr>
+                                                        <td>{{$loop->iteration}}</td>
+                                                        <td>{{$data['question_name']}}</td>
+                                                        <td>{{$data['question']}}</td>
+                                                        <td>{{$data['points']}}</td>
+                                                        <td style="">
+                                                            <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                data-toggle="modal"
+                                                                onclick="fetch_update({{$data['id']}},'trueedit')"
+                                                                data-target="#addModaltrueedit"><i
+                                                                    class="fas fa-pencil-alt"
+                                                                    style="color: blue !important"></i></a>
+                                                            <a class="btn btn-link" title="show" data-toggle="modal"
+                                                                onclick="fetch_update({{$data['id']}},'trueshow')"
+                                                                data-target="#addModaltrueshow"><i class="fas fa-eye"
+                                                                    style="color:green"></i></a>
 
-                                                                @csrf
+                                                            @csrf
 
-                                                                <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'4')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
+                                                            <!-- <button type="submit" title="Delete" onclick="delete1({{$data['id']}},'4')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button> -->
 
-                                                            </td>
+                                                        </td>
 
-                                                        </tr>
+                                                    </tr>
 
 
-                                                        <input type="hidden" class="cfn" id="fn" value="0">
+                                                    <input type="hidden" class="cfn" id="fn" value="0">
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -1190,7 +1190,7 @@
 
                                     @foreach($rows['rows']['quiz_question'] as $key => $row)
 
-                                        <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
+                                    <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
                                     @endforeach
 
                                 </select>
@@ -1674,9 +1674,9 @@
 
 
 <style>
-    tr:first-child .danger {
+    /* tr:first-child .danger {
         display: none;
-    }
+    } */
 
     .container {
         max-width: 900px;
@@ -1843,7 +1843,7 @@
 <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 <script>
-    document.querySelector("[type='number']").addEventListener("keypress", function (evt) {
+    document.querySelector("[type='number']").addEventListener("keypress", function(evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
@@ -1866,7 +1866,7 @@
         }
 
     }
-    $(document).on('focusout', '#keyword_mcq', function (e) {
+    $(document).on('focusout', '#keyword_mcq', function(e) {
         choice_callback();
     });
     const correct_choices = [];
@@ -1890,65 +1890,17 @@
     // });
 
 
-    function create_tr(table_id) {
+    // function create_tr(table_id) {
 
-        let table_body = document.getElementById(table_id),
-            first_tr = table_body.firstElementChild
-        tr_clone = first_tr.cloneNode(true);
-
-        table_body.append(tr_clone);
-
-        clean_first_tr(table_body.firstElementChild);
-
-
-    }
-
-    function clean_first_tr(firstTr) {
-        let children = firstTr.children;
-
-        children = Array.isArray(children) ? children : Object.values(children);
-        children.forEach(x => {
-            if (x !== firstTr.lastElementChild) {
-                x.firstElementChild.value = '';
-            }
-        });
-    }
-
-
-
-    // function remove_tr(This) {
-    //     if (This.closest('tbody').childElementCount == 1) {
-    //         alert("You Don't have Permission to Delete This ?");
-    //     } else {
-    //         This.closest('tr').remove();
-    //     }
+    //     let table_body = document.getElementById(table_id),
+    //     first_tr = table_body.firstElementChild
+    //     tr_clone = first_tr.cloneNode(true);
+    //     table_body.append(tr_clone);
+    //     clean_first_tr(table_body.lastElementChild);
     // }
-    function remove_tr(button) {
-        const row = button.closest('tr');
-        if (document.querySelectorAll('#table_body tr').length > 1) {
-            row.remove();
-        } else {
-            swal.fire("At least one row must remain", "", "warning");
-        }
-    }
-</script>
-
-<script>
-    function create_tr(table_id) {
-
-
-        let table_body1 = document.getElementById(table_id),
-            first_tr = table_body1.firstElementChild
-        tr_clone = first_tr.cloneNode(true);
-
-        table_body1.append(tr_clone);
-
-        clean_first_tr(table_body1.firstElementChild);
-    }
 
     function clean_first_tr(firstTr) {
         let children = firstTr.children;
-
         children = Array.isArray(children) ? children : Object.values(children);
         children.forEach(x => {
             if (x !== firstTr.lastElementChild) {
@@ -1966,6 +1918,49 @@
             This.closest('tr').remove();
         }
     }
+    function remove_tr(button) {
+        const row = button.closest('tr');
+        if (document.querySelectorAll('#table_body tr').length > 1) {
+            row.remove();
+        } else {
+            swal.fire("At least one row must remain", "", "warning");
+        }
+    }
+</script>
+
+<script>
+    // function create_tr(table_id) {
+
+
+    //     let table_body1 = document.getElementById(table_id),
+    //         first_tr = table_body1.firstElementChild
+    //     tr_clone = first_tr.cloneNode(true);
+
+    //     table_body1.append(tr_clone);
+
+    //     clean_first_tr(table_body1.firstElementChild);
+    // }
+
+    // function clean_first_tr(firstTr) {
+    //     let children = firstTr.children;
+
+    //     children = Array.isArray(children) ? children : Object.values(children);
+    //     children.forEach(x => {
+    //         if (x !== firstTr.lastElementChild) {
+    //             x.firstElementChild.value = '';
+    //         }
+    //     });
+    // }
+
+
+
+    // function remove_tr(This) {
+    //     if (This.closest('tbody').childElementCount == 1) {
+    //         alert("You Don't have Permission to Delete This ?");
+    //     } else {
+    //         This.closest('tr').remove();
+    //     }
+    // }
 </script>
 <script>
     function mcqeditremovechoice() {
@@ -1983,38 +1978,38 @@
 
 
 <script>
-    function create_tr(table_id) {
+    // function create_tr(table_id) {
 
 
-        let table_body3 = document.getElementById(table_id),
-            first_tr = table_body3.firstElementChild
-        tr_clone = first_tr.cloneNode(true);
+    //     let table_body3 = document.getElementById(table_id),
+    //         first_tr = table_body3.firstElementChild
+    //     tr_clone = first_tr.cloneNode(true);
 
-        table_body3.append(tr_clone);
+    //     table_body3.append(tr_clone);
 
-        clean_first_tr(table_body3.firstElementChild);
-    }
+    //     clean_first_tr(table_body3.firstElementChild);
+    // }
 
-    function clean_first_tr(firstTr) {
-        let children = firstTr.children;
+    // function clean_first_tr(firstTr) {
+    //     let children = firstTr.children;
 
-        children = Array.isArray(children) ? children : Object.values(children);
-        children.forEach(x => {
-            if (x !== firstTr.lastElementChild) {
-                x.firstElementChild.value = '';
-            }
-        });
-    }
+    //     children = Array.isArray(children) ? children : Object.values(children);
+    //     children.forEach(x => {
+    //         if (x !== firstTr.lastElementChild) {
+    //             x.firstElementChild.value = '';
+    //         }
+    //     });
+    // }
 
 
 
-    function remove_tr(This) {
-        if (This.closest('tbody').childElementCount == 1) {
-            alert("You Don't have Permission to Delete This ?");
-        } else {
-            This.closest('tr').remove();
-        }
-    }
+    // function remove_tr(This) {
+    //     if (This.closest('tbody').childElementCount == 1) {
+    //         alert("You Don't have Permission to Delete This ?");
+    //     } else {
+    //         This.closest('tr').remove();
+    //     }
+    // }
 </script>
 
 
@@ -2096,7 +2091,7 @@
 
             table_body2.append(tr_clone);
 
-            clean_first_tr(table_body2.firstElementChild);
+            clean_first_tr(table_body2.lastElementChild);
             remove_tr(This);
 
         } else if (table_id == "short_body") {
@@ -2167,7 +2162,7 @@
 
             table_body3.append(tr_clone);
 
-            clean_first_tr(table_body3.firstElementChild);
+            clean_first_tr(table_body3.lastElementChild);
             remove_tr(This);
 
 
@@ -2239,15 +2234,24 @@
                 swal.fire("Please Enter the Choices", "", "error");
                 return false;
             } else {
-                let table_body3 = document.getElementById(table_id),
+                // let table_body3 = document.getElementById(table_id),
 
-                    first_tr = table_body3.firstElementChild
+                //     first_tr = table_body3.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
+                // tr_clone.querySelector('input').setAttribute("readonly", "");
+                // table_body3.append(tr_clone);
+
+
+                // clean_first_tr(table_body3.firstElementChild);
+                // remove_tr(This);
+
+                let table_body3 = document.getElementById(table_id),
+                first_tr = table_body3.firstElementChild
                 tr_clone = first_tr.cloneNode(true);
-                tr_clone.querySelector('input').setAttribute("readonly", "");
+
                 table_body3.append(tr_clone);
 
-
-                clean_first_tr(table_body3.firstElementChild);
+                clean_first_tr(table_body3.lastElementChild);
                 remove_tr(This);
 
 
@@ -2259,7 +2263,7 @@
 
     }
 
-    $(document).on('change', '#keyword_mcqedit', function () {
+    $(document).on('change', '#keyword_mcqedit', function() {
         var new_value = $('#keyword_mcqedit').val();
         var new_valuecount = document.querySelectorAll('#keyword_mcqedit').length;
         var new_correctcount = document.querySelector('#mcq_correct_choicesedit').children.length;
@@ -2275,29 +2279,26 @@
 
     });
 
-    function clean_first_tr(firstTr) {
-        let children = firstTr.children;
+    // function clean_first_tr(firstTr) {
+    //     let children = firstTr.children;
 
-        children = Array.isArray(children) ? children : Object.values(children);
-        children.forEach(x => {
-            if (x !== firstTr.lastElementChild) {
-                x.firstElementChild.value = '';
-            }
-        });
-    }
+    //     children = Array.isArray(children) ? children : Object.values(children);
+    //     children.forEach(x => {
+    //         if (x !== firstTr.lastElementChild) {
+    //             x.firstElementChild.value = '';
+    //         }
+    //     });
+    // }
 
 
 
     function remove_tr(This) {
-        //console.log(This.closest('input').value);
 
         if (This.closest('tbody').childElementCount == 1) {
             alert("You Don't have Permission to Delete This ?");
         } else {
             var remove_value = This.closest('tr').firstElementChild.firstElementChild.value;
-            console.log(This.closest('tr'));
             const optionschoices = $('#mcq_correct_choices').children();
-            console.log(optionschoices);
             // alert(remove_value);
             for (const optionschoice of optionschoices) {
                 // alert($(option).text());
@@ -2309,7 +2310,6 @@
 
             }
             const options = $('#mcq_correct_choicesedit').children();
-            console.log(options);
 
 
             for (const option of options) {
@@ -2370,13 +2370,13 @@
             $('#true').css('display', 'none');
         }
     }
-    $('#result').on('change', function (e) {
+    $('#result').on('change', function(e) {
         calcQuestionType(e.target.id);
     });
 </script>
 
 <script>
-    $('#result1').on('change', function () {
+    $('#result1').on('change', function() {
 
         // alert('asda');
         if ($(this).val() === 'LongQuestionlist') {
@@ -2411,8 +2411,8 @@
 
 <!-- Deepika -->
 <script>
-    $(document).ready(function () {
-        $(document).on('hidden.bs.modal', function () {
+    $(document).ready(function() {
+        $(document).on('hidden.bs.modal', function() {
             // const form = this.querySelector('.reset');
 
             // form.reset();
@@ -2482,6 +2482,16 @@
             var keyword_longedit = document.querySelectorAll('#keyword_longedit');
             var keyword_key = 0;
             for (const long_edit of keyword_longedit) {
+                if (keyword_key != 0 && long_edit.value == '') {
+                    swal.fire("Please Enter the Question Keywords", "", "error");
+                    return false;
+                }
+                keyword_key++;
+
+            }
+            var keyword_long_show = document.querySelectorAll('#keyword_long_show');
+            var keyword_key = 0;
+            for (const long_edit of keyword_long_show) {
                 if (keyword_key != 0 && long_edit.value == '') {
                     swal.fire("Please Enter the Question Keywords", "", "error");
                     return false;
@@ -2771,42 +2781,21 @@
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
 
-                                    <div class="wordquestion">
+                                    <div class="wordquestion" style="display:flex;flex-direction:column">
 
                                         <table class="_table">
 
                                             <tbody id="table_long_edit">
-                                                <tr>
-
-                                                    <td>
-                                                        <input type="text" class="form-control default"
-                                                            id="keyword_longedit" name="keyword_longedit[]"
-                                                            autocomplete="off">
-                                                    </td>
-                                                    <td>
-                                                        <div class="action_container">
-                                                            <button class="danger" onclick="remove_tr(this)">
-                                                                <i class="fa fa-close"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="action_container" width="50px">
-                                                            <button class="success" type="button"
-                                                                onclick="create_tr('table_long_edit')">
-                                                                <i class="fa fa-plus"></i>
-                                                            </button>
-                                                        </div>
-
-                                                    </td>
-
-
-                                                </tr>
-
+                                               
                                             </tbody>
-
-
                                         </table>
 
-
+                                        <div class="action_container" width="50px">
+                                            <button class="success" type="button"
+                                                onclick="create_tr('table_long_edit')">
+                                                Add
+                                            </button>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -2908,11 +2897,21 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
-                                    <div class="wordquestion">
-                                        <textarea class="form-control default" id="keyword_longshow"
-                                            name="keyword_longshow"
-                                            style="background-color: #e9ecef !important;"></textarea>
 
+                                    <div class="wordquestion">
+                                        <table class="_table">
+                                            <tbody id="keyword_longshow">
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class="form-control default"
+                                                            id="keyword_long_show" name="keyword_long_show[]"
+                                                            autocomplete="off">
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
 
@@ -2980,9 +2979,6 @@
                                     name="short_qnameshow" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
-
-
-
                     </div>
                     <div class="row">
                         <div class="col-md-1"></div>
@@ -3006,11 +3002,19 @@
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
                                     <div class="wordquestion">
-                                        <textarea class="form-control default" id="keyword_shortshow"
-                                            name="keyword_shortshow"
-                                            style="background-color: #e9ecef !important;"></textarea>
-
-
+                                        <table class="_table">
+                                            <tbody id="keyword_shortshow">
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class="form-control default"
+                                                            id="keyword_short_show" name="keyword_short_show[]"
+                                                            autocomplete="off">
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
 
@@ -3076,7 +3080,7 @@
                                     <option value="" data-badge="">Select Quiz Question</option>
                                     @foreach($rows['rows']['quiz_question'] as $key => $row)
 
-                                        <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
+                                    <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
                                     @endforeach
 
                                 </select>
@@ -3152,7 +3156,7 @@
                                     <option value="" data-badge="">Select Quiz Question</option>
                                     @foreach($rows['rows']['quiz_question'] as $key => $row)
 
-                                        <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
+                                    <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
                                     @endforeach
 
                                 </select>
@@ -3239,29 +3243,12 @@
                             <div class="col-md-7">
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
-                                    <div class="wordquestion">
+                                    <div class="wordquestion" style="display: flex;flex-direction:column">
 
                                         <table class="_table">
 
                                             <tbody id="table_short_edit">
-                                                <tr>
-
-                                                    <td>
-                                                        <input type="text" class="form-control default"
-                                                            id="keyword_shortedit" name="keyword_shortedit[]"
-                                                            autocomplete="off">
-                                                    </td>
-                                                    <td>
-                                                        <div class="action_container">
-                                                            <button class="danger" onclick="remove_tr(this)">
-                                                                <i class="fa fa-close"></i>
-                                                            </button>
-                                                        </div>
-
-                                                    </td>
-
-
-                                                </tr>
+                                                
 
                                             </tbody>
 
@@ -3271,7 +3258,7 @@
                                         <div class="action_container">
                                             <button class="success" type="button"
                                                 onclick="create_tr('table_short_edit')">
-                                                <i class="fa fa-plus"></i>
+                                                Add
                                             </button>
                                         </div>
 
@@ -3372,39 +3359,25 @@
                             <div class="form-group">
                                 <label>Choices:<span class="error-star" style="color:red;">*</span></label>
 
-                                <div class="wordquestion">
+                                <div class="wordquestion" style="display:flex;flex-direction:column">
 
                                     <table class="_table">
 
                                         <tbody id="table_mcq_edit">
                                             <tr>
-                                                <td>
-                                                    <input type="text" class="form-control default" id="keyword_mcqedit"
-                                                        name="keyword_mcqedit[]" autocomplete="off">
-
-                                                </td>
-                                                <td>
-                                                    <div class="action_container">
-                                                        <button class="danger" onclick="remove_tr(this)">
-                                                            <i class="fa fa-close"></i>
-                                                        </button>
-                                                    </div>
-
-                                                </td>
-
-                                                <div class="action_container" width="50px">
-                                                    <button class="success" type="button"
-                                                        onclick="create_tr('table_mcq_edit')">
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
-                                                </div>
-
+                                               
                                             </tr>
-
+                                                
                                         </tbody>
 
 
                                     </table>
+                                    <div class="action_container">
+                                            <button class="success" type="button"
+                                                onclick="create_tr('table_mcq_edit')">
+                                                Add
+                                            </button>
+                                        </div>
 
                                 </div>
                             </div>
@@ -3509,11 +3482,23 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Choices:<span class="error-star" style="color:red;">*</span></label>
-                                <div class="wordquestion">
-                                    <textarea class="form-control default" id="keyword_mcqshow" name="keyword_mcqshow"
-                                        style="background-color: #e9ecef !important;"></textarea>
+                               
 
-                                </div>
+                                <div class="wordquestion">
+                                        <table class="_table">
+                                            <tbody id="keyword_mcqshow">
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class="form-control default"
+                                                            id="keyword_mcq_show" name="keyword_mcq_show[]"
+                                                            autocomplete="off">
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3760,45 +3745,83 @@
 
             },
 
-            success: function (data) {
+            success: function(data) {
                 // correct_choices = data.rows[0]['correct_choices'].split(',');
 
-                console.log(data.rows);
 
                 if (type == "longedit") {
                     $('#table_long_edit tr:not(:first)').remove();
                     $('#long_qnameedit').val(data.rows[0]['question_name']);
                     $('#long_quistionedit').val(data.rows[0]['question']);
                     const keyarray = data.rows[0]['keywords'].split(',');
-                    console.log(keyarray, "actual_data");
-                    for (const keyobject of keyarray) {
+                    if (keyarray[0] === "") {
+                        keyarray.shift();
+                    }
+                    console.log(keyarray);
+                    let table_body2 = document.getElementById('table_long_edit');
+                    if (table_body2.firstElementChild) {
+                            table_body2.firstElementChild.remove();
+                        }
+                    // let first_tr = table_body2.firstElementChild;
+                    for (const value of keyarray) {
                         let table_body2 = document.getElementById('table_long_edit');
-                        first_tr = table_body2.firstElementChild
-                        tr_clone = first_tr.cloneNode(true);
-                        tr_clone.firstElementChild.firstElementChild.value = keyobject;
-                        tr_clone.querySelector('input').setAttribute("readonly", "");
-                        table_body2.append(tr_clone);
+                        let tr_clone = document.createElement('tr');
+                        // first_tr = table_body2.firstElementChild
+                        tr_clone.innerHTML = ` <tr>
 
-                        clean_first_tr(table_body2.firstElementChild);
+                            <td>
+                                <input type="text" class="form-control default"
+                                    id="keyword_longedit" value="${value}" name="keyword_longedit[]"
+                                    autocomplete="off">
+                            </td>
+                            <td>
+                                <div class="action_container">
+                                    <button class="danger" onclick="remove_tr(this)">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>`;
+                        
+                        table_body2.append(tr_clone);
+                        
+
                     }
 
                     $('#long_pointsedit').val(data.rows[0]['points']);
                     $('#eid').val(data.rows[0]['question_id']);
 
                 } else if (type == "longshow") {
+                    $('#keyword_longshow tr:not(:first)').remove();
                     $('#long_qnameshow').val(data.rows[0]['question_name']);
                     $('#long_quistionshow').val(data.rows[0]['question']);
-                    // $('#keyword_longshow').val(data.rows[0]['keywords']);
+
+                    const keyarrayhow = data.rows[0]['keywords'].split(',');
+                    if (keyarrayhow[0] === "") {
+                        keyarrayhow.shift();
+                    }
+
+                    let tableBody = document.getElementById('keyword_longshow');
+                    let firstRow = tableBody.firstElementChild;
+                    keyarrayhow.forEach((keyword, index) => {
+                        let clonedRow = firstRow.cloneNode(true); // Clone the template row
+                        clonedRow.querySelector('input').value = keyword; // Set the keyword value
+                        clonedRow.querySelector('input').setAttribute("readonly", ""); // Make input read-only
+                        tableBody.appendChild(clonedRow); // Append the cloned row to the table
+                    });
+
+                    tableBody.removeChild(firstRow);
+
                     let choices = data.rows[0]['keywords'];
                     const pieces = choices.split(',');
                     const result = pieces.join(', \n ');
-                    $('#keyword_longshow').html(result);
+                    // $('#keyword_longshow').html(result);
                     $('#long_pointsshow').val(data.rows[0]['points']);
                     $('#eidshow').val(data.rows[0]['id']);
 
                     $('#long_qnameshow').prop('disabled', true);
                     $('#long_quistionshow').prop('disabled', true);
-                    $('#keyword_longshow').prop('disabled', true);
+                    $('#keyword_long_show input').prop('disabled', true);
                     $('#long_pointsshow').prop('disabled', true);
 
                     $('#eidshow').attr('Action', '');
@@ -3809,30 +3832,63 @@
                     $('#short_qnameedit').val(data.rows[0]['question_name']);
                     $('#short_quistionedit').val(data.rows[0]['question']);
                     const keyarray = data.rows[0]['keywords'].split(',');
-                    console.log(keyarray, "actual_data");
-                    for (const keyobject of keyarray) {
+                    if (keyarray[0] === "") {
+                        keyarray.shift();
+                    }
+                    let table_body2 = document.getElementById('table_short_edit');
+                    if (table_body2.firstElementChild) {
+                            table_body2.firstElementChild.remove();
+                        }
+                    for (const value of keyarray) {
                         let table_body2 = document.getElementById('table_short_edit');
-                        first_tr = table_body2.firstElementChild
-                        tr_clone = first_tr.cloneNode(true);
-                        tr_clone.firstElementChild.firstElementChild.value = keyobject;
-                        tr_clone.querySelector('input').setAttribute("readonly", "");
-                        table_body2.append(tr_clone);
+                        tr_clone = document.createElement('tr');
+                        tr_clone.innerHTML = ` <tr>
+                        <td>
+                            <input type="text" class="form-control default"
+                                id="keyword_shortedit" value="${value}" name="keyword_shortedit[]"
+                                autocomplete="off">
+                        </td>
+                        <td>
+                            <div class="action_container">
+                                <button class="danger" onclick="remove_tr(this)">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                            </div>
 
-                        clean_first_tr(table_body2.firstElementChild);
+                        </td></tr>`
+
+                        // clean_first_tr(table_body2.firstElementChild);
+                        table_body2.append(tr_clone);
                     }
 
                     $('#short_pointsedit').val(data.rows[0]['points']);
                     $('#short_edit').val(data.rows[0]['question_id']);
 
                 } else if (type == "shortshow") {
-
+                    $('#keyword_shortshow tr:not(:first)').remove();
+                    $('#keyword_shortshow').val(data.rows[0]['keywords']);
                     $('#short_qnameshow').val(data.rows[0]['question_name']);
                     $('#short_quistionshow').val(data.rows[0]['question']);
-                    // $('#keyword_shortshow').val(data.rows[0]['keywords']);
+
+                    const keyarrayhow = data.rows[0]['keywords'].split(',');
+                    if (keyarrayhow[0] === "") {
+                        keyarrayhow.shift();
+                    }
+
+                    let tableBody = document.getElementById('keyword_shortshow');
+                    let firstRow = tableBody.firstElementChild;
+                    keyarrayhow.forEach((keyword, index) => {
+                        let clonedRow = firstRow.cloneNode(true); // Clone the template row
+                        clonedRow.querySelector('input').value = keyword; // Set the keyword value
+                        clonedRow.querySelector('input').setAttribute("readonly", ""); // Make input read-only
+                        tableBody.appendChild(clonedRow); // Append the cloned row to the table
+                    });
+
+                    tableBody.removeChild(firstRow);
                     let choices = data.rows[0]['keywords'];
                     const pieces = choices.split(',');
                     const result = pieces.join(', \n ');
-                    $('#keyword_shortshow').html(result);
+                    $('#keyword_short_show').html(result);
                     $('#short_pointsshow').val(data.rows[0]['points']);
                     $('#short_show').val(data.rows[0]['id']);
 
@@ -3849,56 +3905,75 @@
                     $('#mcq_qnameedit').val(data.rows[0]['question_name']);
                     $('#mcq_quistionedit').val(data.rows[0]['question']);
                     const keyarray = data.rows[0]['choices'].split(',');
-                    console.log(keyarray, "actual_data");
-                    for (const keyobject of keyarray) {
+                    if (keyarray[0] === "") {
+                        keyarray.shift();
+                    }
+                    let table_body2 = document.getElementById('table_mcq_edit');
+                    if (table_body2.firstElementChild) {
+                            table_body2.firstElementChild.remove();
+                        }
+                    for (const value of keyarray) {
                         let table_body2 = document.getElementById('table_mcq_edit');
-                        first_tr = table_body2.firstElementChild
-                        tr_clone = first_tr.cloneNode(true);
-                        tr_clone.firstElementChild.firstElementChild.value = keyobject;
+                        tr_clone = document.createElement('tr');
+                        tr_clone.innerHTML = `
+                            <td>
+                                <input type="text" class="form-control default" id="keyword_mcqedit"
+                                name="keyword_mcqedit[]" value="${value}" autocomplete="off">
+                            </td>
+                            <td>
+                                <div class="action_container">
+                                    <button class="danger" onclick="remove_tr(this)">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </div>
+                            </td>`
+                            table_body2.append(tr_clone);
+                }
+                let correctChoices = data.rows[0]['correct_choices']; 
+                if (typeof correctChoices === 'string') {
+                    correctChoices = JSON.parse(correctChoices); 
+                } else if (Array.isArray(correctChoices)) {
+                    correctChoices = correctChoices.map(choice => {
+                        try {
+                            return JSON.parse(choice); 
+                        } catch (error) {
+                            return choice; 
+                        }
+                    }).flat(); 
+                }
+                    $('#mcq_correct_choicesedit').empty(); // Clear dropdown
+                        keyarray.forEach(option => {
+                            console.log(keyarray, 'mcq');
+                            const isSelected = correctChoices.includes(option) ? 'selected' : '';
+                            console.log(isSelected, 'corectchoice');
+                            $('#mcq_correct_choicesedit').append(`<option value="${option}" ${isSelected}>${option}</option>`);
+                        });
 
-                        tr_clone.querySelector('input').setAttribute("readonly", "");
-                        table_body2.append(tr_clone);
-
-                        clean_first_tr(table_body2.firstElementChild);
-                    }
-
-                    const correctChoices = data.rows[0]['correct_choices'].split(',');
-
-                    $('#mcq_correct_choicesedit').children().remove();
-                    // Append the correct choices to the dropdown
-                    const all_options = data.rows[0]['choices'].split(',');
-                    for (const all_option of all_options) {
-                        const isSelected = correctChoices.includes(all_option) ? 'selected' : '';
-                        const option = `<option value="${all_option}" ${isSelected}>${all_option}</option>`;
-                        // const option1 = `<option value="${keyobject}">${keyobject}</option>`;
-                        $('#mcq_correct_choicesedit').append(option);
-                        // $('#mcq_correct_choicesedit').append(option1);
-
-                    }
-                    // Trigger change event to update Select2
-                    $('.mcq_correct_choicesedit').trigger('change');
-                    console.log(data.rows[0]['correct_choices'].split(','));
-                    setTimeout(() => {
-
-                        $('.mcq_correct_choicesedit').val(data.rows[0]['correct_choices'].split(',')).trigger("change");
-
-                    }, 300);
-
-
+                    $('.mcq_correct_choicesedit').val(correctChoices).trigger('change');
                     $('#mcq_pointsedit').val(data.rows[0]['points']);
-
                     $('#mcq_edit').val(data.rows[0]['question_id']);
 
                 } else if (type == "mcqshow") {
-
+                    $('#keyword_mcqshow tr:not(:first)').remove();
                     $('#mcq_qnameshow').val(data.rows[0]['question_name']);
                     $('#mcq_quistionshow').val(data.rows[0]['question']);
 
-                    //$('#keyword_mcqshow').val(data.rows[0]['choices']);  
+                    const keyarrayhow = data.rows[0]['choices'].split(',');
+                    if (keyarrayhow[0] === "") {
+                        keyarrayhow.shift();
+                    }
+                    let tableBody = document.getElementById('keyword_mcqshow');
+                    let firstRow = tableBody.firstElementChild;
+                        keyarrayhow.forEach((keyword, index) => {
+                        let clonedRow = firstRow.cloneNode(true); // Clone the template row
+                        clonedRow.querySelector('input').value = keyword; // Set the keyword value
+                        clonedRow.querySelector('input').setAttribute("readonly", ""); // Make input read-only
+                        tableBody.appendChild(clonedRow); // Append the cloned row to the table
+                    });
                     let choices = data.rows[0]['choices'];
                     const pieces = choices.split(',');
                     const result = pieces.join(', \n ');
-                    $('#keyword_mcqshow').html(result);
+                    $('#keyword_mcq_show').html(result);
 
 
                     // $('.mcq_correct_choicesshow').val(data.rows[0]['correct_choices']);
@@ -4022,8 +4097,7 @@
                     },
 
 
-                    success: function (data) {
-                        console.log(data);
+                    success: function(data) {
                         //exit();
                         if (data['data'] == 0) {
                             Swal.fire("Info!", data['message_cus'], "info", data['message_cus'])
@@ -4034,7 +4108,7 @@
                             Swal.fire("Success!", data['message_cus'], "success").then((result) => {
 
                                 location.replace(`/elearningquestion`);
-                                setTimeout(function () {
+                                setTimeout(function() {
                                     document.getElementById('quizlist').scrollIntoView({
                                         behavior: 'smooth'
                                     });
@@ -4187,7 +4261,7 @@
         allowClear: true,
         tags: true, // создает новые опции на лету
         language: {
-            noResults: function () {
+            noResults: function() {
                 return "No Choices Added";
             }
         }
@@ -4207,7 +4281,7 @@
             allowClear: true,
             tags: true,
             language: {
-                noResults: function () {
+                noResults: function() {
                     return "No Question Added";
                 }
             }
@@ -4215,9 +4289,9 @@
     }
 
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Call the reinitialization function after the select2 library is loaded
-        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function () {
+        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function() {
             reinitializeSelect2(".js-select1");
         });
     });
@@ -4237,7 +4311,6 @@
     function data() {
 
         var id = $("select[id='quiz_question']").val();
-        console.log(id);
         $.ajax({
             url: "{{ url('/elearning/question_quiz/get_points') }}",
             type: 'GET',
@@ -4246,8 +4319,7 @@
                 _token: '{{csrf_token()}}'
 
             },
-            success: function (data) {
-                console.log(data);
+            success: function(data) {
                 if (id == "") {
                     $('.quizpoints').css('display', 'none');
 
@@ -4267,7 +4339,7 @@
             }
 
         })
-        $('.select2-selection__clear').on('click', function () {
+        $('.select2-selection__clear').on('click', function() {
             $('.quizpoints').css('display', 'none');
 
         });
@@ -4279,7 +4351,6 @@
     function dataedit() {
 
         var id = $("select[id='quiz_questionedit']").val();
-        console.log(id);
         $.ajax({
             url: "{{ url('/elearning/question_quiz/get_points') }}",
             type: 'GET',
@@ -4288,8 +4359,7 @@
                 _token: '{{csrf_token()}}'
 
             },
-            success: function (data) {
-                console.log(data);
+            success: function(data) {
 
                 $('#q_pointsedit').val(data);
 
@@ -4299,7 +4369,7 @@
             }
 
         })
-        $('.select2-selection__clear').on('click', function () {
+        $('.select2-selection__clear').on('click', function() {
             $('.quizpoints').css('display', 'none');
 
         });
@@ -4317,57 +4387,57 @@
 
 
     }
-    $('.close').on('click', function () {
+    $('.close').on('click', function() {
         resetSelect2();
     });
 </script>
 
 <script>
-    document.querySelector("[name='short_points']").addEventListener("keypress", function (evt) {
+    document.querySelector("[name='short_points']").addEventListener("keypress", function(evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
     });
-    document.querySelector("[name='short_pointsedit']").addEventListener("keypress", function (evt) {
+    document.querySelector("[name='short_pointsedit']").addEventListener("keypress", function(evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
     });
 
 
-    document.querySelector("[name='long_points']").addEventListener("keypress", function (evt) {
+    document.querySelector("[name='long_points']").addEventListener("keypress", function(evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)) {
             evt.preventDefault();
         }
     });
-    document.querySelector("[name='long_pointsedit']").addEventListener("keypress", function (evt) {
+    document.querySelector("[name='long_pointsedit']").addEventListener("keypress", function(evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)) {
             evt.preventDefault();
         }
     });
 
-    document.querySelector("[name='true_points']").addEventListener("keypress", function (evt) {
+    document.querySelector("[name='true_points']").addEventListener("keypress", function(evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
     });
-    document.querySelector("[name='true_pointsedit']").addEventListener("keypress", function (evt) {
+    document.querySelector("[name='true_pointsedit']").addEventListener("keypress", function(evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
     });
 
-    document.querySelector("[name='mcq_points']").addEventListener("keypress", function (evt) {
+    document.querySelector("[name='mcq_points']").addEventListener("keypress", function(evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
     });
-    document.querySelector("[name='mcq_pointsedit']").addEventListener("keypress", function (evt) {
+    document.querySelector("[name='mcq_pointsedit']").addEventListener("keypress", function(evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
     });
-    document.querySelector(".comma").addEventListener("keypress", function (evt) {
+    document.querySelector(".comma").addEventListener("keypress", function(evt) {
         var charCode = evt.which || evt.keyCode;
         var charStr = String.fromCharCode(charCode);
 
