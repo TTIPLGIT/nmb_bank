@@ -243,7 +243,7 @@
                                             <table class="table table-bordered" id="align1">
                                                 <thead>
                                                     <tr>
-                                                        <th>SI.No</th>
+                                                        <th>S.No</th>
                                                         <th>Course Name</th>
                                                         <th>CPD Points</th>
                                                         <th>Completed at</th>

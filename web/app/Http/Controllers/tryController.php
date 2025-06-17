@@ -26,8 +26,9 @@ class tryController extends BaseController
                 $objData = json_decode($this->decryptData($response->Data));
                 if ($objData->Code == 200) {
                     $parant_data = json_decode(json_encode($objData->Data), true);
-                    //dd($parant_data);
+                    // dd($parant_data);
                     $rows = $parant_data['rows'];
+                    $event_date = $parant_data['dasboardCount']['event_date'];
 
                     // foreach ($rows as $key => $row) {
                     //     # code...
@@ -45,7 +46,7 @@ class tryController extends BaseController
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
 
-                    return view('elearning.admin.admindashboard', compact('rows', 'modules', 'screens', 'count', 'recommended'));
+                    return view('elearning.admin.admindashboard', compact('rows', 'modules', 'screens', 'count', 'recommended','event_date'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -116,22 +117,22 @@ class tryController extends BaseController
 
     public function admincourse(Request $request)
     {
-        //dd('iuyiii');
-        $method = 'Method => tryController => admincourse';
-        $user_id = $request->session()->get("userID");
+        
         try {
+            $method = 'Method => tryController => admincourse';
+            $user_id = $request->session()->get("userID");
             $menus = $this->FillMenu();
             $rows = array();
-            $rows['elearning_classes'] = DB::table('elearning_classes')
-                ->select('*')
-                ->where('elearning_classes.drop_class', '0')
-                ->orderBy('class_id', 'desc') // Replace 'created_at' with the column you want to order by
-                ->get();
 
+            $rows['elearning_classes'] = DB::table('elearning_classes')
+            ->select('*')
+            ->where('drop_class', '0')
+            ->orderBy('class_id', 'desc')
+            ->get();
             $rows1 = array();
             $rows1['elearning_courses'] = DB::table('elearning_courses')
                 ->select('*')
-                ->where('elearning_courses.drop_course', '0')
+                ->where('drop_course', '0')
                 ->orderBy('course_id', 'desc') // Replace 'created_at' with the column you want to order by
                 ->get();
             $rows1['exam_list'] = DB::table('elearning_exam')
@@ -145,7 +146,7 @@ class tryController extends BaseController
             $screens = $menus['screens'];
             $modules = $menus['modules'];
             $category = tryController::course_list($request);
-            $rows2['course_category'] = $category['rows2']['course_category'];;
+            $rows2['course_category'] = $category['rows2']['course_category'];
             return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'user_id', 'rows1', 'rows2'));
         } catch (\Exception $exc) {
             //dd("bhj");
@@ -550,6 +551,8 @@ class tryController extends BaseController
         }
         $method = 'Method => tryController => event_store';
         try {
+dd($request);
+
             $data = array();
             $data['event_name'] = $request->event_name;
             //$data['resource_name'] = $request->resource_name;
@@ -576,11 +579,9 @@ class tryController extends BaseController
             $request = array();
             $request['requestData'] = $encryptArray;
 
-
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/event/store';
 
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-
             $menus = $this->FillMenu();
 
             $screens = $menus['screens'];

@@ -7,6 +7,15 @@
         box-shadow: none !important;
     }
 
+    .highlight-event {
+        background-color: yellow;
+        /* Green background for upcoming events */
+        color: #fff;
+        /* White text color */
+        font-weight: bold;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
 
 
     .card {
@@ -785,7 +794,7 @@
 
     .dycalendar-today-date,
     .dycalendar-today-date:hover {
-        background-color: white !important;
+        /* background-color: white !important; */
         color: #0ef3d8 !important;
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
             -5px -5px 10px rgba(255, 255, 255, 1) !important;
@@ -1194,7 +1203,8 @@
                         </div>
                         <div class="card-body d-flex flex-row justify-content-between align-items-center">
                             <span class="overview_count">{{$count['total_course'][0]['numberofcourses']}}</span>
-                            <img class="overview_img" src="{{asset('asset/image/progresscourse.png')}}" alt="Course in Progress" width="40%">
+                            <img class="overview_img" src="{{asset('asset/image/progresscourse.png')}}"
+                                alt="Course in Progress" width="40%">
                         </div>
                     </div>
                     <div class="card noShadow">
@@ -1203,7 +1213,8 @@
                         </div>
                         <div class="card-body d-flex flex-row justify-content-between align-items-center">
                             <span class="overview_count">{{$count['free_course'][0]['numberofcourses']}}</span>
-                            <img class="overview_img" src="{{asset('asset/image/completed.png')}}" alt="Course Completed" width="40%">
+                            <img class="overview_img" src="{{asset('asset/image/completed.png')}}"
+                                alt="Course Completed" width="40%">
                         </div>
                     </div>
                     <div class="card noShadow">
@@ -1212,16 +1223,19 @@
                         </div>
                         <div class="card-body d-flex flex-row justify-content-between align-items-center">
                             <span class="overview_count">{{$count['paid_course'][0]['numberofcourses']}}</span>
-                            <img class="overview_img" src="{{asset('asset/image/paid-ads.png')}}" alt="Watching Time" width="40%">
+                            <img class="overview_img" src="{{asset('asset/image/paid-ads.png')}}" alt="Watching Time"
+                                width="40%">
                         </div>
                     </div>
                     <div class="card noShadow">
                         <div class="card-header">
                             <span>Certificate Course</span>
                         </div>
-                        <div class="card-body d-flex flex-row justify-content-between align-items-center" style="height: 92px;">
+                        <div class="card-body d-flex flex-row justify-content-between align-items-center"
+                            style="height: 92px;">
                             <span class="overview_count">{{$count['certificate_course'][0]['numberofcourses']}}</span>
-                            <img class="overview_img" id="overview_img_exception" src="{{asset('asset/image/awards.png')}}" alt="Certificates Achieved" width="40%">
+                            <img class="overview_img" id="overview_img_exception"
+                                src="{{asset('asset/image/awards.png')}}" alt="Certificates Achieved" width="40%">
                         </div>
                     </div>
 
@@ -1279,23 +1293,26 @@
                         <div class="card-header">
                             Notice Board
                         </div>
-                        @php $class_list=count ($rows)== 0 ? "d-flex justify-content-center align-items-center" : '' @endphp
+                        @php $class_list = count($rows) == 0 ? "d-flex justify-content-center align-items-center" : '' @endphp
                         <div class="card-body {{$class_list}}">
-                            @if(count ($rows)== 0)
+                            @if(count($rows) == 0)
                             <div class="nonotice">No Notice Found</div>
                             @endif
-                            @foreach($rows as $key=>$row)
+                            @foreach($rows as $key => $row)
 
                             <div class="d-flex flex-row justify-content-around notice_board">
-                                @php $path=$row['notice_path'].'/'.$row['notice_banner'];@endphp
+                                @php $path = $row['notice_path'] . '/' . $row['notice_banner'];@endphp
                                 @if(file_exists(substr($path, 1)))
-                                <img class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/{{$row['notice_banner']}}" alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')">
+                                <img class="notice_board_poster noticeHasFancy"
+                                    src="{{$row['notice_path']}}/{{$row['notice_banner']}}" alt="Notice Board"
+                                    onclick="makeFancy(event, 'noticeHasFancy')">
                                 <!-- <span class="caption">{{$row['notice_description']}}</span> -->
                                 <span class="caption">{!!html_entity_decode($row['notice_description'])!!}</span>
 
 
                                 @else
-                                <img class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/empty.jpg" alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')">
+                                <img class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/empty.jpg"
+                                    alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')">
                                 <span class="caption">{!!html_entity_decode($row['notice_description'])!!}</span>
 
                                 @endif
@@ -1355,23 +1372,28 @@
                             </div>
                             <div class="card-body">
 
-                                @if(count($recommended)==0)
+                                @if(count($recommended) == 0)
                                 <div class="d-flex flex-row justify-content-around recommended_courses">
 
-                                    <span style="margin-top: 48px;font-weight: 600;font-size: 22px !important;">No Recommended Courses</span>
+                                    <span style="margin-top: 48px;font-weight: 600;font-size: 22px !important;">No
+                                        Recommended Courses</span>
                                 </div>
 
                                 @endif
 
-                                @foreach($recommended as $key=>$row)
+                                @foreach($recommended as $key => $row)
                                 <div class="d-flex flex-row justify-content-around recommended_courses">
-                                    <!--  -->
-                                    @if(file_exists('uploads/class/126/'.$row['course_banner']))
-                                    <img class="recommended_courses_poster recommendedfancy" src="uploads/class/126/{{$row['course_banner']}}" alt="Recommended Course" onclick="makeFancy(event, 'recommendedfancy')">
+
+                                    @if(file_exists('uploads/class/126/' . $row['course_banner']))
+                                    <img class="recommended_courses_poster recommendedfancy"
+                                        src="uploads/class/126/{{$row['course_banner']}}" alt="Recommended Course"
+                                        onclick="makeFancy(event, 'recommendedfancy')">
                                     <span class="caption">{!!html_entity_decode($row['course_description'])!!}</span>
 
                                     @else
-                                    <img class="recommended_courses_poster recommendedfancy" src="uploads/class/126/empty.jpg" alt="Recommended Course" onclick="makeFancy(event, 'recommendedfancy')">
+                                    <img class="recommended_courses_poster recommendedfancy"
+                                        src="{{ asset('css/talentra-image.jpg') }}" alt="Recommended Course"
+                                        onclick="makeFancy(event, 'recommendedfancy')">
                                     <span class="caption">{!!html_entity_decode($row['course_description'])!!}</span>
 
                                     @endif
@@ -1396,8 +1418,8 @@
                                                 -
                                             </span>
                                             <span class="recommended_course_learners">
-                                                @php $exist=$row['total_student']==0 ? "No Students Enrolled" : "Students" @endphp
-                                                @if($row['total_student'] !=0){{$row['total_student']}}@endif {{$exist}}
+                                                @php $exist = $row['total_student'] == 0 ? "No Students Enrolled" : "Students" @endphp
+                                                @if($row['total_student'] != 0){{$row['total_student']}}@endif {{$exist}}
                                             </span>
                                         </div>
 
@@ -1416,7 +1438,8 @@
     </section>
 </div>
 <!-- Vertically centered modal -->
-<div class="modal fade" id="event_poster_modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="event_poster_modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -1437,13 +1460,15 @@
 </div>
 
 <!-- fancy box modal start-->
-<div class="modal fade" id="fancyContainer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="fancyContainerLabel" aria-hidden="true">
+<div class="modal fade" id="fancyContainer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="fancyContainerLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <!-- <h5 class="modal-title" id="fancyContainerLabel">Modal title</h5> -->
                 <div class="col-md-12" style="display: flex;justify-content: flex-end;">
-                    <button class="closefancy" onclick="removefancy()"><span aria-hidden="true"><i class="fa fa-times" aria-hidden="true" style="pointer-events: none !important;"></i></span></button>
+                    <button class="closefancy" onclick="removefancy()"><span aria-hidden="true"><i class="fa fa-times"
+                                aria-hidden="true" style="pointer-events: none !important;"></i></span></button>
                 </div>
 
             </div>
@@ -1451,11 +1476,13 @@
 
                 <div id="fancyControls" class="carousel slide" data-bs-ride="carousel">
                     <!-- js code -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#fancyControls" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#fancyControls"
+                        data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <!-- <span class="visually-hidden">Previous</span> -->
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#fancyControls" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#fancyControls"
+                        data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <!-- <span class="visually-hidden">Next</span> -->
                     </button>
@@ -1573,7 +1600,6 @@
         $("#fancyControls").carousel("cycle");
     }
 </script>
-
 <script>
     function toggleExpansion(e) {
         e.target.classList.toggle("ellipsis");
@@ -1588,6 +1614,7 @@
     }
 
 
+    let events = [];
 
     function get_event(eventsdate) {
 
@@ -1601,8 +1628,6 @@
             },
 
             success: function(data) {
-                console.log(data);
-                console.log(data.rows.length);
                 var count = 1;
                 $('.events_today_wrapper').children().remove();
                 if (data.rows.length == 0) {
@@ -1611,7 +1636,6 @@
 
                 } else {
                     for (const row of data.rows) {
-                        console.log(row.event_description);
                         if (count == 5) {
                             count = 1;
                         } else {
@@ -1657,25 +1681,95 @@
         dayformat: "ddd",
     });
     var myElement = document.getElementById('dycalendar');
-    myElement.addEventListener('DOMSubtreeModified', attachEventListenersToCalendarDays, false);
+    // myElement.addEventListener('DOMSubtreeModified', attachEventListenersToCalendarDays, false);
+    const eventdatehighlight = <?php echo json_encode($event_date) ?>
+
+    console.log(eventdatehighlight);
+
+    function highlightEvents() {
+        const calendarDays = document.querySelectorAll('.dycalendar-body table td');
+
+        calendarDays.forEach((dayElement) => {
+            const clickedDate = dayElement.innerText.padStart(2, '0');
+            const monthYearElement = document.querySelector('.dycalendar-span-month-year');
+            const monthYearText = monthYearElement.innerText;
+            const dateObj = new Date(`${monthYearText} ${clickedDate}`);
+            const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+            const year = dateObj.getFullYear().toString();
+            const eventsdate = year + '-' + month + '-' + clickedDate;
+            // const date = dayElement.getAttribute('data-date'); // Get the date attribute
+            if (eventsdate && eventdatehighlight.some(event => event.event_date === eventsdate)) {
+                dayElement.classList.add('highlight-event'); // Add the highlight class
+            }
+        });
+    }
+
+    // Call the function to highlight events
+    highlightEvents();
+    // $(document).on(".dycalendar-month-container", function () {
+    //     alert('nextmonth');
+    //     highlightEvents(); // This runs when the month change is complete
+    // });
+    // $(".dycalendar-prev-next-btn").click(function(){
+    //     alert('kii');
+    //     $(document).trigger(".dycalendar-month-container");
+    //     });
+
+    const targetNode = document.querySelector(".dycalendar-prev-next-btn");
+    const observers = new MutationObserver(function(mutationsList) {
+        for (let mutation of mutationsList) {
+            if (mutation.type === "childList") {
+                alert('nextmonth');
+                highlightEvents(); // Call your function when the container changes
+            }
+        }
+    });
+    observers.observe(targetNode, {
+        childList: true,
+        subtree: true
+    });
+
+    // Trigger logic when the button is clicked
+    // $(".dycalendar-prev-next-btn").click(function() {
+    //     alert('kii');
+    // });
 
     function attachEventListenersToCalendarDays() {
         const tdElements = document.querySelectorAll('.dycalendar-body table td');
+        const today = new Date();
         for (const tdElement of tdElements) {
-            tdElement.addEventListener('click', (e) => {
-                const clickedDate = e.target.innerText.padStart(2, '0');
-                const monthYearElement = document.querySelector('.dycalendar-span-month-year');
-                const monthYearText = monthYearElement.innerText;
-                const dateObj = new Date(`${monthYearText} ${clickedDate}`);
-                const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-                const year = dateObj.getFullYear().toString();
-                const eventsdate = clickedDate + '-' + month + '-' + year;
 
-                get_event(eventsdate);
-            });
+            const clickedDate = tdElement.innerText.padStart(2, '0');
+            const monthYearElement = document.querySelector('.dycalendar-span-month-year');
+            const monthYearText = monthYearElement.innerText;
+            const dateObj = new Date(`${monthYearText} ${clickedDate}`);
+            const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+            const year = dateObj.getFullYear().toString();
+            const eventsdate = clickedDate + '-' + month + '-' + year;
+
+            const eventDateObj = new Date(`${year}-${month}-${clickedDate}`);
+
+            if (events.includes(eventsdate)) {
+                tdElement.classList.add('highlight-event');
+            }
+
+            tdElement.onclick = () => {
+                get_event(eventsdate); // Fetch events for the selected date
+                tdElements.forEach(td => td.classList.remove('highlight')); // Remove highlight from all cells
+                tdElement.classList.add('highlight'); // Highlight the clicked cell
+            };
+
+            // get_event(eventsdate);
         }
     }
 
+    const observer = new MutationObserver(() => {
+        attachEventListenersToCalendarDays();
+    });
+    observer.observe(myElement, {
+        childList: true,
+        subtree: true
+    });
     // Initial attachment of event listeners
     attachEventListenersToCalendarDays();
 
@@ -1685,19 +1779,19 @@
         tdElement.addEventListener('click', (e) => {
             //console.log(e);
             const clickedDate = e.target.innerText.padStart(2, '0');;
-            console.log(clickedDate);
 
             const monthYearElement = document.querySelector('.dycalendar-span-month-year');
-            console.log(monthYearElement);
             const monthYearText = monthYearElement.innerText;
-            console.log(monthYearText);
             // const [month, year] = monthYearText.split(' ');
             // console.log(clickedDate, month, year);
             const dateObj = new Date(`${monthYearText} ${clickedDate}`);
             const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
             const year = dateObj.getFullYear().toString();
             const eventsdate = clickedDate + '-' + month + '-' + year;
-            console.log(clickedDate, month, year, eventsdate);
+
+            tdElements.forEach(td => td.classList.remove('highlight')); // Remove highlight from all cells
+            e.target.classList.add('highlight');
+
             get_event(eventsdate);
             // const currentDate = new Date();
             // const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0');

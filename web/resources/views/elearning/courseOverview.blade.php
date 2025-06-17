@@ -396,7 +396,7 @@
                         <a href="/elearning/allCourses?sorted=Recently Added&tag=false&progress=false&q=false" class="btn btn-primary">Back</a>
                     </div>
                     <br>
-                    <h5 class="col-md-7 d-flex justify-content-center over">Course Introduction</h5>
+                    <h4 class="col-md-7 d-flex justify-content-center over">Course Introduction</h4>
                     <div class="card noShadow classOverviewContent">
                         <div class="card-body bgWhite classOverviewContentBody">
                             <h3 class="card-title">

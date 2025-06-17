@@ -177,38 +177,43 @@
         <div class=" col-md-12">
             <section class="section5">
                 <div class="section-body mt-2">
-                    <a type="button" style="font-size:15px;margin: 0 0px 5px 15px; border-color:#a9ca !important;" class="btn btn-success btn-lg" title="Test Create" id="gcb" href="" data-toggle="modal" data-target="#addModal1">Exam
-                        <span class="col-md-1" style="font-size:15px !important;padding:8px !important"><i class="fa fa-plus" aria-hidden="true"></i></span></a>
+                    <a type="button" style="font-size:15px;margin: 0 0px 5px 15px; border-color:#a9ca !important;"
+                        class="btn btn-success btn-lg" title="Test Create" id="gcb" href="" data-toggle="modal"
+                        data-target="#addModal1">Exam
+                        <span class="col-md-1" style="font-size:15px !important;padding:8px !important"><i
+                                class="fa fa-plus" aria-hidden="true"></i></span></a>
                     @if (session('success'))
 
-                    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-                    <script type="text/javascript">
-                        window.onload = function() {
-                            var message = $('#session_data').val();
-                            swal.fire({
-                                title: "Success",
-                                text: message,
-                                icon: "success",
-                                type: "success",
-                            });
+                        <input type="hidden" name="session_data" id="session_data" class="session_data"
+                            value="{{ session('success') }}">
+                        <script type="text/javascript">
+                            window.onload = function () {
+                                var message = $('#session_data').val();
+                                swal.fire({
+                                    title: "Success",
+                                    text: message,
+                                    icon: "success",
+                                    type: "success",
+                                });
 
-                        }
-                    </script>
+                            }
+                        </script>
                     @elseif(session('error'))
 
-                    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-                    <script type="text/javascript">
-                        window.onload = function() {
-                            var message = $('#session_data1').val();
-                            swal.fire({
-                                title: "Info",
-                                text: message,
-                                icon: "info",
-                                type: "info",
-                            });
+                        <input type="hidden" name="session_data" id="session_data1" class="session_data"
+                            value="{{ session('error') }}">
+                        <script type="text/javascript">
+                            window.onload = function () {
+                                var message = $('#session_data1').val();
+                                swal.fire({
+                                    title: "Info",
+                                    text: message,
+                                    icon: "info",
+                                    type: "info",
+                                });
 
-                        }
-                    </script>
+                            }
+                        </script>
                     @endif
 
 
@@ -226,7 +231,7 @@
                                             <table class="table table-bordered" id="align1">
                                                 <thead>
                                                     <tr>
-                                                        <th>SI.No</th>
+                                                        <th>S.No</th>
                                                         <th>Category</th>
                                                         <th>Exam Name</th>
                                                         <th>Quiz Name</th>
@@ -237,23 +242,34 @@
 
                                                     @foreach($rows['rows']['quiz_list'] as $data)
 
-                                                    <tr>
-                                                        <td>{{$loop->iteration}}</td>
-                                                        <td>{{$data['role_name']}}</td>
-                                                        <td class="ellipsis">{{$data['exam_name']}}</td>
-                                                        <td class="ellipsis">{{$data['quiz_name']}}</td>
-                                                        <td style="display:flex;justify-content:space-evenly;">
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$data['role_name']}}</td>
+                                                            <td class="ellipsis">{{$data['exam_name']}}</td>
+                                                            <td class="ellipsis">{{$data['quiz_name']}}</td>
+                                                            <td style="display:flex;justify-content:space-evenly;">
 
-                                                            <a class="" title="Edit" id="edit" onclick="fetch_update({{$data['id']}},'edit')" data-toggle="modal" data-target="#addModal2" style="padding-top: 6px;"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" id="show" onclick="fetch_update({{$data['id']}},'show')" data-toggle="modal" data-target="#addModal3" style="padding-top: 6px;" title="show"><i class="fas fa-eye" style="color:green"></i></a>
+                                                                <a class="btn btn-link" title="Edit" id="edit"
+                                                                    onclick="fetch_update({{$data['id']}},'edit')"
+                                                                    data-toggle="modal" data-target="#addModal2"
+                                                                    style="padding-top: 6px;"><i class="fas fa-pencil-alt"
+                                                                        style="color: blue !important;"></i></a>
+                                                                <a class="btn btn-link" id="show"
+                                                                    onclick="fetch_update({{$data['id']}},'show')"
+                                                                    data-toggle="modal" data-target="#addModal3"
+                                                                    style="padding-top: 6px;" title="show"><i
+                                                                        class="fas fa-eye" style="color:green"></i></a>
 
 
-                                                            <button type="submit" title="Delete" onclick="delete1(({{$data['id']}}))" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button>
+                                                                <button type="submit" title="Delete"
+                                                                    onclick="delete1(({{$data['id']}}))"
+                                                                    class="btn btn-link"><i class="far fa-trash-alt"
+                                                                        style="color:red"></i></button>
 
 
-                                                        </td>
+                                                            </td>
 
-                                                    </tr>
+                                                        </tr>
 
                                                     @endforeach
                                                 </tbody>
@@ -300,12 +316,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label required">Category:<span class="error-star" style="color:red;">*</span></label>
+                                <label class="control-label required">Category:<span class="error-star"
+                                        style="color:red;">*</span></label>
                                 <select class="form-control default" name="user_category" id="user_category">
                                     <option value="">Select User Category</option>
-                                    @foreach($rows['rows']['user_category'] as $key=>$row)
+                                    @foreach($rows['rows']['user_category'] as $key => $row)
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                        <option value="{{ $row }}">{{ $key }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -314,17 +331,19 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Exam Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="exam_name" name="exam_name" autocomplete="off" placeholder="Please Enter the Exam Name">
+                                <input type="text" class="form-control default" id="exam_name" name="exam_name"
+                                    autocomplete="off" placeholder="Please Enter the Exam Name">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label required">Quiz Name:<span class="error-star" style="color:red;">*</span></label>
+                                <label class="control-label required">Quiz Name:<span class="error-star"
+                                        style="color:red;">*</span></label>
                                 <select class="form-control" name="quiz_id" id="quiz_id">
                                     <option value="">Select Quiz Name</option>
-                                    @foreach($rows['rows']['quiz_dropdown'] as $key=>$row)
+                                    @foreach($rows['rows']['quiz_dropdown'] as $key => $row)
 
-                                    <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
+                                        <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -335,7 +354,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre(1)" id="savebutton">Submit</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre(1)"
+                                id="savebutton">Submit</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -356,7 +376,8 @@
 
         <div class="modal-content">
 
-            <form action="{{route('elearningexam.update',1)}}" method="POST" id="ethnicupdate" enctype="multipart/form-data" class="reset">
+            <form action="{{route('elearningexam.update', 1)}}" method="POST" id="ethnicupdate"
+                enctype="multipart/form-data" class="reset">
                 @method('put')
                 @csrf
                 <input type="hidden" name="eid" class="eid" id="eid">
@@ -372,12 +393,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label required">Category:<span class="error-star" style="color:red;">*</span></label>
+                                <label class="control-label required">Category:<span class="error-star"
+                                        style="color:red;">*</span></label>
                                 <select class="form-control" name="user_category" id="user_categoryedit">
                                     <option value="">Select User Category</option>
-                                    @foreach($rows['rows']['user_category'] as $key=>$row)
+                                    @foreach($rows['rows']['user_category'] as $key => $row)
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                        <option value="{{ $row }}">{{ $key }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -386,17 +408,19 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Exam Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="exam_nameedit" name="exam_name" autocomplete="off">
+                                <input type="text" class="form-control default" id="exam_nameedit" name="exam_name"
+                                    autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label required">Quiz Name:<span class="error-star" style="color:red;">*</span></label>
+                                <label class="control-label required">Quiz Name:<span class="error-star"
+                                        style="color:red;">*</span></label>
                                 <select class="form-control" name="quiz_id" id="quiz_idedit">
                                     <option value="">Select Quiz Name</option>
-                                    @foreach($rows['rows']['quiz_dropdown'] as $key=>$row)
+                                    @foreach($rows['rows']['quiz_dropdown'] as $key => $row)
 
-                                    <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
+                                        <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -407,7 +431,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre(2)" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre(2)"
+                                id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -444,12 +469,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label required">Category:<span class="error-star" style="color:red;">*</span></label>
+                                <label class="control-label required">Category:<span class="error-star"
+                                        style="color:red;">*</span></label>
                                 <select class="form-control" name="user_category" id="user_categoryshow">
                                     <option value="">Select User Category</option>
-                                    @foreach($rows['rows']['user_category'] as $key=>$row)
+                                    @foreach($rows['rows']['user_category'] as $key => $row)
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                        <option value="{{ $row }}">{{ $key }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -458,17 +484,19 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Exam Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="exam_nameshow" name="exam_name" autocomplete="off" style="background-color: #e9ecef !important;">
+                                <input type="text" class="form-control default" id="exam_nameshow" name="exam_name"
+                                    autocomplete="off" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label required">Quiz Name:<span class="error-star" style="color:red;">*</span></label>
+                                <label class="control-label required">Quiz Name:<span class="error-star"
+                                        style="color:red;">*</span></label>
                                 <select class="form-control" name="quiz_id" id="quiz_idshow">
                                     <option value="">Select Quiz Name</option>
-                                    @foreach($rows['rows']['quiz_dropdown'] as $key=>$row)
+                                    @foreach($rows['rows']['quiz_dropdown'] as $key => $row)
 
-                                    <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
+                                        <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -499,8 +527,8 @@
 
 
 <script>
-    $(document).ready(function() {
-        $(document).on('hidden.bs.modal', function() {
+    $(document).ready(function () {
+        $(document).on('hidden.bs.modal', function () {
             // const form = this.querySelector('.reset');
 
             // form.reset();
@@ -569,12 +597,12 @@
 <script>
     var $j = jQuery.noConflict();
 
-    $j(document).ready(function() {
+    $j(document).ready(function () {
         $j('#quiz_id').select2();
         $j('#quiz_idedit').select2();
         //alert('egeg');
-        $(document).on('change', '#quiz_idedit', function() {
-           // alert('fe');
+        $(document).on('change', '#quiz_idedit', function () {
+            // alert('fe');
             $j('#quiz_idedit').select2('destroy').select2();
 
         });
@@ -599,7 +627,7 @@
 
             },
 
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 if (type == "edit") {
                     $('#user_categoryedit').val(data.rows[0]['user_category']);
@@ -652,7 +680,7 @@
                     },
 
 
-                    success: function(data) {
+                    success: function (data) {
                         console.log(data);
                         if (result.value) {
 
@@ -683,7 +711,7 @@
 
     for (const myModals of myModal) {
 
-        myModals.addEventListener('hidden.bs.modal', function() {
+        myModals.addEventListener('hidden.bs.modal', function () {
 
             const form = this.querySelector('.reset');
 

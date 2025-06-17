@@ -18,7 +18,6 @@ use PDF;
 
 
 class elearningEthnicTestController extends BaseController
-
 {
     public function index(Request $request)
     {
@@ -28,10 +27,10 @@ class elearningEthnicTestController extends BaseController
         }
         $method = 'Method => elearningEthnicTestController => index';
         try {
-            $request =  array();
+            $request = array();
             $request['mlhud_id'] = $user_id;
             $gatewayURL = config('setting.api_gateway_url') . '/ethictest';
-            $response = $this->serviceRequest($gatewayURL, 'GET',  json_encode($request), $method);
+            $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
             //dd($response);
 
@@ -144,7 +143,7 @@ class elearningEthnicTestController extends BaseController
                     $objData = json_decode($this->decryptData($response->Data));
                     if ($objData->Code == 200) {
                         $parant_data = json_decode(json_encode($objData->Data), true);
-                        $rows =  $parant_data['rows'];
+                        $rows = $parant_data['rows'];
                         // $one_row =  $parant_data['one_rows'];
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
@@ -189,7 +188,7 @@ class elearningEthnicTestController extends BaseController
                     $objData = json_decode($this->decryptData($response->Data));
                     if ($objData->Code == 200) {
                         $parant_data = json_decode(json_encode($objData->Data), true);
-                        $rows =  $parant_data['rows'];
+                        $rows = $parant_data['rows'];
                         // $one_row =  $parant_data['one_rows'];
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
@@ -318,7 +317,6 @@ class elearningEthnicTestController extends BaseController
         }
     }
     public function list(Request $request)
-
     {
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
@@ -372,7 +370,7 @@ class elearningEthnicTestController extends BaseController
                 return view('auth.login');
             }
             $method = 'Method => elearningEthnicTestController => quiz';
-            $request =  array();
+            $request = array();
             $request['mlhud_id'] = $user_id;
             $gatewayURL = config('setting.api_gateway_url') . '/ethic/quiz';
             $response = $this->serviceRequest($gatewayURL, 'GET', "", $method);
@@ -517,7 +515,7 @@ class elearningEthnicTestController extends BaseController
             $tags3 = array_unique(explode(", ", $tags2));
             // sorting array indices properly
             $availableTags = array_values($tags3);
-         
+
             // Search
 
             if ($search == "false") {
@@ -656,7 +654,7 @@ class elearningEthnicTestController extends BaseController
                     ->paginate(8);
                 $sorted = "Recently Added";
             }
-            
+
             if ($sort == "Recently Added" && $progressFilter == "Completed" && $searched == false && $tagFilter == "false") {
                 $availableCourses = DB::table('user_course_relation as uc')
                     ->select('*')
@@ -698,6 +696,7 @@ class elearningEthnicTestController extends BaseController
                     ->paginate(8);
                 $progressFilter = "Completed";
             }
+
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
             $modules = $menus['modules'];
@@ -705,9 +704,13 @@ class elearningEthnicTestController extends BaseController
 
             // Call the getCourseprogressbar() method
             $courseProgress = course::getCourseprogressbar($user_id);
-            // dd($courseProgress);
+            $wishlistedCourseIds = DB::table('elearning_wishlist')
+                ->where('active_flag', 0)
+                ->where('user_id', $user_id)
+                ->pluck('course_id')
+                ->toArray();
 
-            return view('elearning.allCourses', compact('Courses', 'availableCourses', 'availableTags', 'search', 'sort', 'tagFilter', 'progressFilter', 'modules', 'screens', 'menus', 'courseProgress'));
+            return view('elearning.allCourses', compact('Courses', 'availableCourses', 'availableTags', 'search', 'sort', 'tagFilter', 'progressFilter', 'modules', 'screens', 'menus', 'courseProgress', 'wishlistedCourseIds'));
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
@@ -717,6 +720,7 @@ class elearningEthnicTestController extends BaseController
 
         $method = 'Method => elearningEthnicTestController => wishlist';
         try {
+            $user_id = $request->session()->get("userID");
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
             $modules = $menus['modules'];
@@ -729,8 +733,10 @@ class elearningEthnicTestController extends BaseController
             $perPage = 8;
 
             $wishlistCourses = DB::table('elearning_wishlist')
+
                 ->join('elearning_courses', 'elearning_wishlist.course_id', '=', 'elearning_courses.course_id')
                 ->where('elearning_wishlist.active_flag', 0)
+                ->where('elearning_wishlist.user_id', $user_id)
                 ->select(
                     'elearning_wishlist.course_id',
                     'elearning_courses.course_name',
@@ -740,6 +746,7 @@ class elearningEthnicTestController extends BaseController
                     'elearning_courses.course_pay',
                     'elearning_courses.course_classes'
                 )
+
                 ->paginate($perPage);
             foreach ($wishlistCourses as $key => $value) {
                 # code...
@@ -781,12 +788,12 @@ class elearningEthnicTestController extends BaseController
         }
         $method = 'Method => elearningEthnicTestController => cart_index';
         try {
-            $request =  array();
+            $request = array();
             $request['mlhud_id'] = $user_id;
             $request['id'] = $id;
             // $id = $this->decryptData($id);
             $gatewayURL = config('setting.api_gateway_url') . '/elearningCart';
-            $response = $this->serviceRequest($gatewayURL, 'GET',  json_encode($request), $method);
+            $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
             //dd($response);
 
@@ -925,10 +932,10 @@ class elearningEthnicTestController extends BaseController
                 if (isset($class_details[0]->class_format) && $class_details[0]->class_format == 'mp3') {
                     $audio_exist = 1;
                 }
-                if (isset($class_details[0]->class_format) &&  $class_details[0]->class_format == 'mp4') {
+                if (isset($class_details[0]->class_format) && $class_details[0]->class_format == 'mp4') {
                     $video_exist = 1;
                 }
-                if (isset($class_details[0]->class_format) &&  $class_details[0]->class_format == 'pdf') {
+                if (isset($class_details[0]->class_format) && $class_details[0]->class_format == 'pdf') {
                     $pdf_exist = 1;
                 } else {
                     $img_exist = 1;
@@ -1076,7 +1083,7 @@ class elearningEthnicTestController extends BaseController
                 $courseContents = DB::select("SELECT * FROM elearning_classes WHERE drop_class=0  ORDER BY FIELD(class_id,$classOrder)");
                 $this->WriteFileLog($courseContents);
 
-                $this->notifications_insert(null, $user_id, "$courseName-Course Enrolled Successfully", "/elearningCourse/class/" .  $id);
+                $this->notifications_insert(null, $user_id, "$courseName-Course Enrolled Successfully", "/elearningCourse/class/" . $id);
                 //dd('notify2');
                 return redirect(route('elearningCourse', $id))->with('success', 'Course Enrolled Successfully');
                 //return view('elearning.courseOverview', compact('courseDetails', 'courseContents', 'classOrder', 'isEnrolled'));
@@ -1100,7 +1107,7 @@ class elearningEthnicTestController extends BaseController
 
 
             foreach ($askedQuestions as $askedQuestions_key => $row) {
-                $question_id =  $row->question_id;
+                $question_id = $row->question_id;
                 // dd($question_id);
                 $is_yours = 0;
                 $follow_up = DB::select("SELECT * FROM elearning_followup WHERE question_id= $question_id");
@@ -1174,7 +1181,7 @@ class elearningEthnicTestController extends BaseController
             foreach ($ratings as $key => $rate) {
                 $ratings[$key]->fullname = $rate->name;
                 $ratings[$key]->name = $firstTwoLetters = strtoupper(substr($rate->name, 0, 2));
-                $dateString =  $ratings[$key]->created_at;
+                $dateString = $ratings[$key]->created_at;
                 $date = new DateTime($dateString);
                 $now = new DateTime();
                 $interval = $now->diff($date);
@@ -1203,7 +1210,7 @@ class elearningEthnicTestController extends BaseController
             // $five_star = (int) $fivestar[0]->fivestar_count;
             //dd($fivestar);
             if ($fivestar[0]->fivestar_count != 0) {
-                $average_ratting['five_star'] = (int)($fivestar[0]->fivestar_count) / ($total_starcount[0]->star_count) * 100;
+                $average_ratting['five_star'] = (int) ($fivestar[0]->fivestar_count) / ($total_starcount[0]->star_count) * 100;
             } else {
                 $average_ratting['five_star'] = 0;
             }
@@ -1212,7 +1219,7 @@ class elearningEthnicTestController extends BaseController
             // $five_star = (int) $fivestar[0]->fivestar_count;
             // dd($fivestar);
             if ($fourstar[0]->fourstar_count != 0) {
-                $average_ratting['four_star'] = (int)($fourstar[0]->fourstar_count) / ($total_starcount[0]->star_count) * 100;
+                $average_ratting['four_star'] = (int) ($fourstar[0]->fourstar_count) / ($total_starcount[0]->star_count) * 100;
             } else {
                 $average_ratting['four_star'] = 0;
             }
@@ -1220,16 +1227,16 @@ class elearningEthnicTestController extends BaseController
             // $five_star = (int) $fivestar[0]->fivestar_count;
             // dd($fivestar);
             if ($threestar[0]->threestar_count != 0) {
-                $average_ratting['three_star'] = (int)($threestar[0]->threestar_count) / ($total_starcount[0]->star_count) * 100;
+                $average_ratting['three_star'] = (int) ($threestar[0]->threestar_count) / ($total_starcount[0]->star_count) * 100;
             } else {
                 $average_ratting['three_star'] = 0;
             }
-           
+
             $twostar = DB::Select("SELECT COUNT(*) as twostar_count FROM elearning_ratings where course_id=$id and (rating_point >= 1.5 AND rating_point <= 2.4)");
             // $five_star = (int) $fivestar[0]->fivestar_count;
             // dd($fivestar);
             if ($twostar[0]->twostar_count != 0) {
-                $average_ratting['two_star'] = (int)($twostar[0]->twostar_count) / ($total_starcount[0]->star_count) * 100;
+                $average_ratting['two_star'] = (int) ($twostar[0]->twostar_count) / ($total_starcount[0]->star_count) * 100;
             } else {
                 $average_ratting['two_star'] = 0;
             }
@@ -1237,7 +1244,7 @@ class elearningEthnicTestController extends BaseController
             // $five_star = (int) $fivestar[0]->fivestar_count;
             // dd($fivestar);
             if ($onestar[0]->onestar_count != 0) {
-                $average_ratting['one_star'] = (int)($onestar[0]->onestar_count) / ($total_starcount[0]->star_count) * 100;
+                $average_ratting['one_star'] = (int) ($onestar[0]->onestar_count) / ($total_starcount[0]->star_count) * 100;
             } else {
                 $average_ratting['one_star'] = 0;
             }
@@ -1271,10 +1278,10 @@ class elearningEthnicTestController extends BaseController
                 if (isset($class_details[0]->class_format) && $class_details[0]->class_format == 'mp3') {
                     $audio_exist = 1;
                 }
-                if (isset($class_details[0]->class_format) &&  $class_details[0]->class_format == 'mp4') {
+                if (isset($class_details[0]->class_format) && $class_details[0]->class_format == 'mp4') {
                     $video_exist = 1;
                 }
-                if (isset($class_details[0]->class_format) &&  $class_details[0]->class_format == 'pdf') {
+                if (isset($class_details[0]->class_format) && $class_details[0]->class_format == 'pdf') {
                     $pdf_exist = 1;
                 } else {
                     $img_exist = 1;
@@ -1415,7 +1422,7 @@ class elearningEthnicTestController extends BaseController
                 # code...
             }
             $data = [
-                'replylist' =>  $replylist,
+                'replylist' => $replylist,
                 'isEmpty' => $isEmpty,
                 'replylist2' => $replylist2,
                 'replylist_admin' => $replylist_admin
@@ -1446,7 +1453,7 @@ class elearningEthnicTestController extends BaseController
             $data = DB::table('elearningallcourses_reply')
                 ->insert([
                     'question_id' => $question_id,
-                    'user_id' =>  $user_id,
+                    'user_id' => $user_id,
                     'course_id' => $course_id,
                     'reply_details' => $reply_details,
                     'active_flag' => '0',
@@ -1487,7 +1494,7 @@ class elearningEthnicTestController extends BaseController
                 $data = DB::table('elearning_followup')
                     ->insert([
                         'question_id' => $question_id,
-                        'user_id' =>  $user_id,
+                        'user_id' => $user_id,
                         'course_id' => $course_id,
                         'created_by' => $user_id,
                         'created_at' => NOW()
@@ -1574,7 +1581,7 @@ class elearningEthnicTestController extends BaseController
             // }
             if ($nooffollows != "No Result Found") {
                 foreach ($nooffollows as $askedQuestions_key => $row) {
-                    $question_id =  $row->question_id;
+                    $question_id = $row->question_id;
                     $is_yours = 0;
                     $follow_up = DB::select("SELECT * FROM elearning_followup WHERE question_id= $question_id");
                     foreach ($follow_up as $follow_up_key2 => $row2) {
@@ -1602,7 +1609,7 @@ class elearningEthnicTestController extends BaseController
             //         'created_by' => $user_id,
             //         'created_at' => NOW()
             //     ]);
-            return  $nooffollows;
+            return $nooffollows;
             // if ($nooffollows) {
             //     return  $nooffollows;
             // } else {
@@ -1680,7 +1687,7 @@ class elearningEthnicTestController extends BaseController
                 ->where('note_id', $note_id)
                 ->update([
                     'note' => $updatedNote,
-                    'updated_by' =>  $user_id,
+                    'updated_by' => $user_id,
                     'updated_at' => NOW(),
                 ]);
             // $data = [
@@ -1707,7 +1714,7 @@ class elearningEthnicTestController extends BaseController
         try {
             // $notes = DB::select("SELECT * FROM elearning_notes WHERE active_note=0 AND course_id=$course_id AND user_id=$user_id");
             $data = DB::table('elearning_notes')
-                ->where('note_id',  $note_id)
+                ->where('note_id', $note_id)
                 ->update([
                     'active_note' => '1',
                 ]);
@@ -1732,8 +1739,8 @@ class elearningEthnicTestController extends BaseController
         $class_id = $request->class_id;
         try {
             DB::table('user_class_relation')
-                ->where('course_id',  $course_id)
-                ->where('class_id',  $class_id)
+                ->where('course_id', $course_id)
+                ->where('class_id', $class_id)
                 ->update([
                     'bookmark' => $currentTime,
                 ]);
@@ -1754,9 +1761,9 @@ class elearningEthnicTestController extends BaseController
         $class_id = $request->class_id;
         try {
             DB::table('user_class_relation')
-                ->where('course_id',  $course_id)
-                ->where('class_id',  $class_id)
-                ->where('user_id',  $user_id)
+                ->where('course_id', $course_id)
+                ->where('class_id', $class_id)
+                ->where('user_id', $user_id)
                 ->update([
                     'status' => 2,
                 ]);
@@ -1777,8 +1784,8 @@ class elearningEthnicTestController extends BaseController
 
                 if ($is_examthere == []) {
                     DB::table('user_course_relation')
-                        ->where('course_id',  $course_id)
-                        ->where('user_id',  $user_id)
+                        ->where('course_id', $course_id)
+                        ->where('user_id', $user_id)
                         ->update([
                             'course_status' => "Completed",
                             'status' => 2,
@@ -1808,7 +1815,7 @@ class elearningEthnicTestController extends BaseController
                     $sumofcpt = $totalcpt_points + $cpt_points;
 
                     DB::table('users')
-                        ->where('id',  $user_id)
+                        ->where('id', $user_id)
                         ->update([
                             'total_cptpoints' => $sumofcpt,
                         ]);
@@ -1876,7 +1883,7 @@ class elearningEthnicTestController extends BaseController
                 $sumofcpt = $totalcpt_points + $cpt_points;
 
                 DB::table('users')
-                    ->where('id',  $user_id)
+                    ->where('id', $user_id)
                     ->update([
                         'total_cptpoints' => $sumofcpt,
                     ]);
@@ -1884,8 +1891,8 @@ class elearningEthnicTestController extends BaseController
 
 
                 DB::table('user_course_relation')
-                    ->where('course_id',  $course_id)
-                    ->where('user_id',  $user_id)
+                    ->where('course_id', $course_id)
+                    ->where('user_id', $user_id)
                     ->update([
                         'course_progress' => $progress,
                     ]);
@@ -1942,14 +1949,14 @@ class elearningEthnicTestController extends BaseController
 
 
             DB::table('user_course_relation')
-                ->where('course_id',  $id)
-                ->where('user_id',  $user_id)
+                ->where('course_id', $id)
+                ->where('user_id', $user_id)
                 ->update([
                     'get_certified' => "1",
 
                 ]);
             $data = [
-                'date' =>  '2024-07-20',
+                'date' => '2024-07-20',
                 'course_name' => $course_name,
                 'name' => $name,
 
@@ -1973,7 +1980,7 @@ class elearningEthnicTestController extends BaseController
             $pdf->save($output);
 
             $data = [
-                'date' =>  $date,
+                'date' => $date,
                 'course_name' => $course_name,
                 'name' => $name,
                 'attach' => $output,
@@ -2036,7 +2043,7 @@ class elearningEthnicTestController extends BaseController
             if ($user_id == null) {
                 return view('auth.login');
             }
-            $request =  array();
+            $request = array();
             $request['course_id'] = $course_id;
             $request['class_id'] = $class_id;
             $request['mlhud_id'] = $user_id;
@@ -2155,7 +2162,7 @@ class elearningEthnicTestController extends BaseController
             if ($user_id == null) {
                 return view('auth.login');
             }
-            $request =  array();
+            $request = array();
             $request['course_id'] = $course_id;
             $request['class_id'] = $class_id;
             $request['mlhud_id'] = $user_id;
@@ -2270,10 +2277,10 @@ class elearningEthnicTestController extends BaseController
         }
         $method = 'Method => elearningEthnicTestController => cpt_index';
         try {
-            $request =  array();
+            $request = array();
             $request['mlhud_id'] = $user_id;
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/cpd';
-            $response = $this->serviceRequest($gatewayURL, 'GET',  json_encode($request), $method);
+            $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
             //dd($response);
 
@@ -2348,10 +2355,10 @@ class elearningEthnicTestController extends BaseController
         }
         $method = 'Method => elearningEthnicTestController => rating_index';
         try {
-            $request =  array();
+            $request = array();
             $request['mlhud_id'] = $user_id;
             $gatewayURL = config('setting.api_gateway_url') . '/rating/admin/index';
-            $response = $this->serviceRequest($gatewayURL, 'GET',  json_encode($request), $method);
+            $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
             //dd($response);
 

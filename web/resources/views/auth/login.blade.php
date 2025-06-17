@@ -6,8 +6,10 @@
         align-items: center;
         text-align: center !important;
         color: white !important;
-        font-size: 16px !important;
+        font-size: 19px !important;
         font-weight: 800 !important;
+        padding-top: 5px;
+        padding-bottom: 0px;
     }
 </style>
 @section('content')
@@ -135,9 +137,9 @@
 
                                         </span>
                                     </div> -->
-                                    <sapn class="caplock-indicator invalid-warning" style="display: none;">WARNING! Caps lock is ON.</sapn>
+                                    <sapn class="caplock-indicator invalid-warning" style="display: none;">WARNING! Caps Lock is ON</sapn>
                                     <br>
-                                    <input type="checkbox" id="toggle" onclick="passlock_show();" style="margin-left:8px"> Show Password
+                                    <input type="checkbox" id="toggle" onclick="passlock_show();" style="margin-left:10 px"> Show Password
 
 
 
@@ -211,8 +213,8 @@
                         </form>
                     </div>
                 </div>
-                <div class="" style="position:absolute">
-                    <img class="" src="{{asset('assets/images/login_man.PNG')}}" alt="" style="width:50%;margin-left:74%;">
+                <div class="" style= "position: absolute; overflow: visible!important;">
+                    <img class="" src="{{asset('assets/images/login_man.PNG')}}" alt="" style="width:50%; margin-left:83.2%; overflow: visible!important;">
                 </div>
             </div>
         </div>

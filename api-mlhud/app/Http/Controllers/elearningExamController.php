@@ -22,8 +22,8 @@ class elearningExamController extends BaseController
             $method = 'Method =>  elearningExamController => index';
             $rows['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz  AS e left join elearning_localadaptation AS l ON e.quiz_id=l.quiz_id left join elearning_ethnictest AS et ON e.quiz_id=et.quiz_id left join elearning_classes AS ec ON e.quiz_id=ec.quiz_id WHERE l.quiz_id IS NULL AND et.quiz_id IS NULL and ec.quiz_id IS NULL AND e.drop_quiz=0');
             $rows['user_category'] = array(
-                'Graduate Trainee' => config('setting.roles.Graduate Trainee'),
-                'Professional Member' => config('setting.roles.professional_member'),
+                'Graduate Trainee' => config('setting.roles.Student'),
+                'Professional Member' => config('setting.roles.Teacher'),
             );
             $this->WriteFileLog($rows);
 
@@ -87,7 +87,7 @@ class elearningExamController extends BaseController
                 'quiz_id' => $inputArray['quiz_id'],
 
             ];
-            $rows=DB::transaction(function () use ($input) {
+            $rows = DB::transaction(function () use ($input) {
                 $settings_id = DB::table('elearning_exam')
                     ->insertGetId([
                         'user_category' => $input['user_category'],
@@ -104,7 +104,7 @@ class elearningExamController extends BaseController
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_exam', $rows, 'Create', 'Exam Creation', auth()->user()->id, NOW(), $role_name_fetch);
-           
+
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
@@ -241,7 +241,7 @@ class elearningExamController extends BaseController
 
             ];
 
-            $rows= DB::table('elearning_exam')
+            $rows = DB::table('elearning_exam')
                 ->where('id', $input['eid'])
                 ->update([
                     'user_category' => $input['user_category'],
@@ -257,7 +257,7 @@ class elearningExamController extends BaseController
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_exam', $rows, 'Update', 'Exam Updation', auth()->user()->id, NOW(), $role_name_fetch);
-           
+
 
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
@@ -302,7 +302,7 @@ class elearningExamController extends BaseController
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] =  $response;
+            $serviceResponse['Data'] = $response;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $sendServiceResponse;
@@ -341,7 +341,7 @@ class elearningExamController extends BaseController
                 'id' => $inputArray['id'],
             ];
 
-            $rows=DB::table('elearning_exam')
+            $rows = DB::table('elearning_exam')
                 ->where('id', $input['id'])
                 ->update([
 
@@ -354,7 +354,7 @@ class elearningExamController extends BaseController
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_exam', $rows, 'Delete', 'Exam Deletion', auth()->user()->id, NOW(), $role_name_fetch);
-           
+
 
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
@@ -505,7 +505,7 @@ class elearningExamController extends BaseController
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] =  $response;
+            $serviceResponse['Data'] = $response;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $sendServiceResponse;
@@ -568,18 +568,18 @@ class elearningExamController extends BaseController
 
             $input = [
                 'quiz_id' => $quizId,
-                'attempt' =>  $attemptcount,
+                'attempt' => $attemptcount,
                 'score' => $inputArray['score'],
                 'pass_mark' => $calc,
                 'total_scores' => $inputArray['total_scores'],
-                'result' =>  $result,
+                'result' => $result,
 
             ];
 
 
             $this->WriteFileLog($input);
 
-            $rows= DB::transaction(function () use ($input) {
+            $rows = DB::transaction(function () use ($input) {
                 $settings_id = DB::table('elearning_userexam')
                     ->insertGetId([
                         'quiz_id' => $input['quiz_id'],
@@ -598,7 +598,7 @@ class elearningExamController extends BaseController
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_exam', $rows, 'Store', 'Exam Quiz Store', auth()->user()->id, NOW(), $role_name_fetch);
-           
+
             $email = $this->getusermail($user_id);
             $name = $this->getusername($user_id);
             $base_url = config('setting.base_url');

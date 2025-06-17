@@ -547,7 +547,7 @@
                 </button>
             </div>
             <h4 class="modal-body text-center text-danger p-4 mb-0">
-                Are you Sure,you want to exit quiz?
+                Are you sure you want to exit the quiz?
             </h4>
             <div class="modal-footer justify-content-center">
                 <a type="button" href="{{ URL::previous() }}" class="btn btn-danger">Yes</a>

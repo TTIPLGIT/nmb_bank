@@ -26,16 +26,16 @@ class elearningController extends BaseController
     {
         try {
             //Credentials
-            $client_id  = "admin";
+            $client_id = "admin";
             $client_pass = "Login@4107";
             //HTTP options
             $opts = array(
                 'http' =>
-                array(
-                    'method'    => $action,
-                    'header'    => array('Content-type: application/json', 'Authorization: Basic ' . base64_encode("$client_id:$client_pass")),
-                    'content' => "some_content"
-                )
+                    array(
+                        'method' => $action,
+                        'header' => array('Content-type: application/json', 'Authorization: Basic ' . base64_encode("$client_id:$client_pass")),
+                        'content' => "some_content"
+                    )
             );
             //Do request
             $context = stream_context_create($opts);
@@ -55,7 +55,7 @@ class elearningController extends BaseController
     {
         $logMethod = 'Method => ClaimInvoiceDisposalController => index';
         $gatewayURL = 'http://localhost:10/elearning6/web/api/courses';
-        $response =  $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
+        $response = $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
         $courses = json_decode($response);
         return $courses;
     }
@@ -64,7 +64,7 @@ class elearningController extends BaseController
     {
         $logMethod = 'Method => ClaimInvoiceDisposalController => index';
         $gatewayURL = 'http://localhost:10/elearning6/web/api/classes';
-        $response =  $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
+        $response = $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
         $classes = json_decode($response);
         return $classes;
     }
@@ -73,7 +73,7 @@ class elearningController extends BaseController
     {
         $logMethod = 'Method => ClaimInvoiceDisposalController => index';
         $gatewayURL = 'http://localhost:10/elearning6/web/api/questions/boolean';
-        $response =  $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
+        $response = $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
         $booleanQuestions = json_decode($response);
         return $booleanQuestions;
     }
@@ -82,7 +82,7 @@ class elearningController extends BaseController
     {
         $logMethod = 'Method => ClaimInvoiceDisposalController => index';
         $gatewayURL = 'http://localhost:10/elearning6/web/api/questions/mcq';
-        $response =  $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
+        $response = $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
         $mcqQuestions = json_decode($response);
         return $mcqQuestions;
     }
@@ -91,7 +91,7 @@ class elearningController extends BaseController
     {
         $logMethod = 'Method => ClaimInvoiceDisposalController => index';
         $gatewayURL = 'http://localhost:10/elearning6/web/api/questions/short';
-        $response =  $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
+        $response = $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
         $shortAnswerQuestions = json_decode($response);
         return $shortAnswerQuestions;
     }
@@ -100,7 +100,7 @@ class elearningController extends BaseController
     {
         $logMethod = 'Method => ClaimInvoiceDisposalController => index';
         $gatewayURL = 'http://localhost:10/elearning6/web/api/questions/long';
-        $response =  $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
+        $response = $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
         $longAnswerQuestions = json_decode($response);
         return $longAnswerQuestions;
     }
@@ -109,7 +109,7 @@ class elearningController extends BaseController
     {
         $logMethod = 'Method => ClaimInvoiceDisposalController => index';
         $gatewayURL = 'http://localhost:10/elearning6/web/api/practice/quiz';
-        $response =  $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
+        $response = $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
         $practiceQuiz = json_decode($response);
         return $practiceQuiz;
     }
@@ -118,7 +118,7 @@ class elearningController extends BaseController
     {
         $logMethod = 'Method => ClaimInvoiceDisposalController => index';
         $gatewayURL = 'http://localhost:10/elearning6/web/api/assessment';
-        $response =  $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
+        $response = $this->serviceRequest($gatewayURL, 'GET', '', $logMethod);
         $assessment = json_decode($response);
         return $assessment;
     }
@@ -737,8 +737,7 @@ class elearningController extends BaseController
     }
 
     public function dashboard(Request $request)
-    {
-        {
+    { {
 
             try {
                 $user_id = $request->session()->get("userID");
@@ -746,17 +745,17 @@ class elearningController extends BaseController
                     return view('auth.login');
                 }
                 $method = 'Method => elearningController => dashboard';
-                $data =  array();
+                $data = array();
                 $data['mlhud_id'] = $user_id;
-                $request =  array();
+                $request = array();
 
                 $request['requestData'] = $data;
                 //dd($request);
                 $gatewayURL = config('setting.api_gateway_url') . '/elearningDashboard';
                 $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
                 $response = json_decode($response);
-                
-               
+
+
 
                 if ($response->Status == 200 && $response->Success) {
                     $objData = json_decode($this->decryptData($response->Data));
@@ -938,8 +937,7 @@ class elearningController extends BaseController
         $menus = $this->FillMenu();
         $screens = $menus['screens'];
         $modules = $menus['modules'];
-
-
+       
         return view('elearning.allCourses', compact('availableCourses', 'availableTags', 'search', 'sort', 'tagFilter', 'progressFilter', 'modules', 'screens', 'menus'));
     }
 
@@ -957,7 +955,7 @@ class elearningController extends BaseController
             $classOrder = $courseDetail->course_classes;
         }
         $isEnrolled = DB::select("SELECT * FROM user_course_relation WHERE user_id=$user_id AND course_id=$id");
-       // dd($isEnrolled);
+        // dd($isEnrolled);
         if (empty($isEnrolled)) {
             $enrolled = "False";
         } else {
@@ -970,7 +968,7 @@ class elearningController extends BaseController
         } else {
             $enrolled = "True";
         }
-       
+
 
 
         $courseContents = DB::select("SELECT * FROM elearning_classes WHERE drop_class=0  ORDER BY FIELD(class_id,$classOrder)");
@@ -981,7 +979,7 @@ class elearningController extends BaseController
 
     public function takeCourse(Request $request, $id)
     {
-       
+
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return redirect(url('/'));
@@ -1040,26 +1038,26 @@ class elearningController extends BaseController
         // dd(empty($askedQuestions));
         // dd($courseDetails);
 
-       // $courseContents['courseContents'] = DB::select("SELECT * from elearning_courses inner join elearning_classes on elearning_courses.course_classes=elearning_classes.class_id where drop_course = 0;");
+        // $courseContents['courseContents'] = DB::select("SELECT * from elearning_courses inner join elearning_classes on elearning_courses.course_classes=elearning_classes.class_id where drop_course = 0;");
 
 
         $courseContents = DB::select("SELECT * FROM elearning_classes WHERE drop_class=0  ORDER BY FIELD(class_id,$classOrder)");
 
         $classContents = DB::select("SELECT * FROM elearning_courses where course_id= $id");
-        $class_array= explode(',',$classContents[0]->course_classes);
-        $selected_class=[];
-        foreach ($class_array as $key=>$value) {
+        $class_array = explode(',', $classContents[0]->course_classes);
+        $selected_class = [];
+        foreach ($class_array as $key => $value) {
             $classContents = DB::select("SELECT * FROM elearning_classes where class_id= $value ");
 
-            $selected_class[$key]=$classContents[0];
+            $selected_class[$key] = $classContents[0];
 
             # code...
         }
 
-       
 
 
-        return view('elearning.class', compact('courseDetails','classContents','selected_class', 'courseContents', 'classOrder', 'isForum', 'questionAdded', 'askedQuestions', 'noQuestionsYet'));
+
+        return view('elearning.class', compact('courseDetails', 'classContents', 'selected_class', 'courseContents', 'classOrder', 'isForum', 'questionAdded', 'askedQuestions', 'noQuestionsYet'));
     }
 
     public function addWishList(Request $request)
@@ -1101,7 +1099,7 @@ class elearningController extends BaseController
     //     }
 
     //     $wishlistCourses = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
-       
+
     //     $courseContents = DB::select("SELECT * FROM elearning_classes WHERE drop_class=0  ORDER BY FIELD(class_id,$classOrder)");
     //     $menus = $this->FillMenu();
     //     $screens = $menus['screens'];
@@ -1270,8 +1268,8 @@ class elearningController extends BaseController
 
             if ($questionType == "boolean") {
                 $thisQuestion = DB::select("select * from elearning_questions_true_false where question_id=$questionNUmber");
-                $correctAnswer =  $thisQuestion[0]->answer;
-                $points =  $thisQuestion[0]->points;
+                $correctAnswer = $thisQuestion[0]->answer;
+                $points = $thisQuestion[0]->points;
                 $totalAvailablePoints = $totalAvailablePoints + $points;
                 if ($answer == $correctAnswer) {
                     $answerDetails[$answerIndex] = [
@@ -1309,10 +1307,10 @@ class elearningController extends BaseController
                 foreach ($answerGiven as $answerChoice) {
                     if (in_array($answerChoice, $correctChoices)) {
                         $pointsEarned = $pointsEarned + $pointPerChoice;
-                        $answerStatusPair[$answerStatusIndex] =  $answerChoice . ", on";
+                        $answerStatusPair[$answerStatusIndex] = $answerChoice . ", on";
                         $answerStatusIndex++;
                     } else {
-                        $answerStatusPair[$answerStatusIndex] =  $answerChoice . ", off";
+                        $answerStatusPair[$answerStatusIndex] = $answerChoice . ", off";
                         $answerStatusIndex++;
                     }
                 }
@@ -1500,11 +1498,11 @@ class elearningController extends BaseController
         $questionAdded = "True";
         $noQuestionsYet = empty($askedQuestions) ? true : false;
         $this->WriteFileLog($courseContents);
-    //     return view('elearning.class', compact('courseDetails', 'courseContents', 'classOrder', 'isForum', 'askedQuestions', 'noQuestionsYet'));
-    // 
-    return redirect(route('elearningCourse/class', $encrypt_id));
+        //     return view('elearning.class', compact('courseDetails', 'courseContents', 'classOrder', 'isForum', 'askedQuestions', 'noQuestionsYet'));
+        // 
+        return redirect(route('elearningCourse/class', $encrypt_id));
 
-}
+    }
 
     public function result()
     {

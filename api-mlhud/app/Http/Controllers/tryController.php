@@ -62,7 +62,7 @@ class tryController extends BaseController
                     ]);
             });
 
-            $this->notifications_insert(null, auth()->user()->id, "Class Name has been Created Successfully", "/admincourse");
+            $this->notifications_insert(null, auth()->user()->id, $input['class_name'] . " Class Name has been Created Successfully", "/admincourse");
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_classes', $update_id, 'Create', 'Class Creation', auth()->user()->id, NOW(), $role_name_fetch);
@@ -917,7 +917,7 @@ class tryController extends BaseController
                     ]);
             });
 
-            $this->notifications_insert(null, auth()->user()->id, "Course Created Successfully", "/admincourse");
+            $this->notifications_insert(null, auth()->user()->id, $inputArray['course_name'] . " Course Created Successfully", "/admincourse");
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_courses', $update_id, 'Create', 'Course Creation', auth()->user()->id, NOW(), $role_name_fetch);
@@ -1305,6 +1305,7 @@ class tryController extends BaseController
             $row2['free_course'] = DB::select('SELECT COUNT(course_id) AS numberofcourses  FROM elearning_courses WHERE course_price="0" and drop_course=0');
             $row2['paid_course'] = DB::select('SELECT COUNT(course_id) AS numberofcourses  FROM elearning_courses WHERE course_price>"0" and drop_course=0');
             $row2['certificate_course'] = DB::select('SELECT COUNT(course_id) AS numberofcourses  FROM elearning_courses WHERE course_certificate=1 and drop_course=0');
+            $row2['event_date'] = DB::select('SELECT STR_TO_DATE(event_date, "%d-%m-%Y") as event_date FROM elearning_events WHERE STR_TO_DATE(event_date, "%d-%m-%Y") >= CURDATE()');
 
             $courses_classes_all = DB::select('SELECT course_name,course_id,course_banner,course_classes,course_pay,course_instructor,course_description FROM elearning_courses WHERE drop_course=0');
 
