@@ -235,7 +235,7 @@
 
     /* checkout */
     @import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
-    
+
 
     h2 {
         margin-bottom: 0px;
@@ -619,201 +619,134 @@
                         </div>
                         @php $count = 1;@endphp
                         @foreach($rows['rows']['cart_list'] as $row)
-                        <div class="card">
-                            <div class="courses_in_cart_wrapper">
-                                <div class="courses_in_cart_container">
-                                    <img src="../../uploads/course/126/{{$row['course_banner']}}" alt="" class="course_image">
-                                    <div class="d-flex flex-column course_details_container">
-                                        <div class="course_name">
-                                            <h5>
-                                                {{ $row['course_name'] }}
-                                            </h5>
-                                        </div>
-                                        <div class="course_instructor">
-                                            <h6>{{ $row['course_instructor'] }}</h6>
-                                        </div>
-                                        <div class="text-left d-flex flex-row price_tag_container2">
-                                            <!-- <span class="course_orginal_price">USh 3369<i class="fa fa-tag" aria-hidden="true"></i></span> -->
-                                            <span class="course_price">USh {{ $row['course_price'] }} <i class="fa fa-tag" aria-hidden="true"></i></span>
-                                        </div>
-                                        <div class="d-flex flex-row justify-content-start">
-                                            <span class="course_rating">
-                                            </span>
-                                            <span class="mx-2 course_rating_list ratingsset{{$count}}">
-                                                @php $ratings= $row['average_rating']*2;
+                                                <div class="card">
+                                                    <div class="courses_in_cart_wrapper">
+                                                        <div class="courses_in_cart_container">
+                                                            <img src="../../uploads/course/126/{{$row['course_banner']}}" alt=""
+                                                                class="course_image">
+                                                            <div class="d-flex flex-column course_details_container">
+                                                                <div class="course_name">
+                                                                    <h5>
+                                                                        {{ $row['course_name'] }}
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="course_instructor">
+                                                                    <h6>{{ $row['course_instructor'] }}</h6>
+                                                                </div>
+                                                                <div class="text-left d-flex flex-row price_tag_container2">
+                                                                    <!-- <span class="course_orginal_price">USh 3369<i class="fa fa-tag" aria-hidden="true"></i></span> -->
+                                                                    <span class="course_price">Rs. {{ $row['course_price'] }} <i
+                                                                            class="fa fa-tag" aria-hidden="true"></i></span>
+                                                                </div>
+                                                                <div class="d-flex flex-row justify-content-start">
+                                                                    <span class="course_rating">
+                                                                    </span>
+                                                                    <span class="mx-2 course_rating_list ratingsset{{$count}}">
+                                                                        @php    $ratings = $row['average_rating'] * 2;
 
-                                                $actual_rating=intval($ratings/2);
+                                                                            $actual_rating = intval($ratings / 2);
 
-                                                @endphp
-                                                @for($i=1;$i<=5;$i++) @if($i<=$actual_rating) <i class="fa fa-star rating-color"></i>
-                                                    @else
-                                                    <i class="fa fa-star unfilled-star"></i>
-                                                    @endif
-                                                    @endfor
-                                                    @if($ratings%2 !=0)
-                                                    <script>
-                                                        var fa_list = document.querySelector('.ratingsset{{$count}} .unfilled-star');
-                                                        fa_list.classList.remove('fa-star');
-                                                        fa_list.classList.add('fa-star-half-o');
-                                                        fa_list.classList.add('rating-color');
-                                                    </script>
-                                                    @endif
-                                            </span>
-                                            <span class="course_rating_count">
-                                                {{ $row['average_rating'] }}
-                                            </span>
-                                        </div>
-                                        @php $count++ @endphp
-                                        <!-- <div class="d-flex flex-row justify-content-start">
-                                            <span class="course_total_hours">
-                                                13 total hours
-                                            </span>
-                                            <span class="mx-1">
-                                                -
-                                            </span>
-                                            <span class="course_contents">
-                                                180 content
-                                            </span>
-                                        </div> -->
-                                    </div>
+                                                                        @endphp
+                                                                        @for($i = 1; $i <= 5; $i++) @if($i <= $actual_rating) <i
+                                                                            class="fa fa-star rating-color"></i>
+                                                                        @else
+                                                                            <i class="fa fa-star unfilled-star"></i>
+                                                                        @endif
+                                                                        @endfor
+                                                                        @if($ratings % 2 != 0)
+                                                                            <script>
+                                                                                var fa_list = document.querySelector('.ratingsset{{$count}} .unfilled-star');
+                                                                                fa_list.classList.remove('fa-star');
+                                                                                fa_list.classList.add('fa-star-half-o');
+                                                                                fa_list.classList.add('rating-color');
+                                                                            </script>
+                                                                        @endif
+                                                                    </span>
+                                                                    <span class="course_rating_count">
+                                                                        {{ $row['average_rating'] }}
+                                                                    </span>
+                                                                </div>
+                                                                @php    $count++ @endphp
+                                                                <!-- <div class="d-flex flex-row justify-content-start">
+                                                                                            <span class="course_total_hours">
+                                                                                                13 total hours
+                                                                                            </span>
+                                                                                            <span class="mx-1">
+                                                                                                -
+                                                                                            </span>
+                                                                                            <span class="course_contents">
+                                                                                                180 content
+                                                                                            </span>
+                                                                                        </div> -->
+                                                            </div>
 
-                                    <div class="d-flex flex-row  text-right course_cart_menus">
-                                        <a class="cutoms_btn btn btn-primary" id="rmve_btn" role="button" onclick="remove_cart(event,{{ $row['id']}});" title="Remove from Cart">Remove</a>
-                                        <!-- <a href="" class="cutoms_btn" role="button">Save for Later</a> -->
-                                        @php
-                                        $courseInWishlist = in_array($row['course_id'], $rows['wishListCourseIds']);
+                                                            <div class="d-flex flex-row  text-right course_cart_menus">
+                                                                <a class="cutoms_btn btn btn-primary" id="rmve_btn" role="button"
+                                                                    onclick="remove_cart(event,{{ $row['id']}});"
+                                                                    title="Remove from Cart">Remove</a>
+                                                                <!-- <a href="" class="cutoms_btn" role="button">Save for Later</a> -->
+                                                                @php
+                                                                    $courseInWishlist = in_array($row['course_id'], $rows['wishListCourseIds']);
 
-                                        @endphp
-                                        
-                                        @if (!$courseInWishlist)
+                                                                @endphp
 
-                                        <a onclick="move_wish(event,{{ $row['course_id']}});" class="cutoms_btn btn btn-primary" id="move_btn" role="button" title="Add to Wishlist">Move to Wishlist</a>
-                                        @else
+                                                                @if (!$courseInWishlist)
 
-                                        @endif
-                                    </div>
-                                    <div class="text-center d-flex flex-column price_tag_container">
-                                        <!-- <span class="course_orginal_price">USh 3369<i class="fa fa-tag" aria-hidden="true"></i></span> -->
-                                        <span class="course_price">USh {{ $row['course_price'] }}<i class="fa fa-tag" aria-hidden="true"></i></span>
-                                    </div>
-                                </div>
+                                                                    <a onclick="move_wish(event,{{ $row['course_id']}});"
+                                                                        class="cutoms_btn btn btn-primary" id="move_btn" role="button"
+                                                                        title="Add to Wishlist">Move to Wishlist</a>
+                                                                @else
 
-                            </div>
-                        </div>
+                                                                @endif
+                                                            </div>
+                                                            <div class="text-center d-flex flex-column price_tag_container">
+                                                                <!-- <span class="course_orginal_price">USh 3369<i class="fa fa-tag" aria-hidden="true"></i></span> -->
+                                                                <span class="course_price">Rs. {{ $row['course_price'] }}<i class="fa fa-tag"
+                                                                        aria-hidden="true"></i></span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                         @endforeach
 
-                    
-                    @php $is_display = $rows['rows']['cart_list'] ==[] ? 'd-none' : ''; @endphp
-                    <div class="col-4 {{$is_display}}">
-                        <div class="d-flex flex-column checkout_cart_wrapper">
-                            @php
-                            $totalPrice = 0;
-                            $isEmpty = empty($rows['rows']['cart_list']);
-                            @endphp
-                            <div class="w-100 checkout_cart_header">
-                                <h6 class="text-capitalize">
-                                    <!-- Total -->
-                                </h6>
-                            </div>
 
-                            <div class="w-100 d-flex flex-column checkout_container" @if($isEmpty) style="display: none;" @endif>
-                                @foreach($rows['rows']['cart_list'] as $row)
+                        @php $is_display = $rows['rows']['cart_list'] == [] ? 'd-none' : ''; @endphp
+                        <div class="col-4 {{$is_display}}">
+                            <div class="d-flex flex-column checkout_cart_wrapper">
                                 @php
-                                $totalPrice += $row['course_price'];
+                                    $totalPrice = 0;
+                                    $isEmpty = empty($rows['rows']['cart_list']);
                                 @endphp
-                                @endforeach
+                                <div class="w-100 checkout_cart_header">
+                                    <h6 class="text-capitalize">
+                                        <!-- Total -->
+                                    </h6>
+                                </div>
 
-                                <!-- <span class="offer-percentage"><span>86</span>% Off</span> -->
-                                <span class="overall-total"><span>Total: USh {{ $totalPrice }}</span></span>
+                                <div class="w-100 d-flex flex-column checkout_container" @if($isEmpty)
+                                style="display: none;" @endif>
+                                    @foreach($rows['rows']['cart_list'] as $row)
+                                                                        @php
+                                                                            $totalPrice += $row['course_price'];
+                                                                        @endphp
+                                    @endforeach
+
+                                    <!-- <span class="offer-percentage"><span>86</span>% Off</span> -->
+                                    <span class="overall-total"><span>Total: Rs. {{ $totalPrice }}</span></span>
+                                </div>
+                                <a type="button" id="checkoutmodal" style="font-size:15px;width: 150px !important;"
+                                    class="btn btn-success btn-lg question" title="Create" href="" data-toggle="modal"
+                                    data-target="#addModal1" @if($isEmpty) style="display: none;" @endif>Checkout</a>
+
+
                             </div>
-                            <a type="button" id="checkoutmodal" style="font-size:15px;width: 150px !important;" class="btn btn-success btn-lg question" title="Create" href="" data-toggle="modal" data-target="#addModal1" @if($isEmpty) style="display: none;" @endif>Checkout</a>
-
 
                         </div>
-
-                    </div>
                     </div>
                     <br>
                     <br>
-                    <div class="wishlist_cart_wrapper">
-                        <div class="w-100 course_cart_header">
-                            <h6 class="text-capitalize">
-                                <span>{{$rows['rows']['wish_count'][0]['total_count']}} Recently Wishlist</span>
-                            </h6>
-                        </div>
-                        @php $count2=0; @endphp
-                        @foreach($rows['rows']['wish_list'] as $row2)
-                        <div class="flex-lg-row courses_in_cart_container">
-                            <img src="../../uploads/course/126/{{$row2['course_banner']}}" alt="" class="course_image">
 
-                            <!-- <img src="{{asset('asset/image/recommended-course4.jpg')}}" alt="" class="course_image"> -->
-                            <div class="d-flex flex-column course_details_container">
-                                <div class="course_name">
-                                    <h5>
-                                        {{ $row2['course_name'] }}
-                                    </h5>
-                                </div>
-                                <div class="course_instructor">
-                                    <h6>{{ $row2['course_instructor'] }}</h6>
-                                </div>
-                                <div class="text-left d-flex flex-row price_tag_container2">
-                                    <!-- <span class="course_orginal_price"><span>USh 3899</span><i class="fa fa-tag" aria-hidden="true"></i></span> -->
-                                    <span class="course_price"><span> USh {{ $row2['course_price'] }}</span><i class="fa fa-tag" aria-hidden="true"></i></span>
-                                </div>
-                                <div class="d-flex flex-row justify-content-start">
-                                    <span class="course_rating">
-
-                                    </span>
-                                    <span class="mx-2 course_rating_list wishlistset{{$count2}}">
-                                        @php $ratings= $row2['average_rating']*2;
-                                        $actual_rating=intval($ratings/2);
-
-                                        @endphp
-                                        @for($i=1;$i<=5;$i++) @if($i<=$actual_rating) <i class="fa fa-star rating-color"></i>
-                                            @else
-                                            <i class="fa fa-star unfilled-star"></i>
-                                            @endif
-                                            @endfor
-                                            @if($ratings%2 !=0)
-                                            <script>
-                                                var fa_list = document.querySelector('.wishlistset{{$count2}} .unfilled-star');
-                                                fa_list.classList.remove('fa-star');
-                                                fa_list.classList.add('fa-star-half-o');
-                                                fa_list.classList.add('rating-color');
-                                            </script>
-                                            @endif
-                                    </span>
-                                    <span class="course_rating_count">
-                                        {{ $row2['average_rating'] }}
-                                    </span>
-                                </div>
-                                @php $count2++ @endphp
-                                <!-- <div class="d-flex flex-row justify-content-start">
-                                    <span class="course_total_hours">
-                                        15 total hours
-                                    </span>
-                                    <span class="mx-1">
-                                        -
-                                    </span>
-                                    <span class="course_contents">
-                                        106 content
-                                    </span>
-                                </div> -->
-                            </div>
-                            <div class="d-flex flex-row  text-right course_cart_menus">
-                                <a onclick="remove_wish(event,{{ $row2['course_id']}});" class="cutoms_btn btn btn-primary" id="rmv_wish" role="button" title="Remove from Wishlist">Remove</a>
-                                @if( $row2['course_price'] !=0)
-                                <a onclick="move_cart(event,{{ $row2['course_id']}});" id="add_cart" class="cutoms_btn btn btn-primary" role="button" title="Add to Cart">Move to Cart</a>
-                                @endif
-                            </div>
-                            <div class="text-center d-flex flex-column price_tag_container">
-                                <!-- <span class="course_orginal_price"><span>USh 3899</span><i class="fa fa-tag" aria-hidden="true"></i></span> -->
-                                <span class="course_price"><span>USh {{ $row2['course_price'] }}</span><i class="fa fa-tag" aria-hidden="true"></i></span>
-                            </div>
-                        </div>
-
-                        @endforeach
-                    </div>
 
 
 
@@ -849,69 +782,74 @@
                             <div class='order-info-content'>
                                 <h2>Order Summary</h2>
                                 @foreach($rows['rows']['cart_list'] as $row)
-                                <div class='line'></div>
-                                <table class='order-table'>
-                                    <tbody>
-                                        <tr>
-                                            <td><img src="../../uploads/course/126/{{$row['course_banner']}}" class='full-width'></img>
-                                            </td>
-                                            <td>
-                                                <br> <span class='thin'> {{ $row['course_name'] }}</span>
-                                                <br>{{ $row['course_instructor'] }}<br> <span class='thin small'><br><br></span>
-
-                                            </td>
-                                            <td>
-                                                <span class='price'>USh {{ $row['course_price'] }}</span>
-                                            </td>
-                                            <td><span><i class="fa fa-trash" aria-hidden="true" style="color: black;font-size: 23px !important;" id="rmve_sum" onclick="remove_summary(event,{{ $row['id']}});"></i></span></td>
-                                        </tr>
-                                        <!-- <tr>
-                                                <td>
-                                                    <div class='price'>USh {{ $row['course_price'] }}</div>
-                                                </td>
-                                            </tr> -->
-
-                                    </tbody>
-
-                                </table>
-                                <!-- <div class='line'></div>
-                                    <table class=' order-table'>
-                                        <tbody>
-                                            <tr>
-                                                <td><img src='http://localhost:10/MLHUDV3/web/resources/views/elearning/admin/noticeboard/image/images.jpeg' class='full-width'></img>
-                                                </td>
-                                                <td>
-                                                    <br> <span class='thin'>CGM/GM</span>
-                                                    <br>Executive Director on deputation<br> <span class='thin small'></span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class='price'>USh 235.95</div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
                                     <div class='line'></div>
                                     <table class='order-table'>
                                         <tbody>
                                             <tr>
-                                                <td><img src='http://localhost:10/MLHUDV3/web/resources/views/elearning/admin/noticeboard/image/article-3.jpeg' class='full-width'></img>
+                                                <td><img src="../../uploads/course/126/{{$row['course_banner']}}"
+                                                        class='full-width'></img>
                                                 </td>
                                                 <td>
-                                                    <br> <span class='thin'>CGM/GM/DGM</span>
-                                                    <br>Finance Division<br> <span class='thin small'></span>
-                                                </td>
+                                                    <br> <span class='thin'> {{ $row['course_name'] }}</span>
+                                                    <br>{{ $row['course_instructor'] }}<br> <span
+                                                        class='thin small'><br><br></span>
 
-                                            </tr>
-                                            <tr>
+                                                </td>
                                                 <td>
-                                                    <div class='price'>USh 25.95</div>
+                                                    <span class='price'>Rs. {{ $row['course_price'] }}</span>
+                                                </td>
+                                                <td><span><i class="fa fa-trash" aria-hidden="true"
+                                                            style="color: black;font-size: 23px !important;" id="rmve_sum"
+                                                            onclick="remove_summary(event,{{ $row['id']}});"></i></span>
                                                 </td>
                                             </tr>
+                                            <!-- <tr>
+                                                        <td>
+                                                            <div class='price'>USh {{ $row['course_price'] }}</div>
+                                                        </td>
+                                                    </tr> -->
+
                                         </tbody>
+
                                     </table>
-                                    <div class='line'></div> -->
+                                    <!-- <div class='line'></div>
+                                            <table class=' order-table'>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><img src='http://localhost:10/TALENTRAV3/web/resources/views/elearning/admin/noticeboard/image/images.jpeg' class='full-width'></img>
+                                                        </td>
+                                                        <td>
+                                                            <br> <span class='thin'>CGM/GM</span>
+                                                            <br>Executive Director on deputation<br> <span class='thin small'></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class='price'>USh 235.95</div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class='line'></div>
+                                            <table class='order-table'>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><img src='http://localhost:10/TALENTRAV3/web/resources/views/elearning/admin/noticeboard/image/article-3.jpeg' class='full-width'></img>
+                                                        </td>
+                                                        <td>
+                                                            <br> <span class='thin'>CGM/GM/DGM</span>
+                                                            <br>Finance Division<br> <span class='thin small'></span>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class='price'>USh 25.95</div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class='line'></div> -->
                                 @endforeach
 
                                 <div class='total'>
@@ -930,11 +868,18 @@
                                 <div class="offset-4 col-md-8">
                                     <form action="{!!route('course_summary.payment')!!}" method="POST">
                                         @csrf
-                                        <input type="hidden" id="course_id" name="course_id" value="{{isset($rows['rows']['cart_list'][0]['course_id']) ? $rows['rows']['cart_list'][0]['course_id'] : 0 }}">
-                                        <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ config('setting.RAZORPAY_KEY') }}" data-amount="{{ number_format($totalPrice * 100, 2, '.', '') }}" data-button='false' data-name="MLHUD Payment" data-description="Payment" data-prefill.name="name" data-prefill.email="email" data-theme.color="#ff7529">
-                                        </script>
+                                        <input type="hidden" id="course_id" name="course_id"
+                                            value="{{isset($rows['rows']['cart_list'][0]['course_id']) ? $rows['rows']['cart_list'][0]['course_id'] : 0 }}">
+                                        <script src="https://checkout.razorpay.com/v1/checkout.js"
+                                            data-key="{{ config('setting.RAZORPAY_KEY') }}"
+                                            data-amount="{{ number_format($totalPrice * 100, 2, '.', '') }}"
+                                            data-button='false' data-name="TALENTRA Payment" data-description="Payment"
+                                            data-prefill.name="name" data-prefill.email="email"
+                                            data-theme.color="#ff7529">
+                                            </script>
                                         <input type="hidden" name="_token" value="{!!csrf_token()!!}">
-                                        <button style="font-size:15px;" type="submit" class="btn btn-success btn-lg question">Proceed to Pay</button>
+                                        <button style="font-size:15px;" type="submit"
+                                            class="btn btn-success btn-lg question">Proceed to Pay</button>
                                     </form>
                                 </div>
 
@@ -961,7 +906,7 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <img src='http://localhost:10/MLHUDV3/web/resources/views/elearning/admin/noticeboard/image/visa_logo.png' height='80' class='credit-card-image' id='credit-card-image'></img>
+                                    <img src='http://localhost:10/TALENTRAV3/web/resources/views/elearning/admin/noticeboard/image/visa_logo.png' height='80' class='credit-card-image' id='credit-card-image'></img>
                                     Card Number
                                     <input class='input-field'></input>
                                     Card Holder
@@ -1008,30 +953,39 @@
                     <div class="col-md-6 offset-3 col-md-offset-6" style=" display: flex; justify-content: center;">
 
                         @if($message = Session::get('error'))
-                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong>Error!</strong> {{ $message }}
-                        </div>
+                            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>Error!</strong> {{ $message }}
+                            </div>
                         @endif
 
                         @if($message = Session::get('success'))
-                        <div class="alert alert-success alert-dismissible fade {{ Session::has('success') ? 'show' : 'in' }}" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong>Success!</strong> {{ $message }}
-                        </div>
+                            <div class="alert alert-success alert-dismissible fade {{ Session::has('success') ? 'show' : 'in' }}"
+                                role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>Success!</strong> {{ $message }}
+                            </div>
                         @endif
 
 
                         <form action="" method="POST">
                             @csrf
-                            <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_KUJc3PyWmtOLvw" data-amount="2000000" data-buttontext="Proceed to Pay" data-name="Elinaservices.com" data-description="Rozerpay" data-image="http://localhost:10/Elina_ISMS/web/public/asset/image/Elina-icon.JPG" data-prefill.name="name" data-prefill.email="kaviya@talentakeaways.com" data-theme.color="green">
-                            </script>
-                            <a type="button" class="btn btn-labeled back-btn" title="Back" href="" style="color:white !important">
-                                <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
+                            <script src="https://checkout.razorpay.com/v1/checkout.js"
+                                data-key="rzp_test_KUJc3PyWmtOLvw" data-amount="2000000"
+                                data-buttontext="Proceed to Pay" data-name="Elinaservices.com"
+                                data-description="Rozerpay"
+                                data-image="http://localhost:10/Elina_ISMS/web/public/asset/image/Elina-icon.JPG"
+                                data-prefill.name="name" data-prefill.email="kaviya@talentakeaways.com"
+                                data-theme.color="green">
+                                </script>
+                            <a type="button" class="btn btn-labeled back-btn" title="Back" href=""
+                                style="color:white !important">
+                                <span class="btn-label" style="font-size:13px !important;"><i
+                                        class="fa fa-arrow-left"></i></span> Back</a>
 
                         </form>
 
@@ -1052,7 +1006,7 @@
 
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.razorpay-payment-button').hide();
     });
 
@@ -1075,10 +1029,10 @@
                             'id': id,
                             _token: '{{csrf_token()}}'
                         },
-                        error: function() {
+                        error: function () {
                             alert('Something is wrong');
                         },
-                        success: function(data) {
+                        success: function (data) {
                             // alert('feef');
                             console.log(data);
                             if (result.value) {
@@ -1115,11 +1069,11 @@
                             'id': id,
                             _token: '{{csrf_token()}}'
                         },
-                        error: function() {
+                        error: function () {
                             alert('Something went wrong');
                         },
 
-                        success: function(data) {
+                        success: function (data) {
                             console.log(data);
                             if (result.value) {
                                 Swal.fire("Success!", "Added to Wishlist!", "success").then((result) => {
@@ -1154,11 +1108,11 @@
                             'id': id,
                             _token: '{{csrf_token()}}'
                         },
-                        error: function() {
+                        error: function () {
                             alert('Something went wrong');
                         },
 
-                        success: function(data) {
+                        success: function (data) {
                             console.log(data);
                             if (result.value) {
                                 Swal.fire("Success!", "Wishlist Removed Successfully!", "success").then((result) => {
@@ -1192,11 +1146,11 @@
                             'course_id': course_id,
                             _token: '{{csrf_token()}}'
                         },
-                        error: function() {
+                        error: function () {
                             alert('Something went wrong');
                         },
 
-                        success: function(data) {
+                        success: function (data) {
                             console.log(data);
                             if (result.value) {
                                 Swal.fire("Success!", "Added to Cart!", "success").then((result) => {
@@ -1230,10 +1184,10 @@
                             'id': id,
                             _token: '{{csrf_token()}}'
                         },
-                        error: function() {
+                        error: function () {
                             alert('Something is wrong');
                         },
-                        success: function(data) {
+                        success: function (data) {
 
                             console.log(data);
                             if (result.value) {

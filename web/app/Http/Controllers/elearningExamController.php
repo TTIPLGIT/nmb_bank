@@ -21,12 +21,11 @@ class elearningExamController extends BaseController
         }
         $method = 'Method => elearningExamController => index';
         try {
-            $request =  array();
+            $request = array();
             $request['mlhud_id'] = $user_id;
             $gatewayURL = config('setting.api_gateway_url') . '/examtest';
-            $response = $this->serviceRequest($gatewayURL, 'GET',  json_encode($request), $method);
+            $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
-            //dd($response);
 
             $objData = json_decode($this->decryptData($response->Data));
             //dd($objData);
@@ -137,7 +136,7 @@ class elearningExamController extends BaseController
                     $objData = json_decode($this->decryptData($response->Data));
                     if ($objData->Code == 200) {
                         $parant_data = json_decode(json_encode($objData->Data), true);
-                        $rows =  $parant_data['rows'];
+                        $rows = $parant_data['rows'];
                         // $one_row =  $parant_data['one_rows'];
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
@@ -182,7 +181,7 @@ class elearningExamController extends BaseController
                     $objData = json_decode($this->decryptData($response->Data));
                     if ($objData->Code == 200) {
                         $parant_data = json_decode(json_encode($objData->Data), true);
-                        $rows =  $parant_data['rows'];
+                        $rows = $parant_data['rows'];
                         // $one_row =  $parant_data['one_rows'];
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
@@ -312,7 +311,6 @@ class elearningExamController extends BaseController
         }
     }
     public function list(Request $request)
-
     {
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
@@ -334,7 +332,7 @@ class elearningExamController extends BaseController
                 return redirect()->route('unauthenticated')->send();
             }
             $rows = json_decode(json_encode($objData->Data), true);
-            if($rows==0){
+            if ($rows == 0) {
                 return redirect()->back()->with('error', 'No Exam Available Please Come Back Later');
             }
 
@@ -366,7 +364,7 @@ class elearningExamController extends BaseController
                 return view('auth.login');
             }
             $method = 'Method => elearningExamController => quiz';
-            $request =  array();
+            $request = array();
             $request['mlhud_id'] = $user_id;
             $gatewayURL = config('setting.api_gateway_url') . '/exam/quiz';
             $response = $this->serviceRequest($gatewayURL, 'GET', "", $method);

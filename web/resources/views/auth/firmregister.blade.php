@@ -88,9 +88,9 @@
     <div class="row justify-content-center">
         <div class=" offset-1 col-sm-7 col-md-6 col-lg-4 col-xl-4 col-xxl-3 col-2560">
             <div class="custom card border border-4 border-243c92 rounded-3 mb-4" style="">
-                <img class="logo_design" src="images\MLHUD-IMG (1).png">
+                <img class="logo_design" src="images\TALENTRA-IMG (1).png">
                 <div class="row justify-content-center mt-2" style="display: flex; flex-wrap: wrap;  flex-direction: column;  text-align:center;">
-                    <!-- <img class="col-4 mi-3 mt-3 col-sm-5 col-md-4 col-lg-4 col-xl-4 col-xxl-4" src="images\MLHUD-IMG (1).png" alt="logo"> -->
+                    <!-- <img class="col-4 mi-3 mt-3 col-sm-5 col-md-4 col-lg-4 col-xl-4 col-xxl-4" src="images\TALENTRA-IMG (1).png" alt="logo"> -->
                     <h4 class="color">Create an Guest Role</h4>
                     <h6 class="account_text">for firm Registraion<a href="/"><b class="login">Login here</b></a></h6>
                    

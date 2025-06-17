@@ -895,7 +895,7 @@
 
                                                             <span>15/03/2022 15:17:07 - Submitted</span> <br><br>
 
-                                                            <span> MLHUD Staff (Mark) - Reviewed </span> <br>
+                                                            <span> TALENTRA Staff (Mark) - Reviewed </span> <br>
 
                                                             <span>15/03/2022 15:29:25 - Accepted</span> <br>
                                                             <span> Notes - Reviewed all Details</span> <br><br>

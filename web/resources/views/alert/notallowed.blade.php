@@ -12,11 +12,11 @@
         <div class="col-md-4"></div>
         <div class="col-md-4">
           <div class="card text-center">
-            <div class="card-header alert-head-background">MLHUD - Not Authorized</div>
+            <div class="card-header alert-head-background">TALENTRA - Not Authorized</div>
             <div class="card-body">
               <img src="{{ asset('images/wrong.png') }}" class="alert-image-size">
               <p class="card-text alert-message-top">Your not authorized to do this operation.</p>
-              <a href="/home" class="btn btn-primary">Ok</a>
+              <a href="/admindashboard" class="btn btn-primary">Ok</a>
             </div>
           </div>
         </div>

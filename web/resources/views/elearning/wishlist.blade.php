@@ -167,35 +167,38 @@
     <section class="section">
         <div class="section-body mt-1">
 
-            <div class="container-fluid d-flex flex-column flex-sm-row justify-content-between align-items-center wishlist_search_container">
+            <div
+                class="container-fluid d-flex flex-column flex-sm-row justify-content-between align-items-center wishlist_search_container">
                 @if (session('success'))
 
-                <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-                <script type="text/javascript">
-                    window.onload = function() {
-                        var message = $('#session_data').val();
-                        swal({
-                            title: "Success",
-                            text: message,
-                            type: "success",
-                        });
+                    <input type="hidden" name="session_data" id="session_data" class="session_data"
+                        value="{{ session('success') }}">
+                    <script type="text/javascript">
+                        window.onload = function () {
+                            var message = $('#session_data').val();
+                            swal({
+                                title: "Success",
+                                text: message,
+                                type: "success",
+                            });
 
-                    }
-                </script>
+                        }
+                    </script>
                 @elseif(session('error'))
 
-                <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-                <script type="text/javascript">
-                    window.onload = function() {
-                        var message = $('#session_data1').val();
-                        swal({
-                            title: "Info",
-                            text: message,
-                            type: "info",
-                        });
+                    <input type="hidden" name="session_data" id="session_data1" class="session_data"
+                        value="{{ session('error') }}">
+                    <script type="text/javascript">
+                        window.onload = function () {
+                            var message = $('#session_data1').val();
+                            swal({
+                                title: "Info",
+                                text: message,
+                                type: "info",
+                            });
 
-                    }
-                </script>
+                        }
+                    </script>
                 @endif
                 <h2 class="wishlist_main_header">
                     Wishlist
@@ -204,7 +207,7 @@
                         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                         <span>Wishlist</span>
                     </div>
-                </h2>
+                </h2> q
                 <!-- <form class="d-flex flex-row justify-content-end align-items-center" action="#" method="get">
                     <input type="search" class="form-control" placeholder="Search">
                     <button type="submit">
@@ -215,87 +218,89 @@
 
             <div class="container-fluid wishlist_courselist_container">
 
-
                 <div class="row">
                     @php $count = 1;@endphp
                     @foreach($wishlistCourses as $wishlistCourse)
 
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="card noShadow wishlist_courselist">
-                            <div class="card-header">
-                                <img src="../../uploads/course/126/{{$wishlistCourse->course_banner}}" alt="" class="course_image">
-                            </div>
-                            <div class="card-body">
-                                <div class="card-title">
-                                    <h5>
-                                        {{$wishlistCourse->course_name}}
-                                    </h5>
-                                </div>
-                                <div class="card-text">
-                                    <h6>{{$wishlistCourse->course_instructor}}</h6>
-                                </div>
-                                <div class="d-flex flex-row justify-content-start">
-                                    <span class="course_rating">
+                                        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                                            <div class="card noShadow wishlist_courselist">
+                                                <div class="card-header">
+                                                    <img src="../../uploads/course/126/{{$wishlistCourse->course_banner}}" alt=""
+                                                        class="course_image">
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="card-title">
+                                                        <h5>
+                                                            {{$wishlistCourse->course_name}}
+                                                        </h5>
+                                                    </div>
+                                                    <div class="card-text">
+                                                        <h6>{{$wishlistCourse->course_instructor}}</h6>
+                                                    </div>
+                                                    <div class="d-flex flex-row justify-content-start">
+                                                        <span class="course_rating">
 
-                                    </span>
-                                    <span class="mx-2 course_rating_list ratingsset{{$count}}">
-                                        @php
-                                        $ratings = !empty($wishlistCourse->average_rating) ? $wishlistCourse->average_rating : 0;
-                                        $averageRating = $ratings * 2;
-                                        $actual_rating = intval($averageRating / 2);
+                                                        </span>
+                                                        <span class="mx-2 course_rating_list ratingsset{{$count}}">
+                                                            @php
+                                                                $ratings = !empty($wishlistCourse->average_rating) ? $wishlistCourse->average_rating : 0;
+                                                                $averageRating = $ratings * 2;
+                                                                $actual_rating = intval($averageRating / 2);
 
 
-                                        @endphp
-                                        @for($i=1;$i<=5;$i++) @if($i<=$actual_rating) <i class="fa fa-star rating-color"></i>
-                                            @else
-                                            <i class="fa fa-star unfilled-star"></i>
-                                            @endif
-                                            @endfor
-                                            @if($averageRating%2 !=0)
-                                            <script>
-                                                var fa_list = document.querySelector('.ratingsset{{$count}} .unfilled-star');
-                                                fa_list.classList.remove('fa-star');
-                                                fa_list.classList.add('fa-star-half-o');
-                                                fa_list.classList.add('rating-color');
-                                            </script>
-                                            @endif
-                                    </span>
-                                    <span class="course_rating_count">
-                                        {{ $ratings }}
-                                    </span>
-                                    @php  $count++ @endphp
-                                </div>
-                                <!-- <div class="d-flex flex-row justify-content-start">
-                                    <span class="course_total_hours">
-                                        17 total hours
-                                    </span>
-                                    <span class="mx-1">
-                                        -
-                                    </span>
-                                    <span class="course_contents">
-                                        130 contents
-                                    </span>
-                                </div> -->
-                                <div class="d-flex flex-row justify-content-start">
+                                                            @endphp
+                                                            @for($i = 1; $i <= 5; $i++) @if($i <= $actual_rating) <i
+                                                                class="fa fa-star rating-color"></i>
+                                                            @else
+                                                                <i class="fa fa-star unfilled-star"></i>
+                                                            @endif
+                                                            @endfor
+                                                            @if($averageRating % 2 != 0)
+                                                                <script>
+                                                                    var fa_list = document.querySelector('.ratingsset{{$count}} .unfilled-star');
+                                                                    fa_list.classList.remove('fa-star');
+                                                                    fa_list.classList.add('fa-star-half-o');
+                                                                    fa_list.classList.add('rating-color');
+                                                                </script>
+                                                            @endif
+                                                        </span>
+                                                        <span class="course_rating_count">
+                                                            {{ $ratings }}
+                                                        </span>
+                                                        @php    $count++ @endphp
+                                                    </div>
+                                                    <!-- <div class="d-flex flex-row justify-content-start">
+                                                                                                                                                                                                                                                                                                        <span class="course_total_hours">
+                                                                                                                                                                                                                                                                                                            17 total hours
+                                                                                                                                                                                                                                                                                                        </span>
+                                                                                                                                                                                                                                                                                                        <span class="mx-1">
+                                                                                                                                                                                                                                                                                                            -
+                                                                                                                                                                                                                                                                                                        </span>
+                                                                                                                                                                                                                                                                                                        <span class="course_contents">
+                                                                                                                                                                                                                                                                                                            130 contents
+                                                                                                                                                                                                                                                                                                        </span>
+                                                                                                                                                                                                                                                                                                    </div> -->
+                                                    <div class="d-flex flex-row justify-content-start">
 
-                                    @if($wishlistCourse->course_pay === 'paid')
+                                                        @if($wishlistCourse->course_pay === 'paid')
 
-                                    <span class="course_price">
-                                        USh {{$wishlistCourse->course_price}}
-                                    </span>
-                                    @else($wishlistCourse->course_pay === 'free')
+                                                            <span class="course_price">
+                                                                Rs. {{$wishlistCourse->course_price}}
+                                                            </span>
+                                                        @else($wishlistCourse->course_pay === 'free')
 
-                                    <span class="course_price">
-                                        <span style="background-color: #0ecf26;" class="course_paid">{{$wishlistCourse->course_pay}}</span>
-                                    </span>
-                                    @endif
-                                    <!-- <span class="course_orginal_price">
-                                        USh 3499
-                                    </span> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                                            <span class="course_price">
+                                                                <span style="background-color: #0ecf26;"
+                                                                    class="course_paid">{{$wishlistCourse->course_pay}}</span>
+                                                            </span>
+                                                        @endif
+                                                        <!-- <span class="course_orginal_price">
+                                                                                                                                                                                                                                                                                                            USh 3499
+                                                                                                                                                                                                                                                                                                        </span> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                     @endforeach
 
                 </div>

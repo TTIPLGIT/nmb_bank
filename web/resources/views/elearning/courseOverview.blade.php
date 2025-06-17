@@ -396,7 +396,7 @@
                         <a href="/elearning/allCourses?sorted=Recently Added&tag=false&progress=false&q=false" class="btn btn-primary">Back</a>
                     </div>
                     <br>
-                    <h5 class="col-md-7 d-flex justify-content-center over">Course Introduction</h5>
+                    <h4 class="col-md-7 d-flex justify-content-center over">Course Introduction</h4>
                     <div class="card noShadow classOverviewContent">
                         <div class="card-body bgWhite classOverviewContentBody">
                             <h3 class="card-title">
@@ -525,14 +525,14 @@
                                     <button class="btn btn-info buyNow">
                                         Buy Now
                                     </button>
-                                    <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ config('setting.RAZORPAY_KEY') }}" data-amount="{{$courseDetail->course_price*100}}" data-button='false' data-name="MLHUD Payment" data-description="Payment" data-prefill.name="name" data-prefill.email="email" data-theme.color="#ff7529">
+                                    <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ config('setting.RAZORPAY_KEY') }}" data-amount="{{$courseDetail->course_price*100}}" data-button='false' data-name="TALENTRA Payment" data-description="Payment" data-prefill.name="name" data-prefill.email="email" data-theme.color="#ff7529">
                                     </script>
                                     @else
                                     @php $id=Crypt::encrypt($courseDetail->course_id); @endphp
                                     <a href="{{ route('elearningCourse/class',$id) }}" class="btn btn-info buyNow">
                                         Take Now
                                     </a>
-                                    <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ config('setting.RAZORPAY_KEY') }}" data-amount="{{$courseDetail->course_price*100}}" data-button='false' data-name="MLHUD Payment" data-description="Payment" data-prefill.name="name" data-prefill.email="email" data-theme.color="#ff7529">
+                                    <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{ config('setting.RAZORPAY_KEY') }}" data-amount="{{$courseDetail->course_price*100}}" data-button='false' data-name="TALENTRA Payment" data-description="Payment" data-prefill.name="name" data-prefill.email="email" data-theme.color="#ff7529">
                                     </script>
                                     <input type="hidden" name="_token" value="{!!csrf_token()!!}">
                                     @endif

@@ -211,7 +211,7 @@
     }
 
     .btn>i {
-       
+
         /* background-color: darkolivegreen; */
     }
 
@@ -268,7 +268,8 @@
                 <form method="POST" id="registration_form" enctype="multipart/form-data" onsubmit="return false">
                     @csrf
 
-                    <div class="tile registration_tab" id="tile-1" style="margin-top:10px !important; margin-bottom:10px !important;">
+                    <div class="tile registration_tab" id="tile-1"
+                        style="margin-top:10px !important; margin-bottom:10px !important;">
 
 
                     </div>
@@ -293,7 +294,10 @@
                             <div class="col-md-9"></div>
 
                             <div class="col-md-3">
-                                <a type="button" style="font-size:15px;float:right;" class="btn btn-success btn-lg question" title="Create" href="" data-toggle="modal" data-target="#addModal">Add Notice Board <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
+                                <a type="button" style="font-size:15px;float:right;"
+                                    class="btn btn-success btn-lg question" title="Create" href="" data-toggle="modal"
+                                    data-target="#addModal">Add Notice Board <span><i class="fa fa-plus"
+                                            aria-hidden="true"></i></span></a>
                             </div>
                         </div>
 
@@ -330,27 +334,37 @@
                                                 <tbody style="background-color: #cfe0e8;">
 
                                                     @foreach($rows['rows'] as $data)
-                                                    <tr>
-                                                        <td>{{$loop->iteration}}</td>
-                                                        <td>{{$data['notice_name']}}</td>
-                                                        <td><img src="uploads/notice/126/{{$data['notice_banner']}}" width="50px" height="50px" alt="Image"/></td>
-                                                        <td>{{$data['notice_date']}}</td>
-                                                        <td>{{$data['notice_author']}}</td>
-                                                        
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$data['notice_name']}}</td>
+                                                            <td><img src="uploads/notice/126/{{$data['notice_banner']}}"
+                                                                    width="50px" height="50px" alt="Image" /></td>
+                                                            <td>{{$data['notice_date']}}</td>
+                                                            <td>{{$data['notice_author']}}</td>
 
 
-                                                        <td>
 
-                                                                <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal4"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                                <a class="btn btn-link" title="show"><i class="fas fa-eye" style="color:green"></i></a>
-                                                                
+                                                            <td style="">
 
-                                                                <a type="button" title="Delete" onclick="notice_delete(<?php echo $data['notice_id'] ?>)" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></a>
-                                                            
+                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                    data-toggle="modal" data-target="#addModal4"
+                                                                    style="margin-right: 5px !important;"><i
+                                                                        class="fas fa-pencil-alt"
+                                                                        style="color: blue !important"></i></a>
 
-                                                        </td>
+                                                                <a class="btn btn-link" title="show"><i class="fas fa-eye"
+                                                                        style="color:green"></i></a>
 
-                                                    </tr>
+
+                                                                <a type="button" title="Delete"
+                                                                    onclick="notice_delete(<?php    echo $data['notice_id'] ?>)"
+                                                                    class="btn btn-link"><i class="far fa-trash-alt"
+                                                                        style="color:red"></i></a>
+
+
+                                                            </td>
+
+                                                        </tr>
                                                     @endforeach
                                                     <input type="hidden" class="ceduid" id="eduid" value="0">
 
@@ -382,27 +396,27 @@
 
 <script>
 
-function notice_delete(notice_id) {
-    //alert(id);
+    function notice_delete(notice_id) {
+        //alert(id);
         $.ajax({
             url: "{{ route('notice_delete') }}",
             type: 'POST',
             data: {
-                notice_id:notice_id,
+                notice_id: notice_id,
 
                 _token: '{{csrf_token()}}'
             },
-            error: function() {
+            error: function () {
                 alert('Something is wrong');
             },
-            success: function(data) {
+            success: function (data) {
 
                 swal({
-                        title: "Success",
-                        text: "Notice Deleted Successfully",
-                        type: "success"
-                    },
-                    function() {
+                    title: "Success",
+                    text: "Notice Deleted Successfully",
+                    type: "success"
+                },
+                    function () {
 
                         window.location.href = "{{ url('adminnoticeboard') }}";
 
@@ -413,8 +427,8 @@ function notice_delete(notice_id) {
 
     }
 
-    $(document).ready(function() {
-        $(document).on('hidden.bs.modal', function() {
+    $(document).ready(function () {
+        $(document).on('hidden.bs.modal', function () {
 
             const form_count = document.querySelectorAll('form.reset');
             for (let index = 0; index < form_count.length; index++) {
@@ -427,7 +441,7 @@ function notice_delete(notice_id) {
 
     })
 
-    </script>
+</script>
 
 
 <!-- addquestion function -->
@@ -451,7 +465,8 @@ function notice_delete(notice_id) {
 
             <div class="card longquestion" id="">
                 <h4 class="modal-title long">Add Notice</h4>
-                <form method="POST" id="notice_form" action="{{ route('notice_store')}}" name="add_notice" enctype="multipart/form-data" class="reset">
+                <form method="POST" id="notice_form" action="{{ route('notice_store')}}" name="add_notice"
+                    enctype="multipart/form-data" class="reset">
                     @csrf
 
                     <div class="row">
@@ -483,7 +498,7 @@ function notice_delete(notice_id) {
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Notice Date:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="date"  class="form-control default" id="notice_date" name="notice_date">
+                                <input type="date" class="form-control default" id="notice_date" name="notice_date">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -502,7 +517,8 @@ function notice_delete(notice_id) {
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <a class="btn btn-success btn-space" onclick="gencre()" type="submit" id="savebutton">Submit</a>
+                            <a class="btn btn-success btn-space" onclick="gencre()" type="submit"
+                                id="savebutton">Submit</a>
                             <input type="submit" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -537,7 +553,7 @@ function notice_delete(notice_id) {
             swal.fire("Please Upload The Noticeboard Image", "", "error");
             return false;
         }
-        
+
         var notice_date = $("#notice_date").val();
         if (notice_date == '') {
             swal.fire("Please Select the Noticeboard Date", "", "error")
@@ -557,7 +573,7 @@ function notice_delete(notice_id) {
 
 
 <script>
-    $(function() {
+    $(function () {
         var dtToday = new Date();
 
         var month = dtToday.getMonth() + 1;
@@ -763,7 +779,7 @@ function notice_delete(notice_id) {
 </script>
 
 <script>
-    $('#result').on('change', function() {
+    $('#result').on('change', function () {
         $('#courselist').css('display', 'none');
         $('#classlist').css('display', 'none');
 
@@ -858,7 +874,8 @@ function notice_delete(notice_id) {
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre()" id="savebutton">Submit</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre()"
+                                id="savebutton">Submit</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>

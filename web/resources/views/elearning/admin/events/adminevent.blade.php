@@ -268,7 +268,8 @@
                 <form method="POST" id="registration_form" enctype="multipart/form-data" onsubmit="return false">
                     @csrf
 
-                    <div class="tile registration_tab" id="tile-1" style="margin-top:10px !important; margin-bottom:10px !important;">
+                    <div class="tile registration_tab" id="tile-1"
+                        style="margin-top:10px !important; margin-bottom:10px !important;">
 
 
                     </div>
@@ -293,7 +294,9 @@
                             <div class="col-md-10"></div>
 
                             <div class="col-md-2">
-                                <a type="button" style="font-size:15px;" class="btn btn-success btn-lg question" title="Create" href="" data-toggle="modal" data-target="#addModal">Add Event <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
+                                <a type="button" style="font-size:15px;" class="btn btn-success btn-lg question"
+                                    title="Create" href="" data-toggle="modal" data-target="#addModal">Add Event
+                                    <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
                             </div>
                         </div>
 
@@ -328,26 +331,34 @@
                                                 <tbody style="background-color: #cfe0e8;">
                                                     @foreach($rows['rows'] as $data)
 
-                                                    <tr>
-                                                        <td>{{$loop->iteration}}</td>
-                                                        <td>{{$data['event_name']}}</td>
-                                                        <td> <img src="uploads/events/126/{{$data['event_image']}}" width="50px" height="50px" alt="Image" /></td>
-                                                        <td>{{$data['event_date']}}</td>
-                                                        <td>
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$data['event_name']}}</td>
+                                                            <td> <img src="uploads/events/126/{{$data['event_image']}}"
+                                                                    width="50px" height="50px" alt="Image" /></td>
+                                                            <td>{{$data['event_date']}}</td>
+                                                            <td>
 
 
 
 
-                                                            <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal4"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" title="show"><i class="fas fa-eye" style="color:green"></i></a>
+                                                                <a class="btn btn-link" title="Edit" id="gcb"
+                                                                    data-toggle="modal" data-target="#addModal4"><i
+                                                                        class="fas fa-pencil-alt"
+                                                                        style="color: blue !important"></i></a>
+                                                                <a class="btn btn-link" title="show"><i class="fas fa-eye"
+                                                                        style="color:green"></i></a>
 
 
-                                                            <a type="button" title="Delete" onclick="event_delete(<?php echo $data['event_id'] ?>)" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></a>
+                                                                <a type="button" title="Delete"
+                                                                    onclick="event_delete(<?php    echo $data['event_id'] ?>)"
+                                                                    class="btn btn-link"><i class="far fa-trash-alt"
+                                                                        style="color:red"></i></a>
 
 
-                                                        </td>
+                                                            </td>
 
-                                                    </tr>
+                                                        </tr>
 
                                                     @endforeach
 
@@ -389,17 +400,17 @@
 
                 _token: '{{csrf_token()}}'
             },
-            error: function() {
+            error: function () {
                 alert('Something is wrong');
             },
-            success: function(data) {
+            success: function (data) {
 
                 swal({
-                        title: "Success",
-                        text: "Event Deleted Successfully",
-                        type: "success"
-                    },
-                    function() {
+                    title: "Success",
+                    text: "Event Deleted Successfully",
+                    type: "success"
+                },
+                    function () {
 
                         window.location.href = "{{ url('adminevent') }}";
 
@@ -412,7 +423,7 @@
 </script>
 
 <script>
-    $(function() {
+    $(function () {
         var dtToday = new Date();
 
         var month = dtToday.getMonth() + 1;
@@ -448,7 +459,8 @@
 
             <div class="card longquestion" id="">
                 <h4 class="modal-title long">Add Event</h4>
-                <form method="POST" id="event_form" action="{{ route('event_store')}}" name="add_event" enctype="multipart/form-data" class="reset">
+                <form method="POST" id="event_form" action="{{ route('event_store')}}" name="add_event"
+                    enctype="multipart/form-data" class="reset">
                     @csrf
 
                     <div class="row">
@@ -480,7 +492,7 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Event Date:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="date"  class="form-control" id="event_date" name="event_date">
+                                <input type="date" class="form-control" id="event_date" name="event_date">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -697,8 +709,8 @@
         }
     }
 
-    $(document).ready(function() {
-        $(document).on('hidden.bs.modal', function() {
+    $(document).ready(function () {
+        $(document).on('hidden.bs.modal', function () {
 
             const form_count = document.querySelectorAll('form.reset');
             for (let index = 0; index < form_count.length; index++) {
@@ -733,7 +745,7 @@
         if (event_date == '') {
             swal.fire("Please Select the Event Date", "", "error")
             return false;
-        }else {
+        } else {
             document.getElementById('event_form').submit();
         }
 
@@ -843,7 +855,7 @@
 </script>
 
 <script>
-    $('#result').on('change', function() {
+    $('#result').on('change', function () {
         $('#courselist').css('display', 'none');
         $('#classlist').css('display', 'none');
 
@@ -938,7 +950,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre()" id="savebutton">Submit</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre()"
+                                id="savebutton">Submit</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>

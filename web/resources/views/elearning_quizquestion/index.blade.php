@@ -508,7 +508,7 @@
 
     }
 
-    
+
 
     @media (min-width: 992px) {
         .true_quistion {
@@ -677,9 +677,12 @@
                     <div class="section-body mt-1">
                         <div class="row">
                             <div class="col-sm-2 addquizmodal">
-                                <a type="button" style="font-size:15px;margin: 0px 0px 7px 0px;" class="btn btn-success btn-lg" title="Create" id="gcb" href="" data-toggle="modal" data-target="#addModal1">Add Quiz <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
+                                <a type="button" style="font-size:15px;margin: 0px 0px 7px 0px;"
+                                    class="btn btn-success btn-lg" title="Create" id="gcb" href="" data-toggle="modal"
+                                    data-target="#addModal1">Add Quiz <span><i class="fa fa-plus"
+                                            aria-hidden="true"></i></span></a>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" id="quizlist">
 
                                 <div class="card mt-0">
                                     <div class="card-body">
@@ -703,9 +706,9 @@
                                                 <table class="table table-bordered" id="align1">
                                                     <thead>
                                                         <tr>
-                                                            <th>SI.No</th>
+                                                            <th>S.No</th>
                                                             <th>quiz Name</th>
-                                                            <th class="ellipsis">quiz Question</th>
+                                                            <th class="ellipsis">quiz Questions</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -716,9 +719,9 @@
                                                             <td>{{$data['quiz_name']}}</td>
                                                             <td>
                                                                 @foreach($rows['rows']['quiz_question'] as $row)
-                                                                @foreach($data['quiz_questions'] as $key=>$new_row)
-                                                                @if($new_row==$row['question_id'])
-                                                                @if($key==0)
+                                                                @foreach($data['quiz_questions'] as $key => $new_row)
+                                                                @if($new_row == $row['question_id'])
+                                                                @if($key == 0)
                                                                 {{$row['name']}}
                                                                 @else
                                                                 ,{{$row['name']}}
@@ -734,12 +737,24 @@
 
 
                                                             <td style="">
-                                                                <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModaleditquiz" onclick="fetch_update({{$data['quiz_id']}},'quizedit')" style="margin-top: 6px !important;"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                                <a class="" title="show" data-toggle="modal" data-target="#addModalshowquiz" onclick="fetch_update({{$data['quiz_id']}},'quizshow')"><i class="fas fa-eye" style="color:green"></i></a>
+                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                    data-toggle="modal" data-target="#addModaleditquiz"
+                                                                    onclick="fetch_update({{$data['quiz_id']}},'quizedit')"
+                                                                    style="margin-top: 0px !important;"><i
+                                                                        class="fas fa-pencil-alt"
+                                                                        style="color: blue !important"></i></a>
+
+                                                                <a class="btn btn-link" title="show" data-toggle="modal"
+                                                                    data-target="#addModalshowquiz"
+                                                                    onclick="fetch_update({{$data['quiz_id']}},'quizshow')"><i
+                                                                        class="fas fa-eye" style="color:green"></i></a>
 
                                                                 @csrf
 
-                                                                <button type="submit" title="Delete" onclick="delete1({{$data['quiz_id']}},'5')" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></button>
+                                                                <button type="submit" title="Delete"
+                                                                    onclick="delete1({{$data['quiz_id']}},'5')"
+                                                                    class="btn btn-link"><i class="far fa-trash-alt"
+                                                                        style="color:red"></i></button>
 
 
                                                             </td>
@@ -763,16 +778,20 @@
                 </section>
             </form>
             <br>
+
             <div class="row" style="display: flex;justify-content: space-between;">
                 <div class="col-sm-3" style="margin-bottom: 9px !important;">
-                    <a type="button" style="font-size:15px;margin: 0px 0px 0px 0px;" class="btn btn-success btn-lg question" title="Create" href="" data-toggle="modal" data-target="#addModal">Add Question <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
+                    <a type="button" style="font-size:15px;margin: 0px 0px 0px 0px;"
+                        class="btn btn-success btn-lg question" title="Create" href="" data-toggle="modal"
+                        data-target="#addModal">Add Question <span><i class="fa fa-plus"
+                                aria-hidden="true"></i></span></a>
                 </div>
                 <div class="col-sm-3" style="margin-bottom: 6px !important;">
                     <select class="form-control default" id="result1" name="result1">
-                        <option value="">Quiz Type</option>
+                        <!-- <option value="" >Question Type</option> -->
                         <option value="LongQuestionlist">Long Question</option>
                         <option value="MCQlist">Multiple Choice Question(MCQ)</option>
-                        <option value="ShortAnswerlist">Short Answer</option>
+                        <option value="ShortAnswerlist">Short Question</option>
                         <option value="True/Falselist" selected>True/False</option>
                     </select>
                 </div>
@@ -782,24 +801,61 @@
 
 
                 <div class="section-body mt-0">
+                    @if (session('type'))
+                    <input type="hidden" name="session_data" id="session_data" class="session_data"
+                        value="{{ session('type') }}">
+
+                    <script type="text/javascript">
+                        window.onload = function() {
+
+                            var value = $('#session_data').val();
+                            $('#result1').val(value).change()
+                        }
+                    </script>
+
+                    @endif
                     @if (session('success'))
 
-                    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+                    <input type="hidden" name="session_data" id="session_data" class="session_data"
+                        value="{{ session('success') }}">
                     <script type="text/javascript">
                         window.onload = function() {
                             var message = $('#session_data').val();
+                            // alert(message);
                             swal.fire({
                                 title: "Success",
                                 text: message,
                                 icon: "success",
                                 type: "success",
                             });
+                            if (message == 'Quiz Created Successfully') {
+                                setTimeout(function() {
+                                    document.getElementById('quizlist').scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }, 500);
+                            } else if (message == 'Quiz Updated Successfully') {
+                                setTimeout(function() {
+                                    document.getElementById('quizlist').scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }, 500);
+                            } else {
+                                // alert("ASdae");
+                                setTimeout(function() {
+                                    document.getElementById('truelist').scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }, 500);
+                            }
+
 
                         }
                     </script>
                     @elseif(session('error'))
 
-                    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
+                    <input type="hidden" name="session_data" id="session_data1" class="session_data"
+                        value="{{ session('error') }}">
                     <script type="text/javascript">
                         window.onload = function() {
                             var message = $('#session_data1').val();
@@ -825,9 +881,9 @@
                                             <table class="table  table-bordered table-striped" id="tableExport">
                                                 <thead>
                                                     <tr>
-                                                        <th>SI.No</th>
-                                                        <th>question Name</th>
-                                                        <th class="ellipsis">question</th>
+                                                        <th>S.No</th>
+                                                        <th>question Tag</th>
+                                                        <th class="ellipsis">questions</th>
                                                         <th>Points</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -845,8 +901,15 @@
 
 
 
-                                                            <a class="" title="Edit" id="gcb" href="" onclick="fetch_update({{$data['id']}},'longedit')" data-toggle="modal" data-target="#addModal3" style="margin-top:6px;"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" title="show" id="gcb" href="" onclick="fetch_update({{$data['id']}},'longshow')" data-toggle="modal" data-target="#addModal4"><i class="fas fa-eye" style="color:green"></i></a>
+                                                            <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                onclick="fetch_update({{$data['id']}},'longedit')"
+                                                                data-toggle="modal" data-target="#addModal3"
+                                                                style="margin-top:0px;"><i class="fas fa-pencil-alt"
+                                                                    style="color: blue !important"></i></a>
+                                                            <a class="btn btn-link" title="show" id="gcb" href=""
+                                                                onclick="fetch_update({{$data['id']}},'longshow')"
+                                                                data-toggle="modal" data-target="#addModal4"><i
+                                                                    class="fas fa-eye" style="color:green"></i></a>
 
                                                             @csrf
 
@@ -888,9 +951,9 @@
                                             <table class="table  table-bordered table-striped" id="align2">
                                                 <thead>
                                                     <tr>
-                                                        <th>SI.No</th>
-                                                        <th>Question Name</th>
-                                                        <th class="ellipsis">Question</th>
+                                                        <th>S.No</th>
+                                                        <th>Question Tag</th>
+                                                        <th class="ellipsis">Questions</th>
                                                         <th>Points</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -906,8 +969,15 @@
 
                                                         <td style="">
 
-                                                            <a class="" title="Edit" id="gcb" href="" onclick="fetch_update({{$data['id']}},'mcqedit')" data-toggle="modal" data-target="#addModalmcqedit" style="margin-top:6px;"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" title="show" id="gcb" href="" onclick="fetch_update({{$data['id']}},'mcqshow')" data-toggle="modal" data-target="#addModalmcqshow"><i class="fas fa-eye" style="color:green"></i></a>
+                                                            <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                onclick="fetch_update({{$data['id']}},'mcqedit')"
+                                                                data-toggle="modal" data-target="#addModalmcqedit"
+                                                                style="margin-top:0px;"><i class="fas fa-pencil-alt"
+                                                                    style="color: blue !important"></i></a>
+                                                            <a class="btn btn-link" title="show" id="gcb" href=""
+                                                                onclick="fetch_update({{$data['id']}},'mcqshow')"
+                                                                data-toggle="modal" data-target="#addModalmcqshow"><i
+                                                                    class="fas fa-eye" style="color:green"></i></a>
 
                                                             @csrf
 
@@ -950,9 +1020,9 @@
                                             <table class="table  table-bordered table-striped" id="align3">
                                                 <thead>
                                                     <tr>
-                                                        <th>SI.No</th>
-                                                        <th>Question Name</th>
-                                                        <th class="ellipsis">Question</th>
+                                                        <th>S.No</th>
+                                                        <th>Question Tag</th>
+                                                        <th class="ellipsis">Questions</th>
                                                         <th>Points</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -965,8 +1035,15 @@
                                                         <td>{{$data['question']}}</td>
                                                         <td>{{$data['points']}}</td>
                                                         <td style="">
-                                                            <a class="" title="Edit" id="gcb" href="" onclick="fetch_update({{$data['id']}},'shortedit')" data-toggle="modal" data-target="#addModalshortedit" style="margin-top:6px;"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" title="show" id="gcb" href="" onclick="fetch_update({{$data['id']}},'shortshow')" data-toggle="modal" data-target="#addModalshortshow"><i class="fas fa-eye" style="color:green"></i></a>
+                                                            <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                onclick="fetch_update({{$data['id']}},'shortedit')"
+                                                                data-toggle="modal" data-target="#addModalshortedit"
+                                                                style="margin-top:0px;"><i class="fas fa-pencil-alt"
+                                                                    style="color: blue !important"></i></a>
+                                                            <a class="btn btn-link" title="show" id="gcb" href=""
+                                                                onclick="fetch_update({{$data['id']}},'shortshow')"
+                                                                data-toggle="modal" data-target="#addModalshortshow"><i
+                                                                    class="fas fa-eye" style="color:green"></i></a>
 
                                                             @csrf
 
@@ -1010,8 +1087,8 @@
                                                 <thead>
                                                     <tr>
                                                         <th>S.No</th>
-                                                        <th>question Name</th>
-                                                        <th class="ellipsis">question</th>
+                                                        <th>question Tag</th>
+                                                        <th class="ellipsis">questions</th>
                                                         <th>Points</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -1024,8 +1101,16 @@
                                                         <td>{{$data['question']}}</td>
                                                         <td>{{$data['points']}}</td>
                                                         <td style="">
-                                                            <a class="" title="Edit" id="gcb" href="" data-toggle="modal" onclick="fetch_update({{$data['id']}},'trueedit')" data-target="#addModaltrueedit"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="" title="show" data-toggle="modal" onclick="fetch_update({{$data['id']}},'trueshow')" data-target="#addModaltrueshow"><i class="fas fa-eye" style="color:green"></i></a>
+                                                            <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                data-toggle="modal"
+                                                                onclick="fetch_update({{$data['id']}},'trueedit')"
+                                                                data-target="#addModaltrueedit"><i
+                                                                    class="fas fa-pencil-alt"
+                                                                    style="color: blue !important"></i></a>
+                                                            <a class="btn btn-link" title="show" data-toggle="modal"
+                                                                onclick="fetch_update({{$data['id']}},'trueshow')"
+                                                                data-target="#addModaltrueshow"><i class="fas fa-eye"
+                                                                    style="color:green"></i></a>
 
                                                             @csrf
 
@@ -1076,7 +1161,8 @@
 
         <div class="modal-content">
 
-            <form method="POST" id="quizcreate_form" action="{{route('elearning.quiz_store')}}" enctype="multipart/form-data" class="reset">
+            <form method="POST" id="quizcreate_form" action="{{route('elearning.quiz_store')}}"
+                enctype="multipart/form-data" class="reset">
                 {{ csrf_field() }}
 
                 <div class="modal-header mh">
@@ -1092,15 +1178,17 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quiz Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="q_name" name="q_name" autocomplete="off" placeholder="Enter the Quiz Name">
+                                <input type="text" class="form-control default comma" id="q_name" name="q_name"
+                                    autocomplete="off" placeholder="Enter the Quiz Name">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quiz Question:<span class="error-star" style="color:red;">*</span></label>
-                                <select class="js-select1" id="quiz_question" name="quiz_question[]" multiple="multiple" onchange="data();">
-                                    <option value="" data-badge="">Select Quiz Question</option>
-                                    @foreach($rows['rows']['quiz_question'] as $key=>$row)
+                                <select class="js-select1" id="quiz_question" name="quiz_question[]" multiple="multiple"
+                                    onchange="data();" placeholder="Select Quiz Question">
+
+                                    @foreach($rows['rows']['quiz_question'] as $key => $row)
 
                                     <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
                                     @endforeach
@@ -1111,7 +1199,8 @@
                         <div class="col-md-6 quizpoints" style="display:none;">
                             <div class="form-group">
                                 <label>Total Points:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="q_points" name="q_points" autocomplete="off">
+                                <input type="text" class="form-control default" id="q_points" name="q_points"
+                                    autocomplete="off">
                             </div>
                         </div>
 
@@ -1119,8 +1208,10 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre(5)" id="savebutton">Submit</button>
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel" onclick="resetSelect2()">
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre(5)"
+                                id="savebutton">Submit</button>
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel"
+                                onclick="resetSelect2()">
                         </div>
                     </div>
                 </div>
@@ -1141,7 +1232,8 @@
 
         <div class="modal-content">
 
-            <form method="POST" id="create_form" onsubmit="return validateForm()" enctype="multipart/form-data" class="reset">
+            <form method="POST" id="create_form" onsubmit="return validateForm()" enctype="multipart/form-data"
+                class="reset">
                 {{ csrf_field() }}
 
                 <div class="modal-header mh">
@@ -1158,7 +1250,7 @@
                                     <option value="">Question Type</option>
                                     <option value="Long Question">Long Question</option>
                                     <option value="MCQ">Multiple Choice Question(MCQ)</option>
-                                    <option value="ShortAnswer">Short Answer</option>
+                                    <option value="ShortAnswer">Short Question</option>
                                     <option value="True/False">True/False</option>
                                 </select>
 
@@ -1174,17 +1266,19 @@
             </form>
 
             <!-- Long question -->
-
+            <div id="question-row"></div>
             <div class="card longquestion" id="longquestion" style="display:none">
                 <h4 class="modal-title long">Long Question:</h4>
-                <form method="post" action="{{route('elearningquestion.long_store')}}" id="longcreateform" enctype="multipart/form-data" class="reset">
+                <form method="post" action="{{route('elearningquestion.long_store')}}" id="longcreateform"
+                    enctype="multipart/form-data" class="reset">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="long_qname" name="long_qname" autocomplete="off" placeholder="Please Enter the Long Question name">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="long_qname" name="long_qname"
+                                    autocomplete="off" placeholder="Enter the Long Question Tag">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1195,7 +1289,8 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="long_quistion" class="long_quistion" name="long_quistion" autocomplete="off"></textarea>
+                                <textarea id="long_quistion" class="long_quistion" name="long_quistion"
+                                    autocomplete="off" placeholder="Please Enter the Long Question name"></textarea>
 
                             </div>
                         </div>
@@ -1216,12 +1311,20 @@
                                             <tr>
 
                                                 <td>
-                                                    <input type="text" class="form-control default" id="keyword_long" name="keyword_long[]" autocomplete="off">
+                                                    <input type="text" class="form-control default" id="keyword_long"
+                                                        name="keyword_long[]" autocomplete="off">
+
                                                 </td>
                                                 <td>
                                                     <div class="action_container">
                                                         <button class="danger" onclick="remove_tr(this)">
                                                             <i class="fa fa-close"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="action_container" width="50px">
+                                                        <button class="success" type="button"
+                                                            onclick="create_tr('table_body')">
+                                                            <i class="fa fa-plus"></i>
                                                         </button>
                                                     </div>
 
@@ -1235,11 +1338,7 @@
 
                                     </table>
 
-                                    <div class="action_container" width="50px">
-                                        <button class="success" type="button" onclick="create_tr('table_body')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+
 
                                 </div>
                             </div>
@@ -1255,7 +1354,8 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="long_points" name="long_points" autocomplete="off" placeholder="Enter The Points">
+                                <input type="number" class="form-control default" id="long_points" name="long_points"
+                                    autocomplete="off" placeholder="Enter The Points">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1265,8 +1365,10 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre(1)" id="savebutton">Submit</button>
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel" onclick="resetSelect2()">
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre(1)"
+                                id="savebutton">Submit</button>
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel"
+                                onclick="resetSelect2()">
                         </div>
                     </div>
                 </form>
@@ -1277,14 +1379,16 @@
 
             <div class="card mcqquestion" id="mcq" style="display:none">
                 <h4 class="modal-title mcq">Multiple Choice Question(MCQ):</h4>
-                <form method="post" action="{{route('elearningquestion.mcq_store')}}" id="mcqcreateform" enctype="multipart/form-data" class="reset">
+                <form method="post" action="{{route('elearningquestion.mcq_store')}}" id="mcqcreateform"
+                    enctype="multipart/form-data" class="reset">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="mcq_qname" name="mcq_qname" autocomplete="off" placeholder="Enter the Question Name">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="mcq_qname" name="mcq_qname"
+                                    autocomplete="off" placeholder="Enter the Question Tag">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1297,7 +1401,8 @@
 
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="mcq_quistion" class="mcq_quistion" name="mcq_quistion" rows="4" cols="81" autocomplete="off"></textarea>
+                                <textarea id="mcq_quistion" class="mcq_quistion" name="mcq_quistion" rows="4" cols="81"
+                                    autocomplete="off" placeholder="Please Enter the Mcq Question name"></textarea>
 
                             </div>
                         </div>
@@ -1316,13 +1421,20 @@
                                             <tr>
 
                                                 <td>
-                                                    <input type="text" class="form-control default" id="keyword_mcq" name="keyword_mcq[]" autocomplete="off">
+                                                    <input type="text" class="form-control default" id="keyword_mcq"
+                                                        name="keyword_mcq[]" autocomplete="off">
                                                 </td>
 
                                                 <td>
                                                     <div class="action_container">
                                                         <button class="danger" onclick="remove_tr(this)">
                                                             <i class="fa fa-close"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="action_container3">
+                                                        <button class="success" type="button"
+                                                            onclick="create_tr('mcq_body')">
+                                                            <i class="fa fa-plus"></i>
                                                         </button>
                                                     </div>
 
@@ -1335,11 +1447,7 @@
 
 
                                     </table>
-                                    <div class="action_container3">
-                                        <button class="success" type="button" onclick="create_tr('mcq_body')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -1352,7 +1460,8 @@
                             <div class="form-group">
                                 <label>Correct Choices:<span class="error-star" style="color:red;">*</span></label>
                                 <br>
-                                <select class="js-select2" id="mcq_correct_choices" name="mcq_correct_choices[]" multiple="multiple">
+                                <select class="js-select2" id="mcq_correct_choices" name="mcq_correct_choices[]"
+                                    multiple="multiple">
                                     <option value="" data-badge="">Select Correct Choices</option>
 
 
@@ -1366,7 +1475,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="mcq_points" name="mcq_points" autocomplete="off" placeholder="Enter the Points">
+                                <input type="number" class="form-control default" id="mcq_points" name="mcq_points"
+                                    autocomplete="off" placeholder="Enter the Points">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1376,8 +1486,10 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre(3)" id="savebutton">Submit</button>
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel" onclick="resetSelect2()">
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre(3)"
+                                id="savebutton">Submit</button>
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel"
+                                onclick="resetSelect2()">
                         </div>
                     </div>
                 </form>
@@ -1386,15 +1498,17 @@
             <!-- Short answer -->
 
             <div class="card shortquestion" id="shortanswer" style="display:none">
-                <h4 class="modal-title short">Add Short Answer:</h4>
-                <form method="post" action="{{route('elearningquestion.short_store')}}" id="shortcreateform" enctype="multipart/form-data" class="reset">
+                <h4 class="modal-title short">Short Question:</h4>
+                <form method="post" action="{{route('elearningquestion.short_store')}}" id="shortcreateform"
+                    enctype="multipart/form-data" class="reset">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="short_qname" name="short_qname" autocomplete="off" placeholder="Enter the Question Name">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="short_qname"
+                                    name="short_qname" autocomplete="off" placeholder="Enter the Short Question Tag">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1404,7 +1518,9 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="short_quistion" class="short_quistion" name="short_quistion" rows="4" cols="81" autocomplete="off"></textarea>
+                                <textarea id="short_quistion" class="short_quistion" name="short_quistion" rows="4"
+                                    cols="81" autocomplete="off"
+                                    placeholder="Please Enter the Short Question name"></textarea>
 
                             </div>
                         </div>
@@ -1423,7 +1539,8 @@
                                             <tr>
 
                                                 <td>
-                                                    <input type="text" class="form-control default" id="keyword_short" name="keyword_short[]" autocomplete="off">
+                                                    <input type="text" class="form-control default" id="keyword_short"
+                                                        name="keyword_short[]" autocomplete="off">
 
                                                 </td>
 
@@ -1432,6 +1549,12 @@
                                                     <div class="action_container">
                                                         <button class="danger" onclick="remove_tr(this)">
                                                             <i class="fa fa-close"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="action_container">
+                                                        <button class="success" type="button"
+                                                            onclick="create_tr('short_body')">
+                                                            <i class="fa fa-plus"></i>
                                                         </button>
                                                     </div>
 
@@ -1444,11 +1567,7 @@
 
 
                                     </table>
-                                    <div class="action_container4">
-                                        <button class="success" type="button" onclick="create_tr('short_body')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -1459,7 +1578,8 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="short_points" name="short_points" autocomplete="off" placeholder="Enter the Points">
+                                <input type="number" class="form-control default" id="short_points" name="short_points"
+                                    autocomplete="off" placeholder="Enter the Points">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1467,8 +1587,10 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre(2)" id="savebutton">Submit</button>
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel" onclick="resetSelect2()">
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre(2)"
+                                id="savebutton">Submit</button>
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel"
+                                onclick="resetSelect2()">
                         </div>
                     </div>
                 </form>
@@ -1479,15 +1601,17 @@
 
             <div class="card truequestion" id="true" style="display:none">
                 <h4 class="modal-title true">True/false:</h4>
-                <form method="post" action="{{route('elearningquestion.true_store')}}" id="truecreateform" enctype="multipart/form-data" class="reset">
+                <form method="post" action="{{route('elearningquestion.true_store')}}" id="truecreateform"
+                    enctype="multipart/form-data" class="reset">
                     {{ csrf_field() }}
 
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="true_qname" name="true_qname" autocomplete="off" placeholder="Enter the Question Name">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="true_qname" name="true_qname"
+                                    autocomplete="off" placeholder="Enter the Question Tag">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1497,7 +1621,9 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="true_quistion" class="true_quistion" name="true_quistion" rows="4" cols="81" autocomplete="off"></textarea>
+                                <textarea id="true_quistion" class="true_quistion" name="true_quistion" rows="4"
+                                    cols="81" autocomplete="off"
+                                    placeholder="Please Enter the T/F Question name"></textarea>
 
                             </div>
                         </div>
@@ -1523,7 +1649,8 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="true_points" name="true_points" autocomplete="off" placeholder="Enter the Points">
+                                <input type="number" class="form-control default" id="true_points" name="true_points"
+                                    autocomplete="off" placeholder="Enter the Points">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -1531,8 +1658,10 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre(4)" id="savebutton">Submit</button>
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel" onclick="resetSelect2()">
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre(4)"
+                                id="savebutton">Submit</button>
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel"
+                                onclick="resetSelect2()">
                         </div>
                     </div>
                 </form>
@@ -1545,9 +1674,9 @@
 
 
 <style>
-    tr:first-child .danger {
+    /* tr:first-child .danger {
         display: none;
-    }
+    } */
 
     .container {
         max-width: 900px;
@@ -1577,10 +1706,10 @@
     }
 
     .action_container3 {
-        float: right;
+        /* float: right; */
         position: relative;
-        left: 5px;
-        top: 3px;
+        /* left: 5px;
+        top: 3px; */
         z-index: 999;
     }
 
@@ -1761,22 +1890,17 @@
     // });
 
 
-    function create_tr(table_id) {
+    // function create_tr(table_id) {
 
-        let table_body = document.getElementById(table_id),
-            first_tr = table_body.firstElementChild
-        tr_clone = first_tr.cloneNode(true);
-
-        table_body.append(tr_clone);
-
-        clean_first_tr(table_body.firstElementChild);
-
-
-    }
+    //     let table_body = document.getElementById(table_id),
+    //     first_tr = table_body.firstElementChild
+    //     tr_clone = first_tr.cloneNode(true);
+    //     table_body.append(tr_clone);
+    //     clean_first_tr(table_body.lastElementChild);
+    // }
 
     function clean_first_tr(firstTr) {
         let children = firstTr.children;
-
         children = Array.isArray(children) ? children : Object.values(children);
         children.forEach(x => {
             if (x !== firstTr.lastElementChild) {
@@ -1792,43 +1916,51 @@
             alert("You Don't have Permission to Delete This ?");
         } else {
             This.closest('tr').remove();
+        }
+    }
+    function remove_tr(button) {
+        const row = button.closest('tr');
+        if (document.querySelectorAll('#table_body tr').length > 1) {
+            row.remove();
+        } else {
+            swal.fire("At least one row must remain", "", "warning");
         }
     }
 </script>
 
 <script>
-    function create_tr(table_id) {
+    // function create_tr(table_id) {
 
 
-        let table_body1 = document.getElementById(table_id),
-            first_tr = table_body1.firstElementChild
-        tr_clone = first_tr.cloneNode(true);
+    //     let table_body1 = document.getElementById(table_id),
+    //         first_tr = table_body1.firstElementChild
+    //     tr_clone = first_tr.cloneNode(true);
 
-        table_body1.append(tr_clone);
+    //     table_body1.append(tr_clone);
 
-        clean_first_tr(table_body1.firstElementChild);
-    }
+    //     clean_first_tr(table_body1.firstElementChild);
+    // }
 
-    function clean_first_tr(firstTr) {
-        let children = firstTr.children;
+    // function clean_first_tr(firstTr) {
+    //     let children = firstTr.children;
 
-        children = Array.isArray(children) ? children : Object.values(children);
-        children.forEach(x => {
-            if (x !== firstTr.lastElementChild) {
-                x.firstElementChild.value = '';
-            }
-        });
-    }
+    //     children = Array.isArray(children) ? children : Object.values(children);
+    //     children.forEach(x => {
+    //         if (x !== firstTr.lastElementChild) {
+    //             x.firstElementChild.value = '';
+    //         }
+    //     });
+    // }
 
 
 
-    function remove_tr(This) {
-        if (This.closest('tbody').childElementCount == 1) {
-            alert("You Don't have Permission to Delete This ?");
-        } else {
-            This.closest('tr').remove();
-        }
-    }
+    // function remove_tr(This) {
+    //     if (This.closest('tbody').childElementCount == 1) {
+    //         alert("You Don't have Permission to Delete This ?");
+    //     } else {
+    //         This.closest('tr').remove();
+    //     }
+    // }
 </script>
 <script>
     function mcqeditremovechoice() {
@@ -1846,38 +1978,38 @@
 
 
 <script>
-    function create_tr(table_id) {
+    // function create_tr(table_id) {
 
 
-        let table_body3 = document.getElementById(table_id),
-            first_tr = table_body3.firstElementChild
-        tr_clone = first_tr.cloneNode(true);
+    //     let table_body3 = document.getElementById(table_id),
+    //         first_tr = table_body3.firstElementChild
+    //     tr_clone = first_tr.cloneNode(true);
 
-        table_body3.append(tr_clone);
+    //     table_body3.append(tr_clone);
 
-        clean_first_tr(table_body3.firstElementChild);
-    }
+    //     clean_first_tr(table_body3.firstElementChild);
+    // }
 
-    function clean_first_tr(firstTr) {
-        let children = firstTr.children;
+    // function clean_first_tr(firstTr) {
+    //     let children = firstTr.children;
 
-        children = Array.isArray(children) ? children : Object.values(children);
-        children.forEach(x => {
-            if (x !== firstTr.lastElementChild) {
-                x.firstElementChild.value = '';
-            }
-        });
-    }
+    //     children = Array.isArray(children) ? children : Object.values(children);
+    //     children.forEach(x => {
+    //         if (x !== firstTr.lastElementChild) {
+    //             x.firstElementChild.value = '';
+    //         }
+    //     });
+    // }
 
 
 
-    function remove_tr(This) {
-        if (This.closest('tbody').childElementCount == 1) {
-            alert("You Don't have Permission to Delete This ?");
-        } else {
-            This.closest('tr').remove();
-        }
-    }
+    // function remove_tr(This) {
+    //     if (This.closest('tbody').childElementCount == 1) {
+    //         alert("You Don't have Permission to Delete This ?");
+    //     } else {
+    //         This.closest('tr').remove();
+    //     }
+    // }
 </script>
 
 
@@ -1892,13 +2024,65 @@
                 swal.fire("Please Enter the Question Keywords", "", "error");
                 return false;
             } else {
-                let table_body2 = document.getElementById(table_id),
-                    first_tr = table_body2.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
+                // let table_body2 = document.getElementById(table_id),
+                //     first_tr = table_body2.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
 
-                table_body2.append(tr_clone);
+                // table_body2.append(tr_clone);
 
-                clean_first_tr(table_body2.firstElementChild);
+                // clean_first_tr(table_body2.firstElementChild);
+                // const tableBody = document.getElementById(table_id);
+                // const firstRow = tableBody.firstElementChild;
+                // const newRow = firstRow.cloneNode(true);
+                // // Remove the "Add" button from the cloned row
+                // const addButton = newRow.querySelector('.success');
+                // if (addButton) {
+                //     addButton.remove();
+                // }
+
+                // // Clear the value of the input in the new row
+                // newRow.querySelector('input').value = '';
+
+                // tableBody.appendChild(newRow);
+                const tableBody = document.getElementById(table_id);
+                const rows = tableBody.querySelectorAll('tr');
+                let isValid = true;
+
+                // Validate all input fields in the table
+                rows.forEach(row => {
+                    const input = row.querySelector('input');
+                    if (input && input.value.trim() === '') {
+                        isValid = false;
+                    }
+                });
+
+                // If any input field is empty, show an error and do not add a new row
+                if (!isValid) {
+                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                    return;
+                }
+
+                // Proceed to add a new row if validation passes
+                const firstRow = tableBody.firstElementChild;
+                const newRow = firstRow.cloneNode(true);
+
+                // Remove the "Add" button from the cloned row
+                const addButton = newRow.querySelector('.success');
+                if (addButton) {
+                    addButton.remove();
+                }
+
+                // Clear the value of the input in the new row
+                newRow.querySelector('input').value = '';
+
+                // Add the "Add" button back to the original row if needed
+                const originalAddButton = tableBody.querySelector('.success');
+                if (originalAddButton) {
+                    originalAddButton.style.display = 'inline';
+                }
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
             }
         } else if (table_id == "table_long_edit") {
             let table_body2 = document.getElementById(table_id),
@@ -1907,7 +2091,7 @@
 
             table_body2.append(tr_clone);
 
-            clean_first_tr(table_body2.firstElementChild);
+            clean_first_tr(table_body2.lastElementChild);
             remove_tr(This);
 
         } else if (table_id == "short_body") {
@@ -1918,14 +2102,57 @@
                 swal.fire("Please Enter the Question Keywords", "", "error");
                 return false;
             } else {
-                let table_body3 = document.getElementById(table_id),
-                    first_tr = table_body3.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
+                // let table_body3 = document.getElementById(table_id),
+                //     first_tr = table_body3.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
 
-                table_body3.append(tr_clone);
+                // table_body3.append(tr_clone);
 
+                // clean_first_tr(table_body3.firstElementChild);
+                // document.querySelector('#short_body').parentElement.previousElementSibling.classList.add('custom');
+
+                const tableBody = document.getElementById(table_id);
+                const rows = tableBody.querySelectorAll('tr');
+                let isValid = true;
+
+                // Validate all input fields in the table
+                rows.forEach(row => {
+                    const input = row.querySelector('input');
+                    if (input && input.value.trim() === '') {
+                        isValid = false;
+                    }
+                });
+
+                // If any input field is empty, show an error and do not add a new row
+                if (!isValid) {
+                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                    return;
+                }
+
+                // Proceed to add a new row if validation passes
+                const firstRow = tableBody.firstElementChild;
+                const newRow = firstRow.cloneNode(true);
+
+                // Remove the "Add" button from the cloned row
+                const addButton = newRow.querySelector('.success');
+                if (addButton) {
+                    addButton.remove();
+                }
+
+                // Clear the value of the input in the new row
+                newRow.querySelector('input').value = '';
+
+                // Add the "Add" button back to the original row if needed
+                const originalAddButton = tableBody.querySelector('.success');
+                if (originalAddButton) {
+                    originalAddButton.style.display = 'inline';
+                }
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
                 clean_first_tr(table_body3.firstElementChild);
                 document.querySelector('#short_body').parentElement.previousElementSibling.classList.add('custom');
+
 
             }
         } else if (table_id == "table_short_edit") {
@@ -1935,7 +2162,7 @@
 
             table_body3.append(tr_clone);
 
-            clean_first_tr(table_body3.firstElementChild);
+            clean_first_tr(table_body3.lastElementChild);
             remove_tr(This);
 
 
@@ -1947,12 +2174,54 @@
                 swal.fire("Please Enter the Choices", "", "error");
                 return false;
             } else {
-                let table_body3 = document.getElementById(table_id),
-                    first_tr = table_body3.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
-                tr_clone.querySelector('input').setAttribute("readonly", "");
-                table_body3.append(tr_clone);
+                // let table_body3 = document.getElementById(table_id),
+                //     first_tr = table_body3.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
+                // tr_clone.querySelector('input').setAttribute("readonly", "");
+                // table_body3.append(tr_clone);
 
+                // clean_first_tr(table_body3.firstElementChild);
+                // document.querySelector('#mcq_body').parentElement.previousElementSibling.classList.add('custom');
+
+                const tableBody = document.getElementById(table_id);
+                const rows = tableBody.querySelectorAll('tr');
+                let isValid = true;
+
+                // Validate all input fields in the table
+                rows.forEach(row => {
+                    const input = row.querySelector('input');
+                    if (input && input.value.trim() === '') {
+                        isValid = false;
+                    }
+                });
+
+                // If any input field is empty, show an error and do not add a new row
+                if (!isValid) {
+                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                    return;
+                }
+
+                // Proceed to add a new row if validation passes
+                const firstRow = tableBody.firstElementChild;
+                const newRow = firstRow.cloneNode(true);
+
+                // Remove the "Add" button from the cloned row
+                const addButton = newRow.querySelector('.success');
+                if (addButton) {
+                    addButton.remove();
+                }
+
+                // Clear the value of the input in the new row
+                newRow.querySelector('input').value = '';
+
+                // Add the "Add" button back to the original row if needed
+                const originalAddButton = tableBody.querySelector('.success');
+                if (originalAddButton) {
+                    originalAddButton.style.display = 'inline';
+                }
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
                 clean_first_tr(table_body3.firstElementChild);
                 document.querySelector('#mcq_body').parentElement.previousElementSibling.classList.add('custom');
 
@@ -1965,15 +2234,24 @@
                 swal.fire("Please Enter the Choices", "", "error");
                 return false;
             } else {
-                let table_body3 = document.getElementById(table_id),
+                // let table_body3 = document.getElementById(table_id),
 
-                    first_tr = table_body3.firstElementChild
+                //     first_tr = table_body3.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
+                // tr_clone.querySelector('input').setAttribute("readonly", "");
+                // table_body3.append(tr_clone);
+
+
+                // clean_first_tr(table_body3.firstElementChild);
+                // remove_tr(This);
+
+                let table_body3 = document.getElementById(table_id),
+                first_tr = table_body3.firstElementChild
                 tr_clone = first_tr.cloneNode(true);
-                tr_clone.querySelector('input').setAttribute("readonly", "");
+
                 table_body3.append(tr_clone);
 
-
-                clean_first_tr(table_body3.firstElementChild);
+                clean_first_tr(table_body3.lastElementChild);
                 remove_tr(This);
 
 
@@ -2001,29 +2279,26 @@
 
     });
 
-    function clean_first_tr(firstTr) {
-        let children = firstTr.children;
+    // function clean_first_tr(firstTr) {
+    //     let children = firstTr.children;
 
-        children = Array.isArray(children) ? children : Object.values(children);
-        children.forEach(x => {
-            if (x !== firstTr.lastElementChild) {
-                x.firstElementChild.value = '';
-            }
-        });
-    }
+    //     children = Array.isArray(children) ? children : Object.values(children);
+    //     children.forEach(x => {
+    //         if (x !== firstTr.lastElementChild) {
+    //             x.firstElementChild.value = '';
+    //         }
+    //     });
+    // }
 
 
 
     function remove_tr(This) {
-        //console.log(This.closest('input').value);
 
         if (This.closest('tbody').childElementCount == 1) {
             alert("You Don't have Permission to Delete This ?");
         } else {
             var remove_value = This.closest('tr').firstElementChild.firstElementChild.value;
-            console.log(This.closest('tr'));
             const optionschoices = $('#mcq_correct_choices').children();
-            console.log(optionschoices);
             // alert(remove_value);
             for (const optionschoice of optionschoices) {
                 // alert($(option).text());
@@ -2035,7 +2310,6 @@
 
             }
             const options = $('#mcq_correct_choicesedit').children();
-            console.log(options);
 
 
             for (const option of options) {
@@ -2104,7 +2378,7 @@
 <script>
     $('#result1').on('change', function() {
 
-
+        // alert('asda');
         if ($(this).val() === 'LongQuestionlist') {
             $('#longquestionlist').css('display', 'block');
             $('#truelist').css('display', 'none');
@@ -2159,7 +2433,7 @@
 
     function gencre(id) {
 
-
+        // event.preventDefault(); // Prevent default form action
         if (id == "1") {
             var long_qname = $("#long_qname").val();
             if (long_qname == '') {
@@ -2184,6 +2458,10 @@
                 //$('#savebutton').css('pointer-events', 'none');
                 $('#savebutton').prop('disabled', true);
                 document.getElementById('longcreateform').submit();
+                document.getElementById('truelist').scrollIntoView({
+                    behavior: 'smooth'
+                }); // Scroll to the question-row
+
             }
 
 
@@ -2204,6 +2482,16 @@
             var keyword_longedit = document.querySelectorAll('#keyword_longedit');
             var keyword_key = 0;
             for (const long_edit of keyword_longedit) {
+                if (keyword_key != 0 && long_edit.value == '') {
+                    swal.fire("Please Enter the Question Keywords", "", "error");
+                    return false;
+                }
+                keyword_key++;
+
+            }
+            var keyword_long_show = document.querySelectorAll('#keyword_long_show');
+            var keyword_key = 0;
+            for (const long_edit of keyword_long_show) {
                 if (keyword_key != 0 && long_edit.value == '') {
                     swal.fire("Please Enter the Question Keywords", "", "error");
                     return false;
@@ -2440,7 +2728,8 @@
 
         <div class="modal-content">
 
-            <form method="POST" id="longedit_form" action="{{route('elearningquestion.long_update',1)}}" enctype="multipart/form-data" class="reset">
+            <form method="POST" id="longedit_form" action="{{route('elearningquestion.long_update', 1)}}"
+                enctype="multipart/form-data" class="reset">
                 @csrf
 
                 <input type="hidden" name="eid" class="eid" id="eid">
@@ -2453,14 +2742,15 @@
                 <!-- Long question -->
 
                 <div class=" container edit  longquestion">
-                    <h4 class="modal-title long">Edit Long Question:</h4>
+                    <h4 class="modal-title long">Long Question:</h4>
 
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="long_qnameedit" name="long_qnameedit" autocomplete="off">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="long_qnameedit"
+                                    name="long_qnameedit" autocomplete="off">
                             </div>
                             <div class="col-md-1"></div>
                         </div>
@@ -2475,7 +2765,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="long_quistionedit" class="long_quistionedit" name="long_quistionedit" autocomplete="off"></textarea>
+                                    <textarea id="long_quistionedit" class="long_quistionedit" name="long_quistionedit"
+                                        autocomplete="off"></textarea>
                                 </div>
 
                             </div>
@@ -2489,36 +2780,20 @@
                             <div class="col-md-10">
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
-                                    <div class="wordquestion">
+
+                                    <div class="wordquestion" style="display:flex;flex-direction:column">
 
                                         <table class="_table">
 
                                             <tbody id="table_long_edit">
-                                                <tr>
-
-                                                    <td>
-                                                        <input type="text" class="form-control default" id="keyword_longedit" name="keyword_longedit[]" autocomplete="off">
-                                                    </td>
-                                                    <td>
-                                                        <div class="action_container">
-                                                            <button class="danger" onclick="remove_tr(this)">
-                                                                <i class="fa fa-close"></i>
-                                                            </button>
-                                                        </div>
-
-                                                    </td>
-
-
-                                                </tr>
-
+                                               
                                             </tbody>
-
-
                                         </table>
 
                                         <div class="action_container" width="50px">
-                                            <button class="success" type="button" onclick="create_tr('table_long_edit')">
-                                                <i class="fa fa-plus"></i>
+                                            <button class="success" type="button"
+                                                onclick="create_tr('table_long_edit')">
+                                                Add
                                             </button>
                                         </div>
 
@@ -2536,7 +2811,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                    <input type="text" class="form-control default" id="long_pointsedit" name="long_pointsedit" autocomplete="off">
+                                    <input type="text" class="form-control default" id="long_pointsedit"
+                                        name="long_pointsedit" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-1"></div>
@@ -2545,7 +2821,8 @@
 
                     <div class="row">
                         <div class="col-lg-12 text-center">
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre('longedit')" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre('longedit')"
+                                id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -2584,15 +2861,16 @@
             <!-- Long question -->
 
             <div class=" container show  longquestion">
-                <h4 class="modal-title long">Show Long Question:</h4>
+                <h4 class="modal-title long">Long Question:</h4>
                 <form method="POST" class="longqustionsform">
 
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="long_qnameshow" name="long_qnameshow" style="background-color: #e9ecef !important;">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="long_qnameshow"
+                                    name="long_qnameshow" style="background-color: #e9ecef !important;">
                             </div>
                             <div class="col-md-1"></div>
                         </div>
@@ -2606,7 +2884,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div>
-                                    <textarea id="long_quistionshow" class="long_quistionshow" name="long_quistionshow" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea id="long_quistionshow" class="long_quistionshow" name="long_quistionshow"
+                                        style="background-color: #e9ecef !important;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2618,9 +2897,21 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
-                                    <div class="wordquestion">
-                                        <textarea class="form-control default" id="keyword_longshow" name="keyword_longshow" style="background-color: #e9ecef !important;"></textarea>
 
+                                    <div class="wordquestion">
+                                        <table class="_table">
+                                            <tbody id="keyword_longshow">
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class="form-control default"
+                                                            id="keyword_long_show" name="keyword_long_show[]"
+                                                            autocomplete="off">
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
 
@@ -2629,7 +2920,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Points:<span class="error-star" style="color:red;">*</span></label>
-                                    <input type="text" class="form-control default" id="long_pointsshow" name="long_pointsshow" style="background-color: #e9ecef !important;">
+                                    <input type="text" class="form-control default" id="long_pointsshow"
+                                        name="long_pointsshow" style="background-color: #e9ecef !important;">
                                 </div>
                             </div>
 
@@ -2676,19 +2968,17 @@
             <!-- Long question -->
 
             <div class=" container show  longquestion">
-                <h4 class="modal-title long">Show Short Question:</h4>
+                <h4 class="modal-title long">Short Question:</h4>
                 <form method="POST" class="longqustionsform">
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="short_qnameshow" name="short_qnameshow" style="background-color: #e9ecef !important;">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default" id="short_qnameshow"
+                                    name="short_qnameshow" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
-
-
-
                     </div>
                     <div class="row">
                         <div class="col-md-1"></div>
@@ -2696,7 +2986,9 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div classs="col-md-10">
-                                    <textarea id="short_quistionshow" class="short_quistionshow" name="short_quistionshow" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea id="short_quistionshow" class="short_quistionshow"
+                                        name="short_quistionshow"
+                                        style="background-color: #e9ecef !important;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2710,9 +3002,19 @@
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
                                     <div class="wordquestion">
-                                        <textarea class="form-control default" id="keyword_shortshow" name="keyword_shortshow" style="background-color: #e9ecef !important;"></textarea>
-
-
+                                        <table class="_table">
+                                            <tbody id="keyword_shortshow">
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class="form-control default"
+                                                            id="keyword_short_show" name="keyword_short_show[]"
+                                                            autocomplete="off">
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
 
@@ -2721,7 +3023,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Points:<span class="error-star" style="color:red;">*</span></label>
-                                    <input type="text" class="form-control default" id="short_pointsshow" name="short_pointsshow" style="background-color: #e9ecef !important;">
+                                    <input type="text" class="form-control default" id="short_pointsshow"
+                                        name="short_pointsshow" style="background-color: #e9ecef !important;">
                                 </div>
                             </div>
 
@@ -2747,7 +3050,8 @@
 
         <div class="modal-content">
 
-            <form method="POST" id="quizedit_form" action="{{route('elearning.quiz_update',1)}}" enctype="multipart/form-data">
+            <form method="POST" id="quizedit_form" action="{{route('elearning.quiz_update', 1)}}"
+                enctype="multipart/form-data">
                 {{ csrf_field() }}
 
                 <input type="hidden" name="quiz_edit" class="quiz_edit" id="quiz_edit">
@@ -2771,9 +3075,10 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quiz Question:<span class="error-star" style="color:red;">*</span></label>
-                                <select class="js-select1 quizq_edit quiz_questionedit" id="quiz_questionedit" name="quiz_questionedit[]" multiple="multiple" onchange="dataedit();">
+                                <select class="js-select1 quizq_edit quiz_questionedit" id="quiz_questionedit"
+                                    name="quiz_questionedit[]" multiple="multiple" onchange="dataedit();">
                                     <option value="" data-badge="">Select Quiz Question</option>
-                                    @foreach($rows['rows']['quiz_question'] as $key=>$row)
+                                    @foreach($rows['rows']['quiz_question'] as $key => $row)
 
                                     <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
                                     @endforeach
@@ -2785,7 +3090,8 @@
                         <div class="col-md-6 ">
                             <div class="form-group">
                                 <label>Total Points:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="q_pointsedit" name="q_pointsedit" autocomplete="off">
+                                <input type="text" class="form-control default" id="q_pointsedit" name="q_pointsedit"
+                                    autocomplete="off">
                             </div>
                         </div>
 
@@ -2793,7 +3099,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre('quizedit')" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre('quizedit')"
+                                id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -2836,15 +3143,18 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quiz Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="q_nameshow" name="q_nameshow" style="background-color: #e9ecef !important;">
+                                <input type="text" class="form-control default" id="q_nameshow" name="q_nameshow"
+                                    style="background-color: #e9ecef !important;">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quiz Question:<span class="error-star" style="color:red;">*</span></label>
-                                <select class="js-select1 quiz_questionshow" id="quiz_questionshow" name="quiz_questionshow[]" multiple="multiple" style="background-color: #e9ecef !important;">
+                                <select class="js-select1 quiz_questionshow" id="quiz_questionshow"
+                                    name="quiz_questionshow[]" multiple="multiple"
+                                    style="background-color: #e9ecef !important;">
                                     <option value="" data-badge="">Select Quiz Question</option>
-                                    @foreach($rows['rows']['quiz_question'] as $key=>$row)
+                                    @foreach($rows['rows']['quiz_question'] as $key => $row)
 
                                     <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
                                     @endforeach
@@ -2856,7 +3166,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Total Points:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="q_pointsshow" name="q_pointsshow" autocomplete="off" style="background-color: #e9ecef !important;">
+                                <input type="text" class="form-control default" id="q_pointsshow" name="q_pointsshow"
+                                    autocomplete="off" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
 
@@ -2885,12 +3196,13 @@
 
         <div class="modal-content">
 
-            <form method="POST" id="shortedit_form" action="{{route('elearningquestion.short_update',1)}}" enctype="multipart/form-data">
+            <form method="POST" id="shortedit_form" action="{{route('elearningquestion.short_update', 1)}}"
+                enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="short_edit" class="short_edit" id="short_edit">
 
                 <div class="modal-header mh">
-                    <h4 class="modal-title">Edit Short Answer</h4>
+                    <h4 class="modal-title">Edit Short Question</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
 
@@ -2898,14 +3210,15 @@
 
                 <!-- short answer -->
                 <div class="card longquestion">
-                    <h4 class="modal-title short">Short Answer:</h4>
+                    <h4 class="modal-title short">Short Question:</h4>
 
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="short_qnameedit" name="short_qnameedit" autocomplete="off">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="short_qnameedit"
+                                    name="short_qnameedit" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -2916,7 +3229,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="short_quistionedit" class="short_quistionedit" name="short_quistionedit" autocomplete="off"></textarea>
+                                    <textarea id="short_quistionedit" class="short_quistionedit"
+                                        name="short_quistionedit" autocomplete="off"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2929,27 +3243,12 @@
                             <div class="col-md-7">
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
-                                    <div class="wordquestion">
+                                    <div class="wordquestion" style="display: flex;flex-direction:column">
 
                                         <table class="_table">
 
                                             <tbody id="table_short_edit">
-                                                <tr>
-
-                                                    <td>
-                                                        <input type="text" class="form-control default" id="keyword_shortedit" name="keyword_shortedit[]" autocomplete="off">
-                                                    </td>
-                                                    <td>
-                                                        <div class="action_container">
-                                                            <button class="danger" onclick="remove_tr(this)">
-                                                                <i class="fa fa-close"></i>
-                                                            </button>
-                                                        </div>
-
-                                                    </td>
-
-
-                                                </tr>
+                                                
 
                                             </tbody>
 
@@ -2957,8 +3256,9 @@
                                         </table>
 
                                         <div class="action_container">
-                                            <button class="success" type="button" onclick="create_tr('table_short_edit')">
-                                                <i class="fa fa-plus"></i>
+                                            <button class="success" type="button"
+                                                onclick="create_tr('table_short_edit')">
+                                                Add
                                             </button>
                                         </div>
 
@@ -2980,7 +3280,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Points:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="short_pointsedit" name="short_pointsedit" autocomplete="off">
+                                <input type="text" class="form-control default" id="short_pointsedit"
+                                    name="short_pointsedit" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -2988,7 +3289,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre('shortedit')" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre('shortedit')"
+                                id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -3008,7 +3310,8 @@
 
         <div class="modal-content">
 
-            <form method="POST" id="mcqedit_form" action="{{route('elearningquestion.mcq_update',1)}}" enctype="multipart/form-data">
+            <form method="POST" id="mcqedit_form" action="{{route('elearningquestion.mcq_update', 1)}}"
+                enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="mcq_edit" class="mcq_edit" id="mcq_edit">
 
@@ -3029,8 +3332,9 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="mcq_qnameedit" name="mcq_qnameedit" autocomplete="off">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="mcq_qnameedit"
+                                    name="mcq_qnameedit" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3041,7 +3345,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="mcq_quistionedit" class="mcq_quistionedit" name="mcq_quistionedit" autocomplete="off"></textarea>
+                                    <textarea id="mcq_quistionedit" class="mcq_quistionedit" name="mcq_quistionedit"
+                                        autocomplete="off"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -3054,38 +3359,26 @@
                             <div class="form-group">
                                 <label>Choices:<span class="error-star" style="color:red;">*</span></label>
 
-                                <div class="wordquestion">
+                                <div class="wordquestion" style="display:flex;flex-direction:column">
 
                                     <table class="_table">
 
                                         <tbody id="table_mcq_edit">
                                             <tr>
-
-                                                <td>
-                                                    <input type="text" class="form-control default" id="keyword_mcqedit" name="keyword_mcqedit[]" autocomplete="off">
-                                                </td>
-
-                                                <td>
-                                                    <div class="action_container">
-                                                        <button class="danger" onclick="remove_tr(this)">
-                                                            <i class="fa fa-close"></i>
-                                                        </button>
-                                                    </div>
-
-                                                </td>
-
-
+                                               
                                             </tr>
-
+                                                
                                         </tbody>
 
 
                                     </table>
-                                    <div class="action_container3">
-                                        <button class="success" type="button" onclick="create_tr('table_mcq_edit')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+                                    <div class="action_container">
+                                            <button class="success" type="button"
+                                                onclick="create_tr('table_mcq_edit')">
+                                                Add
+                                            </button>
+                                        </div>
+
                                 </div>
                             </div>
                         </div>
@@ -3097,7 +3390,8 @@
                             <div class="form-group">
                                 <label>Correct Choices:<span class="error-star" style="color:red;">*</span></label>
                                 <br>
-                                <select class="js-select2 mcq_correct_choicesedit" id="mcq_correct_choicesedit" name="mcq_correct_choicesedit[]" multiple="multiple" autocomplete="off">
+                                <select class="js-select2 mcq_correct_choicesedit" id="mcq_correct_choicesedit"
+                                    name="mcq_correct_choicesedit[]" multiple="multiple" autocomplete="off">
 
                                     <option value="" data-badge="">Select Correct Choices</option>
                                     <!-- <option value="Valuation always depends on the fact that who is valuing what" data-badge="">crt</option> -->
@@ -3111,7 +3405,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="mcq_pointsedit" name="mcq_pointsedit" autocomplete="off">
+                                <input type="number" class="form-control default" id="mcq_pointsedit"
+                                    name="mcq_pointsedit" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3121,7 +3416,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre('mcqedit')" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre('mcqedit')"
+                                id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -3159,8 +3455,9 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="mcq_qnameshow" name="mcq_qnameshow" autocomplete="off" style="background-color: #e9ecef !important;">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default" id="mcq_qnameshow" name="mcq_qnameshow"
+                                    autocomplete="off" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3172,7 +3469,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="mcq_quistionshow" class="mcq_quistionshow" name="mcq_quistionshow" autocomplete="off" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea id="mcq_quistionshow" class="mcq_quistionshow" name="mcq_quistionshow"
+                                        autocomplete="off" style="background-color: #e9ecef !important;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -3184,10 +3482,23 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Choices:<span class="error-star" style="color:red;">*</span></label>
-                                <div class="wordquestion">
-                                    <textarea class="form-control default" id="keyword_mcqshow" name="keyword_mcqshow" style="background-color: #e9ecef !important;"></textarea>
+                               
 
-                                </div>
+                                <div class="wordquestion">
+                                        <table class="_table">
+                                            <tbody id="keyword_mcqshow">
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class="form-control default"
+                                                            id="keyword_mcq_show" name="keyword_mcq_show[]"
+                                                            autocomplete="off">
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3198,7 +3509,9 @@
                             <div class="form-group">
                                 <label>Correct Choices:<span class="error-star" style="color:red;">*</span></label>
                                 <br>
-                                <textarea type="text" class="form-control default mcq_correct_choicesshow" id="mcq_correct_choicesshow" name="mcq_correct_choicesshow" style="background-color: #e9ecef !important;"></textarea>
+                                <textarea type="text" class="form-control default mcq_correct_choicesshow"
+                                    id="mcq_correct_choicesshow" name="mcq_correct_choicesshow"
+                                    style="background-color: #e9ecef !important;"></textarea>
 
                             </div>
                         </div>
@@ -3206,7 +3519,9 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="mcq_pointsshow" name="mcq_pointsshow" autocomplete="off" style="background-color: #e9ecef !important;">
+                                <input type="number" class="form-control default" id="mcq_pointsshow"
+                                    name="mcq_pointsshow" autocomplete="off"
+                                    style="background-color: #e9ecef !important;">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3235,7 +3550,8 @@
         <div class="modal-content">
 
 
-            <form method="POST" id="trueedit_form" action="{{route('elearningquestion.true_update',1)}}" enctype="multipart/form-data">
+            <form method="POST" id="trueedit_form" action="{{route('elearningquestion.true_update', 1)}}"
+                enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="true_edit" class="true_edit" id="true_edit">
 
@@ -3255,8 +3571,9 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default comma" id="true_qnameedit" name="true_qnameedit" autocomplete="off">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default comma" id="true_qnameedit"
+                                    name="true_qnameedit" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3267,7 +3584,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="true_quistionedit" class="true_quistionedit" name="true_quistionedit" autocomplete="off"></textarea>
+                                    <textarea id="true_quistionedit" class="true_quistionedit" name="true_quistionedit"
+                                        autocomplete="off"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -3282,11 +3600,13 @@
 
                                 <!-- <input type="text" class="form-control default" id="answer" name="answer"> -->
                                 <div>
-                                    <input type="radio" class="answer_edit_on" id="answer_edit" value="on" name="answer_edit" required />
+                                    <input type="radio" class="answer_edit_on" id="answer_edit" value="on"
+                                        name="answer_edit" required />
                                     <label for="answer">True</label>
                                 </div>
                                 <div>
-                                    <input type="radio" class="answer_edit_off" id="answer_edit" value="off" name="answer_edit" required />
+                                    <input type="radio" class="answer_edit_off" id="answer_edit" value="off"
+                                        name="answer_edit" required />
                                     <label for="answer">False</label>
                                 </div>
                             </div>
@@ -3295,7 +3615,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="true_pointsedit" name="true_pointsedit" autocomplete="off">
+                                <input type="text" class="form-control default" id="true_pointsedit"
+                                    name="true_pointsedit" autocomplete="off">
                             </div>
                         </div>
 
@@ -3303,7 +3624,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre('truedit')" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre('truedit')"
+                                id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -3341,8 +3663,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Question Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="true_qnameshow" name="true_qnameshow" style="background-color: #e9ecef !important;">
+                                <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default" id="true_qnameshow"
+                                    name="true_qnameshow" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
 
@@ -3352,7 +3675,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="true_quistionshow" class="true_quistionshow" name="true_quistionshow" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea id="true_quistionshow" class="true_quistionshow" name="true_quistionshow"
+                                        style="background-color: #e9ecef !important;"></textarea>
                                 </div>
 
                             </div>
@@ -3367,11 +3691,13 @@
 
                                 <!-- <input type="text" class="form-control default" id="answer" name="answer"> -->
                                 <div>
-                                    <input type="radio" class="answer_show_on" id="answer_show" name="answer_show" required />
+                                    <input type="radio" class="answer_show_on" id="answer_show" name="answer_show"
+                                        required />
                                     <label for="answer">True</label>
                                 </div>
                                 <div>
-                                    <input type="radio" class="answer_show_off" id="answer_show" name="answer_show" required />
+                                    <input type="radio" class="answer_show_off" id="answer_show" name="answer_show"
+                                        required />
                                     <label for="answer">False</label>
                                 </div>
                             </div>
@@ -3380,7 +3706,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="true_pointsshow" name="true_pointsshow" style="background-color: #e9ecef !important;">
+                                <input type="text" class="form-control default" id="true_pointsshow"
+                                    name="true_pointsshow" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
 
@@ -3421,42 +3748,80 @@
             success: function(data) {
                 // correct_choices = data.rows[0]['correct_choices'].split(',');
 
-                console.log(data.rows);
 
                 if (type == "longedit") {
                     $('#table_long_edit tr:not(:first)').remove();
                     $('#long_qnameedit').val(data.rows[0]['question_name']);
                     $('#long_quistionedit').val(data.rows[0]['question']);
                     const keyarray = data.rows[0]['keywords'].split(',');
-                    console.log(keyarray, "actual_data");
-                    for (const keyobject of keyarray) {
+                    if (keyarray[0] === "") {
+                        keyarray.shift();
+                    }
+                    console.log(keyarray);
+                    let table_body2 = document.getElementById('table_long_edit');
+                    if (table_body2.firstElementChild) {
+                            table_body2.firstElementChild.remove();
+                        }
+                    // let first_tr = table_body2.firstElementChild;
+                    for (const value of keyarray) {
                         let table_body2 = document.getElementById('table_long_edit');
-                        first_tr = table_body2.firstElementChild
-                        tr_clone = first_tr.cloneNode(true);
-                        tr_clone.firstElementChild.firstElementChild.value = keyobject;
-                        tr_clone.querySelector('input').setAttribute("readonly", "");
-                        table_body2.append(tr_clone);
+                        let tr_clone = document.createElement('tr');
+                        // first_tr = table_body2.firstElementChild
+                        tr_clone.innerHTML = ` <tr>
 
-                        clean_first_tr(table_body2.firstElementChild);
+                            <td>
+                                <input type="text" class="form-control default"
+                                    id="keyword_longedit" value="${value}" name="keyword_longedit[]"
+                                    autocomplete="off">
+                            </td>
+                            <td>
+                                <div class="action_container">
+                                    <button class="danger" onclick="remove_tr(this)">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>`;
+                        
+                        table_body2.append(tr_clone);
+                        
+
                     }
 
                     $('#long_pointsedit').val(data.rows[0]['points']);
                     $('#eid').val(data.rows[0]['question_id']);
 
                 } else if (type == "longshow") {
+                    $('#keyword_longshow tr:not(:first)').remove();
                     $('#long_qnameshow').val(data.rows[0]['question_name']);
                     $('#long_quistionshow').val(data.rows[0]['question']);
-                    // $('#keyword_longshow').val(data.rows[0]['keywords']);
+
+                    const keyarrayhow = data.rows[0]['keywords'].split(',');
+                    if (keyarrayhow[0] === "") {
+                        keyarrayhow.shift();
+                    }
+
+                    let tableBody = document.getElementById('keyword_longshow');
+                    let firstRow = tableBody.firstElementChild;
+                    keyarrayhow.forEach((keyword, index) => {
+                        let clonedRow = firstRow.cloneNode(true); // Clone the template row
+                        clonedRow.querySelector('input').value = keyword; // Set the keyword value
+                        clonedRow.querySelector('input').setAttribute("readonly", ""); // Make input read-only
+                        tableBody.appendChild(clonedRow); // Append the cloned row to the table
+                    });
+
+                    tableBody.removeChild(firstRow);
+
                     let choices = data.rows[0]['keywords'];
                     const pieces = choices.split(',');
                     const result = pieces.join(', \n ');
-                    $('#keyword_longshow').html(result);
+                    // $('#keyword_longshow').html(result);
                     $('#long_pointsshow').val(data.rows[0]['points']);
                     $('#eidshow').val(data.rows[0]['id']);
 
                     $('#long_qnameshow').prop('disabled', true);
                     $('#long_quistionshow').prop('disabled', true);
-                    $('#keyword_longshow').prop('disabled', true);
+                    $('#keyword_long_show input').prop('disabled', true);
                     $('#long_pointsshow').prop('disabled', true);
 
                     $('#eidshow').attr('Action', '');
@@ -3467,30 +3832,63 @@
                     $('#short_qnameedit').val(data.rows[0]['question_name']);
                     $('#short_quistionedit').val(data.rows[0]['question']);
                     const keyarray = data.rows[0]['keywords'].split(',');
-                    console.log(keyarray, "actual_data");
-                    for (const keyobject of keyarray) {
+                    if (keyarray[0] === "") {
+                        keyarray.shift();
+                    }
+                    let table_body2 = document.getElementById('table_short_edit');
+                    if (table_body2.firstElementChild) {
+                            table_body2.firstElementChild.remove();
+                        }
+                    for (const value of keyarray) {
                         let table_body2 = document.getElementById('table_short_edit');
-                        first_tr = table_body2.firstElementChild
-                        tr_clone = first_tr.cloneNode(true);
-                        tr_clone.firstElementChild.firstElementChild.value = keyobject;
-                        tr_clone.querySelector('input').setAttribute("readonly", "");
-                        table_body2.append(tr_clone);
+                        tr_clone = document.createElement('tr');
+                        tr_clone.innerHTML = ` <tr>
+                        <td>
+                            <input type="text" class="form-control default"
+                                id="keyword_shortedit" value="${value}" name="keyword_shortedit[]"
+                                autocomplete="off">
+                        </td>
+                        <td>
+                            <div class="action_container">
+                                <button class="danger" onclick="remove_tr(this)">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                            </div>
 
-                        clean_first_tr(table_body2.firstElementChild);
+                        </td></tr>`
+
+                        // clean_first_tr(table_body2.firstElementChild);
+                        table_body2.append(tr_clone);
                     }
 
                     $('#short_pointsedit').val(data.rows[0]['points']);
                     $('#short_edit').val(data.rows[0]['question_id']);
 
                 } else if (type == "shortshow") {
-
+                    $('#keyword_shortshow tr:not(:first)').remove();
+                    $('#keyword_shortshow').val(data.rows[0]['keywords']);
                     $('#short_qnameshow').val(data.rows[0]['question_name']);
                     $('#short_quistionshow').val(data.rows[0]['question']);
-                    // $('#keyword_shortshow').val(data.rows[0]['keywords']);
+
+                    const keyarrayhow = data.rows[0]['keywords'].split(',');
+                    if (keyarrayhow[0] === "") {
+                        keyarrayhow.shift();
+                    }
+
+                    let tableBody = document.getElementById('keyword_shortshow');
+                    let firstRow = tableBody.firstElementChild;
+                    keyarrayhow.forEach((keyword, index) => {
+                        let clonedRow = firstRow.cloneNode(true); // Clone the template row
+                        clonedRow.querySelector('input').value = keyword; // Set the keyword value
+                        clonedRow.querySelector('input').setAttribute("readonly", ""); // Make input read-only
+                        tableBody.appendChild(clonedRow); // Append the cloned row to the table
+                    });
+
+                    tableBody.removeChild(firstRow);
                     let choices = data.rows[0]['keywords'];
                     const pieces = choices.split(',');
                     const result = pieces.join(', \n ');
-                    $('#keyword_shortshow').html(result);
+                    $('#keyword_short_show').html(result);
                     $('#short_pointsshow').val(data.rows[0]['points']);
                     $('#short_show').val(data.rows[0]['id']);
 
@@ -3507,56 +3905,75 @@
                     $('#mcq_qnameedit').val(data.rows[0]['question_name']);
                     $('#mcq_quistionedit').val(data.rows[0]['question']);
                     const keyarray = data.rows[0]['choices'].split(',');
-                    console.log(keyarray, "actual_data");
-                    for (const keyobject of keyarray) {
+                    if (keyarray[0] === "") {
+                        keyarray.shift();
+                    }
+                    let table_body2 = document.getElementById('table_mcq_edit');
+                    if (table_body2.firstElementChild) {
+                            table_body2.firstElementChild.remove();
+                        }
+                    for (const value of keyarray) {
                         let table_body2 = document.getElementById('table_mcq_edit');
-                        first_tr = table_body2.firstElementChild
-                        tr_clone = first_tr.cloneNode(true);
-                        tr_clone.firstElementChild.firstElementChild.value = keyobject;
+                        tr_clone = document.createElement('tr');
+                        tr_clone.innerHTML = `
+                            <td>
+                                <input type="text" class="form-control default" id="keyword_mcqedit"
+                                name="keyword_mcqedit[]" value="${value}" autocomplete="off">
+                            </td>
+                            <td>
+                                <div class="action_container">
+                                    <button class="danger" onclick="remove_tr(this)">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </div>
+                            </td>`
+                            table_body2.append(tr_clone);
+                }
+                let correctChoices = data.rows[0]['correct_choices']; 
+                if (typeof correctChoices === 'string') {
+                    correctChoices = JSON.parse(correctChoices); 
+                } else if (Array.isArray(correctChoices)) {
+                    correctChoices = correctChoices.map(choice => {
+                        try {
+                            return JSON.parse(choice); 
+                        } catch (error) {
+                            return choice; 
+                        }
+                    }).flat(); 
+                }
+                    $('#mcq_correct_choicesedit').empty(); // Clear dropdown
+                        keyarray.forEach(option => {
+                            console.log(keyarray, 'mcq');
+                            const isSelected = correctChoices.includes(option) ? 'selected' : '';
+                            console.log(isSelected, 'corectchoice');
+                            $('#mcq_correct_choicesedit').append(`<option value="${option}" ${isSelected}>${option}</option>`);
+                        });
 
-                        tr_clone.querySelector('input').setAttribute("readonly", "");
-                        table_body2.append(tr_clone);
-
-                        clean_first_tr(table_body2.firstElementChild);
-                    }
-
-                    const correctChoices = data.rows[0]['correct_choices'].split(',');
-
-                    $('#mcq_correct_choicesedit').children().remove();
-                    // Append the correct choices to the dropdown
-                    const all_options = data.rows[0]['choices'].split(',');
-                    for (const all_option of all_options) {
-                        const isSelected = correctChoices.includes(all_option) ? 'selected' : '';
-                        const option = `<option value="${all_option}" ${isSelected}>${all_option}</option>`;
-                        // const option1 = `<option value="${keyobject}">${keyobject}</option>`;
-                        $('#mcq_correct_choicesedit').append(option);
-                        // $('#mcq_correct_choicesedit').append(option1);
-
-                    }
-                    // Trigger change event to update Select2
-                    $('.mcq_correct_choicesedit').trigger('change');
-                    console.log(data.rows[0]['correct_choices'].split(','));
-                    setTimeout(() => {
-
-                        $('.mcq_correct_choicesedit').val(data.rows[0]['correct_choices'].split(',')).trigger("change");
-
-                    }, 300);
-
-
+                    $('.mcq_correct_choicesedit').val(correctChoices).trigger('change');
                     $('#mcq_pointsedit').val(data.rows[0]['points']);
-
                     $('#mcq_edit').val(data.rows[0]['question_id']);
 
                 } else if (type == "mcqshow") {
-
+                    $('#keyword_mcqshow tr:not(:first)').remove();
                     $('#mcq_qnameshow').val(data.rows[0]['question_name']);
                     $('#mcq_quistionshow').val(data.rows[0]['question']);
 
-                    //$('#keyword_mcqshow').val(data.rows[0]['choices']);  
+                    const keyarrayhow = data.rows[0]['choices'].split(',');
+                    if (keyarrayhow[0] === "") {
+                        keyarrayhow.shift();
+                    }
+                    let tableBody = document.getElementById('keyword_mcqshow');
+                    let firstRow = tableBody.firstElementChild;
+                        keyarrayhow.forEach((keyword, index) => {
+                        let clonedRow = firstRow.cloneNode(true); // Clone the template row
+                        clonedRow.querySelector('input').value = keyword; // Set the keyword value
+                        clonedRow.querySelector('input').setAttribute("readonly", ""); // Make input read-only
+                        tableBody.appendChild(clonedRow); // Append the cloned row to the table
+                    });
                     let choices = data.rows[0]['choices'];
                     const pieces = choices.split(',');
                     const result = pieces.join(', \n ');
-                    $('#keyword_mcqshow').html(result);
+                    $('#keyword_mcq_show').html(result);
 
 
                     // $('.mcq_correct_choicesshow').val(data.rows[0]['correct_choices']);
@@ -3681,7 +4098,6 @@
 
 
                     success: function(data) {
-                        console.log(data);
                         //exit();
                         if (data['data'] == 0) {
                             Swal.fire("Info!", data['message_cus'], "info", data['message_cus'])
@@ -3692,6 +4108,11 @@
                             Swal.fire("Success!", data['message_cus'], "success").then((result) => {
 
                                 location.replace(`/elearningquestion`);
+                                setTimeout(function() {
+                                    document.getElementById('quizlist').scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }, 500); // Delay before scrolling
 
                             })
                         }
@@ -3890,7 +4311,6 @@
     function data() {
 
         var id = $("select[id='quiz_question']").val();
-        console.log(id);
         $.ajax({
             url: "{{ url('/elearning/question_quiz/get_points') }}",
             type: 'GET',
@@ -3900,7 +4320,6 @@
 
             },
             success: function(data) {
-                console.log(data);
                 if (id == "") {
                     $('.quizpoints').css('display', 'none');
 
@@ -3932,7 +4351,6 @@
     function dataedit() {
 
         var id = $("select[id='quiz_questionedit']").val();
-        console.log(id);
         $.ajax({
             url: "{{ url('/elearning/question_quiz/get_points') }}",
             type: 'GET',
@@ -3942,7 +4360,6 @@
 
             },
             success: function(data) {
-                console.log(data);
 
                 $('#q_pointsedit').val(data);
 

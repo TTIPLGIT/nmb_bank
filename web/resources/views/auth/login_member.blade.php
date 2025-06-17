@@ -53,9 +53,11 @@
 
 
             <h1 class="text-center fwcolor">
-                <a type="button" href="{{url('http://mlhud-uganda-portal.com/home')}}" class="btn btn-primary bg-243c92 font-weight-bold rounded-halfpill ml-3"><i class="fa fa-arrow-circle-left" aria-hidden="true" style="    font-size: 2rem; display: flex;align-items: center;"></i></a>
-                <span class="mx-auto">VALUATION PROFESSIONAL PORTAL</span>
-
+                <a type="button" href="{{ config('setting.base_url') }}" src="{{asset('asset/image/Talentra-1.svg')}}"
+                    class="btn btn-primary bg-243c92 font-weight-bold rounded-halfpill ml-3"><i
+                        class="fa fa-arrow-circle-left" aria-hidden="true"
+                        style="font-size: 2rem; display: flex;align-items: center;"></i></a>
+                <span class="mx-auto">TTIPL - Learning Management System</span>
 
 
             </h1>
@@ -65,79 +67,88 @@
 
 @if (session('success'))
 
-<input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-<script type="text/javascript">
-    window.onload = function() {
-        var message = $('#session_data').val();
-        swal({
-            title: "Success",
-            text: message,
-            icon: "success",
+    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+    <script type="text/javascript">
+        window.onload = function () {
+            var message = $('#session_data').val();
+            swal({
+                title: "Success",
+                text: message,
+                icon: "success",
 
 
-        });
+            });
 
-    }
-</script>
+        }
+    </script>
 @elseif(session('error'))
 
-<input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-<script type="text/javascript">
-    window.onload = function() {
-        var message = $('#session_data1').val();
-        swal({
-            title: "Info",
-            text: message,
-            icon: "info",
+    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
+    <script type="text/javascript">
+        window.onload = function () {
+            var message = $('#session_data1').val();
+            swal({
+                title: "Info",
+                text: message,
+                icon: "info",
 
 
-        });
+            });
 
-    }
-</script>
+        }
+    </script>
 @endif
+
 <div class="container-fluid mt-lg-4">
+    <!-- <div class="image-size" style="position:absolute">
+            <img class="image-size" src="{{asset('assets/images/login-image.PNG')}}" alt="">
+        </div> -->
     <div class="row justify-content-center">
         <div class="col-sm-7 col-md-6 col-lg-4 col-xl-4 col-xxl-3 col-2560">
             <div class=" custom card border border-4 border-243c92 rounded-3 mb-4">
-                <img class="logo-center" src="images\MLHUD-IMG (1).png">
-                <div class="row justify-content-center mt-2" style="display: flex; flex-wrap: wrap;  flex-direction: column; align-content:center; ">
-                    <!-- <img class="col-4 mi-3 mt-3 col-sm-5 col-md-4 col-lg-4 col-xl-4 col-xxl-4" src="images\MLHUD-IMG (1).png" alt="logo"> -->
+                <img class="logo-center" style="width:50%;" src="{{asset('asset/image/Talentra-1.svg')}}" alt="logo">
+                <div class="row justify-content-center mt-2"
+                    style="display: flex; flex-wrap: wrap;  flex-direction: column; align-content:center; ">
+                    <!-- <img class="col-4 mi-3 mt-3 col-sm-5 col-md-4 col-lg-4 col-xl-4 col-xxl-4" src="images\TALENTRA-IMG (1).png" alt="logo"> -->
                     <h4 class="color" style="align-self:center;">Create an Account</h4>
-                    <h6 class="account_text">Already have an Account?<a href="/"><b class="login">Login here </b></a></h6>
+                    <h6 class="account_text">Already have an Account? <a href="/"><b class="login">Login here</b></a>
+                    </h6>
                 </div>
                 @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
                 @endif
 
                 @if (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
                 @endif
 
                 @if ($errors->any())
-                <div class="alert alert-danger">
+                    <div class="alert alert-danger">
 
-                    @foreach ($errors->all() as $error)
-                    {{ $error }}
-                    @endforeach
+                        @foreach ($errors->all() as $error)
+                            {{ $error }}
+                        @endforeach
 
-                </div>
+                    </div>
                 @endif
 
 
 
                 <div class="card-body">
-                    <form action="{{ route('register_memberstore') }}" encrypt="multipart/form-data" method="POST" id="register_member">
+                    <form action="{{ route('register_memberstore') }}" encrypt="multipart/form-data" method="POST"
+                        id="register_member">
                         @csrf
                         <div class="row">
                             <div class="col-6">
                                 <label class="custom_label" for="Surname">Surname</label>
-                                <span class="error-star" id="spanname" style="color:red;     position: absolute;top: 1px;left: 78px;">*</span>
-                                <input type="text" id="surname" name="surname" value="" class="form-control" placeholder="Enter Surname">
+                                <span class="error-star" id="spanname"
+                                    style="color:red;     position: absolute;top: 1px;left: 78px;">*</span>
+                                <input type="text" id="surname" name="surname" value="" class="form-control"
+                                    placeholder="Enter Surname">
                                 <div class="row d-flex justify-content-center">
                                     <span class="error_message" id="surnameerror"></span>
                                 </div>
@@ -145,27 +156,31 @@
                             </div>
                             <div class="col-6">
                                 <label class="custom_label" for="givenname">Given name</label>
-                                <span class="error-star" id="spanname" style="color:red;     position: absolute;top: 1px;left: 96px;">*</span>
-                                <input type="text" id="givenname" name="name" value="" class="form-control" placeholder="Enter Given Name">
+                                <span class="error-star" id="spanname"
+                                    style="color:red;     position: absolute;top: 1px;left: 96px;">*</span>
+                                <input type="text" id="givenname" name="name" value="" class="form-control"
+                                    placeholder="Enter Given Name">
                                 <div class="row d-flex justify-content-center">
                                     <span class="error_text" id="givennameerror"></span>
                                 </div>
 
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col mt-1">
                                 <label class="custom_label" for="Other name(s)">Other name(s)</label>
                                 <input type="text" id="othername" name="othername" value="" class="form-control" placeholder="Enter Other Name">
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row">
                             <div class="col mt-1 date_picker">
                                 <label class="custom_label" for="dob">DOB</label>
-                                <span class="error-star" id="spanname" style="color:red; position: absolute;top: 1px;left: 54px;">*</span>
+                                <span class="error-star" id="spanname"
+                                    style="color:red; position: absolute;top: 1px;left: 54px;">*</span>
                                 <!-- <input type="date" id="dob" name="dob" value="" class="form-control"> -->
-                                <input type="text" id="cleave_date" name="dob" value="" class="form-control dob startdate" placeholder="Enter DOB">
+                                <input type="text" id="cleave_date" name="dob" value=""
+                                    class="form-control dob startdate" placeholder="Enter DOB">
 
                                 <span class="span_message" id="doberror"></span>
                             </div>
@@ -193,53 +208,59 @@
                         <div class="row">
                             <div class="col mt-3">
                                 <label class="custom_label" for="Email">Email</label>
-                                <span class="error-star" id="spanname" style="color:red;position: absolute;top: 1px;left: 54px;">*</span>
-                                <input type="text" id="email" name="email" value="" class="form-control" placeholder="Enter Email">
+                                <span class="error-star" id="spanname"
+                                    style="color:red;position: absolute;top: 1px;left: 54px;">*</span>
+                                <input type="text" id="email" name="email" value="" class="form-control"
+                                    placeholder="Enter Email">
                                 <span class="span_message" id="emailerror"></span>
                             </div>
                         </div>
 
 
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col">
                                 <label class="custom_label" for="">Current Country(Practising)</label>
                                 <select class="form-control search_dropdown" id="country" name="country" value="">
                                     <option value="">Select the Country</option>
-                                    @foreach($rows['country'] as $key=>$rows)
-
-                                    <option value="{{$rows['iso']}}">{{$rows['nicename']}}</option>
-                                    @endforeach
+                                    <option value="uganda" selected>Uganda</option>
 
                                 </select>
                                 <span class="span_message" id="countryerror"></span>
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <div class="row">
                             <div class="col">
                                 <label class="custom_label" for="Mobile Number">Mobile Number</label>
-                                <span class="error-star" id="spanname" style="color:red; position: absolute;top: 1px;left: 118px;">*</span>
-                                <input type="text" id="mobile" name="Mobile_no" value="" class="form-control no-spin" id="mob" placeholder="Enter Mobile Number">
+                                <span class="error-star" id="spanname"
+                                    style="color:red; position: absolute;top: 1px;left: 118px;">*</span>
+                                <input type="text" id="mobile" name="Mobile_no" value="" class="form-control no-spin"
+                                    id="mob" placeholder="Enter Mobile Number">
                                 <span class="span_message" id="mobileerror"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label class="custom_label" for="pwd">Password</label>
-                                <span class="error-star" id="spanname" style="color:red; position: absolute;left: 83px;">*</span>
-                                <input type="password" id="password" name="password" value="" class="form-control" placeholder="Enter Password">
+                                <span class="error-star" id="spanname"
+                                    style="color:red; position: absolute;left: 83px;">*</span>
+                                <input type="password" id="password" name="password" value="" class="form-control"
+                                    placeholder="Enter Password">
                                 <span class="span_message" id="passworderror"></span>
-                                <i class="far fa-eye-slash" title="view" id="togglePassword" onclick="pass_view();" style="position:absolute; top:36px; right:20px; cursor:pointer;"></i>
+                                <i class="far fa-eye-slash" title="view" id="togglePassword" onclick="pass_view();"
+                                    style="position:absolute; top:36px; right:20px; cursor:pointer;"></i>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col">
                                 <label class="custom_label" for="cpwd">Confirm Password</label>
-                                <span class="error-star" id="spanname" style="color:red; position: absolute;top: 1px;left: 136px;">*</span>
-                                <input type="password" id="confirmpassword" name="password_confirmation" value="" class="form-control" placeholder="Re-enter Password Again">
+                                <span class="error-star" id="spanname"
+                                    style="color:red; position: absolute;top: 1px;left: 136px;">*</span>
+                                <input type="password" id="confirmpassword" name="password_confirmation" value=""
+                                    class="form-control" placeholder="Re-enter Password Again">
                                 <span class="span_message" id="confirmpassworderror"></span>
                             </div>
                         </div>
@@ -247,7 +268,8 @@
 
                         <div class="row">
                             <div class="col agreecolor">
-                                <input type="checkbox" value="check" id="check"> <label for="check">I Agree that the information provided is correct</label>
+                                <input type="checkbox" value="check" id="check"> <label for="check">I Agree that the
+                                    information provided is correct</label>
                                 <span class="message_error" id="checkederror"></span>
                             </div>
                         </div>
@@ -268,56 +290,33 @@
 </div>
 </div>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://unpkg.com/libphonenumber-js/bundle/libphonenumber-js.min.js"></script>
 <script>
-     const preventSubmitButton = (cl) => {
-    $(`.${cl}`).attr('disabled',true);
-    $(`.${cl}`).text('Submitting...');
-    
-  }
+    const preventSubmitButton = (cl) => {
+        $(`.${cl}`).attr('disabled', true);
+        $(`.${cl}`).text('Submitting...');
+
+    }
 </script>
 <script>
-    function validatePhoneNumber() {
-        const countrySelect = document.getElementById("country");
-        const phoneNumberInput = document.getElementById("mobile");
-
-        const selectedCountry = countrySelect.value;
-        const phoneNumber = phoneNumberInput.value;
-        if (phoneNumber == '') {
-            $('#mobile').removeClass('is-invalid');
-            document.getElementById("mobileerror").innerText = "";
-
-        }
-
-        // Create a PhoneNumber object using the libphonenumber-js library
-        const phoneNumberObject = libphonenumber.parsePhoneNumber(phoneNumber, selectedCountry);
-
-        if (phoneNumberObject && phoneNumberObject.isValid()) {
-            $('#mobile').removeClass('is-invalid');
-            document.getElementById("mobileerror").innerText = "";
-        } else {
-            $('#mobile').addClass('is-invalid');
-
-            document.getElementById("mobileerror").innerHTML =
-                "**Please Enter the Valid Mobile Number**";
-        }
-    }
 
 
 
-    $(document).on('change', '#country', function() {
-        validatePhoneNumber();
-    })
 
 
 
-    $(document).on("click", ".type_of_role", function(e) {
+
+
+    $(document).on("click", ".type_of_role", function (e) {
         const check_values = $('.type_of_role');
         for (const check_value of check_values) {
             if (check_value.checked == true) {
@@ -355,10 +354,8 @@
 
 
 
-    function validate(e)
-
-    {
-
+    function validate(e) {
+        console.log("Validation started");  // Check if validation starts
         const surname = document.getElementById("surname");
         const givenname = document.getElementById("givenname");
         const email = document.getElementById("email");
@@ -366,16 +363,12 @@
         const password = document.getElementById("password");
         const confirmpassword = document.getElementById("confirmpassword");
         const cleave_date = document.getElementById("cleave_date");
-        const country = document.getElementById("country");
-        if (mobile.value != '') {
-            validatePhoneNumber();
-        }
+        const genders = document.querySelectorAll(".gender");
 
-
-
-
+        e.preventDefault();
 
         if (surname.value == "") {
+            console.log("Surname is empty");  // Log when surname is empty
             $('#surname').addClass('is-invalid');
             document.getElementById("surnameerror").innerHTML =
                 "**Please Enter the Surname**";
@@ -389,6 +382,10 @@
             document.getElementById("surnameerror").innerText = "";
             $('#surname').removeClass('is-invalid');
         }
+
+
+
+
 
 
         if (givenname.value == "") {
@@ -407,6 +404,7 @@
         }
 
 
+
         if (email.value == "") {
             $('#email').addClass('is-invalid');
             document.getElementById("emailerror").innerHTML =
@@ -423,19 +421,26 @@
         }
 
 
+        var exist = 0;
 
-        if (country.value == "") {
-            $('#country').addClass('is-invalid');
-            document.getElementById("countryerror").innerHTML = "**Please select the Country**";
+        if ($('.gener').attr('style') != "display: none;") {
+            for (const gender of genders) {
+                if (gender.checked == true) {
+                    $('#gender_value').val(gender.value);
+                    exist++;
+                }
 
-        } else {
-            $('#country').removeClass('is-invalid');
+            }
+            if (exist == 0) {
+                $('#gendererror').addClass('is-invalid');
+                document.getElementById("gendererror").innerHTML = "**Please select the Gender**";
 
-            document.getElementById("countryerror").innerText = "";
+            } else {
+                $('#gendererror').removeClass('is-invalid');
+                document.getElementById("gendererror").innerHTML = "";
+
+            }
         }
-
-
-        // Mobile number validation
 
         if (mobile.value == "") {
             $('#mobile').addClass('is-invalid');
@@ -443,10 +448,17 @@
             document.getElementById("mobileerror").innerHTML =
                 "**Please Enter the Mobile Number**";
 
+        } else if (!number.test(mobile.value)) {
+            $('#mobile').addClass('is-invalid');
+            document.getElementById("mobileerror").innerHTML =
+                "**Please Enter the Valid Mobile Number**";
+
         } else {
             $('#mobile').removeClass('is-invalid');
             document.getElementById("mobileerror").innerText = "";
         }
+
+
 
         if (password.value == "") {
             document.getElementById("passworderror").innerHTML =
@@ -459,6 +471,8 @@
         } else {
             document.getElementById("passworderror").innerText = "";
         }
+
+
 
 
 
@@ -483,10 +497,10 @@
         }
 
 
-
         if (cleave_date.value == "") {
+
             document.getElementById("doberror").innerHTML =
-                "**Please Enter the DOB**";
+                "**Please Select the DOB**";
         } else if (getAge(cleave_date.value) < 18) {
             document.getElementById("doberror").innerHTML =
                 "**User is not allowed to enter the site at this time, the user must be ablove 18.**";
@@ -495,7 +509,6 @@
         } else {
             document.getElementById("doberror").innerText = "";
         }
-
 
 
         if (check.checked == false) {
@@ -507,11 +520,29 @@
         }
 
 
+        //     if (way.value =="") {
+        //     document.getElementById("wayerror").innerHTML ="**Please select the Country**";
+
+        //   }
+
+        //   else{
+        //     document.getElementById("wayerror").innerText ="";
+        //   }
+
         const validation_parameter = $('.is-invalid');
+        console.log("Invalid fields count:", validation_parameter.length);
         if (validation_parameter.length == 0) {
+            console.log("All validations passed");
             preventSubmitButton('form_submit_handle');
             $("#register_member").submit();
+        } else {
+            console.log("Some validations failed");
         }
+        function validate(e) {
+            alert('Testing validate function');  // Initial alert
+            // Rest of the code...
+        }
+
     }
 </script>
 
@@ -522,10 +553,9 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         const phoneNumberInput = document.getElementById("mobile");
-        phoneNumberInput.addEventListener("input", validatePhoneNumber);
 
 
     });
@@ -540,11 +570,11 @@
         }
         if (c == "fnu") {
             let value = event.target.value || '';
-            value = value.replace(/[^0-9+ ]/, '', );
+            value = value.replace(/[^0-9+ ]/, '',);
             event.target.value = value;
         } else if (c == "fna") {
             let value = event.target.value || '';
-            value = value.replace(/[^a-z A-Z ]/, '', );
+            value = value.replace(/[^a-z A-Z ]/, '',);
             event.target.value = value;
 
         } else {
@@ -555,7 +585,7 @@
 
     function formatName(event) {
         let value = event.target.value || '';
-        value = value.replace(/[^a-z A-Z ]/, '', );
+        value = value.replace(/[^a-z A-Z ]/, '',);
         event.target.value = value;
 
     }
@@ -566,7 +596,7 @@
 
     function formatNumber(event, a) {
         let value = event.target.value || '';
-        value = value.replace(/[^0-9]/, '', );
+        value = value.replace(/[^0-9]/, '',);
         event.target.value = value;
         if (value != null && value.replace(/[^0-9]/)) {
             // otp = "otp"+a+"";
@@ -583,7 +613,7 @@
         $.cookie('status', status);
         $.cookie('emailverify', email);
         $("#resend").attr("disabled", true);
-        setTimeout(function() {
+        setTimeout(function () {
             $("#resend").attr("disabled", false);
         }, 120000);
         let timerOn = true;
@@ -598,7 +628,7 @@
             remaining -= 1;
 
             if (remaining >= 0 && timerOn) {
-                setTimeout(function() {
+                setTimeout(function () {
                     timer(remaining);
                 }, 1000);
                 return;
@@ -623,16 +653,16 @@
 
                 _token: '{{csrf_token()}}'
             },
-            error: function() {
+            error: function () {
                 alert('Something is wrong');
             },
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 swal({
-                        title: "Success",
-                        text: "Otp Sent Successfully",
-                        type: "success"
-                    },
+                    title: "Success",
+                    text: "Otp Sent Successfully",
+                    type: "success"
+                },
 
                 );
                 return true;
@@ -659,7 +689,7 @@
             return false;
         }
         $("#verifyotpbtn").attr("disabled", true);
-        setTimeout(function() {
+        setTimeout(function () {
             $("#verifyotpbtn").attr("disabled", false);
         }, 10000);
         $.ajax({
@@ -675,17 +705,17 @@
                 otp6: otp6,
                 _token: '{{csrf_token()}}'
             },
-            error: function() {
+            error: function () {
                 swal({
-                        title: "Failed",
-                        text: "OTP Mismatched",
-                        type: "fail"
-                    },
+                    title: "Failed",
+                    text: "OTP Mismatched",
+                    type: "fail"
+                },
 
                 );
                 return false;
             },
-            success: function(response) {
+            success: function (response) {
 
                 let fnstatus = response.success;
 
@@ -694,7 +724,7 @@
                         title: "Success",
                         text: "Email Verified Successfully",
                         type: "success"
-                    }, );
+                    },);
                     let status = "Verified";
                     $.cookie('status', status);
                     $.cookie('emailverify', email);
@@ -705,7 +735,7 @@
                         title: "Warning",
                         text: "Incorrect OTP",
                         type: "warning"
-                    }, );
+                    },);
 
                     return true;
                 }
@@ -731,10 +761,10 @@
             $('#addModal').modal('show');
         } else {
             swal({
-                    title: "Warning",
-                    text: "Please Enter Email",
-                    type: "warning"
-                },
+                title: "Warning",
+                text: "Please Enter Email",
+                type: "warning"
+            },
 
             );
             return false;
@@ -782,13 +812,13 @@
 <script>
     var $j = jQuery.noConflict();
 
-    $j(document).ready(function() {
+    $j(document).ready(function () {
         $j('#country').select2();
     });
 </script>
 <script>
     var $j = jQuery.noConflict();
-    $j(function() {
+    $j(function () {
         $j('.dob').datepicker({
             dateFormat: 'dd-mm-yy',
             showButtonPanel: true,

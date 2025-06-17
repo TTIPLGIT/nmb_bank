@@ -126,12 +126,12 @@ class AuthController extends BaseController
 
 						//   defind role_id
 						$stringuser_id = 27;
-						$update_id =  DB::table('users')
+						$update_id = DB::table('users')
 							->where('id', $user_id)
 							->update([
 								'array_roles' => $stringuser_id,
 							]);
-						$user_id  =  $user_id;
+						$user_id = $user_id;
 						$uam_screen_id = DB::table('uam_user_roles')->insertGetId([
 							'user_id' => $user_id,
 							'role_id' => $stringuser_id,
@@ -157,7 +157,7 @@ class AuthController extends BaseController
 
 
 						$role_id = 27;
-						$parentrow =  DB::select("select a.screen_id,a.module_screen_id,a.module_id from uam_role_screens as a where a.role_id = $role_id");
+						$parentrow = DB::select("select a.screen_id,a.module_screen_id,a.module_id from uam_role_screens as a where a.role_id = $role_id");
 						$parentidcounting = count($parentrow);
 
 						if ($parentrow != []) {
@@ -165,13 +165,13 @@ class AuthController extends BaseController
 								$module_id = $parentrow[$j]->module_id;
 								$screen_id = $parentrow[$j]->screen_id;
 								$x = 0;
-								$modulesrows =  DB::select("select * from uam_modules where module_id = $module_id");
+								$modulesrows = DB::select("select * from uam_modules where module_id = $module_id");
 								if ($modulesrows != []) {
 									$parent_module_id = $modulesrows[$x]->parent_module_id;
 									$module_name = $modulesrows[$x]->module_name;
 								}
 
-								$screenrows =  DB::select("select * from uam_screens where screen_id = $screen_id");
+								$screenrows = DB::select("select * from uam_screens where screen_id = $screen_id");
 								if ($screenrows != []) {
 									$screen_name = $screenrows[$x]->screen_name;
 									$screen_url = $screenrows[$x]->screen_url;
@@ -225,8 +225,8 @@ class AuthController extends BaseController
 									$active_flag = $permissioncheck[$m]->active_flag;
 									$array_permission = $permissioncheck[$m]->array_permission;
 									$role_screen_permissions_id = DB::table('uam_user_screen_permissions')->insertGetId([
-										'user_screen_id' =>  $user_screen_id,
-										'screen_permission_id' =>  $screen_permission_id,
+										'user_screen_id' => $user_screen_id,
+										'screen_permission_id' => $screen_permission_id,
 										'permission' => $permission_name,
 										'description' => $description,
 										'active_flag' => $active_flag,
@@ -320,7 +320,6 @@ class AuthController extends BaseController
 			$data['dob'] = $request->dob;
 			$data['gender_value'] = $request->gender_value;
 			$data['email'] = $request->email;
-			$data['country'] = $request->country;
 			$data['status'] = $request->status;
 			$data['Mobile_no'] = $request->Mobile_no;
 			$data['password'] = bcrypt($request->password);
@@ -335,7 +334,6 @@ class AuthController extends BaseController
 				'email' => $inputArray['email'],
 				'dob' => $inputArray['dob'],
 				'gender_value' => $inputArray['gender_value'],
-				'country' => $inputArray['country'],
 				'Mobile_no' => $inputArray['Mobile_no'],
 				'password' => $inputArray['password'],
 
@@ -362,15 +360,14 @@ class AuthController extends BaseController
 								'email' => $input['email'],
 								'dob' => $input['dob'],
 								'gender' => $input['gender_value'],
-								'country' => $input['country'],
 								'Mobile_no' => $input['Mobile_no'],
 								'password' => $input['password'],
 
 								'dor' => today(),
 								'project_role_id' => 1,
-								'array_dashboard_list' => 1,
-								'designation_id' => 2,
-								'role' => '1',
+								'array_dashboard_list' => '',
+								'designation_id' => 1,
+								'role' => '',
 								'active_flag' => 0,
 								'created_at' => NOW(),
 
@@ -378,13 +375,13 @@ class AuthController extends BaseController
 
 
 						//   defind role_id
-						$stringuser_id = 35;
-						$update_id =  DB::table('users')
+						$stringuser_id = 42;
+						$update_id = DB::table('users')
 							->where('id', $user_id)
 							->update([
 								'array_roles' => $stringuser_id,
 							]);
-						$user_id  =  $user_id;
+						$user_id = $user_id;
 						$uam_screen_id = DB::table('uam_user_roles')->insertGetId([
 							'user_id' => $user_id,
 							'role_id' => $stringuser_id,
@@ -405,7 +402,7 @@ class AuthController extends BaseController
 
 
 						$role_id = 35;
-						$parentrow =  DB::select("select a.screen_id,a.module_screen_id,a.module_id from uam_role_screens as a where a.role_id = $role_id");
+						$parentrow = DB::select("select a.screen_id,a.module_screen_id,a.module_id from uam_role_screens as a where a.role_id = $role_id");
 						$parentidcounting = count($parentrow);
 
 						if ($parentrow != []) {
@@ -413,13 +410,13 @@ class AuthController extends BaseController
 								$module_id = $parentrow[$j]->module_id;
 								$screen_id = $parentrow[$j]->screen_id;
 								$x = 0;
-								$modulesrows =  DB::select("select * from uam_modules where module_id = $module_id");
+								$modulesrows = DB::select("select * from uam_modules where module_id = $module_id");
 								if ($modulesrows != []) {
 									$parent_module_id = $modulesrows[$x]->parent_module_id;
 									$module_name = $modulesrows[$x]->module_name;
 								}
 
-								$screenrows =  DB::select("select * from uam_screens where screen_id = $screen_id");
+								$screenrows = DB::select("select * from uam_screens where screen_id = $screen_id");
 								if ($screenrows != []) {
 									$screen_name = $screenrows[$x]->screen_name;
 									$screen_url = $screenrows[$x]->screen_url;
@@ -473,8 +470,8 @@ class AuthController extends BaseController
 									$active_flag = $permissioncheck[$m]->active_flag;
 									$array_permission = $permissioncheck[$m]->array_permission;
 									$role_screen_permissions_id = DB::table('uam_user_screen_permissions')->insertGetId([
-										'user_screen_id' =>  $user_screen_id,
-										'screen_permission_id' =>  $screen_permission_id,
+										'user_screen_id' => $user_screen_id,
+										'screen_permission_id' => $screen_permission_id,
 										'permission' => $permission_name,
 										'description' => $description,
 										'active_flag' => $active_flag,
@@ -630,7 +627,7 @@ class AuthController extends BaseController
 						]);
 				});
 				$serviceResponse = array();
-				$serviceResponse['Code'] =  config('setting.status_code.success');
+				$serviceResponse['Code'] = config('setting.status_code.success');
 				$serviceResponse['Message'] = config('setting.status_message.success');
 				$serviceResponse['Data'] = 1;
 				$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
@@ -692,7 +689,7 @@ class AuthController extends BaseController
 
 
 					$stringuser_id = 3;
-					$update_id =  DB::table('user_otp')
+					$update_id = DB::table('user_otp')
 						->where('email', $input['email'])
 						->update([
 							'status' => 'verified',

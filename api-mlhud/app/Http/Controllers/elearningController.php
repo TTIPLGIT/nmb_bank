@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Psy\Readline\Hoa\Console;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Event;
 
 
 class elearningController extends BaseController
@@ -130,9 +131,11 @@ class elearningController extends BaseController
     }
     public function events_fetch(Request $request)
     {
+       
 
+        $method = 'Method => elearningController =>events_fetch';
         try {
-            $method = 'Method => elearningController =>events_fetch';
+           
             $userID = auth()->user()->id;
             // $rows = DB::select("SELECT role_id from uam_roles  where user_id=$userID");
             // $role_id=$rows[0]->role_id;
@@ -144,9 +147,16 @@ class elearningController extends BaseController
             $event_date = $input['event_date'];
             $rows = DB::select("SELECT role_id from uam_user_roles  where user_id=$userID");
             $role_id = $rows[0]->role_id;
-            $rows = DB::select("SELECT  *  from elearning_events  where (user_category =$role_id or user_category = 0) and event_date ='$event_date' and event_status=0");
+        
+            $rows = DB::select("SELECT  * from elearning_events  where (user_category =$role_id or user_category = 0) and event_date ='$event_date' and event_status=0");
+          
+            // $events = Event::select('event_date')->where('event_date', '>=', now()->startOfMonth())->get();
+            // $eventDates = $events->pluck('event_date')->map(function ($date) {
+            //     return \Carbon\Carbon::parse($date)->format('d-m-Y'); // Format as needed
+            // });
             $response = [
                 'rows' => $rows,
+                //'event_dates' => $eventDates,
             ];
 
             $serviceResponse = array();

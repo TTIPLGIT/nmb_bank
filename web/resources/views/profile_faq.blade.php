@@ -310,7 +310,7 @@
       
         <fieldset>
           <div class="row">
-          <h1 class="faq"><b><u>Frequently Asked Questions on MLHUD</u></b></h1>
+          <h1 class="faq"><b><u>Frequently Asked Questions on TALENTRA</u></b></h1>
             <div class="col-lg-12">
 
 

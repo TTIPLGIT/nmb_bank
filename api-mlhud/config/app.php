@@ -1,5 +1,5 @@
 <?php
-//use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Config; 
 
 return [
 
@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'MLHUD'),
+    'name' => env('APP_NAME', 'TALENTRA'),
 
     /*
     |--------------------------------------------------------------------------

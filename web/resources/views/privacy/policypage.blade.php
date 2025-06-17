@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
          <link rel="stylesheet" 
           href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
-          <title>MLHUD</title>
-<link rel="icon" href="{{ asset('images/MLHUD-IMG (1).png') }}" type="image/gif" sizes="16x16">
+          <title>Talentra</title>
+          <link rel="icon" href="{{asset('css/talentra-image.jpg')}}" sizes="40x40">
         <!-- Fonts -->
         <link href="{{ asset('css/login.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -49,6 +49,7 @@
 }
 html ,body{
    background-color: #f2f2f2 !important;
+   margin-left: 0px !important;
 }
 
 *{
@@ -59,18 +60,11 @@ html ,body{
     </head>
     
     <body>
-        <div class="header row" style="display:flex;align-items:center;" >
-
-        
-        <div class="col-3 col-sm-3" ><a href="{{url('/')}}"><picture><source media="(max-width:558px)" srcset="{{asset('assets/images/a.png')}}"><img class="policy_logo " style="width: 260%;
-    
-    display: block;
-    margin: 15px;
-    text-align: center;
-    align-items: center;" src="{{asset('asset/image/logo-mlhud.png')}}" ></a></picture></div>
-
-  <div class="col-9     col-sm-9" style="justify-content: center;
-    display: flex;align-items: center;"><h2 class="policy_txt" style="color:#FFF;font-weight: 900; font-family: sans-serif!important">VALUATION PROFESSIONAL PORTAL</h2></div>
+  <div class="header row" style="display:flex; align-items:center;" >      
+  <div class="col-3 col-sm-3" > <!-- <a href="{{url('/')}}"><picture><source media="(max-width:558px)" srcset="{{asset('assets/images/a.png')}}"> -->
+  <img class="policy_logo" style="width: 80% !important; display: block; margin: 0px !important; padding: 0px !important; text-align: center; align-items: center;" src="{{asset('asset/image/Talentra-1.svg')}}" alt="logo"></a></div>
+  <div class="col-9 col-sm-9" style="justify-content: center; display: flex;align-items: center;">
+  <h2 class="policy_txt" style="color:#FFF;font-weight: 900; font-family: sans-serif!important; margin-bottom: 0px !important;">TTIPL - Learning Management System</h2></div>
   </div>  
 
     <div class="container">

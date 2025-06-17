@@ -36,7 +36,7 @@
                                 data-key="{{ config('setting.RAZORPAY_KEY') }}"
                                 data-amount="1000"
                                 data-buttontext="Pay Amount"
-                                data-name="MLHUD Payment"
+                                data-name="TALENTRA Payment"
                                 data-description="Payment"
                                 data-prefill.name="name"
                                 data-prefill.email="email"

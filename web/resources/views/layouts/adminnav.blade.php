@@ -5,21 +5,27 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>TTIPL-LMS</title>
+  <title>Talentra</title>
+
   <!-- General CSS Files -->
   <link href="{{asset('asset/css/app.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{asset('asset/bundles/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{asset('asset/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
+  <link href="{{asset('asset/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}"
+    rel="stylesheet" />
 
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
   <!--dropzone css -->
   <!-- jQuery -->
   <!-- <script src="//code.jquery.com/jquery-1.11.3.min.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js" integrity="sha512-wvgsp3xEKrcb+x3VGdlHOTpVmqCbPmSUNbD4VYW3Ub1M49xNjQh7LjKKi6jrHFEw6AVRngaUtYYBiI8L4Vw22w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js"
+    integrity="sha512-wvgsp3xEKrcb+x3VGdlHOTpVmqCbPmSUNbD4VYW3Ub1M49xNjQh7LjKKi6jrHFEw6AVRngaUtYYBiI8L4Vw22w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  
+
 
 
 
@@ -36,7 +42,8 @@
   <link href="{{asset('asset/css/components.css')}}" type="text/css" rel="stylesheet" />
   <!-- Custom style CSS -->
   <link href="{{asset('asset/css/custom.css')}}" type="text/css" rel="stylesheet" />
-  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />
+  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" type="text/css"
+    rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="{{ asset('css/hummingbird_v1.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('css/hummingbird_treeview.css') }}">
   <!-- <link rel="stylesheet" type="text/css" href="{{ asset('css/select2.min.css') }}" /> -->
@@ -50,7 +57,7 @@
   <!-- <script type="text/javascript" src="{{ asset('js/select2.js') }}"></script> -->
 
   <link href="{{asset('assets/css/adminnavbar.min.css')}}" rel="stylesheet" type="text/css" />
-  <link rel="icon" href="{{ url('css/favicon.png') }}" sizes="32x32">
+  <link rel="icon" href="{{asset('css/talentra-image.jpg')}}" sizes="40x40">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
@@ -62,18 +69,20 @@
 
   <!-- loading gif -->
   <!-- Ck editor -->
-  <script src="https://cdn.tiny.cloud/1/3r7kjxhafm9hbckihumdmitzncsve258qw14txq1wqt2jo50/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.tiny.cloud/1/3r7kjxhafm9hbckihumdmitzncsve258qw14txq1wqt2jo50/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
   <!-- <link rel="stylesheet" href="{{asset('asset/css/owl.carousel.css')}}"> -->
   <!-- <link rel="stylesheet" href="{{asset('asset/css/owl.theme.default.css')}}"> -->
   <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
 
   <!-- <script src="{{asset('asset/js/owl.carousel.min.js')}}"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
   <style>
     .stamp {
       border: none !important;
     }
-     
+
 
     .li {
       padding-top: 10px;
@@ -912,8 +921,8 @@
       width: 35px !important;
       position: relative;
       margin-top: 8px;
-      border-radius: 30px;    
-      
+      border-radius: 30px;
+
       /* margin-right: 19px;
       position: relative;
       width: 42px !important; */
@@ -975,19 +984,23 @@
         transform: rotate(360deg);
       }
     }
-    .aligned-row{
+
+    .aligned-row {
       display: flex;
       text-wrap: nowrap;
     }
+
     /* saranya */
-    .form-control{
-      text-transform:none !important;
+    .form-control {
+      text-transform: none !important;
     }
-    .nav-link i{
-      color:#680EDA;
+
+    .nav-link i {
+      color: #680EDA;
     }
-    .circle i{
-      color:#680EDA;
+
+    .circle i {
+      color: #680EDA;
     }
   </style>
 
@@ -999,19 +1012,20 @@
 
 </head>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script>
   // saranya
-  (function($) {
-            // Define your function
-            window.selectReinitialize = function(element) {
-                $(`.${element}`).select2('destroy').select2();
-            };
+  (function ($) {
+    // Define your function
+    window.selectReinitialize = function (element) {
+      $(`.${element}`).select2('destroy').select2();
+    };
 
-          
-        })(jQuery);
+
+  })(jQuery);
 
 </script>
+
 <body class="light dark-sidebar theme-white">
   <div class="loader-container" id="loaderContainer">
     <div class="loader_ajax"></div>
@@ -1019,34 +1033,34 @@
   <div class="loader"></div>
   @if (session('success'))
 
-  <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-  <script type="text/javascript">
-    window.onload = function() {
+    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+    <script type="text/javascript">
+    window.onload = function () {
       var message = $('#session_data').val();
       swal.fire({
-        title: "Success",
-        text: message,
-        icon: "success",
+      title: "Success",
+      text: message,
+      icon: "success",
       });
 
 
     }
-  </script>
+    </script>
   @elseif(session('error'))
 
-  <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-  <script type="text/javascript">
-    window.onload = function() {
+    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
+    <script type="text/javascript">
+    window.onload = function () {
       var message = $('#session_data1').val();
       swal.fire({
-        title: "Success",
-        text: message,
-        icon: "success",
+      title: "Success",
+      text: message,
+      icon: "success",
       });
 
 
     }
-  </script>
+    </script>
   @endif
 
   <div id="app">
@@ -1056,7 +1070,8 @@
         <div class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
             <li>
-              <a href="#" data-toggle="sidebar" id="toggle" class="nav-link nav-link-lg collapse-btn "><i class="fas fa-bars navheading"></i></a>
+              <a href="#" data-toggle="sidebar" id="toggle" class="nav-link nav-link-lg collapse-btn "><i
+                  class="fas fa-bars navheading"></i></a>
             </li>
             <li>
               <a href="#" class="nav-link nav-link-lg fullscreen-btn">
@@ -1066,16 +1081,18 @@
           </ul>
 
         </div>
-        <div class="form-inline mr-auto d-md-inline-block d-none" style="color: #2a0245!important; font-weight: 500; font-size: 23px">
-          <span style="  color:white; padding: 10px;" class=""><b class="navheading"></b>
-            <span style="color: #9958ae; right: -90px;position: relative;" class="user_name_nav"></span></span>
+        <div class="form-inline mr-auto d-md-inline-block d-none"
+          style="color: #2a0245 !important; font-weight: 500; font-size: 22px">
+          <span style="  color:white; padding: 10px;" class=""><b class="navheading">Learning Management System </b>
+            <!-- <span style="color: #9958ae; right: -90px;position: relative;" class="user_name_nav"></span> --></span>
 
         </div>
 
         <ul class="navbar-nav navbar-right">
           <nav class="navigation" style="">
 
-            <span class="badge badge-light badgeworkflow" style="position: absolute; left: 51px; width:2%;margin-left:auto;"></span>
+            <span class="badge badge-light badgeworkflow"
+              style="position: absolute; left: 51px; width:2%;margin-left:auto;"></span>
 
             <ul class="inner-navigation">
 
@@ -1087,7 +1104,7 @@
                     <i class="fa fa-bell notify"></i><span class="badge badge-light bell_notification"></span>
                   </a>
                   <ul class="dropdown" name="notificationMenu" style="top: 80%;">
-                    <li class="notification-group">
+                    <!-- <li class="notification-group">
                       <div class="notification-tab">
                         <i class="fa fa-list-alt "></i>
 
@@ -1095,7 +1112,6 @@
                         <h4 style="font-size:15px" class="">Registration</h4>
                         <span class="user_name_alert"></span>
                       </div>
-                      <!-- tab -->
                       <ul class="notification-list registration_data_list">
 
 
@@ -1104,21 +1120,20 @@
 
 
                       </ul>
-                    </li>
-                    <li class="notification-group">
+                    </li> -->
+                    <!-- <li class="notification-group">
                       <div class="notification-tab">
                         <i class="fa fa-users "></i>
                         <h4 style="font-size:15px" class="">General Notifications</h4>
                         <span class="user_name_alert1"></span>
                       </div>
-                      <!-- tab -->
                       <ul class="notification-list user_alert_list">
 
 
 
 
                       </ul>
-                    </li>
+                    </li> -->
                     <li class="notification-group">
                       <div class="notification-tab">
                         <i class="fa fa-graduation-cap" aria-hidden="true"></i>
@@ -1160,52 +1175,60 @@
 
 
           <li class="dropdown drop_bg">
-            <a data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user" style=" display:flex; align-items: center;flex-direction:column;">
-              @if($modules['data'] !="")
+            <a data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"
+              style=" display:flex; align-items: center;flex-direction:column;">
+              @if($modules['data'] != "")
 
-              <div style="width: auto;height:auto">
-                <div style="float: left;">
-                  <span class="d-sm-none d-lg-inline-block">
-                    <?php if (!empty($modules['profile_image'])) { ?>
-                      <img class="prof_admin" value="" src="{{ $modules['profile_image']}}">
-                    <?php } else {   ?>
-                      <img class="prof_admin" value="" src="{{url()->to('/')}}/images/empty.jpg">
+          <div style="width: auto;height:auto">
+          <div style="float: left;">
+            <span class="d-sm-none d-lg-inline-block">
+            <?php  if (!empty($modules['profile_image'])) { ?>
+            <img class="prof_admin" value="" src="{{ $modules['profile_image']}}">
+            <?php  } else {   ?>
+            <img class="prof_admin" value="" src="{{url()->to('/')}}/images/empty.jpg">
 
-                    <?php } ?>
-                  </span>
-                </div>
-                <div style="float: right;line-height:1.5 !important">
-                  <div style="padding-left: 8px;">
-                    {{ucfirst($modules['user_name'])}}
-                  </div>
-                  <div style="padding-left:8px;margin-top:1px !important">
-                    <span class="d-sm-none d-lg-inline-block" style="font-weight:100;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 122px;" title="{{$modules['user_role']}}"> {{$modules['user_role']}}</span>
-                  </div>
-                </div>
-                <!-- <div class="profile-container" style="display: flex; justify-content:center">
-                      <div class="profile-image-container">
-                        <img src="http://localhost:6061/user_signature/126/YXZhdGFyNS5wbmc=.png" style="width: 25%;">
-                      </div>
-                      <div class="profile-details">
-                        <span>Viruma</span>
-                        <p>Admin</p>
-                      </div>
-                </div> -->
+            <?php  } ?>
+            </span>
+          </div>
+          <div style="float: right;line-height:1.5 !important">
+            <div style="padding-left: 8px;">
+            {{ucfirst($modules['user_name'])}}
+            </div>
+            <div style="padding-left:8px;margin-top:1px !important">
+            <span class="d-sm-none d-lg-inline-block"
+              style="font-weight:100;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 122px;"
+              title="{{$modules['user_role']}}"> {{$modules['user_role']}}</span>
+            </div>
+          </div>
+          <!-- <div class="profile-container" style="display: flex; justify-content:center">
+              <div class="profile-image-container">
+              <img src="http://localhost:6061/user_signature/126/YXZhdGFyNS5wbmc=.png" style="width: 25%;">
               </div>
-            </a>
+              <div class="profile-details">
+              <span>Viruma</span>
+              <p>Admin</p>
+              </div>
+          </div> -->
+          </div>
+        </a>
 
-            @endif
+      @endif
             <div class="dropdown-menu dropdown-menu-right">
-              @if($modules['data'] !="")
-              <p class="dropdown-item has-icon" style="color:black;pointer-events:none; font-size:small">Welcome {{ucfirst($modules['user_name'])}}</p>
-              @endif
+              @if($modules['data'] != "")
+          <p class="dropdown-item has-icon" style="color:black;pointer-events:none; font-size:small">Welcome
+          {{ucfirst($modules['user_name'])}}</p>
+        @endif
               <a href="{{ url('profilepage') }}" class="dropdown-item has-icon">
-                <i class="far fa-user" style="color:black !important;"></i><b style="color:black !important;">Profile</b></a>
-              <a class="dropdown-item has-icon" href="{{ route('main_index') }}"><i class="fa fa-question-circle" style="color:black !important;"></i><b style="color:black !important;">FAQ</b></a>
+                <i class="far fa-user" style="color:black !important;"></i><b
+                  style="color:black !important;">Profile</b></a>
+              <a class="dropdown-item has-icon" href="{{ route('main_index') }}"><i class="fa fa-question-circle"
+                  style="color:black !important;"></i><b style="color:black !important;">FAQ</b></a>
 
 
-              <a class="dropdown-item has-icon" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                <i class="fa fa-sign-out" style="color:black !important;"></i><b style="color:black !important;">Logout</b></a>
+              <a class="dropdown-item has-icon"
+                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                <i class="fa fa-sign-out" style="color:black !important;"></i><b
+                  style="color:black !important;">Logout</b></a>
 
 
               <form id="logout-form" action="{{ route('logout') }}" method="POST">
@@ -1229,71 +1252,73 @@
             </a>
           </div>
           <ul class="sidebar-menu">
-            @if(session()->get("gd_status")!='2')
-            <li class="dropdown "><a href="{{route('elearningDashboard')}}" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a>
+            @if(session()->get("gd_status") != '2')
+        <li class="dropdown "><a href="{{route('admindashboard')}}" class="nav-link"><i
+            class="fas fa-home"></i><span>Dashboard</span></a>
 
-            </li>
-            @endif
+        </li>
+      @endif
 
             <!-- Professional member Firm Admin Screen -->
-            @if($modules['data'] !="")
-            <!-- @if($modules['user_role'] == "professional member")
+            @if($modules['data'] != "")
+        <!-- @if($modules['user_role'] == "professional member")
 
-            <li class="dropdown ">
-              <a class="nav-link has-dropdown">
-                <i class="fas fa-user-cog" aria-hidden="true"></i>
-                <span>
-                  Firm Administration
-                </span>
-              </a>
-              <ul class="dropdown-menu active" style="display: none;">
+        <li class="dropdown ">
+          <a class="nav-link has-dropdown">
+          <i class="fas fa-user-cog" aria-hidden="true"></i>
+          <span>
+            Firm Administration
+          </span>
+          </a>
+          <ul class="dropdown-menu active" style="display: none;">
 
-                <li class=""><a class="nav-link " href="{{route('firm_admin_index')}}">Firm Administration</a></li>
-              </ul>
+          <li class=""><a class="nav-link " href="{{route('firm_admin_index')}}">Firm Administration</a></li>
+          </ul>
 
 
-            </li>
-            @endif -->
-            <!-- <li>
-              <a href="{{ route('ethictest.index') }}" class="nav-link sidebar_links">
-                <i class="sidebar-icons fa fa-pencil-square-o" aria-hidden="true"></i>
-                <span>Ethics Test</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ route('localadaptationtest.index') }}" class="nav-link sidebar_links">
-                <i class="sidebar-icons fa fa-globe" aria-hidden="true"></i>
-                <span>Local Adaptation Test</span>
-              </a>
-            </li> -->
-            @endif
+        </li>
+        @endif -->
+        <!-- <li>
+          <a href="{{ route('ethictest.index') }}" class="nav-link sidebar_links">
+          <i class="sidebar-icons fa fa-pencil-square-o" aria-hidden="true"></i>
+          <span>Ethics Test</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('localadaptationtest.index') }}" class="nav-link sidebar_links">
+          <i class="sidebar-icons fa fa-globe" aria-hidden="true"></i>
+          <span>Local Adaptation Test</span>
+          </a>
+        </li> -->
+      @endif
 
-            @if($modules['data'] !="")
-            @foreach ($modules['data'] as $key => $module)
-            <li class="dropdown">
+            @if($modules['data'] != "")
+        @foreach ($modules['data'] as $key => $module)
+      <li class="dropdown">
 
-              <a class="nav-link has-dropdown">
-                <i class="{{$module['class_name']}}" aria-hidden="true"></i>
-                <span>
-                  {{$module['module_name']}}
-                </span>
-              </a>
+        <a class="nav-link has-dropdown">
+        <i class="{{$module['class_name']}}" aria-hidden="true"></i>
+        <span>
+        {{$module['module_name']}}
+        </span>
+        </a>
 
-              <ul class="dropdown-menu active" style="display: none;">
-                @if($screens !="")
-                @foreach ($screens as $key => $screen)
-                @if($module['module_id'] == $screen['module_id'])
+        <ul class="dropdown-menu active" style="display: none;">
+        @if($screens != "")
+      @foreach ($screens as $key => $screen)
+      @if($module['module_id'] == $screen['module_id'])
 
-                <li><a class="nav-link " href="{{ config('setting.base_url')}}{{ $screen['route_url'] }}">{{$screen['screen_name']}}</a></li>
-                @endif
-                @endforeach
-                @endif
-              </ul>
+      <li><a class="nav-link "
+      href="{{ config('setting.base_url')}}{{ $screen['route_url'] }}">{{$screen['screen_name']}}</a></li>
+    @endif
+    @endforeach
+    @endif
+        </ul>
 
-            </li>
+      </li>
 
-            @endforeach
-            @endif
+    @endforeach
+      @endif
           </ul>
 
 
@@ -1331,7 +1356,9 @@
 
 </body>
 <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2/js/bootstrap.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js" integrity="sha512-wvgsp3xEKrcb+x3VGdlHOTpVmqCbPmSUNbD4VYW3Ub1M49xNjQh7LjKKi6jrHFEw6AVRngaUtYYBiI8L4Vw22w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js"
+  integrity="sha512-wvgsp3xEKrcb+x3VGdlHOTpVmqCbPmSUNbD4VYW3Ub1M49xNjQh7LjKKi6jrHFEw6AVRngaUtYYBiI8L4Vw22w=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @include('layouts.script')
 
 </html>
@@ -1347,9 +1374,9 @@
   // }
 
   const preventSubmitButton = (cl) => {
-    $(`.${cl}`).attr('disabled',true);
+    $(`.${cl}`).attr('disabled', true);
     $(`.${cl}`).text('Submitting...');
-    
+
   }
   function notification_fetch() {
     var id = "user_id";
@@ -1369,7 +1396,7 @@
         id: id,
         _token: '{{csrf_token()}}'
       },
-      success: function(data) {
+      success: function (data) {
         //alert("das");
         var data2 = data;
         var count = data2['registration_count'][0].countflow;
@@ -1492,7 +1519,7 @@
     });
 
   }
-  $(document).ready(function() {
+  $(document).ready(function () {
     //alert('fefe');
 
     notification_fetch();
@@ -1524,7 +1551,7 @@
         id: id,
         _token: '{{csrf_token()}}'
       },
-      success: function(data) {
+      success: function (data) {
 
         var url = data['notify_link'][0].notification_url;
         window.location.href = url;

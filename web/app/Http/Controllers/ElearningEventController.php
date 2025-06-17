@@ -17,6 +17,8 @@ class ElearningEventController extends BaseController
 
     public function event_store(Request $request)
     {
+        $method = 'Method => ElearningEventController => event_store';
+
         $validator = Validator::make($request->all(), [
             'event_image' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
@@ -31,7 +33,6 @@ class ElearningEventController extends BaseController
             if ($user_id == null) {
                 return view('auth.login');
             }
-            $method = 'Method => ElearningEventController => event_store';
 
             $data = array();
             $data['user_category'] = $request->user_category;
@@ -40,15 +41,17 @@ class ElearningEventController extends BaseController
             $data['event_date'] = $request->event_date;
 
 
-
             $encryptArray = $data;
 
             $storagepath_ursb_old = public_path() . '/uploads/notice/' . $user_id; //system_store_pdf
+            
             $storagepath_ursb = '/uploads/notice/' . $user_id; //database_location
+
             if (!File::exists($storagepath_ursb_old)) {
                 File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
             }
             $data['event_path'] = $storagepath_ursb;
+
             $documentsb =  $request['event_image'];
             $files = $documentsb->getClientOriginalName();
             $findspace = array(' ', '&', "'", '"');
@@ -152,13 +155,13 @@ class ElearningEventController extends BaseController
     public function event_delete(Request $request)
 
     {
+        $method = 'Method => ElearningEventController => event_delete';
         try {
             $this->WriteFileLog("fefeef");
             $user_id = $request->session()->get("userID");
             if ($user_id == null) {
                 return view('auth.login');
             }
-            $method = 'Method => ElearningEventController => event_delete';
 
             $user_details = $request->user_details;
 
@@ -204,11 +207,11 @@ class ElearningEventController extends BaseController
 
     public function event_show($id)
     {
+        $method = 'Method => ElearningEventController => event_show';
         $permission_data = $this->FillScreensByUser();
         $screen_permission = $permission_data[0];
         if (strpos($screen_permission['permissions'], 'Show') !== false) {
             try {
-                $method = 'Method => ElearningEventController => event_show';
                 $id = $this->decryptData($id);
                 $gatewayURL = config('setting.api_gateway_url') . '/event/show' . $this->encryptData($id);
                 $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
@@ -238,11 +241,11 @@ class ElearningEventController extends BaseController
     }
     public function event_edit($id)
     {
+        $method = 'Method => ElearningEventController => event_edit';
         $permission_data = $this->FillScreensByUser();
         $screen_permission = $permission_data[0];
         if (strpos($screen_permission['permissions'], 'Edit') !== false) {
             try {
-                $method = 'Method => ElearningEventController => event_edit';
                 $id = $this->decryptData($id);
                 $gatewayURL = config('setting.api_gateway_url') . '/event/edit' . $this->encryptData($id);
                 $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
@@ -273,13 +276,13 @@ class ElearningEventController extends BaseController
     public function event_update(Request $request, $id)
     {
         // dd($request);
+        $method = 'Method => ElearningEventController => event_update';
         try {
 
             $user_id = $request->session()->get("userID");
             if ($user_id == null) {
                 return view('auth.login');
             }
-            $method = 'Method => ElearningEventController => event_update';
             $validator = Validator::make($request->all(), [
                 'event_imageedit' => 'required|image|mimes:jpeg,png,jpg,gif',
             ]);
@@ -345,10 +348,10 @@ class ElearningEventController extends BaseController
     public function fetch(Request $request)
     {
         $this->WriteFileLog($request);
+        $method = 'Method => ElearningEventController => fetch';
 
         try {
             $this->WriteFileLog("feef");
-            $method = 'Method => ElearningEventController => fetch';
             // $user_id = $request->session()->get("userID");
             // if ($user_id == null) {
             //     return view('auth.login');

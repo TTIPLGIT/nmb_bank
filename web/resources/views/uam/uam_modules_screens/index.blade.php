@@ -29,7 +29,7 @@
 </style>
 <div class="main-content module_space">
 
-{{ Breadcrumbs::render('uam_modules_screens.index') }}
+  {{ Breadcrumbs::render('uam_modules_screens.index') }}
 
 
 
@@ -37,15 +37,16 @@
 
 
     <div class="section-body mt-2">
-    @if(strpos($screen_permission['permissions'], 'Create') !== false)
-      <a type="button" style="font-size:15px;" class="btn btn-success btn-lg"  href="{{ route('uam_modules_screens.create') }}" >Create</a>
-      @endif
-        <style>
-          .section {
-            margin-top: 20px;
-          }
-        </style>
-       
+      @if(strpos($screen_permission['permissions'], 'Create') !== false)
+      <a type="button" style="font-size:15px;" class="btn btn-success btn-lg"
+      href="{{ route('uam_modules_screens.create') }}">Create</a>
+    @endif
+      <style>
+        .section {
+          margin-top: 20px;
+        }
+      </style>
+
       <div class="row">
 
         <div class="col-12">
@@ -61,95 +62,103 @@
               </div>
               @if (session('success'))
 
-              <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-              <script type="text/javascript">
-                window.onload = function() {
-                  var message = $('#session_data').val();
-                  swal({
-                    title: "Success",
-                    text: message,
-                    type: "success",
-                  });
+          <input type="hidden" name="session_data" id="session_data" class="session_data"
+          value="{{ session('success') }}">
+          <script type="text/javascript">
+          window.onload = function () {
+            var message = $('#session_data').val();
+            swal({
+            title: "Success",
+            text: message,
+            type: "success",
+            });
 
-                }
-              </script>
-              @elseif(session('error'))
-              
-              <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-              <script type="text/javascript">
-                window.onload = function() {
-                  var message = $('#session_data1').val();
-                  swal({
-                    title: "Info",
-                    text: message,
-                    type: "info",
-                  });
+          }
+          </script>
+        @elseif(session('error'))
 
-                }
-              </script>
-              @endif
+        <input type="hidden" name="session_data" id="session_data1" class="session_data"
+        value="{{ session('error') }}">
+        <script type="text/javascript">
+        window.onload = function () {
+          var message = $('#session_data1').val();
+          swal({
+          title: "Info",
+          text: message,
+          type: "info",
+          });
 
-              
+        }
+        </script>
+      @endif
+
+
 
               <div class="table-wrapper">
                 <div class="table-responsive">
                   <table class="table table-bordered align_button" id="align">
                     <thead>
                       <tr>
-                        <th width="50px">Sl. No.</th>
-                         <th>Module Name</th>
-                            <th>Screen Name</th>
-                            
-                        
-                            <th>Action</th>
+                        <th>S.No</th>
+                        <th>Module Name</th>
+                        <th>Screen Name</th>
+
+
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($rows as $key=>$row)
-                      <tr>
-                         <td>{{ ++$key }}</td>
-                        <td>{{ $row['module_name'] }}</td>
-                        <td>{{ $row['screen_names'] }}</td>
-                        
-                        <td class="text-center">
+                      @foreach($rows as $key => $row)
+              <tr>
+              <td>{{ ++$key }}</td>
+              <td>{{ $row['module_name'] }}</td>
+              <td>{{ $row['screen_names'] }}</td>
 
-                  <form action="{{ route('uam_modules_screens.destroy', \Crypt::encrypt($row ['module_screen_id'])) }}" method="POST">
-                           @if(strpos($screen_permission['permissions'], 'Show') !== false)
-                           <a class="btn btn-link" title="Show" href="{{ route('uam_modules_screens.show', \Crypt::encrypt($row ['module_id'])) }}"><i class="fas fa-eye" style="color:blue"></i></a>
+              <td class="text-center">
 
-                           @endif
-                           @csrf
-                           @method('DELETE')
-                           
-                           @if(strpos($screen_permission['permissions'], 'Delete') !== false)
-                           <a class="btn btn-link" type="submit" title="Delete" onclick="return confirm('Are you sure you want to delete this data ?');"><i class="far fa-trash-alt" style="color:red"></i></a>
+                <form
+                action="{{ route('uam_modules_screens.destroy', \Crypt::encrypt($row['module_screen_id'])) }}"
+                method="POST">
+                @if(strpos($screen_permission['permissions'], 'Show') !== false)
+          <a class="btn btn-link" title="Show"
+            href="{{ route('uam_modules_screens.show', \Crypt::encrypt($row['module_id'])) }}"><i
+            class="fas fa-eye" style="color:blue"></i></a>
 
+        @endif
+                @csrf
+                @method('DELETE')
 
-                           @endif
-                          </form>
-
-                       </td>
-                     </tr>
-                     @endforeach
-                   </tbody>
-                   
-                 </table>
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
+                @if(strpos($screen_permission['permissions'], 'Delete') !== false)
+          <a class="btn btn-link" type="submit" title="Delete"
+            onclick="return confirm('Are you sure you want to delete this data ?');"><i
+            class="far fa-trash-alt" style="color:red"></i></a>
 
 
-   </section>
+        @endif
+                </form>
+
+              </td>
+              </tr>
+            @endforeach
+                    </tbody>
+
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  </section>
 
 
 
 
 
 
- </div>
+</div>
 
 
 
@@ -183,11 +192,11 @@
       },
       callback: function (result) {
         if (result == true) {
-         var url = $('#'+id).val();
-         window.location.href = url;
-       }
-     }
-   });
+          var url = $('#' + id).val();
+          window.location.href = url;
+        }
+      }
+    });
 
 
   }

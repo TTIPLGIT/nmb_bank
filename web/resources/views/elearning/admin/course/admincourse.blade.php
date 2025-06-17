@@ -296,35 +296,35 @@
     @if (session('success'))
 
 
-    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-    <script type="text/javascript">
-        $(document).ready(function() {
+        <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+        <script type="text/javascript">
+            $(document).ready(function () {
 
-            var message = $('#session_data').val();
-            // alert(message);
-            console.log(message);
-            swal.fire({
-                title: "Success",
-                text: message,
-                icon: "success",
-            });
+                var message = $('#session_data').val();
+                // alert(message);
+                console.log(message);
+                swal.fire({
+                    title: "Success",
+                    text: message,
+                    icon: "success",
+                });
 
-        })
-    </script>
+            })
+        </script>
     @elseif(session('error'))
 
-    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-    <script type="text/javascript">
-        window.onload = function() {
-            var message = $('#session_data1').val();
-            swal.fire({
-                title: "Info",
-                text: message,
-                icon: "info",
-            });
+        <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
+        <script type="text/javascript">
+            window.onload = function () {
+                var message = $('#session_data1').val();
+                swal.fire({
+                    title: "Info",
+                    text: message,
+                    icon: "info",
+                });
 
-        }
-    </script>
+            }
+        </script>
     @endif
 
 
@@ -337,7 +337,8 @@
                 <form method="POST" id="registration_form" enctype="multipart/form-data" onsubmit="return false">
                     @csrf
 
-                    <div class="tile registration_tab" id="tile-1" style="margin-top:10px !important; margin-bottom:10px !important;">
+                    <div class="tile registration_tab" id="tile-1"
+                        style="margin-top:10px !important; margin-bottom:10px !important;">
 
 
                     </div>
@@ -366,14 +367,20 @@
 
                                 </select>
                             </div>
-
-                            <div class="col-md-2 addquizmodal" id="addClassButton">
-                                <a type="button" style="font-size:15px;margin-bottom: 15px;" class="btn btn-success btn-lg" title="Create" id="gcb" href="" data-toggle="modal" data-target="#addModal1">Add Class <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
-                            </div>
                             <div class="col-md-6"></div>
 
+                            <div class="col-md-2 addquizmodal" id="addClassButton">
+                                <a type="button" style="font-size:15px;margin-bottom: 15px;"
+                                    class="btn btn-success btn-lg" title="Create" id="gcb" href="" data-toggle="modal"
+                                    data-target="#addModal1">Add Class <span><i class="fa fa-plus"
+                                            aria-hidden="true"></i></span></a>
+                            </div>
+
                             <div class="col-md-2" id="addCourseButton">
-                                <a type="button" style="font-size:15px;margin-bottom: 15px;" class="btn btn-success question" title="Create" href="" data-toggle="modal" data-target="#addModal">Add Course <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
+                                <a type="button" style="font-size:15px;margin-bottom: 15px;"
+                                    class="btn btn-success btn-lg" title="Create" href="" data-toggle="modal"
+                                    data-target="#addModal">Add Course <span><i class="fa fa-plus"
+                                            aria-hidden="true"></i></span></a>
                             </div>
                         </div>
 
@@ -415,33 +422,49 @@
 
                                                     @foreach($rows['elearning_classes'] as $data)
 
-                                                    <tr>
-                                                        <td>{{$loop->iteration}}</td>
-                                                        <td>{{$data->class_name}}</td>
-                                                        <td>{{$data->class_duration}} Mins</td>
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$data->class_name}}</td>
+                                                            <td>{{$data->class_duration}} Mins</td>
 
-                                                        <?php if ($data->class_format == 'mp4') { ?>
-                                                            <td> <img src="uploads/class/126/mp4.png" width="50px" height="50px" alt="..."></td>
-                                                        <?php } elseif ($data->class_format == 'mp3') { ?>
-                                                            <td> <img src="uploads/class/126/mp3.png" width="50px" height="50px" alt="Image" /></td>
-                                                        <?php } elseif ($data->class_format == 'pdf') { ?>
-                                                            <td> <img src="uploads/class/126/pdf.png" width="50px" height="50px" alt="Image" /></td>
-                                                        <?php } elseif ($data->class_format == 'jpg' or 'png') { ?>
-                                                            <td> <img src="uploads/class/126/empty.jpg" width="50px" height="50px" alt="Image" /></td>
+                                                            <?php    if ($data->class_format == 'mp4') { ?>
+                                                            <td> <img src="uploads/class/126/mp4.png" width="50px"
+                                                                    height="50px" alt="..."></td>
+                                                            <?php    } elseif ($data->class_format == 'mp3') { ?>
+                                                            <td> <img src="uploads/class/126/mp3.png" width="50px"
+                                                                    height="50px" alt="Image" /></td>
+                                                            <?php    } elseif ($data->class_format == 'pdf') { ?>
+                                                            <td> <img src="uploads/class/126/pdf.png" width="50px"
+                                                                    height="50px" alt="Image" /></td>
+                                                            <?php    } elseif ($data->class_format == 'jpg' or 'png') { ?>
+                                                            <td> <img src="uploads/class/126/empty.jpg" width="50px"
+                                                                    height="50px" alt="Image" /></td>
 
-                                                        <?php } else { ?>
-                                                            <td> <img src="uploads/class/126/{{$data->resource_name}}" width="50px" height="50px" alt="Image" /></td>
-                                                        <?php } ?>
-                                                        <td>
-                                                            <a class="" title="Edit" id="gcb" data-toggle="modal" data-target="#addModal4" onclick="fetch_update({{$data->class_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" onclick="fetch_update({{$data->class_id}},'class_show')" title="Show" id="gcb" href="" data-toggle="modal" data-target="#addModalquiz1"><i class="fas fa-eye" style="color:green"></i></a>
+                                                            <?php    } else { ?>
+                                                            <td> <img src="uploads/class/126/{{$data->resource_name}}"
+                                                                    width="50px" height="50px" alt="Image" /></td>
+                                                            <?php    } ?>
+                                                            <td>
+                                                                <a class="btn btn-link" title="Edit" id="gcb"
+                                                                    data-toggle="modal" data-target="#addModal4"
+                                                                    onclick="fetch_update({{$data->class_id}},'edit')">
+                                                                    <i class="fas fa-pencil-alt"
+                                                                        style="color: blue !important"></i></a>
+                                                                <a class="btn btn-link"
+                                                                    onclick="fetch_update({{$data->class_id}},'class_show')"
+                                                                    title="Show" id="gcb" href="" data-toggle="modal"
+                                                                    data-target="#addModalquiz1"><i class="fas fa-eye"
+                                                                        style="color:green"></i></a>
 
 
-                                                            <a type="button" title="Delete" onclick="class_delete(<?php echo $data->class_id ?>)" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></a>
+                                                                <a type="button" title="Delete"
+                                                                    onclick="class_delete(<?php    echo $data->class_id ?>)"
+                                                                    class="btn btn-link"><i class="far fa-trash-alt"
+                                                                        style="color:red"></i></a>
 
-                                                        </td>
+                                                            </td>
 
-                                                    </tr>
+                                                        </tr>
                                                     @endforeach
 
 
@@ -480,7 +503,7 @@
                                                     <tr>
                                                         <th>S.No</th>
                                                         <th>Course Name</th>
-                                                        <th>Category</th>
+                                                        <!-- <th>Category</th> -->
                                                         <th>Course Banner</th>
                                                         <th>Start Date</th>
                                                         <th>End Date</th>
@@ -492,48 +515,56 @@
                                                     @foreach(($rows1['elearning_courses']) as $data)
 
 
-                                                    <tr>
-                                                        <td>{{$loop->iteration}}</td>
-                                                        <td>{{$data->course_name}}</td>
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$data->course_name}}</td>
 
-                                                        @if($data->course_category =="27")
-                                                        <td>Graduate Trainee</td>
-                                                        @elseif($data->course_category =="34")
-                                                        <td>Professional Member</td>
+                                                            <!-- @if($data->course_category =="27")
+                                                                        <td>Graduate Trainee</td>
+                                                                        @elseif($data->course_category =="34")
+                                                                        <td>Professional Member</td>
 
-                                                        @else
-                                                        <td>All</td>
+                                                                        @else
+                                                                        <td>All</td>
 
-                                                        @endif
+                                                                        @endif -->
 
-                                                        <?php if (!empty($data->course_banner)) { ?>
-
-
-                                                            <td><img src="uploads/course/126/{{$data->course_banner}}" width="50px" height="50px" alt="Image" /></td>
-                                                        <?php } else { ?>
-                                                            <td> <img src="uploads/class/126/empty.jpg" width="50px" height="50px" alt="..."></td>
-                                                        <?php } ?>
-                                                        <td>{{$data->course_start_period}}</td>
-                                                        <td>{{$data->course_end_period}}</td>
-                                                        @if(!empty($data->course_price))
-
-                                                        <td>{{$data->course_price}} Ush</td>
-
-                                                        @else
-                                                        <td>0 Ush</td>
-
-                                                        @endif
-                                                        <td>
+                                                            <?php    if (!empty($data->course_banner)) { ?>
 
 
-                                                            <!-- <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal3" onclick="fetch_courseupdate_new({{$data->course_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a> -->
-                                                            <a class="btn btn-link" title="show" data-toggle="modal" data-target="#addModal5" onclick="fetch_courseupdate_new({{$data->course_id}},'show')"><i class="fas fa-eye" style="color:green"></i></a>
+                                                            <td><img src="uploads/course/126/{{$data->course_banner}}"
+                                                                    width="50px" height="50px" alt="Image" /></td>
+                                                            <?php    } else { ?>
+                                                            <td> <img src="uploads/class/126/empty.jpg" width="50px"
+                                                                    height="50px" alt="..."></td>
+                                                            <?php    } ?>
+                                                            <td>{{$data->course_start_period}}</td>
+                                                            <td>{{$data->course_end_period}}</td>
+                                                            @if(!empty($data->course_price))
 
-                                                            <a type="button" title="Delete" onclick="course_delete(<?php echo $data->course_id ?>)" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></a>
+                                                                <td>Rs. {{$data->course_price}}</td>
 
-                                                        </td>
+                                                            @else
+                                                                <td>Rs. 0</td>
 
-                                                    </tr>
+                                                            @endif
+                                                            <td>
+
+
+                                                                <!-- <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal3" onclick="fetch_courseupdate_new({{$data->course_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a> -->
+                                                                <a class="btn btn-link" title="show" data-toggle="modal"
+                                                                    data-target="#addModal5"
+                                                                    onclick="fetch_courseupdate_new({{$data->course_id}},'show')"><i
+                                                                        class="fas fa-eye" style="color:green"></i></a>
+
+                                                                <a type="button" title="Delete"
+                                                                    onclick="course_delete(<?php    echo $data->course_id ?>)"
+                                                                    class="btn btn-link"><i class="far fa-trash-alt"
+                                                                        style="color:red"></i></a>
+
+                                                            </td>
+
+                                                        </tr>
                                                     @endforeach
 
 
@@ -587,14 +618,16 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Class Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="class_nameshow" name="class_nameshow">
+                                <input type="text" class="form-control default" id="class_nameshow"
+                                    name="class_nameshow">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Class Description:<span class="error-star" style="color:red;">*</span></label>
-                                <textarea class="form-control default" id="class_descriptionshow" name="class_descriptionshow"></textarea>
+                                <textarea class="form-control default" id="class_descriptionshow"
+                                    name="class_descriptionshow"></textarea>
                             </div>
                         </div>
 
@@ -605,7 +638,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Class Resource:<span class="error-star" style="color:red;">*</span></label>
-                                <iframe id="resource_nameshow" class="img-fluidshow" alt="Banner Image" title="" width="300" height="150" style="width:100% !important;"></iframe>
+                                <iframe id="resource_nameshow" class="img-fluidshow" alt="Banner Image" title=""
+                                    width="300" height="150" style="width:100% !important;"></iframe>
 
 
                             </div>
@@ -613,7 +647,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Class Duration:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" min="1" max="200" class="form-control default" id="class_durationshow" name="class_durationshow">
+                                <input type="number" min="1" max="200" class="form-control default"
+                                    id="class_durationshow" name="class_durationshow">
                             </div>
                         </div>
 
@@ -623,7 +658,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Class Quiz:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="test" min="1" max="200" class="form-control default" id="class_quizshow" name="class_quizshow">
+                                <input type="test" min="1" max="200" class="form-control default" id="class_quizshow"
+                                    name="class_quizshow">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -631,9 +667,9 @@
                                 <label>Quiz Name:<span class="error-star" style="color:red;">*</span></label>
                                 <select class="form-control" name="quiz_id" id="quiz_idshow">
                                     <option value="">Select Quiz Name</option>
-                                    @foreach($rows1['quiz_dropdown'] as $key=>$row)
+                                    @foreach($rows1['quiz_dropdown'] as $key => $row)
 
-                                    <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
+                                        <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
                                     @endforeach
                                 </select>
 
@@ -688,10 +724,10 @@
 
                         _token: '{{csrf_token()}}'
                     },
-                    error: function() {
+                    error: function () {
                         alert('Something is wrong');
                     },
-                    success: function(data) {
+                    success: function (data) {
 
                         if (data['data'] == 0) {
                             Swal.fire("Info!", data['message_cus'], "info", data['message_cus'])
@@ -734,7 +770,7 @@
                 _token: '{{csrf_token()}}'
             },
 
-            success: function(data) {
+            success: function (data) {
 
                 //alert(data);
                 console.log(data);
@@ -763,10 +799,10 @@
 
                     _token: '{{csrf_token()}}'
                 },
-                error: function() {
+                error: function () {
                     alert('Something is wrong');
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data['data'] == 0) {
                         Swal.fire("Info!", data['message_cus'], "info", data['message_cus'])
                         return false
@@ -816,7 +852,7 @@
 
             },
 
-            success: function(data) {
+            success: function (data) {
                 // correct_choices = data.rows[0]['correct_choices'].split(',');
 
                 console.log(data);
@@ -898,7 +934,8 @@
 
             <div class="card longquestion" id="">
                 <h4 class="modal-title long">Add Course:</h4>
-                <form method="post" name="add_course" action="{{ route('course_store')}}" enctype="multipart/form-data" id="course_form" class="reset">
+                <form method="post" name="add_course" action="{{ route('course_store')}}" enctype="multipart/form-data"
+                    id="course_form" class="reset">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
@@ -907,9 +944,9 @@
 
                                 <select class="form-control" name="course_category" id="course_category">
                                     <option value="">---Select Category---</option>
-                                    @foreach($rows2['course_category'] as $key=>$row)
+                                    @foreach($rows2['course_category'] as $key => $row)
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                        <option value="{{ $row }}">{{ $key }}</option>
                                     @endforeach
                                 </select>
 
@@ -918,7 +955,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="course_name" name="course_name" autocomplete="off">
+                                <input type="text" class="form-control default" id="course_name" name="course_name"
+                                    autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -928,19 +966,24 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Course Description:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="course_description" name="course_description" rows="3" class="form-control"></textarea>
+                                <label>Course Description:<span class="error-star"
+                                        style="color:red;">*</span></label><br>
+                                <textarea id="course_description" name="course_description" rows="3"
+                                    class="form-control"></textarea>
 
                             </div>
 
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Course Certificate:<span class="error-star" style="color:red;">*</span></label><br>
-                                <input type="radio" class="btn-check course_certificate" name="course_certificate" value="1" id="course_certificateyes" autocomplete="off">
+                                <label>Course Certificate:<span class="error-star"
+                                        style="color:red;">*</span></label><br>
+                                <input type="radio" class="btn-check course_certificate" name="course_certificate"
+                                    value="1" id="course_certificateyes" autocomplete="off">
                                 <label class="btn btn-outline-primary" for="course_certificateyes">Yes</label>
 
-                                <input type="radio" class="btn-check course_certificate" name="course_certificate" value="2" id="course_certificateno" autocomplete="off">
+                                <input type="radio" class="btn-check course_certificate" name="course_certificate"
+                                    value="2" id="course_certificateno" autocomplete="off">
                                 <label class="btn btn-outline-primary" for="course_certificateno">No</label>
 
 
@@ -951,10 +994,12 @@
                             <div class="form-group" onclick="course_exam()">
 
                                 <label>Course Exam:<span class="error-star" style="color:red;">*</span></label><br>
-                                <input type="radio" class="btn-check course_exam" name="course_exam" value="1" id="course_examyes" autocomplete="off">
+                                <input type="radio" class="btn-check course_exam" name="course_exam" value="1"
+                                    id="course_examyes" autocomplete="off">
                                 <label class="btn btn-outline-primary" for="course_examyes">Yes</label>
 
-                                <input type="radio" class="btn-check course_exam" name="course_exam" value="2" id="course_examno" autocomplete="off">
+                                <input type="radio" class="btn-check course_exam" name="course_exam" value="2"
+                                    id="course_examno" autocomplete="off">
                                 <label class="btn btn-outline-primary" for="course_examno">No</label>
 
 
@@ -969,16 +1014,20 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Introduction:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="file" class="form-control default" id="course_introduction" name="course_introduction" required>
-                                <span style="color:red !important"><strong>Following files could be uploaded as mp4,mp3,png,jpg</strong></span>
+                                <input type="file" class="form-control default" id="course_introduction"
+                                    name="course_introduction" required>
+                                <span style="color:red !important"><strong>Following files could be uploaded as
+                                        mp4,mp3,png,jpg</strong></span>
 
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Banner:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="file" class="form-control default" id="course_banner" name="course_banner" accept="image/*" autocomplete="off" required>
-                                <span style="color:red !important"><strong>Following files could be uploaded as jpeg,png,jpg</strong></span>
+                                <input type="file" class="form-control default" id="course_banner" name="course_banner"
+                                    accept="image/*" autocomplete="off" required>
+                                <span style="color:red !important"><strong>Following files could be uploaded as
+                                        jpeg,png,jpg</strong></span>
                             </div>
                         </div>
                     </div>
@@ -1002,26 +1051,35 @@
                         <div class="col-md-6" id="paid" style="display:none;">
                             <div class="form-group">
                                 <label>Course Price:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="course_price" placeholder="Enter the Money(UGX)" name="course_price" autocomplete="off">
+                                <input type="number" class="form-control default" id="course_price"
+                                    placeholder="Enter the Money(UGX)" name="course_price" autocomplete="off">
                             </div>
 
                         </div>
                         <div class="col-md-6" id="free" style="display:none;">
                             <div class="form-group">
                                 <label>Course Price:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" readonly class="form-control " value="0" id="" name="course_price" autocomplete="off">
+                                <input type="number" readonly class="form-control " id="" name="course_price"
+                                    autocomplete="off">
                             </div>
 
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12 form-group" style="display:flex;justify-content: space-evenly;align-items: center;" onclick="no_period()"><label>This Course has Start and End Period<span class="error-star" style="color:red;">*</span></label>
+                        <div class="col-md-12 form-group"
+                            style="display:flex;justify-content: space-evenly;align-items: center;"
+                            onclick="no_period()"><label>This Course has Start and End Period<span class="error-star"
+                                    style="color:red;">*</span></label>
                             <div class="form-group">
-                                <input type="radio" class="btn-check answer_show_on course_noperiod" name="course_noperiod" value="1" id="course_noperiodyes" autocomplete="off">
-                                <label class="btn btn-outline-primary answer_show_on1" for="course_noperiodyes">Yes</label>
+                                <input type="radio" class="btn-check answer_show_on course_noperiod"
+                                    name="course_noperiod" value="1" id="course_noperiodyes" autocomplete="off">
+                                <label class="btn btn-outline-primary answer_show_on1"
+                                    for="course_noperiodyes">Yes</label>
 
-                                <input type="radio" class="btn-check answer_show_off course_noperiod" name="course_noperiod" value="2" id="course_noperiodno" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary answer_show_off1" for="course_noperiodno">No</label>
+                                <input type="radio" class="btn-check answer_show_off course_noperiod"
+                                    name="course_noperiod" value="2" id="course_noperiodno" autocomplete="off" checked>
+                                <label class="btn btn-outline-primary answer_show_off1"
+                                    for="course_noperiodno">No</label>
 
                             </div>
 
@@ -1035,13 +1093,16 @@
 
 
                     <div class="row">
-                        <div class="col-md-3"><label class="course_period">Course Period:<span class="error-star" style="color:red;">*</span></label></div>
+                        <div class="col-md-3"><label class="course_period">Course Period:<span class="error-star"
+                                    style="color:red;">*</span></label></div>
 
                         <div class="col-md-4">
 
                             <div class="form-group">
                                 <label>Start Date:<span class="error-star" style="color:red;">*</span></label>
-                                <input type='text' class="form-control default startdate" id='course_start_period' readonly name="course_start_period" title="Course Start Date" placeholder="dd-mm-yy" autocomplete="off">
+                                <input type='text' class="form-control default startdate" id='course_start_period'
+                                    readonly name="course_start_period" title="Course Start Date" placeholder="dd-mm-yy"
+                                    autocomplete="off">
                             </div>
 
                         </div>
@@ -1051,7 +1112,9 @@
 
                             <div class="form-group">
                                 <label>End Date:<span class="error-star" style="color:red;">*</span></label>
-                                <input type='text' class="form-control default enddate" id='course_end_period' readonly name="course_end_period" title="Course End Date" placeholder="dd-mm-yy" onchange="autodateupdate(this)" onclick="end_date();" autocomplete="off">
+                                <input type='text' class="form-control default enddate" id='course_end_period' readonly
+                                    name="course_end_period" title="Course End Date" placeholder="dd-mm-yy"
+                                    onchange="autodateupdate(this)" onclick="end_date();" autocomplete="off">
                             </div>
                         </div>
 
@@ -1064,16 +1127,18 @@
 
                     <div class="col-md-12 examname" style="display:none !important;">
                         <div class="row">
-                            <div class="col-md-3 form-group"><label class="course_exam">Exam Details:<span class="error-star" style="color:red;">*</span></label></div>
+                            <div class="col-md-3 form-group"><label class="course_exam">Exam Details:<span
+                                        class="error-star" style="color:red;">*</span></label></div>
 
                             <div class="col-md-5">
 
                                 <div class="form-group">
-                                    <label class="control-label required">Exam Name:<span class="error-star" style="color:red;">*</span></label>
+                                    <label class="control-label required">Exam Name:<span class="error-star"
+                                            style="color:red;">*</span></label>
                                     <select class="form-control" name="exam_name" id="exam_name">
                                         <option value="">Select Exam Name</option>
-                                        @foreach($rows1['exam_list'] as $key=>$row)
-                                        <option value="{{ $row->id }}">{{ $row->exam_name }}</option>
+                                        @foreach($rows1['exam_list'] as $key => $row)
+                                            <option value="{{ $row->id }}">{{ $row->exam_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -1083,7 +1148,9 @@
 
                                 <div class="form-group">
                                     <label>Exam Date:<span class="error-star" style="color:red;">*</span></label>
-                                    <input type='text' class="form-control default exam_date" id="exam_date" name="exam_date" title="Course Exam Date" placeholder="dd-mm-yy" autocomplete="off">
+                                    <input type='text' class="form-control default exam_date" id="exam_date"
+                                        name="exam_date" title="Course Exam Date" placeholder="dd-mm-yy"
+                                        autocomplete="off">
                                 </div>
 
                             </div>
@@ -1092,7 +1159,9 @@
                             <div class="form-group">
                                 <label>Pass Percentage:<span class="error-star" style="color:red;">*</span></label>
                                 <div style="display:flex;align-items: baseline;">
-                                    <input type="number" class="form-control default" id="pass_percentage" name="pass_percentage" autocomplete="off"><span class="col-md-6" style="color:red;"><strong>(in percentage only)</strong></span>
+                                    <input type="number" class="form-control default" id="pass_percentage"
+                                        name="pass_percentage" autocomplete="off"><span class="col-md-6"
+                                        style="color:red;"><strong>(in percentage only)</strong></span>
                                 </div>
                             </div>
                         </div>
@@ -1104,7 +1173,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Instructor:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="course_instructor" name="course_instructor" autocomplete="off">
+                                <input type="text" class="form-control default" id="course_instructor"
+                                    name="course_instructor" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -1119,12 +1189,19 @@
                                             <tr>
 
                                                 <td>
-                                                    <input type="text" class="form-control default" id="course_tags" name="course_tags[]" autocomplete="off">
+                                                    <input type="text" class="form-control default" id="course_tags"
+                                                        name="course_tags[]" autocomplete="off">
                                                 </td>
                                                 <td>
                                                     <div class="action_container">
                                                         <button class="danger" onclick="remove_tr(this)">
                                                             <i class="fa fa-close"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="action_container" width="50px">
+                                                        <button class="success" type="button"
+                                                            onclick="create_tr('table_body')">
+                                                            <i class="fa fa-plus"></i>
                                                         </button>
                                                     </div>
 
@@ -1138,11 +1215,7 @@
 
                                     </table>
 
-                                    <div class="action_container" width="50px">
-                                        <button class="success" type="button" onclick="create_tr('table_body')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+
 
                                 </div>
                             </div>
@@ -1163,7 +1236,9 @@
                                             <tr>
 
                                                 <td>
-                                                    <input type="text" class="form-control default" id="course_skills_required" name="course_skills_required[]" autocomplete="off">
+                                                    <input type="text" class="form-control default"
+                                                        id="course_skills_required" name="course_skills_required[]"
+                                                        autocomplete="off">
                                                 </td>
                                                 <td>
                                                     <div class="action_container">
@@ -1171,6 +1246,13 @@
                                                             <i class="fa fa-close"></i>
                                                         </button>
                                                     </div>
+                                                    <div class="action_container" width="50px">
+                                                        <button class="success" type="button"
+                                                            onclick="create_tr1('table_body1')">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+
 
                                                 </td>
 
@@ -1182,11 +1264,6 @@
 
                                     </table>
 
-                                    <div class="action_container" width="50px">
-                                        <button class="success" type="button" onclick="create_tr1('table_body1')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
 
                                 </div>
                             </div>
@@ -1205,12 +1282,20 @@
                                             <tr>
 
                                                 <td>
-                                                    <input type="text" class="form-control default" id="course_gain_skills" name="course_gain_skills[]" autocomplete="off">
+                                                    <input type="text" class="form-control default"
+                                                        id="course_gain_skills" name="course_gain_skills[]"
+                                                        autocomplete="off">
                                                 </td>
                                                 <td>
                                                     <div class="action_container">
                                                         <button class="danger" onclick="remove_tr(this)">
                                                             <i class="fa fa-close"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="action_container" width="50px">
+                                                        <button class="success" type="button"
+                                                            onclick="create_tr3('table_body3')">
+                                                            <i class="fa fa-plus"></i>
                                                         </button>
                                                     </div>
 
@@ -1224,11 +1309,7 @@
 
                                     </table>
 
-                                    <div class="action_container" width="50px">
-                                        <button class="success" type="button" onclick="create_tr3('table_body3')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+
 
                                 </div>
                             </div>
@@ -1241,7 +1322,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>CPD Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="course_cpt_points" name="course_cpt_points" autocomplete="off">
+                                <input type="number" class="form-control default" id="course_cpt_points"
+                                    name="course_cpt_points" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -1249,11 +1331,12 @@
                                 <label>Classes:<span class="error-star" style="color:red;">*</span></label>
 
                                 <br>
-                                <select class="js-select2" name="course_classes[]" id="course_classes" multiple="multiple" style="width:220px !important;">
+                                <select class="js-select2" name="course_classes[]" id="course_classes"
+                                    multiple="multiple" style="width:220px !important;">
 
 
                                     @foreach($rows['elearning_classes'] as $data)
-                                    <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
+                                        <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
                                     @endforeach
 
                                 </select>
@@ -1267,8 +1350,10 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <a class="btn btn-success btn-space savebutton" type="submit" onclick="gencre1(1)" id="savebutton">Submit </a>
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="resetSelect2()" value="Cancel">
+                            <a class="btn btn-success btn-space savebutton" type="submit" onclick="gencre1(1)"
+                                id="savebutton">Submit </a>
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="resetSelect2()"
+                                value="Cancel">
                         </div>
                     </div>
                 </form>
@@ -1578,7 +1663,7 @@
             allowClear: true,
             tags: true,
             language: {
-                noResults: function() {
+                noResults: function () {
                     return "No Question Added";
                 }
             }
@@ -1586,9 +1671,9 @@
     }
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Call the reinitialization function after the select2 library is loaded
-        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function() {
+        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function () {
             reinitializeSelect2(".js-select5");
         });
     });
@@ -1608,7 +1693,7 @@
             allowClear: true,
             tags: true,
             language: {
-                noResults: function() {
+                noResults: function () {
                     return "No Question Added";
                 }
             }
@@ -1616,9 +1701,9 @@
     }
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Call the reinitialization function after the select2 library is loaded
-        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function() {
+        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function () {
             reinitializeSelect2(".js-select6");
         });
     });
@@ -1781,7 +1866,7 @@
             minDate: 0,
             maxDate: '+30Y',
             inline: true,
-            onSelect: function(selectedDate) {
+            onSelect: function (selectedDate) {
                 // alert(selectedDate);
                 var examDateInput = $("#exam_date");
                 examDateInput.val(selectedDate);
@@ -1791,7 +1876,7 @@
         })
 
     }
-    $(function() {
+    $(function () {
         //start_end_date();
     });
 
@@ -1863,13 +1948,55 @@
                 return false;
             } else {
 
-                let table_body = document.getElementById(table_id),
-                    first_tr = table_body.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
+                // let table_body = document.getElementById(table_id),
+                //     first_tr = table_body.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
 
-                table_body.append(tr_clone);
+                // table_body.append(tr_clone);
 
-                clean_first_tr(table_body.firstElementChild);
+                // clean_first_tr(table_body.firstElementChild);
+                const tableBody = document.getElementById(table_id);
+                const rows = tableBody.querySelectorAll('tr');
+                let isValid = true;
+
+                // Validate all input fields in the table
+                rows.forEach(row => {
+                    const input = row.querySelector('input');
+                    if (input && input.value.trim() === '') {
+                        isValid = false;
+                    }
+                });
+
+                // If any input field is empty, show an error and do not add a new row
+                if (!isValid) {
+                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                    return;
+                }
+
+                // Proceed to add a new row if validation passes
+                const firstRow = tableBody.firstElementChild;
+                const newRow = firstRow.cloneNode(true);
+
+                // Remove the "Add" button from the cloned row
+                const addButton = newRow.querySelector('.success');
+                if (addButton) {
+                    addButton.remove();
+                }
+
+                // Clear the value of the input in the new row
+                newRow.querySelector('input').value = '';
+
+                // Add the "Add" button back to the original row if needed
+                const originalAddButton = tableBody.querySelector('.success');
+                if (originalAddButton) {
+                    originalAddButton.style.display = 'inline';
+                }
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
+                //clean_first_tr(table_body.firstElementChild);
+
+
             }
         }
     }
@@ -1896,15 +2023,15 @@
     }
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         const cresource = document.getElementById('cresource');
 
-        cresource.addEventListener('change', function() {
+        cresource.addEventListener('change', function () {
             const file = cresource.files[0];
             const video = document.createElement('video');
 
             video.preload = 'metadata';
-            video.onloadedmetadata = function() {
+            video.onloadedmetadata = function () {
                 window.URL.revokeObjectURL(video.src); // Release the object URL
                 const duration = video.duration;
                 $('#cduration').val((duration / 60).toFixed(2));
@@ -1914,7 +2041,7 @@
 
             video.src = URL.createObjectURL(file);
         });
-        $(document).on('hidden.bs.modal', function() {
+        $(document).on('hidden.bs.modal', function () {
             // const form = this.querySelector('.reset');
             //alert('ef');
             // form.reset();
@@ -1941,13 +2068,52 @@
                 return false;
             } else {
 
-                let table_body1 = document.getElementById(table_id),
-                    first_tr = table_body1.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
+                // let table_body1 = document.getElementById(table_id),
+                //     first_tr = table_body1.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
 
-                table_body1.append(tr_clone);
+                // table_body1.append(tr_clone);
 
-                clean_first_tr(table_body1.firstElementChild);
+                // clean_first_tr(table_body1.firstElementChild);
+                const tableBody = document.getElementById(table_id);
+                const rows = tableBody.querySelectorAll('tr');
+                let isValid = true;
+
+                // Validate all input fields in the table
+                rows.forEach(row => {
+                    const input = row.querySelector('input');
+                    if (input && input.value.trim() === '') {
+                        isValid = false;
+                    }
+                });
+
+                // If any input field is empty, show an error and do not add a new row
+                if (!isValid) {
+                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                    return;
+                }
+
+                // Proceed to add a new row if validation passes
+                const firstRow = tableBody.firstElementChild;
+                const newRow = firstRow.cloneNode(true);
+
+                // Remove the "Add" button from the cloned row
+                const addButton = newRow.querySelector('.success');
+                if (addButton) {
+                    addButton.remove();
+                }
+
+                // Clear the value of the input in the new row
+                newRow.querySelector('input').value = '';
+
+                // Add the "Add" button back to the original row if needed
+                const originalAddButton = tableBody.querySelector('.success');
+                if (originalAddButton) {
+                    originalAddButton.style.display = 'inline';
+                }
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
             }
         }
     }
@@ -1987,13 +2153,52 @@
             } else {
 
 
-                let table_body3 = document.getElementById(table_id),
-                    first_tr = table_body3.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
+                // let table_body3 = document.getElementById(table_id),
+                //     first_tr = table_body3.firstElementChild
+                // tr_clone = first_tr.cloneNode(true);
 
-                table_body3.append(tr_clone);
+                // table_body3.append(tr_clone);
 
-                clean_first_tr(table_body3.firstElementChild);
+                // clean_first_tr(table_body3.firstElementChild);
+                const tableBody = document.getElementById(table_id);
+                const rows = tableBody.querySelectorAll('tr');
+                let isValid = true;
+
+                // Validate all input fields in the table
+                rows.forEach(row => {
+                    const input = row.querySelector('input');
+                    if (input && input.value.trim() === '') {
+                        isValid = false;
+                    }
+                });
+
+                // If any input field is empty, show an error and do not add a new row
+                if (!isValid) {
+                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                    return;
+                }
+
+                // Proceed to add a new row if validation passes
+                const firstRow = tableBody.firstElementChild;
+                const newRow = firstRow.cloneNode(true);
+
+                // Remove the "Add" button from the cloned row
+                const addButton = newRow.querySelector('.success');
+                if (addButton) {
+                    addButton.remove();
+                }
+
+                // Clear the value of the input in the new row
+                newRow.querySelector('input').value = '';
+
+                // Add the "Add" button back to the original row if needed
+                const originalAddButton = tableBody.querySelector('.success');
+                if (originalAddButton) {
+                    originalAddButton.style.display = 'inline';
+                }
+
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
             }
         }
     }
@@ -2068,7 +2273,7 @@
 
             },
 
-            success: function(data) {
+            success: function (data) {
                 // correct_choices = data.rows[0]['correct_choices'].split(',');
 
                 console.log(data);
@@ -2273,7 +2478,7 @@
         });
 
     }
-    $('#result').on('change', function() {
+    $('#result').on('change', function () {
         //fetch_courseupdate_new();
         $('#courselist').css('display', 'none');
         $('#classlist').css('display', 'none');
@@ -2290,7 +2495,7 @@
 </script>
 
 <script>
-    $('#course_pay').on('change', function() {
+    $('#course_pay').on('change', function () {
         $('#paid').css('display', 'none');
         $('#free').css('display', 'none');
 
@@ -2306,13 +2511,14 @@
 </script>
 
 <script>
-    $('#course_payedit').on('change', function() {
+    $('#course_payedit').on('change', function () {
         $('#paid1').css('display', 'none');
         $('#free1').css('display', 'none');
 
 
         if ($(this).val() === 'paid') {
             $('#paid1').css('display', 'block');
+
         }
         if ($(this).val() === 'free') {
             $('#free1').css('display', 'block');
@@ -2320,7 +2526,7 @@
 
     });
 
-    $('#course_payshow').on('change', function() {
+    $('#course_payshow').on('change', function () {
         $('#paid2').css('display', 'none');
         $('#free2').css('display', 'none');
 
@@ -2333,6 +2539,45 @@
         }
 
     });
+    $(document).ready(function () {
+        // Handle the visibility of the paid/free sections and input values
+        $('#course_pay').on('change', function () {
+            $('#paid').css('display', 'none');
+            $('#free').css('display', 'none');
+
+            const selectedValue = $(this).val();
+
+            if (selectedValue === 'paid') {
+                $('#paid').css('display', 'block');
+                $('#free').css('display', 'none');
+                $('#course_price').val(''); // Clear the course_price input
+
+            } else if (selectedValue === 'free') {
+                $('#free').css('display', 'block');
+                $('#paid').css('display', 'none');
+                $('#course_price').val('0'); // Set course_price to 0
+            }
+        });
+
+    });
+
+    // $('#course_pay').on('change', function() {
+    //     $('#paid').css('display', 'none');
+    //     $('#free').css('display', 'none');
+
+
+    //     if ($(this).val() == 'paid') {
+    //         $('#paid').css('display', 'block');
+    //         $('#free').css('display', 'none');
+    //         $('#course_price').val('');
+    //     }
+    //     if ($(this).val() === 'free') {
+    //         $('#free').css('display', 'block');
+    //         $('#paid').css('display', 'none');
+    //         document.getElementById('course_price').value = "0";
+    //     }
+
+    // });
 </script>
 
 <!-- Deepika -->
@@ -2347,7 +2592,8 @@
                 <h4 class="modal-title">Add Class</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
-            <form method="POST" id="class_form" action="{{ route('class_store')}}" name="add_class" enctype="multipart/form-data" class="reset">
+            <form method="POST" id="class_form" action="{{ route('class_store')}}" name="add_class"
+                enctype="multipart/form-data" class="reset">
                 @csrf
 
 
@@ -2368,7 +2614,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Class Description:<span class="error-star" style="color:red;">*</span></label>
-                                <textarea class="form-control default" id="cdescription" name="class_description"></textarea>
+                                <textarea class="form-control default" id="cdescription"
+                                    name="class_description"></textarea>
                                 <span class="input-Message" id="cnameerror" style="color:red;">
                             </div>
                         </div>
@@ -2379,16 +2626,19 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Class Resource:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="file" class="form-control default" id="cresource" required name="resource_name" accept=".pdf, .mp3,.mp4">
+                                <input type="file" class="form-control default" id="cresource" required
+                                    name="resource_name" accept=".pdf,.mp3,.mp4">
                                 <span class="input-Message" id="resourceerror" style="color:red;"></span>
-                                <span style="color:red !important"><strong>Following files could be uploaded as pdf,mp3,mp4</strong></span>
+                                <span style="color:red !important"><strong>Following files could be uploaded as
+                                        pdf,mp3,mp4</strong></span>
 
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Class Duration:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" readonly class="form-control default" id="cduration" min="1" max="200" value="0.00" name="class_duration">
+                                <input type="text" readonly class="form-control default" id="cduration" min="1"
+                                    max="200" value="0.00" name="class_duration">
                                 <span class="input-Message" id="durationerror" style="color:red;">
                             </div>
                         </div>
@@ -2413,8 +2663,8 @@
 
                                 <select class="form-control" name="quiz_id" id="quiz_id">
                                     <option value="">---Select Quiz Type---</option>
-                                    @foreach($rows1['quiz_dropdown'] as $key=>$row)
-                                    <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
+                                    @foreach($rows1['quiz_dropdown'] as $key => $row)
+                                        <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -2425,7 +2675,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <a class="btn btn-success btn-space classsavebutton" type="submit" onclick="gencre()" id="classsavebutton">Submit</a>
+                            <a class="btn btn-success btn-space classsavebutton" type="submit" onclick="gencre()"
+                                id="classsavebutton">Submit</a>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -2447,7 +2698,8 @@
 
         <div class="modal-content">
 
-            <form method="POST" action="{{route('elearning.class_update',1)}}" id="edit_form" enctype="multipart/form-data">
+            <form method="POST" action="{{route('elearning.class_update', 1)}}" id="edit_form"
+                enctype="multipart/form-data">
 
                 @csrf
                 <input type="hidden" name="eid" class="eid" id="eid">
@@ -2468,14 +2720,17 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Class Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="class_nameedit" name="class_nameedit" autocomplete="off">
+                                <input type="text" class="form-control default" id="class_nameedit"
+                                    name="class_nameedit" autocomplete="off">
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="">Class Description<span class="error-star" style="color:red;">*</span></label>
-                                <textarea class="form-control " id="class_descriptionedit" name="class_descriptionedit" rows="18" columns="10" required></textarea>
+                                <label class="">Class Description<span class="error-star"
+                                        style="color:red;">*</span></label>
+                                <textarea class="form-control " id="class_descriptionedit" name="class_descriptionedit"
+                                    rows="18" columns="10" required></textarea>
                             </div>
                         </div>
 
@@ -2484,25 +2739,32 @@
                         <div class="col-md-7">
                             <div class="form-group">
                                 <label>Class Resource:<span class="error-star" style="color:red;">*</span></label>
-                                <div class="col-md-10" style="display: flex;justify-content: space-between;margin-bottom: 15px;">
-                                    <a class="btn btn-link btn-warning" onclick="changeimage(event);" id="change_banner">Change Banner</a>
-                                    <a class="btn btn-link btn-warning" onclick="changeimage(event);" id="change_cancel" style="display:none;">Cancel</a>
+                                <div class="col-md-10"
+                                    style="display: flex;justify-content: space-between;margin-bottom: 15px;">
+                                    <a class="btn btn-link btn-warning" onclick="changeimage(event);"
+                                        id="change_banner">Change Banner</a>
+                                    <a class="btn btn-link btn-warning" onclick="changeimage(event);" id="change_cancel"
+                                        style="display:none;">Cancel</a>
 
                                 </div>
-                                <input type="file" class="form-control default" id="resourse_nameedit" name="resource_nameedit" style="display:none;" autocomplete="off" accept=".pdf, .mp3,.mp4">
+                                <input type="file" class="form-control default" id="resourse_nameedit"
+                                    name="resource_nameedit" style="display:none;" autocomplete="off"
+                                    accept=".pdf, .mp3,.mp4">
 
                                 <iframe class="img-fluid" alt="Banner Image" title=""></iframe>
 
 
 
                             </div>
-                            <span style="color:red !important"><strong>Following files could be uploaded as pdf,mp3,mp4</strong></span>
+                            <span style="color:red !important"><strong>Following files could be uploaded as
+                                    pdf,mp3,mp4</strong></span>
 
                         </div>
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label>Class Duration:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="class_durationedit" name="class_durationedit" autocomplete="off">
+                                <input type="text" class="form-control default" id="class_durationedit"
+                                    name="class_durationedit" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -2511,7 +2773,8 @@
                             <div class="form-group">
                                 <label>Class Quiz:<span class="error-star" style="color:red;">*</span></label>
 
-                                <select class="form-control" name="class_quizedit" id="class_quizedit" onchange="data(event);">
+                                <select class="form-control" name="class_quizedit" id="class_quizedit"
+                                    onchange="data(event);">
                                     <option value="">---Select Quiz Type---</option>
                                     <option value="yes">Yes </option>
                                     <option value="no">No</option>
@@ -2524,8 +2787,8 @@
 
                                 <select class="form-control" name="quiz_idedit" id="quiz_idedit">
                                     <option value="">---Select Quiz Type---</option>
-                                    @foreach($rows1['quiz_dropdown'] as $key=>$row)
-                                    <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
+                                    @foreach($rows1['quiz_dropdown'] as $key => $row)
+                                        <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -2541,7 +2804,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space savebutton" type="submit" onclick="gencre11('edit')" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space savebutton" type="submit"
+                                onclick="gencre11('edit')" id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -2577,19 +2841,21 @@
 
             <div class="card longquestion" id="">
                 <h4 class="modal-title long">Edit Course:</h4>
-                <form method="POST" id="course_form_edit" action="{{url('/elearning/course/update/1')}}" enctype="multipart/form-data">
+                <form method="POST" id="course_form_edit" action="{{url('/elearning/course/update/1')}}"
+                    enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden" name="course_edit" class="course_edit" id="course_edit">
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label required">Course Category:<span class="error-star" style="color:red;">*</span></label>
+                                <label class="control-label required">Course Category:<span class="error-star"
+                                        style="color:red;">*</span></label>
                                 <select class="form-control" name="course_category" id="course_categoryedit">
                                     <option value="">Select User Category</option>
-                                    @foreach($rows2['course_category'] as $key=>$row)
+                                    @foreach($rows2['course_category'] as $key => $row)
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                        <option value="{{ $row }}">{{ $key }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -2603,8 +2869,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Course Description:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="course_descriptionedit" name="course_description" rows="3" class="form-control"></textarea>
+                                <label>Course Description:<span class="error-star"
+                                        style="color:red;">*</span></label><br>
+                                <textarea id="course_descriptionedit" name="course_description" rows="3"
+                                    class="form-control"></textarea>
 
                             </div>
 
@@ -2612,10 +2880,12 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Certificate:</label><br>
-                                <input type="radio" class="btn-check answer_edit_on" name="course_certificate" value="1" id="course_certificateedit" autocomplete="off">
+                                <input type="radio" class="btn-check answer_edit_on" name="course_certificate" value="1"
+                                    id="course_certificateedit" autocomplete="off">
                                 <label class="btn btn-outline-primary" for="btnradio1">Yes</label>
 
-                                <input type="radio" class="btn-check answer_edit_off" name="course_certificate" value="2" id="course_certificateedit" autocomplete="off">
+                                <input type="radio" class="btn-check answer_edit_off" name="course_certificate"
+                                    value="2" id="course_certificateedit" autocomplete="off">
                                 <label class="btn btn-outline-primary" for="btnradio2">No</label>
 
 
@@ -2626,13 +2896,18 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Course Introduction:<span class="error-star" style="color:red;">*</span></label>
-                                <div class="col-md-10" style="display: flex;justify-content: space-between;margin-bottom: 15px;">
-                                    <a class="btn btn-link btn-warning" onclick="changeimage1(event);" id="change_banner1">Change Introduction</a>
-                                    <a class="btn btn-link btn-warning" onclick="changeimage1(event);" id="change_cancel1" style="display:none;">Cancel</a>
+                                <div class="col-md-10"
+                                    style="display: flex;justify-content: space-between;margin-bottom: 15px;">
+                                    <a class="btn btn-link btn-warning" onclick="changeimage1(event);"
+                                        id="change_banner1">Change Introduction</a>
+                                    <a class="btn btn-link btn-warning" onclick="changeimage1(event);"
+                                        id="change_cancel1" style="display:none;">Cancel</a>
                                 </div>
-                                <input type="file" class="form-control default" id="course_introductionedit" name="course_introductionedit" style="display:none;" autocomplete="off">
+                                <input type="file" class="form-control default" id="course_introductionedit"
+                                    name="course_introductionedit" style="display:none;" autocomplete="off">
 
-                                <iframe id="course_introductionedit" class="img-fluid1" alt="Banner Image" width="300" height="150"></iframe>
+                                <iframe id="course_introductionedit" class="img-fluid1" alt="Banner Image" width="300"
+                                    height="150"></iframe>
                             </div>
                         </div>
 
@@ -2642,17 +2917,22 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Course Banner:<span class="error-star" style="color:red;">*</span></label>
-                                <div class="col-md-10" style="display: flex;justify-content: space-between;margin-bottom: 15px;">
-                                    <a class="btn btn-link btn-warning" onclick="changeimage2(event);" id="change_banner2">Change Banner</a>
-                                    <a class="btn btn-link btn-warning" onclick="changeimage2(event);" id="change_cancel2" style="display:none;">Cancel</a>
+                                <div class="col-md-10"
+                                    style="display: flex;justify-content: space-between;margin-bottom: 15px;">
+                                    <a class="btn btn-link btn-warning" onclick="changeimage2(event);"
+                                        id="change_banner2">Change Banner</a>
+                                    <a class="btn btn-link btn-warning" onclick="changeimage2(event);"
+                                        id="change_cancel2" style="display:none;">Cancel</a>
                                 </div>
-                                <input type="file" class="form-control default" id="course_banneredit" name="course_banneredit" style="display:none;" accept="image/*" autocomplete="off">
+                                <input type="file" class="form-control default" id="course_banneredit"
+                                    name="course_banneredit" style="display:none;" accept="image/*" autocomplete="off">
                                 <?php if (!empty($data->course_banner)) { ?>
 
-                                    <img class="img-fluid2" alt="Banner Image" title="">
+                                <img class="img-fluid2" alt="Banner Image" title="">
 
                                 <?php } else { ?>
-                                    <img class="" src="uploads/class/126/empty.jpg" alt="Banner Image" width="200px" height="200px" title="">
+                                <img class="" src="uploads/class/126/empty.jpg" alt="Banner Image" width="200px"
+                                    height="200px" title="">
 
                                 <?php } ?>
 
@@ -2684,27 +2964,32 @@
                         <div class="col-md-6" id="paid1" style="display:none;">
                             <div class="form-group">
                                 <label>Course Price:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="course_priceedit" name="course_price">
+                                <input type="text" class="form-control default" id="course_priceedit"
+                                    name="course_price">
                             </div>
 
                         </div>
                         <div class="col-md-6" id="free1" style="display:none;">
                             <div class="form-group">
                                 <label>Course Price:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" readonly class="form-control default" value="0" id="course_price" name="course_price">
+                                <input type="text" readonly class="form-control default" value="0" id="course_price"
+                                    name="course_price">
                             </div>
 
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-3"><label class="course_period">Course Period:<span class="error-star" style="color:red;">*</span></label></div>
+                        <div class="col-md-3"><label class="course_period">Course Period:<span class="error-star"
+                                    style="color:red;">*</span></label></div>
 
                         <div class="col-md-4">
 
                             <div class="form-group">
                                 <label>Start Date:<span class="error-star" style="color:red;">*</span></label>
-                                <input type='text' class="form-control default startdate" id='course_start_periodedit' disabled name="course_start_period" title="Meeting Start Date" placeholder="dd-mm-yy" onchange="autodateupdate(this)" required autocomplete="off">
+                                <input type='text' class="form-control default startdate" id='course_start_periodedit'
+                                    disabled name="course_start_period" title="Meeting Start Date"
+                                    placeholder="dd-mm-yy" onchange="autodateupdate(this)" required autocomplete="off">
                             </div>
 
                         </div>
@@ -2714,7 +2999,9 @@
 
                             <div class="form-group">
                                 <label>End Date:<span class="error-star" style="color:red;">*</span></label>
-                                <input type='text' class="form-control default startdate" id='course_end_periodedit' disabled name="course_end_period" title="Meeting Start Date" placeholder="dd-mm-yy" onchange="autodateupdate(this)" required autocomplete="off">
+                                <input type='text' class="form-control default startdate" id='course_end_periodedit'
+                                    disabled name="course_end_period" title="Meeting Start Date" placeholder="dd-mm-yy"
+                                    onchange="autodateupdate(this)" required autocomplete="off">
                             </div>
                         </div>
 
@@ -2725,7 +3012,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Instructor:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="course_instructoredit" name="course_instructor">
+                                <input type="text" class="form-control default" id="course_instructoredit"
+                                    name="course_instructor">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -2740,7 +3028,8 @@
                                             <tr>
 
                                                 <td>
-                                                    <input type="text" class="form-control default" id="course_tagsedit" name="course_tags[]">
+                                                    <input type="text" class="form-control default" id="course_tagsedit"
+                                                        name="course_tags[]">
                                                 </td>
                                                 <td>
                                                     <div class="action_container">
@@ -2785,7 +3074,8 @@
                                             <tr>
 
                                                 <td>
-                                                    <input type="text" class="form-control default" id="course_skills_required[]" name="course_skills_required">
+                                                    <input type="text" class="form-control default"
+                                                        id="course_skills_required[]" name="course_skills_required">
                                                 </td>
                                                 <td>
                                                     <div class="action_container">
@@ -2827,7 +3117,8 @@
                                             <tr>
 
                                                 <td>
-                                                    <input type="text" class="form-control default" id="course_gain_skills" name="course_gain_skills">
+                                                    <input type="text" class="form-control default"
+                                                        id="course_gain_skills" name="course_gain_skills">
                                                 </td>
                                                 <td>
                                                     <div class="action_container">
@@ -2865,7 +3156,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>CPD Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="course_cpt_pointsedit" name="course_cpt_points">
+                                <input type="text" class="form-control default" id="course_cpt_pointsedit"
+                                    name="course_cpt_points">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -2873,11 +3165,12 @@
                                 <label>Classes:<span class="error-star" style="color:red;">*</span></label>
 
                                 <br>
-                                <select class="js-select6 course_classesedit" name="course_classes[]" id="course_classesedit" multiple="multiple">
+                                <select class="js-select6 course_classesedit" name="course_classes[]"
+                                    id="course_classesedit" multiple="multiple">
 
 
                                     @foreach($rows['elearning_classes'] as $data)
-                                    <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
+                                        <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
                                     @endforeach
 
                                 </select>
@@ -2891,7 +3184,8 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <button class="btn btn-success btn-space" type="button" onclick="gencre1('edit');" id="savebutton">Update</button>
+                            <button class="btn btn-success btn-space" type="button" onclick="gencre1('edit');"
+                                id="savebutton">Update</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -2925,19 +3219,21 @@
 
             <div class="card longquestion" id="">
                 <h4 class="modal-title long">Show Course:</h4>
-                <form method="POST" id="course_form_show" action="{{url('/elearning/course/show/1')}}" enctype="multipart/form-data">
+                <form method="POST" id="course_form_show" action="{{url('/elearning/course/show/1')}}"
+                    enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden" name="course_editshow" class="course_edit" id="course_editshow">
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label required">Course Category:<span class="error-star" style="color:red;">*</span></label>
+                                <label class="control-label required">Course Category:<span class="error-star"
+                                        style="color:red;">*</span></label>
                                 <select class="form-control" name="course_category" id="course_categoryshow">
                                     <option value="">Select User Category</option>
-                                    @foreach($rows2['course_category'] as $key=>$row)
+                                    @foreach($rows2['course_category'] as $key => $row)
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                        <option value="{{ $row }}">{{ $key }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -2951,8 +3247,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Course Description:<span class="error-star" style="color:red;">*</span></label><br>
-                                <textarea id="course_descriptionshow" name="course_description" rows="3" class="form-control"></textarea>
+                                <label>Course Description:<span class="error-star"
+                                        style="color:red;">*</span></label><br>
+                                <textarea id="course_descriptionshow" name="course_description" rows="3"
+                                    class="form-control"></textarea>
 
                             </div>
 
@@ -2960,10 +3258,12 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Course Certificate:</label><br>
-                                <input type="radio" class="btn-check answer_show_on course_certificateshow" name="course_certificate" value="1" id="course_certificateshow" autocomplete="off">
+                                <input type="radio" class="btn-check answer_show_on course_certificateshow"
+                                    name="course_certificate" value="1" id="course_certificateshow" autocomplete="off">
                                 <label class="btn btn-outline-primary answer_show_on1" for="btnradio1">Yes</label>
 
-                                <input type="radio" class="btn-check answer_show_off course_certificateshow" name="course_certificate" value="2" id="course_certificateshow" autocomplete="off">
+                                <input type="radio" class="btn-check answer_show_off course_certificateshow"
+                                    name="course_certificate" value="2" id="course_certificateshow" autocomplete="off">
                                 <label class="btn btn-outline-primary answer_show_off1" for="btnradio2">No</label>
 
 
@@ -2972,10 +3272,12 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Course Exam:<span class="error-star" style="color:red;">*</span></label><br>
-                                <input type="radio" class="btn-check exam_show_on course_examshow" name="course_exam" value="1" id="course_examshow" autocomplete="off">
+                                <input type="radio" class="btn-check exam_show_on course_examshow" name="course_exam"
+                                    value="1" id="course_examshow" autocomplete="off">
                                 <label class="btn btn-outline-primary exam_show_on1" for="btnradio1">Yes</label>
 
-                                <input type="radio" class="btn-check exam_show_off course_examshow" name="course_exam" value="2" id="course_examshow" autocomplete="off">
+                                <input type="radio" class="btn-check exam_show_off course_examshow" name="course_exam"
+                                    value="2" id="course_examshow" autocomplete="off">
                                 <label class="btn btn-outline-primary exam_show_off1" for="btnradio2">No</label>
 
 
@@ -2988,9 +3290,12 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Course Introduction:<span class="error-star" style="color:red;">*</span></label>
-                                <div class="col-md-10" style="display: flex;justify-content: space-between;margin-bottom: 15px;">
-                                    <iframe id="course_introductionshow" class="img-fluid1" alt="Banner Image" width="300" height="150"></iframe>
-                                    <input type="file" class="form-control default" id="course_introductionshow" name="course_introduction" style="display:none;" autocomplete="off">
+                                <div class="col-md-10"
+                                    style="display: flex;justify-content: space-between;margin-bottom: 15px;">
+                                    <iframe id="course_introductionshow" class="img-fluid1" alt="Banner Image"
+                                        width="300" height="150"></iframe>
+                                    <input type="file" class="form-control default" id="course_introductionshow"
+                                        name="course_introduction" style="display:none;" autocomplete="off">
 
                                 </div>
 
@@ -3004,9 +3309,11 @@
                             <div class="form-group">
                                 <label>Course Banner:<span class="error-star" style="color:red;">*</span></label>
 
-                                <input type="file" class="form-control default" id="course_bannershow" name="course_banner" style="display:none;" accept="image/*" autocomplete="off">
+                                <input type="file" class="form-control default" id="course_bannershow"
+                                    name="course_banner" style="display:none;" accept="image/*" autocomplete="off">
 
-                                <img class="img-fluid2" alt="Banner Image" title="" style="width:200px;height:300px !important;">
+                                <img class="img-fluid2" alt="Banner Image" title=""
+                                    style="width:200px;height:300px !important;">
 
 
 
@@ -3038,27 +3345,35 @@
                         <div class="col-md-6" id="paid2" style="display:none;">
                             <div class="form-group">
                                 <label>Course Price:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="course_priceshow" name="course_price">
+                                <input type="text" class="form-control default" id="course_priceshow"
+                                    name="course_price">
                             </div>
 
                         </div>
                         <div class="col-md-6" id="free2" style="display:none;">
                             <div class="form-group">
                                 <label>Course Price:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" readonly class="form-control default" value="0" id="course_priceshow" name="course_price">
+                                <input type="text" readonly class="form-control default" value="0" id="course_priceshow"
+                                    name="course_price">
                             </div>
 
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12 form-group" style="display:flex;justify-content: space-evenly;align-items: center;"><label>This Course has Start and End Period<span class="error-star" style="color:red;">*</span></label>
+                        <div class="col-md-12 form-group"
+                            style="display:flex;justify-content: space-evenly;align-items: center;"><label>This Course
+                                has Start and End Period<span class="error-star" style="color:red;">*</span></label>
                             <div class="col-md-4 form-group">
-                                <input type="radio" class="btn-check answer_show_on course_noperiodshow" name="course_noperiod" value="1" id="course_noperiodshow" autocomplete="off">
-                                <label class="btn btn-outline-primary answer_show_on1" for="course_noperiodyes">Yes</label>
+                                <input type="radio" class="btn-check answer_show_on course_noperiodshow"
+                                    name="course_noperiod" value="1" id="course_noperiodshow" autocomplete="off">
+                                <label class="btn btn-outline-primary answer_show_on1"
+                                    for="course_noperiodyes">Yes</label>
 
-                                <input type="radio" class="btn-check answer_show_off course_noperiodshow" name="course_noperiod" value="2" id="course_noperiodshow" autocomplete="off">
-                                <label class="btn btn-outline-primary answer_show_off1" for="course_noperiodno">No</label>
+                                <input type="radio" class="btn-check answer_show_off course_noperiodshow"
+                                    name="course_noperiod" value="2" id="course_noperiodshow" autocomplete="off">
+                                <label class="btn btn-outline-primary answer_show_off1"
+                                    for="course_noperiodno">No</label>
 
                             </div>
 
@@ -3071,13 +3386,16 @@
 
 
                     <div class="row">
-                        <div class="col-md-3"><label class="course_period">Course Period:<span class="error-star" style="color:red;">*</span></label></div>
+                        <div class="col-md-3"><label class="course_period">Course Period:<span class="error-star"
+                                    style="color:red;">*</span></label></div>
 
                         <div class="col-md-4">
 
                             <div class="form-group">
                                 <label>Start Date:<span class="error-star" style="color:red;">*</span></label>
-                                <input type='text' class="form-control default" id='course_start_periodshow' disabled name="course_start_period" title="Meeting Start Date" placeholder="dd-mm-yy" onchange="autodateupdate(this)" required autocomplete="off">
+                                <input type='text' class="form-control default" id='course_start_periodshow' disabled
+                                    name="course_start_period" title="Meeting Start Date" placeholder="dd-mm-yy"
+                                    onchange="autodateupdate(this)" required autocomplete="off">
                             </div>
 
                         </div>
@@ -3087,23 +3405,27 @@
 
                             <div class="form-group">
                                 <label>End Date:<span class="error-star" style="color:red;">*</span></label>
-                                <input type='text' class="form-control default" id='course_end_periodshow' disabled name="course_end_period" title="Meeting Start Date" placeholder="dd-mm-yy" onchange="autodateupdate(this)" required autocomplete="off">
+                                <input type='text' class="form-control default" id='course_end_periodshow' disabled
+                                    name="course_end_period" title="Meeting Start Date" placeholder="dd-mm-yy"
+                                    onchange="autodateupdate(this)" required autocomplete="off">
                             </div>
                         </div>
 
                     </div>
                     <div class="col-md-12 examnameshow">
                         <div class="row">
-                            <div class="col-md-3"><label class="course_period">Exam Details:<span class="error-star" style="color:red;">*</span></label></div>
+                            <div class="col-md-3"><label class="course_period">Exam Details:<span class="error-star"
+                                        style="color:red;">*</span></label></div>
 
                             <div class="col-md-5">
 
                                 <div class="form-group">
-                                    <label class="control-label required">Exam Name:<span class="error-star" style="color:red;">*</span></label>
+                                    <label class="control-label required">Exam Name:<span class="error-star"
+                                            style="color:red;">*</span></label>
                                     <select class="form-control" name="exam_nameshow" id="exam_nameshow">
                                         <option value="">Select Exam Name</option>
-                                        @foreach($rows1['exam_list'] as $key=>$row)
-                                        <option value="{{ $row->id }}">{{ $row->exam_name }}</option>
+                                        @foreach($rows1['exam_list'] as $key => $row)
+                                            <option value="{{ $row->id }}">{{ $row->exam_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -3113,7 +3435,8 @@
 
                                 <div class="form-group">
                                     <label>Exam Date:<span class="error-star" style="color:red;">*</span></label>
-                                    <input type='text' class="form-control default exam_dateshow" id='exam_dateshow' name="exam_dateshow" title="Course Exam Date" autocomplete="off">
+                                    <input type='text' class="form-control default exam_dateshow" id='exam_dateshow'
+                                        name="exam_dateshow" title="Course Exam Date" autocomplete="off">
                                 </div>
 
                             </div>
@@ -3123,7 +3446,9 @@
                             <div class="form-group">
                                 <label>Pass Percentage:<span class="error-star" style="color:red;">*</span></label>
                                 <div style="display:flex;align-items: baseline;">
-                                    <input type="text" class="form-control default" id="pass_percentageshow" name="pass_percentageshow"><span class="col-md-6" style="color:red;"><strong>(in percentage only)</strong></span>
+                                    <input type="text" class="form-control default" id="pass_percentageshow"
+                                        name="pass_percentageshow"><span class="col-md-6" style="color:red;"><strong>(in
+                                            percentage only)</strong></span>
                                 </div>
                             </div>
                         </div>
@@ -3135,7 +3460,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Instructor:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="course_instructorshow" name="course_instructor">
+                                <input type="text" class="form-control default" id="course_instructorshow"
+                                    name="course_instructor">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -3143,7 +3469,8 @@
                             <div class="form-group">
                                 <label>Course Tags:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="wordquestion">
-                                    <textarea class="form-control default" id="course_tagsshow" name="course_tags" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea class="form-control default" id="course_tagsshow" name="course_tags"
+                                        style="background-color: #e9ecef !important;"></textarea>
 
                                 </div>
                             </div>
@@ -3158,7 +3485,9 @@
                             <div class="form-group">
                                 <label>Skill Required:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="wordquestion">
-                                    <textarea class="form-control default" id="course_skills_requiredshow" name="course_skills_required" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea class="form-control default" id="course_skills_requiredshow"
+                                        name="course_skills_required"
+                                        style="background-color: #e9ecef !important;"></textarea>
 
                                 </div>
                             </div>
@@ -3170,7 +3499,9 @@
                             <div class="form-group">
                                 <label>Gain Skill:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="wordquestion">
-                                    <textarea class="form-control default" id="course_gain_skillsshow" name="course_gain_skills" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea class="form-control default" id="course_gain_skillsshow"
+                                        name="course_gain_skills"
+                                        style="background-color: #e9ecef !important;"></textarea>
 
                                 </div>
                             </div>
@@ -3185,7 +3516,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>CPD Points: <span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="course_cpt_pointsshow" name="course_cpt_points">
+                                <input type="text" class="form-control default" id="course_cpt_pointsshow"
+                                    name="course_cpt_points">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -3193,10 +3525,11 @@
                                 <label>Classes:<span class="error-star" style="color:red;">*</span></label>
 
                                 <br>
-                                <select class="js-select5  course_classesshow" name="course_classes[]" id="course_classesshow" multiple="multiple" style="width:208px !important;">
+                                <select class="js-select5  course_classesshow" name="course_classes[]"
+                                    id="course_classesshow" multiple="multiple" style="width:208px !important;">
 
-                                    @foreach($rows['elearning_classes'] as $key=>$data)
-                                    <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
+                                    @foreach($rows['elearning_classes'] as $key => $data)
+                                        <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
                                     @endforeach
 
                                 </select>
@@ -3276,7 +3609,7 @@
         $(".js-select2").empty();
 
     }
-    $('.close').on('click', function() {
+    $('.close').on('click', function () {
         resetSelect2();
     });
 </script>
@@ -3288,6 +3621,7 @@
 
         if (id == "1") {
             var course_category = $("#course_category").val();
+
             if (course_category == '') {
                 swal.fire("Please Select the Course Category", "", "error");
                 return false;
@@ -3611,7 +3945,7 @@
 <script>
     var $j = jQuery.noConflict();
 
-    $j(document).ready(function() {
+    $j(document).ready(function () {
 
 
         // Initialize Select2 plugin
@@ -3822,7 +4156,7 @@
             // Disable the form control
             $('.enddate').prop('disabled', true);
             $('#exam_date').prop('readonly', false);
-            document.querySelector("#exam_date").addEventListener("keypress", function(evt) {
+            document.querySelector("#exam_date").addEventListener("keypress", function (evt) {
                 var charCode = evt.which || evt.keyCode;
                 var charStr = String.fromCharCode(charCode);
 
@@ -3835,7 +4169,7 @@
 
         }
     }
-    document.querySelector("[type='number']").addEventListener("keypress", function(evt) {
+    document.querySelector("[type='number']").addEventListener("keypress", function (evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
@@ -3843,15 +4177,15 @@
 </script>
 
 <!-- saranya -->
- <script>
+<script>
     function toggleButton() {
-            var selectBox = document.getElementById("result");
-            var button = document.getElementById("addClassButton");
-            if (selectBox.value === "classlist") {
-                button.style.display = "block";
-            } else {
-                button.style.display = "none";
-            }
+        var selectBox = document.getElementById("result");
+        var button = document.getElementById("addClassButton");
+        if (selectBox.value === "classlist") {
+            button.style.display = "block";
+        } else {
+            button.style.display = "none";
         }
- </script>
+    }
+</script>
 @endsection

@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>MLHUD</title>
+    <title>Talentra</title>
+    <link rel="icon" href="{{asset('css/talentra-image.jpg')}}" sizes="40x40">
 
     <!-- Bootstrap v4.3.1 CSS File -->
     <link href="{{asset('asset/css/app.min.css')}}" rel="stylesheet" type="text/css" />
@@ -1236,7 +1237,7 @@
             <div class="navbar-bg"></div>
             <nav class="navbar nav11 navbar-expand-lg main-navbar">
                 <div class="sidebar-brand" style=" background-color:white!important;">
-                    <img src="{{asset('asset/image/logo-mlhud.png')}}" alt="logo" class="logo" width="180px">
+                    <img src="{{asset('asset/image/Talentra-1.svg')}}" alt="logo" class="logo" width="150px" style="margin-left:10px !important;">
                 </div>
                 <div class="form-inline mr-auto">
                     <ul class="navbar-nav mr-3">
@@ -1253,7 +1254,7 @@
                         </li> -->
                         <li class="d-none d-md-block portal_name">
                             <span>
-                                VALUATION PROFESSIONAL PORTAL
+                              <b> Learning Management System </b> 
                             </span>
                         </li>
                     </ul>

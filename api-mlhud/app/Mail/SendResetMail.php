@@ -31,7 +31,7 @@ class SendResetMail extends Mailable
     {
         $email_id = config('setting.email_id');
 
-        return $this->from($email_id)->subject('MLHUD Password Reset')->view('reset')->with('data',$this->data);
+        return $this->from($email_id)->subject('TALENTRA Password Reset')->view('reset')->with('data',$this->data);
     }
 
 }

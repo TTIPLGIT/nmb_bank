@@ -26,8 +26,9 @@ class tryController extends BaseController
                 $objData = json_decode($this->decryptData($response->Data));
                 if ($objData->Code == 200) {
                     $parant_data = json_decode(json_encode($objData->Data), true);
-                    //dd($parant_data);
+                    // dd($parant_data);
                     $rows = $parant_data['rows'];
+                    $event_date = $parant_data['dasboardCount']['event_date'];
 
                     // foreach ($rows as $key => $row) {
                     //     # code...
@@ -45,7 +46,7 @@ class tryController extends BaseController
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
 
-                    return view('elearning.admin.admindashboard', compact('rows', 'modules', 'screens', 'count', 'recommended'));
+                    return view('elearning.admin.admindashboard', compact('rows', 'modules', 'screens', 'count', 'recommended','event_date'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -116,25 +117,28 @@ class tryController extends BaseController
 
     public function admincourse(Request $request)
     {
-        //dd('iuyiii');
-        $method = 'Method => tryController => admincourse';
-        $user_id = $request->session()->get("userID");
+        
         try {
+            $method = 'Method => tryController => admincourse';
+            $user_id = $request->session()->get("userID");
             $menus = $this->FillMenu();
             $rows = array();
-            $rows['elearning_classes'] = DB::table('elearning_classes')
-                ->select('*')
-                ->where('elearning_classes.drop_class', '0')
-                ->get();
 
+            $rows['elearning_classes'] = DB::table('elearning_classes')
+            ->select('*')
+            ->where('drop_class', '0')
+            ->orderBy('class_id', 'desc')
+            ->get();
             $rows1 = array();
             $rows1['elearning_courses'] = DB::table('elearning_courses')
                 ->select('*')
-                ->where('elearning_courses.drop_course', '0')
+                ->where('drop_course', '0')
+                ->orderBy('course_id', 'desc') // Replace 'created_at' with the column you want to order by
                 ->get();
             $rows1['exam_list'] = DB::table('elearning_exam')
                 ->select('*')
                 ->where('elearning_exam.active_flag', '0')
+                ->orderBy('id', 'desc') // Replace 'created_at' with the column you want to order by
                 ->get();
 
             $rows1['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz  AS e left join elearning_localadaptation AS l ON e.quiz_id=l.quiz_id left join elearning_ethnictest AS et ON e.quiz_id=et.quiz_id left join elearning_exam AS el ON e.quiz_id=el.quiz_id WHERE l.quiz_id IS NULL AND et.quiz_id IS NULL and el.quiz_id IS NULL AND e.drop_quiz=0');
@@ -142,7 +146,7 @@ class tryController extends BaseController
             $screens = $menus['screens'];
             $modules = $menus['modules'];
             $category = tryController::course_list($request);
-            $rows2['course_category'] = $category['rows2']['course_category'];;
+            $rows2['course_category'] = $category['rows2']['course_category'];
             return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'user_id', 'rows1', 'rows2'));
         } catch (\Exception $exc) {
             //dd("bhj");
@@ -260,7 +264,6 @@ class tryController extends BaseController
 
     public function class_store(Request $request)
     {
-
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return view('auth.login');
@@ -282,7 +285,6 @@ class tryController extends BaseController
             $data['class_description'] = $request->class_description;
             $data['quiz_id'] = $request->quiz_id;
             $data['class_quiz'] = $request->class_quiz;
-
 
             $encryptArray = $data;
 
@@ -306,7 +308,6 @@ class tryController extends BaseController
 
 
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/class/store';
-
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
 
             $menus = $this->FillMenu();
@@ -550,6 +551,8 @@ class tryController extends BaseController
         }
         $method = 'Method => tryController => event_store';
         try {
+dd($request);
+
             $data = array();
             $data['event_name'] = $request->event_name;
             //$data['resource_name'] = $request->resource_name;
@@ -576,11 +579,9 @@ class tryController extends BaseController
             $request = array();
             $request['requestData'] = $encryptArray;
 
-
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/event/store';
 
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-
             $menus = $this->FillMenu();
 
             $screens = $menus['screens'];
@@ -787,7 +788,7 @@ class tryController extends BaseController
 
     public function course_store(Request $request)
     {
-        //dd($request);
+        // dd($request);
 
         $validator = Validator::make($request->all(), [
             'course_banner' => 'required|image|mimes:jpeg,png,jpg,gif',

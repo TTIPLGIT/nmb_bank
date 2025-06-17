@@ -88,7 +88,12 @@ class ElearningQuestionController extends BaseController
 
 
                 if ($objData->Code == 200) {
-                    return redirect(route('elearningquestion.index'))->with('success', 'Question Created Successfully');
+                    return redirect(route('elearningquestion.index'))
+                    ->with([
+                        'success' => 'Question Created Successfully',
+                        'type' => 'LongQuestionlist'
+                    ]);
+                   // with('success', 'Question Created Successfully');
                 }
 
                 if ($objData->Code == 400) {
@@ -823,7 +828,7 @@ class ElearningQuestionController extends BaseController
 
 
                 if ($objData->Code == 200) {
-                    return redirect(route('elearningquestion.index'))->with('success', 'Quiz Created Successfully');
+                    return redirect(route('elearningquestion.index'))->with('success', ' Quiz Created Successfully');
                 }
 
                 if ($objData->Code == 400) {
@@ -937,7 +942,7 @@ class ElearningQuestionController extends BaseController
             $response1 = json_decode($response);
 
             if ($response1->Status == 200 && $response1->Success) {
-                return redirect(route('elearningquestion.index'))->with('success', 'Question  Updated Successfully');
+                return redirect(route('elearningquestion.index'))->with('success', 'Quiz Updated Successfully');
             } else {
                 $objData = json_decode($this->decryptData($response1->Data));
                 return view('errors.errors');

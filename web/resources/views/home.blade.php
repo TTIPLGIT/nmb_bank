@@ -3615,7 +3615,7 @@ margin-top: 15%;
                 type: 'column'
             },
             title: {
-                text: 'MLHUD'
+                text: 'TALENTRA'
             },
             credits: {
                 enabled: false

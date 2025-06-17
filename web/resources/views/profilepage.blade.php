@@ -26,22 +26,25 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <form class="form-horizontal" method="post" name="profile" id="upload-image-form" enctype="multipart/form-data" autocomplete="off">
+              <form class="form-horizontal" method="post" name="profile" id="upload-image-form"
+                enctype="multipart/form-data" autocomplete="off">
 
                 @csrf
                 <div class="row">
 
 
-                  <input class="form-control" type="hidden" id="user_id" name="user_id" placeholder="Enter Module Name" value="{{ $one_row[0]['id'] }}">
+                  <input class="form-control" type="hidden" id="user_id" name="user_id" placeholder="Enter Module Name"
+                    value="{{ $one_row[0]['id'] }}">
 
 
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label">User Name <span style="color: red;font-size: 16px;"></span></label>
-                      <input class="form-control" type="text" id="name" name="name" placeholder="Enter User Name" value="{{ $one_row[0]['name'] }}" disabled="">
+                      <input class="form-control" type="text" id="name" name="name" placeholder="Enter User Name"
+                        value="{{ $one_row[0]['name'] }}" disabled="">
                       @error('name')
-                      <div class="error">{{ $message }}</div>
-                      @enderror
+              <div class="error">{{ $message }}</div>
+            @enderror
                     </div>
                   </div>
 
@@ -49,34 +52,39 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label">Email <span style="color: red;font-size: 16px;"></span></label>
-                      <input class="form-control" type="email" id="email" name="email" placeholder="Enter Email" value="{{ $one_row[0]['email'] }}" disabled="">
+                      <input class="form-control" type="email" id="email" name="email" placeholder="Enter Email"
+                        value="{{ $one_row[0]['email'] }}" disabled="">
                       @error('email')
-                      <div class="error">{{ $message }}</div>
-                      @enderror
+              <div class="error">{{ $message }}</div>
+            @enderror
                     </div>
                   </div>
 
                   @if($one_row[0]['phone_number'] != "")
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="control-label">Phone Number <span style="color: red;font-size: 16px;"></span></label>
-                      <input class="form-control" type="text" id="phone_number" name="phone_number" placeholder="Enter Phone Number" value="{{ $one_row[0]['phone_number'] }}" autocomplete="off">
-                      @error('phone_number')
-                      <div class="error">{{ $message }}</div>
-                      @enderror
+            <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Phone Number <span
+                style="color: red;font-size: 16px;"></span></label>
+              <input class="form-control" type="text" id="phone_number" name="phone_number"
+              placeholder="Enter Phone Number" value="{{ $one_row[0]['phone_number'] }}" autocomplete="off">
+              @error('phone_number')
+          <div class="error">{{ $message }}</div>
+        @enderror
 
-                    </div>
-                    @else
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="control-label">Phone Number <span style="color: red;font-size: 16px;"></span></label>
-                        <input class="form-control" type="text" id="phone_number" name="phone_number" placeholder="Enter Phone Number" value="{{ $one_row[0]['phone_number'] }}" autocomplete="off">
-                        @error('phone_number')
-                        <div class="error">{{ $message }}</div>
-                        @enderror
+            </div>
+        @else
+      <div class="col-md-6">
+        <div class="form-group">
+        <label class="control-label">Phone Number <span
+          style="color: red;font-size: 16px;"></span></label>
+        <input class="form-control" type="text" id="phone_number" name="phone_number"
+          placeholder="Enter Phone Number" value="{{ $one_row[0]['phone_number'] }}" autocomplete="off">
+        @error('phone_number')
+      <div class="error">{{ $message }}</div>
+    @enderror
 
-                      </div>
-                      @endif
+        </div>
+      @endif
 
 
 
@@ -104,9 +112,12 @@
                             <i class="fa fa-camera upload-button"></i>
 
 
-                            <input class="file-upload" type="file" id="signature_attachment" name="signature_attachment" placeholder="Enter Signature Attachment" accept="image/*" style="padding: 3px 6px;margin: 0px;">
+                            <input class="file-upload" type="file" id="signature_attachment" name="signature_attachment"
+                              placeholder="Enter Signature Attachment" accept="image/*"
+                              style="padding: 3px 6px;margin: 0px;">
 
-                            <input type="hidden" name="signature" id="signature" value="{{ $one_row[0]['profile_image'] }}">
+                            <input type="hidden" name="signature" id="signature"
+                              value="{{ $one_row[0]['profile_image'] }}">
                           </div>
                         </div>
                       </div>
@@ -120,11 +131,12 @@
 
 
                         @error('profile_image')
-                        <div class="error">{{ $message }}</div>
-                        @enderror
+              <div class="error">{{ $message }}</div>
+            @enderror
                       </div>
                     </div>
-                    <input class="form-control" type="hidden" id="user_type" name="user_type" placeholder="Enter Password" value="AD">
+                    <input class="form-control" type="hidden" id="user_type" name="user_type"
+                      placeholder="Enter Password" value="AD">
 
 
                   </div>
@@ -132,9 +144,12 @@
                   <div class="row text-center">
                     <div class="col-md-12">
 
-                      <button onclick="update_validation()" class="btn btn-success" id="update_button" disabled type="submit"><i class="fa fa-check"></i> Update </button>&nbsp;
+                      <button onclick="update_validation()" class="btn btn-success" id="update_button" disabled
+                        type="submit"><i class="fa fa-check"></i> Update </button>&nbsp;
                       <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button>&nbsp;
-                      <a class="btn btn-danger footer_btn_cancel footer_btn_top" href="{{ route('home') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
+                      <a class="btn btn-danger footer_btn_cancel footer_btn_top"
+                        href="{{ route('elearningDashboard') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel
+                      </a>&nbsp;
                     </div>
                   </div>
               </form>
@@ -147,11 +162,11 @@
 </div>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
 <script>
-  $('#phone_number').change(function(e) {
+  $('#phone_number').change(function (e) {
     document.getElementById('update_button').disabled = false;
   });
   var _URL = window.URL || window.webkitURL;
-  $("#signature_attachment").change(function(e) {
+  $("#signature_attachment").change(function (e) {
 
 
 
@@ -168,7 +183,7 @@
       img = new Image();
 
 
-      img.onload = function() {
+      img.onload = function () {
 
         if ((this.width >= '425') && (this.width <= '625')) {
 
@@ -238,7 +253,7 @@
     }
   });
 
-  $('#upload-image-form').submit(function(e) {
+  $('#upload-image-form').submit(function (e) {
     e.preventDefault();
     let formData = new FormData(this);
     console.log(formData);
@@ -267,12 +282,10 @@
       processData: false,
       success: (response) => {
         if (response) {
-
-          swal({
-            html: true,
-            title: "Profile Settings Uploaded Succesfully",
-            // text: "<h5><b>Please click 'Yes' and check your mail id used during the registration for the User id and password to log-in into the Integrated Solution Management System (ISMS) for Enrollment process. Once Enrolled, Consent form will be sent to your registered mail id. Next step will be a payment process for the ISMS Registration.</b></h5>",
-            type: "success",
+          Swal.fire({
+            title: "Profile Settings Uploaded Successfully",
+            html: "<h5><b>Please click 'Ok' and Your profile has been updated successfully.</b></h5>",
+            icon: "success",
             customClass: 'swalalerttext',
             showCancelButton: false,
             confirmButtonColor: '#00a2ed',
@@ -283,18 +296,22 @@
             closeOnCancel: true,
             showLoaderOnConfirm: true,
             width: '850px'
-          }).then(() => {
-            location.reload();
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = '/admindashboard';
+            }
           });
-
-
         }
       },
-      error: function(response) {
-
-        $('#image-input-error').text(response.responseJSON.errors.file);
+      error: (response) => {
+        if (response.responseJSON && response.responseJSON.errors && response.responseJSON.errors.file) {
+          $('#image-input-error').text(response.responseJSON.errors.file);
+        } else {
+          $('#image-input-error').text("An error occurred. Please try again.");
+        }
       }
     });
+
   });
 </script>
 
@@ -347,14 +364,14 @@
   }
 </style>
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
 
 
-    var readURL = function(input) {
+    var readURL = function (input) {
       if (input.files && input.files[0]) {
         var reader = new FileReader();
         document.getElementById('update_button').disabled = false;
-        reader.onload = function(e) {
+        reader.onload = function (e) {
           $('.profile-pic').attr('src', e.target.result);
         }
 
@@ -363,11 +380,11 @@
     }
 
 
-    $(".file-upload").on('change', function() {
+    $(".file-upload").on('change', function () {
       readURL(this);
     });
 
-    $(".upload-button").on('click', function() {
+    $(".upload-button").on('click', function () {
       $(".file-upload").click();
     });
   });

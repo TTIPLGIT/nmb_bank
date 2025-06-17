@@ -12,7 +12,7 @@
   <div class="col-md-4"></div>
     <div class="col-md-4">
       <div class="card text-center">
-        <div class="card-header alert-head-background">MLHUD - {{ $alertTitle }}</div>
+        <div class="card-header alert-head-background">TALENTRA - {{ $alertTitle }}</div>
         <div class="card-body">    
           <img src="{{ asset('images/success-message.png') }}" class="alert-image-size">
           <p class="card-text alert-message-top">{{ $message }}</p>

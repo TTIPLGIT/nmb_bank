@@ -257,7 +257,7 @@
 
                         <input type="hidden" class="commitee_approve" id="commitee_approve" value="{{$rows['committe'][0]['COUNT(id)']}}">
                         <div class="card-body">
-                            <p>Your Application is Reviewed by MLHUD</p>
+                            <p>Your Application is Reviewed by TALENTRA</p>
 
 
                             <input type="hidden" class="payment_c" id="payment_c" value="0">

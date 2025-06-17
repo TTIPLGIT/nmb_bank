@@ -1,6 +1,19 @@
 @extends('layouts.app')
-
+<style>
+    .loginname {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center !important;
+        color: white !important;
+        font-size: 19px !important;
+        font-weight: 800 !important;
+        padding-top: 5px;
+        padding-bottom: 0px;
+    }
+</style>
 @section('content')
+
 
 <div class="container_fluid ">
     @if (session('success'))
@@ -58,8 +71,8 @@
             <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-5 col-xxl-3 col-2560 d-flex justify-content-center">
                 <div class="card" style="border-radius:20px;width:76%;z-index:1">
                     <div class="login-head">
-                        <!-- <img class="col-6 m-3 col-sm-6 col-md-6 col-lg-4 col-xl-5 col-xxl-5" src="images\MLHUD-IMG (1).png" alt="logo"> -->
-                         <h4 style="text-align:center"><i class="fa fa-lock" style="color:white;"></i></h4>
+                        <!-- <img class="col-6 m-3 col-sm-6 col-md-6 col-lg-4 col-xl-5 col-xxl-5" src="images\TALENTRA-IMG (1).png" alt="logo"> -->
+                        <h4 class="loginname">Login</h4>
                     </div>
 
                     @if (session('success'))
@@ -116,7 +129,7 @@
                             <div class="row mb-3">
                                 <!-- <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label> -->
 
-                                <div class="input-group form-label-group col-12">
+                                <div class="form-group col-12">
                                     <input id="password" type="password" class="form-control login_pass @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="off" style="border-radius:15px;background-color:white">
                                     <!-- <div class="input-group-append">
                                         <span class="input-group-text rounded-halfpillrightside" id="basic-addon1" style="background: transparent;">
@@ -124,7 +137,12 @@
 
                                         </span>
                                     </div> -->
-                                    <sapn class="caplock-indicator invalid-warning" style="display: none;">WARNING! Caps lock is ON.</sapn>
+                                    <sapn class="caplock-indicator invalid-warning" style="display: none;">WARNING! Caps Lock is ON</sapn>
+                                    <br>
+                                    <input type="checkbox" id="toggle" onclick="passlock_show();" style="margin-left:10 px"> Show Password
+
+
+
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -148,14 +166,14 @@
                             </div> -->
                             <div class="row mb-0 justify-content-center" style="margin-top:15%">
                                 <div class="col text-center">
-                                <a class="btn btn-outline-secondary font-weight-bold" onclick="gt_user()">
+                                    <a class="btn btn-outline-secondary font-weight-bold" onclick="gt_user()">
                                         New User?
                                     </a>
                                     <button type="submit" class="btn btn-primary font-weight-bold">
                                         {{ __('SIGN IN') }}
                                     </button>
 
-                                    
+
 
                                 </div>
                             </div>
@@ -176,27 +194,27 @@
                                 </div>
                             </div>
 
-                            
+
                             <!-- <div class="mt-2 d-flex justify-content-center">
                                 <a type="" href="{{route('firm')}}" class="firm">Firm Signup</a>
                             </div> -->
 
 
                             <!-- <div class="row mb-0 justify-content-center"> -->
-                                <div class="col text-center footer">
-                                    <a class="btn p-1 m-0 font-weight-bold" href="{{ route('policypage')}}">
-                                        Privacy Policy
-                                    </a>|
-                                    <a class="btn p-1 m-0 font-weight-bold" href="{{ route('FAQ') }}">
-                                        FAQ
-                                    </a>
-                                </div>
+                            <div class="col text-center footer">
+                                <a class="btn p-1 m-0 font-weight-bold" href="{{ route('policypage')}}">
+                                    Privacy Policy
+                                </a>|
+                                <a class="btn p-1 m-0 font-weight-bold" href="{{ route('FAQ') }}">
+                                    FAQ
+                                </a>
+                            </div>
                             <!-- </div> -->
                         </form>
                     </div>
                 </div>
-                <div class="" style="position:absolute">
-                    <img class="" src="{{asset('assets/images/login_man.PNG')}}" alt="" style="width:50%;margin-left:74%;">
+                <div class="" style= "position: absolute; overflow: visible!important;">
+                    <img class="" src="{{asset('assets/images/login_man.PNG')}}" alt="" style="width:50%; margin-left:83.2%; overflow: visible!important;">
                 </div>
             </div>
         </div>
@@ -208,34 +226,35 @@
 
     <script>
         function gt_user() {
-            Swal.fire({
-                title: "Choose a Option?",
-                icon: "warning",
-                customClass: 'swalalerttext',
-                showCancelButton: true,
-                confirmButtonColor: '#243c92',
-                cancelButtonColor: '#243c92',
-                confirmButtonText: "Professional Member (Non-Uganda Resident)",
-                cancelButtonText: "Graduate Trainee",
-                closeOnConfirm: false,
-                closeOnCancel: true,
-                showLoaderOnConfirm: true,
-                width: '500px',
-            }).then((result) => {
+            window.location.replace('/register_member');
+            // Swal.fire({
+            //     title: "Choose a Option?",
+            //     icon: "warning",
+            //     customClass: 'swalalerttext',
+            //     showCancelButton: true,
+            //     confirmButtonColor: '#243c92',
+            //     cancelButtonColor: '#243c92',
+            //     confirmButtonText: "Professional Member (Non-Uganda Resident)",
+            //     cancelButtonText: "Graduate Trainee",
+            //     closeOnConfirm: false,
+            //     closeOnCancel: true,
+            //     showLoaderOnConfirm: true,
+            //     width: '500px',
+            // }).then((result) => {
 
-                if (result.value) {
-                    //PF
+            //     if (result.value) {
+            //         //PF
 
-                    window.location.replace('/register_member');
-
-
-                } else {
-                    //GT
-                    window.location.replace('/register');
+            //         window.location.replace('/register_member');
 
 
-                }
-            })
+            //     } else {
+            //         //GT
+            //         window.location.replace('/register');
+
+
+            //     }
+            // })
         }
     </script>
 

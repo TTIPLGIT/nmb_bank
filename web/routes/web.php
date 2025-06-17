@@ -98,7 +98,6 @@ Route::get('/', function () {
 
 Route::get('/token', function (Request $request) {
     $token = $request->session()->token();
-
     $token = csrf_token();
     return $token;
 });
@@ -134,7 +133,9 @@ Route::get('/clear-all', function () {
         return redirect(url()->previous());
     }
 })->name('clear-all');
-
+Route::get('/clearCache', function () {
+    opcache_reset();
+})->name('clearCache');
 // GT
 Route::get('register', [App\Http\Controllers\LoginController::class, 'register'])->name('register');
 Route::post('registerstore', [App\Http\Controllers\LoginController::class, 'registerstore'])->name('registerstore');
@@ -374,6 +375,7 @@ Route::get('/FAQ_question/delete/{id}', [\App\Http\Controllers\FAQquestionContro
 Route::post('/FAQ_question/update_data', [\App\Http\Controllers\FAQquestionController::class, 'update_data'])->name('FAQ_question.update_data');
 Route::post('/FAQ_question/update_toggle', [\App\Http\Controllers\FAQquestionController::class, 'update_toggle'])->name('FAQ_question.update_toggle');
 Route::get('/valuer/show/{id}', [\App\Http\Controllers\ValuerController::class, 'show'])->name('valuer.show');
+Route::get('/privacy/update/{id}', [\App\Http\Controllers\FAQmodulesController::class, 'index1'])->name('privacy.update');
 
 //elearning
 

@@ -26,8 +26,9 @@ class elearningEthnicTestController extends BaseController
             $method = 'Method => elearningEthnicTestController => index';
             $rows['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz  AS e left join elearning_localadaptation AS l ON e.quiz_id=l.quiz_id left join elearning_exam AS el ON e.quiz_id=el.quiz_id left join elearning_classes AS ec ON e.quiz_id=ec.quiz_id WHERE l.quiz_id IS NULL and el.quiz_id IS NULL and ec.quiz_id IS NULL AND e.drop_quiz=0');
             $rows['user_category'] = array(
-                'Graduate Trainee' => config('setting.roles.Graduate Trainee'),
-                'Professional Member' => config('setting.roles.professional_member'),
+                'Student' => config('setting.roles.Student'),
+                'Teacher' => config('setting.roles.Teacher'),
+                'All' => 0
             );
 
 
@@ -301,7 +302,7 @@ class elearningEthnicTestController extends BaseController
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] =  $response;
+            $serviceResponse['Data'] = $response;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $sendServiceResponse;
@@ -339,7 +340,7 @@ class elearningEthnicTestController extends BaseController
                 'id' => $inputArray['id'],
             ];
 
-            $update_id =  DB::table('elearning_ethnictest')
+            $update_id = DB::table('elearning_ethnictest')
                 ->where('id', $input['id'])
                 ->update([
 
@@ -490,7 +491,7 @@ class elearningEthnicTestController extends BaseController
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] =  $response;
+            $serviceResponse['Data'] = $response;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $sendServiceResponse;
@@ -527,7 +528,7 @@ class elearningEthnicTestController extends BaseController
             } while (!(in_array($randomNumber, $availableQuizIds)));
             $randomQuiz = DB::select("select * from elearning_ethnictest inner join elearning_practice_quiz on elearning_practice_quiz.quiz_id = elearning_ethnictest.quiz_id  where elearning_ethnictest.quiz_id=$randomNumber");
             $quizId = $randomQuiz[0]->quiz_id;
-            $pass_percentage =  $randomQuiz[0]->pass_percentage;
+            $pass_percentage = $randomQuiz[0]->pass_percentage;
 
 
             $attempt = DB::select("SELECT count('id') as count from elearning_userethnic where user_id=$user_id");
@@ -546,11 +547,11 @@ class elearningEthnicTestController extends BaseController
 
             $input = [
                 'quiz_id' => $quizId,
-                'attempt' =>  $attemptcount,
+                'attempt' => $attemptcount,
                 'score' => $inputArray['score'],
                 'pass_mark' => $calc,
                 'total_scores' => $inputArray['total_scores'],
-                'result' =>  $result,
+                'result' => $result,
 
             ];
 
@@ -668,7 +669,7 @@ class elearningEthnicTestController extends BaseController
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] =  $response;
+            $serviceResponse['Data'] = $response;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $sendServiceResponse;
@@ -688,7 +689,7 @@ class elearningEthnicTestController extends BaseController
     }
     public function quiz_store(Request $request)
     {
-
+        $this->WriteFileLog('testquiz1');
         try {
             $method = 'Method => elearningEthnicTestController => quiz_store';
             $user_id = auth()->user()->id;
@@ -745,8 +746,8 @@ class elearningEthnicTestController extends BaseController
                         $progress = $progress - 20;
                     }
                     DB::table('user_course_relation')
-                        ->where('course_id',  $course_id)
-                        ->where('user_id',  $user_id)
+                        ->where('course_id', $course_id)
+                        ->where('user_id', $user_id)
                         ->update([
                             'course_progress' => $progress,
                         ]);
@@ -754,9 +755,9 @@ class elearningEthnicTestController extends BaseController
                 $is_completed = Db::select("SELECT * from user_class_relation where status=1 and status=0");
                 if ($is_completed == []) {
                     DB::table('user_class_relation')
-                        ->where('course_id',  $course_id)
-                        ->where('class_id',  $class_id)
-                        ->where('user_id',  $user_id)
+                        ->where('course_id', $course_id)
+                        ->where('class_id', $class_id)
+                        ->where('user_id', $user_id)
                         ->update([
                             'status' => 2,
                         ]);
@@ -772,11 +773,11 @@ class elearningEthnicTestController extends BaseController
 
             $input = [
                 'quiz_id' => $quizId,
-                'attempt' =>  $attemptcount,
+                'attempt' => $attemptcount,
                 'score' => $inputArray['score'],
                 'pass_mark' => $calc,
                 'total_scores' => $inputArray['total_scores'],
-                'result' =>  $result,
+                'result' => $result,
                 'class_id' => $class_id,
                 'course_id' => $course_id
 
@@ -914,7 +915,7 @@ class elearningEthnicTestController extends BaseController
             $course_id = $input['course_id'];
             $random_quizid = DB::select("SELECT c.exam_id,c.*,e.exam_name,e.quiz_id from elearning_courses as c inner join elearning_exam  as e on c.exam_id=e.id where course_id=$course_id");
             $random_quizid = $random_quizid[0]->quiz_id;
-$this->WriteFileLog($random_quizid);
+            $this->WriteFileLog($random_quizid);
             $randomQuiz = DB::select("Select * from elearning_practice_quiz where quiz_id= $random_quizid");
             // $randomQuiz = DB::select("Select * from elearning_ethnictest inner join elearning_practice_quiz on elearning_practice_quiz.quiz_id = elearning_ethnictest.quiz_id  where elearning_ethnictest.quiz_id=$randomNumber");
 
@@ -955,7 +956,7 @@ $this->WriteFileLog($random_quizid);
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] =  $response;
+            $serviceResponse['Data'] = $response;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $sendServiceResponse;
@@ -990,7 +991,7 @@ $this->WriteFileLog($random_quizid);
             ];
             $class_id = $input['class_id'];
             $course_id = $input['course_id'];
-            $randomQuiz =  DB::select("select c.*,e.* from elearning_courses  as c inner join elearning_exam as e on e.id= c.exam_id  where c.course_id=$course_id and drop_course=0");
+            $randomQuiz = DB::select("select c.*,e.* from elearning_courses  as c inner join elearning_exam as e on e.id= c.exam_id  where c.course_id=$course_id and drop_course=0");
 
             $quizId = $randomQuiz[0]->quiz_id;
             $examId = $randomQuiz[0]->exam_id;
@@ -1024,7 +1025,7 @@ $this->WriteFileLog($random_quizid);
                 'quiz_id' => $quizId,
                 'score' => $inputArray['score'],
                 'total_scores' => $inputArray['total_scores'],
-                'result' =>  $result,
+                'result' => $result,
                 'class_id' => $class_id,
                 'course_id' => $course_id,
                 'exam_id' => $examId
@@ -1076,10 +1077,10 @@ $this->WriteFileLog($random_quizid);
 
                     //    
                     DB::table('user_course_relation')
-                        ->where('course_id',  $course_id)
-                        ->where('user_id',  $user_id)
+                        ->where('course_id', $course_id)
+                        ->where('user_id', $user_id)
                         ->update([
-                            'get_certified' =>0,
+                            'get_certified' => 0,
                             'status' => 2,
                             'course_progress' => $add_examprogress + 20,
                             'exam_status' => 2,
@@ -1091,8 +1092,8 @@ $this->WriteFileLog($random_quizid);
 
                     // course Relation 2
                     DB::table('user_course_relation')
-                        ->where('course_id',  $course_id)
-                        ->where('user_id',  $user_id)
+                        ->where('course_id', $course_id)
+                        ->where('user_id', $user_id)
                         ->update([
                             'status' => 2,
                             'exam_status' => 2,
@@ -1103,8 +1104,8 @@ $this->WriteFileLog($random_quizid);
                 Mail::to($data['email'])->send(new exammail($data));
             } else {
                 DB::table('user_course_relation')
-                    ->where('course_id',  $course_id)
-                    ->where('user_id',  $user_id)
+                    ->where('course_id', $course_id)
+                    ->where('user_id', $user_id)
                     ->update([
                         'status' => 2,
                         'exam_status' => 2,
@@ -1139,7 +1140,7 @@ $this->WriteFileLog($random_quizid);
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] =  $response;
+            $serviceResponse['Data'] = $response;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $sendServiceResponse;
@@ -1357,8 +1358,8 @@ $this->WriteFileLog($random_quizid);
             $method = 'Method => elearningEthnicTestController => rating_index';
             $userID = auth()->user()->id;
             $this->WriteFileLog($userID);
-            $cartCourseIds=[];
-            $wishListCourseIds=[];
+            $cartCourseIds = [];
+            $wishListCourseIds = [];
             $rows['cart_list'] = DB::select("SELECT r.*,c.course_name,c.course_instructor,c.course_price,c.course_banner,Null as average_rating from elearning_cart as r inner join elearning_courses as c on c.course_id=r.course_id where c.drop_course=0 and r.user_id= $userID and r.active_flag=0");
             //$rows['ratings'] = DB::select("SELECT r.* from elearning_ratings where r.user_id= $userID");
             $rows['wish_list'] = DB::select("SELECT r.*,c.course_name,c.course_instructor,c.course_price,c.course_banner,Null as average_rating from elearning_wishlist as r inner join elearning_courses as c on c.course_id=r.course_id where c.drop_course=0 and r.user_id= $userID and r.active_flag=0");
@@ -1506,7 +1507,7 @@ $this->WriteFileLog($random_quizid);
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] =  $response;
+            $serviceResponse['Data'] = $response;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $sendServiceResponse;

@@ -1238,7 +1238,7 @@
     <div class="col-md-8" style="display:flex;justify-content: space-between;align-items: center;">
 
         <a href="/elearning/allCourses?sorted=Recently%20Added&tag=false&progress=false&q=false" class="btn btn-primary">Back</a>
-        <h5>Course Contents</h5>
+        <h4>Course Contents</h4>
     </div>
     <br>
     @if(isset($course_certificate[0]->get_certified) && $course_certificate[0]->get_certified == 1)
@@ -1259,7 +1259,7 @@
 
 
     @endif
-    <?php if ($classContent->class_format == 'mp4' && $classContent->class_status == 1) { ?>
+    <?php if($classContent->class_format == 'mp4' && $classContent->class_status == 1) { ?>
         <video class="coursetypes videos" src="../../uploads/class/126/{{$classContent->resource_name}}" data-poster="../..{{$classContent->resource_path}}/{{$classContent->resource_name}}" frameborder="0" allowfullscreen controls width="100%">
 
         </video>
@@ -1288,9 +1288,9 @@
             <div class="pdf-containercompleted" id="pdf-containercompleted">
 
             </div>
-            <!-- <object class="coursetypes" data="../../uploads/class/126/{{$classContent->resource_name}}#toolbar=0" width="800" height="500">
+            <object class="coursetypes" data="../../uploads/class/126/{{$classContent->resource_name}}#toolbar=0" width="800" height="500">
 
-            </object> -->
+            </object>
 
             <br>
             <div class="pdf_complete">
@@ -1644,7 +1644,7 @@
                             </span>
 
                             <span class="postDate">
-                                {{ \Carbon\Carbon::parse($askedQuestion->created_at)->format('d-m-Y H:i:s') }}
+                                {{ \Carbon\Carbon::parse($askedQuestion->created_at)->setTimezone('Asia/Kolkata')->format('d-m-Y H:i:s') }}
                             </span>
                         </div>
                     </div>
@@ -1771,7 +1771,15 @@
 <div class="container-fluid" id="ratingContent" style="display: none;">
     <div style="display: flex;justify-content: space-between;align-items: center;">
         <h2 class="student_feedback">Ratings for {{$courseDetail->course_name}}</h2>
+        @php
+        $id=$courseDetail->course_id;
+        $user_id=session('userID');
+        $ratings_list = DB::select("SELECT r.*,u.name from elearning_ratings as r inner join users as u on u.id=r.user_id where r.course_id=$id and r.user_id=$user_id");
+
+        @endphp
+        @if(count($ratings_list)==0)
         <button class="btn btn-warning" type="button" style="border-radius: 20%;" data-toggle="modal" data-target="#addModal2"><i class="fa fa-star-o"></i><strong>Rating</strong></button>
+        @endif
     </div>
     <div class="container">
         <div class="row">
@@ -2311,7 +2319,17 @@
                             document.querySelector('.addNoteCallerTip').style.display = "flex";
                             addNoteCaller.classList.remove('success');
                         }, 3000);
-                        window.location.reload();
+                        // window.location.reload();
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Your Notes added Successfully.',
+                            icon: 'success'
+                        }).then((result) => {
+                            localStorage.setItem('activeTabKey', 'notes');
+                            location.reload(); // Handle the success action
+                            // This code will execute when the user clicks the "OK" button in the Swal modal
+                            // You can put your success-related code here
+                        });
                     }
                 },
                 error: function(error) {
@@ -2420,7 +2438,8 @@
                             if (data != 0) {
                                 Swal.fire("Success!", "Note Deleted Successfully!", "success").then((result) => {
 
-                                    location.reload();
+                                    localStorage.setItem('activeTabKey', 'notes');
+                                    location.reload(); // Handle the success action
 
                                 })
                             }
@@ -2458,7 +2477,9 @@
                     if (data != 0) {
                         Swal.fire("Success!", "Note Update Successfully!", "success").then((result) => {
 
-                            window.location.reload();
+                            // window.location.reload();
+                            localStorage.setItem('activeTabKey', 'notes');
+                            location.reload();
 
                         })
                     }
@@ -2573,11 +2594,16 @@
             success: function(data) {
                 console.log(data);
                 if (data != 0) {
-                    Swal.fire("Success!", "Reply Added Successfully!", "success").then((result) => {
-
-                        location.reload();
-
-                    })
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Reply Added Successfully',
+                        icon: 'success'
+                    }).then((result) => {
+                        localStorage.setItem('activeTabKey', 'qAndA');
+                        location.reload(); // Handle the success action
+                        // This code will execute when the user clicks the "OK" button in the Swal modal
+                        // You can put your success-related code here
+                    });
                 }
 
 
@@ -2915,10 +2941,16 @@
                         success: function(data) {
                             // alert('feef');
                             if (result.value) {
-                                Swal.fire("Success!", "Ratings Added Successfully!", "success").then((result) => {
-
-                                    location.reload();
-                                })
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Ratings Added Successfully!',
+                                    icon: 'success'
+                                }).then((result) => {
+                                    localStorage.setItem('activeTabKey', 'rating');
+                                    location.reload(); // Handle the success action
+                                    // This code will execute when the user clicks the "OK" button in the Swal modal
+                                    // You can put your success-related code here
+                                });
                             }
 
                         }
@@ -2932,6 +2964,13 @@
     }
 
     $(document).ready(function() {
+        if (localStorage.getItem('activeTabKey')) {
+            document.querySelector(`#${localStorage.getItem('activeTabKey')}`).click()
+            if (localStorage.getItem('activeTabKey') == 'qAndA') {
+                location.href = '#qAndAContent';
+            }
+            localStorage.removeItem('activeTabKey');
+        }
         $(document).on('click', '.ratting_class', function(e) {
             handleRatingClick.call(this, e); // Pass 'this' and 'e' as arguments
         });
@@ -3071,17 +3110,31 @@
             return false;
         } else {
             swal.fire({
-            text: "Do you want to Create a new Question?",
-            icon: "info",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, submit it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('course_add').submit();
-            }
-        });
+                text: "Do you want to Create a new Question?",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, submit it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Your Question added Successfully.',
+                        icon: 'success'
+                    }).then((result) => {
+                        localStorage.setItem('activeTabKey', 'qAndA');
+                        document.getElementById('course_add').submit();
+                        // This code will execute when the user clicks the "OK" button in the Swal modal
+                        // You can put your success-related code here
+                    });
+                    // document.getElementById('course_add').submit();
+                    // localStorage.setItem('activeTabKey', 'qAndA');
+                    // location.reload(); // Handle the success action
+
+                    // Adjust timeout as needed
+                }
+            });
         }
     }
 </script>

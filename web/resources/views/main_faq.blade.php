@@ -9,8 +9,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="{{ asset('assets/css/mediaquery.css') }}" rel="stylesheet" type="text/css" />
-  <title>MLHUD</title>
-  <link rel="icon" href="{{ asset('images/fia_logo.png') }}" type="image/gif" sizes="16x16">
+  <title>Talentra</title>
+  <link rel="icon" href="{{asset('css/talentra-image.jpg')}}" sizes="40x40">
   <!-- Fonts -->
   <link href="{{ asset('css/login.css') }}" rel="stylesheet">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -41,15 +41,16 @@
     }
 
     .navigation .inner-navigation li .menu-link.circle {
-    line-height: 100%;
-    padding: 0px;
-    border-radius: 50%;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+      line-height: 100%;
+      padding: 0px;
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .header {
       height: 110px;
       width: 100%;
@@ -91,7 +92,7 @@
 
 
     p {
-      font-size: 15px ;
+      font-size: 15px;
       color: black !important;
       font-weight: 500 !important;
     }
@@ -223,7 +224,7 @@
     }
 
 
-   
+
 
     #box {
       border-color: #602e9e !important;
@@ -239,11 +240,11 @@
   <div class="header row" style="display:flex;align-items:center;">
 
 
-    <div class="col-3 col-sm-3"><a href="{{url('/')}}"><picture><source media="(max-width:558px)" srcset="{{asset('asset/image/Talentra-1.svg')}}"><img class="faq_image" style="width: 260%;
-display: block;
-margin: 15px;
-text-align: center;
-align-items: center;" src="{{asset('asset/image/Talentra-1.svg')}}"></a></div>
+    <div class="col-3 col-sm-3"><a href="{{url('/')}}">
+        <picture>
+          <source media="(max-width:558px)" srcset="{{asset('asset/image/Talentra-1.svg')}}"><img class="faq_image" style="width: 250%;
+display: block;margin: 5px;text-align: center;align-items: center;" src="{{asset('asset/image/Talentra-1.svg')}}">
+      </a></div>
 
     <div class="col-9  col-sm-9" style="justify-content: center;
 display: flex;align-items: center;">
@@ -264,7 +265,7 @@ display: flex;align-items: center;">
     <div class="col-lg-4 mr-lg-4">
 
 
-   
+
       <h2><b class="faq_help" style="font-size: 29px;">What do you need help with ?</b></h2>
       <div class="input-group">
         <input type="search" class="form-control rounded" id="module_name" name="module_name" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
@@ -282,7 +283,7 @@ display: flex;align-items: center;">
 
     </div>
 
- 
+
     <!-- <div class="col-lg-2" >
 
     <a type="button" href="{{url('https://www.bimacc.org/')}}"  style=" font-size:18px !important; padding:15px !important; text-align:center !important;  color: #602e9e !important; border-radius:25px;"   title="Bimacc-official link"><i class="fas fa-home"></i><b>Home</b></a>
@@ -308,7 +309,7 @@ display: flex;align-items: center;">
 
             <fieldset>
               <div class="row">
-                <h1 class="faq"><b><u>Frequently Asked Questions on MLHUD</u></b></h1>
+                <h1 class="faq"><b><u>Frequently Asked Questions on LMS</u></b></h1>
                 <div class="col-lg-12">
 
 

@@ -9,6 +9,9 @@
         font-size: 1.8rem;
     }
 
+    body {
+        width: 0px !important;
+    }
 
 
     .noShadow .card-body {
@@ -256,33 +259,33 @@
 <div class="main-content">
     @if (session('success'))
 
-    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-    <script type="text/javascript">
-        window.onload = function() {
-            var message = $('#session_data').val();
-            swal.fire({
-                title: "Success",
-                text: message,
-                type: "success",
-            });
+        <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+        <script type="text/javascript">
+            window.onload = function () {
+                var message = $('#session_data').val();
+                swal.fire({
+                    title: "Success",
+                    text: message,
+                    type: "success",
+                });
 
-        }
-    </script>
+            }
+        </script>
     @elseif(session('error'))
 
-    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-    <script type="text/javascript">
-        window.onload = function() {
-            var message = $('#session_data1').val();
-            swal.fire({
-                title: "Info",
-                icon: "warning",
-                text: message,
-                type: "info",
-            });
+        <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
+        <script type="text/javascript">
+            window.onload = function () {
+                var message = $('#session_data1').val();
+                swal.fire({
+                    title: "Info",
+                    icon: "warning",
+                    text: message,
+                    type: "info",
+                });
 
-        }
-    </script>
+            }
+        </script>
     @endif
 
     <section class="section">
@@ -293,7 +296,7 @@
                     {{$quizName}}
                 </h2>
                 @php
-                $id = $quizId;
+                    $id = $quizId;
                 @endphp
                 <form id="quizForm" class="row" action="{{ route('course.examstore', $quizId) }}" method="post">
 
@@ -305,82 +308,106 @@
                     <input type="hidden" class="form-control" id="class_id" name="class_id" value="{{$class_id}}">
 
 
-                    @php $id=Crypt::encrypt($quizId); @endphp
+                    @php $id = Crypt::encrypt($quizId); @endphp
                     <input type="hidden" id="quizId" name="quizId" value="{{ $id }}">
                     @foreach($questionDetails as $questionDetail)
-                    <input type="hidden" id="questionIds" name="questionIds" value="{{ $qIds }}">
-                    @if($questionDetail->question_type == "boolean")
-                    <div class="col-12 px-3 mb-4 questions">
-                        <div class="card noShadow px-2 py-3">
-                            <div class="card-header">
-                                {{$loop->iteration}}.&nbsp;&nbsp;{{ $questionDetail->question }}
-                            </div>
-                            <div class="card-body">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio_{{ $questionDetail->question_id }}_true" name="customRadio_{{ $questionDetail->question_id }}" value="true" class="custom-control-input" autocomplete="off">
-                                    <label class="custom-control-label" for="customRadio_{{ $questionDetail->question_id }}_true">True</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio_{{ $questionDetail->question_id }}_false" name="customRadio_{{ $questionDetail->question_id }}" value="false" class="custom-control-input" autocomplete="off">
-                                    <label class="custom-control-label" for="customRadio_{{ $questionDetail->question_id }}_false">False</label>
-                                </div>
-                                <input type="hidden" name="error" class="error boolean_error" id="boolean_{{ $questionDetail->question_id }}_error" value="*Select any one option" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                    @if($questionDetail->question_type == "mcq")
-                    <div class="col-12 px-3 mb-4 questions">
-                        <div class="card noShadow px-2 py-3">
-                            <div class="card-header">
-                                {{$loop->iteration}}.&nbsp;&nbsp;{{ $questionDetail->question }}
-                            </div>
-                            <div class="card-body">
-                                <div class="mcqChoicesContainer">
-                                    @foreach($questionDetail->choices as $choice)
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input mcq_{{ $questionDetail->question_id }}" id="customCheck_{{ $choice }}" autocomplete="off">
-                                        <label class="custom-control-label" id="mcq_{{ $questionDetail->question_id }}_{{$loop->iteration}}" for="customCheck_{{ $choice }}">
-                                            {{ $choice }}
-                                        </label>
+                        <input type="hidden" id="questionIds" name="questionIds" value="{{ $qIds }}">
+                        @if($questionDetail->question_type == "boolean")
+                            <div class="col-12 px-3 mb-4 questions">
+                                <div class="card noShadow px-2 py-3">
+                                    <div class="card-header">
+                                        {{$loop->iteration}}.&nbsp;&nbsp;{{ $questionDetail->question }}
                                     </div>
-                                    @endforeach
-                                    <input type="hidden" name="error" class="error mcq_error" id="mcq_{{ $questionDetail->question_id }}_error" value="*Select atleast one option" disabled>
+                                    <div class="card-body">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="customRadio_{{ $questionDetail->question_id }}_true"
+                                                name="customRadio_{{ $questionDetail->question_id }}" value="true"
+                                                class="custom-control-input" autocomplete="off">
+                                            <label class="custom-control-label"
+                                                for="customRadio_{{ $questionDetail->question_id }}_true">True</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="customRadio_{{ $questionDetail->question_id }}_false"
+                                                name="customRadio_{{ $questionDetail->question_id }}" value="false"
+                                                class="custom-control-input" autocomplete="off">
+                                            <label class="custom-control-label"
+                                                for="customRadio_{{ $questionDetail->question_id }}_false">False</label>
+                                        </div>
+                                        <input type="hidden" name="error" class="error boolean_error"
+                                            id="boolean_{{ $questionDetail->question_id }}_error" value="*Select any one option"
+                                            disabled>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    @endif
-                    @if($questionDetail->question_type == "short")
-                    <div class="col-12 px-3 mb-4 questions">
-                        <div class="card noShadow px-2 py-3">
-                            <div class="card-header">
-                                {{$loop->iteration}}.&nbsp;&nbsp;{{ $questionDetail->question }}
-                            </div>
-                            <div class="card-body">
-                                <div class="col-12 col-md-12 p-0 shortResultContainer" id="shortResultContainer_{{ $questionDetail->question_id }}">
-                                    <input type="text" id="short_{{ $questionDetail->question_id }}" class="form-control answerInput" placeholder="Enter Your Answer" autocomplete="off">
+                        @endif
+                        @if($questionDetail->question_type == "mcq")
+                            <div class="col-12 px-3 mb-4 questions">
+                                <div class="card noShadow px-2 py-3">
+                                    <div class="card-header">
+                                        {{$loop->iteration}}.&nbsp;&nbsp;{{ $questionDetail->question }}
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mcqChoicesContainer">
+                                            @foreach($questionDetail->choices as $choice)
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox"
+                                                        class="custom-control-input mcq_{{ $questionDetail->question_id }}"
+                                                        id="customCheck_{{ $choice }}" autocomplete="off">
+                                                    <label class="custom-control-label"
+                                                        id="mcq_{{ $questionDetail->question_id }}_{{$loop->iteration}}"
+                                                        for="customCheck_{{ $choice }}">
+                                                        {{ $choice }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                            <input type="hidden" name="error" class="error mcq_error"
+                                                id="mcq_{{ $questionDetail->question_id }}_error"
+                                                value="*Select atleast one option" disabled>
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="hidden" name="error" class="error short_error" id="short_{{ $questionDetail->question_id }}_error" value="*This field is required" disabled>
                             </div>
-                        </div>
-                    </div>
-                    @endif
-                    @if($questionDetail->question_type == "long")
-                    <div class="col-12 px-3 mb-4 questions">
-                        <div class="card noShadow px-2 py-3">
-                            <div class="card-header">
-                                {{$loop->iteration}}.&nbsp;&nbsp;{{ $questionDetail->question }}
-                            </div>
-                            <div class="card-body">
-                                <div class="col-12 col-md-12 p-0 longResultContainer" id="longResultContainer_{{ $questionDetail->question_id }}">
-                                    <input type="text" id="long_{{ $questionDetail->question_id }}" class="form-control answerInput" placeholder="Enter Your Answer" autocomplete="off">
+                        @endif
+                        @if($questionDetail->question_type == "short")
+                            <div class="col-12 px-3 mb-4 questions">
+                                <div class="card noShadow px-2 py-3">
+                                    <div class="card-header">
+                                        {{$loop->iteration}}.&nbsp;&nbsp;{{ $questionDetail->question }}
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-12 col-md-12 p-0 shortResultContainer"
+                                            id="shortResultContainer_{{ $questionDetail->question_id }}">
+                                            <input type="text" id="short_{{ $questionDetail->question_id }}"
+                                                class="form-control answerInput" placeholder="Enter Your Answer"
+                                                autocomplete="off">
+                                        </div>
+                                        <input type="hidden" name="error" class="error short_error"
+                                            id="short_{{ $questionDetail->question_id }}_error" value="*This field is required"
+                                            disabled>
+                                    </div>
                                 </div>
-                                <input type="hidden" name="error" class="error long_error" id="long_{{ $questionDetail->question_id }}_error" value="*This field is required" disabled>
                             </div>
-                        </div>
-                    </div>
-                    @endif
+                        @endif
+                        @if($questionDetail->question_type == "long")
+                            <div class="col-12 px-3 mb-4 questions">
+                                <div class="card noShadow px-2 py-3">
+                                    <div class="card-header">
+                                        {{$loop->iteration}}.&nbsp;&nbsp;{{ $questionDetail->question }}
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-12 col-md-12 p-0 longResultContainer"
+                                            id="longResultContainer_{{ $questionDetail->question_id }}">
+                                            <input type="text" id="long_{{ $questionDetail->question_id }}"
+                                                class="form-control answerInput" placeholder="Enter Your Answer"
+                                                autocomplete="off">
+                                        </div>
+                                        <input type="hidden" name="error" class="error long_error"
+                                            id="long_{{ $questionDetail->question_id }}_error" value="*This field is required"
+                                            disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     @endforeach
                 </form>
             </div>
@@ -396,7 +423,8 @@
 </div>
 
 <!-- quit verify modal -->
-<div class="modal fade" id="quizQuitModal" tabindex="-1" role="dialog" aria-labelledby="quizQuitModalLabel" aria-hidden="true">
+<div class="modal fade" id="quizQuitModal" tabindex="-1" role="dialog" aria-labelledby="quizQuitModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header px-3 py-3">
@@ -417,7 +445,8 @@
 </div>
 
 <!-- submit success modal -->
-<div class="modal fade" id="submitSuccess" tabindex="-1" role="dialog" aria-labelledby="submitSuccessLabel" aria-hidden="true">
+<div class="modal fade" id="submitSuccess" tabindex="-1" role="dialog" aria-labelledby="submitSuccessLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header px-3 py-3">
@@ -437,7 +466,8 @@
 </div>
 
 <!-- score modal -->
-<div class="modal fade" id="totalScore" tabindex="-1" role="dialog" aria-labelledby="totalScoreLabel" aria-hidden="true">
+<div class="modal fade" id="totalScore" tabindex="-1" role="dialog" aria-labelledby="totalScoreLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header px-3 py-3">
@@ -576,7 +606,7 @@
                 _token: '{{csrf_token()}}'
             },
 
-            success: function(data) {
+            success: function (data) {
                 quizResultData = data;
                 console.log(quizResultData.totalPointsEarned);
                 quizSubmit.setAttribute('disabled', true);
@@ -596,12 +626,12 @@
                 }).then((result) => {
                     if (result.value) {
                         document.getElementById('quizForm').submit();
-                        swal.fire("Success!", "All courses have been completed Successfully.", "success");
+                        swal.fire("Success!", "All classes have been completed Successfully.", "success");
                     }
                 })
             },
 
-            error: function(error) {
+            error: function (error) {
                 console.log('error; ' + eval(error));
             }
         })
@@ -634,7 +664,7 @@
         viewScoreLink.innerHTML = "&nbsp;-&nbsp;Score";
         viewScoreLink.addEventListener("click", totalScoreEval);
         quizHeader.appendChild(viewScoreLink);
-        document.querySelector('.totalScoreBody .circle').style.backgroundImage = `conic-gradient(from 180deg, #28a745 ${Math.floor((quizResultData.totalPointsEarned*100)/quizResultData.totalAvailablePoints)}%, #fff 0)`;
+        document.querySelector('.totalScoreBody .circle').style.backgroundImage = `conic-gradient(from 180deg, #28a745 ${Math.floor((quizResultData.totalPointsEarned * 100) / quizResultData.totalAvailablePoints)}%, #fff 0)`;
         document.querySelector('.totalScoreBody .inner').innerHTML = `${quizResultData.totalPointsEarned}/${quizResultData.totalAvailablePoints}`;
         for (let answerDetail of quizResultData.answerDetails) {
             if (answerDetail.questionType == "boolean") {
@@ -700,4 +730,4 @@
 
     viewQuizResults.addEventListener("click", quizResult);
 </script>
-@endsection
+@endsection`
