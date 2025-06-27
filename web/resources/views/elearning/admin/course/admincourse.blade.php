@@ -296,35 +296,35 @@
     @if (session('success'))
 
 
-        <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-        <script type="text/javascript">
-            $(document).ready(function () {
+    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+    <script type="text/javascript">
+        $(document).ready(function() {
 
-                var message = $('#session_data').val();
-                // alert(message);
-                console.log(message);
-                swal.fire({
-                    title: "Success",
-                    text: message,
-                    icon: "success",
-                });
+            var message = $('#session_data').val();
+            // alert(message);
+            console.log(message);
+            swal.fire({
+                title: "Success",
+                text: message,
+                icon: "success",
+            });
 
-            })
-        </script>
+        })
+    </script>
     @elseif(session('error'))
 
-        <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-        <script type="text/javascript">
-            window.onload = function () {
-                var message = $('#session_data1').val();
-                swal.fire({
-                    title: "Info",
-                    text: message,
-                    icon: "info",
-                });
+    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
+    <script type="text/javascript">
+        window.onload = function() {
+            var message = $('#session_data1').val();
+            swal.fire({
+                title: "Info",
+                text: message,
+                icon: "info",
+            });
 
-            }
-        </script>
+        }
+    </script>
     @endif
 
 
@@ -422,49 +422,49 @@
 
                                                     @foreach($rows['elearning_classes'] as $data)
 
-                                                        <tr>
-                                                            <td>{{$loop->iteration}}</td>
-                                                            <td>{{$data->class_name}}</td>
-                                                            <td>{{$data->class_duration}} Mins</td>
+                                                    <tr>
+                                                        <td>{{$loop->iteration}}</td>
+                                                        <td>{{$data->class_name}}</td>
+                                                        <td>{{$data->class_duration}} Mins</td>
 
-                                                            <?php    if ($data->class_format == 'mp4') { ?>
+                                                        <?php if ($data->class_format == 'mp4') { ?>
                                                             <td> <img src="uploads/class/126/mp4.png" width="50px"
                                                                     height="50px" alt="..."></td>
-                                                            <?php    } elseif ($data->class_format == 'mp3') { ?>
+                                                        <?php    } elseif ($data->class_format == 'mp3') { ?>
                                                             <td> <img src="uploads/class/126/mp3.png" width="50px"
                                                                     height="50px" alt="Image" /></td>
-                                                            <?php    } elseif ($data->class_format == 'pdf') { ?>
+                                                        <?php    } elseif ($data->class_format == 'pdf') { ?>
                                                             <td> <img src="uploads/class/126/pdf.png" width="50px"
                                                                     height="50px" alt="Image" /></td>
-                                                            <?php    } elseif ($data->class_format == 'jpg' or 'png') { ?>
+                                                        <?php    } elseif ($data->class_format == 'jpg' or 'png') { ?>
                                                             <td> <img src="uploads/class/126/empty.jpg" width="50px"
                                                                     height="50px" alt="Image" /></td>
 
-                                                            <?php    } else { ?>
+                                                        <?php    } else { ?>
                                                             <td> <img src="uploads/class/126/{{$data->resource_name}}"
                                                                     width="50px" height="50px" alt="Image" /></td>
-                                                            <?php    } ?>
-                                                            <td>
-                                                                <a class="btn btn-link" title="Edit" id="gcb"
-                                                                    data-toggle="modal" data-target="#addModal4"
-                                                                    onclick="fetch_update({{$data->class_id}},'edit')">
-                                                                    <i class="fas fa-pencil-alt"
-                                                                        style="color: blue !important"></i></a>
-                                                                <a class="btn btn-link"
-                                                                    onclick="fetch_update({{$data->class_id}},'class_show')"
-                                                                    title="Show" id="gcb" href="" data-toggle="modal"
-                                                                    data-target="#addModalquiz1"><i class="fas fa-eye"
-                                                                        style="color:green"></i></a>
+                                                        <?php    } ?>
+                                                        <td>
+                                                            <a class="btn btn-link" title="Edit" id="gcb"
+                                                                data-toggle="modal" data-target="#addModal4"
+                                                                onclick="fetch_update({{$data->class_id}},'edit')">
+                                                                <i class="fas fa-pencil-alt"
+                                                                    style="color: blue !important"></i></a>
+                                                            <a class="btn btn-link"
+                                                                onclick="fetch_update({{$data->class_id}},'class_show')"
+                                                                title="Show" id="gcb" href="" data-toggle="modal"
+                                                                data-target="#addModalquiz1"><i class="fas fa-eye"
+                                                                    style="color:green"></i></a>
 
 
-                                                                <a type="button" title="Delete"
-                                                                    onclick="class_delete(<?php    echo $data->class_id ?>)"
-                                                                    class="btn btn-link"><i class="far fa-trash-alt"
-                                                                        style="color:red"></i></a>
+                                                            <a type="button" title="Delete"
+                                                                onclick="class_delete(<?php echo $data->class_id ?>)"
+                                                                class="btn btn-link"><i class="far fa-trash-alt"
+                                                                    style="color:red"></i></a>
 
-                                                            </td>
+                                                        </td>
 
-                                                        </tr>
+                                                    </tr>
                                                     @endforeach
 
 
@@ -515,11 +515,11 @@
                                                     @foreach(($rows1['elearning_courses']) as $data)
 
 
-                                                        <tr>
-                                                            <td>{{$loop->iteration}}</td>
-                                                            <td>{{$data->course_name}}</td>
+                                                    <tr>
+                                                        <td>{{$loop->iteration}}</td>
+                                                        <td>{{$data->course_name}}</td>
 
-                                                            <!-- @if($data->course_category =="27")
+                                                        <!-- @if($data->course_category =="27")
                                                                         <td>Graduate Trainee</td>
                                                                         @elseif($data->course_category =="34")
                                                                         <td>Professional Member</td>
@@ -529,42 +529,42 @@
 
                                                                         @endif -->
 
-                                                            <?php    if (!empty($data->course_banner)) { ?>
+                                                        <?php if (!empty($data->course_banner)) { ?>
 
 
                                                             <td><img src="uploads/course/126/{{$data->course_banner}}"
                                                                     width="50px" height="50px" alt="Image" /></td>
-                                                            <?php    } else { ?>
+                                                        <?php    } else { ?>
                                                             <td> <img src="uploads/class/126/empty.jpg" width="50px"
                                                                     height="50px" alt="..."></td>
-                                                            <?php    } ?>
-                                                            <td>{{$data->course_start_period}}</td>
-                                                            <td>{{$data->course_end_period}}</td>
-                                                            @if(!empty($data->course_price))
+                                                        <?php    } ?>
+                                                        <td>{{$data->course_start_period}}</td>
+                                                        <td>{{$data->course_end_period}}</td>
+                                                        @if(!empty($data->course_price))
 
-                                                                <td>Rs. {{$data->course_price}}</td>
+                                                        <td>Rs. {{$data->course_price}}</td>
 
-                                                            @else
-                                                                <td>Rs. 0</td>
+                                                        @else
+                                                        <td>Rs. 0</td>
 
-                                                            @endif
-                                                            <td>
+                                                        @endif
+                                                        <td>
 
 
-                                                                <!-- <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal3" onclick="fetch_courseupdate_new({{$data->course_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a> -->
-                                                                <a class="btn btn-link" title="show" data-toggle="modal"
-                                                                    data-target="#addModal5"
-                                                                    onclick="fetch_courseupdate_new({{$data->course_id}},'show')"><i
-                                                                        class="fas fa-eye" style="color:green"></i></a>
+                                                            <!-- <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal3" onclick="fetch_courseupdate_new({{$data->course_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a> -->
+                                                            <a class="btn btn-link" title="show" data-toggle="modal"
+                                                                data-target="#addModal5"
+                                                                onclick="fetch_courseupdate_new({{$data->course_id}},'show')"><i
+                                                                    class="fas fa-eye" style="color:green"></i></a>
 
-                                                                <a type="button" title="Delete"
-                                                                    onclick="course_delete(<?php    echo $data->course_id ?>)"
-                                                                    class="btn btn-link"><i class="far fa-trash-alt"
-                                                                        style="color:red"></i></a>
+                                                            <a type="button" title="Delete"
+                                                                onclick="course_delete(<?php echo $data->course_id ?>)"
+                                                                class="btn btn-link"><i class="far fa-trash-alt"
+                                                                    style="color:red"></i></a>
 
-                                                            </td>
+                                                        </td>
 
-                                                        </tr>
+                                                    </tr>
                                                     @endforeach
 
 
@@ -669,7 +669,7 @@
                                     <option value="">Select Quiz Name</option>
                                     @foreach($rows1['quiz_dropdown'] as $key => $row)
 
-                                        <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
+                                    <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
                                     @endforeach
                                 </select>
 
@@ -724,10 +724,10 @@
 
                         _token: '{{csrf_token()}}'
                     },
-                    error: function () {
+                    error: function() {
                         alert('Something is wrong');
                     },
-                    success: function (data) {
+                    success: function(data) {
 
                         if (data['data'] == 0) {
                             Swal.fire("Info!", data['message_cus'], "info", data['message_cus'])
@@ -770,7 +770,7 @@
                 _token: '{{csrf_token()}}'
             },
 
-            success: function (data) {
+            success: function(data) {
 
                 //alert(data);
                 console.log(data);
@@ -799,10 +799,10 @@
 
                     _token: '{{csrf_token()}}'
                 },
-                error: function () {
+                error: function() {
                     alert('Something is wrong');
                 },
-                success: function (data) {
+                success: function(data) {
                     if (data['data'] == 0) {
                         Swal.fire("Info!", data['message_cus'], "info", data['message_cus'])
                         return false
@@ -852,7 +852,7 @@
 
             },
 
-            success: function (data) {
+            success: function(data) {
                 // correct_choices = data.rows[0]['correct_choices'].split(',');
 
                 console.log(data);
@@ -940,13 +940,71 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Course Category:<span class="error-star" style="color:red;">*</span></label>
+                                <label>Catagory<span class="error-star" style="color:red;">*</span></label>
 
                                 <select class="form-control" name="course_category" id="course_category">
                                     <option value="">---Select Category---</option>
-                                    @foreach($rows2['course_category'] as $key => $row)
 
-                                        <option value="{{ $row }}">{{ $key }}</option>
+                                    @foreach($rows['course_catagory_name'] as $data)
+                                    <option value="{{$data->catagory_id}}" data-badge="">{{$data->catagory_name}}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <label>Sub Catagory<span class="error-star" style="color:red;">*</span></label>
+
+                            <select class="form-control" name="course_category" id="course_category" onchange="fetch_show(this.value, 'edit')">
+                                <option value="">---Select Category---</option>
+                                @foreach($rows['course_catagory_name'] as $data)
+                                <option value="{{ $data->catagory_id }}">{{ $data->sub_catagory }}</option>
+                                @endforeach
+                            </select>
+
+                        </div> -->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Role <span class="error-star" style="color:red;">*</span></label>
+
+                                <select class="form-control" name="course_category" id="course_category">
+                                    <option value="">---Select Role---</option>
+                                    @foreach($roles as $values)
+
+                                    <option value="{{ $values->role_id }}">{{ $values->role_name }}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Designation<span class="error-star" style="color:red;">*</span></label>
+
+                                <select class="form-control" name="course_category" id="course_category">
+                                    <option value="">---Select Designation---</option>
+
+                                    @foreach($rows['designation'] as $data)
+                                    <option value="{{$data->designation_id}}" data-badge="">{{$data->designation_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Role <span class="error-star" style="color:red;">*</span></label>
+
+                                <select class="form-control" name="course_category" id="course_category">
+                                    <option value="">---Select Role---</option>
+                                    @foreach($roles as $values)
+
+                                    <option value="{{ $values->role_id }}">{{ $values->role_name }}</option>
                                     @endforeach
                                 </select>
 
@@ -960,6 +1018,7 @@
                             </div>
                         </div>
                     </div>
+
 
                     <div class="row">
 
@@ -1138,7 +1197,7 @@
                                     <select class="form-control" name="exam_name" id="exam_name">
                                         <option value="">Select Exam Name</option>
                                         @foreach($rows1['exam_list'] as $key => $row)
-                                            <option value="{{ $row->id }}">{{ $row->exam_name }}</option>
+                                        <option value="{{ $row->id }}">{{ $row->exam_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -1336,7 +1395,7 @@
 
 
                                     @foreach($rows['elearning_classes'] as $data)
-                                        <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
+                                    <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
                                     @endforeach
 
                                 </select>
@@ -1663,7 +1722,7 @@
             allowClear: true,
             tags: true,
             language: {
-                noResults: function () {
+                noResults: function() {
                     return "No Question Added";
                 }
             }
@@ -1671,9 +1730,9 @@
     }
 
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Call the reinitialization function after the select2 library is loaded
-        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function () {
+        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function() {
             reinitializeSelect2(".js-select5");
         });
     });
@@ -1693,7 +1752,7 @@
             allowClear: true,
             tags: true,
             language: {
-                noResults: function () {
+                noResults: function() {
                     return "No Question Added";
                 }
             }
@@ -1701,9 +1760,9 @@
     }
 
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Call the reinitialization function after the select2 library is loaded
-        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function () {
+        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function() {
             reinitializeSelect2(".js-select6");
         });
     });
@@ -1866,7 +1925,7 @@
             minDate: 0,
             maxDate: '+30Y',
             inline: true,
-            onSelect: function (selectedDate) {
+            onSelect: function(selectedDate) {
                 // alert(selectedDate);
                 var examDateInput = $("#exam_date");
                 examDateInput.val(selectedDate);
@@ -1876,7 +1935,7 @@
         })
 
     }
-    $(function () {
+    $(function() {
         //start_end_date();
     });
 
@@ -2023,15 +2082,15 @@
     }
 
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         const cresource = document.getElementById('cresource');
 
-        cresource.addEventListener('change', function () {
+        cresource.addEventListener('change', function() {
             const file = cresource.files[0];
             const video = document.createElement('video');
 
             video.preload = 'metadata';
-            video.onloadedmetadata = function () {
+            video.onloadedmetadata = function() {
                 window.URL.revokeObjectURL(video.src); // Release the object URL
                 const duration = video.duration;
                 $('#cduration').val((duration / 60).toFixed(2));
@@ -2041,7 +2100,7 @@
 
             video.src = URL.createObjectURL(file);
         });
-        $(document).on('hidden.bs.modal', function () {
+        $(document).on('hidden.bs.modal', function() {
             // const form = this.querySelector('.reset');
             //alert('ef');
             // form.reset();
@@ -2273,7 +2332,7 @@
 
             },
 
-            success: function (data) {
+            success: function(data) {
                 // correct_choices = data.rows[0]['correct_choices'].split(',');
 
                 console.log(data);
@@ -2478,7 +2537,7 @@
         });
 
     }
-    $('#result').on('change', function () {
+    $('#result').on('change', function() {
         //fetch_courseupdate_new();
         $('#courselist').css('display', 'none');
         $('#classlist').css('display', 'none');
@@ -2495,7 +2554,7 @@
 </script>
 
 <script>
-    $('#course_pay').on('change', function () {
+    $('#course_pay').on('change', function() {
         $('#paid').css('display', 'none');
         $('#free').css('display', 'none');
 
@@ -2511,7 +2570,7 @@
 </script>
 
 <script>
-    $('#course_payedit').on('change', function () {
+    $('#course_payedit').on('change', function() {
         $('#paid1').css('display', 'none');
         $('#free1').css('display', 'none');
 
@@ -2526,7 +2585,7 @@
 
     });
 
-    $('#course_payshow').on('change', function () {
+    $('#course_payshow').on('change', function() {
         $('#paid2').css('display', 'none');
         $('#free2').css('display', 'none');
 
@@ -2539,9 +2598,9 @@
         }
 
     });
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Handle the visibility of the paid/free sections and input values
-        $('#course_pay').on('change', function () {
+        $('#course_pay').on('change', function() {
             $('#paid').css('display', 'none');
             $('#free').css('display', 'none');
 
@@ -2664,7 +2723,7 @@
                                 <select class="form-control" name="quiz_id" id="quiz_id">
                                     <option value="">---Select Quiz Type---</option>
                                     @foreach($rows1['quiz_dropdown'] as $key => $row)
-                                        <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
+                                    <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -2788,7 +2847,7 @@
                                 <select class="form-control" name="quiz_idedit" id="quiz_idedit">
                                     <option value="">---Select Quiz Type---</option>
                                     @foreach($rows1['quiz_dropdown'] as $key => $row)
-                                        <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
+                                    <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -2855,7 +2914,7 @@
                                     <option value="">Select User Category</option>
                                     @foreach($rows2['course_category'] as $key => $row)
 
-                                        <option value="{{ $row }}">{{ $key }}</option>
+                                    <option value="{{ $row }}">{{ $key }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -2928,11 +2987,11 @@
                                     name="course_banneredit" style="display:none;" accept="image/*" autocomplete="off">
                                 <?php if (!empty($data->course_banner)) { ?>
 
-                                <img class="img-fluid2" alt="Banner Image" title="">
+                                    <img class="img-fluid2" alt="Banner Image" title="">
 
                                 <?php } else { ?>
-                                <img class="" src="uploads/class/126/empty.jpg" alt="Banner Image" width="200px"
-                                    height="200px" title="">
+                                    <img class="" src="uploads/class/126/empty.jpg" alt="Banner Image" width="200px"
+                                        height="200px" title="">
 
                                 <?php } ?>
 
@@ -3170,7 +3229,7 @@
 
 
                                     @foreach($rows['elearning_classes'] as $data)
-                                        <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
+                                    <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
                                     @endforeach
 
                                 </select>
@@ -3233,7 +3292,7 @@
                                     <option value="">Select User Category</option>
                                     @foreach($rows2['course_category'] as $key => $row)
 
-                                        <option value="{{ $row }}">{{ $key }}</option>
+                                    <option value="{{ $row }}">{{ $key }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -3425,7 +3484,7 @@
                                     <select class="form-control" name="exam_nameshow" id="exam_nameshow">
                                         <option value="">Select Exam Name</option>
                                         @foreach($rows1['exam_list'] as $key => $row)
-                                            <option value="{{ $row->id }}">{{ $row->exam_name }}</option>
+                                        <option value="{{ $row->id }}">{{ $row->exam_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -3529,7 +3588,7 @@
                                     id="course_classesshow" multiple="multiple" style="width:208px !important;">
 
                                     @foreach($rows['elearning_classes'] as $key => $data)
-                                        <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
+                                    <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
                                     @endforeach
 
                                 </select>
@@ -3609,7 +3668,7 @@
         $(".js-select2").empty();
 
     }
-    $('.close').on('click', function () {
+    $('.close').on('click', function() {
         resetSelect2();
     });
 </script>
@@ -3945,7 +4004,7 @@
 <script>
     var $j = jQuery.noConflict();
 
-    $j(document).ready(function () {
+    $j(document).ready(function() {
 
 
         // Initialize Select2 plugin
@@ -4156,7 +4215,7 @@
             // Disable the form control
             $('.enddate').prop('disabled', true);
             $('#exam_date').prop('readonly', false);
-            document.querySelector("#exam_date").addEventListener("keypress", function (evt) {
+            document.querySelector("#exam_date").addEventListener("keypress", function(evt) {
                 var charCode = evt.which || evt.keyCode;
                 var charStr = String.fromCharCode(charCode);
 
@@ -4169,7 +4228,7 @@
 
         }
     }
-    document.querySelector("[type='number']").addEventListener("keypress", function (evt) {
+    document.querySelector("[type='number']").addEventListener("keypress", function(evt) {
         if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
             evt.preventDefault();
         }
@@ -4188,4 +4247,8 @@
         }
     }
 </script>
+
+
+
+
 @endsection

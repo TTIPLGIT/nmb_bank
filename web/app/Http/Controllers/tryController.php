@@ -46,7 +46,7 @@ class tryController extends BaseController
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
 
-                    return view('elearning.admin.admindashboard', compact('rows', 'modules', 'screens', 'count', 'recommended','event_date'));
+                    return view('elearning.admin.admindashboard', compact('rows', 'modules', 'screens', 'count', 'recommended', 'event_date'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -117,7 +117,7 @@ class tryController extends BaseController
 
     public function admincourse(Request $request)
     {
-        
+
         try {
             $method = 'Method => tryController => admincourse';
             $user_id = $request->session()->get("userID");
@@ -125,10 +125,25 @@ class tryController extends BaseController
             $rows = array();
 
             $rows['elearning_classes'] = DB::table('elearning_classes')
-            ->select('*')
-            ->where('drop_class', '0')
-            ->orderBy('class_id', 'desc')
-            ->get();
+                ->select('*')
+                ->where('drop_class', '0')
+                ->orderBy('class_id', 'desc')
+                ->get();
+
+            $rows['course_catagory_name'] = DB::table('course_catagory')
+                ->select('*')
+                ->orderBy('catagory_id', 'desc')
+                ->get();
+
+            $rows['designation'] = DB::table('designation')
+                ->select('*')
+                ->orderBy('designation_id', 'desc')
+                ->get();
+
+            $roles = DB::table('uam_roles')
+                ->select('*')
+                ->get();
+
             $rows1 = array();
             $rows1['elearning_courses'] = DB::table('elearning_courses')
                 ->select('*')
@@ -147,7 +162,16 @@ class tryController extends BaseController
             $modules = $menus['modules'];
             $category = tryController::course_list($request);
             $rows2['course_category'] = $category['rows2']['course_category'];
-            return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'user_id', 'rows1', 'rows2'));
+
+            $rows3['elearning_classes'] = DB::table('elearning_classes')
+                ->select('*')
+                ->where('drop_class', '0')
+                ->orderBy('class_id', 'desc')
+                ->get();
+
+
+
+            return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'roles', 'user_id', 'rows1', 'rows2'));
         } catch (\Exception $exc) {
             //dd("bhj");
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
@@ -551,7 +575,7 @@ class tryController extends BaseController
         }
         $method = 'Method => tryController => event_store';
         try {
-dd($request);
+            dd($request);
 
             $data = array();
             $data['event_name'] = $request->event_name;

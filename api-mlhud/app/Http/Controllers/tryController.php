@@ -260,6 +260,7 @@ class tryController extends BaseController
             return $sendServiceResponse;
         }
     }
+    
     public function class_fetch(Request $request)
     {
 
@@ -649,6 +650,8 @@ class tryController extends BaseController
                     'event_status' => '1',
 
                 ]);
+
+              
 
 
 
