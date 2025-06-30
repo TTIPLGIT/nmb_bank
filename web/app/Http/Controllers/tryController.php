@@ -140,6 +140,12 @@ class tryController extends BaseController
                 ->orderBy('designation_id', 'desc')
                 ->get();
 
+            $rows['users'] = DB::table('users')
+                ->select('*')
+                ->orderBy('id', 'desc')
+                ->get();
+
+
             $roles = DB::table('uam_roles')
                 ->select('*')
                 ->get();
@@ -173,7 +179,7 @@ class tryController extends BaseController
 
             return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'roles', 'user_id', 'rows1', 'rows2'));
         } catch (\Exception $exc) {
-            //dd("bhj");
+            dd("why this");
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
     }
@@ -813,7 +819,6 @@ class tryController extends BaseController
     public function course_store(Request $request)
     {
         // dd($request);
-
         $validator = Validator::make($request->all(), [
             'course_banner' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
@@ -852,18 +857,27 @@ class tryController extends BaseController
             $data['course_category'] = $request->course_category;
             $data['examname'] = $request->exam_name;
             $data['exam_date'] = $request->exam_date;
-
-
             $data['pass_percentage'] = $request->pass_percentage;
-            //dd($data);
+
+            $data['category_id'] = $request->category_id;
+            $data['role_id'] = $request->role_id;
+            $data['designation_id'] = $request->designation_id;
+            $data['user_ids'] = $request->user_ids;
+
+
+
 
             $encryptArray = $data;
+
             $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
+
             $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
+            // dd( $storagepath_ursb_old);
             if (!File::exists($storagepath_ursb_old)) {
                 File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
             }
             $data['introduction_path'] = $storagepath_ursb;
+
             $documentsb =  $request['course_introduction'];
             $files = $documentsb->getClientOriginalName();
             $findspace = array(' ', '&', "'", '"');
@@ -921,6 +935,7 @@ class tryController extends BaseController
             //dd($response);
             // return redirect(route('admincourse'))->with('danger', 'User session Exipired');
         } catch (\Exception $exc) {
+            // dd("welcome");
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
     }

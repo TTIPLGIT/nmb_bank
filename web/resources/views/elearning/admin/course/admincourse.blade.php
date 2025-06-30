@@ -297,6 +297,35 @@
 
 
     <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+    <script>
+        $('#user_id').on('select2:select', function(e) {
+            alert("welcome")
+            const selectedValue = e.params.data.id;
+
+
+            if (selectedValue === 'all') {
+                const allValues = [];
+
+                // Get all option values except "all"
+                $('#user_id option').each(function() {
+                    const val = $(this).val();
+                    if (val !== 'all') {
+                        allValues.push(val);
+                    }
+                });
+
+                // Select all users (excluding 'all')
+                $('#user_id').val(allValues).trigger('change.select2');
+            }
+        });
+
+        // Optional: Clear all selections if user manually removes everything
+        $('#user_id').on('select2:unselect', function(e) {
+            if ($('#user_id').val() === null || $('#user_id').val().length === 0) {
+                $('#user_id').val(null).trigger('change.select2');
+            }
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -915,6 +944,61 @@
         examDateElement.val(selectedEndDate);
     }
 </script>
+<!-- Designation mapping with the role  -->
+
+
+
+<script>
+    var allDesignations = @json($rows['designation']);
+    var allUsers = @json($rows['users']);
+
+    function filterDesignations() {
+        const roleId = document.getElementById('role_id').value;
+        const designationSelect = document.getElementById('designation_id');
+        const userSelect = document.getElementById('user_id');
+
+        // Clear previous options
+        designationSelect.innerHTML = '<option value="">Please Select Designation</option>';
+        userSelect.innerHTML = '<option value="">Please Select User</option>';
+
+        // Filter designations based on role
+        const filteredDesignations = allDesignations.filter(d => d.role_id == roleId);
+
+        filteredDesignations.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d.designation_id;
+            opt.textContent = d.designation_name;
+            designationSelect.appendChild(opt);
+        });
+
+
+    }
+
+    function filterNames() {
+        const roleId = document.getElementById('role_id').value;
+        const designationSelect = document.getElementById('designation_id').value;
+        const userSelect = document.getElementById('user_id');
+
+        userSelect.innerHTML = '<option value="all">All</option>';
+
+        const filteredNames = allUsers.filter(d =>
+            d.designation_id == designationSelect && d.role_id == roleId
+        );
+
+        filteredNames.forEach(a => {
+            const opt1 = document.createElement('option');
+            opt1.value = a.id;
+            opt1.textContent = a.name;
+            userSelect.appendChild(opt1);
+        });
+    }
+
+
+
+    console.log(document.getElementById('user_id'));
+</script>
+
+
 
 <!-- addquestion function -->
 <div class="modal fade" id="addModal">
@@ -942,7 +1026,7 @@
                             <div class="form-group">
                                 <label>Catagory<span class="error-star" style="color:red;">*</span></label>
 
-                                <select class="form-control" name="course_category" id="course_category">
+                                <select class="form-control" name="category_id" id="category_id">
                                     <option value="">---Select Category---</option>
 
                                     @foreach($rows['course_catagory_name'] as $data)
@@ -966,31 +1050,32 @@
                     </div>
 
                     <div class="row">
+                        <!-- Role Selection -->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Role <span class="error-star" style="color:red;">*</span></label>
-
-                                <select class="form-control" name="course_category" id="course_category">
+                                <select class="form-control" name="role_id" id="role_id" onchange="filterDesignations()">
                                     <option value="">---Select Role---</option>
                                     @foreach($roles as $values)
-
                                     <option value="{{ $values->role_id }}">{{ $values->role_name }}</option>
                                     @endforeach
                                 </select>
-
+                                @error('role_id') {{-- corrected from roles_id --}}
+                                <div class="error">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
+
+                        <!-- Designation Selection -->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Designation<span class="error-star" style="color:red;">*</span></label>
-
-                                <select class="form-control" name="course_category" id="course_category">
-                                    <option value="">---Select Designation---</option>
-
-                                    @foreach($rows['designation'] as $data)
-                                    <option value="{{$data->designation_id}}" data-badge="">{{$data->designation_name}}</option>
-                                    @endforeach
+                                <label>Designation <span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="designation_id" id="designation_id" onchange="filterNames()">
+                                    <option value="">Please Select Designation</option>
                                 </select>
+                                @error('designation_id')
+                                <div class="error">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -998,18 +1083,20 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Role <span class="error-star" style="color:red;">*</span></label>
-
-                                <select class="form-control" name="course_category" id="course_category">
-                                    <option value="">---Select Role---</option>
-                                    @foreach($roles as $values)
-
-                                    <option value="{{ $values->role_id }}">{{ $values->role_name }}</option>
+                                <label>User Name <span class="text-danger">*</span></label>
+                                <select class=" user_id_course form-control js-select2" name="user_ids[]" id="user_id" multiple="multiple">
+                                    <option value="all">All</option>
+                                    @foreach($rows['users'] as $data)
+                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
                                     @endforeach
                                 </select>
-
                             </div>
                         </div>
+
+
+
+
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Name:<span class="error-star" style="color:red;">*</span></label>
@@ -1957,14 +2044,45 @@
 </script>
 
 <script>
-    $(".js-select21").select2({
+    $(".js-select2").select2({
         closeOnSelect: false,
         placeholder: "Select Class Name",
         // allowHtml: true,
         allowClear: true,
         tags: true // создает новые опции на лету
     });
+
+
+    $('#user_id').on('select2:select', function(e) {
+
+        const selectedValue = e.params.data.id;
+        console.log(selectedValue)
+        console.log(selectedValue === 'all')
+        console.log(selectedValue == 'all')
+        if (selectedValue === 'all') {
+            const allValues = [];
+
+            // Get all option values except "all"
+            $('#user_id option').each(function() {
+                const val = $(this).val();
+                if (val !== 'all') {
+                    allValues.push(val);
+                }
+            });
+
+            // Select all users (excluding 'all')
+            $('#user_id').val(allValues).trigger('change.select2');
+        }
+    });
+
+    // Optional: Clear all selections if user manually removes everything
+    $('#user_id').on('select2:unselect', function(e) {
+        if ($('#user_id').val() === null || $('#user_id').val().length === 0) {
+            $('#user_id').val(null).trigger('change.select2');
+        }
+    });
 </script>
+
 <script>
     function data(e) {
         // alert(e);
@@ -2638,6 +2756,8 @@
 
     // });
 </script>
+
+
 
 <!-- Deepika -->
 
@@ -4001,10 +4121,31 @@
 <!-- edit function -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-<script>
+<!-- <script>
     var $j = jQuery.noConflict();
 
     $j(document).ready(function() {
+        $('.select2').select2({
+            placeholder: "Select users",
+            allowClear: true
+        });
+
+        $('#user_id').on('change', function() {
+            let selected = $(this).val();
+
+            if (selected.includes('all')) {
+                // Select all other options
+                let allValues = [];
+                $('#user_id option').each(function() {
+                    allValues.push($(this).val());
+                });
+                $('#user_id').val(allValues).trigger('change');
+            } else {
+                // If "all" was unselected, and it's still in selected list, remove it
+                $('#user_id option[value="all"]').prop('selected', false);
+                $('#user_id').trigger('change.select2');
+            }
+        });
 
 
         // Initialize Select2 plugin
@@ -4014,7 +4155,7 @@
         //alert('egeg');
 
     });
-</script>
+</script> -->
 
 
 
@@ -4247,7 +4388,6 @@
         }
     }
 </script>
-
 
 
 

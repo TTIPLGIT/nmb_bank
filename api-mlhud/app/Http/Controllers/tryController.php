@@ -260,7 +260,7 @@ class tryController extends BaseController
             return $sendServiceResponse;
         }
     }
-    
+
     public function class_fetch(Request $request)
     {
 
@@ -651,7 +651,7 @@ class tryController extends BaseController
 
                 ]);
 
-              
+
 
 
 
@@ -847,6 +847,8 @@ class tryController extends BaseController
             $course_classes_name = implode(", ", $course_classes);
             $introduction_extension = explode(".", $inputArray['course_introduction']);
             $introduction_extension = $introduction_extension[1];
+            $userIdsString = implode(",",  $inputArray['user_ids']);
+
 
 
 
@@ -881,8 +883,14 @@ class tryController extends BaseController
                 'pass_percentage' => $inputArray['pass_percentage'],
                 'course_format' => $introduction_extension,
 
-            ];
+                'category_id' => $inputArray['category_id'],
+                'role_id' => $inputArray['role_id'],
+                'designation_id' => $inputArray['designation_id'],
+                'user_ids' => $userIdsString,
 
+
+            ];
+        
             $this->WriteFileLog( $input );
 
             $update_id = DB::transaction(function () use ($input) {
@@ -915,6 +923,13 @@ class tryController extends BaseController
                         'course_cpt_points' => $input['course_cpt_points'],
                         'course_category' => $input['course_category'],
                         'course_format' => $input['course_format'],
+
+                        'category_id' => $input['category_id'],
+                        'role_id' => $input['role_id'],
+                        'designation_id' => $input['designation_id'],
+                        'user_ids' => $input['user_ids'],
+
+
 
 
                     ]);
