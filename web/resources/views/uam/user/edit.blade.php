@@ -8,9 +8,9 @@
 
 
     <div class="section-body mt-1">
-      <h5 class="heading_align"  style="color:darkblue">User Edit</h5>
+      <h5 class="heading_align" style="color:darkblue">User Edit</h5>
 
-      {{ Breadcrumbs::render('user.edit',$one_row[0]['id']) }} 
+      {{ Breadcrumbs::render('user.edit',$one_row[0]['id']) }}
 
       <div class="row">
 
@@ -42,14 +42,16 @@
                       <div class="error">{{ $message }}</div>
                       @enderror
                     </div>
-
+  
                     <div class="form-group">
                       <label class="control-label">Roles <span style="color: red;font-size: 16px;">*</span></label>
-                      <select class="form-control" name="roles_id">
+                      <select class="form-control" name="roles_id" id="roles_id" onchange="filterDesignations()">
                         <option value="">Please Select Role</option>
-
-                        @foreach($rows_data as $key=>$row_data)
-                        <option value="{{ $row_data['role_id'] }}" {{ $row_data['role_id'] ==  $one_row[0]['array_roles'] ? 'selected':'' }}>{{ $row_data['role_name'] }}</option>
+                        @foreach($rows_data as $key => $row_data)
+                        <option value="{{ $row_data['role_id'] }}"
+                          {{ $row_data['role_id'] == $one_row[0]['array_roles'] ? 'selected' : '' }}>
+                          {{ $row_data['role_name'] }}
+                        </option>
                         @endforeach
                       </select>
 
@@ -57,6 +59,20 @@
                       <div class="error">{{ $message }}</div>
                       @enderror
                     </div>
+
+                   
+                      <div class="form-group">
+                        <label class="control-label">Designation<span style="color: red;font-size: 16px;">*</span></label>
+                        <select class="form-control" name="designation_id" id="designation_id">
+                          <option value="">Please Select Designation</option>
+                          {{-- Designation options will be populated by JS --}}
+                        </select>
+
+                        @error('designation_id')
+                        <div class="error">{{ $message }}</div>
+                        @enderror
+                      </div>
+                    
 
 
 
@@ -97,7 +113,7 @@
 
 
 
-                 {{-- <div class="col-md-12">
+                  {{-- <div class="col-md-12">
 
                     <div class="form-group">
                       <label class="control-label">Directorate and Department <span style="color: red;font-size: 16px;">*</span></label>
@@ -110,100 +126,100 @@
                           @foreach ($parent_folder as $key => $parent_folder_value)
                           <li>
                             <i class="fa fa-plus"></i> <label> <input id="node-{{ $parent_folder_value['document_folder_structure_id'] }}" data-id="{{ $parent_folder_value['document_folder_structure_id'] }}" type="checkbox" module="{{ $parent_folder_value['document_folder_structure_id'] }}"> {{ $parent_folder_value['folder_name'] }} </label>
-                            <ul>
+                  <ul>
 
-                             @if($directorate !="")
-                              @foreach ($directorate as $key => $directorate_value)
-                              @if($parent_folder_value['document_folder_structure_id'] == $directorate_value['parent_document_folder_structure_id'])
+                    @if($directorate !="")
+                    @foreach ($directorate as $key => $directorate_value)
+                    @if($parent_folder_value['document_folder_structure_id'] == $directorate_value['parent_document_folder_structure_id'])
 
-                              <li><i class="fa fa-plus"></i> <label> <input id="node-{{$directorate_value['parent_document_folder_structure_id'] }}-{{$directorate_value['id'] }}" data-id="{{$directorate_value['parent_document_folder_structure_id'] }}-{{$directorate_value['id'] }}" module="{{$directorate_value['parent_document_folder_structure_id'] }}" type="checkbox"> {{$directorate_value['folder_name'] }}</label>
-                                <ul>
+                    <li><i class="fa fa-plus"></i> <label> <input id="node-{{$directorate_value['parent_document_folder_structure_id'] }}-{{$directorate_value['id'] }}" data-id="{{$directorate_value['parent_document_folder_structure_id'] }}-{{$directorate_value['id'] }}" module="{{$directorate_value['parent_document_folder_structure_id'] }}" type="checkbox"> {{$directorate_value['folder_name'] }}</label>
+                      <ul>
 
-                                  @if($department !="")
-                                  @foreach ($department as $key => $department_value)
-                                  @if($directorate_value['id']== $department_value['parent_document_folder_structure_id'])
+                        @if($department !="")
+                        @foreach ($department as $key => $department_value)
+                        @if($directorate_value['id']== $department_value['parent_document_folder_structure_id'])
 
-                                  <li><i class="fa fa-plus"></i> <label><input id="node-{{$department_value['parent_document_folder_structure_id']}}-{{$department_value['id'] }}" data-id="{{$department_value['parent_document_folder_structure_id']}}:{{$department_value['id'] }}" type="checkbox"> {{$department_value['folder_name'] }} </label>
-                                    <ul>
+                        <li><i class="fa fa-plus"></i> <label><input id="node-{{$department_value['parent_document_folder_structure_id']}}-{{$department_value['id'] }}" data-id="{{$department_value['parent_document_folder_structure_id']}}:{{$department_value['id'] }}" type="checkbox"> {{$department_value['folder_name'] }} </label>
+                          <ul>
 
 
-                                      @if($sub_department !="")
-                                      @foreach ($sub_department as $key => $sub_department_value_one)
-                                      @if($department_value['id'] == $sub_department_value_one['parent_document_folder_structure_id'])
+                            @if($sub_department !="")
+                            @foreach ($sub_department as $key => $sub_department_value_one)
+                            @if($department_value['id'] == $sub_department_value_one['parent_document_folder_structure_id'])
 
-                                      <li> <i class="fa fa-plus"></i> <label><input id="node1-{{$sub_department_value_one['parent_document_folder_structure_id'] }}-{{$sub_department_value_one['id'] }}" data-id="{{$sub_department_value_one['parent_document_folder_structure_id'] }}:{{$sub_department_value_one['id']}}" type="checkbox"> {{$sub_department_value_one['folder_name'] }} </label>
-                                        <!-- sub -->
-                                        <ul>
-                                          @if($sub_department !="")
-                                          @foreach ($sub_department as $key => $sub_department_value_two)
-                                          @if($sub_department_value_one['documentfolderid'] == $sub_department_value_two['parent_document_folder_structure_id'])
+                            <li> <i class="fa fa-plus"></i> <label><input id="node1-{{$sub_department_value_one['parent_document_folder_structure_id'] }}-{{$sub_department_value_one['id'] }}" data-id="{{$sub_department_value_one['parent_document_folder_structure_id'] }}:{{$sub_department_value_one['id']}}" type="checkbox"> {{$sub_department_value_one['folder_name'] }} </label>
+                              <!-- sub -->
+                              <ul>
+                                @if($sub_department !="")
+                                @foreach ($sub_department as $key => $sub_department_value_two)
+                                @if($sub_department_value_one['documentfolderid'] == $sub_department_value_two['parent_document_folder_structure_id'])
 
-                                          <li><label><input class="hummingbird-end-node" id="node1-{{$sub_department_value_one['parent_document_folder_structure_id'] }}-{{$sub_department_value_one['id'] }}-{{$sub_department_value_two['id'] }}" data-id="{{$sub_department_value_two['parent_document_folder_structure_id'] }}:{{$sub_department_value_two['id'] }}" type="checkbox"> {{$sub_department_value_two['folder_name'] }} </label>
-                                                                                      @endif
-                                            @endforeach
-                                            @endif
-
-                                        </ul>
-                                        <!-- sub -->
-                                      </li>
-
-                                      @endif
-                                      @endforeach
-                                      @endif
-
-                                    </ul>
-                                  </li>
-
+                                <li><label><input class="hummingbird-end-node" id="node1-{{$sub_department_value_one['parent_document_folder_structure_id'] }}-{{$sub_department_value_one['id'] }}-{{$sub_department_value_two['id'] }}" data-id="{{$sub_department_value_two['parent_document_folder_structure_id'] }}:{{$sub_department_value_two['id'] }}" type="checkbox"> {{$sub_department_value_two['folder_name'] }} </label>
                                   @endif
                                   @endforeach
                                   @endif
 
-                                </ul>
-                              </li>
+                              </ul>
+                              <!-- sub -->
+                            </li>
 
-                              @endif
-                              @endforeach
-                              @endif
-                            </ul>
-                          </li>
-                          @endforeach
-                          @endif
-                        </ul>
-                      </div>
-                    </div>
-                    @error('directorate_department')
-                    <div class="error">{{ $message }}</div>
-                    @enderror
+                            @endif
+                            @endforeach
+                            @endif
 
-                  </div>
+                          </ul>
+                        </li>
 
+                        @endif
+                        @endforeach
+                        @endif
 
-                  <input id="displayItems" name="displayItems" class="form-control" type="hidden">
+                      </ul>
+                    </li>
 
-
-                  <input id="displayItems1" name="directorate_department" class="form-control" type="hidden">
-                  <input id="displayItems2" name="displayItems2" class="form-control" type="hidden">
-                  <div class="para"></div>
-                  <input class="form-control" type="hidden" id="parent_node_id" name="parent_node_id" placeholder="Enter Password" value="{{ $document_folder_structure_id }}">
-                  <input class="form-control" type="hidden" id="user_type" name="user_type" placeholder="Enter Password" value="AD">
-                </div>--}}
-                <div class="row text-center">
-                  <div class="col-md-12">
-
-                  <button class="btn btn-success" type="submit">&nbsp;&nbsp; Update</button>&nbsp;
-                  <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button>&nbsp;
-                    <a class="btn btn-danger footer_btn_cancel" href="{{ route('user.index') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
-                  </div>
+                    @endif
+                    @endforeach
+                    @endif
+                  </ul>
+                  </li>
+                  @endforeach
+                  @endif
+                  </ul>
                 </div>
-              </form>
             </div>
+            @error('directorate_department')
+            <div class="error">{{ $message }}</div>
+            @enderror
+
+          </div>
+
+
+          <input id="displayItems" name="displayItems" class="form-control" type="hidden">
+
+
+          <input id="displayItems1" name="directorate_department" class="form-control" type="hidden">
+          <input id="displayItems2" name="displayItems2" class="form-control" type="hidden">
+          <div class="para"></div>
+          <input class="form-control" type="hidden" id="parent_node_id" name="parent_node_id" placeholder="Enter Password" value="{{ $document_folder_structure_id }}">
+          <input class="form-control" type="hidden" id="user_type" name="user_type" placeholder="Enter Password" value="AD">
+        </div>--}}
+        <div class="row text-center">
+          <div class="col-md-12">
+
+            <button class="btn btn-success" type="submit">&nbsp;&nbsp; Update</button>&nbsp;
+            <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button>&nbsp;
+            <a class="btn btn-danger footer_btn_cancel" href="{{ route('user.index') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
           </div>
         </div>
+        </form>
       </div>
-
-
     </div>
-  </section>
+</div>
+</div>
+
+
+</div>
+</section>
 </div>
 
 
@@ -742,5 +758,40 @@
 
   });
 </script>
+
+<script>
+    const allDesignations = @json($designation); // Make sure this is full list
+    const selectedRoleId = {{ $one_row[0]['array_roles'] ?? 'null' }};
+    const selectedDesignationId = {{ $one_row[0]['designation_id'] ?? 'null' }};
+</script>
+
+<script>
+function filterDesignations() {
+    const roleId = document.getElementById('roles_id').value;
+    const designationSelect = document.getElementById('designation_id');
+
+    designationSelect.innerHTML = '<option value="">Please Select Designation</option>';
+
+    const filtered = allDesignations.filter(d => d.role_id == roleId);
+
+    filtered.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d.designation_id;
+        opt.textContent = d.designation_name;
+
+        if (d.designation_id == selectedDesignationId) {
+            opt.selected = true;
+        }
+
+        designationSelect.appendChild(opt);
+    });
+}
+
+// Load designations for selected role on page load
+window.addEventListener('DOMContentLoaded', function () {
+    filterDesignations();
+});
+</script>
+
 
 @endsection

@@ -1961,8 +1961,8 @@ class elearningEthnicTestController extends BaseController
                 'name' => $name,
 
             ];
-
-            $pdf = PDF::loadView('pdf.template', $data);
+   $pdf = PDF::loadView('certificate_template.NMB_level1.index', $data);
+          
             $storagepath_user = public_path() . '/userdocuments/certificate/' . $user_id;
             if (!File::exists($storagepath_user)) {
                 File::makeDirectory($storagepath_user);
@@ -1978,7 +1978,7 @@ class elearningEthnicTestController extends BaseController
             $output = $storagepath_ninf . '/' . $filename;
 
             $pdf->save($output);
-
+            
             $data = [
                 'date' => $date,
                 'course_name' => $course_name,
@@ -1997,7 +1997,7 @@ class elearningEthnicTestController extends BaseController
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
 
             $response1 = json_decode($response);
-
+            
             if ($pdf->download('certificate.pdf')) {
                 return redirect()->back()->with('success', 'Your Certificate has been Issued Successfully');
             } else {
