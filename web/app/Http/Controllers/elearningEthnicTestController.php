@@ -1955,13 +1955,31 @@ class elearningEthnicTestController extends BaseController
                     'get_certified' => "1",
 
                 ]);
+            $certificate_template_id = $course_details[0]->cetificate_template;
+          
+            $signatories  = DB::table('certificate_template_signatories')
+             ->where('certificate_template_id', $certificate_template_id)
+                 ->orderBy('sort_order', 'asc')
+                ->get();
+            $get_template  = DB::table('certificate_templates')
+             ->where('certificate_templates_id', $certificate_template_id)
+            ->first();
+
+             
             $data = [
-                'date' => '2024-07-20',
+                 'date' => Carbon::today()->format('d-m-Y'),
                 'course_name' => $course_name,
                 'name' => $name,
+                'signatories' => $signatories
 
             ];
-   $pdf = PDF::loadView('certificate_template.NMB_level1.index', $data);
+             
+           $pdf = PDF::loadView("certificate_template.{$get_template->template_name}.index", [
+    'data' => $data
+]);
+
+
+
           
             $storagepath_user = public_path() . '/userdocuments/certificate/' . $user_id;
             if (!File::exists($storagepath_user)) {
