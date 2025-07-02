@@ -877,7 +877,12 @@ class tryController extends BaseController
 
                 'course_classes' => $course_classes_name,
                 'course_cpt_points' => $inputArray['course_cpt_points'],
+
                 'course_category' => $inputArray['course_category'],
+                'role_id' => $inputArray['role_id'],
+                'designation_id' => $inputArray['designation_id'],
+                'user_ids' => $userIdsString,
+
                  'course_format' => $introduction_extension,
                 'examname' => $inputArray['examname'],
                 'exam_date' => $inputArray['exam_date'],
@@ -890,7 +895,7 @@ class tryController extends BaseController
               
             ];
 
-           
+          
 
             $update_id = DB::transaction(function () use ($input) {
                 $update_id = DB::table('elearning_courses')
@@ -927,25 +932,20 @@ class tryController extends BaseController
                         'course_expiry_period' => $input['course_expiry_period'],
                         'expired_course_id' => $input['expired_course_id'],
 
-                        'category_id' => $input['category_id'],
+                        'course_category' => $input['course_category'],
                         'role_id' => $input['role_id'],
                         'designation_id' => $input['designation_id'],
                         'user_ids' => $input['user_ids'],
 
 
-
-                        'category_id' => $input['category_id'],
-                        'role_id' => $input['role_id'],
-                        'designation_id' => $input['designation_id'],
-                        'user_ids' => $input['user_ids'],
 
 
 
 
                     ]);
             });
-
-            $this->notifications_insert(null, auth()->user()->id, $inputArray['course_name'] . " Course Created Successfully", "/admincourse");
+ 
+            // $this->notifications_insert(null, auth()->user()->id, $inputArray['course_name'] . " Course Created Successfully", "/admincourse");
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_courses', $update_id, 'Create', 'Course Creation', auth()->user()->id, NOW(), $role_name_fetch);

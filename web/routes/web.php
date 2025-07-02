@@ -331,7 +331,10 @@ Route::post('/course/catagory_update', [App\Http\Controllers\coursecategoryContr
 Route::get('/course/catagory/fetch', [App\Http\Controllers\coursecategoryController::class, 'course_catagory_fetch'])->name('course_catagory');
 Route::post('/course_catagory_delete', [App\Http\Controllers\coursecategoryController::class, 'course_catagory_delete'])->name('course_deletes');
 
-
+Route::get('/certificate_template', [\App\Http\Controllers\CertifcateTemplateController::class, 'index'])->name('certificate_template.index');
+Route::get('/certificate_template/show/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'show'])->name('certificate_template.show');
+Route::get('/certificate_template/edit/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'edit'])->name('certificate_template.edit');
+Route::Post('/certificate_template/store', [\App\Http\Controllers\CertifcateTemplateController::class, 'store'])->name('certificate_template.store');
 
 
 

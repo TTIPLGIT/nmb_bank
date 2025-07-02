@@ -183,11 +183,11 @@ class tryController extends BaseController
                 ->orderBy('class_id', 'desc')
                 ->get();
 
-
+           
 
             return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'roles', 'user_id', 'rows1', 'rows2'));
         } catch (\Exception $exc) {
-            dd("why this");
+          
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
     }
@@ -874,14 +874,14 @@ class tryController extends BaseController
           
             $data['pass_percentage'] = $request->pass_percentage;
 
-            $data['course_category_id'] = $request->course_category_id;
+            $data['course_category'] = $request->course_category_id;
             $data['role_id'] = $request->role_id;
             $data['designation_id'] = $request->designation_id;
             $data['user_ids'] = $request->user_ids;
 
 
 
- 
+        
             $encryptArray = $data;
 
             $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf

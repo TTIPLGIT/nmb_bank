@@ -546,9 +546,7 @@ form.longqustionsform {
                                                     @foreach(($rows1['elearning_courses']) as $data)
 
 
-                                                    <tr>
-                                                        <td>{{$loop->iteration}}</td>
-                                                        <td>{{$data->course_name}}</td>
+                                                  
  
                                                      
                                                     <tr>
