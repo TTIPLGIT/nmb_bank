@@ -329,8 +329,14 @@ Route::middleware('auth:api')->group(function () {
   Route::get('/designation/data_edit/{id}', [\App\Http\Controllers\DesignationController::class, 'data_edit']);
   Route::post('/designation/storedata', [\App\Http\Controllers\DesignationController::class, 'storedata']);
   Route::post('/designation/updatedata', [\App\Http\Controllers\DesignationController::class, 'updatedata']);
+  
 
   //iyyappan //
+
+  Route::get('/certificate_template/get_data', [\App\Http\Controllers\CertificateTemplateController::class, 'get_data']);
+  Route::get('/certificate_template/data_edit/{id}', [\App\Http\Controllers\CertificateTemplateController::class, 'data_edit']);
+  Route::get('/certificate_template/data_edit_details/{id}', [\App\Http\Controllers\CertificateTemplateController::class, 'data_edit_details']);
+  Route::post('/certificate-template/store', [\App\Http\Controllers\CertificateTemplateController::class, 'storedata']);
 
 
   Route::post('/elearning/class/store', [\App\Http\Controllers\tryController::class, 'class_store']);
@@ -351,6 +357,8 @@ Route::middleware('auth:api')->group(function () {
   Route::post('/elearning/course/store', [\App\Http\Controllers\tryController::class, 'course_store']);
   Route::get('/course/course_list', [\App\Http\Controllers\tryController::class, 'course_list']);
   Route::post('/course/course_delete', [\App\Http\Controllers\tryController::class, 'course_delete']);
+   Route::post('/course/course_delete', [\App\Http\Controllers\tryController::class, 'course_delete']);
+     Route::post('/course/course_copy', [\App\Http\Controllers\tryController::class, 'course_copy']);
 
   // Route::post('/elearning/quiz/store', [\App\Http\Controllers\tryController::class, 'quiz_store']);
   // Route::get('/quiz/quiz_list', [\App\Http\Controllers\tryController::class, 'quiz_list']);

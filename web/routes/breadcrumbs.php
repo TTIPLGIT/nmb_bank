@@ -215,6 +215,40 @@ Breadcrumbs::for('uam_roles.edit', function ($trail, $id) {
     $trail->parent('uam_roles.index');
     $trail->push('Edit', route('uam_roles.edit', $id));
 });
+
+Breadcrumbs::for('designation.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Designation', route('designation.index'));
+});
+Breadcrumbs::for('designation.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('designation.index');
+    $trail->push('Create', route('designation.create'));
+});
+Breadcrumbs::for('designation.edit', function ($trail, $id) {
+    $trail->parent('designation.index');
+    $trail->push('Edit', route('designation.edit', $id));
+});
+Breadcrumbs::for('designation.show', function ($trail, $id) {
+    $trail->parent('designation.index');
+    $trail->push('Show', route('designation.show', $id));
+});
+
+Breadcrumbs::for('certificate_template.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Certificate Template', route('certificate_template.index'));
+});
+
+Breadcrumbs::for('certificate_template.edit', function ($trail, $id) {
+    $trail->parent('certificate_template.index');
+    $trail->push('Details', route('certificate_template.edit', $id));
+});
+
+Breadcrumbs::for('certificate_template.show', function ($trail, $id) {
+    $trail->parent('certificate_template.index');
+    $trail->push('Preview', route('certificate_template.show', $id));
+});
+
+
 Breadcrumbs::for('user.index', function ($trail) {
     $trail->parent('home');
     $trail->push('User', route('user.index'));
