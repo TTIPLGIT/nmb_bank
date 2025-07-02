@@ -135,20 +135,23 @@ class tryController extends BaseController
                 ->orderBy('catagory_id', 'desc')
                 ->get();
 
+
+
             $rows['designation'] = DB::table('designation')
                 ->select('*')
                 ->orderBy('designation_id', 'desc')
                 ->get();
+
 
             $rows['users'] = DB::table('users')
                 ->select('*')
                 ->orderBy('id', 'desc')
                 ->get();
 
-
             $roles = DB::table('uam_roles')
                 ->select('*')
                 ->get();
+                
 
             $rows1 = array();
             $rows1['elearning_courses'] = DB::table('elearning_courses')
@@ -156,6 +159,7 @@ class tryController extends BaseController
                 ->where('drop_course', '0')
                 ->orderBy('course_id', 'desc') // Replace 'created_at' with the column you want to order by
                 ->get();
+               
             $rows1['exam_list'] = DB::table('elearning_exam')
                 ->select('*')
                 ->where('elearning_exam.active_flag', '0')
@@ -859,7 +863,7 @@ class tryController extends BaseController
             $data['exam_date'] = $request->exam_date;
             $data['pass_percentage'] = $request->pass_percentage;
 
-            $data['category_id'] = $request->category_id;
+            $data['course_category_id'] = $request->course_category_id;
             $data['role_id'] = $request->role_id;
             $data['designation_id'] = $request->designation_id;
             $data['user_ids'] = $request->user_ids;

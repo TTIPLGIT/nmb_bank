@@ -883,7 +883,7 @@ class tryController extends BaseController
                 'pass_percentage' => $inputArray['pass_percentage'],
                 'course_format' => $introduction_extension,
 
-                'category_id' => $inputArray['category_id'],
+                'course_category_id' => $inputArray['course_category_id'],
                 'role_id' => $inputArray['role_id'],
                 'designation_id' => $inputArray['designation_id'],
                 'user_ids' => $userIdsString,
@@ -1142,7 +1142,7 @@ class tryController extends BaseController
     {
 
         try {
-            $method = 'Method => tryController =>course_fetch';
+            $method = 'Method => tryController =>cou    rse_fetch';
             $userID = auth()->user()->course_id;
             $inputArray = $this->decryptData($request->requestData);
             $input = [

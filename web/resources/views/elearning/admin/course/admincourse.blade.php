@@ -532,7 +532,6 @@
                                                     <tr>
                                                         <th>S.No</th>
                                                         <th>Course Name</th>
-                                                        <!-- <th>Category</th> -->
                                                         <th>Course Banner</th>
                                                         <th>Start Date</th>
                                                         <th>End Date</th>
@@ -540,6 +539,7 @@
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
+                                            
                                                 <tbody>
                                                     @foreach(($rows1['elearning_courses']) as $data)
 
@@ -547,16 +547,8 @@
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$data->course_name}}</td>
-
-                                                        <!-- @if($data->course_category =="27")
-                                                                        <td>Graduate Trainee</td>
-                                                                        @elseif($data->course_category =="34")
-                                                                        <td>Professional Member</td>
-
-                                                                        @else
-                                                                        <td>All</td>
-
-                                                                        @endif -->
+ 
+                                                     
 
                                                         <?php if (!empty($data->course_banner)) { ?>
 
@@ -585,6 +577,7 @@
                                                                 data-target="#addModal5"
                                                                 onclick="fetch_courseupdate_new({{$data->course_id}},'show')"><i
                                                                     class="fas fa-eye" style="color:green"></i></a>
+ 
 
                                                             <a type="button" title="Delete"
                                                                 onclick="course_delete(<?php echo $data->course_id ?>)"
@@ -1026,7 +1019,7 @@
                             <div class="form-group">
                                 <label>Catagory<span class="error-star" style="color:red;">*</span></label>
 
-                                <select class="form-control" name="category_id" id="category_id">
+                                <select class="form-control" name="course_category_id" id="course_category_id">
                                     <option value="">---Select Category---</option>
 
                                     @foreach($rows['course_catagory_name'] as $data)
@@ -2437,225 +2430,262 @@
 </script>
 
 <script>
-    function fetch_courseupdate_new(course_id, type) {
+   function fetch_courseupdate_new(course_id, type)
+    {
 
+        
+    $.ajax({
+        url: "{{ url('/elearning/course/fetch') }}",
+        type: 'GET',
+        data: {
+            'course_id': course_id,
+            'type': type,
+            _token: '{{csrf_token()}}'
 
-        $.ajax({
-            url: "{{ url('/elearning/course/fetch') }}",
-            type: 'GET',
-            data: {
-                'course_id': course_id,
-                'type': type,
-                _token: '{{csrf_token()}}'
+        },
 
-            },
+        success: function(data) {
+            // correct_choices = data.rows[0]['correct_choices'].split(',');
 
-            success: function(data) {
-                // correct_choices = data.rows[0]['correct_choices'].split(',');
+            console.log(data);
 
-                console.log(data);
+            if (type == "edit") {
 
-                if (type == "edit") {
+                $('#course_categoryedit').val(data.rows[0]['course_category']);
+                $('#course_nameedit').val(data.rows[0]['course_name']);
 
-                    $('#course_categoryedit').val(data.rows[0]['course_category']);
-                    $('#course_nameedit').val(data.rows[0]['course_name']);
+                $('#course_descriptionedit').val(data.rows[0]['course_description']);
 
-                    $('#course_descriptionedit').val(data.rows[0]['course_description']);
+                //$('#course_certificateedit').val(data.rows[0]['course_certificate']);
 
-                    //$('#course_certificateedit').val(data.rows[0]['course_certificate']);
+                if (data.rows[0]['course_certificate'] == "1") {
+                    $('.answer_edit_on').prop('checked', true)
 
-                    if (data.rows[0]['course_certificate'] == "1") {
-                        $('.answer_edit_on').prop('checked', true)
-
-                    } else {
-                        $('.answer_edit_off').prop('checked', true)
-
-                    }
-                    $('#course_certificateedit').val(data.rows[0]['course_certificate']);
-                    // $('#course_introductionedit').val(data.rows[0]['course_introduction']);
-
-                    $('.img-fluid1').attr('src', data.rows[0]['introduction_path1']);
-                    $('.img-fluid1').attr('title', data.rows[0]['course_introduction']);
-
-                    // $('#course_banneredit').val(data.rows[0]['course_banner']);
-                    $('.img-fluid2').attr('src', data.rows[0]['banner_path1']);
-                    $('.img-fluid2').attr('title', data.rows[0]['course_banner']);
-
-                    $('#course_payedit').val(data.rows[0]['course_pay']);
-                    var course_payedit = document.querySelector('#course_payedit').value;
-                    if (course_payedit == "paid") {
-                        $('#paid1').css('display', 'block');
-                        $('#free1').css('display', 'none');
-                        $('#course_priceedit').val(data.rows[0]['course_price']);
-
-
-                    } else {
-                        $('#paid1').css('display', 'none');
-                        $('#free1').css('display', 'block');
-                        $('#course_price').val(data.rows[0]['course_price']);
-                    }
-                    $('#course_start_periodedit').val(data.rows[0]['course_start_period']);
-                    $('#course_end_periodedit').val(data.rows[0]['course_end_period']);
-                    $('#course_instructoredit').val(data.rows[0]['course_instructor']);
-
-                    //$('#course_tags').val(data.rows[0]['course_tags']);
-                    const keyarray = data.rows[0]['course_tags'].split(',');
-                    console.log(keyarray, "actual_data");
-                    for (const keyobject of keyarray) {
-                        let table_body2 = document.getElementById('table_bodyedit');
-                        first_tr = table_body2.firstElementChild
-                        tr_clone = first_tr.cloneNode(true);
-                        tr_clone.firstElementChild.firstElementChild.value = keyobject;
-                        tr_clone.querySelector('input').setAttribute("readonly", "");
-                        table_body2.append(tr_clone);
-
-                        clean_first_tr(table_body2.firstElementChild);
-                    }
-                    const keyarray1 = data.rows[0]['course_skills_required'].split(',');
-                    console.log(keyarray1, "actual_data");
-                    for (const keyobject of keyarray1) {
-                        let table_body2 = document.getElementById('table_body1edit');
-                        first_tr = table_body2.firstElementChild
-                        tr_clone = first_tr.cloneNode(true);
-                        tr_clone.firstElementChild.firstElementChild.value = keyobject;
-                        tr_clone.querySelector('input').setAttribute("readonly", "");
-                        table_body2.append(tr_clone);
-
-                        clean_first_tr(table_body2.firstElementChild);
-                    }
-
-                    const keyarray2 = data.rows[0]['course_gain_skills'].split(',');
-                    console.log(keyarray2, "actual_data");
-                    for (const keyobject of keyarray2) {
-                        let table_body2 = document.getElementById('table_body2edit');
-                        first_tr = table_body2.firstElementChild
-                        tr_clone = first_tr.cloneNode(true);
-                        tr_clone.firstElementChild.firstElementChild.value = keyobject;
-                        tr_clone.querySelector('input').setAttribute("readonly", "");
-                        table_body2.append(tr_clone);
-
-                        clean_first_tr(table_body2.firstElementChild);
-                    }
-                    $('#course_cpt_pointsedit').val(data.rows[0]['course_cpt_points']);
-                    // course_classesedit
-
-                    $('.course_classesedit').val(data.rows[0]['course_classes'].split(', '));
-                    reinitializeSelect2(".js-select6");
-                    $('#course_edit').val(data.rows[0]['course_id']);
-
-
-                } else if (type == "show") {
-                    $('#course_categoryshow').val(data.rows[0]['course_category']);
-                    $('#course_nameshow').val(data.rows[0]['course_name']);
-
-                    $('#course_descriptionshow').val(data.rows[0]['course_description']);
-
-                    //$('#course_certificateedit').val(data.rows[0]['course_certificate']);
-
-                    if (data.rows[0]['course_certificate'] == "1") {
-                        $('.answer_show_on').prop('checked', true)
-
-                        // $('.answer_show_on1').css('background-color', 'blue');
-                    } else {
-                        $('.answer_show_off').prop('checked', true)
-                        $('.answer_show_off1').css('background-color', 'red');
-                    }
-                    $('#course_certificateshow').val(data.rows[0]['course_certificate']);
-
-                    if (data.rows[0]['course_exam'] == "1") {
-                        $('.exam_show_on').prop('checked', true)
-
-                        $('.exam_show_on1').css('background-color', 'blue');
-
-                        $('.examnameshow').css('display', 'block');
-
-
-                    } else {
-                        $('.exam_show_off').prop('checked', true)
-                        $('.exam_show_off1').css('background-color', 'red');
-                        $('.examnameshow').css('display', 'none');
-                    }
-                    $('#course_examshow').val(data.rows[0]['course_exam']);
-
-                    $('.img-fluid1').attr('src', data.rows[0]['introduction_path1']);
-                    $('.img-fluid1').attr('title', data.rows[0]['course_introduction']);
-
-
-                    $('.img-fluid2').attr('src', data.rows[0]['banner_path1']);
-                    $('.img-fluid2').attr('title', data.rows[0]['course_banner']);
-
-                    $('#course_payshow').val(data.rows[0]['course_pay']);
-                    var course_payshow = document.querySelector('#course_payshow').value;
-                    if (course_payshow == "paid") {
-                        $('#paid2').css('display', 'block');
-                        $('#free2').css('display', 'none');
-                        $('#course_priceshow').val(data.rows[0]['course_price']);
-
-
-                    } else {
-                        $('#paid1').css('display', 'none');
-                        $('#free1').css('display', 'block');
-                        $('#course_price').val(data.rows[0]['course_price']);
-                    }
-                    $('#course_noperiodshow').val(data.rows[0]['course_noperiod']);
-                    $('#course_start_periodshow').val(data.rows[0]['course_start_period']);
-                    $('#course_end_periodshow').val(data.rows[0]['course_end_period']);
-                    $('#course_instructorshow').val(data.rows[0]['course_instructor']);
-
-                    //$('#course_tags').val(data.rows[0]['course_tags']);
-                    let choices = data.rows[0]['course_tags'];
-                    const pieces = choices.split(',');
-                    const result = pieces.join(', \n ');
-                    $('#course_tagsshow').html(result);
-
-                    let choices1 = data.rows[0]['course_skills_required'];
-                    const pieces1 = choices.split(',');
-                    const result1 = pieces.join(', \n ');
-                    $('#course_skills_requiredshow').html(result);
-
-
-                    let choices2 = data.rows[0]['course_gain_skills'];
-                    const pieces2 = choices.split(',');
-                    const result2 = pieces.join(', \n ');
-                    $('#course_gain_skillsshow').html(result);
-
-                    $('#course_cpt_pointsshow').val(data.rows[0]['course_cpt_points']);
-                    // course_classesedit
-                    $('.course_classesshow').val(data.rows[0]['course_classes'].split(', '));
-                    $('#exam_nameshow').val(data.rows[0]['exam_id']);
-                    $('#exam_dateshow').val(data.rows[0]['exam_date']);
-                    $('#pass_percentageshow').val(data.rows[0]['pass_percentage']);
-
-                    $('#course_categoryshow').prop('disabled', true);
-                    $('#course_nameshow').prop('disabled', true);
-                    $('#course_descriptionshow').prop('disabled', true);
-                    $('.course_certificateshow').prop('disabled', true);
-                    $('.course_examshow').prop('disabled', true);
-                    $('#course_payshow').prop('disabled', true);
-                    $('#course_priceshow').prop('disabled', true);
-                    $('#exam_nameshow').prop('disabled', true);
-                    $('#exam_dateshow').prop('disabled', true);
-                    $('#pass_percentageshow').prop('disabled', true);
-
-                    $('#course_start_periodshow').prop('disabled', true);
-                    $('#course_end_periodshow').prop('disabled', true);
-                    $('#course_instructorshow').prop('disabled', true);
-                    $('#course_tagsshow').prop('disabled', true);
-                    $('#course_skills_requiredshow').prop('disabled', true);
-
-                    $('#course_gain_skillsshow').prop('disabled', true);
-                    $('#course_cpt_pointsshow').prop('disabled', true);
-                    $('#course_classesshow').prop('disabled', true);
-                    $('.course_noperiodshow').prop('disabled', true);
-                    $('#course_show').attr('action', '');
-                    reinitializeSelect2(".js-select5");
+                } else {
+                    $('.answer_edit_off').prop('checked', true)
 
                 }
-            }
-        });
 
-    }
-    $('#result').on('change', function() {
+
+                $('#course_certificateedit').val(data.rows[0]['course_certificate']);
+                // $('#course_introductionedit').val(data.rows[0]['course_introduction']);
+
+                $('.img-fluid1').attr('src', data.rows[0]['introduction_path1']);
+                $('.img-fluid1').attr('title', data.rows[0]['course_introduction']);
+
+                // $('#course_banneredit').val(data.rows[0]['course_banner']);
+                $('.img-fluid2').attr('src', data.rows[0]['banner_path1']);
+                $('.img-fluid2').attr('title', data.rows[0]['course_banner']);
+
+                $('#course_payedit').val(data.rows[0]['course_pay']);
+                var course_payedit = document.querySelector('#course_payedit').value;
+                if (course_payedit == "paid") {
+                    $('#paid1').css('display', 'block');
+                    $('#free1').css('display', 'none');
+                    $('#course_priceedit').val(data.rows[0]['course_price']);
+
+
+                } else {
+                    $('#paid1').css('display', 'none');
+                    $('#free1').css('display', 'block');
+                    $('#course_price').val(data.rows[0]['course_price']);
+                }
+                $('#course_start_periodedit').val(data.rows[0]['course_start_period']);
+                $('#course_end_periodedit').val(data.rows[0]['course_end_period']);
+                $('#course_instructoredit').val(data.rows[0]['course_instructor']);
+
+                //$('#course_tags').val(data.rows[0]['course_tags']);
+                const keyarray = data.rows[0]['course_tags'].split(',');
+                console.log(keyarray, "actual_data");
+                for (const keyobject of keyarray) {
+                    let table_body2 = document.getElementById('table_bodyedit');
+                    first_tr = table_body2.firstElementChild
+                    tr_clone = first_tr.cloneNode(true);
+                    tr_clone.firstElementChild.firstElementChild.value = keyobject;
+                    tr_clone.querySelector('input').setAttribute("readonly", "");
+                    table_body2.append(tr_clone);
+
+                    clean_first_tr(table_body2.firstElementChild);
+                }
+                const keyarray1 = data.rows[0]['course_skills_required'].split(',');
+                console.log(keyarray1, "actual_data");
+                for (const keyobject of keyarray1) {
+                    let table_body2 = document.getElementById('table_body1edit');
+                    first_tr = table_body2.firstElementChild
+                    tr_clone = first_tr.cloneNode(true);
+                    tr_clone.firstElementChild.firstElementChild.value = keyobject;
+                    tr_clone.querySelector('input').setAttribute("readonly", "");
+                    table_body2.append(tr_clone);
+
+                    clean_first_tr(table_body2.firstElementChild);
+                }
+
+                const keyarray2 = data.rows[0]['course_gain_skills'].split(',');
+                console.log(keyarray2, "actual_data");
+                for (const keyobject of keyarray2) {
+                    let table_body2 = document.getElementById('table_body2edit');
+                    first_tr = table_body2.firstElementChild
+                    tr_clone = first_tr.cloneNode(true);
+                    tr_clone.firstElementChild.firstElementChild.value = keyobject;
+                    tr_clone.querySelector('input').setAttribute("readonly", "");
+                    table_body2.append(tr_clone);
+
+                    clean_first_tr(table_body2.firstElementChild);
+                }
+                $('#course_cpt_pointsedit').val(data.rows[0]['course_cpt_points']);
+                // course_classesedit
+
+                $('.course_classesedit').val(data.rows[0]['course_classes'].split(', '));
+                reinitializeSelect2(".js-select6");
+                $('#course_edit').val(data.rows[0]['course_id']);
+
+
+            } else if (type == "show") {
+                $('#course_categoryshow').val(data.rows[0]['course_category']);
+                $('#course_nameshow').val(data.rows[0]['course_name']);
+
+                $('#course_descriptionshow').val(data.rows[0]['course_description']);
+
+                //$('#course_certificateedit').val(data.rows[0]['course_certificate']);
+
+                if (data.rows[0]['course_certificate'] == "1") {
+                    $('.answer_show_on').prop('checked', true)
+
+                    $('.answer_show_on1').css('background-color', 'blue');
+                } else {
+                    $('.answer_show_off').prop('checked', true)
+                    $('.answer_show_off1').css('background-color', 'red');
+                }
+                // Show/hide certificate section
+                console.log(data.rows[0]['certificate_expiry']);
+                if (data.rows[0]['course_certificate'] == "1") {
+
+                    $('#certificateFields_edit').show();
+
+                    // Handle certificate_expiry
+                    if (data.rows[0]['certificate_expiry'] == "1") {
+                        $('#certificate_expiryyes_show').prop('checked', true);
+                        $('#expiryDateField_show').show();
+                        $('#course_expiry_period_show').val(data.rows[0][
+                            'course_expiry_period'
+                        ]); // set expiry date
+                    } else {
+                        $('#certificate_expiryno_show').prop('checked', true);
+                        $('#expiryDateField_show').hide();
+                    }
+
+                    // Set selected certificate template
+                    $('#cetificate_template_show').val(data.rows[0]['cetificate_template']);
+                } else {
+                    $('#certificateFields_edit').hide();
+                    $('#expiryDateField_show').hide();
+                    $('#certificate_expiryyes_show').prop('checked', false);
+                    $('#certificate_expiryno_show').prop('checked', false);
+                    $('#cetificate_template_show').val('');
+                }
+                $('#course_certificateshow').val(data.rows[0]['course_certificate']);
+
+                if (data.rows[0]['course_exam'] == "1") {
+                    $('.exam_show_on').prop('checked', true)
+
+                    $('.exam_show_on1').css('background-color', 'blue');
+
+                    $('.examnameshow').css('display', 'block');
+
+
+                } else {
+                    $('.exam_show_off').prop('checked', true)
+                    $('.exam_show_off1').css('background-color', 'red');
+                    $('.examnameshow').css('display', 'none');
+                }
+                $('#course_examshow').val(data.rows[0]['course_exam']);
+
+                $('.img-fluid1').attr('src', data.rows[0]['introduction_path1']);
+                $('.img-fluid1').attr('title', data.rows[0]['course_introduction']);
+
+
+                $('.img-fluid2').attr('src', data.rows[0]['banner_path1']);
+                $('.img-fluid2').attr('title', data.rows[0]['course_banner']);
+
+                $('#course_payshow').val(data.rows[0]['course_pay']);
+                var course_payshow = document.querySelector('#course_payshow').value;
+                if (course_payshow == "paid") {
+                    $('#paid2').css('display', 'block');
+                    $('#free2').css('display', 'none');
+                    $('#course_priceshow').val(data.rows[0]['course_price']);
+
+
+                } else {
+                    $('#paid1').css('display', 'none');
+                    $('#free1').css('display', 'block');
+                    $('#course_price').val(data.rows[0]['course_price']);
+                }
+                $('#course_noperiodshow').val(data.rows[0]['course_noperiod']);
+                $('#course_start_periodshow').val(data.rows[0]['course_start_period']);
+                $('#course_end_periodshow').val(data.rows[0]['course_end_period']);
+                $('#course_instructorshow').val(data.rows[0]['course_instructor']);
+
+                //$('#course_tags').val(data.rows[0]['course_tags']);
+                let choices = data.rows[0]['course_tags'];
+                const pieces = choices.split(',');
+                const result = pieces.join(', \n ');
+                $('#course_tagsshow').html(result);
+
+                let choices1 = data.rows[0]['course_skills_required'];
+                const pieces1 = choices.split(',');
+                const result1 = pieces.join(', \n ');
+                $('#course_skills_requiredshow').html(result);
+
+
+                let choices2 = data.rows[0]['course_gain_skills'];
+                const pieces2 = choices.split(',');
+                const result2 = pieces.join(', \n ');
+                $('#course_gain_skillsshow').html(result);
+
+                $('#course_cpt_pointsshow').val(data.rows[0]['course_cpt_points']);
+                // course_classesedit
+                $('.course_classesshow').val(data.rows[0]['course_classes'].split(', '));
+                $('#exam_nameshow').val(data.rows[0]['exam_id']);
+                $('#exam_dateshow').val(data.rows[0]['exam_date']);
+                $('#pass_percentageshow').val(data.rows[0]['pass_percentage']);
+
+                $('#course_categoryshow').prop('disabled', true);
+                $('#course_nameshow').prop('disabled', true);
+                $('#course_descriptionshow').prop('disabled', true);
+                $('.course_certificateshow').prop('disabled', true);
+                $('.course_examshow').prop('disabled', true);
+                $('#course_payshow').prop('disabled', true);
+                $('#course_priceshow').prop('disabled', true);
+                $('#exam_nameshow').prop('disabled', true);
+                $('#cetificate_template_show').prop('disabled', true);
+                $('#certificate_expiryyes_show').prop('disabled', true);
+                $('#certificate_expiryno_show').prop('disabled', true);
+                $('#course_expiry_period_show').prop('disabled', true);
+                $('#exam_dateshow').prop('disabled', true);
+                $('#pass_percentageshow').prop('disabled', true);
+
+                $('#course_start_periodshow').prop('disabled', true);
+                $('#course_end_periodshow').prop('disabled', true);
+                $('#course_instructorshow').prop('disabled', true);
+                $('#course_tagsshow').prop('disabled', true);
+                $('#course_skills_requiredshow').prop('disabled', true);
+
+                $('#course_gain_skillsshow').prop('disabled', true);
+                $('#course_cpt_pointsshow').prop('disabled', true);
+                $('#course_classesshow').prop('disabled', true);
+                $('.course_noperiodshow').prop('disabled', true);
+                $('#course_show').attr('action', '');
+                reinitializeSelect2(".js-select5");
+
+            }
+        }
+        
+    });
+
+
+ 
+}
+   $('#result').on('change', function() {
         //fetch_courseupdate_new();
         $('#courselist').css('display', 'none');
         $('#classlist').css('display', 'none');
