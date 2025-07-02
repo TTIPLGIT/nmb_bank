@@ -18,3 +18,8 @@ api-mlhud/public/images/signatures/
 
 web/.env.example
 api-mlhud/composer.lock
+web/node_modules
+web/node_modules/.bin/acorn.ps1
+web/package-lock.json
+web/package.json
+
