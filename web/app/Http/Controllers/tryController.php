@@ -46,7 +46,7 @@ class tryController extends BaseController
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
 
-                    return view('elearning.admin.admindashboard', compact('rows', 'modules', 'screens', 'count', 'recommended','event_date'));
+                    return view('elearning.admin.admindashboard', compact('rows', 'modules', 'screens', 'count', 'recommended', 'event_date'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -117,7 +117,7 @@ class tryController extends BaseController
 
     public function admincourse(Request $request)
     {
-        
+
         try {
             $method = 'Method => tryController => admincourse';
             $user_id = $request->session()->get("userID");
@@ -125,16 +125,41 @@ class tryController extends BaseController
             $rows = array();
 
             $rows['elearning_classes'] = DB::table('elearning_classes')
-            ->select('*')
-            ->where('drop_class', '0')
-            ->orderBy('class_id', 'desc')
-            ->get();
+                ->select('*')
+                ->where('drop_class', '0')
+                ->orderBy('class_id', 'desc')
+                ->get();
+
+            $rows['course_catagory_name'] = DB::table('course_catagory')
+                ->select('*')
+                ->orderBy('catagory_id', 'desc')
+                ->get();
+
+
+
+            $rows['designation'] = DB::table('designation')
+                ->select('*')
+                ->orderBy('designation_id', 'desc')
+                ->get();
+
+
+            $rows['users'] = DB::table('users')
+                ->select('*')
+                ->orderBy('id', 'desc')
+                ->get();
+
+            $roles = DB::table('uam_roles')
+                ->select('*')
+                ->get();
+                
+
             $rows1 = array();
             $rows1['elearning_courses'] = DB::table('elearning_courses')
                 ->select('*')
                 ->where('drop_course', '0')
                 ->orderBy('course_id', 'desc') // Replace 'created_at' with the column you want to order by
                 ->get();
+               
             $rows1['exam_list'] = DB::table('elearning_exam')
                 ->select('*')
                 ->where('elearning_exam.active_flag', '0')
@@ -143,13 +168,26 @@ class tryController extends BaseController
 
             $rows1['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz  AS e left join elearning_localadaptation AS l ON e.quiz_id=l.quiz_id left join elearning_ethnictest AS et ON e.quiz_id=et.quiz_id left join elearning_exam AS el ON e.quiz_id=el.quiz_id WHERE l.quiz_id IS NULL AND et.quiz_id IS NULL and el.quiz_id IS NULL AND e.drop_quiz=0');
 
+              $rows1['certificate_templates'] = DB::select("SELECT * from certificate_templates WHERE active_flag ='0'");
+
+            
+
             $screens = $menus['screens'];
             $modules = $menus['modules'];
             $category = tryController::course_list($request);
             $rows2['course_category'] = $category['rows2']['course_category'];
-            return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'user_id', 'rows1', 'rows2'));
+
+            $rows3['elearning_classes'] = DB::table('elearning_classes')
+                ->select('*')
+                ->where('drop_class', '0')
+                ->orderBy('class_id', 'desc')
+                ->get();
+
+           
+
+            return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'roles', 'user_id', 'rows1', 'rows2'));
         } catch (\Exception $exc) {
-            //dd("bhj");
+          
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
     }
@@ -551,7 +589,7 @@ class tryController extends BaseController
         }
         $method = 'Method => tryController => event_store';
         try {
-dd($request);
+            dd($request);
 
             $data = array();
             $data['event_name'] = $request->event_name;
@@ -789,7 +827,6 @@ dd($request);
     public function course_store(Request $request)
     {
         // dd($request);
-
         $validator = Validator::make($request->all(), [
             'course_banner' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
@@ -828,18 +865,37 @@ dd($request);
             $data['course_category'] = $request->course_category;
             $data['examname'] = $request->exam_name;
             $data['exam_date'] = $request->exam_date;
+            
 
-
+             $data['cetificate_template'] = $request->cetificate_template;
+            $data['certificate_expiry'] = $request->certificate_expiry;
+             $data['course_expiry_period'] = $request->course_expiry_period;
+               $data['expired_course_id'] = $request->expired_course_id;
+          
             $data['pass_percentage'] = $request->pass_percentage;
-            //dd($data);
 
+            $data['course_category'] = $request->course_category_id;
+            $data['role_id'] = $request->role_id;
+            $data['designation_id'] = $request->designation_id;
+            $data['user_ids'] = $request->user_ids;
+
+
+
+        
             $encryptArray = $data;
+
             $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
+
             $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
+            
+            // dd( $storagepath_ursb_old);
             if (!File::exists($storagepath_ursb_old)) {
+                 
                 File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
             }
+          
             $data['introduction_path'] = $storagepath_ursb;
+
             $documentsb =  $request['course_introduction'];
             $files = $documentsb->getClientOriginalName();
             $findspace = array(' ', '&', "'", '"');
@@ -867,8 +923,10 @@ dd($request);
             $request = array();
             $request['requestData'] = $encryptArray;
 
-            $gatewayURL = config('setting.api_gateway_url') . '/elearning/course/store';
+           
 
+            $gatewayURL = config('setting.api_gateway_url') . '/elearning/course/store';
+           
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
             $menus = $this->FillMenu();
 
@@ -876,7 +934,7 @@ dd($request);
             $modules = $menus['modules'];
 
             $response1 = json_decode($response);
-            // dd($response1);
+           
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
@@ -897,8 +955,53 @@ dd($request);
             //dd($response);
             // return redirect(route('admincourse'))->with('danger', 'User session Exipired');
         } catch (\Exception $exc) {
+            // dd("welcome");
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
+    }
+
+      public function course_copy(Request $request)
+
+    {
+        try {
+            $this->WriteFileLog("fefeef");
+            $user_id = $request->session()->get("userID");
+            if ($user_id == null) {
+                return view('auth.login');
+            }
+            $method = 'Method => tryController => course_copy';
+            $user_details = $request->user_details;
+
+
+            $data['user_id'] = $user_id;
+            $data['course_id'] = $request->course_id;
+            $data['certificate_expiry'] = $request->certificate_expiry;
+            $data['course_expiry_period'] = $request->course_expiry_period;
+
+            $data['q'][0]['table'] = 'elearning_courses';
+            $encryptArray = $data;
+            $request = array();
+            $request['requestData'] = $encryptArray;
+            $this->WriteFileLog($request);
+
+            $gatewayURL = config('setting.api_gateway_url') . '/course/course_copy';
+
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+
+            $response1 = json_decode($response);
+
+            $objData = json_decode($this->decryptData($response1->Data));
+            $rows['data'] = json_decode(json_encode($objData->Data), true);
+            $rows['message_cus'] = json_decode(json_encode($objData->response_message), true);
+            return $rows;
+         
+        } catch (\Exception $exc) {
+            // echo $exc;
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        }
+
+
+        //
     }
 
 

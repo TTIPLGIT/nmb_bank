@@ -1955,14 +1955,32 @@ class elearningEthnicTestController extends BaseController
                     'get_certified' => "1",
 
                 ]);
+            $certificate_template_id = $course_details[0]->cetificate_template;
+          
+            $signatories  = DB::table('certificate_template_signatories')
+             ->where('certificate_template_id', $certificate_template_id)
+                 ->orderBy('sort_order', 'asc')
+                ->get();
+            $get_template  = DB::table('certificate_templates')
+             ->where('certificate_templates_id', $certificate_template_id)
+            ->first();
+
+             
             $data = [
-                'date' => '2024-07-20',
+                 'date' => Carbon::today()->format('d-m-Y'),
                 'course_name' => $course_name,
                 'name' => $name,
+                'signatories' => $signatories
 
             ];
+             
+           $pdf = PDF::loadView("certificate_template.{$get_template->template_name}.index", [
+    'data' => $data
+]);
 
-            $pdf = PDF::loadView('pdf.template', $data);
+
+
+          
             $storagepath_user = public_path() . '/userdocuments/certificate/' . $user_id;
             if (!File::exists($storagepath_user)) {
                 File::makeDirectory($storagepath_user);
@@ -1978,7 +1996,7 @@ class elearningEthnicTestController extends BaseController
             $output = $storagepath_ninf . '/' . $filename;
 
             $pdf->save($output);
-
+            
             $data = [
                 'date' => $date,
                 'course_name' => $course_name,
@@ -1997,7 +2015,7 @@ class elearningEthnicTestController extends BaseController
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
 
             $response1 = json_decode($response);
-
+            
             if ($pdf->download('certificate.pdf')) {
                 return redirect()->back()->with('success', 'Your Certificate has been Issued Successfully');
             } else {

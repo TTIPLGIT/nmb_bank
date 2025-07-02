@@ -408,6 +408,8 @@ class UserController extends BaseController
 				->where('active_flag', 0)
 				->get();
 
+			
+
 			$project_roles = DB::table('project_roles')
 				->select('*')
 				->where('active_flag', 1)
@@ -559,7 +561,7 @@ class UserController extends BaseController
 							'designation_id' => $input['designation'],
 						]);
 
-$this->WriteFileLog($input);
+
 					$user_id  =  $user_id;
 					$input['user_id'] = $user_id;
 
@@ -942,7 +944,7 @@ $this->WriteFileLog($input);
 			} else {
 				DB::transaction(function () use ($input) {
 					$user_id  = $input['user_id'];
-					$roles_data_id = $input['roles_id'];
+					$designation_id = $input['designation_id'];
 					$stringuser_id = $input['roles_id'];
 
 					// $dashboard_list_id = $input['dashboard_list_id'];
@@ -992,7 +994,7 @@ $this->WriteFileLog($input);
 							'name' => $input['name'],
 							'email' => $input['email'],
 							'array_dashboard_list' => NULL,
-							'designation_id' => 1,
+							'designation_id' =>  $input['designation_id'],
 							'project_role_id' => 1,
 
 						]);
@@ -2039,6 +2041,9 @@ $this->WriteFileLog($input);
 			$Elearning_usernotifications_data = DB::select("select * from notifications where (notification_url LIKE '/elearning/quiz/view%'or notification_url LIKE '/ethic/quiz/list%' or notification_url LIKE '/exam/quiz/list%' or notification_url LIKE '/localadaptation/quiz/list%' or notification_url LIKE '/elearningCourse/class%' or notification_url LIKE '/elearningCourse%' or notification_url LIKE '/elearningCourse/class%' ) and active='0'and  user_id =$id order by notification_id DESC;");
 			$Elearning_usernotifications_count = DB::select("select count(notification_url) as countflow from notifications WHERE (notification_url LIKE '/elearning/quiz/view%' or notification_url LIKE '/ethic/quiz/list%' or notification_url LIKE '/exam/quiz/list%' or notification_url LIKE '/localadaptation/quiz/list%' or notification_url LIKE '/elearningCourse/class%' or notification_url LIKE '/elearningCourse%'  or notification_url LIKE '/elearningCourse/class%') and active='0'  and  user_id =$id;");
 
+			$Elearning_expiry_data = DB::select("select * from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id order by notification_id DESC;");
+			$Elearning_expiry_data_count = DB::select("select count(notification_url) as countflow from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id;");
+
 
 			$response = [
 
@@ -2052,6 +2057,8 @@ $this->WriteFileLog($input);
 				'Elearning_notifications_count' => $Elearning_notifications_count,
 				'Elearning_usernotifications_data' => $Elearning_usernotifications_data,
 				'Elearning_usernotifications_count' => $Elearning_usernotifications_count,
+				'Elearning_expiry_data' => $Elearning_expiry_data ,
+				'Elearning_expiry_data_count' => $Elearning_expiry_data_count ,
 			];
 
 
@@ -2138,7 +2145,7 @@ $this->WriteFileLog($input);
 
 				'rows' => $policy_link,
 			];
-
+			
 
 
 			$serviceResponse = array();
@@ -2147,6 +2154,7 @@ $this->WriteFileLog($input);
 			$serviceResponse['Data'] = $response;
 			$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
 			$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+			
 			return $sendServiceResponse;
 		} catch (\Exception $exc) {
 			$exceptionResponse = array();

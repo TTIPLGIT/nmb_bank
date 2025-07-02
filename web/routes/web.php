@@ -74,16 +74,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\FileuploadController;
 use App\Http\Controllers\governmentInstructionController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\coursecategoryController;
+
 
 Route::get('/check-openssl', function () {
     if (extension_loaded('openssl')) {
@@ -154,6 +146,7 @@ Route::post('educationcourse_store', [App\Http\Controllers\EducationMastersContr
 Route::get('/educationcourse/edit', [App\Http\Controllers\EducationMastersController::class, 'educationcourse_edit'])->name('educationcourse_edit');
 Route::post('/educationcourse/update', [App\Http\Controllers\EducationMastersController::class, 'educationcourse_update'])->name('educationcourse_update');
 Route::post('/educationcourse/delete', [App\Http\Controllers\EducationMastersController::class, 'educationcourse_delete'])->name('educationcourse_delete');
+
 
 // General Details Masters Route //
 Route::get('general_masters', [App\Http\Controllers\generaldetailsMastersController::class, 'gdmasters_index'])->name('gdmasters_index');
@@ -264,6 +257,21 @@ Route::post('/allocate_stake_holder', [\App\Http\Controllers\ValuerController::c
 Route::post('/ajax_data/get_stake_data', [\App\Http\Controllers\ValuerController::class, 'stakeholder_data'])->name('stakeholder_data');
 Route::get('/change_password_admin/{id}', [\App\Http\Controllers\UserController::class, 'change_password_admin'])->name('user.change_password_admin');
 
+
+
+Route::get('/designation', [\App\Http\Controllers\DesignationController::class, 'index'])->name('designation.index');
+Route::get('/designation/create', [\App\Http\Controllers\DesignationController::class, 'create'])->name('designation.create');
+Route::get('/designation/edit/{id}', [\App\Http\Controllers\DesignationController::class, 'edit'])->name('designation.edit');
+Route::get('/designation/show/{id}', [\App\Http\Controllers\DesignationController::class, 'show'])->name('designation.show');
+Route::Post('/designation/update', [\App\Http\Controllers\DesignationController::class, 'update_data'])->name('designation.update');
+Route::Post('/designation/store', [\App\Http\Controllers\DesignationController::class, 'store'])->name('designation.store');
+
+Route::get('/certificate_template', [\App\Http\Controllers\CertifcateTemplateController::class, 'index'])->name('certificate_template.index');
+Route::get('/certificate_template/show/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'show'])->name('certificate_template.show');
+Route::get('/certificate_template/edit/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'edit'])->name('certificate_template.edit');
+Route::Post('/certificate_template/store', [\App\Http\Controllers\CertifcateTemplateController::class, 'store'])->name('certificate_template.store');
+
+
 Route::post('/designation/bulkdummyupload', [\App\Http\Controllers\DesignationController::class, 'bulkdummyupload'])->name('designation.bulkdummyupload');
 Route::post('/dummydesignation/bulkdummyupload', [\App\Http\Controllers\DesignationController::class, 'dummybulkdummyupload'])->name('dummydesignation.bulkdummyupload');
 
@@ -303,6 +311,8 @@ Route::get('/admindashboard', [App\Http\Controllers\tryController::class, 'admin
 Route::get('/admindashboardevents/fetch', [App\Http\Controllers\tryController::class, 'events_fetch'])->name('admindashboardevents.fetch');
 Route::get('/dashboardevents/fetch', [App\Http\Controllers\elearningdashboardgtController::class, 'events_fetch'])->name('dashboardevents.fetch');
 
+// Route::get('/view_list', [App\Http\Controllers\firmadministrationController::class, 'firm_admin_index'])->name('firm_admin_index');
+
 Route::get('/admincourse', [App\Http\Controllers\tryController::class, 'admincourse'])->name('admincourse');
 //  Route::get('/adminquiz', [App\Http\Controllers\tryController::class, 'adminquiz'])->name('adminquiz');
 
@@ -311,6 +321,21 @@ Route::post('/add_class', [App\Http\Controllers\tryController::class, 'addclass_
 Route::get('/class_index', [App\Http\Controllers\tryController::class, 'class_index'])->name('class_index');
 Route::post('class_delete', [App\Http\Controllers\tryController::class, 'class_delete'])->name('class_delete');
 Route::get('class_edit', [App\Http\Controllers\tryController::class, 'class_edit2'])->name('class_edit');
+
+
+////submit the  course category
+Route::get('/catagory_list', [App\Http\Controllers\coursecategoryController::class, 'index'])->name('catagory_list');
+Route::get('/catagory_create', [App\Http\Controllers\coursecategoryController::class, 'createpage'])->name('catagory_create');
+Route::post('/catagory_store', [App\Http\Controllers\coursecategoryController::class, 'store'])->name('catagory.store');
+Route::post('/course/catagory_update', [App\Http\Controllers\coursecategoryController::class, 'update'])->name('catagory.update');
+Route::get('/course/catagory/fetch', [App\Http\Controllers\coursecategoryController::class, 'course_catagory_fetch'])->name('course_catagory');
+Route::post('/course_catagory_delete', [App\Http\Controllers\coursecategoryController::class, 'course_catagory_delete'])->name('course_deletes');
+
+Route::get('/certificate_template', [\App\Http\Controllers\CertifcateTemplateController::class, 'index'])->name('certificate_template.index');
+Route::get('/certificate_template/show/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'show'])->name('certificate_template.show');
+Route::get('/certificate_template/edit/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'edit'])->name('certificate_template.edit');
+Route::Post('/certificate_template/store', [\App\Http\Controllers\CertifcateTemplateController::class, 'store'])->name('certificate_template.store');
+
 
 
 
@@ -322,6 +347,7 @@ Route::get('/coursepreview', [App\Http\Controllers\tryController::class, 'course
 Route::post('/course_store', [App\Http\Controllers\tryController::class, 'course_store'])->name('course_store');
 Route::get('/course_list', [App\Http\Controllers\tryController::class, 'course_list'])->name('course_list');
 Route::post('/course_delete', [App\Http\Controllers\tryController::class, 'course_delete'])->name('course_delete');
+Route::post('/course_copy', [App\Http\Controllers\tryController::class, 'course_copy'])->name('course_copy');
 
 
 Route::post('/event_store', [App\Http\Controllers\tryController::class, 'event_store'])->name('event_store');
@@ -356,7 +382,7 @@ Route::get('/pendingvaluationindex', [App\Http\Controllers\AssessmentController:
 Route::get('/rejectedrequestindex', [App\Http\Controllers\AssessmentController::class, 'rejectedrequestindex'])->name('rejectedrequestindex');
 Route::get('/duediligenceindex', [App\Http\Controllers\AssessmentController::class, 'duediligenceindex'])->name('duediligenceindex');
 Route::get('/Inspectionindex', [App\Http\Controllers\AssessmentController::class, 'Inspectionindex'])->name('Inspectionindex');
-Route::get('/Evaluationindex', [App\Http\Capproveontrollers\AssessmentController::class, 'Evaluationindex'])->name('Evaluationindex');
+Route::get('/Evaluationindex', [App\Http\Controllers\AssessmentController::class, 'Evaluationindex'])->name('Evaluationindex');
 Route::get('/valuationreportindex', [App\Http\Controllers\AssessmentController::class, 'valuationreportindex'])->name('valuationreportindex');
 Route::get('/gt_interview_delete', [App\Http\Controllers\AssessmentController::class, 'interview_delete'])->name('interview_delete');
 
@@ -742,3 +768,5 @@ Route::POST('/designation/remove', [RoleassignController::class, 'remove'])->nam
 //reports
 Route::get('/report', [ReportsController::class, 'index'])->name('reports');
 Route::get('/report_fetch', [ReportsController::class, 'report_fetch'])->name('report_fetch');
+
+

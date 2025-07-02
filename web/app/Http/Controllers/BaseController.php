@@ -32,6 +32,9 @@ class BaseController extends Controller
             $authorization = 'Bearer ' . session('accessToken');
             //  echo json_encode($authorization);exit;
 
+              // Debug logs
+  
+
             $serviceResponse = $client->request($action, $gatewayURL, [
                 'headers' => [
                     'Authorization' => $authorization,
@@ -199,7 +202,9 @@ class BaseController extends Controller
      */
     public function decryptData($data)
     {
+      
         try {
+             
             return Crypt::decrypt($data);
         } catch (\Exception $exc) {
             Log::error('Method => BaseController => decryptData => Decrypt data error =>: [' . $exc->getCode() . '] ' . $exc->getMessage());
