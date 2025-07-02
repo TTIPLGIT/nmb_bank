@@ -297,8 +297,37 @@ form.longqustionsform {
 
 
     <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+    <script>
+        $('#user_id').on('select2:select', function(e) {
+            alert("welcome")
+            const selectedValue = e.params.data.id;
+
+
+            if (selectedValue === 'all') {
+                const allValues = [];
+
+                // Get all option values except "all"
+                $('#user_id option').each(function() {
+                    const val = $(this).val();
+                    if (val !== 'all') {
+                        allValues.push(val);
+                    }
+                });
+
+                // Select all users (excluding 'all')
+                $('#user_id').val(allValues).trigger('change.select2');
+            }
+        });
+
+        // Optional: Clear all selections if user manually removes everything
+        $('#user_id').on('select2:unselect', function(e) {
+            if ($('#user_id').val() === null || $('#user_id').val().length === 0) {
+                $('#user_id').val(null).trigger('change.select2');
+            }
+        });
+    </script>
     <script type="text/javascript">
-    $(document).ready(function() {
+        $(document).ready(function() {
 
         var message = $('#session_data').val();
         // alert(message);
@@ -503,7 +532,6 @@ form.longqustionsform {
                                                     <tr>
                                                         <th>S.No</th>
                                                         <th>Course Name</th>
-                                                        <!-- <th>Category</th> -->
                                                         <th>Course Banner</th>
                                                         <th>Start Date</th>
                                                         <th>End Date</th>
@@ -512,11 +540,15 @@ form.longqustionsform {
                                                     </tr>
                                                 </thead>
 
+                                            
                                                 <tbody>
 
                                                     @foreach(($rows1['elearning_courses']) as $data)
 
 
+                                                  
+ 
+                                                     
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$data->course_name}}</td>
@@ -544,6 +576,7 @@ form.longqustionsform {
                                                         <td>{{$data->course_end_period}}</td>
                                                         @if(!empty($data->course_price))
 
+                                                        <td>Rs. {{$data->course_price}}</td>
                                                         <td>Rs. {{$data->course_price}}</td>
 
                                                         @else
@@ -966,6 +999,61 @@ function end_date() {
     examDateElement.val(selectedEndDate);
 }
 </script>
+<!-- Designation mapping with the role  -->
+
+
+
+<script>
+    var allDesignations = @json($rows['designation']);
+    var allUsers = @json($rows['users']);
+
+    function filterDesignations() {
+        const roleId = document.getElementById('role_id').value;
+        const designationSelect = document.getElementById('designation_id');
+        const userSelect = document.getElementById('user_id');
+
+        // Clear previous options
+        designationSelect.innerHTML = '<option value="">Please Select Designation</option>';
+        userSelect.innerHTML = '<option value="">Please Select User</option>';
+
+        // Filter designations based on role
+        const filteredDesignations = allDesignations.filter(d => d.role_id == roleId);
+
+        filteredDesignations.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d.designation_id;
+            opt.textContent = d.designation_name;
+            designationSelect.appendChild(opt);
+        });
+
+
+    }
+
+    function filterNames() {
+        const roleId = document.getElementById('role_id').value;
+        const designationSelect = document.getElementById('designation_id').value;
+        const userSelect = document.getElementById('user_id');
+
+        userSelect.innerHTML = '<option value="all">All</option>';
+
+        const filteredNames = allUsers.filter(d =>
+            d.designation_id == designationSelect && d.role_id == roleId
+        );
+
+        filteredNames.forEach(a => {
+            const opt1 = document.createElement('option');
+            opt1.value = a.id;
+            opt1.textContent = a.name;
+            userSelect.appendChild(opt1);
+        });
+    }
+
+
+
+    console.log(document.getElementById('user_id'));
+</script>
+
+
 
 <!-- addquestion function -->
 <div class="modal fade" id="addModal">
@@ -992,18 +1080,79 @@ function end_date() {
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Course Category:<span class="error-star" style="color:red;">*</span></label>
+                                <label>Catagory<span class="error-star" style="color:red;">*</span></label>
 
-                                <select class="form-control" name="course_category" id="course_category">
+                                <select class="form-control" name="course_category_id" id="course_category_id">
                                     <option value="">---Select Category---</option>
-                                    @foreach($rows2['course_category'] as $key => $row)
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                    @foreach($rows['course_catagory_name'] as $data)
+                                    <option value="{{$data->catagory_id}}" data-badge="">{{$data->catagory_name}}</option>
                                     @endforeach
                                 </select>
 
                             </div>
                         </div>
+                        <!-- <div class="col-md-6">
+                            <label>Sub Catagory<span class="error-star" style="color:red;">*</span></label>
+
+                            <select class="form-control" name="course_category" id="course_category" onchange="fetch_show(this.value, 'edit')">
+                                <option value="">---Select Category---</option>
+                                @foreach($rows['course_catagory_name'] as $data)
+                                <option value="{{ $data->catagory_id }}">{{ $data->sub_catagory }}</option>
+                                @endforeach
+                            </select>
+
+                        </div> -->
+                    </div>
+
+                    <div class="row">
+                        <!-- Role Selection -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Role <span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="role_id" id="role_id" onchange="filterDesignations()">
+                                    <option value="">---Select Role---</option>
+                                    @foreach($roles as $values)
+                                    <option value="{{ $values->role_id }}">{{ $values->role_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('role_id') {{-- corrected from roles_id --}}
+                                <div class="error">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Designation Selection -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Designation <span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="designation_id" id="designation_id" onchange="filterNames()">
+                                    <option value="">Please Select Designation</option>
+                                </select>
+                                @error('designation_id')
+                                <div class="error">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>User Name <span class="text-danger">*</span></label>
+                                <select class=" user_id_course form-control js-select2" name="user_ids[]" id="user_id" multiple="multiple">
+                                    <option value="all">All</option>
+                                    @foreach($rows['users'] as $data)
+                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+
+
+
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Name:<span class="error-star" style="color:red;">*</span></label>
@@ -1012,6 +1161,7 @@ function end_date() {
                             </div>
                         </div>
                     </div>
+
 
                     <div class="row">
 
@@ -1991,14 +2141,45 @@ $(".js-select2").select2({
 </script>
 
 <script>
-$(".js-select21").select2({
-    closeOnSelect: false,
-    placeholder: "Select Class Name",
-    // allowHtml: true,
-    allowClear: true,
-    tags: true // создает новые опции на лету
-});
+    $(".js-select2").select2({
+        closeOnSelect: false,
+        placeholder: "Select Class Name",
+        // allowHtml: true,
+        allowClear: true,
+        tags: true // создает новые опции на лету
+    });
+
+
+    $('#user_id').on('select2:select', function(e) {
+
+        const selectedValue = e.params.data.id;
+        console.log(selectedValue)
+        console.log(selectedValue === 'all')
+        console.log(selectedValue == 'all')
+        if (selectedValue === 'all') {
+            const allValues = [];
+
+            // Get all option values except "all"
+            $('#user_id option').each(function() {
+                const val = $(this).val();
+                if (val !== 'all') {
+                    allValues.push(val);
+                }
+            });
+
+            // Select all users (excluding 'all')
+            $('#user_id').val(allValues).trigger('change.select2');
+        }
+    });
+
+    // Optional: Clear all selections if user manually removes everything
+    $('#user_id').on('select2:unselect', function(e) {
+        if ($('#user_id').val() === null || $('#user_id').val().length === 0) {
+            $('#user_id').val(null).trigger('change.select2');
+        }
+    });
 </script>
+
 <script>
 function data(e) {
     // alert(e);
@@ -2706,6 +2887,8 @@ $(document).ready(function() {
 // });
 </script>
 
+
+
 <!-- Deepika -->
 
 <!-- end create -->
@@ -3054,11 +3237,11 @@ $(document).ready(function() {
                                     name="course_banneredit" style="display:none;" accept="image/*" autocomplete="off">
                                 <?php if (!empty($data->course_banner)) { ?>
 
-                                <img class="img-fluid2" alt="Banner Image" title="">
+                                    <img class="img-fluid2" alt="Banner Image" title="">
 
                                 <?php } else { ?>
-                                <img class="" src="uploads/class/126/empty.jpg" alt="Banner Image" width="200px"
-                                    height="200px" title="">
+                                    <img class="" src="uploads/class/126/empty.jpg" alt="Banner Image" width="200px"
+                                        height="200px" title="">
 
                                 <?php } ?>
 
@@ -3904,9 +4087,37 @@ function resetSelect2() {
     // Get the Select2 element by its ID
     $(".js-select2").empty();
 
-}
-$('.close').on('click', function() {
-    resetSelect2();
+    }
+    $('.close').on('click', function () {
+        resetSelect2();
+    });
+</script>
+<script>
+$(document).ready(function() {
+    // Course Certificate toggle
+    $('input[name="course_certificate"]').change(function() {
+        if ($(this).val() == '1') {
+            $('#certificateFields').slideDown();
+        } else {
+            $('#certificateFields').slideUp();
+            $('#cetificate_template').val('');
+            $('input[name="certificate_expiry"]').prop('checked', false);
+            $('#course_expiry_period').val('');
+            $('#expiryDateField').hide(); // Also hide date field
+        }
+    });
+
+    // Certificate Expiry toggle
+    $(document).on('change', 'input[name="certificate_expiry"]', function() {
+        if ($(this).val() == '1') {
+            $('#expiryDateField').slideDown();
+        } else {
+            $('#expiryDateField').slideUp();
+            $('#course_expiry_period').val('');
+        }
+    });
+
+
 });
 </script>
 <script>

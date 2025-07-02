@@ -1275,13 +1275,15 @@
                                         href="{{ config('setting.base_url')}}{{ $screen['route_url'] }}">{{$screen['screen_name']}}</a>
                                 </li>
                                 @endif
-                                @endforeach
+                                
+    @endforeach
                                 @endif
                             </ul>
 
                         </li>
-
+   
                         @endforeach
+     <li><a class="nav-link " href="{{route('catagory_list')}}">Course Category</a></li>
                         @endif
                     </ul>
 
@@ -1364,7 +1366,8 @@ function notification_fetch() {
         success: function(data) {
             //alert("das");
             var data2 = data;
-            var count = data2['registration_count'][0].countflow;
+            console.log(data2,'A');
+        var count = data2['registration_count'][0].countflow;
             var count2 = data2['General_notifications_count'][0].countflow;
             var count3 = data2['approval_nrv_count'][0].countflow;
             var count4 = data2['Elearning_notifications_count'][0].countflow;
