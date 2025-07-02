@@ -155,9 +155,9 @@
         @endif
 
                 @if(strpos($screen_permission['permissions'], 'Show') !== false)
-          <a class="btn btn-link" href="{{ route('user.show', \Crypt::encrypt($row['id'])) }}"
+          <!-- <a class="btn btn-link" href="{{ route('user.show', \Crypt::encrypt($row['id'])) }}"
           data-bs-toggle="tooltip" data-bs-placement="top" title="Show"><i class="fa fa-eye"
-            aria-hidden="true"></i><span></span></a>
+            aria-hidden="true"></i><span></span></a> -->
         @endif
                 @if(strpos($screen_permission['permissions'], 'Edit') !== false)
           <input type="hidden" name="delete_id" id="<?php    echo $row['id']; ?>"

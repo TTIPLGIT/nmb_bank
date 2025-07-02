@@ -143,14 +143,27 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Role Names<span style="color: red;font-size: 16px;">*</span></label>
-                                            <select class="form-control" name="roles_id" id="profession_role" class="professional" onchange="toggleProfessionalFields()">
+                                            <select class="form-control" name="roles_id" id="roles_id" onchange="filterDesignations()">
                                                 <option value="">Please Select Role</option>
-                                                @foreach($rows as $key=>$row)
-                                                <option value="{{ $row['role_id']}}">{{ $row['role_name'] }}</option>
+                                                @foreach($rows as $key => $row)
+                                                <option value="{{ $row['role_id'] }}">{{ $row['role_name'] }}</option>
                                                 @endforeach
                                             </select>
 
                                             @error('roles_id')
+                                            <div class="error">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Designation<span style="color: red;font-size: 16px;">*</span></label>
+                                            <select class="form-control" name="designation_id" id="designation_id">
+                                                <option value="">Please Select Designation</option>
+                                                {{-- Designation options will be populated by JS --}}
+                                            </select>
+
+                                            @error('designation_id')
                                             <div class="error">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -255,7 +268,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="custom_label" for="designation_notes">Notes<span style="color: red;font-size: 16px;">*</span></label>
-                                                        <span  style="color:Red">If you want to change the designation to professional member, kindly change the role in designation menu </span>
+                                                        <span style="color:Red">If you want to change the designation to professional member, kindly change the role in designation menu </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -765,6 +778,29 @@
                         $('#renewal_date').val(formattedRenewalDate);
                     });
                 });
+            </script>
+            <script>
+                const allDesignations = @json($designation);
+            </script>
+
+            <script>
+                function filterDesignations() {
+                    const roleId = document.getElementById('roles_id').value;
+                    const designationSelect = document.getElementById('designation_id');
+
+                    // Clear old options
+                    designationSelect.innerHTML = '<option value="">Please Select Designation</option>';
+
+                    // Filter and append new options
+                    const filtered = allDesignations.filter(d => d.role_id == roleId);
+
+                    filtered.forEach(d => {
+                        const opt = document.createElement('option');
+                        opt.value = d.designation_id; // or role_id if that's the unique ID
+                        opt.textContent = d.designation_name;
+                        designationSelect.appendChild(opt);
+                    });
+                }
             </script>
 
 

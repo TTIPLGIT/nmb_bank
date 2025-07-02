@@ -14,5 +14,9 @@ web/public/approved/
 *.env
 web/public/user_signature/
 web/storage/*.pdf
+api-mlhud/public/images/signatures/
+
+web/.env.example
+api-mlhud/composer.lock
 
 api-mlhud/public/images/signatures

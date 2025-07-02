@@ -75,9 +75,12 @@ class UserController extends BaseController
             $method = 'Method => UserController => policypage';
             $gatewayURL = config('setting.api_gateway_url') . '/user/policypage';
             $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+           
             $response = json_decode($response);
+            
             if ($response->Status == 200 && $response->Success) {
                 $objData = json_decode($this->decryptData($response->Data));
+                
                 if ($objData->Code == 200) {
                     $parant_data = json_decode(json_encode($objData->Data), true);
                     $rows =  $parant_data['rows'];
@@ -383,7 +386,7 @@ class UserController extends BaseController
                 'confirm_password' => 'required|same:password',
                 // 'directorate_department' => 'required',
                 'dashboard_list_id' => 'required',
-                // 'designation' => 'required',
+                'designation' => 'required',
             ];
 
             $messages = [
@@ -394,7 +397,7 @@ class UserController extends BaseController
                 'confirm_password.required' => 'Please enter same password',
                 // 'directorate_department.required' => 'Directorate Department is required',
                 'dashboard_list_id.required' => 'Dashboard list is required ',
-                // 'designation.required' => 'Designation is required',
+                'designation.required' => 'Designation is required',
 
             ];
 
@@ -437,7 +440,7 @@ class UserController extends BaseController
                 $userRow['user_type'] = $request->user_type;
                 // $userRow['directorate_department'] = $directorate_department;
                 $userRow['dashboard_list_id'] = $request->dashboard_list_id;
-                $userRow['designation'] = '1';
+                $userRow['designation'] = $request->designation_id;
                 // $userRow['parent_node_id'] = $request->parent_node_id;
                 // $userRow['directorate'] = $directorate;
                 // $userRow['array_department'] = $displayItems2_department;
@@ -647,7 +650,7 @@ class UserController extends BaseController
                 // 'project_role_id'=> 'required',
                 // 'directorate_department' => 'required',
                 // 'dashboard_list_id' => 'required',
-                // 'designation' => 'required',
+                 'designation_id' => 'required',
             ];
             $messages = [
                 'name.required' => 'User name is required',
@@ -656,10 +659,11 @@ class UserController extends BaseController
                 //  'project_role_id.required' => 'Project role id is required',
                 // 'directorate_department.required' => 'Directorate Department is required',
                 // 'dashboard_list_id.required' => 'Dashboard list is required ',
-                // 'designation.required' => 'Designation is required',
+                 'designation_id.required' => 'Designation is required',
             ];
             $validator = Validator::make($request->all(), $rules, $messages);
             if ($validator->fails()) {
+             
                 return Redirect::back()->withErrors($validator);
             } else {
 
@@ -681,7 +685,7 @@ class UserController extends BaseController
                 $data['email'] = $request->email;
                 // $data['directorate_department'] = $directorate_department;
                 $data['dashboard_list_id'] = $request->dashboard_list_id;
-                $data['designation'] = $request->designation;
+                $data['designation_id'] = $request->designation_id;
                 $data['parent_node_id'] = $request->parent_node_id;
                 // $data['directorate'] = $directorate;
                 // $data['array_department'] = $displayItems2_department;
@@ -693,8 +697,10 @@ class UserController extends BaseController
                 $gatewayURL = config('setting.api_gateway_url') . '/user/updatedata';
                 $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
                 $response1 = json_decode($response);
+             
                 if ($response1->Status == 200 && $response1->Success) {
                     $objData = json_decode($this->decryptData($response1->Data));
+                  
                     if ($objData->Code == 200) {
                         return redirect(route('user.index'))->with('success', 'UAM user updated successfully');
                     }

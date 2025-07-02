@@ -40,6 +40,7 @@ return [
     | application. If disabled, a simple generic error page is shown.
     |
     */
+   
 
     'debug' => (bool) env('APP_DEBUG', false),
 
@@ -121,7 +122,7 @@ return [
     |
     */
 
-    'key' => Config::get('setting.encrypt.key'),
+    'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 
