@@ -54,7 +54,6 @@ class ElearningEventController extends BaseController
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('Events', $update_id, 'create', 'Event Create', auth()->user()->id, NOW(), $role_name_fetch);
 
-
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');

@@ -23,3 +23,5 @@ web/node_modules/.bin/acorn.ps1
 web/package-lock.json
 web/package.json
 
+
+api-mlhud/public/images/signatures
