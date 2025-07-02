@@ -772,3 +772,14 @@ Route::post('/user/notified', [\App\Http\Controllers\UserController::class, 'not
 
 Route::get('/cronjob/schedular', [App\Http\Controllers\CronjobController::class, 'job_schedular'])->name('cronjob');
 Route::get('/generatepdf/{id}', [App\Http\Controllers\elearningEthnicTestController::class, 'generatePDF'])->name('generatePDF');
+
+Route::get('/categories/getAll', [App\Http\Controllers\coursecategoryController::class, 'getAll'])->name('getAll');
+Route::get('/course/catagory_fetch', [App\Http\Controllers\coursecategoryController::class, 'course_catagory_fetch'])->name('course_atagory_fetch');
+Route::post('/catagory_create', [App\Http\Controllers\coursecategoryController::class, 'store'])->name('catagory_create');
+Route::post('/catagory_update', [App\Http\Controllers\coursecategoryController::class, 'update'])->name('catagory_update');
+Route::post('/course_catagory_delete', [App\Http\Controllers\coursecategoryController::class, 'delete'])->name('course_catagory_delete');
+
+ Route::get('/certificate_template/get_data', [\App\Http\Controllers\CertificateTemplateController::class, 'get_data']);
+  Route::get('/certificate_template/data_edit/{id}', [\App\Http\Controllers\CertificateTemplateController::class, 'data_edit']);
+  Route::get('/certificate_template/data_edit_details/{id}', [\App\Http\Controllers\CertificateTemplateController::class, 'data_edit_details']);
+  Route::post('/certificate-template/store', [\App\Http\Controllers\CertificateTemplateController::class, 'storedata']);

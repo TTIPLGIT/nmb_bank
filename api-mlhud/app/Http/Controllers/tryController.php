@@ -260,6 +260,7 @@ class tryController extends BaseController
             return $sendServiceResponse;
         }
     }
+
     public function class_fetch(Request $request)
     {
 
@@ -652,6 +653,8 @@ class tryController extends BaseController
 
 
 
+
+
             $notifications = DB::table('notifications')->insertGetId([
                 'user_id' => auth()->user()->id,
                 'notification_status' => 'Event Details Deleted',
@@ -844,6 +847,8 @@ class tryController extends BaseController
             $course_classes_name = implode(", ", $course_classes);
             $introduction_extension = explode(".", $inputArray['course_introduction']);
             $introduction_extension = $introduction_extension[1];
+            $userIdsString = implode(",",  $inputArray['user_ids']);
+
 
 
            
@@ -872,7 +877,12 @@ class tryController extends BaseController
 
                 'course_classes' => $course_classes_name,
                 'course_cpt_points' => $inputArray['course_cpt_points'],
+
                 'course_category' => $inputArray['course_category'],
+                'role_id' => $inputArray['role_id'],
+                'designation_id' => $inputArray['designation_id'],
+                'user_ids' => $userIdsString,
+
                  'course_format' => $introduction_extension,
                 'examname' => $inputArray['examname'],
                 'exam_date' => $inputArray['exam_date'],
@@ -885,7 +895,7 @@ class tryController extends BaseController
               
             ];
 
-           
+          
 
             $update_id = DB::transaction(function () use ($input) {
                 $update_id = DB::table('elearning_courses')
@@ -922,11 +932,20 @@ class tryController extends BaseController
                         'course_expiry_period' => $input['course_expiry_period'],
                         'expired_course_id' => $input['expired_course_id'],
 
+                        'course_category' => $input['course_category'],
+                        'role_id' => $input['role_id'],
+                        'designation_id' => $input['designation_id'],
+                        'user_ids' => $input['user_ids'],
+
+
+
+
+
 
                     ]);
             });
-
-            $this->notifications_insert(null, auth()->user()->id, $inputArray['course_name'] . " Course Created Successfully", "/admincourse");
+ 
+            // $this->notifications_insert(null, auth()->user()->id, $inputArray['course_name'] . " Course Created Successfully", "/admincourse");
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_courses', $update_id, 'Create', 'Course Creation', auth()->user()->id, NOW(), $role_name_fetch);
@@ -1203,7 +1222,7 @@ class tryController extends BaseController
     {
 
         try {
-            $method = 'Method => tryController =>course_fetch';
+            $method = 'Method => tryController =>cou    rse_fetch';
             $userID = auth()->user()->course_id;
             $inputArray = $this->decryptData($request->requestData);
             $input = [

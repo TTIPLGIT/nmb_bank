@@ -4,6 +4,7 @@ use App\Http\Controllers\governmentInstructionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Controllers;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -318,6 +319,9 @@ Route::middleware('auth:api')->group(function () {
   Route::post('/FAQ_question/storedata', [\App\Http\Controllers\FAQquestionController::class, 'storedata']);
   Route::post('/FAQ_question/updatedata', [\App\Http\Controllers\FAQquestionController::class, 'updatedata']);
   Route::post('/FAQ_question/update_toggle', [\App\Http\Controllers\FAQquestionController::class, 'update_toggle']);
+
+  Route::post('/course_list', [\App\Http\Controllers\coursecategoryController::class, 'index']);
+
 
 
 
@@ -638,6 +642,8 @@ Route::middleware('auth:api')->group(function () {
 
 
 
+
+
   Route::get('/Activeoperation/login', [\App\Http\Controllers\ActiveoperationController::class, 'get_login']);
 
   Route::post('/Activeoperation/login', [\App\Http\Controllers\ActiveoperationController::class, 'login_search']);
@@ -847,3 +853,13 @@ Route::post('/master/fileupload_update', [App\Http\Controllers\FileuploadControl
 
 // reports
 Route::get('/report/fetch', [App\Http\Controllers\ReportsController::class, 'report_fetch'])->name('report_fetch');
+
+
+
+//  Course Categories
+
+Route::get('/categories/getAll', [App\Http\Controllers\coursecategoryController::class, 'getAll'])->name('getAll');
+Route::get('/course/catagory_fetch', [App\Http\Controllers\coursecategoryController::class, 'course_catagory_fetch'])->name('course_atagory_fetch');
+Route::post('/catagory_create', [App\Http\Controllers\coursecategoryController::class, 'store'])->name('catagory_create');
+Route::post('/catagory_update', [App\Http\Controllers\coursecategoryController::class, 'update'])->name('catagory_update');
+Route::post('/course_catagory_delete', [App\Http\Controllers\coursecategoryController::class, 'delete'])->name('course_catagory_delete');
