@@ -200,6 +200,7 @@ class coursecategoryController extends BaseController
         try {
             $allRecords['categories'] = DB::table('course_catagory')
                 ->where('active_flag', 0)
+                ->orderBy('catagory_id', 'DESC')
                 ->get();
 
 

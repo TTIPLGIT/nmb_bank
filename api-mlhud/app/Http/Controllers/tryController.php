@@ -851,7 +851,7 @@ class tryController extends BaseController
 
 
 
-           
+
             $input = [
                 'course_banner' => $inputArray['course_banner'],
                 'course_name' => $inputArray['course_name'],
@@ -883,19 +883,19 @@ class tryController extends BaseController
                 'designation_id' => $inputArray['designation_id'],
                 'user_ids' => $userIdsString,
 
-                 'course_format' => $introduction_extension,
+                'course_format' => $introduction_extension,
                 'examname' => $inputArray['examname'],
                 'exam_date' => $inputArray['exam_date'],
                 'pass_percentage' => $inputArray['pass_percentage'],
-                 'examname' => $inputArray['examname'],
+                'examname' => $inputArray['examname'],
                 'cetificate_template' => $inputArray['cetificate_template'],
                 'certificate_expiry' => $inputArray['certificate_expiry'],
                 'course_expiry_period' => $inputArray['course_expiry_period'],
-                 'expired_course_id' => $inputArray['expired_course_id'],
-              
+                'expired_course_id' => $inputArray['expired_course_id'],
+
             ];
 
-          
+
 
             $update_id = DB::transaction(function () use ($input) {
                 $update_id = DB::table('elearning_courses')
@@ -927,7 +927,7 @@ class tryController extends BaseController
                         'course_cpt_points' => $input['course_cpt_points'],
                         'course_category' => $input['course_category'],
                         'course_format' => $input['course_format'],
-                         'cetificate_template' => $input['cetificate_template'],
+                        'cetificate_template' => $input['cetificate_template'],
                         'certificate_expiry' => $input['certificate_expiry'],
                         'course_expiry_period' => $input['course_expiry_period'],
                         'expired_course_id' => $input['expired_course_id'],
@@ -944,7 +944,7 @@ class tryController extends BaseController
 
                     ]);
             });
- 
+
             // $this->notifications_insert(null, auth()->user()->id, $inputArray['course_name'] . " Course Created Successfully", "/admincourse");
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
@@ -1109,7 +1109,7 @@ class tryController extends BaseController
         }
     }
 
-     public function course_copy(Request $request)
+    public function course_copy(Request $request)
     {
 
         try {
@@ -1120,42 +1120,42 @@ class tryController extends BaseController
 
 
 
-             $id = $inputArray['course_id'];
-              $course_expiry_period = $inputArray['course_expiry_period'];
-               $certificate_expiry = $inputArray['certificate_expiry'];
-            
+            $id = $inputArray['course_id'];
+            $course_expiry_period = $inputArray['course_expiry_period'];
+            $certificate_expiry = $inputArray['certificate_expiry'];
 
-              $originalCourse = DB::table('elearning_courses')->where('course_id', $id)->first();
+
+            $originalCourse = DB::table('elearning_courses')->where('course_id', $id)->first();
 
             if ($originalCourse) {
-             
+
                 $newCourseData = (array) $originalCourse;
 
-                unset($newCourseData['course_id']); 
-            
-                $newCourseData['expired_course_id'] = $id; 
-                $newCourseData['course_expiry_period'] = $course_expiry_period; 
-                $newCourseData['certificate_expiry'] = $certificate_expiry; 
+                unset($newCourseData['course_id']);
+
+                $newCourseData['expired_course_id'] = $id;
+                $newCourseData['course_expiry_period'] = $course_expiry_period;
+                $newCourseData['certificate_expiry'] = $certificate_expiry;
 
                 $newCourseId = DB::table('elearning_courses')->insertGetId($newCourseData);
             }
 
-                $notifications = DB::table('notifications')->insertGetId([
-                    'user_id' => auth()->user()->id,
-                    'notification_status' => 'Course Details Copied',
-                    'notification_url' => 'Registration',
-                    'megcontent' => "Course details Copied Successfully .",
-                    'alert_meg' => "Course details Copied Successfully .",
-                    'created_by' => auth()->user()->id,
-                    'created_at' => NOW()
-                ]);
-                $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
-                $role_name_fetch = $role_name[0]->role_name;
-                $this->auditLog('elearning_courses', $uelid, 'Copy', 'Admin Course Copied Successfully', auth()->user()->id, NOW(), $role_name_fetch);
-                // $this->auditLog('elearning_classes', $update_id, 'Delete', 'Class Deletion', auth()->user()->id, NOW(), $role_name_fetch);
+            $notifications = DB::table('notifications')->insertGetId([
+                'user_id' => auth()->user()->id,
+                'notification_status' => 'Course Details Copied',
+                'notification_url' => 'Registration',
+                'megcontent' => "Course details Copied Successfully .",
+                'alert_meg' => "Course details Copied Successfully .",
+                'created_by' => auth()->user()->id,
+                'created_at' => NOW()
+            ]);
+            $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
+            $role_name_fetch = $role_name[0]->role_name;
+            $this->auditLog('elearning_courses', $uelid, 'Copy', 'Admin Course Copied Successfully', auth()->user()->id, NOW(), $role_name_fetch);
+            // $this->auditLog('elearning_classes', $update_id, 'Delete', 'Class Deletion', auth()->user()->id, NOW(), $role_name_fetch);
 
-                $this->notifications_insert(null, auth()->user()->id, "Course Copied Successfully", "/class/index");
-            
+            $this->notifications_insert(null, auth()->user()->id, "Course Copied Successfully", "/class/index");
+
 
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
@@ -1187,15 +1187,30 @@ class tryController extends BaseController
 
             $userID = (auth()->check()) ? auth()->user()->id : $request['user_id'];
             $course_id = $request->course_id;
-            $row = DB::table('elearning_courses')
+            $row['elearning_courses'] = DB::table('elearning_courses')
                 ->select('*')
                 ->where('course_id', $course_id)
                 ->get();
+
+
+            $course = $row['elearning_courses'];
+
+            $userIds = [];
+            if ($course && !empty($course->user_ids)) {
+                $userIds = explode(',', $course->user_ids);
+            }
+
+            $row['users'] = DB::table('users')
+                ->select('*')
+                ->whereIn('id', $userIds)
+                ->get();
+
 
             $response = [
                 'rows' => $row,
             ];
 
+            $this->WriteFileLog($row['users']);
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
@@ -1230,16 +1245,23 @@ class tryController extends BaseController
                 'type' => $inputArray['type'],
             ];
             $course_id = $input['course_id'];
-            if ($input['type'] == "edit") {
-                $rows = DB::select("SELECT course_id,course_category,course_name,course_instructor,course_banner,banner_path,course_start_period,course_end_period,course_pay,course_price,course_description,course_certificate,course_introduction,introduction_path,course_format,course_tags,course_skills_required,course_gain_skills,course_classes,course_cpt_points,CONCAT(banner_path,'/',course_banner) AS banner_path1, CONCAT(introduction_path,'/',course_introduction) AS introduction_path1,cetificate_template,course_expiry_period,certificate_expiry  from elearning_courses  where course_id =$course_id");
-            } else if ($input['type'] == "show") {
-                $rows = DB::select("SELECT pass_percentage,exam_id,exam_date,course_exam,course_id,course_category,course_name,course_instructor,course_banner,banner_path,course_start_period,course_end_period,course_pay,course_price,course_description,course_certificate,course_introduction,introduction_path,course_format,course_tags,course_skills_required,course_gain_skills,course_classes,course_cpt_points,CONCAT(banner_path,'/',course_banner) AS banner_path1, CONCAT(introduction_path,'/',course_introduction) AS introduction_path1,cetificate_template,course_expiry_period,certificate_expiry,role_id,designation_id,user_ids from elearning_courses  where course_id =$course_id");
-            }
+            $this->WriteFileLog($course_id);
+            $rows = DB::select("SELECT pass_percentage,exam_id,exam_date,course_exam,course_id,course_category,course_name,course_instructor,course_banner,banner_path,course_start_period,course_end_period,course_pay,course_price,course_description,course_certificate,course_introduction,introduction_path,course_format,course_tags,course_skills_required,course_gain_skills,course_classes,course_cpt_points,CONCAT(banner_path,'/',course_banner) AS banner_path1, CONCAT(introduction_path,'/',course_introduction) AS introduction_path1,cetificate_template,course_expiry_period,certificate_expiry,role_id,designation_id,user_ids from elearning_courses  where course_id =$course_id");
+
+             $elearning_course = DB::table('elearning_courses')
+                        ->join('users', 'users.id', '=', 'elearning_courses.user_ids')
+                        ->select('elearning_courses.*', 'users.name as user_name')
+                        ->where('elearning_courses.course_id', $course_id)
+                        ->orderBy('elearning_courses.course_id', 'desc')
+                        ->get();
+
+
 
             $response = [
                 'rows' => $rows,
+                'elearning_course' => $elearning_course
             ];
-            //$this->WriteFileLog($response);
+
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');

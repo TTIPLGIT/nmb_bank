@@ -862,11 +862,13 @@
     .dropdown-container .dropdown .notification-group .notification-tab {
         padding: 0px 25px;
         min-height: 65px;
+        
     }
 
     .dropdown-container .dropdown .notification-group .notification-tab:hover {
+       
         cursor: pointer;
-        background: #6c757d;
+        
     }
 
     .dropdown-container .dropdown .notification-group .notification-tab:hover .fa,
@@ -874,6 +876,7 @@
     .dropdown-container .dropdown .notification-group .notification-tab:hover .label {
         color: #FFF;
         display: inline-block;
+       
     }
 
     .dropdown-container .dropdown .notification-group .notification-tab:hover .label {
@@ -913,6 +916,7 @@
 
     .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:hover {
         cursor: pointer;
+
     }
 
     .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:last-child {
@@ -922,7 +926,7 @@
     }
 
     .dropdown-container .dropdown .notification-group.expanded .notification-tab {
-        /* background: #6c757d; */
+        background: #5D6773;
     }
 
     .dropdown-container .dropdown .notification-group.expanded .notification-tab .fa,
@@ -933,7 +937,8 @@
     }
 
     .dropdown-container .dropdown .notification-group.expanded .notification-tab .label {
-        background: #085a7e;
+        background:#5D6773
+;
         border-color: #085a7e;
     }
 
@@ -1116,7 +1121,7 @@
         height: 40px !important;
         border-radius: 50%;
         /* background-color: rgb(0, 34, 102); */
-        color: white;
+        color: black;
     }
 
     .fade-in-text {
@@ -1169,7 +1174,7 @@
         right: 140px !important;
         border-radius: 50%;
         background-color: red !important;
-        color: white !important;
+        color: black !important;
     }
 
     a>i>.badge.badge-light.bell_notification {
@@ -1208,11 +1213,11 @@
     }
 
     .no_notification:hover {
-        background-color: transparent !important;
+        background-color: #5D6773 !important;
     }
 
     .notification-tab:hover {
-        background-color: transparent !important;
+        background-color: #5D6773 !important;
 
     }
 
@@ -1284,7 +1289,7 @@
                     </ul>
                 </div>
                 <div class="form-inline mr-auto d-md-inline-block d-none" style="color: #2a0245!important; font-weight: 500; font-size: 26px;>
-                    <span style=" color:black; padding: 10px;" class="nav_heading"><b class="">Learning Management
+                    <span style="  class="nav_heading"><b class="">Learning Management
                         System</b>
                     <span style="color: #9958ae; right: -90px;position: relative;" class="user_name_nav"></span></span>
                 </div>
@@ -1296,14 +1301,19 @@
 
                             <li class="left">
                                 <div class="dropdown-container">
-                                    <a href="#" id="eleaning_notification" data-toggle="dropdown"
-                                        class="nav-link notification-toggle nav-link-lg badges">
+                                    <a href="#" data-dropdown="notificationMenu" id="eleaning_notification" data-toggle="dropdown"
+                                        class=" menu-link has-notifications circle nav-link notification-toggle nav-link-lg badges">
                                         <i id="bell" class="far fa-bell notify"></i>
                                         <span class="badge badge-light bell_notification"></span>
                                         <!-- <span id="notifier"></span> -->
                                         <span class="badge badge-danger badge-counter"></span>
 
                                     </a>
+                                     <!-- <a href="#" data-dropdown="notificationMenu"
+                                        class="menu-link has-notifications circle">
+                                        <i class="fa fa-bell notify"></i><span
+                                            class="badge badge-light bell_notification"></span>
+                                    </a> -->
                                     <ul class="dropdown" name="notificationMenu" style="top: 80%;">
                                         <li class="notification-group">
                                             <div class="notification-tab">
