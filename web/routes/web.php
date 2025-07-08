@@ -76,6 +76,7 @@ use App\Http\Controllers\governmentInstructionController;
 
 use App\Http\Controllers\coursecategoryController;
 
+use App\Http\Controllers\GamificationLevelController;
 
 Route::get('/check-openssl', function () {
     if (extension_loaded('openssl')) {
@@ -323,13 +324,6 @@ Route::post('class_delete', [App\Http\Controllers\tryController::class, 'class_d
 Route::get('class_edit', [App\Http\Controllers\tryController::class, 'class_edit2'])->name('class_edit');
 
 
-////submit the  course category
-Route::get('/catagory_list', [App\Http\Controllers\coursecategoryController::class, 'index'])->name('catagory_list');
-Route::get('/catagory_create', [App\Http\Controllers\coursecategoryController::class, 'createpage'])->name('catagory_create');
-Route::post('/catagory_store', [App\Http\Controllers\coursecategoryController::class, 'store'])->name('catagory.store');
-Route::post('/course/catagory_update', [App\Http\Controllers\coursecategoryController::class, 'update'])->name('catagory.update');
-Route::get('/course/catagory/fetch', [App\Http\Controllers\coursecategoryController::class, 'course_catagory_fetch'])->name('course_catagory');
-Route::post('/course_catagory_delete', [App\Http\Controllers\coursecategoryController::class, 'course_catagory_delete'])->name('course_deletes');
 
 Route::get('/certificate_template', [\App\Http\Controllers\CertifcateTemplateController::class, 'index'])->name('certificate_template.index');
 Route::get('/certificate_template/show/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'show'])->name('certificate_template.show');
@@ -770,3 +764,16 @@ Route::get('/report', [ReportsController::class, 'index'])->name('reports');
 Route::get('/report_fetch', [ReportsController::class, 'report_fetch'])->name('report_fetch');
 
 
+////submit the  course category
+Route::get('/catagory_list', [App\Http\Controllers\coursecategoryController::class, 'index'])->name('catagory_list');
+Route::get('/catagory_create', [App\Http\Controllers\coursecategoryController::class, 'createpage'])->name('catagory_create');
+Route::post('/catagory_store', [App\Http\Controllers\coursecategoryController::class, 'store'])->name('catagory.store');
+Route::post('/course/catagory_update', [App\Http\Controllers\coursecategoryController::class, 'update'])->name('catagory.update');
+Route::get('/course/catagory/fetch', [App\Http\Controllers\coursecategoryController::class, 'course_catagory_fetch'])->name('course_catagory');
+Route::post('/course_catagory_delete', [App\Http\Controllers\coursecategoryController::class, 'course_catagory_delete'])->name('course_deletes');
+
+
+//// Gamifications level
+Route::get('/level_master_page', [App\Http\Controllers\GamificationLevelController::class, 'index'])->name('level_master_page');
+Route::get('/level_add_page', [App\Http\Controllers\GamificationLevelController::class, 'createpage'])->name('level_add_page');
+Route::post('/level_create_store', [App\Http\Controllers\GamificationLevelController::class, 'store'])->name('level_store');
