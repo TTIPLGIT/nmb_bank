@@ -898,7 +898,7 @@ class tryController extends BaseController
           
 
             $update_id = DB::transaction(function () use ($input) {
-                $update_id = DB::table('elearning_courses')
+                return DB::table('elearning_courses')
                     ->insertGetId([
                         'course_banner' => $input['course_banner'],
                         'course_name' => $input['course_name'],
@@ -970,6 +970,7 @@ class tryController extends BaseController
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
             $serviceResponse['Data'] = 1;
+             $serviceResponse['course_id'] = $update_id;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $sendServiceResponse;

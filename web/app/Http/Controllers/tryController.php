@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -147,6 +149,7 @@ class tryController extends BaseController
                 ->select('*')
                 ->orderBy('id', 'desc')
                 ->get();
+                
 
             $roles = DB::table('uam_roles')
                 ->select('*')
@@ -904,6 +907,10 @@ class tryController extends BaseController
             $documentsb->move($storagepath_ursb_old, $proposal_files); //storing the file in the system
             $data['course_introduction'] = $proposal_files;
 
+
+              
+
+
             $storagepath_ursb_old1 = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
             $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
             if (!File::exists($storagepath_ursb_old1)) {
@@ -914,9 +921,9 @@ class tryController extends BaseController
             $files = $documentsb->getClientOriginalName();
             $findspace = array(' ', '&', "'", '"');
             $replacewith = array('-', '-');
-            $proposal_files = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
-            $documentsb->move($storagepath_ursb_old1, $proposal_files); //storing the file in the system
-            $data['course_banner'] = $proposal_files;
+            $proposal_files1 = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
+            $documentsb->move($storagepath_ursb_old1, $proposal_files1); //storing the file in the system
+            $data['course_banner'] = $proposal_files1;
             //dd($data);
 
             $encryptArray = $data;
@@ -939,6 +946,50 @@ class tryController extends BaseController
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
 
+                      $ext = strtolower(pathinfo($proposal_files, PATHINFO_EXTENSION));
+                $originalPath = $storagepath_ursb_old . '/' . $proposal_files;
+                $fileTypeMap = [
+                    'mp3' => 'audio',
+                    'txt' => 'text',
+                    'pdf' => 'pdf'
+                ];
+
+                $file_type = $fileTypeMap[$ext] ?? 'unknown';
+
+                if ($ext === 'mp4') {
+                   
+                    $transcription = $this->transcribeMp4($originalPath); 
+                    $txtFileName = pathinfo($proposal_files, PATHINFO_FILENAME) . '_transcript.txt';
+                    $txtPath = $storagepath_ursb_old . '/' . $txtFileName;
+
+                    file_put_contents($txtPath, $transcription);
+
+                   
+                    $response = Http::attach(
+                        'file', file_get_contents($txtPath), $txtFileName
+                    )->post('http://localhost:8000/upload', [
+                        'file_type' => 'text',
+                        'course_id' => $objData->course_id,
+                        'course_name' => $data['course_name'],
+                        'course_description' => $data['course_description']
+                    ]);
+
+                    // \Log::info('API triggered with transcript: ' . $response->body());
+                } else {
+                    // For non-mp4, send the original file as-is
+                    $response = Http::attach(
+                        'file', file_get_contents($originalPath), $proposal_files
+                    )->post('http://localhost:8000/upload', [
+                        'file_type' => $file_type,
+                         'course_id' => $objData->course_id,
+                        'course_name' => $data['course_name'],
+                        'course_description' => $data['course_description']
+                    ]);
+                    // dd($originalPath,$proposal_files,$objData);
+                    Log::info('API triggered with original file: ' . $ext);
+                    Log::info('API triggered with original file: ' . $response->body());
+                }
+
                     return redirect(route('admincourse'))->with('success', 'Course Created Successfully');
                 }
 
@@ -959,6 +1010,40 @@ class tryController extends BaseController
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
     }
+    private function transcribeMp4($mp4Path)
+    {
+        // Normalize slashes
+        $mp4Path = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $mp4Path);
+
+        $info = pathinfo($mp4Path);
+        $mp3Path = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '.mp3';
+
+        // Normalize slashes
+        $mp3Path = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $mp3Path);
+
+        // FFmpeg command with error output
+        $ffmpegCmd = "ffmpeg -i \"$mp4Path\" -vn -ab 128k -ar 44100 -y \"$mp3Path\" 2>&1";
+        $output = shell_exec($ffmpegCmd);
+
+        // DEBUG: Dump paths and command output
+        // dd([
+        //     'mp4Path' => $mp4Path,
+        //     'mp3Path' => $mp3Path,
+        //     'ffmpeg_output' => $output,
+        // ]);
+
+        if (!file_exists($mp3Path)) {
+            session()->flash('swal_error', 'Audio conversion failed.');
+            return null;
+        }
+
+        $pythonScript = 'C:\TALENTRABOT\transcribe.py';
+        $cmd = "python \"$pythonScript\" \"$mp3Path\" 2>&1";
+        $transcript = shell_exec($cmd);
+
+        return $transcript ?: "Transcription failed.";
+    }
+
 
       public function course_copy(Request $request)
 
