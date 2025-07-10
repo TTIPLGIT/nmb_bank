@@ -61,9 +61,7 @@ class elearningEthnicTestController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $id)
-    {
-    }
+    public function create(Request $request, $id) {}
 
     /**
      * Store a newly created resource in storage.
@@ -484,8 +482,33 @@ class elearningEthnicTestController extends BaseController
             }
             $searched = false;
             $sorted = "Recently Added";
-            // Getting Non-Destroyed Courses
-            $Courses = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0");
+
+            // $Courses = DB::select("
+            //             SELECT elearning_courses.* 
+            //                         FROM elearning_courses 
+            //                         INNER JOIN users ON users.id = elearning_courses.user_ids
+            //                         INNER JOIN uam_roles ON uam_roles.role_id = users.role_id
+            //                         INNER JOIN designation ON designation.designation_id = users.designation_id
+            //                         WHERE elearning_courses.drop_course = 0 
+            //                         AND uam_roles.role_id = elearning_courses.role_id
+            //                         AND designation.designation_id = elearning_courses.designation_id
+            //         ");
+
+
+           
+
+
+           
+            $Courses = DB::table('elearning_courses')
+                ->where('drop_course', 0)
+                ->whereRaw("FIND_IN_SET(?, user_ids)", [$user_id ])
+                ->get();
+
+
+            // $Courses = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0");
+
+
+            // dd($Courses);
 
             // Getting Currently Available Courses
             $availableCourseIds = [];
@@ -520,6 +543,7 @@ class elearningEthnicTestController extends BaseController
 
             if ($search == "false") {
                 $availableCourses = course::whereIn('course_id', $availableCourseIds)->paginate(8);
+
                 $searched = false;
             } else {
                 $availableCourses = course::whereIn('course_id', $availableCourseIds)
@@ -1955,14 +1979,37 @@ class elearningEthnicTestController extends BaseController
                     'get_certified' => "1",
 
                 ]);
+            $certificate_template_id = $course_details[0]->cetificate_template;
+          
+            $signatories  = DB::table('certificate_template_signatories')
+             ->where('certificate_template_id', $certificate_template_id)
+                 ->orderBy('sort_order', 'asc')
+                ->get();
+            $get_template  = DB::table('certificate_templates')
+             ->where('certificate_templates_id', $certificate_template_id)
+            ->first();
+
+             
             $data = [
-                'date' => '2024-07-20',
+                 'date' => Carbon::today()->format('d-m-Y'),
                 'course_name' => $course_name,
                 'name' => $name,
+                'signatories' => $signatories
 
             ];
-   $pdf = PDF::loadView('certificate_template.NMB_level1.index', $data);
+
+           
+
+
+             
+           $pdf = PDF::loadView("certificate_template.{$get_template->template_name}.index", [
+    'data' => $data
+]);
+
+
+
           
+
             $storagepath_user = public_path() . '/userdocuments/certificate/' . $user_id;
             if (!File::exists($storagepath_user)) {
                 File::makeDirectory($storagepath_user);
@@ -1978,7 +2025,7 @@ class elearningEthnicTestController extends BaseController
             $output = $storagepath_ninf . '/' . $filename;
 
             $pdf->save($output);
-            
+
             $data = [
                 'date' => $date,
                 'course_name' => $course_name,
@@ -1997,7 +2044,7 @@ class elearningEthnicTestController extends BaseController
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
 
             $response1 = json_decode($response);
-            
+
             if ($pdf->download('certificate.pdf')) {
                 return redirect()->back()->with('success', 'Your Certificate has been Issued Successfully');
             } else {
