@@ -34,10 +34,12 @@ class coursecategoryController extends BaseController
             $objData = json_decode($this->decryptData($response->Data));
             $parant_data = json_decode(json_encode($objData->Data), true);
             $categories = $parant_data['categories'];
+          
+           
         }
         return view("coursecategory.coursecategory", compact('screens', 'modules', 'categories'));
         //
-    }
+            }
 
     public function createpage(Request $request)
     {

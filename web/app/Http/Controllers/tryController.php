@@ -148,10 +148,21 @@ class tryController extends BaseController
                 ->orderBy('id', 'desc')
                 ->get();
 
+            $rows['elearning_courses'] = DB::table('elearning_courses')
+                ->join('users', 'id', '=', 'elearning_courses.user_ids')
+                ->select('elearning_courses.*', 'users.name as user_name')
+                ->orderBy('elearning_courses.course_id', 'desc')
+                ->get();
+
+                
+        //    dd($rows);
+
+     
+           
             $roles = DB::table('uam_roles')
                 ->select('*')
                 ->get();
-                
+
 
             $rows1 = array();
             $rows1['elearning_courses'] = DB::table('elearning_courses')
@@ -159,7 +170,7 @@ class tryController extends BaseController
                 ->where('drop_course', '0')
                 ->orderBy('course_id', 'desc') // Replace 'created_at' with the column you want to order by
                 ->get();
-               
+
             $rows1['exam_list'] = DB::table('elearning_exam')
                 ->select('*')
                 ->where('elearning_exam.active_flag', '0')
@@ -168,9 +179,9 @@ class tryController extends BaseController
 
             $rows1['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz  AS e left join elearning_localadaptation AS l ON e.quiz_id=l.quiz_id left join elearning_ethnictest AS et ON e.quiz_id=et.quiz_id left join elearning_exam AS el ON e.quiz_id=el.quiz_id WHERE l.quiz_id IS NULL AND et.quiz_id IS NULL and el.quiz_id IS NULL AND e.drop_quiz=0');
 
-              $rows1['certificate_templates'] = DB::select("SELECT * from certificate_templates WHERE active_flag ='0'");
+            $rows1['certificate_templates'] = DB::select("SELECT * from certificate_templates WHERE active_flag ='0'");
 
-            
+
 
             $screens = $menus['screens'];
             $modules = $menus['modules'];
@@ -183,11 +194,11 @@ class tryController extends BaseController
                 ->orderBy('class_id', 'desc')
                 ->get();
 
-           
+
 
             return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'roles', 'user_id', 'rows1', 'rows2'));
         } catch (\Exception $exc) {
-          
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
     }
@@ -865,13 +876,13 @@ class tryController extends BaseController
             $data['course_category'] = $request->course_category;
             $data['examname'] = $request->exam_name;
             $data['exam_date'] = $request->exam_date;
-            
 
-             $data['cetificate_template'] = $request->cetificate_template;
+
+            $data['cetificate_template'] = $request->cetificate_template;
             $data['certificate_expiry'] = $request->certificate_expiry;
-             $data['course_expiry_period'] = $request->course_expiry_period;
-               $data['expired_course_id'] = $request->expired_course_id;
-          
+            $data['course_expiry_period'] = $request->course_expiry_period;
+            $data['expired_course_id'] = $request->expired_course_id;
+
             $data['pass_percentage'] = $request->pass_percentage;
 
             $data['course_category'] = $request->course_category_id;
@@ -881,19 +892,19 @@ class tryController extends BaseController
 
 
 
-        
+
             $encryptArray = $data;
 
             $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
 
             $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
-            
+
             // dd( $storagepath_ursb_old);
             if (!File::exists($storagepath_ursb_old)) {
-                 
+
                 File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
             }
-          
+
             $data['introduction_path'] = $storagepath_ursb;
 
             $documentsb =  $request['course_introduction'];
@@ -923,10 +934,10 @@ class tryController extends BaseController
             $request = array();
             $request['requestData'] = $encryptArray;
 
-           
+
 
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/course/store';
-           
+
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
             $menus = $this->FillMenu();
 
@@ -934,7 +945,7 @@ class tryController extends BaseController
             $modules = $menus['modules'];
 
             $response1 = json_decode($response);
-           
+
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
@@ -960,7 +971,7 @@ class tryController extends BaseController
         }
     }
 
-      public function course_copy(Request $request)
+    public function course_copy(Request $request)
 
     {
         try {
@@ -994,7 +1005,6 @@ class tryController extends BaseController
             $rows['data'] = json_decode(json_encode($objData->Data), true);
             $rows['message_cus'] = json_decode(json_encode($objData->response_message), true);
             return $rows;
-         
         } catch (\Exception $exc) {
             // echo $exc;
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
@@ -1118,6 +1128,7 @@ class tryController extends BaseController
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
                         $modules = $menus['modules'];
+
                         return view('elearning.admin.course.admincourse', compact('user_id', 'rows', 'menus', 'screens', 'modules'));
                     }
                 } else {
@@ -1136,7 +1147,7 @@ class tryController extends BaseController
     public function course_fetch(Request $request)
     {
 
-        $this->WriteFileLog($request);
+        // $this->WriteFileLog($request);
         try {
             $this->WriteFileLog("feef");
             $method = 'Method => tryController => course_fetch';
@@ -1158,6 +1169,7 @@ class tryController extends BaseController
             $response1 = json_decode($response);
             $objData = json_decode($this->decryptData($response1->Data));
             $rows = json_decode(json_encode($objData->Data), true);
+            // dd($rows);
             return $rows;
         } catch (\Exception $exc) {
             echo $exc;

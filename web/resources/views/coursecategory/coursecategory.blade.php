@@ -15,7 +15,8 @@
     <section class="section">
         <div class="section-body">
             <section class="section">
-                <div class="section-body">{{ Breadcrumbs::render('final_assesment') }}
+                <div class="section-body">{{ Breadcrumbs::render('catagory_list') }}
+
 
                     <div class="d-flex justify-content-start  ml-3 mb-3">
                         <a href="{{ route('catagory_create') }}" class="btn btn-success " style="margin-right:100px">Create <i class="fa fa-plus"
@@ -214,7 +215,7 @@
 </script>
 
 
-<script>
+<!-- <script>
     function fetch_update_edit(catagory_id, type) {
         $.ajax({
             url: "{{ url('/course/catagory/fetch') }}",
@@ -237,7 +238,7 @@
             }
         });
     }
-</script>
+</script> -->
 
 <script>
     function fetch_delete(catagory_id, type) {

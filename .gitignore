@@ -25,3 +25,6 @@ web/package.json
 
 
 api-mlhud/public/images/signatures
+ApiGateway_Publish/ocelot.json
+ApiGateway_Publish/ocelot.json
+.gitignore
