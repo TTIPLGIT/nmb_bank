@@ -16,7 +16,7 @@
 .certificate {
     position: relative;
     width: 712px;
-    height: 550px;
+    height: 650px;
     background: #fff;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     overflow: hidden;
@@ -77,7 +77,7 @@
 }
 
 .title {
-    margin-top: 40px;
+    margin-top: 2px;
     letter-spacing: 1px;
 }
 
@@ -223,6 +223,22 @@
     height: 100%;
     background-color: #0045a5;
 }
+
+.nmb-logo {
+    background-color: #004A99;
+    /* NMB blue or choose your color */
+    padding: 10px;
+    display: inline-block;
+    border-radius: 6px;
+    /* Optional: for rounded corners */
+}
+
+.nmb-logo img {
+    max-height: 60px;
+    height: auto;
+    display: block;
+    background-color: transparent;
+}
 </style>
 <div class="main-content">
     {{ Breadcrumbs::render('certificate_template.show', $template['certificate_templates_id']) }}
@@ -255,7 +271,13 @@
                                     <div class="border-line right-line"></div>
 
                                     <div class="certificate-content">
-
+                                        <div class="nmb-logo">
+                                            <a href="/">
+                                                <img class="img-responsive"
+                                                    src="https://www.nmbbank.co.tz/images/nmb-white-logo.png"
+                                                    alt="NMB Bank PLC">
+                                            </a>
+                                        </div>
                                         <div class="title">
                                             <h1>CERTIFICATE</h1>
                                             <h2>OF PARTICIPATION</h2>
@@ -270,6 +292,28 @@
                                         </div>
 
                                         <div class="date">Held on "16 December 2023"</div>
+                                        @php
+                                        use BaconQrCode\Renderer\ImageRenderer;
+                                        use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+                                        use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+                                        use BaconQrCode\Writer;
+
+
+
+                                        $renderer = new ImageRenderer(
+                                        new RendererStyle(50),
+                                        new SvgImageBackEnd()
+                                        );
+
+                                        $writer = new Writer($renderer);
+
+                                        $svg = $writer->writeString('https://www.nmbbank.co.tz/');
+                                        @endphp
+
+                                        <div>
+
+                                            {!! $svg !!}
+                                        </div>
 
                                         <div class="signatures">
                                             <div class="signature"><br><br><br>

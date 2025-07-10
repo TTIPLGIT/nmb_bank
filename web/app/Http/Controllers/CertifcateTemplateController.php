@@ -7,6 +7,8 @@ use Log;
 use Redirect;
 use Validator;
 use GuzzleHttp\Client;
+use DB;
+use Illuminate\Support\Facades\Crypt;
 
 class CertifcateTemplateController extends BaseController
 {
@@ -215,6 +217,29 @@ public function store(Request $request)
             return redirect()->route('not_allow');
         }
     }
+
+    public function verify($id)
+{
+   $decryptedId = Crypt::decryptString($id);
+    $certificate = DB::table('elearning_courses')
+                ->select('*')
+                ->where('course_id', $decryptedId)
+                ->first();
+
+    if ($certificate == null) {
+        return response()->json(['message' => 'Certificate not found.'], 404);
+    }
+    
+    $isExpired = now()->gt($certificate->course_expiry_period);
+
+    return view('certificate_template.verification_result', [
+        'name' => $certificate->course_pay,
+        'course' => $certificate->course_name,
+        'date' => $certificate->course_expiry_period,
+        'status' => $isExpired ? 'Expired' : 'Valid',
+    ]);
+}
+
 
 
 
