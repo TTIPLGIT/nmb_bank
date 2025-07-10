@@ -9,9 +9,9 @@
 
     .certificate {
         position: relative;
-        width: 612px;
+        width: 716px;
         /* 8.5 inches */
-        height: 792px;
+        height: 612px;
         /* 11 inches */
         align-items: center !important;
         background: #fff;
@@ -210,6 +210,43 @@
         border: none !important;
         background: none !important;
     }
+
+    .border-line {
+        position: absolute;
+        z-index: 1;
+    }
+
+    .top-line {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 8px;
+        background-color: #f26f21;
+    }
+
+    .bottom-line {
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 8px;
+        background-color: #0045a5;
+    }
+
+    .left-line {
+        top: 0;
+        left: 0;
+        width: 8px;
+        height: 100%;
+        background-color: #f26f21;
+    }
+
+    .right-line {
+        top: 0;
+        right: 0;
+        width: 8px;
+        height: 100%;
+        background-color: #0045a5;
+    }
     </style>
 </head>
 
@@ -217,20 +254,10 @@
 
     <div class="certificate">
         <!-- Decorative Images -->
-        <img src="{{ public_path('images/Certificate_template/NMB_level1/top_right_border.PNG') }}"
-            class="top-right-image">
-        <img src="{{ public_path('images/Certificate_template/NMB_level1/new_left_bottom.png') }}"
-            class="bottom-left-image">
-
-        <!-- Gold Edges -->
-        <div class="g1"></div>
-        <div class="gold-edge tl-gold">
-
-        </div>
-        <div class="gold-edge tr-gold"></div>
-        <div class="gold-edge bl-gold"></div>
-        <div class="gold-edge br-gold"></div>
-        <div class="g2"></div>
+        <div class="border-line top-line"></div>
+        <div class="border-line bottom-line"></div>
+        <div class="border-line left-line"></div>
+        <div class="border-line right-line"></div>
 
         <!-- Certificate Body -->
         <div class="certificate-content">

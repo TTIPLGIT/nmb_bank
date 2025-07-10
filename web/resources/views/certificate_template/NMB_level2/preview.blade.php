@@ -14,19 +14,138 @@
 }
 
 .certificate {
+    position: relative;
+    width: 712px;
+    height: 550px;
     background: #fff;
-    width: 768px;
-    height: auto;
-    padding: 50px 40px;
-    border: 5px solid #3b7d3b;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.corner-block {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: #0c1b33;
+    z-index: 1;
+}
+
+.gold-edge {
+    position: absolute;
+    background-color: #d4a017;
+}
+
+.tl-gold {
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 300px;
+}
+
+.tr-gold {
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 200px;
+}
+
+.bl-gold {
+    bottom: 0;
+    left: 0;
+    width: 10px;
+    height: 200px;
+}
+
+.br-gold {
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 300px;
+}
+
+.certificate-content {
+    position: relative;
+    z-index: 2;
+    padding: 60px;
     text-align: center;
 }
 
-h1 {
-    font-size: 32px;
-    color: #245f24;
-    margin-bottom: 10px;
+.logo {
+    text-align: left;
+    font-weight: bold;
+    color: #0c1b33;
+}
+
+.title {
+    margin-top: 40px;
+    letter-spacing: 1px;
+}
+
+.title h1 {
+    font-size: 2.5em;
+    margin: 0;
+    color: #2d2d2d;
+    letter-spacing: 2px;
+    margin-top: 10px;
+
+}
+
+.title h2 {
+    font-size: 25px;
+    font-weight: normal;
+    letter-spacing: 3px;
+    color: #888;
+    margin-top: -1px;
+}
+
+.given {
+    margin-top: 30px;
+    font-size: 25px;
+    color: #5c5c5c;
+    letter-spacing: 2px;
+}
+
+.name {
+    font-size: 30px;
+    font-weight: bold;
+    color: #2d2d2d;
+    margin: 20px 0;
+    border-bottom: 2px solid #d4a017;
+    width: 400px;
+    display: inline-block;
+    padding: 5px 30px;
+}
+
+.description {
+    margin: 30px auto;
+    max-width: 400px;
+    font-size: 1em;
+    color: #444;
+    margin-top: -6px;
+}
+
+.date {
+    margin-top: 10px;
+    font-style: italic;
+    color: #888;
+}
+
+.signatures {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -75px;
+    padding: 0 20px;
+}
+
+.signature {
+    text-align: center;
+}
+
+.signature-line {
+    width: 150px;
+    height: 2px;
+    background: #d4a017;
+    margin: 0 auto 5px;
 }
 
 .signature-img {
@@ -34,65 +153,75 @@ h1 {
 
 }
 
-.company {
-    color: #245f24;
-    margin-bottom: 40px;
+.g1 {
+    height: 10px;
+    width: 500px;
+    background-color: #d4a017;
 }
 
-.label {
-    font-size: 18px;
-    color: #444;
+.g2 {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    width: 500px;
+    height: 10px;
+    background-color: #d4a017;
+
 }
 
-.recipient {
-    font-size: 28px;
-    color: #1e4620;
-    margin: 20px 0;
-}
-
-.description {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 50px;
-}
-
-.footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-top: 30px;
-    flex-wrap: wrap;
-}
-
-.signature-block {
-    text-align: center;
-    width: 30%;
-}
-
-.signature-line {
+.top-right-image {
+    position: absolute;
+    top: 0;
+    right: 0;
     width: 150px;
-    height: 2px;
-    background-color: #245f24;
-    margin: 0 auto 8px;
+    height: auto;
+    z-index: 4;
 }
 
-.name {
-    font-weight: bold;
-    color: #2a462a;
-    margin-bottom: 2px;
+.bottom-left-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 150px;
+    height: auto;
+    z-index: 4;
 }
 
-.title {
-    font-size: 14px;
-    color: #666;
+.border-line {
+    position: absolute;
+    z-index: 1;
 }
 
-.certificate-info {
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #333;
-    width: 30%;
+.top-line {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: #f26f21;
+}
+
+.bottom-line {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: #0045a5;
+}
+
+.left-line {
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background-color: #f26f21;
+}
+
+.right-line {
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 100%;
+    background-color: #0045a5;
 }
 </style>
 <div class="main-content">
@@ -110,58 +239,58 @@ h1 {
                     <div class="card">
                         <div class="card-body">
 
-
-
-                            <!DOCTYPE html>
-                            <html lang="en">
-
                             <head>
                                 <meta charset="UTF-8">
-                                <title>Completion Certificate</title>
-                                <link rel="stylesheet" href="style.css">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <title>Certificate of Participation</title>
+                                <link href="cer.css" rel="stylesheet" />
                             </head>
 
                             <div class="certificate-wrapper">
                                 <div class="certificate">
-                                    <h1>COMPLETION CERTIFICATE</h1>
-                                    <h3 class="company">🏢 COMPANY NAME</h3>
 
-                                    <p class="label">This certificate is granted to</p>
-                                    <h2 class="recipient">Peter Gallagher</h2>
+                                    <div class="border-line top-line"></div>
+                                    <div class="border-line bottom-line"></div>
+                                    <div class="border-line left-line"></div>
+                                    <div class="border-line right-line"></div>
 
-                                    <p class="description">
-                                        Successfully completed the <strong>Corporate Governance course</strong>.<br>
-                                        Skills and knowledge acquired: knowledge of organizational<br>
-                                        and legal forms of legal entities.
-                                    </p>
+                                    <div class="certificate-content">
 
-                                    <div class="footer">
-                                        <div class="signature-block">
-                                            <img src="{{asset('images/Certificate_template/NMB_level1/lorna.PNG')}}"
-                                                alt="Lorna Signature" class="signature-img">
-                                            <div class="signature-line"></div>
-                                            <p class="name">Nathan Day</p>
-                                            <p class="title">Chief Accountant</p>
+                                        <div class="title">
+                                            <h1>CERTIFICATE</h1>
+                                            <h2>OF PARTICIPATION</h2>
                                         </div>
 
-                                        <div class="certificate-info">
-                                            <p><strong>Certificate ID No:</strong> 759-375-485</p>
-                                            <p><strong>Date of issue:</strong> 12.06.2024</p>
+                                        <div class="given">GIVEN TO</div>
+                                        <div class="name">Margarita Perez</div>
+
+                                        <div class="description">
+                                            is thanked for their participation on "Technology in Entrepreneurship"
+                                            seminar organized by the Ingoude Company.
                                         </div>
 
-                                        <div class="signature-block">
-                                            <img src="{{asset('images/Certificate_template/NMB_level1/silva.PNG')}}"
-                                                alt="Juliana Signature" class="signature-img">
-                                            <div class="signature-line"></div>
-                                            <p class="name">Toby Stevens</p>
-                                            <p class="title">Tax Management Professor</p>
+                                        <div class="date">Held on "16 December 2023"</div>
+
+                                        <div class="signatures">
+                                            <div class="signature"><br><br><br>
+                                                <img src="{{asset('images/Certificate_template/NMB_level1/lorna.PNG')}}"
+                                                    alt="Lorna Signature" class="signature-img">
+                                                <div class="signature-line"></div>
+                                                Lorna Alvarado<br>
+                                                <small>CEO of Wardiere Inc.</small>
+                                            </div>
+                                            <div class="signature"><br><br><br>
+                                                <div class="newsign"><img
+                                                        src="{{asset('images/Certificate_template/NMB_level1/silva.PNG')}}"
+                                                        alt="Juliana Signature" class="signature-img"><br></div>
+                                                <div class="signature-line"></div>
+                                                Juliana Silva<br>
+                                                <small>Event Director</small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            </html>
-
                         </div>
                     </div>
                 </div>
