@@ -776,4 +776,7 @@ Route::post('/course_catagory_delete', [App\Http\Controllers\coursecategoryContr
 //// Gamifications level
 Route::get('/level_master_page', [App\Http\Controllers\GamificationLevelController::class, 'index'])->name('level_master_page');
 Route::get('/level_add_page', [App\Http\Controllers\GamificationLevelController::class, 'createpage'])->name('level_add_page');
-Route::post('/level_create_store', [App\Http\Controllers\GamificationLevelController::class, 'store'])->name('level_store');
+Route::post('/level_create_store', [App\Http\Controllers\GamificationLevelController::class, 'store'])->name('levels_store');
+Route::get('/level_show', [App\Http\Controllers\GamificationLevelController::class, 'show'])->name('level_show');
+Route::post('/level_update',[App\Http\Controllers\GamificationLevelController::class, 'update']) ->name('level_update');
+Route::post('/level_delete',[App\Http\Controllers\GamificationLevelController::class, 'level_delete'])->name('level_delete');

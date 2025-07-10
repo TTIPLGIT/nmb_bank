@@ -563,3 +563,28 @@ Breadcrumbs::for('reports', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Reports', route('reports'));
 });
+
+/// Gamification Levels list
+
+Breadcrumbs::for('level_master_page', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Level  list ', route('level_master_page'));
+});
+
+/// Gamification Levels
+
+Breadcrumbs::for('level_add_page', function (BreadcrumbTrail $trail) {
+    $trail->parent('level_master_page');
+    $trail->push('Level Create', route('level_add_page'));
+});
+
+/// course Category
+Breadcrumbs::for('catagory_list', function (BreadcrumbTrail $trail) {
+    $trail->parent('home'); 
+    $trail->push('Category List', route('catagory_list'));
+});
+
+Breadcrumbs::for('catagory_create', function (BreadcrumbTrail $trail) {
+    $trail->parent('catagory_list'); 
+    $trail->push('Category Create', route('catagory_create'));
+});
