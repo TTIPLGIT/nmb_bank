@@ -21,7 +21,8 @@
     <section class="section">
         <div class="section-body">
             <section class="section">
-                <div class="section-body">{{ Breadcrumbs::render('final_assesment') }}
+                <div class="section-body">{{ Breadcrumbs::render('catagory_create') }}
+
 
                     <div class="ml-5">
 
