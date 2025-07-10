@@ -20,3 +20,6 @@ web/.env.example
 api-mlhud/composer.lock
 
 api-mlhud/public/images/signatures
+ApiGateway_Publish/ocelot.json
+ApiGateway_Publish/ocelot.json
+.gitignore
