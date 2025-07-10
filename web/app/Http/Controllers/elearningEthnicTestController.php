@@ -892,7 +892,7 @@ class elearningEthnicTestController extends BaseController
 
     public function courseOverview(Request $request, $id)
     {
-
+        
         $method = 'Method => elearningEthnicTestController => courseOverview';
         try {
             $user_id = $request->session()->get("userID");
@@ -1969,6 +1969,8 @@ class elearningEthnicTestController extends BaseController
 
             $date = $course_details[0]->course_end_period;
 
+            $course_id = $course_details[0]->course_id;
+
             $name = $this->getusername($user_id);
 
 
@@ -1994,7 +1996,8 @@ class elearningEthnicTestController extends BaseController
                  'date' => Carbon::today()->format('d-m-Y'),
                 'course_name' => $course_name,
                 'name' => $name,
-                'signatories' => $signatories
+                'signatories' => $signatories,
+                'course_id' => $course_id,
 
             ];
 

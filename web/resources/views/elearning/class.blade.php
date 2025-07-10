@@ -1568,6 +1568,27 @@ label:hover~input:checked~label
             </div>
         </div>
     </div>
+    <!-- Chatbot Floating Icon -->
+    <div id="chatIcon1"
+        style="position: fixed; bottom: 30px; right: 30px; background-color: #007bff; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999;">
+        <i class="fa fa-comments" style="font-size: 24px;"></i>
+    </div>
+
+    <!-- Chatbot Window -->
+    <div id="chatbotContainer"
+        style="position: fixed; bottom: 100px; right: 30px; width: 320px; display: none; z-index: 9999;">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                TALENTRA Chatbot
+                <button class="btn btn-sm btn-light close-chat1" style="padding: 0 8px;">&times;</button>
+            </div>
+            <div class="card-body" style="height: 300px; overflow-y: auto;" id="chatLog"></div>
+            <div class="card-footer p-2">
+                <input type="text" class="form-control" id="chatInput" placeholder="Ask a question...">
+                <button class="btn btn-primary btn-sm mt-2 w-100" id="sendBtn1">Send</button>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="container-fluid py-3 px-5" id="qAndAContent" style="display: none;">
 
@@ -2506,7 +2527,7 @@ function editNoteparser(e) {
                         console.log(data);
                         if (data != 0) {
                             Swal.fire("Success!", "Note Deleted Successfully!", "success").then((
-                            result) => {
+                                result) => {
 
                                 localStorage.setItem('activeTabKey', 'notes');
                                 location.reload(); // Handle the success action
@@ -2631,7 +2652,7 @@ function addreply(question_id, user_id) {
                     if (row2.course_reply_id == row.id) {
                         $(`.reply_data${reply_count}`).append(
                             `<div><img src="{{asset('assets/images/main.png')}}" style="width:35px !important;height:35px !important;"></img><label style="font-weight:700 !important;">admin reply:</label>${row2.reply_details}</div>`
-                            );
+                        );
                     }
 
 
@@ -3210,5 +3231,52 @@ function course_submit() {
         });
     }
 }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Toggle chatbot window
+    $('#chatIcon1').on('click', function() {
+        $('#chatbotContainer').toggle();
+    });
+
+    $('.close-chat1').on('click', function() {
+        $('#chatbotContainer').hide();
+    });
+
+    $('#sendBtn1').on('click', function() {
+        const question = $('#chatInput').val();
+        const user_id = "{{ Auth::id() }}";
+        const course_id = "{{ isset($courseDetail) ? $courseDetail->course_id : 0 }}";
+
+        if (!question.trim()) return;
+
+        $('#chatLog').append(`<div class="mb-2"><strong>You:</strong> ${question}</div>`);
+
+        $.ajax({
+            url: 'http://localhost:8000/ask/',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                question: question,
+                course_id: course_id,
+                user_id: user_id
+            }),
+            success: function(response) {
+                $('#chatLog').append(
+                    `<div class="mb-2"><strong>Talentra:</strong> ${response.answer}</div>`
+                );
+                $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
+            },
+            error: function() {
+                $('#chatLog').append(
+                    `<div class="mb-2 text-danger"><strong>Error:</strong> Could not get response.</div>`
+                );
+            }
+        });
+
+        $('#chatInput').val('');
+    });
+});
 </script>
 @endsection
