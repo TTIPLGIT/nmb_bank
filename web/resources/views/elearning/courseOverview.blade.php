@@ -758,6 +758,7 @@
                     <i class="fa fa-comments" style="font-size: 24px;"></i>
                 </div>
 
+
                 <!-- Chatbot Window -->
                 <div id="chatbotContainer"
                     style="position: fixed; bottom: 100px; right: 30px; width: 320px; display: none; z-index: 9999;">
