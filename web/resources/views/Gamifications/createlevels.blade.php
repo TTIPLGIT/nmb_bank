@@ -66,7 +66,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-6">
-                                                <label>Level Icons</label>
+                                                <label>Level Icons<span class="error-star" style="color:red;">*</span></label>
                                                 <input type="text" class="form-control default" id="level_icon" name="level_icon">
                                             </div>
 
@@ -75,7 +75,9 @@
                                         <div class="row mt-4">
                                             <div class="col-12">
                                                 <div class="d-flex justify-content-center gap-2">
-                                                    <button type="button" class="btn btn-success" onclick="gencre(event)">Submit</button>
+
+                                                    <a class="btn btn-success btn-space classsavebutton" type="submit" onclick="gencre(event)"
+                                                        id="submitBtn">Submit</a>
                                                     <a class="btn btn-danger btn-lg" style="color:white;" href="{{ route('level_master_page') }}">Back</a>
                                                 </div>
                                             </div>
@@ -103,16 +105,20 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 <script>
     function gencre(event) {
-        event.preventDefault();
+        event.preventDefault(); 
+
+        let existingLevels = @json($allRecords['levels']);
 
         var level_number = $("#level_number").val().trim();
         var level_name = $("#level_name").val().trim();
         var min_point_val = $("#min_points").val().trim();
         var max_point_val = $("#max_points").val().trim();
+        var level_icon = $("#level_icon").val().trim();
 
         var min_point = parseInt(min_point_val);
         var max_point = parseInt(max_point_val);
 
+      
         if (level_number === '') {
             Swal.fire("Please enter the Level Number", "", "error");
             return false;
@@ -129,14 +135,33 @@
             Swal.fire("Please enter the Maximum Point", "", "error");
             return false;
         }
+        if (level_icon === '') {
+            Swal.fire("Please enter the Level Icon", "", "error");
+            return false;
+        }
+
+     
         if (!isNaN(min_point) && !isNaN(max_point) && min_point > max_point) {
             Swal.fire("Minimum Point should not be greater than Maximum Point", "", "error");
             return false;
         }
 
+     
+        let conflict = existingLevels.some(level => {
+            return level.min_point == min_point || level.max_point == max_point;
+        });
+
+        if (conflict) {
+            Swal.fire("The minimum or maximum value already exists.");
+            return false;
+        }
+
+    
+        $('#classsavebutton').css('pointer-events', 'none');
         document.getElementById("levels_submit").submit();
     }
 </script>
+
 
 @if(session('fail'))
 <script>
