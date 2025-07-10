@@ -456,7 +456,7 @@ form.longqustionsform {
                                                         <td>{{$data->class_name}}</td>
                                                         <td>{{$data->class_duration}} Mins</td>
 
-                                                        <?php    if ($data->class_format == 'mp4') { ?>
+                                                        <?php if ($data->class_format == 'mp4') { ?>
                                                         <td> <img src="uploads/class/126/mp4.png" width="50px"
                                                                 height="50px" alt="..."></td>
                                                         <?php    } elseif ($data->class_format == 'mp3') { ?>
@@ -487,7 +487,7 @@ form.longqustionsform {
 
 
                                                             <a type="button" title="Delete"
-                                                                onclick="class_delete(<?php    echo $data->class_id ?>)"
+                                                                onclick="class_delete(<?php echo $data->class_id ?>)"
                                                                 class="btn btn-link"><i class="far fa-trash-alt"
                                                                     style="color:red"></i></a>
 
@@ -563,7 +563,7 @@ form.longqustionsform {
 
                                                                         @endif -->
 
-                                                        <?php    if (!empty($data->course_banner)) { ?>
+                                                        <?php if (!empty($data->course_banner)) { ?>
 
 
                                                         <td><img src="uploads/course/126/{{$data->course_banner}}"
@@ -626,7 +626,7 @@ form.longqustionsform {
                                                                     class="fas fa-eye" style="color:green"></i></a>
 
                                                             <a type="button" title="Delete"
-                                                                onclick="course_delete(<?php    echo $data->course_id ?>)"
+                                                                onclick="course_delete(<?php echo $data->course_id ?>)"
                                                                 class="btn btn-link"><i class="far fa-trash-alt"
                                                                     style="color:red"></i></a>
                                                             @if($showHandleButton)
@@ -2139,51 +2139,70 @@ $('.savebutton').prop('disabled', true);
 $(".js-select2").select2({
     closeOnSelect: false,
     placeholder: "Select Class Name",
-    // allowHtml: true,
+    allowHtml: true,
     allowClear: true,
-    tags: true // создает новые опции на лету
+    tags: true
 });
 </script>
 
 <script>
 $(".js-select2").select2({
-    closeOnSelect: false,
-    placeholder: "Select Class Name",
-    // allowHtml: true,
+    closeOnSelect: true,
+    placeholder: "Select User Name",
     allowClear: true,
-    tags: true // создает новые опции на лету
+    tags: true
 });
 
+const $select = $('#user_id');
 
 $('#user_id').on('select2:select', function(e) {
 
-    const selectedValue = e.params.data.id;
-    console.log(selectedValue)
-    console.log(selectedValue === 'all')
-    console.log(selectedValue == 'all')
-    if (selectedValue === 'all') {
-        const allValues = [];
+            const selectedValue = e.params.data.id;
+            console.log(selectedValue)
+            console.log(selectedValue === 'all')
+            console.log(selectedValue == 'all')
+            if (selectedValue === 'all') {
+                const allValues = [];
+                $select.on('select2:select', function(e) {
+                    const selectedValue = e.params.data.id;
 
-        // Get all option values except "all"
-        $('#user_id option').each(function() {
-            const val = $(this).val();
-            if (val !== 'all') {
-                allValues.push(val);
-            }
-        });
+                    if (selectedValue === 'all') {
+                        const allValues = [];
 
-        // Select all users (excluding 'all')
-        $('#user_id').val(allValues).trigger('change.select2');
-    }
-});
+                        // Get all option values except "all"
+                        $('#user_id option').each(function() {
+                            const val = $(this).val();
+                            if (val !== 'all') {
+                                allValues.push(val);
+                            }
+                        });
 
-// Optional: Clear all selections if user manually removes everything
-$('#user_id').on('select2:unselect', function(e) {
-    if ($('#user_id').val() === null || $('#user_id').val().length === 0) {
-        $('#user_id').val(null).trigger('change.select2');
-    }
-});
+
+                        $select.val(allValues).trigger('change.select2');
+                    }
+                });
+
+                $select.on('select2:unselect', function(e) {
+                    const unselectedValue = e.params.data.id;
+
+                    if (unselectedValue === 'all') {
+                        // ✅ Remove all values
+                        $select.val(null).trigger('change.select2');
+                    }
+                });
+
+                // ✅ Prevent 'all' from being in the final selected list
+                $select.on('change', function() {
+                    const selected = $select.val() || [];
+
+                    // Remove 'all' if accidentally included
+                    if (selected.includes('all')) {
+                        const filtered = selected.filter(val => val !== 'all');
+                        $select.val(filtered).trigger('change.select2');
+                    }
+                });
 </script>
+
 
 <script>
 function data(e) {
@@ -2649,10 +2668,24 @@ function fetch_courseupdate_new(course_id, type) {
 
 
             } else if (type == "show") {
+                console.log(data);
                 $('#course_categoryshow').val(data.rows[0]['course_category']);
                 $('#course_nameshow').val(data.rows[0]['course_name']);
 
                 $('#course_descriptionshow').val(data.rows[0]['course_description']);
+
+                $('#course_category_id_show').val(data.rows[0]['course_category']);
+                $('#course_category_id_show').prop('disabled', true);
+                $('#role_id_show').val(data.rows[0]['role_id']);
+                $('#role_id_show').prop('disabled', true);
+                $('#designation_id_show').val(data.rows[0]['designation_id']);
+                $('#designation_id_show').prop('disabled', true);
+
+                let userIdsString = data.rows[0]['user_ids']; // "565,557"
+                let userIdsArray = userIdsString.split(',');
+
+                $('#user_ids_show').val(userIdsArray).trigger('change');
+                $('#user_ids_show').prop('disabled', true);
 
                 //$('#course_certificateedit').val(data.rows[0]['course_certificate']);
 
@@ -3539,7 +3572,7 @@ $(document).ready(function() {
                     <input type="hidden" name="course_editshow" class="course_edit" id="course_editshow">
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label required">Course Category:<span class="error-star"
                                         style="color:red;">*</span></label>
@@ -3551,7 +3584,82 @@ $(document).ready(function() {
                                     @endforeach
                                 </select>
                             </div>
+                        </div> -->
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Catagory<span class="error-star" style="color:red;">*</span></label>
+
+                                <select class="form-control" name="course_category_id" id="course_category_id_show">
+                                    <option value="">---Select Category---</option>
+
+                                    @foreach($rows['course_catagory_name'] as $data)
+                                    <option value="{{$data->catagory_id}}" data-badge="">{{$data->catagory_name}}
+                                    </option>
+                                    @endforeach
+                                </select>
+
+                            </div>
                         </div>
+                        <!-- <div class="col-md-6">
+                            <label>Sub Catagory<span class="error-star" style="color:red;">*</span></label>
+
+                            <select class="form-control" name="course_category" id="course_category" onchange="fetch_show(this.value, 'edit')">
+                                <option value="">---Select Category---</option>
+                                @foreach($rows['course_catagory_name'] as $data)
+                                <option value="{{ $data->catagory_id }}">{{ $data->sub_catagory }}</option>
+                                @endforeach
+                            </select>
+
+                        </div> -->
+
+
+                        <!-- Role Selection -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Role <span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="role_id" id="role_id_show">
+                                    <option value="">---Select Role---</option>
+                                    @foreach($roles as $values)
+                                    <option value="{{ $values->role_id }}">{{ $values->role_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('role_id') {{-- corrected from roles_id --}}
+                                <div class="error">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Designation Selection -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Designation <span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="designation_id" id="designation_id_show">
+                                    <!-- <option value="">Please Select Designation</option> -->
+                                    @foreach( $rows['designation'] as $values)
+                                    <option value="{{ $values->designation_id }}">{{ $values->designation_name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('designation_id')
+                                <div class="error">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>User Name <span class="text-danger">*</span></label>
+                                <select style="height:100px" class="user_id_course form-control js-select5"
+                                    name="user_ids[]" id="user_ids_show" multiple="multiple"
+                                    style="width:208px !important;">
+                                    @foreach($rows['users'] as $data)
+                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -3569,7 +3677,7 @@ $(document).ready(function() {
                             </div>
 
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Certificate:</label><br>
                                 <input type="radio" class="btn-check answer_show_on course_certificateshow"
@@ -3583,7 +3691,7 @@ $(document).ready(function() {
 
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Exam:<span class="error-star" style="color:red;">*</span></label><br>
                                 <input type="radio" class="btn-check exam_show_on course_examshow" name="course_exam"
@@ -3599,9 +3707,7 @@ $(document).ready(function() {
                         </div>
 
 
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Introduction:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10"
@@ -3610,16 +3716,12 @@ $(document).ready(function() {
                                         width="300" height="150"></iframe>
                                     <input type="file" class="form-control default" id="course_introductionshow"
                                         name="course_introduction" style="display:none;" autocomplete="off">
-
                                 </div>
-
                             </div>
                         </div>
 
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Banner:<span class="error-star" style="color:red;">*</span></label>
 
@@ -3628,19 +3730,10 @@ $(document).ready(function() {
 
                                 <img class="img-fluid2" alt="Banner Image" title=""
                                     style="width:200px;height:300px !important;">
-
-
-
-
-
-
-
                             </div>
                         </div>
 
-                    </div>
 
-                    <div class="row">
 
                         <div class="col-md-6">
 
@@ -3656,23 +3749,23 @@ $(document).ready(function() {
 
                             </div>
                         </div>
-                        <div class="row mt-3" id="certificateFields_edit" style="display: none;">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label> Certificate Template:<span class="error-star"
-                                            style="color:red;">*</span></label>
-                                    <select class="form-control" name="cetificate_template"
-                                        id="cetificate_template_show">
-                                        <option value="">---Select Certificate Template---</option>
-                                        @foreach($rows1['certificate_templates'] as $row)
-                                        <option value="{{ $row->certificate_templates_id }}">{{ $row->template_name }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
+                        <div class=" col md-6" id="certificateFields_edit" style="display: none;">
+                            <!-- <div class="col-md"> -->
+                            <div class="form-group">
+                                <label> Certificate Template:<span class="error-star"
+                                        style="color:red;">*</span></label>
+                                <select class="form-control" name="cetificate_template" id="cetificate_template_show">
+                                    <option value="">---Select Certificate Template---</option>
+                                    @foreach($rows1['certificate_templates'] as $row)
+                                    <option value="{{ $row->certificate_templates_id }}">{{ $row->template_name }}
+                                    </option>
+                                    @endforeach
+                                </select>
                             </div>
 
-                            <div class="col-md-3">
+
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Certificate Expiry:<span class="error-star"
                                             style="color:red;">*</span></label><br>
@@ -3686,7 +3779,7 @@ $(document).ready(function() {
                                 </div>
                             </div>
 
-                            <div class="col-md-3" id="expiryDateField_show" style="display: none;">
+                            <div class="col-md-6" id="expiryDateField_show" style="display: none;">
                                 <div class="form-group">
                                     <label>Expiry Date:<span class="error-star" style="color:red;">*</span></label>
                                     <input type='date' class="form-control default hasDatepicker"
@@ -3711,9 +3804,7 @@ $(document).ready(function() {
                             </div>
 
                         </div>
-                    </div>
 
-                    <div class="row">
                         <div class="col-md-12 form-group"
                             style="display:flex;justify-content: space-evenly;align-items: center;"><label>This Course
                                 has Start and End Period<span class="error-star" style="color:red;">*</span></label>
@@ -3735,12 +3826,10 @@ $(document).ready(function() {
                         </div>
 
 
-                    </div>
 
-
-                    <div class="row">
                         <div class="col-md-3"><label class="course_period">Course Period:<span class="error-star"
-                                    style="color:red;">*</span></label></div>
+                                    style="color:red;">*</span></label>
+                        </div>
 
                         <div class="col-md-4">
 
@@ -3764,51 +3853,51 @@ $(document).ready(function() {
                             </div>
                         </div>
 
-                    </div>
-                    <div class="col-md-12 examnameshow">
-                        <div class="row">
-                            <div class="col-md-3"><label class="course_period">Exam Details:<span class="error-star"
-                                        style="color:red;">*</span></label></div>
 
-                            <div class="col-md-5">
+                        <div class="col-md-12 examnameshow">
+                            <div class="">
+                                <div class="col-md-3"><label class="course_period">Exam Details:<span class="error-star"
+                                            style="color:red;">*</span></label></div>
 
-                                <div class="form-group">
-                                    <label class="control-label required">Exam Name:<span class="error-star"
-                                            style="color:red;">*</span></label>
-                                    <select class="form-control" name="exam_nameshow" id="exam_nameshow">
-                                        <option value="">Select Exam Name</option>
-                                        @foreach($rows1['exam_list'] as $key => $row)
-                                        <option value="{{ $row->id }}">{{ $row->exam_name }}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="col-md-5">
+
+                                    <div class="form-group">
+                                        <label class="control-label required">Exam Name:<span class="error-star"
+                                                style="color:red;">*</span></label>
+                                        <select class="form-control" name="exam_nameshow" id="exam_nameshow">
+                                            <option value="">Select Exam Name</option>
+                                            @foreach($rows1['exam_list'] as $key => $row)
+                                            <option value="{{ $row->id }}">{{ $row->exam_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        <label>Exam Date:<span class="error-star" style="color:red;">*</span></label>
+                                        <input type='text' class="form-control default exam_dateshow" id='exam_dateshow'
+                                            name="exam_dateshow" title="Course Exam Date" autocomplete="off">
+                                    </div>
+
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Exam Date:<span class="error-star" style="color:red;">*</span></label>
-                                    <input type='text' class="form-control default exam_dateshow" id='exam_dateshow'
-                                        name="exam_dateshow" title="Course Exam Date" autocomplete="off">
+                                    <label>Pass Percentage:<span class="error-star" style="color:red;">*</span></label>
+                                    <div style="display:flex;align-items: baseline;">
+                                        <input type="text" class="form-control default" id="pass_percentageshow"
+                                            name="pass_percentageshow"><span class="col-md-6"
+                                            style="color:red;"><strong>(in
+                                                percentage only)</strong></span>
+                                    </div>
                                 </div>
-
                             </div>
+
                         </div>
 
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Pass Percentage:<span class="error-star" style="color:red;">*</span></label>
-                                <div style="display:flex;align-items: baseline;">
-                                    <input type="text" class="form-control default" id="pass_percentageshow"
-                                        name="pass_percentageshow"><span class="col-md-6" style="color:red;"><strong>(in
-                                            percentage only)</strong></span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -3828,11 +3917,9 @@ $(document).ready(function() {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- <h style="color:black"><b>Address:</b></h> -->
+                        <!-- <h style="color:black"><b>Address:</b></h> -->
 
 
-                    <div class="row">
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -3860,12 +3947,6 @@ $(document).ready(function() {
                             </div>
                         </div>
 
-                    </div>
-
-
-
-                    <div class="row">
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>CPD Points: <span class="error-star" style="color:red;">*</span></label>
@@ -3891,16 +3972,10 @@ $(document).ready(function() {
 
                             </div>
                         </div>
-                    </div>
 
-
-
-                    <div class="row">
                         <div class="col-lg-12 text-center">
-
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
-                    </div>
                 </form>
             </div>
 
@@ -4092,6 +4167,10 @@ function resetSelect2() {
     // Get the Select2 element by its ID
     $(".js-select2").empty();
 
+}
+$('.close').on('click', function() {
+    resetSelect2();
+});
 }
 $('.close').on('click', function() {
     resetSelect2();

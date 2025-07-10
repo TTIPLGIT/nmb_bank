@@ -200,9 +200,10 @@ class coursecategoryController extends BaseController
         try {
             $allRecords['categories'] = DB::table('course_catagory')
                 ->where('active_flag', 0)
+                ->orderBy('catagory_id', 'DESC')
                 ->get();
 
-
+            $this->WriteFileLog($allRecords['categories']);
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');

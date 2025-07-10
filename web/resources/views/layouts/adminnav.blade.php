@@ -1283,7 +1283,7 @@
                         </li>
    
                         @endforeach
-     <li><a class="nav-link " href="{{route('catagory_list')}}">Course Category</a></li>
+     
                         @endif
                     </ul>
 
