@@ -34,12 +34,10 @@ class coursecategoryController extends BaseController
             $objData = json_decode($this->decryptData($response->Data));
             $parant_data = json_decode(json_encode($objData->Data), true);
             $categories = $parant_data['categories'];
-          
-           
         }
         return view("coursecategory.coursecategory", compact('screens', 'modules', 'categories'));
         //
-            }
+    }
 
     public function createpage(Request $request)
     {
@@ -73,6 +71,19 @@ class coursecategoryController extends BaseController
                 'catagory_name' => $request->catagory_name,
                 'sub_catagory' => $request->sub_catagory,
                 'description' => $request->description,
+                'badge' => $request->badge,
+                'badge_name' => $request->badge_name,
+                'badge_count' => $request->badge_count,
+                'badge_icon' => $request->badge_icon,
+                'streak_challenge' => $request->streak_challenge,
+                'streak_name' => $request->streak_name,
+                'number_course_for_streak' => $request->number_course_for_streak,
+                'bonus_point' => $request->bonus_point,
+                'complete_within' => $request->complete_within,
+                'complete_within_type' => $request->complete_within_type,
+                'streak_icon' => $request->streak_icon,
+                'course_locked' => $request->course_locked,
+                'points_to_unlock' => $request->points_to_unlock,
             ];
 
 
@@ -119,8 +130,22 @@ class coursecategoryController extends BaseController
                 'catagory_name' => $request->catagory_name,
                 'sub_catagory' => $request->sub_catagory,
                 'description' => $request->description,
-                'catagory_id' => $request->catagory_id
+                'catagory_id' => $request->catagory_id,
+                'badge' => $request->badge,
+                'badge_name' => $request->badge_name,
+                'badge_count' => $request->badge_count,
+                'badge_icon' => $request->badge_icon,
+                'streak_challenge' => $request->streak_challenge,
+                'streak_name' => $request->streak_name,
+                'number_course_for_streak' => $request->number_course_for_streak,
+                'bonus_point' => $request->bonus_point,
+                'complete_within' => $request->complete_within,
+                'complete_within_type' => $request->complete_within_type,
+                'streak_icon' => $request->streak_icon,
+                'course_locked' => $request->course_locked,
+                'points_to_unlock' => $request->points_to_unlock,
             ];
+         
 
 
 
@@ -179,58 +204,54 @@ class coursecategoryController extends BaseController
     }
     public function course_catagory_delete(Request $request)
 
-    {
-        {
+    { {
 
-        try {
-            $user_id = $request->session()->get("userID");
-            if ($user_id == null) {
-                return view('auth.login');
-            }
-
-            $menus = $this->FillMenu();
-            $method = 'Method => coursecategoryController => course_catagoryupdate';
-
-            if ($menus == "401") {
-                return redirect(url('/'))->with('danger', 'User session expired');
-            }
-            $data = [
-                'catagory_name' => $request->catagory_name,
-                'sub_catagory' => $request->sub_catagory,
-                'description' => $request->description,
-                'catagory_id' => $request->catagory_id
-            ];
-
-
-
-
-            $encryptArray = $this->encryptData($data);
-            $requestPayload = ['requestData' => $encryptArray];
-
-            $gatewayURL = config('setting.api_gateway_url') . '/course_catagory_delete';
-
-            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestPayload), $method);
-
-            $response1 = json_decode($response);
-
-            if ($response1->Status == 200 && $response1->Success) {
-                $objData = json_decode($this->decryptData($response1->Data));
-
-                if ($objData->Code == 200) {
-                    return redirect()->route('catagory_list')->with('success', 'Category created successfully.');
+            try {
+                $user_id = $request->session()->get("userID");
+                if ($user_id == null) {
+                    return view('auth.login');
                 }
 
-                return back()->with('fail', 'Not added: ' . ($objData->Message ?? 'Unknown error'));
+                $menus = $this->FillMenu();
+                $method = 'Method => coursecategoryController => course_catagoryupdate';
+
+                if ($menus == "401") {
+                    return redirect(url('/'))->with('danger', 'User session expired');
+                }
+                $data = [
+                    'catagory_name' => $request->catagory_name,
+                    'sub_catagory' => $request->sub_catagory,
+                    'description' => $request->description,
+                    'catagory_id' => $request->catagory_id
+                ];
+
+
+
+
+                $encryptArray = $this->encryptData($data);
+                $requestPayload = ['requestData' => $encryptArray];
+
+                $gatewayURL = config('setting.api_gateway_url') . '/course_catagory_delete';
+
+                $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestPayload), $method);
+
+                $response1 = json_decode($response);
+
+                if ($response1->Status == 200 && $response1->Success) {
+                    $objData = json_decode($this->decryptData($response1->Data));
+
+                    if ($objData->Code == 200) {
+                        return redirect()->route('catagory_list')->with('success', 'Category created successfully.');
+                    }
+
+                    return back()->with('fail', 'Not added: ' . ($objData->Message ?? 'Unknown error'));
+                }
+
+                return redirect()->route('catagory_list');
+            } catch (\Exception $exc) {
+                return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
             }
-
             return redirect()->route('catagory_list');
-        } catch (\Exception $exc) {
-            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
-        return redirect()->route('catagory_list');
-    }
-
-
-    
     }
 }
