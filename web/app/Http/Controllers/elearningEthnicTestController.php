@@ -892,7 +892,7 @@ class elearningEthnicTestController extends BaseController
 
     public function courseOverview(Request $request, $id)
     {
-        
+
         $method = 'Method => elearningEthnicTestController => courseOverview';
         try {
             $user_id = $request->session()->get("userID");
@@ -1966,10 +1966,9 @@ class elearningEthnicTestController extends BaseController
             $course_details = DB::select("SELECT c.*  from elearning_courses as c  where c.course_id =$id and c.drop_course=0");
 
             $course_name = $course_details[0]->course_name;
+            $course_id = $course_details[0]->course_id;
 
             $date = $course_details[0]->course_end_period;
-
-            $course_id = $course_details[0]->course_id;
 
             $name = $this->getusername($user_id);
 

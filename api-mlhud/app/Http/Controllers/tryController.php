@@ -854,6 +854,7 @@ class tryController extends BaseController
 
             $input = [
                 'course_banner' => $inputArray['course_banner'],
+                'course_summary' => $inputArray['course_summary'],
                 'course_name' => $inputArray['course_name'],
                 'course_instructor' => $inputArray['course_instructor'],
 
@@ -869,6 +870,7 @@ class tryController extends BaseController
                 'course_noperiod' => $inputArray['course_noperiod'],
                 'course_introduction' => $inputArray['course_introduction'],
                 'introduction_path' => $inputArray['introduction_path'],
+                'summary_path' => $inputArray['summary_path'],
                 'banner_path' => $inputArray['banner_path'],
 
                 'course_tags' => $course_tags_name,
@@ -901,6 +903,7 @@ class tryController extends BaseController
                 return DB::table('elearning_courses')
                     ->insertGetId([
                         'course_banner' => $input['course_banner'],
+                        'course_summary' => $input['course_summary'],
                         'course_name' => $input['course_name'],
                         'course_instructor' => $input['course_instructor'],
                         'exam_id' => $input['examname'],
@@ -916,6 +919,7 @@ class tryController extends BaseController
                         'course_certificate' => $input['course_certificate'],
                         'course_exam' => $input['course_exam'],
                         'course_introduction' => $input['course_introduction'],
+                        'summary_path' => $input['summary_path'],
                         'introduction_path' => $input['introduction_path'],
                         'banner_path' => $input['banner_path'],
 

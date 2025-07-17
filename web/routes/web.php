@@ -271,6 +271,8 @@ Route::get('/certificate_template', [\App\Http\Controllers\CertifcateTemplateCon
 Route::get('/certificate_template/show/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'show'])->name('certificate_template.show');
 Route::get('/certificate_template/edit/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'edit'])->name('certificate_template.edit');
 Route::Post('/certificate_template/store', [\App\Http\Controllers\CertifcateTemplateController::class, 'store'])->name('certificate_template.store');
+Route::get('/certificate/verify/{id}', [App\Http\Controllers\CertifcateTemplateController::class, 'verify'])->name('certificate.verify');
+
 
 
 Route::post('/designation/bulkdummyupload', [\App\Http\Controllers\DesignationController::class, 'bulkdummyupload'])->name('designation.bulkdummyupload');
@@ -673,6 +675,8 @@ Route::get('/notice/fetch', [App\Http\Controllers\ElearningNoticeBoardController
 // Route::get('/notice/admindashboard',[App\Http\Controllers\ElearningNoticeBoardController::class, 'admindashboard'])->name('elearning.admindashboard');
 
 Route::get('/elearningDashboard', [App\Http\Controllers\elearningdashboardgtController::class, 'dashboard'])->name('elearningDashboard');
+
+Route::get('/your_achievements', [App\Http\Controllers\elearningdashboardgtController::class, 'your_achievements'])->name('your_achievements');
 
 
 //Event

@@ -25,3 +25,5 @@ web/package.json
 
 
 api-mlhud/public/images/signatures
+ApiGateway_Publish/ocelot.json
+web/composer.json
