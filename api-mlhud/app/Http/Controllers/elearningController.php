@@ -99,6 +99,28 @@ class elearningController extends BaseController
             $row2['course_completed'] = DB::select("SELECT COUNT(*) AS course_completed  FROM user_course_relation WHERE user_id=$userID and course_status='Completed'");
             $row2['course_certificate'] = DB::select("SELECT COUNT(*) AS course_certificate  FROM user_course_relation WHERE user_id=$userID and get_certified=1");
             $row2['cpt_points'] = DB::select("SELECT total_cptpoints AS cpt_points  FROM users WHERE id=$userID and active_flag=0");
+            $userPoints = DB::table('users')
+            ->where('id', $userID)
+            ->where('active_flag', 0)
+            ->value('total_cptpoints');
+            if ($row2['cpt_points'] !== null) {
+          
+            $level = DB::table('gamification_levels')
+                ->where('active_flag', 1)
+                ->where('min_point', '<=',  $userPoints)
+                ->where('max_point', '>=',  $userPoints)
+                ->first(); 
+
+           
+         
+            $row2['level_name'] = $level->level_name ?? 'Unranked';
+            $row2['level_icon'] = $level->level_icon ?? null;
+        } else {
+           
+            $row2['level_name'] = 'Unranked';
+            $row2['level_icon'] = null;
+        }
+          
 
 
             $response = [

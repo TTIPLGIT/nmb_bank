@@ -307,7 +307,8 @@
             use Illuminate\Support\Facades\Crypt;
 
             $encryptedId = Crypt::encryptString($data['course_id']);
-            $url = route('certificate.verify', ['id' => $encryptedId]);
+            $url = route('certificate.verify', $encryptedId);
+
 
             $renderer = new ImageRenderer(
             new RendererStyle(75),
