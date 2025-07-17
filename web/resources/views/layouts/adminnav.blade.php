@@ -1284,7 +1284,9 @@
                         </li>
 
                         @endforeach
+
                         <a href="{{ route('leaderboard') }}">Leaderboard</a>
+
 
                         @endif
                     </ul>
@@ -1356,6 +1358,51 @@
             }
         });
 
+
+    $.ajax({
+        url: "{{ url('/user/notifications')}}",
+        type: "POST",
+        dataType: "json",
+        async: false,
+        data: {
+            id: id,
+            _token: '{{csrf_token()}}'
+        },
+        success: function(data) {
+            //alert("das");
+            var data2 = data;
+            console.log(data2, 'A');
+            var count = data2['registration_count'][0].countflow;
+            var count2 = data2['General_notifications_count'][0].countflow;
+            var count3 = data2['approval_nrv_count'][0].countflow;
+            var count4 = data2['Elearning_notifications_count'][0].countflow;
+
+            // var count_data_1 = data2['count_data'][0].countflow;
+            // $('.badgeworkflow').text(count_data_1);
+
+            if (count == 0 && count3 == 0) {
+                $('.registration_data_list').append(
+                    '<div class="fade-in-text no_notification "><p>No new notifications</p></div>');
+            } else {
+                $('.user_name_alert').append('<span class="label user_name_alert2">' + count + '</span>');
+                for (var count = 0; count < data2['registration_data'].length; count++) {
+                    var notification_id = data2['registration_data'][count].notification_id;
+                    var alert_meg = data2['registration_data'][count].alert_meg;
+                    $('.registration_data_list').append('<li onclick="notification(' + notification_id +
+                        ')" class="notification-list-item"><p class="message">' + alert_meg +
+                        '</p></li>');
+                }
+                // NRU //
+                if ($('.user_name_alert span')) {
+                    var exist_count = $('.user_name_alert span').val();
+                }
+                for (var count = 0; count < data2['approval_nrv_data'].length; count++) {
+                    var notification_id = data2['approval_nrv_data'][count].notification_id;
+                    var alert_meg = data2['approval_nrv_data'][count].alert_meg;
+                    $('.registration_data_list').append('<li onclick="notification(' + notification_id +
+                        ')" class="notification-list-item"><p class="message">' + alert_meg +
+                        '</p></li>');
+
         $.ajax({
             url: "{{ url('/user/notifications')}}",
             type: "POST",
@@ -1400,6 +1447,7 @@
                             ')" class="notification-list-item"><p class="message">' + alert_meg +
                             '</p></li>');
                     }
+
                 }
 
 

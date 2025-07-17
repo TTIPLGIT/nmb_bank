@@ -913,9 +913,10 @@ class elearningEthnicTestController extends BaseController
             ];
             $class_id = $input['class_id'];
             $course_id = $input['course_id'];
+             
             $random_quizid = DB::select("SELECT c.exam_id,c.*,e.exam_name,e.quiz_id from elearning_courses as c inner join elearning_exam  as e on c.exam_id=e.id where course_id=$course_id");
             $random_quizid = $random_quizid[0]->quiz_id;
-            $this->WriteFileLog($random_quizid);
+          
             $randomQuiz = DB::select("Select * from elearning_practice_quiz where quiz_id= $random_quizid");
             // $randomQuiz = DB::select("Select * from elearning_ethnictest inner join elearning_practice_quiz on elearning_practice_quiz.quiz_id = elearning_ethnictest.quiz_id  where elearning_ethnictest.quiz_id=$randomNumber");
 
@@ -982,7 +983,7 @@ class elearningEthnicTestController extends BaseController
             $user_id = auth()->user()->id;
             //$inputArray = $this->decryptData($request->requestData);
             $inputArray = $this->decryptData($request->requestData);
-            $this->WriteFileLog($inputArray, "inputArray");
+           
 
             $input = [
                 'course_id' => $inputArray['course_id'],
@@ -1006,11 +1007,7 @@ class elearningEthnicTestController extends BaseController
             $test_percentage = ($inputArray['score'] / $totalpoints) * 100;
 
 
-            // $calc = (35 / 100) * intval($totalpoints);
-            $this->WriteFileLog($totalpoints);
-            $this->WriteFileLog($inputArray['score']);
-            $this->WriteFileLog('wsdfe');
-            // $this->WriteFileLog($calc);
+          
             //dd($calc);
             // $passmark=20;
             $course_exam_percentage = DB::select("SELECT c.pass_percentage from elearning_courses as c where c.exam_id=$examId and c.course_id=$course_id");
@@ -1020,7 +1017,7 @@ class elearningEthnicTestController extends BaseController
             } else {
                 $result = "FAIL";
             }
-            $this->WriteFileLog($result);
+            
             $input = [
                 'quiz_id' => $quizId,
                 'score' => $inputArray['score'],
@@ -1033,7 +1030,7 @@ class elearningEthnicTestController extends BaseController
             ];
 
 
-            $this->WriteFileLog($input);
+           
 
             DB::transaction(function () use ($input) {
                 $settings_id = DB::table('elearning_courseexam')
@@ -1055,7 +1052,7 @@ class elearningEthnicTestController extends BaseController
             $course_certification = DB::select("SELECT c.*,uc.* from elearning_courses as c inner join user_course_relation as uc on c.course_id=uc.course_id where c.course_id=$course_id  and uc.user_id=$user_id");
             // pass
             $add_examprogress = $course_certification[0]->course_progress;
-            $this->WriteFileLog($course_certification);
+          
 
             $email = $this->getusermail($user_id);
             $name = $this->getusername($user_id);
@@ -1072,8 +1069,6 @@ class elearningEthnicTestController extends BaseController
                 if ($course_certification[0]->course_certificate == 1) {
                     // update progress to 100
 
-                    $this->WriteFileLog($course_id);
-                    $this->WriteFileLog($user_id);
 
                     //    
                     DB::table('user_course_relation')

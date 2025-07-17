@@ -1243,6 +1243,18 @@ console.log(document.getElementById('user_id'));
                     <div class="row">
 
                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Course Summary for chatbot:<span class="error-star"
+                                        style="color:red;">*</span></label>
+                                <input type="file" class="form-control default" id="course_summary"
+                                    name="course_summary" required>
+                                <span style="color:red !important"><strong>Following files could be uploaded as
+                                        mp3,pdf,txt</strong></span>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
 
 
                             <div class="form-group">
@@ -3733,6 +3745,19 @@ $(document).ready(function() {
                             </div>
                         </div>
 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Course Summary for chatbot:<span class="error-star"
+                                        style="color:red;">*</span></label>
+
+                                <input type="file" class="form-control default" id="course_summaryshow"
+                                    name="course_summaryshow" style="display:none;" accept="image/*" autocomplete="off">
+
+                                <img class="img-fluid2" alt="Summary Image" title=""
+                                    style="width:200px;height:300px !important;">
+                            </div>
+                        </div>
+
 
 
                         <div class="col-md-6">
@@ -4300,6 +4325,11 @@ function gencre1(id) {
         var course_banner = $("#course_banner").val();
         if (course_banner == '') {
             swal.fire("Please Upload the Course Banner", "", "error")
+            return false;
+        }
+        var course_summary = $("#course_summary").val();
+        if (course_summary == '') {
+            swal.fire("Please Upload the Course Summary", "", "error")
             return false;
         }
         // var course = $("#course").val();

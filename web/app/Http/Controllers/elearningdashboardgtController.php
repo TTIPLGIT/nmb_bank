@@ -51,8 +51,63 @@ class elearningdashboardgtController extends BaseController
                     $parant_data = json_decode(json_encode($objData->Data), true);
                     $rows = $parant_data['rows'];
                     $count = $parant_data['dasboardCount'];
+                   
                     $recommended = $parant_data['recomment_courses'];
                     return view('elearning.dashboard', compact('rows', 'menus', 'screens', 'modules', 'user_id', 'recommended', 'count'));
+                }
+            } else {
+                $objData = json_decode($this->decryptData($response->Data));
+                return view('errors.errors');
+                exit;
+            }
+        } catch (\Exception $exc) {
+            //dd("bhj");
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        }
+    }
+
+     public function your_achievements(Request $request)
+    {
+      
+        $user_id = $request->session()->get("userID");
+        if ($user_id == null) {
+            return view('auth.login');
+        }
+        $method = 'Method => elearningController => dashboard';
+        try {
+
+            // dd($user_id);
+            $request =  array();
+            $request['mlhud_id'] = $user_id;
+
+
+            $gatewayURL = config('setting.api_gateway_url') . '/elearningDashboard';
+            $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
+            $response = json_decode($response);
+           
+            $objData = json_decode($this->decryptData($response->Data));
+            $code = $objData->Code;
+            if ($code == "401") {
+
+                return redirect()->route('unauthenticated')->send();
+            }
+
+            $rows = json_decode(json_encode($objData->Data), true);
+
+            $menus = $this->FillMenu();
+            $screens = $menus['screens'];
+            $modules = $menus['modules'];
+
+            
+            if ($response->Status == 200 && $response->Success) {
+                $objData = json_decode($this->decryptData($response->Data));
+                if ($objData->Code == 200) {
+                    $parant_data = json_decode(json_encode($objData->Data), true);
+                    $rows = $parant_data['rows'];
+                    $count = $parant_data['dasboardCount'];
+                   
+                    $recommended = $parant_data['recomment_courses'];
+                    return view('achievements.your_achievement', compact('rows', 'menus', 'screens', 'modules', 'user_id', 'recommended', 'count'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
