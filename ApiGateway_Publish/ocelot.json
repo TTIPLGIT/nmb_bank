@@ -3529,7 +3529,6 @@
       "UpstreamPathTemplate": "/api/gateway/FAQ_modules/data_edit/{id}",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/certificate_template/get_data",
       "DownstreamScheme": "http",
@@ -3542,7 +3541,6 @@
       "UpstreamPathTemplate": "/api/gateway/certificate_template/get_data",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/certificate_template/data_edit/{id}",
       "DownstreamScheme": "http",
@@ -6855,6 +6853,18 @@
           "Port": 6062
         }
       ],
+      "UpstreamPathTemplate": "/api/gateway/course/course_delete",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/class/class_delete",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
       "UpstreamPathTemplate": "/api/gateway/course/course_copy",
       "UpstreamHttpMethod": ["POST"]
     },
@@ -8536,6 +8546,7 @@
       "UpstreamPathTemplate": "/api/gateway/course/catagory_fetch",
       "UpstreamHttpMethod": ["GET"]
     },
+    
     {
       "DownstreamPathTemplate": "/api/course_catagory_delete",
       "DownstreamScheme": "http",
@@ -8543,69 +8554,10 @@
         {
           "Host": "localhost",
           "Port": 6062
+          "Port": 6062
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/course_catagory_delete",
-      "UpstreamHttpMethod": ["POST"]
-    },
-    {
-      "DownstreamPathTemplate": "/api/level/getAll",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 6062
-        }
-      ],
-      "UpstreamPathTemplate": "/api/gateway/level/getAll",
-      "UpstreamHttpMethod": ["GET"]
-    },
-    {
-      "DownstreamPathTemplate": "/api/level_create_store",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 6062
-        }
-      ],
-      "UpstreamPathTemplate": "/api/gateway/level_create_store",
-      "UpstreamHttpMethod": ["POST"]
-    },
-    {
-      "DownstreamPathTemplate": "/api/level_show",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 6062
-        }
-      ],
-      "UpstreamPathTemplate": "/api/gateway/level_show",
-      "UpstreamHttpMethod": ["GET"]
-    },
-    {
-      "DownstreamPathTemplate": "/api/level_delete",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 6062
-        }
-      ],
-      "UpstreamPathTemplate": "/api/gateway/level_delete",
-      "UpstreamHttpMethod": ["POST"]
-    },
-    {
-      "DownstreamPathTemplate": "/api/level_update",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 6062
-        }
-      ],
-      "UpstreamPathTemplate": "/api/gateway/level_update",
       "UpstreamHttpMethod": ["POST"]
     }
   ],

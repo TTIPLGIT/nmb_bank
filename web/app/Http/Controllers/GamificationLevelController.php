@@ -51,7 +51,7 @@ class GamificationLevelController extends BaseController
             ->where('active_flag', 1)
             ->orderBy('level_id', 'desc')
             ->get();
-        return view("Gamifications.createlevels", compact('screens', 'modules','allRecords'));
+        return view("Gamifications.createlevels", compact('screens', 'modules', 'allRecords'));
     }
     public function store(Request $request)
     {
@@ -274,5 +274,16 @@ class GamificationLevelController extends BaseController
             }
             return redirect()->route('level_master_page');
         }
+    }
+
+    public function leaderboard(Request $request)
+    {
+
+        $menus = $this->FillMenu();
+        $user_id = $request->session()->get("userID");
+        $screens = $menus['screens'];
+        $modules = $menus['modules'];
+
+        return view("Gamifications.leaderboard", compact('screens', 'modules','user_id'));
     }
 }
