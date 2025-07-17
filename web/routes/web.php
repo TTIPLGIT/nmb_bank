@@ -780,3 +780,5 @@ Route::post('/level_create_store', [App\Http\Controllers\GamificationLevelContro
 Route::get('/level_show', [App\Http\Controllers\GamificationLevelController::class, 'show'])->name('level_show');
 Route::post('/level_update',[App\Http\Controllers\GamificationLevelController::class, 'update']) ->name('level_update');
 Route::post('/level_delete',[App\Http\Controllers\GamificationLevelController::class, 'level_delete'])->name('level_delete');
+
+Route::get('/leaderboard',[App\Http\Controllers\GamificationLevelController::class, 'leaderboard'])->name('leaderboard');

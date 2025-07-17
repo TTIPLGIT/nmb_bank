@@ -424,13 +424,13 @@
                 if (type === "show") {
                     $('#catagory_name, #sub_catagory, #description, #badge_yes, #badge_no, #badge_name, #badge_count, #badge_icon,#streak_challenge_yes,#streak_challenge_no, #streak_name,#streak_count,#streak_points,#achieve_date,#achieve_time,#achieve_value,#achieve_icon,#course_locked_yes,#course_locked_no,#points_to_unlock').prop('disabled', true);
                     $('#updateButton').hide();
-                    $('#sub_title_name').html("Catagory");
-                    $('#title_name').html("Catagory");
+                    $('#sub_title_name').html("Category");
+                    $('#title_name').html("Category");
                 } else {
                     $('#catagory_name, #sub_catagory, #description, #badge_yes, #badge_no, #badge_name, #badge_count, #badge_icon,#streak_challenge_yes,#streak_challenge_no, #streak_name,#streak_count,#streak_points,#achieve_date,#achieve_time,#achieve_value,#achieve_icon,#course_locked_yes,#course_locked_no,#points_to_unlock').prop('disabled', false);
                     $('#updateButton').show();
-                    $('#sub_title_name').html("Edit Catagory");
-                    $('#title_name').html("Edit Catagory");
+                    $('#sub_title_name').html("Edit Category");
+                    $('#title_name').html("Edit Category");
                 }
             }
         });
