@@ -786,3 +786,4 @@ Route::post('/level_update',[App\Http\Controllers\GamificationLevelController::c
 Route::post('/level_delete',[App\Http\Controllers\GamificationLevelController::class, 'level_delete'])->name('level_delete');
 
 Route::get('/leaderboard',[App\Http\Controllers\GamificationLevelController::class, 'leaderboard'])->name('leaderboard');
+Route::get('/leaderboard/filter', [App\Http\Controllers\GamificationLevelController::class, 'leaderboardcondition'])->name('leaderboard.filter');

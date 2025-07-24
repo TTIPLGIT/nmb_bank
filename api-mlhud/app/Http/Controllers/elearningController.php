@@ -151,6 +151,80 @@ class elearningController extends BaseController
             return $sendServiceResponse;
         }
     }
+
+     public function yourAchievements(Request $request)
+    {
+        $method = 'Method => elearningController => dashboard';
+        try {
+            $userID = auth()->user()->id;
+
+      $userId = auth()->id(); // Get current user ID
+
+$rawResults = DB::select("
+    SELECT 
+        badge_name AS name,
+        CONCAT('Complete ', badge_count,' ',catagory_name , ' Course(s) in this Category') AS description,
+        badge_icon AS icon,
+        catagory_id,
+        'badge' AS type,
+        EXISTS (
+            SELECT 1 FROM user_course_rewards_strikes ucrs
+            WHERE ucrs.user_id = ? 
+              AND ucrs.reward_type = 'badge'
+              AND ucrs.reward_name = course_catagory.badge_name
+        ) AS unlocked
+    FROM course_catagory
+    WHERE badge IS NOT NULL AND badge_name IS NOT NULL
+
+    UNION ALL
+
+    SELECT 
+        streak_name AS name,
+        CONCAT('Complete ', number_course_for_streak,' ' ,catagory_name, ' course(s) in this Category within ', complete_within, ' ', complete_within_type) AS description,
+        streak_icon AS icon,
+        catagory_id,
+        'streak' AS type,
+        EXISTS (
+            SELECT 1 FROM user_course_rewards_strikes ucrs
+            WHERE ucrs.user_id = ? 
+              AND ucrs.reward_type = 'streak'
+              AND ucrs.reward_name = course_catagory.streak_name
+        ) AS unlocked
+    FROM course_catagory
+    WHERE streak_challenge IS NOT NULL AND streak_name IS NOT NULL
+", [$userId, $userId]); 
+
+
+          
+
+
+            $response = [
+                'rawResults' => $rawResults
+               
+            ];
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.success');
+            $serviceResponse['Message'] = config('setting.status_message.success');
+            $serviceResponse['Data'] = $response;
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+
+            return $sendServiceResponse;
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = $method;
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            return $sendServiceResponse;
+        }
+    }
     public function events_fetch(Request $request)
     {
        
