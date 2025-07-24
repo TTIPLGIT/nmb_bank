@@ -2043,6 +2043,28 @@ class UserController extends BaseController
 
 			$Elearning_expiry_data = DB::select("select * from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id order by notification_id DESC;");
 			$Elearning_expiry_data_count = DB::select("select count(notification_url) as countflow from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id;");
+  			$row2['cpt_points'] = DB::select("SELECT total_cptpoints AS cpt_points  FROM users WHERE id=$id and active_flag=0");
+			 $userPoints = DB::table('users')
+            ->where('id', $id)
+            ->where('active_flag', 0)
+            ->value('total_cptpoints');
+            if ($row2['cpt_points'] !== null) {
+          
+            $level = DB::table('gamification_levels')
+                ->where('active_flag', 1)
+                ->where('min_point', '<=',  $userPoints)
+                ->where('max_point', '>=',  $userPoints)
+                ->first(); 
+
+           
+         
+            $level_name = $level->level_name ?? 'Unranked';
+            $level_icon = $level->level_icon ?? null;
+        } else {
+           
+            $level_name = 'Unranked';
+            $level_icon = null;
+        }
 
 
 			$response = [
@@ -2059,6 +2081,8 @@ class UserController extends BaseController
 				'Elearning_usernotifications_count' => $Elearning_usernotifications_count,
 				'Elearning_expiry_data' => $Elearning_expiry_data ,
 				'Elearning_expiry_data_count' => $Elearning_expiry_data_count ,
+				'level_name' =>$level_name,
+				'level_icon' =>$level_icon	
 			];
 
 

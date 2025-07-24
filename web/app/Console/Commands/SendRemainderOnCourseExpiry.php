@@ -113,6 +113,141 @@ public function handle()
     }
 
     \Log::info('Certificate expiry & expired notifications sent.');
+
+$categories = DB::table('course_catagory')
+    ->where(function ($q) {
+        $q->where('badge', 1)
+          ->orWhere('streak_challenge', 1);
+    })
+    ->get();
+
+foreach ($categories as $category) {
+    $userCourses = DB::table('user_course_relation as ucr')
+        ->join('elearning_courses as ec', 'ec.course_id', '=', 'ucr.course_id')
+        ->where('ucr.course_status', 'Completed')
+        ->where('ec.course_category', $category->catagory_id)
+        ->select('ucr.user_id', 'ucr.complete_in_day', 'ucr.complete_in_hours', 'ucr.course_id')
+        ->get()
+        ->groupBy('user_id');
+
+    // Allowed time for streak calculation (no conversion now)
+    $allowedTime = 0;
+    $timeUnit = $category->complete_within_type;
+
+    if ($timeUnit === 'day') {
+        $allowedTime = (int) $category->complete_within;
+    } elseif ($timeUnit === 'hours') {
+        $allowedTime = (int) $category->complete_within;
+    }
+
+    foreach ($userCourses as $userId => $courses) {
+        $totalCompleted = count($courses);
+        $completedInTime = 0;
+
+        foreach ($courses as $course) {
+            $userTime = 0;
+
+            if ($timeUnit === 'day') {
+                $userTime = (float) $course->complete_in_day;
+            } elseif ($timeUnit === 'hours') {
+                $userTime = (float) $course->complete_in_hours;
+            }
+
+            if ($userTime > 0 && $userTime <= $allowedTime) {
+                $completedInTime++;
+            }
+        }
+
+        // ✅ Badge logic
+        if (
+            $category->badge == 1 &&
+            $totalCompleted >= $category->badge_count &&
+            !DB::table('user_course_rewards_strikes')->where([
+                ['user_id', '=', $userId],
+                ['category_id', '=', $category->catagory_id],
+                ['reward_type', '=', 'badge']
+            ])->exists()
+        ) {
+            DB::table('user_course_rewards_strikes')->insert([
+                'user_id' => $userId,
+                'category_id' => $category->catagory_id,
+                'reward_type' => 'badge',
+                'reward_name' => $category->badge_name,
+                'icon' => $category->badge_icon,
+                'points' => 0,
+                'awarded_at' => now()
+            ]);
+        }
+
+        // ✅ Streak logic (must meet both count & time)
+        if (
+            $category->streak_challenge == 1 &&
+            $totalCompleted >= $category->number_course_for_streak &&
+            $completedInTime >= $category->number_course_for_streak &&
+            !DB::table('user_course_rewards_strikes')->where([
+                ['user_id', '=', $userId],
+                ['category_id', '=', $category->catagory_id],
+                ['reward_type', '=', 'streak']
+            ])->exists()
+        ) {
+
+             DB::table('user_cpt_points')->insert([
+                'user_id' => $userId,
+                'course_id' => 0,
+                'cpt_points' => $category->bonus_point
+            ]);
+           DB::table('users')
+            ->where('id', $userId)
+            ->update([
+                'total_cptpoints' => DB::raw("total_cptpoints + {$category->bonus_point}")
+            ]);
+
+
+          
+            DB::table('user_course_rewards_strikes')->insert([
+                'user_id' => $userId,
+                'category_id' => $category->catagory_id,
+                'reward_type' => 'streak',
+                'reward_name' => $category->streak_name,
+                'icon' => $category->streak_icon,
+                'points' => $category->bonus_point ?? 0,
+                'awarded_at' => now()
+            ]);
+
+
+           
+            
+        }
+
+        // ❌ Optional Strike (uncomment if needed)
+        /*
+        if (
+            $category->streak_challenge == 1 &&
+            $totalCompleted >= $category->number_course_for_streak &&
+            $completedInTime < $category->number_course_for_streak &&
+            !DB::table('user_course_rewards_strikes')->where([
+                ['user_id', '=', $userId],
+                ['course_id', '=', $category->catagory_id],
+                ['reward_type', '=', 'strike']
+            ])->exists()
+        ) {
+            DB::table('user_course_rewards_strikes')->insert([
+                'user_id' => $userId,
+                'course_id' => $category->catagory_id,
+                'reward_type' => 'strike',
+                'reward_name' => $category->streak_name,
+                'icon' => $category->streak_icon,
+                'points' => 0,
+                'awarded_at' => now()
+            ]);
+        }
+        */
+    }
+}
+
+\Log::info('✅ Badge & Streak logic executed based on actual time units without conversion.');
+
+
 }
 
 }

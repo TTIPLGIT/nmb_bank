@@ -1336,9 +1336,9 @@
                             class="user_name_nav"></span></span>
 
                 </div>
-                <div class="user-level-display">
-                    <i id="level" class="{{$count['level_icon']}}"></i>
-                    <span class="level-text">{{ strtoupper($count['level_name']) }}</span>
+
+                <div class="user-level-display" id="level-container">
+
                 </div>
 
                 <ul class="navbar-nav navbar-right">
@@ -1623,6 +1623,21 @@ function notification_fetch() {
         success: function(data) {
             //alert("das");
             console.log(data);
+            var container = $('#level-container');
+
+            // Clear any previous data if needed
+            container.empty();
+
+            // Build new HTML with the returned data
+            var html = `
+       
+            <i id="level" class="${data.level_icon}"></i>
+            <span class="level-text">${data.level_name.toUpperCase()}</span>
+       
+    `;
+
+            // Append it to the container
+            container.append(html);
             var count = data['Elearning_usernotifications_count'][0].countflow;
             var count2 = data['Elearning_expiry_data_count'][0].countflow;
             var totalCount = count + count2;

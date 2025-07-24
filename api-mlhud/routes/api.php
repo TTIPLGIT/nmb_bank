@@ -874,3 +874,6 @@ Route::post('/level_update', [ App\Http\Controllers\GamificationLevelController:
 
 Route::post('/level_delete',  [App\Http\Controllers\GamificationLevelController::class, 'delete'])->name('level_delete');
 
+
+Route::get('/yourAchievements', [App\Http\Controllers\elearningController::class, 'yourAchievements'])->name('yourAchievements');
+
