@@ -318,6 +318,42 @@
     box-shadow: 0 0 12px #4CAF50;
     transition: all 0.3s ease-in-out;
 }
+
+.locked-course-card {
+    pointer-events: none;
+    opacity: 0.7;
+
+}
+
+.locked-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgb(17 52 80 / 60%);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.lock-icon {
+    font-size: 70px;
+    margin-bottom: 8px;
+    color: #000000ff;
+}
+
+.locked-text {
+    font-weight: bold;
+    font-size: 25px;
+    color: #000000ff;
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 
@@ -404,8 +440,20 @@
 
                     @foreach($availableCourses as $key => $value)
                     @php
+                    $Courseslocked = DB::table('course_catagory as uc')
+                    ->select('*')
+                    ->where('uc.course_locked','=' , 1)
+                    ->where('uc.catagory_id','=' , $value->course_category)
+                    ->first();
+
+                    $userPoints = DB::table('users')
+                    ->where('id', $user_id)
+                    ->where('active_flag', 0)
+                    ->value('total_cptpoints');
+
                     $showExpiryBadge = false;
 
+                    // Certificate Expiry Logic
                     if ($value->certificate_expiry == '1' && !empty($value->course_expiry_period)) {
                     $expiryDate = \Carbon\Carbon::parse($value->course_expiry_period);
                     $today = \Carbon\Carbon::today();
@@ -415,21 +463,41 @@
                     $showExpiryBadge = true;
                     }
                     }
+
+                    // Lock logic
+                    $isLocked = false;
+                    $canUnlock = true;
+                    if ($Courseslocked && $Courseslocked->points_to_unlock > 0 && $Courseslocked->course_locked == 1) {
+                    $isLocked = true;
+                    $canUnlock = $userPoints >= $Courseslocked->points_to_unlock;
+                    }
                     @endphp
 
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-3" id="course_{{$value->course_id}}" @if($value->
-                        expired_course_id)
-                        data-expired-course-id="{{ $value->expired_course_id }}"
-                        @endif>
-                        <div class="card noShadow all_courses_courselist">
+                        expired_course_id) data-expired-course-id="{{ $value->expired_course_id }}" @endif>
+
+                        <div
+                            class="card noShadow all_courses_courselist position-relative {{ $isLocked && !$canUnlock ? 'locked-course-card' : '' }}">
+
+                            @if($isLocked && !$canUnlock)
+                            <div class="locked-overlay">
+                                <i class="fa fa-lock lock-icon"></i>
+                                <div class="locked-text">
+                                    <br>
+                                    {{ $Courseslocked->points_to_unlock }} Pts Needed
+                                </div>
+                            </div>
+                            @endif
+
                             <div class="card-header">
-                                @php $isWishlisted = in_array($value->course_id, $wishlistedCourseIds);@endphp
+                                @php $isWishlisted = in_array($value->course_id, $wishlistedCourseIds); @endphp
                                 <span class="btn btn-outline-danger wishList-badge"
-                                    title="{{$isWishlisted  ? 'Added to Wishlist' : 'Add to Wishlist ❤️'}}"
+                                    title="{{ $isWishlisted ? 'Added to Wishlist' : 'Add to Wishlist ❤️' }}"
                                     id="wish_{{$value->course_id}}">
-                                    <i class="{{$isWishlisted ? 'fa fa-heart':'fa fa-heart-o'}}" aria-hidden="true"
+                                    <i class="{{ $isWishlisted ? 'fa fa-heart' : 'fa fa-heart-o' }}" aria-hidden="true"
                                         id="wishHeart_{{$value->course_id}}"></i>
                                 </span>
+
                                 @php $id = Crypt::encrypt($value->course_id); @endphp
                                 <a href="{{ route('elearningCourse', $id) }}">
                                     @php
@@ -444,42 +512,32 @@
                                     @endif
                                 </a>
                             </div>
+
                             <div class="card-body">
-                                <div class="card-title" title="{{$value->course_name}}">
+                                <div class="card-title" title="{{ $value->course_name }}">
+                                    <h5>{{ $value->course_name }}</h5>
                                     <h5>
-                                        {{$value->course_name}}
-
-
-                                    </h5>
-                                    <h5>
-
                                         @if($showExpiryBadge)
                                         <a href="javascript:void(0);"
                                             onclick="highlightCopiedCourse({{ $value->course_id }})">
                                             <span class="blinking-warning">
-                                                {{ \Carbon\Carbon::parse($value->course_expiry_period)->isPast() ? 'Certificate Expired' : 'Certificate Expiring Soon.Do the Re-Certification' }}
+                                                {{ \Carbon\Carbon::parse($value->course_expiry_period)->isPast() ? 'Certificate Expired' : 'Certificate Expiring Soon. Do the Re-Certification' }}
                                             </span>
                                         </a>
                                         @endif
-
                                     </h5>
                                 </div>
+
                                 <script>
                                 function highlightCopiedCourse(originalCourseId) {
-                                    // Find the course card with expired_course_id == originalCourseId
                                     const matchingCard = document.querySelector(
                                         `[data-expired-course-id='${originalCourseId}']`);
-
                                     if (matchingCard) {
-                                        // Scroll into view and highlight
                                         matchingCard.scrollIntoView({
                                             behavior: 'smooth',
                                             block: 'center'
                                         });
-
                                         matchingCard.classList.add('highlight-new-course');
-
-                                        // Remove highlight after 2 seconds
                                         setTimeout(() => {
                                             matchingCard.classList.remove('highlight-new-course');
                                         }, 2000);
@@ -493,42 +551,33 @@
                                 }
                                 </script>
 
-
-
                                 <div class="card-text">
                                     <h6>
-                                        {{$value->course_instructor}}
-                                        <?php    if ($value->course_pay == 'paid') { ?>
+                                        {{ $value->course_instructor }}
+                                        @if ($value->course_pay == 'paid')
                                         <span style="background-color: #1d33d3;"
-                                            class="course_paid">{{$value->course_pay}}</span>
-                                        <?php    } elseif ($value->course_pay == 'free') { ?>
+                                            class="course_paid">{{ $value->course_pay }}</span>
+                                        @elseif ($value->course_pay == 'free')
                                         <span style="background-color: #0ecf26;"
-                                            class="course_paid">{{$value->course_pay}}</span>
-                                        <?php    } ?>
+                                            class="course_paid">{{ $value->course_pay }}</span>
+                                        @endif
                                     </h6>
-
-
                                 </div>
+
                                 <div class="progress course_total_progress">
                                     <div class="progress-bar" role="progressbar"
-                                        style="width: {{isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0'}}%"
+                                        style="width: {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%"
                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                <span
-                                    class="text-uppercase">{{isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0'}}%
-                                    completed</span>
-                                <!-- <input type="hidden" class="courseStartPeriod" id="startPeriod_{{$value->course_id}}" value="{{$value->course_start_period}}">
-                                                    <input type="hidden" class="courseEndPeriod" id="endPeriod_{{$value->course_id}}" value="{{$value->course_end_period}}">
-                                                    <input type="hidden" class="coursePay" id="pay_{{$value->course_id}}" value="{{$value->course_pay}}">
-                                                    <input type="hidden" class="courseDescription" id="description_{{$value->course_id}}" value="{{$value->course_description}}">
-                                                    <input type="hidden" class="courseIntroduction" id="introduction_{{$value->course_id}}" value="{{$value->course_introduction}}">
-                                                    <input type="hidden" name="courseTags" id="tags_{{$value->course_id}}" value="{{$value->course_tags}}" />
-                                                    <input type="hidden" class="courseSkillsRequired" id="skills_required_{{$value->course_id}}" value="{{$value->course_skills_required}}">
-                                                    <input type="hidden" class="courseGainSkills" id="gain_skills_{{$value->course_id}}" value="{{$value->course_gain_skills}}"> -->
+                                <span class="text-uppercase">
+                                    {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%
+                                    completed
+                                </span>
                             </div>
                         </div>
                     </div>
                     @endforeach
+
                 </div>
                 <div class="d-flex flex-row justify-content-center allCoursePagination">
                     {!! $availableCourses->links() !!}

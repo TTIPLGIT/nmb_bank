@@ -81,7 +81,7 @@ class elearningdashboardgtController extends BaseController
             $request['mlhud_id'] = $user_id;
 
 
-            $gatewayURL = config('setting.api_gateway_url') . '/elearningDashboard';
+            $gatewayURL = config('setting.api_gateway_url') . '/yourAchievements';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
            
@@ -98,16 +98,16 @@ class elearningdashboardgtController extends BaseController
             $screens = $menus['screens'];
             $modules = $menus['modules'];
 
-            
+           
             if ($response->Status == 200 && $response->Success) {
                 $objData = json_decode($this->decryptData($response->Data));
                 if ($objData->Code == 200) {
-                    $parant_data = json_decode(json_encode($objData->Data), true);
-                    $rows = $parant_data['rows'];
-                    $count = $parant_data['dasboardCount'];
+                    $rawResults = json_decode(json_encode($objData->Data), true);
                    
-                    $recommended = $parant_data['recomment_courses'];
-                    return view('achievements.your_achievement', compact('rows', 'menus', 'screens', 'modules', 'user_id', 'recommended', 'count'));
+                
+                   
+                   
+                    return view('achievements.your_achievement', compact('menus', 'screens', 'modules', 'rawResults'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));

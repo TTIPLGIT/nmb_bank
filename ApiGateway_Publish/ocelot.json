@@ -60,7 +60,6 @@
       "UpstreamPathTemplate": "/api/gateway/Register/expcreate",
       "UpstreamHttpMethod": ["Get"]
     },
-
     {
       "DownstreamPathTemplate": "/api/Register/nrvexpcreate",
       "DownstreamScheme": "http",
@@ -73,7 +72,6 @@
       "UpstreamPathTemplate": "/api/gateway/Register/nrvexpcreate",
       "UpstreamHttpMethod": ["Get"]
     },
-
     {
       "DownstreamPathTemplate": "/api/Register/educreate",
       "DownstreamScheme": "http",
@@ -86,7 +84,6 @@
       "UpstreamPathTemplate": "/api/gateway/Register/educreate",
       "UpstreamHttpMethod": ["Get"]
     },
-
     {
       "DownstreamPathTemplate": "/api/fileupload/fileupload_index",
       "DownstreamScheme": "http",
@@ -99,7 +96,6 @@
       "UpstreamPathTemplate": "/api/gateway/fileupload/fileupload_index",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/master/fileupload_store",
       "DownstreamScheme": "http",
@@ -112,7 +108,6 @@
       "UpstreamPathTemplate": "/api/gateway/master/fileupload_store",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/master/fileupload_edit",
       "DownstreamScheme": "http",
@@ -125,7 +120,6 @@
       "UpstreamPathTemplate": "/api/gateway/master/fileupload_edit",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/master/fileupload_update",
       "DownstreamScheme": "http",
@@ -138,7 +132,6 @@
       "UpstreamPathTemplate": "/api/gateway/master/fileupload_update",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/master/fileupload_delete",
       "DownstreamScheme": "http",
@@ -151,7 +144,6 @@
       "UpstreamPathTemplate": "/api/gateway/master/fileupload_delete",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/education/course_index",
       "DownstreamScheme": "http",
@@ -176,7 +168,6 @@
       "UpstreamPathTemplate": "/api/gateway/education/educationcourse_edit",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/master/educationcourse_store",
       "DownstreamScheme": "http",
@@ -189,7 +180,6 @@
       "UpstreamPathTemplate": "/api/gateway/master/educationcourse_store",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/education/educationcourse_update",
       "DownstreamScheme": "http",
@@ -202,7 +192,6 @@
       "UpstreamPathTemplate": "/api/gateway/education/educationcourse_update",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/education/education_delete",
       "DownstreamScheme": "http",
@@ -215,7 +204,6 @@
       "UpstreamPathTemplate": "/api/gateway/education/education_delete",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/generaldetails/gdmasters_index",
       "DownstreamScheme": "http",
@@ -228,7 +216,6 @@
       "UpstreamPathTemplate": "/api/gateway/generaldetails/gdmasters_index",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/master/gdconstituency_store",
       "DownstreamScheme": "http",
@@ -241,7 +228,6 @@
       "UpstreamPathTemplate": "/api/gateway/master/gdconstituency_store",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/master/gddistrict_store",
       "DownstreamScheme": "http",
@@ -254,7 +240,6 @@
       "UpstreamPathTemplate": "/api/gateway/master/gddistrict_store",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/gt_district/delete",
       "DownstreamScheme": "http",
@@ -267,7 +252,6 @@
       "UpstreamPathTemplate": "/api/gateway/gt_district/delete",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/master/gdvillage_store",
       "DownstreamScheme": "http",
@@ -280,7 +264,6 @@
       "UpstreamPathTemplate": "/api/gateway/master/gdvillage_store",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/gd/district_list",
       "DownstreamScheme": "http",
@@ -293,7 +276,6 @@
       "UpstreamPathTemplate": "/api/gateway/gd/district_list",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/general/district_edit",
       "DownstreamScheme": "http",
@@ -306,7 +288,6 @@
       "UpstreamPathTemplate": "/api/gateway/general/district_edit",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/gd/constituency_list",
       "DownstreamScheme": "http",
@@ -319,7 +300,6 @@
       "UpstreamPathTemplate": "/api/gateway/gd/constituency_list",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/gd/village_list",
       "DownstreamScheme": "http",
@@ -332,7 +312,6 @@
       "UpstreamPathTemplate": "/api/gateway/gd/village_list",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/education/coursename_list",
       "DownstreamScheme": "http",
@@ -345,7 +324,6 @@
       "UpstreamPathTemplate": "/api/gateway/education/coursename_list",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/gt_interview/delete",
       "DownstreamScheme": "http",
@@ -358,7 +336,6 @@
       "UpstreamPathTemplate": "/api/gateway/gt_interview/delete",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/register/store",
       "DownstreamScheme": "http",
@@ -371,7 +348,6 @@
       "UpstreamPathTemplate": "/api/gateway/Register/store",
       "UpstreamHttpMethod": ["Post"]
     },
-
     {
       "DownstreamPathTemplate": "/api/razorpay_payment",
       "DownstreamScheme": "http",
@@ -384,7 +360,6 @@
       "UpstreamPathTemplate": "/api/gateway/razorpay_payment",
       "UpstreamHttpMethod": ["Post"]
     },
-
     {
       "DownstreamPathTemplate": "/api/razorpay_payment/firm",
       "DownstreamScheme": "http",
@@ -397,7 +372,6 @@
       "UpstreamPathTemplate": "/api/gateway/razorpay_payment/firm",
       "UpstreamHttpMethod": ["Post"]
     },
-
     {
       "DownstreamPathTemplate": "/api/registermember/store",
       "DownstreamScheme": "http",
@@ -578,7 +552,6 @@
       "UpstreamPathTemplate": "/api/gateway/critical/report",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/critical/file_update",
       "DownstreamScheme": "http",
@@ -591,7 +564,6 @@
       "UpstreamPathTemplate": "/api/gateway/critical/file_update",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/critical/criticalapprove",
       "DownstreamScheme": "http",
@@ -688,7 +660,6 @@
       "UpstreamPathTemplate": "/api/gateway/critical/store",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/interview/updatenew",
       "DownstreamScheme": "http",
@@ -701,7 +672,6 @@
       "UpstreamPathTemplate": "/api/gateway/interview/updatenew",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/interview/store",
       "DownstreamScheme": "http",
@@ -810,7 +780,6 @@
       "UpstreamPathTemplate": "/api/gateway/firmRegister/store",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/education/education_edit",
       "DownstreamScheme": "http",
@@ -823,7 +792,6 @@
       "UpstreamPathTemplate": "/api/gateway/education/education_edit",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/firm/firm_index",
       "DownstreamScheme": "http",
@@ -932,7 +900,6 @@
       "UpstreamPathTemplate": "/api/gateway/firm/active_update",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/firm/permission_store",
       "DownstreamScheme": "http",
@@ -945,7 +912,6 @@
       "UpstreamPathTemplate": "/api/gateway/firm/permission_store",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/firm_admin/fetch",
       "DownstreamScheme": "http",
@@ -958,7 +924,6 @@
       "UpstreamPathTemplate": "/api/gateway/firm_admin/fetch",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/firm/permission_update",
       "DownstreamScheme": "http",
@@ -971,7 +936,6 @@
       "UpstreamPathTemplate": "/api/gateway/firm/permission_update",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/firm_admin/leave",
       "DownstreamScheme": "http",
@@ -984,7 +948,6 @@
       "UpstreamPathTemplate": "/api/gateway/firm_admin/leave",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/license/license_index",
       "DownstreamScheme": "http",
@@ -1081,7 +1044,6 @@
       "UpstreamPathTemplate": "/api/gateway/district/fetch",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/constituency/fetch",
       "DownstreamScheme": "http",
@@ -1094,7 +1056,6 @@
       "UpstreamPathTemplate": "/api/gateway/constituency/fetch",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/valuer/certification/screen",
       "DownstreamScheme": "http",
@@ -1119,7 +1080,6 @@
       "UpstreamPathTemplate": "/api/gateway/master/storequestion",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/district/update",
       "DownstreamScheme": "http",
@@ -1132,7 +1092,6 @@
       "UpstreamPathTemplate": "/api/gateway/district/update",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/auditlog/vreg",
       "DownstreamScheme": "http",
@@ -1769,7 +1728,6 @@
       "UpstreamPathTemplate": "/api/gateway/user_general/storedynamic1",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/user_exp/nrustore",
       "DownstreamScheme": "http",
@@ -1782,7 +1740,6 @@
       "UpstreamPathTemplate": "/api/gateway/user_exp/nrustore",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/payment/store",
       "DownstreamScheme": "http",
@@ -6781,7 +6738,6 @@
       "UpstreamPathTemplate": "/api/gateway/elearning/class/store",
       "UpstreamHttpMethod": ["Post"]
     },
-
     {
       "DownstreamPathTemplate": "/api/elearning/class/index",
       "DownstreamScheme": "http",
@@ -6794,7 +6750,6 @@
       "UpstreamPathTemplate": "/api/gateway/elearning/class/index",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/addclass/classlist",
       "DownstreamScheme": "http",
@@ -6807,7 +6762,6 @@
       "UpstreamPathTemplate": "/api/gateway/addclass/classlist",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/elearning/course/store",
       "DownstreamScheme": "http",
@@ -6853,18 +6807,6 @@
           "Port": 6062
         }
       ],
-      "UpstreamPathTemplate": "/api/gateway/course/course_delete",
-      "UpstreamHttpMethod": ["POST"]
-    },
-    {
-      "DownstreamPathTemplate": "/api/class/class_delete",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 6062
-        }
-      ],
       "UpstreamPathTemplate": "/api/gateway/course/course_copy",
       "UpstreamHttpMethod": ["POST"]
     },
@@ -6880,7 +6822,6 @@
       "UpstreamPathTemplate": "/api/gateway/class/class_delete",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/class/class_edit",
       "DownstreamScheme": "http",
@@ -6905,7 +6846,6 @@
       "UpstreamPathTemplate": "/api/gateway/class/class_edit2",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/elearning/event/store",
       "DownstreamScheme": "http",
@@ -6918,7 +6858,6 @@
       "UpstreamPathTemplate": "/api/gateway/elearning/event/store",
       "UpstreamHttpMethod": ["Post"]
     },
-
     {
       "DownstreamPathTemplate": "/api/event/event_list",
       "DownstreamScheme": "http",
@@ -7531,7 +7470,6 @@
       "UpstreamPathTemplate": "/api/gateway/elearning/question_quiz/store",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/dashboardevents/fetch",
       "DownstreamScheme": "http",
@@ -7628,7 +7566,6 @@
       "UpstreamPathTemplate": "/api/gateway/reply/store",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/admindashboardevents/fetch",
       "DownstreamScheme": "http",
@@ -7773,7 +7710,6 @@
       "UpstreamPathTemplate": "/api/gateway/event/fetch",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/examtest/store",
       "DownstreamScheme": "http",
@@ -8122,7 +8058,6 @@
       "UpstreamPathTemplate": "/api/gateway/rating/admin/index",
       "UpstreamHttpMethod": ["GET"]
     },
-
     {
       "DownstreamPathTemplate": "/api/elearningCart",
       "DownstreamScheme": "http",
@@ -8183,7 +8118,6 @@
       "UpstreamPathTemplate": "/api/gateway/razorsummarypayment",
       "UpstreamHttpMethod": ["Post"]
     },
-
     {
       "DownstreamPathTemplate": "/api/schedular/endperiod",
       "DownstreamScheme": "http",
@@ -8280,7 +8214,6 @@
       "UpstreamPathTemplate": "/api/gateway/member/member_update",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/user_changereject",
       "DownstreamScheme": "http",
@@ -8293,7 +8226,6 @@
       "UpstreamPathTemplate": "/api/gateway/user_changereject",
       "UpstreamHttpMethod": ["POST"]
     },
-
     {
       "DownstreamPathTemplate": "/api/webportal/member_bulk/store",
       "DownstreamScheme": "http",
@@ -8546,7 +8478,6 @@
       "UpstreamPathTemplate": "/api/gateway/course/catagory_fetch",
       "UpstreamHttpMethod": ["GET"]
     },
-    
     {
       "DownstreamPathTemplate": "/api/course_catagory_delete",
       "DownstreamScheme": "http",
@@ -8554,11 +8485,82 @@
         {
           "Host": "localhost",
           "Port": 6062
-          "Port": 6062
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/course_catagory_delete",
       "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/level/getAll",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/level/getAll",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/level_create_store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/level_create_store",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/level_show",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/level_show",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/level_delete",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/level_delete",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/level_update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/level_update",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/yourAchievements",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/yourAchievements",
+      "UpstreamHttpMethod": ["GET"]
     }
   ],
   "GlobalConfiguration": {
