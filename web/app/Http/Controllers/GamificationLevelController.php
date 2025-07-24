@@ -285,48 +285,34 @@ class GamificationLevelController extends BaseController
 
         session()->flash('show_gif', true);
 
-
-
+        // Get filters
         $role = $request->input('role');
         $designation = $request->input('designation');
         $course_catagory = $request->input('course_catagory');
 
-        $rows['course_catagory'] = DB::table('course_catagory')
-            ->orderBy('catagory_id', 'desc')
-            ->get();
-        $rows['elearning_courses'] = DB::table('elearning_courses')
-            ->orderBy('course_id', 'desc')
-            ->get();
-
+        // Static dropdown data
+        $rows['course_catagory'] = DB::table('course_catagory')->orderBy('catagory_id', 'desc')->get();
+        $rows['elearning_courses'] = DB::table('elearning_courses')->orderBy('course_id', 'desc')->get();
         $rows['role'] = DB::table('uam_roles')->get();
         $rows['designation'] = DB::table('designation')->orderBy('designation_id', 'desc')->get();
 
-
+        // Base query from user_cpt_points
         $query = DB::table('user_cpt_points')
             ->join('users', 'users.id', '=', 'user_cpt_points.user_id')
-            ->leftJoin('uam_user_roles', 'users.role_id', '=', 'uam_user_roles.role_id')
-            ->leftJoin('designation', 'users.designation_id', '=', 'designation.designation_id')
-            ->leftJoin('elearning_courses', function ($join) use ($course_catagory) {
-                $join->where(function ($query) use ($course_catagory) {
-                    if (!empty($course_catagory)) {
-                        $query->whereRaw("FIND_IN_SET(users.id, (SELECT user_ids FROM elearning_courses WHERE course_id = ?))", [$course_catagory]);
-                    } else {
-                        $query->on('users.role_id', '=', 'elearning_courses.role_id')
-                            ->on('users.designation_id', '=', 'elearning_courses.designation_id');
-                    }
-                });
-            })
             ->select('users.id', 'users.name', DB::raw('SUM(user_cpt_points.cpt_points) as total_points'))
             ->groupBy('users.id', 'users.name');
 
+        // Apply role filter if present
         if (!empty($role)) {
             $query->where('users.role_id', $role);
         }
 
+        // Apply designation filter if present
         if (!empty($designation)) {
             $query->where('users.designation_id', $designation);
         }
 
+        // Apply course category filter if present
         if (!empty($course_catagory)) {
             $course = DB::table('elearning_courses')
                 ->where('course_id', $course_catagory)
@@ -334,23 +320,22 @@ class GamificationLevelController extends BaseController
                 ->first();
 
             if ($course && !empty($course->user_ids)) {
-                $courseUserIDs = array_map('intval', explode(',', $course->user_ids));
-                $query->whereIn('users.id', $courseUserIDs);
+                $userIds = array_map('intval', explode(',', $course->user_ids));
+                $query->whereIn('users.id', $userIds);
             } else {
-
+                // If no users found in this course
                 $query->whereRaw('1 = 0');
             }
         }
 
-
+        // Get final results
         $rows['results'] = $query->get();
-
-
         $rows['leaderboard'] = $query->orderByDesc('total_points')->get();
         $rows['top3'] = $rows['leaderboard']->take(3);
 
         session()->forget('first_time_leaderboard');
 
+        // Find current user's rank
         $rank = 1;
         $currentUserRank = null;
         foreach ($rows['leaderboard'] as $user) {
@@ -376,40 +361,34 @@ class GamificationLevelController extends BaseController
 
         session()->flash('show_gif', true);
 
-
-
+    
         $role = $request->input('role');
         $designation = $request->input('designation');
         $course_catagory = $request->input('course_catagory');
 
-        $rows['course_catagory'] = DB::table('course_catagory')
-            ->orderBy('catagory_id', 'desc')
-            ->get();
-        $rows['elearning_courses'] = DB::table('elearning_courses')
-            ->orderBy('course_id', 'desc')
-            ->get();
-
+ 
+        $rows['course_catagory'] = DB::table('course_catagory')->orderBy('catagory_id', 'desc')->get();
+        $rows['elearning_courses'] = DB::table('elearning_courses')->orderBy('course_id', 'desc')->get();
         $rows['role'] = DB::table('uam_roles')->get();
         $rows['designation'] = DB::table('designation')->orderBy('designation_id', 'desc')->get();
 
+     
         $query = DB::table('user_cpt_points')
             ->join('users', 'users.id', '=', 'user_cpt_points.user_id')
-            ->leftJoin('uam_user_roles', 'users.role_id', '=', 'uam_user_roles.role_id')
-            ->leftJoin('designation', 'users.designation_id', '=', 'designation.designation_id')
-            ->leftJoin('elearning_courses', function ($join) {
-                $join->on('users.role_id', '=', 'elearning_courses.role_id')
-                    ->on('users.designation_id', '=', 'elearning_courses.designation_id');
-            })->select('users.id', 'users.name', DB::raw('SUM(user_cpt_points.cpt_points) as total_points'))
+            ->select('users.id', 'users.name', DB::raw('SUM(user_cpt_points.cpt_points) as total_points'))
             ->groupBy('users.id', 'users.name');
 
+      
         if (!empty($role)) {
             $query->where('users.role_id', $role);
         }
 
+       
         if (!empty($designation)) {
             $query->where('users.designation_id', $designation);
         }
 
+ 
         if (!empty($course_catagory)) {
             $course = DB::table('elearning_courses')
                 ->where('course_id', $course_catagory)
@@ -417,23 +396,22 @@ class GamificationLevelController extends BaseController
                 ->first();
 
             if ($course && !empty($course->user_ids)) {
-                $courseUserIDs = array_map('intval', explode(',', $course->user_ids));
-                $query->whereIn('users.id', $courseUserIDs);
+                $userIds = array_map('intval', explode(',', $course->user_ids));
+                $query->whereIn('users.id', $userIds);
             } else {
-                // if no matching users for this course, force empty result
+        
                 $query->whereRaw('1 = 0');
             }
         }
 
-
+      
         $rows['results'] = $query->get();
-
-
         $rows['leaderboard'] = $query->orderByDesc('total_points')->get();
         $rows['top3'] = $rows['leaderboard']->take(3);
 
         session()->forget('first_time_leaderboard');
 
+     
         $rank = 1;
         $currentUserRank = null;
         foreach ($rows['leaderboard'] as $user) {
@@ -451,3 +429,4 @@ class GamificationLevelController extends BaseController
         return view("Gamifications.leaderboard", compact('screens', 'modules', 'user_id', 'rows', 'currentUserRank'));
     }
 }
+
