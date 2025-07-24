@@ -109,13 +109,13 @@
                                         <div class="form-group d-flex align-items-center flex-wrap gap-10">
 
                                             <div>
-                                                <input type="radio" class="btn-check" name="complete_within" value="date" id="achieve_date" autocomplete="off" onclick="updatePlaceholder()">
-                                                <label class="btn btn-outline-primary" for="achieve_date" style="color:black">Day</label>
+                                                <input type="radio" class="btn-check" name="complete_within" value="day" id="achieve_day" autocomplete="off" onclick="updatePlaceholder()">
+                                                <label class="btn btn-outline-primary" for="achieve_day" style="color:black">Day</label>
                                             </div>
 
 
                                             <div>
-                                                <input type="radio" class="btn-check" name="complete_within" value="time" id="achieve_time" autocomplete="off" onclick="updatePlaceholder()">
+                                                <input type="radio" class="btn-check" name="complete_within" value="hours" id="achieve_time" autocomplete="off" onclick="updatePlaceholder()">
                                                 <label class="btn btn-outline-primary" for="achieve_time" style="color:black">Hours</label>
                                             </div>
 
@@ -136,7 +136,7 @@
                                     <input type="radio" class="btn-check" name="course_locked" value=1 id="course_locked_yes" autocomplete="off" onclick="toggleUnlockPoints()">
                                     <label class="btn btn-outline-primary" for="course_locked_yes" style="color:black" value=1>Yes</label>
 
-                                    <input type="radio" class="btn-check" name="course_locked" value=1 id="course_locked_no" autocomplete="off" onclick="toggleUnlockPoints()">
+                                    <input type="radio" class="btn-check" name="course_locked" value=0 id="course_locked_no" autocomplete="off" onclick="toggleUnlockPoints()">
                                     <label class="btn btn-outline-primary" for="course_locked_no" style="color:black" value=0>No</label>
 
 
@@ -183,9 +183,10 @@
         var badgeNo = $("#badge_no").is(":checked");
         var streakChallenge = $("#streak_challenge_yes").is(":checked");
         var streakNo = $("#streak_challenge_no").is(":checked");
-        var day = $("#achieve_date").is(":checked");
+        var day = $("#achieve_day").is(":checked");
         var time = $("#achieve_time").is(":checked");
-        var courseLocked = $("#course_locked_yes").is(":checked") || $("#course_locked_no").is(":checked");
+        var courseLocked = $("#course_locked_yes").is(":checked");
+        var courseLocked_no = $("#course_locked_no").is(":checked");
 
         // Category name
         if (category === '') {
@@ -246,7 +247,7 @@
                 return false;
             }
             if ($("#achieve_value").val().trim() === '') {
-                let message = day ? "Please enter the Day" : time ? "Please enter the Hours" : "Please enter the Hours or Date";
+                let message = day ? "Please enter the Day" : time ? "Please enter the Hours" : "Please enter the Hours or Day";
                 Swal.fire(message, "", "error");
                 return false;
             }
@@ -256,18 +257,26 @@
             }
         }
 
-        // Course Locked check (optional if mandatory)
-        if (!courseLocked) {
+
+
+        if (!courseLocked && !courseLocked_no) {
             Swal.fire("Please select 'Yes' or 'No' for Course Locked.", "", "error");
             return false;
         }
-        if ($("#points_to_unlock").val().trim() === '') {
-            Swal.fire("Please Enter the points to unlock", "error");
-            return false;
+        if (courseLocked) {
+            if ($("#points_to_unlock").val().trim() === '') {
+                Swal.fire("Please Enter the Points to Unlock", "", "error");
+                return false;
+            }
         }
 
-        // Submit if all validations pass
-        $("#catagory_submit").submit();
+    
+
+
+
+
+    // Submit if all validations pass
+    $("#catagory_submit").submit();
     }
 
     function toggleBadgeFields() {
@@ -282,19 +291,19 @@
     });
 
 
-function updatePlaceholder() {
-    const input = document.getElementById("achieve_value");
-    const isDay = document.getElementById("achieve_date").checked;
-    const isTime = document.getElementById("achieve_time").checked;
+    function updatePlaceholder() {
+        const input = document.getElementById("achieve_value");
+        const isDay = document.getElementById("achieve_day").checked;
+        const isTime = document.getElementById("achieve_time").checked;
 
-    if (isDay) {
-        input.placeholder = "Please enter the total number of days";
-    } else if (isTime) {
-        input.placeholder = "Please enter the time";
-    } else {
-        input.placeholder = "Please enter the day or time";
+        if (isDay) {
+            input.placeholder = "Please enter the total number of days";
+        } else if (isTime) {
+            input.placeholder = "Please enter the time";
+        } else {
+            input.placeholder = "Please enter the day or time";
+        }
     }
-}
 </script>
 <script>
     function toggleUnlockPoints() {

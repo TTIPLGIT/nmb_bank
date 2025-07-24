@@ -858,7 +858,7 @@ Route::get('/report/fetch', [App\Http\Controllers\ReportsController::class, 'rep
 
 //  Course Categories
 
-// Route::get('/categories/getAll', [App\Http\Controllers\coursecategoryController::class, 'getAll'])->name('getAll');
+Route::get('/categories/getAll', [App\Http\Controllers\coursecategoryController::class, 'getAll'])->name('getAll');
 Route::get('/course/catagory_fetch', [App\Http\Controllers\coursecategoryController::class, 'course_catagory_fetch'])->name('course_atagory_fetch');
 Route::post('/catagory_create', [App\Http\Controllers\coursecategoryController::class, 'store'])->name('catagory_create');
 Route::post('/catagory_update', [App\Http\Controllers\coursecategoryController::class, 'update'])->name('catagory_update');
@@ -873,3 +873,4 @@ Route::get('/level_show', [App\Http\Controllers\GamificationLevelController::cla
 Route::post('/level_update', [ App\Http\Controllers\GamificationLevelController::class,'update'])->name('level_update');
 
 Route::post('/level_delete',  [App\Http\Controllers\GamificationLevelController::class, 'delete'])->name('level_delete');
+

@@ -1285,7 +1285,6 @@
 
                         @endforeach
 
-                        <a href="{{ route('leaderboard') }}">Leaderboard</a>
 
 
                         @endif

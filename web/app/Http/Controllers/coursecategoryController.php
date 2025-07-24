@@ -28,15 +28,16 @@ class coursecategoryController extends BaseController
         $modules = $menus['modules'];
         $method = "GET";
         $gatewayURL = config('setting.api_gateway_url') . '/categories/getAll';
-
+        $categories = [];
+       
         $response = json_decode($this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method));
         if ($response->Status == 200 && $response->Success) {
             $objData = json_decode($this->decryptData($response->Data));
             $parant_data = json_decode(json_encode($objData->Data), true);
             $categories = $parant_data['categories'];
         }
+        
         return view("coursecategory.coursecategory", compact('screens', 'modules', 'categories'));
-        //
     }
 
     public function createpage(Request $request)
@@ -145,7 +146,7 @@ class coursecategoryController extends BaseController
                 'course_locked' => $request->course_locked,
                 'points_to_unlock' => $request->points_to_unlock,
             ];
-         
+
 
 
 
