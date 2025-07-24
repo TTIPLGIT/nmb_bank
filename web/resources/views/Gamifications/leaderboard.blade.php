@@ -119,8 +119,8 @@
 
     .userscard {
         height: 220px;
-        position: fixed;
-        top: 360px;
+        position: absolute;
+        top: 260px;
         margin-right: 40px;
         margin-left: 4px;
         border: 5px solid rgba(255, 215, 0, 0.6);
@@ -247,6 +247,13 @@
         height: 539px;
 
     }
+
+    .btn-active {
+        background-color: #0d6efd !important;
+
+        color: white !important;
+        border-color: #0d6efd !important;
+    }
 </style>
 
 <div class="main-content">
@@ -298,78 +305,75 @@
                         }, 3000);
                     </script>
                     @endif
-                    <div class="leaderboard-section">
 
-                        @if(isset($currentUserRank) && session('role_type') !== 'Admin')
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-3 podium-card userscard text-center float-start"
-                                    style="cursor: pointer;"
-                                    data-toggle="modal"
-                                    data-target="#addModal4"
-                                    onclick="fetch_show({{ $user_id }}, 'show')">
+                    @if(isset($currentUserRank) && session('role_type') !== 'Admin')
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3 podium-card userscard text-center float-start"
+                                style="cursor: pointer;"
+                                data-toggle="modal"
+                                data-target="#addModal4"
+                                onclick="fetch_show({{ $user_id }}, 'show')">
 
-                                    <img src="/images/leaderboard/rank 2.jpg" alt="{{ $currentUserRank['name'] }}" class="profile-img" />
+                                <img src="/images/leaderboard/rank 2.jpg" alt="{{ $currentUserRank['name'] }}" class="profile-img" />
 
-                                    <div class="mt-3 fw-bold">
-                                        🎉 Congratulations <span class="text-success">{{ $currentUserRank['name'] }}</span><br>
-                                        You are ranked <span class="text-success">#{{ $currentUserRank['rank'] }}</span> with
-                                        <span class="text-danger">{{ $currentUserRank['points'] }} pts</span>!
-                                    </div>
+                                <div class="mt-3  fw-bold">
+                                    🎉 Congratulations <span class="text-success">{{ $currentUserRank['name'] }}</span><br>
+                                    You are ranked <span class="text-success">#{{ $currentUserRank['rank'] }}</span> with <span class="text-danger">{{ $currentUserRank['points'] }} pts</span>!
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    @endif
+
+
+
+
+                    <div class="podium d-flex justify-content-center">
+
+                        @if(isset($rows['top3'][1]))
+                        <div class="podium-card second position-relative text-center"
+                            style="cursor: pointer; margin-left:4px"
+                            data-toggle="modal"
+                            data-target="#addModal4"
+                            onclick="fetch_show({{ $user_id }}, 'show')">
+
+                            <img src="/images/leaderboard/rank 2.jpg" alt="{{ $rows['top3'][1]->name }}" class="profile-img" />
+                            <h6>{{ $rows['top3'][1]->name }}</h6>
+                            <span class="score">{{ $rows['top3'][1]->total_points }}</span>
+                            <img src="/images/leaderboard/2nd.png" alt="2nd" style="margin-bottom:-15px" class="rank-badge" />
+                        </div>
                         @endif
 
-                        <div class="podium d-flex justify-content-center mt-4">
+                        @if(isset($rows['top3'][0]))
+                        <div class="podium-card first position-relative text-center"
+                            style="cursor: pointer;"
+                            data-toggle="modal"
+                            data-target="#addModal4"
+                            onclick="fetch_show({{ $user_id }}, 'show')">
 
-                            @if(isset($rows['top3'][1]))
-                            <div class="podium-card second position-relative text-center"
-                                style="cursor: pointer; margin-left:4px"
-                                data-toggle="modal"
-                                data-target="#addModal4"
-                                onclick="fetch_show({{ $user_id }}, 'show')">
-
-                                <img src="/images/leaderboard/rank 2.jpg" alt="{{ $rows['top3'][1]->name }}" class="profile-img" />
-                                <h6>{{ $rows['top3'][1]->name }}</h6>
-                                <span class="score">{{ $rows['top3'][1]->total_points }}</span>
-                                <img src="/images/leaderboard/2nd.png" alt="2nd" style="margin-bottom:-15px" class="rank-badge" />
-                            </div>
-                            @endif
-
-                            @if(isset($rows['top3'][0]))
-                            <div class="podium-card first position-relative text-center"
-                                style="cursor: pointer;"
-                                data-toggle="modal"
-                                data-target="#addModal4"
-                                onclick="fetch_show({{ $user_id }}, 'show')">
-
-                                <img src="/images/leaderboard/crown.png" alt="Crown" class="crown" />
-                                <img src="/images/leaderboard/rank 1.jpg" alt="{{ $rows['top3'][0]->name }}" class="profile-img" />
-                                <h6>{{ $rows['top3'][0]->name }}</h6>
-                                <span class="score">{{ $rows['top3'][0]->total_points }}</span>
-                                <img src="/images/leaderboard/1st.png" alt="1st" class="rank-badge" />
-                            </div>
-                            @endif
-
-                            @if(isset($rows['top3'][2]))
-                            <div class="podium-card third position-relative text-center"
-                                style="cursor: pointer;"
-                                data-toggle="modal"
-                                data-target="#addModal4"
-                                onclick="fetch_show({{ $user_id }}, 'show')">
-
-                                <img src="/images/leaderboard/rank 3.jpg" alt="{{ $rows['top3'][2]->name }}" class="profile-img" />
-                                <h6>{{ $rows['top3'][2]->name }}</h6>
-                                <span class="score">{{ $rows['top3'][2]->total_points }}</span>
-                                <img src="/images/leaderboard/3rd.png" alt="3rd" style="margin-bottom:-15px" class="rank-badge" />
-                            </div>
-                            @endif
-
+                            <img src="/images/leaderboard/crown.png" alt="Crown" class="crown" />
+                            <img src="/images/leaderboard/rank 1.jpg" alt="{{ $rows['top3'][0]->name }}" class="profile-img" />
+                            <h6>{{ $rows['top3'][0]->name }}</h6>
+                            <span class="score">{{ $rows['top3'][0]->total_points }}</span>
+                            <img src="/images/leaderboard/1st.png" alt="1st" class="rank-badge" />
                         </div>
+                        @endif
 
+                        @if(isset($rows['top3'][2]))
+                        <div class="podium-card third position-relative text-center"
+                            style="cursor: pointer;"
+                            data-toggle="modal"
+                            data-target="#addModal4"
+                            onclick="fetch_show({{ $user_id }}, 'show')">
+
+                            <img src="/images/leaderboard/rank 3.jpg" alt="{{ $rows['top3'][2]->name }}" class="profile-img" />
+                            <h6>{{ $rows['top3'][2]->name }}</h6>
+                            <span class="score">{{ $rows['top3'][2]->total_points }}</span>
+                            <img src="/images/leaderboard/3rd.png" alt="3rd" style="margin-bottom:-15px" class="rank-badge" />
+                        </div>
+                        @endif
                     </div>
-
                 </div>
 
             </div>
@@ -480,7 +484,6 @@
 
 
 
-
                             <div class="modal-footer  border-top-0">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clearForm()">Clear</button>
 
@@ -536,6 +539,15 @@
 
         document.getElementById("filterbuttons").style.display = 'none';
     }
+    document.getElementById('pointsbutton').addEventListener('click', function() {
+        this.classList.add('btn-active');
+        document.getElementById('hoursbutton').classList.remove('btn-active');
+    });
+
+    document.getElementById('hoursbutton').addEventListener('click', function() {
+        this.classList.add('btn-active');
+        document.getElementById('pointsbutton').classList.remove('btn-active');
+    }); 
 </script>
 
 <script>
