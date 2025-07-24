@@ -189,8 +189,8 @@
                             <div class="form-group d-flex align-items-center flex-wrap gap-10">
 
                                 <div>
-                                    <input type="radio" class="btn-check" name="complete_within" value="date" id="achieve_date" autocomplete="off" onclick="toggleAchieveInput()">
-                                    <label class="btn btn-outline-primary" for="achieve_date" style="color:black">Day</label>
+                                    <input type="radio" class="btn-check" name="complete_within" value="Day" id="achieve_day" autocomplete="off" onclick="toggleAchieveInput()">
+                                    <label class="btn btn-outline-primary" for="achieve_day" style="color:black">Day</label>
                                 </div>
 
 
@@ -252,7 +252,7 @@
         var badgeNo = $("#badge_no").is(":checked");
         var streakChallenge = $("#streak_challenge_yes").is(":checked");
         var streakNo = $("#streak_challenge_no").is(":checked");
-        var day = $("#achieve_date").is(":checked");
+        var day = $("#achieve_day").is(":checked");
         var time = $("#achieve_time").is(":checked");
         var courseLocked = $("#course_locked_yes").is(":checked") || $("#course_locked_no").is(":checked");
 
@@ -406,14 +406,14 @@
                     $('#course_locked_no').prop('checked', true);
                 }
 
-                if (row.complete_within == "time") {
+                if (row.complete_within === "time") {
                     $('#achieve_time').prop('checked', true);
                     $('#label_achieve_time').addClass('active');
-                    $('#label_achieve_date').removeClass('active');
-                } else if (row.complete_within === "date") {
+                    $('#label_achieve_day').removeClass('active');
+                } else if (row.complete_within === "day") {
                     $('#achieve_date').prop('checked', true);
-                    $('#label_achieve_time').addClass('active');
-                    $('#label_achieve_date').removeClass('active');
+                    $('#label_achieve_day').addClass('active');
+                    $('#label_achieve_time').removeClass('active');
                 }
 
 
@@ -422,12 +422,12 @@
                 toggleBadgeFields();
 
                 if (type === "show") {
-                    $('#catagory_name, #sub_catagory, #description, #badge_yes, #badge_no, #badge_name, #badge_count, #badge_icon,#streak_challenge_yes,#streak_challenge_no, #streak_name,#streak_count,#streak_points,#achieve_date,#achieve_time,#achieve_value,#achieve_icon,#course_locked_yes,#course_locked_no,#points_to_unlock').prop('disabled', true);
+                    $('#catagory_name, #sub_catagory, #description, #badge_yes, #badge_no, #badge_name, #badge_count, #badge_icon,#streak_challenge_yes,#streak_challenge_no, #streak_name,#streak_count,#streak_points,#achieve_day,#achieve_time,#achieve_value,#achieve_icon,#course_locked_yes,#course_locked_no,#points_to_unlock').prop('disabled', true);
                     $('#updateButton').hide();
                     $('#sub_title_name').html("Category");
                     $('#title_name').html("Category");
                 } else {
-                    $('#catagory_name, #sub_catagory, #description, #badge_yes, #badge_no, #badge_name, #badge_count, #badge_icon,#streak_challenge_yes,#streak_challenge_no, #streak_name,#streak_count,#streak_points,#achieve_date,#achieve_time,#achieve_value,#achieve_icon,#course_locked_yes,#course_locked_no,#points_to_unlock').prop('disabled', false);
+                    $('#catagory_name, #sub_catagory, #description, #badge_yes, #badge_no, #badge_name, #badge_count, #badge_icon,#streak_challenge_yes,#streak_challenge_no, #streak_name,#streak_count,#streak_points,#achieve_day,#achieve_time,#achieve_value,#achieve_icon,#course_locked_yes,#course_locked_no,#points_to_unlock').prop('disabled', false);
                     $('#updateButton').show();
                     $('#sub_title_name').html("Edit Category");
                     $('#title_name').html("Edit Category");
@@ -448,6 +448,7 @@
         } else {
             $('#streak_name, #streak_count, #streak_points,#achieve_value,#achieve_icon').closest('.form-group').hide();
         }
+       
 
 
     }
@@ -458,7 +459,7 @@
 </script>
 <script>
     function toggleAchieveInput() {
-        const isDay = document.getElementById("achieve_date").checked;
+        const isDay = document.getElementById("achieve_day").checked;
         const isTime = document.getElementById("achieve_time").checked;
         const achieveInput = document.getElementById("achieve_value");
 
