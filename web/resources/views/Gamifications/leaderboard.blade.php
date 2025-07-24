@@ -247,6 +247,13 @@
         height: 539px;
 
     }
+
+    .btn-active {
+        background-color: #0d6efd !important;
+
+        color: white !important;
+        border-color: #0d6efd !important;
+    }
 </style>
 
 <div class="main-content">
@@ -477,7 +484,6 @@
 
 
 
-
                             <div class="modal-footer  border-top-0">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clearForm()">Clear</button>
 
@@ -533,6 +539,15 @@
 
         document.getElementById("filterbuttons").style.display = 'none';
     }
+    document.getElementById('pointsbutton').addEventListener('click', function() {
+        this.classList.add('btn-active');
+        document.getElementById('hoursbutton').classList.remove('btn-active');
+    });
+
+    document.getElementById('hoursbutton').addEventListener('click', function() {
+        this.classList.add('btn-active');
+        document.getElementById('pointsbutton').classList.remove('btn-active');
+    }); 
 </script>
 
 <script>

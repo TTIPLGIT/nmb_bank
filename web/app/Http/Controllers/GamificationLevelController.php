@@ -357,7 +357,7 @@ class GamificationLevelController extends BaseController
         $menus = $this->FillMenu();
         $user_id = $request->session()->get("userID");
         $screens = $menus['screens'];
-        $modules = $menus['modules'];
+        $modules = $menus['modules'];   
 
         session()->flash('show_gif', true);
 
