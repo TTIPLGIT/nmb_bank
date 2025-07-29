@@ -734,7 +734,7 @@ class elearningEthnicTestController extends BaseController
                 ->pluck('course_id')
                 ->toArray();
 
-            return view('elearning.allCourses', compact('Courses', 'availableCourses', 'availableTags', 'search', 'sort', 'tagFilter', 'progressFilter', 'modules', 'screens', 'menus', 'courseProgress', 'wishlistedCourseIds'));
+            return view('elearning.allCourses', compact('Courses', 'availableCourses', 'availableTags', 'search', 'sort', 'tagFilter', 'progressFilter', 'modules', 'screens', 'menus', 'courseProgress', 'wishlistedCourseIds','user_id'));
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
@@ -1966,6 +1966,7 @@ class elearningEthnicTestController extends BaseController
             $course_details = DB::select("SELECT c.*  from elearning_courses as c  where c.course_id =$id and c.drop_course=0");
 
             $course_name = $course_details[0]->course_name;
+            $course_id = $course_details[0]->course_id;
 
             $date = $course_details[0]->course_end_period;
 
@@ -1994,7 +1995,8 @@ class elearningEthnicTestController extends BaseController
                  'date' => Carbon::today()->format('d-m-Y'),
                 'course_name' => $course_name,
                 'name' => $name,
-                'signatories' => $signatories
+                'signatories' => $signatories,
+                'course_id' => $course_id,
 
             ];
 

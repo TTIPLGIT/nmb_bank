@@ -11,7 +11,7 @@
         position: relative;
         width: 716px;
         /* 8.5 inches */
-        height: 612px;
+        height: 650px;
         /* 11 inches */
         align-items: center !important;
         background: #fff;
@@ -75,7 +75,7 @@
     }
 
     .title {
-        margin-top: 40px;
+        margin-top: 2px;
         letter-spacing: 1px;
     }
 
@@ -127,9 +127,7 @@
         color: #888;
     }
 
-    .signatures-row {
-        padding-top: 129px;
-    }
+
 
     .signature {
         width: 45%;
@@ -247,6 +245,22 @@
         height: 100%;
         background-color: #0045a5;
     }
+
+    .nmb-logo {
+        background-color: #004A99;
+        /* NMB blue or choose your color */
+        padding: 10px;
+        display: inline-block;
+        border-radius: 6px;
+        /* Optional: for rounded corners */
+    }
+
+    .nmb-logo img {
+        max-height: 60px;
+        height: auto;
+        display: block;
+        background-color: transparent;
+    }
     </style>
 </head>
 
@@ -261,7 +275,12 @@
 
         <!-- Certificate Body -->
         <div class="certificate-content">
-
+            <div class="nmb-logo">
+                <a href="/">
+                    <img class="img-responsive" src="https://www.nmbbank.co.tz/images/nmb-white-logo.png"
+                        alt="NMB Bank PLC">
+                </a>
+            </div>
 
             <div class="title">
                 <h1>CERTIFICATE</h1>
@@ -278,6 +297,32 @@
             </div>
 
             <div class="date">Held on {{$data['date']}}</div>
+
+            @php
+            use BaconQrCode\Renderer\ImageRenderer;
+            use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+            use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+            use BaconQrCode\Writer;
+
+            use Illuminate\Support\Facades\Crypt;
+
+            $encryptedId = Crypt::encryptString($data['course_id']);
+            $url = route('certificate.verify', $encryptedId);
+
+
+            $renderer = new ImageRenderer(
+            new RendererStyle(75),
+            new SvgImageBackEnd()
+            );
+
+            $writer = new Writer($renderer);
+
+            $svg = $writer->writeString($url);
+
+            $svgBase64 = 'data:image/svg+xml;base64,' . base64_encode($svg);
+            @endphp
+
+            <img src="{{ $svgBase64 }}" alt="QR Code" />
 
 
             <div class="signatures-row">

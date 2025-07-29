@@ -77,7 +77,7 @@
 }
 
 .title {
-    margin-top: 40px;
+    margin-top: 2px;
     letter-spacing: 1px;
 }
 
@@ -186,6 +186,22 @@
     height: auto;
     z-index: 4;
 }
+
+.nmb-logo {
+    background-color: #004A99;
+    /* NMB blue or choose your color */
+    padding: 10px;
+    display: inline-block;
+    border-radius: 6px;
+    /* Optional: for rounded corners */
+}
+
+.nmb-logo img {
+    max-height: 60px;
+    height: auto;
+    display: block;
+    background-color: transparent;
+}
 </style>
 <div class="main-content">
     {{ Breadcrumbs::render('certificate_template.show', $template['certificate_templates_id']) }}
@@ -196,6 +212,7 @@
     @endif
     <section class="section">
         <div class="section-body mt-1">
+
             <h5 style="color:darkblue">{{$template['template_name']}} Certificate Preview</h5>
             <div class="row">
                 <div class="col-12">
@@ -227,11 +244,21 @@
                                     <div class="gold-edge br-gold"></div>
 
                                     <div class="certificate-content">
-                                        <div class="logo">🏢 WARDIERE INC.</div>
+
+                                        <div class="nmb-logo">
+                                            <a href="/">
+                                                <img class="img-responsive"
+                                                    src="https://www.nmbbank.co.tz/images/nmb-white-logo.png"
+                                                    alt="NMB Bank PLC">
+                                            </a>
+                                        </div>
+
                                         <div class="title">
                                             <h1>CERTIFICATE</h1>
                                             <h2>OF PARTICIPATION</h2>
                                         </div>
+
+
 
                                         <div class="given">GIVEN TO</div><br><br><br>
                                         <div class="name">Margarita Perez</div>
@@ -242,6 +269,33 @@
                                         </div>
 
                                         <div class="date">Held on "16 December 2023"</div>
+
+
+
+                                        @php
+                                        use BaconQrCode\Renderer\ImageRenderer;
+                                        use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+                                        use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+                                        use BaconQrCode\Writer;
+
+
+
+                                        $renderer = new ImageRenderer(
+                                        new RendererStyle(50),
+                                        new SvgImageBackEnd()
+                                        );
+
+                                        $writer = new Writer($renderer);
+
+                                        $svg = $writer->writeString('https://www.nmbbank.co.tz/');
+                                        @endphp
+
+                                        <div>
+
+                                            {!! $svg !!}
+                                        </div>
+
+
 
                                         <div class="signatures">
                                             <div class="signature"><br><br><br>

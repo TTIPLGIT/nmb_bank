@@ -862,13 +862,13 @@
     .dropdown-container .dropdown .notification-group .notification-tab {
         padding: 0px 25px;
         min-height: 65px;
-        
+
     }
 
     .dropdown-container .dropdown .notification-group .notification-tab:hover {
-       
+
         cursor: pointer;
-        
+
     }
 
     .dropdown-container .dropdown .notification-group .notification-tab:hover .fa,
@@ -876,7 +876,7 @@
     .dropdown-container .dropdown .notification-group .notification-tab:hover .label {
         color: #FFF;
         display: inline-block;
-       
+
     }
 
     .dropdown-container .dropdown .notification-group .notification-tab:hover .label {
@@ -937,8 +937,7 @@
     }
 
     .dropdown-container .dropdown .notification-group.expanded .notification-tab .label {
-        background:#5D6773
-;
+        background: #5D6773;
         border-color: #085a7e;
     }
 
@@ -1212,6 +1211,47 @@
         right: 4px !important;
     }
 
+    .user-level-display {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-weight: bold;
+        background: #eaf6ff;
+        /* soft blue background */
+        color: #1c3f5e;
+        /* dark blue text */
+        padding: 8px 16px;
+        border-radius: 30px;
+        box-shadow: 0 2px 8px rgba(153, 88, 174, 0.3);
+        width: fit-content;
+    }
+
+    .user-level-display i {
+        font-size: 24px;
+        color: #ff9900;
+        /* Medal gold color */
+        margin-right: 8px;
+        animation: shine 1.2s infinite alternate;
+    }
+
+    .user-level-display .level-text {
+        font-family: 'Segoe UI', sans-serif;
+        letter-spacing: 1px;
+    }
+
+    @keyframes shine {
+        from {
+            opacity: 0.8;
+            transform: scale(1);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1.5);
+        }
+    }
+
+
     .no_notification:hover {
         background-color: #5D6773 !important;
     }
@@ -1288,11 +1328,19 @@
                         </li>
                     </ul>
                 </div>
-                <div class="form-inline mr-auto d-md-inline-block d-none" style="color: #2a0245!important; font-weight: 500; font-size: 26px;>
-                    <span style="  class="nav_heading"><b class="">Learning Management
-                        System</b>
-                    <span style="color: #9958ae; right: -90px;position: relative;" class="user_name_nav"></span></span>
+                <div class="form-inline mr-auto d-md-inline-block d-none"
+                    style="color: #2a0245!important; font-weight: 500; font-size: 26px;">
+                    <span style=" class=" nav_heading"><b class="">Learning Management
+                            System</b>
+                        <span style="color: #9958ae; right: -90px;position: relative;"
+                            class="user_name_nav"></span></span>
+
                 </div>
+
+                <div class="user-level-display" id="level-container">
+
+                </div>
+
                 <ul class="navbar-nav navbar-right">
                     <nav class="navigation">
                         <span class="badge badge-light badgeworkflow"
@@ -1301,7 +1349,8 @@
 
                             <li class="left">
                                 <div class="dropdown-container">
-                                    <a href="#" data-dropdown="notificationMenu" id="eleaning_notification" data-toggle="dropdown"
+                                    <a href="#" data-dropdown="notificationMenu" id="eleaning_notification"
+                                        data-toggle="dropdown"
                                         class=" menu-link has-notifications circle nav-link notification-toggle nav-link-lg badges">
                                         <i id="bell" class="far fa-bell notify"></i>
                                         <span class="badge badge-light bell_notification"></span>
@@ -1309,7 +1358,7 @@
                                         <span class="badge badge-danger badge-counter"></span>
 
                                     </a>
-                                     <!-- <a href="#" data-dropdown="notificationMenu"
+                                    <!-- <a href="#" data-dropdown="notificationMenu"
                                         class="menu-link has-notifications circle">
                                         <i class="fa fa-bell notify"></i><span
                                             class="badge badge-light bell_notification"></span>
@@ -1574,6 +1623,21 @@ function notification_fetch() {
         success: function(data) {
             //alert("das");
             console.log(data);
+            var container = $('#level-container');
+
+            // Clear any previous data if needed
+            container.empty();
+
+            // Build new HTML with the returned data
+            var html = `
+       
+            <i id="level" class="${data.level_icon}"></i>
+            <span class="level-text">${data.level_name.toUpperCase()}</span>
+       
+    `;
+
+            // Append it to the container
+            container.append(html);
             var count = data['Elearning_usernotifications_count'][0].countflow;
             var count2 = data['Elearning_expiry_data_count'][0].countflow;
             var totalCount = count + count2;

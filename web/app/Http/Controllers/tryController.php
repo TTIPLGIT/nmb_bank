@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -147,22 +149,12 @@ class tryController extends BaseController
                 ->select('*')
                 ->orderBy('id', 'desc')
                 ->get();
-
-            $rows['elearning_courses'] = DB::table('elearning_courses')
-                ->join('users', 'id', '=', 'elearning_courses.user_ids')
-                ->select('elearning_courses.*', 'users.name as user_name')
-                ->orderBy('elearning_courses.course_id', 'desc')
-                ->get();
-
                 
-        //    dd($rows);
 
-     
-           
             $roles = DB::table('uam_roles')
                 ->select('*')
                 ->get();
-
+                
 
             $rows1 = array();
             $rows1['elearning_courses'] = DB::table('elearning_courses')
@@ -170,7 +162,7 @@ class tryController extends BaseController
                 ->where('drop_course', '0')
                 ->orderBy('course_id', 'desc') // Replace 'created_at' with the column you want to order by
                 ->get();
-
+               
             $rows1['exam_list'] = DB::table('elearning_exam')
                 ->select('*')
                 ->where('elearning_exam.active_flag', '0')
@@ -179,9 +171,9 @@ class tryController extends BaseController
 
             $rows1['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz  AS e left join elearning_localadaptation AS l ON e.quiz_id=l.quiz_id left join elearning_ethnictest AS et ON e.quiz_id=et.quiz_id left join elearning_exam AS el ON e.quiz_id=el.quiz_id WHERE l.quiz_id IS NULL AND et.quiz_id IS NULL and el.quiz_id IS NULL AND e.drop_quiz=0');
 
-            $rows1['certificate_templates'] = DB::select("SELECT * from certificate_templates WHERE active_flag ='0'");
+              $rows1['certificate_templates'] = DB::select("SELECT * from certificate_templates WHERE active_flag ='0'");
 
-
+            
 
             $screens = $menus['screens'];
             $modules = $menus['modules'];
@@ -194,11 +186,11 @@ class tryController extends BaseController
                 ->orderBy('class_id', 'desc')
                 ->get();
 
-
+           
 
             return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'roles', 'user_id', 'rows1', 'rows2'));
         } catch (\Exception $exc) {
-
+          
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
     }
@@ -842,6 +834,11 @@ class tryController extends BaseController
             'course_banner' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
+      $validator = Validator::make($request->all(), [
+            'course_summary' => 'required|mimes:pdf,txt,mp3',
+        ]);
+
+
         if ($validator->fails()) {
             // Validation failed
             return redirect()->back()->with('error', 'Files should be image');
@@ -876,13 +873,13 @@ class tryController extends BaseController
             $data['course_category'] = $request->course_category;
             $data['examname'] = $request->exam_name;
             $data['exam_date'] = $request->exam_date;
+            
 
-
-            $data['cetificate_template'] = $request->cetificate_template;
+             $data['cetificate_template'] = $request->cetificate_template;
             $data['certificate_expiry'] = $request->certificate_expiry;
-            $data['course_expiry_period'] = $request->course_expiry_period;
-            $data['expired_course_id'] = $request->expired_course_id;
-
+             $data['course_expiry_period'] = $request->course_expiry_period;
+               $data['expired_course_id'] = $request->expired_course_id;
+          
             $data['pass_percentage'] = $request->pass_percentage;
 
             $data['course_category'] = $request->course_category_id;
@@ -892,19 +889,19 @@ class tryController extends BaseController
 
 
 
-
+        
             $encryptArray = $data;
 
             $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
 
             $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
-
+            
             // dd( $storagepath_ursb_old);
             if (!File::exists($storagepath_ursb_old)) {
-
+                 
                 File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
             }
-
+          
             $data['introduction_path'] = $storagepath_ursb;
 
             $documentsb =  $request['course_introduction'];
@@ -914,6 +911,10 @@ class tryController extends BaseController
             $proposal_files = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
             $documentsb->move($storagepath_ursb_old, $proposal_files); //storing the file in the system
             $data['course_introduction'] = $proposal_files;
+
+
+              
+
 
             $storagepath_ursb_old1 = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
             $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
@@ -925,19 +926,34 @@ class tryController extends BaseController
             $files = $documentsb->getClientOriginalName();
             $findspace = array(' ', '&', "'", '"');
             $replacewith = array('-', '-');
-            $proposal_files = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
-            $documentsb->move($storagepath_ursb_old1, $proposal_files); //storing the file in the system
-            $data['course_banner'] = $proposal_files;
+            $proposal_files1 = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
+            $documentsb->move($storagepath_ursb_old1, $proposal_files1); //storing the file in the system
+            $data['course_banner'] = $proposal_files1;
+
+
+            $storagepath_ursb_old2 = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
+            $storagepath_ursb2 = '/uploads/course/' . $user_id; //database_location
+            if (!File::exists($storagepath_ursb_old2)) {
+                File::makeDirectory($storagepath_ursb_old2); //folder_creation_when_folder_doesn't_esist
+            }
+            $data['summary_path'] = $storagepath_ursb2;
+            $documentsb =  $request['course_summary'];
+            $files = $documentsb->getClientOriginalName();
+            $findspace = array(' ', '&', "'", '"');
+            $replacewith = array('-', '-');
+            $proposal_files2 = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
+            $documentsb->move($storagepath_ursb_old2, $proposal_files2); //storing the file in the system
+            $data['course_summary'] = $proposal_files2;
             //dd($data);
 
             $encryptArray = $data;
             $request = array();
             $request['requestData'] = $encryptArray;
 
-
+           
 
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/course/store';
-
+           
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
             $menus = $this->FillMenu();
 
@@ -945,10 +961,34 @@ class tryController extends BaseController
             $modules = $menus['modules'];
 
             $response1 = json_decode($response);
-
+           
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
+
+                $ext = strtolower(pathinfo($proposal_files2, PATHINFO_EXTENSION));
+                $originalPath = $storagepath_ursb_old2 . '/' . $proposal_files2;
+                $fileTypeMap = [
+                    'mp3' => 'audio',
+                    'txt' => 'text',
+                    'pdf' => 'pdf'
+                ];
+
+                $file_type = $fileTypeMap[$ext] ?? 'unknown';
+
+                
+                $response = Http::attach(
+                        'file', file_get_contents($originalPath), $proposal_files2
+                    )->post('http://localhost:8000/upload', [
+                        'file_type' => $file_type,
+                         'course_id' => $objData->course_id,
+                        'course_name' => $data['course_name'],
+                        'course_description' => $data['course_description']
+                    ]);
+                    // dd($originalPath,$proposal_files,$objData);
+                    Log::info('API triggered with original file: ' . $ext);
+                    Log::info('API triggered with original file: ' . $response->body());
+                
 
                     return redirect(route('admincourse'))->with('success', 'Course Created Successfully');
                 }
@@ -971,7 +1011,9 @@ class tryController extends BaseController
         }
     }
 
-    public function course_copy(Request $request)
+
+
+      public function course_copy(Request $request)
 
     {
         try {
@@ -1005,6 +1047,7 @@ class tryController extends BaseController
             $rows['data'] = json_decode(json_encode($objData->Data), true);
             $rows['message_cus'] = json_decode(json_encode($objData->response_message), true);
             return $rows;
+         
         } catch (\Exception $exc) {
             // echo $exc;
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
@@ -1128,7 +1171,6 @@ class tryController extends BaseController
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
                         $modules = $menus['modules'];
-
                         return view('elearning.admin.course.admincourse', compact('user_id', 'rows', 'menus', 'screens', 'modules'));
                     }
                 } else {
@@ -1147,7 +1189,7 @@ class tryController extends BaseController
     public function course_fetch(Request $request)
     {
 
-        // $this->WriteFileLog($request);
+        $this->WriteFileLog($request);
         try {
             $this->WriteFileLog("feef");
             $method = 'Method => tryController => course_fetch';
@@ -1169,7 +1211,6 @@ class tryController extends BaseController
             $response1 = json_decode($response);
             $objData = json_decode($this->decryptData($response1->Data));
             $rows = json_decode(json_encode($objData->Data), true);
-            // dd($rows);
             return $rows;
         } catch (\Exception $exc) {
             echo $exc;

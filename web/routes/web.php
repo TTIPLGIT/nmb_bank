@@ -271,6 +271,8 @@ Route::get('/certificate_template', [\App\Http\Controllers\CertifcateTemplateCon
 Route::get('/certificate_template/show/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'show'])->name('certificate_template.show');
 Route::get('/certificate_template/edit/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'edit'])->name('certificate_template.edit');
 Route::Post('/certificate_template/store', [\App\Http\Controllers\CertifcateTemplateController::class, 'store'])->name('certificate_template.store');
+Route::get('/certificate/verify/{id}', [App\Http\Controllers\CertifcateTemplateController::class, 'verify'])->name('certificate.verify');
+
 
 
 Route::post('/designation/bulkdummyupload', [\App\Http\Controllers\DesignationController::class, 'bulkdummyupload'])->name('designation.bulkdummyupload');
@@ -674,6 +676,8 @@ Route::get('/notice/fetch', [App\Http\Controllers\ElearningNoticeBoardController
 
 Route::get('/elearningDashboard', [App\Http\Controllers\elearningdashboardgtController::class, 'dashboard'])->name('elearningDashboard');
 
+Route::get('/your_achievements', [App\Http\Controllers\elearningdashboardgtController::class, 'your_achievements'])->name('your_achievements');
+
 
 //Event
 
@@ -780,3 +784,6 @@ Route::post('/level_create_store', [App\Http\Controllers\GamificationLevelContro
 Route::get('/level_show', [App\Http\Controllers\GamificationLevelController::class, 'show'])->name('level_show');
 Route::post('/level_update',[App\Http\Controllers\GamificationLevelController::class, 'update']) ->name('level_update');
 Route::post('/level_delete',[App\Http\Controllers\GamificationLevelController::class, 'level_delete'])->name('level_delete');
+
+Route::get('/leaderboard',[App\Http\Controllers\GamificationLevelController::class, 'leaderboard'])->name('leaderboard');
+Route::get('/leaderboard/filter', [App\Http\Controllers\GamificationLevelController::class, 'leaderboardcondition'])->name('leaderboard.filter');

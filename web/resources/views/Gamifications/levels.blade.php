@@ -20,8 +20,8 @@
 
 
                     <div class="d-flex justify-content-start  ml-3 mb-3">
-                        <a href="{{ route('level_add_page') }}" class="btn btn-success " style="margin-right:100px">Level <i class="fa fa-plus"
-                                aria-hidden="true"></i></a>
+                        <a href="{{ route('level_add_page') }}" class="btn btn-success "
+                            style="margin-right:100px">Level <i class="fa fa-plus" aria-hidden="true"></i></a>
                     </div>
 
                     <div class="row">
@@ -119,18 +119,25 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="POST" action="{{ route('level_update') }}" enctype="multipart/form-data" id="levels_update">
+                <button type="button" style="color:red;padding:20px" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
                 @csrf
+
                 <input type="hidden" id="level_id" name="level_id">
                 <h4 style="color:black;text-align:center;margin-bottom:20px" id="level_heading">Create Levels</h4>
 
                 <div class="row">
                     <div class="col-6">
                         <label>Level Number<span class="error-star" style="color:red;">*</span></label>
-                        <input type="number" class="form-control default" id="level_number" name="level_number" required>
+                        <input type="number" class="form-control default" id="level_number" name="level_number"
+                            required>
                     </div>
                     <div class="col-6">
                         <label>Level Name<span class="error-star" style="color:red;">*</span></label>
-                        <input type="text" class="form-control default" id="level_name" name="level_name" min="0" step="1">
+                        <input type="text" class="form-control default" id="level_name" name="level_name" min="0"
+                            step="1">
+
+
                     </div>
 
                 </div>
@@ -138,12 +145,12 @@
                 <div class="row mt-3">
                     <div class="col-6">
                         <label>Minimum Point<span class="error-star" style="color:red;">*</span></label>
-                        <input type="number" class="form-control default" id="min_point" name="min_point" min="{{ $level['min_point'] }}" step="1">
+                        <input type="number" class="form-control default" id="min_point" name="min_point" step="1">
 
                     </div>
                     <div class="col-6">
                         <label>Maximum Point <span class="error-star" style="color:red;">*</span></label>
-                        <input type="number" class="form-control default" id="max_point" name="max_point" min="{{ $level['max_point'] }}"  step="1">
+                        <input type="number" class="form-control default" id="max_point" name="max_point" step="1">
                     </div>
 
                 </div>
@@ -158,7 +165,8 @@
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="d-flex justify-content-center gap-2" style="margin-bottom:20px">
-                            <button type="submit" id="updateButton" class="btn btn-success" onclick="gencre(event)">Submit</button>
+                            <button type="submit" id="updateButton" class="btn btn-success"
+                                onclick="gencre(event)">Submit</button>
                             <a class="btn btn-danger btn-lg" href="{{ route('level_master_page') }}">Back</a>
                         </div>
                     </div>
