@@ -1461,6 +1461,12 @@
                                 <span>Quiz</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('your_achievements') }}" class="nav-link sidebar_links">
+                                <i class="sidebar-icons bi bi-trophy-fill" aria-hidden="true"></i>
+                                <span>Achievements</span>
+                            </a>
+                        </li>
                         @endif
                         <!-- <li>
                             <a href="{{ route('elearningAssessment') }}" class="nav-link sidebar_links">
