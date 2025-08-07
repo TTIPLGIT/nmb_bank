@@ -4,7 +4,7 @@
 <style>
     .main-content {
         background: linear-gradient(to right, #000428, #004e92);
-        color: BLACK;
+        color: white;
 
     }
 
@@ -347,6 +347,28 @@
         color: black;
         border-bottom: 1px solid #ddd;
     }
+
+    i#font-color {
+        color: red;
+    }
+
+    @keyframes zoomPulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.3);
+        }
+    }
+
+    .zoom-blink {
+        animation: zoomPulse 1.5s ease-in-out infinite;
+        color: orange;
+        font-size: 30px;
+    }
 </style>
 
 <div class="main-content">
@@ -355,8 +377,8 @@
             <div id="main-content">
                 <div class="d-flex justify-content-center">
                     <div class="leaderboard-title d-flex align-items-center gap-2">
-                        <img src="/images/leaderboard/leaderboard.png" style="height: 40px; width: 40px; margin-right:10px " alt="Crown" />
-                        <span style="font-size: 28px; font-weight: bold; color: white;">Leaderboard</span>
+                        <img src="/images/leaderboard/leaderboard.png" style="height: 30px; width: 40px; margin-right:10px " alt="Crown" />
+                        <span style="font-size: 28px; font-weight: bold;">Leaderboard</span>
                     </div>
                 </div>
                 <div class="container dropdown-wrapper">
@@ -458,6 +480,7 @@
                     <div class="podium d-flex justify-content-center">
 
                         <div class="podium d-flex justify-content-center">
+
                             @if(isset($rows['top3'][1]))
                             <div id="second-place"
                                 class="podium-card second position-relative text-center"
@@ -466,10 +489,18 @@
                                 style="cursor: pointer;"
                                 data-name="{{ $rows['top3'][1]->name }}"
                                 data-points="{{ $rows['top3'][1]->total_points }}"
+                                data-hours="{{ $rows['top3'][1]->total_hours ?? 0 }}"
                                 data-img="{{ getProfileImage($rows['top3'][1]) }}"
-                                data-userid="{{ $rows['top3'][1]->id }}">
+                                data-userid="{{ $rows['top3'][1]->id }}"
+                                data-level="{{ $rows['top3'][1]->level_name ?? 'N/A' }}"
+                                data-streak="{{ $rows['top3'][1]->streak_name ?? 'N/A' }}"
+                                data-badge="{{ $rows['top3'][1]->badge_name ?? 'N/A' }}"
+                                data-badge_icon="{{ $rows['top3'][1]->badge_icon ?? 'N/A' }}"
+                                data-icon="{{ $rows['top3'][1]->streak_icon ?? 'N/A' }}"
+                                data-level_icon="{{ $rows['top3'][1]->level_icon ?? 'N/A' }}">
 
                                 <img id="second-img"
+
                                     src="{{ getProfileImage($rows['top3'][1]) }}"
                                     class="profile-img" />
                                 <h6 id="second-name">{{ $rows['top3'][1]->name }}</h6>
@@ -477,7 +508,6 @@
 
                                 @if(isset($rows['metric_type']) && $rows['metric_type'] === 'hours')
                                 <span class="score" id="second-hours">{{ $rows['top3'][1]->total_hours }} Hours</span>
-
                                 @endif
 
                                 <img src="/images/leaderboard/2nd.png" class="rank-badge" />
@@ -493,28 +523,33 @@
                                 style="cursor: pointer;"
                                 data-name="{{ $rows['top3'][0]->name }}"
                                 data-points="{{ $rows['top3'][0]->total_points }}"
+                                data-hours="{{ $rows['top3'][0]->total_hours ?? 0 }}"
                                 data-img="{{ getProfileImage($rows['top3'][0]) }}"
-                                data-userid="{{ $rows['top3'][0]->id }}">
+                                data-userid="{{ $rows['top3'][0]->id }}"
+                                data-level="{{ $rows['top3'][0]->level_name ?? 'N/A' }}"
+                                data-streak="{{ $rows['top3'][0]->streak_name ?? 'N/A' }}"
+                                data-badge="{{ $rows['top3'][0]->badge_name ?? 'N/A' }}"
+                                data-badge_icon="{{ $rows['top3'][0]->badge_icon ?? 'N/A' }}"
+                                data-icon="{{ $rows['top3'][0]->streak_icon ?? 'N/A' }}"
+                                data-level_icon="{{ $rows['top3'][0]->level_icon ?? 'N/A' }}">
 
                                 <img src="/images/leaderboard/crown.png" class="crown" />
-                                <img id="first-img"
-                                    src="{{ getProfileImage($rows['top3'][0]) }}"
-                                    class="profile-img" />
+                                <img id="first-img" src="{{ getProfileImage($rows['top3'][0]) }}" class="profile-img" />
                                 <h6 id="first-name">{{ $rows['top3'][0]->name }}</h6>
-                                <span class="score" id="first-points">{{ $rows['top3'][0]->total_points }} </span> Points
-                                <br>
+                                <span class="score" id="first-points">{{ $rows['top3'][0]->total_points }}</span> Points<br>
+
                                 @if(isset($rows['metric_type']) && $rows['metric_type'] === 'hours')
-                                <span class="score" id="first-hours">{{ $rows['top3'][0]->total_hours }} </span>Hours
-
+                                <span class="score" id="first-hours">{{ $rows['top3'][0]->total_hours }} Hours</span>
                                 @endif
-
 
                                 <img src="/images/leaderboard/1st.png" class="rank-badge" />
                             </div>
                             @endif
 
 
+
                             @if(isset($rows['top3'][2]))
+
                             <div id="third-place"
                                 class="podium-card third position-relative text-center"
                                 data-toggle="modal"
@@ -522,24 +557,33 @@
                                 style="cursor: pointer;"
                                 data-name="{{ $rows['top3'][2]->name }}"
                                 data-points="{{ $rows['top3'][2]->total_points }}"
+                                data-hours="{{ $rows['top3'][2]->total_hours ?? 0 }}"
                                 data-img="{{ getProfileImage($rows['top3'][2]) }}"
-                                data-userid="{{ $rows['top3'][2]->id }}">
+                                data-userid="{{ $rows['top3'][2]->id }}"
+                                data-level="{{ $rows['top3'][2]->level_name ?? 'N/A' }}"
+                                data-streak="{{ $rows['top3'][2]->streak_name ?? 'N/A' }}"
+                                data-badge="{{ $rows['top3'][2]->badge_name ?? 'N/A' }}"
+                                data-badge_icon="{{ $rows['top3'][2]->badge_icon ?? 'N/A' }}"
+                                data-icon="{{ $rows['top3'][2]->streak_icon ?? 'N/A' }}"
+                                data-level_icon="{{ $rows['top3'][2]->level_icon ?? 'N/A' }}">
 
                                 <img id="third-img"
                                     src="{{ getProfileImage($rows['top3'][2]) }}"
                                     class="profile-img" />
+
                                 <h6 id="third-name">{{ $rows['top3'][2]->name }}</h6>
                                 <span class="score" id="third-points">{{ $rows['top3'][2]->total_points }}</span> Points
+
+                                @if($rows['metric_type'] === 'hours')
                                 <br>
-
-                                @if(isset($rows['metric_type']) && $rows['metric_type'] === 'hours')
                                 <span class="score" id="third-hours">{{ $rows['top3'][2]->total_hours }} Hours</span>
-
                                 @endif
 
+                                <br>
                                 <img src="/images/leaderboard/3rd.png" class="rank-badge" />
                             </div>
                             @endif
+
 
                         </div>
 
@@ -551,49 +595,52 @@
             </div>
 
             <div class="table-wrapper">
-
                 <table class="leaderboard-table">
                     <thead>
                         <tr>
-                            <th style="padding-left:50px; width: 50px;">Rank</th>
-                            <th style="padding-left:130px;">Name</th>
-                            <th style="padding-left:280px;">Points</th>
+                            <th style="padding-left: 20px; width: 70px;">Rank</th>
+                            <th style="padding-left: 10px; text-align: left;">Name</th>
+                            <th style="padding-left: 320px; text-align:left;">Points</th>
                             @if($rows['metric_type'] === 'hours')
-                            <th style="padding-left:100px;">Hours</th>
+                            <th style="padding-left: 80px; text-align: right;">Hours</th>
                             @endif
-
                         </tr>
-
+                    </thead>
                 </table>
-
 
                 @php
                 $remainingUsers = $rows['leaderboard']->skip(3);
                 @endphp
 
                 <div class="leaderboard-scroll {{ count($remainingUsers) > 3 ? 'scroll-enabled' : '' }}">
-                    <table class="leaderboard-table ">
+                    <table class="leaderboard-table">
                         <tbody id="rankTableBody">
                             @foreach($remainingUsers as $key => $value)
+
                             <tr class="leaderboard-row"
                                 data-toggle="modal"
                                 data-target="#profile_details"
                                 style="cursor: pointer;"
                                 data-name="{{ $value->name }}"
                                 data-points="{{ $value->total_points }}"
-                                data-img="{{ $value->profile_image ? config('setting.base_url') . $value->profile_image : config('setting.base_url') . 'images/empty.jpg' }}">
-                                <th style="padding-left:50px; width: 50px;">{{ $key + 1 }}</th>
-                                <th style="padding-left:150px;">{{ $value->name }}</th>
-                                <th style="padding-right:6px;">{{ $value->total_points }}</th>
+                                data-hours="{{ $value->total_hours ?? 0 }}"
+                                data-img="{{ $value->profile_image ? config('setting.base_url') . $value->profile_image : config('setting.base_url') . 'images/empty.jpg' }}"
+                                data-level="{{ $value->level_name ?? 'N/A' }}"
+                                data-streak="{{ $value->streak_name ?? 'N/A' }}"
+                                data-badge="{{ $value->badge_name ?? 'N/A' }}"
+                                data-badge_icon="{{ $value->badge_icon ?? 'N/A' }}"
+                                data-icon="{{ $value->streak_icon ?? 'N/A' }}"
+                                data-level_icon="{{ $value->level_icon ?? 'N/A' }}">
+
+                                <th style="padding-left: 20px; width: 70px;">{{ $key + 4 }}</th>
+                                <th style="padding-left: 10px; text-align: left;">{{ $value->name }}</th>
+                                <th style="padding-left: 200px; text-align: left;">{{ $value->total_points }}</th>
+
                                 @if($rows['metric_type'] === 'hours')
-                                <th style="padding-left:1px;">{{ $value->total_hours ?? 0 }}</th>
+                                <th style="padding-left: 80px; text-align: right;">{{ $value->total_hours ?? 0 }}</th>
                                 @endif
-
-
-
                             </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
@@ -614,27 +661,144 @@
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 
 <!-- Profile Modal -->
-<div class="modal fade" id="profile_details" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true" style="height:500px; margin-top:-100px;">
-    <div class="modal-dialog modal-dialog-centered" style="margin-top: 10px;">
-        <div class="modal-content rounded-4" style="margin-top: 10px; box-shadow: none; border: none;">
 
-            <div class="modal-header border-0" style="background-color:white;margin-top:-150px">
-                <h5 class="modal-title" id="profileModalLabel">User Profile</h5>
-                <button type="button"
-                    style="color: red; font-size: 24px; border: none; padding: 10px; margin-top: -150px; margin-right: 10px; background-color: transparent;"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-hidden="true">
-                    &times;
-                </button>
+<div class="modal fade" id="profile_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content border-0 p-4">
+            <div class="card-body position-relative">
+
+                <!-- Close Button -->
+                <button type="button" style="color: red; margin-top: -130px; font-size: 24px; padding: 20px; margin-right: -30px; background: transparent; border: none; outline: none; box-shadow: none;" id="filterclose" class="close" data-dismiss="modal" aria-hidden="true" onfocus="this.blur();">&times;</button>
+
+                <!-- User Profile Content -->
+                <div class="text-center" style="margin-top:-50px;border-radius:10px; background-color: #f2f2f2;">
+                    <img id="modal-profile-img" src="/images/empty.jpg" class=""
+                        style="width: 100px; height: 100px;margin-top:-50px; object-fit: cover; border: 4px solid #fff;;border-radius:20px" />
+                    <h1 class="mt-3 fw-semibold" id="modal-name"></h1>
+
+                    <!-- Level Info -->
+                    <div class="d-flex justify-content-center align-items-center gap-2 text-center mt-2" style="padding-bottom:10px">
+                        @if(!empty($currentUserRank['level_name']))
+                        <div>
+                            <h4 class="fw-bold modal-level_name">{{ $currentUserRank['level_name'] }}</h4>
+                        </div>
+                        <div id="modal-level_icon" style="margin-left: 10px;">
+                            @if(!empty($currentUserRank['level_icon']))
+                            <i class="{{ $currentUserRank['level_icon'] }}" style="font-size: 32px; color: orange;"></i>
+                            @else
+                            <i class="fas fa-star" style="color: yellow; font-size: 14px;"></i>
+                            @endif
+                        </div>
+                        @endif
+                    </div>
+
+
+                </div>
+
+                <!-- Info Cards -->
+                <div class=" mt-4 g-2 px-2" style="border-radius:10px; background-color: #f2f2f2;">
+                    <!-- Total Points -->
+                    <!-- Stats Container -->
+
+                    @php
+                    // Check if 'hours' should be shown
+                    $showHours = isset($rows['metric_type']) && $rows['metric_type'] === 'hours';
+
+                    // Set column width based on how many items to show
+                    $colWidth = $showHours ? 'col-4' : 'col-6';
+                    @endphp
+
+                    <div class="row justify-content-center text-center align-items-center g-3 mt-2">
+
+                        <!-- Total Points -->
+                        <div class="{{ $colWidth }}">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="/images/points_images.png" style="height: 100px; width: 100px;" class="me-2" />
+                                <div class="text-start ps-3">
+                                    <h5>Total Points</h5>
+                                    <h2 class="fw-bold" id="modal-points">0</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Total Hours (if applicable) -->
+                        @if($showHours)
+                        <div class="{{ $colWidth }}">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="/images/hours_images.png" style="height: 100px; width: 100px;" class="me-2" />
+                                <div class="text-start ps-3">
+                                    <h5>Total Hours</h5>
+                                    <h2 class="fw-bold" id="modal-hours">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Level -->
+                        <div class="{{ $colWidth }}">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="/images/levels_images.png" style="height: 100px; width: 100px;padding-top:4px;" class="me-2" />
+                                <div class="text-start ps-3">
+                                    <h5>Level</h5>
+                                    <h2 class="fw-bold modal-level_name" style="color: black;">
+                                        {{ $currentUserRank['level_name'] ?? 'N/A' }}
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Streaks -->
+                    @if(isset($rewardsGrouped['streak']) && count($rewardsGrouped['streak']) > 0)
+                    <div class="col-12 mb-3">
+                        <div class="py-2 px-3" style="border-top: 3px solid #b9b6b6ff;">
+                            <h2 class="text-center mb-2">🔥 Streaks</h2>
+
+
+                            <div class="w-100 text-center">
+                                <div id="streak-container"
+                                    class="d-inline-flex gap-3"
+                                    style="max-height: 120px; overflow-x: auto;">
+                                    <!-- Dynamic streaks will be inserted here -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    @endif
+
+
+
+                    <!-- Badges -->
+                    @if(isset($rewardsGrouped['badge']) && count($rewardsGrouped['badge']) > 0)
+                    <div class="col-12 mb-3">
+                        <div class="py-2 px-3" style="border-top: 3px solid #b9b6b6ff;">
+                            <h2 class="text-center mb-2">🏅 Badges</h2>
+
+                            <div class="w-100 text-center">
+                                <div id="badge-container"
+                                    class="d-inline-flex gap-3"
+                                    style="max-height: 120px; overflow-x: auto;">
+                                    <!-- Dynamic badge items will be inserted here -->
+                                    @foreach($rewardsGrouped['badge'] as $badge)
+                                    <div class="text-center" style="min-width: 100px;">
+                                        <div style="font-size: 28px;">
+                                            {!! $badge->icon ?? '🏅' !!}
+                                        </div>
+                                        <div class="fw-bold small mt-1">{{ $badge->name ?? 'Badge' }}</div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
+                </div>
+
             </div>
-
-            <div class="modal-body text-center">
-                <img id="modal-profile-img" src="" class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;" />
-                <h5 id="modal-name" class="fw-bold mb-2"></h5>
-                <p class="mb-0">Total Points: <span id="modal-points"></span></p>
-            </div>
-
         </div>
     </div>
 </div>
@@ -642,9 +806,7 @@
 
 
 
-
 <!-- filter modal -->
-
 
 <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -724,7 +886,7 @@
                                 </button>
                             </div>
 
-                            <input type="hidden" id="metric_type" value="points">
+                            <input type="hidden" id="metric_type" value="{{$metricType}}">
                             <div class="modal-footer  border-top-0">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clearForm()">Clear</button>
 
@@ -774,6 +936,7 @@
             success: function(response) {
                 updatePodium(response.top3);
                 updateLeaderboardTable(response.rankList);
+
             },
             error: function(xhr) {
                 console.error('AJAX Error:', xhr.responseText);
@@ -793,10 +956,12 @@
             const imgPath = user && user.profile_image ? baseUrl + user.profile_image : baseUrl + 'images/empty.jpg';
             $('#' + positions[i] + '-img').attr('src', imgPath);
 
-            $('#podium-card-' + (i + 1))
+            $(`#${positions[i]}-place`)
                 .attr('data-name', user ? user.name : '')
                 .attr('data-points', user ? user.total_metric : '')
                 .attr('data-img', imgPath);
+
+
         }
     }
 
@@ -902,19 +1067,134 @@
 
             applyFilter(filterType);
         });
-
         $(document).on('click', '.podium-card, .leaderboard-row', function() {
-            const name = $(this).data('name') || 'N/A';
-            const points = $(this).data('points') || 0;
-            const img = $(this).data('img') || (baseUrl + 'images/empty.jpg');
+            const name = $(this).attr('data-name') || 'N/A';
+            const points = $(this).attr('data-points') || 0;
+            const hours = $(this).attr('data-hours') || 0;
+            const img = $(this).attr('data-img') || (baseUrl + 'images/empty.jpg');
+            const level = $(this).attr('data-level') || 'N/A';
+
+            const userId = parseInt($(this).attr('data-userid'));
+            const streak = $(this).attr('data-streak') || 'N/A';
+            const badge = $(this).attr('data-badge') || 'N/A';
+            const streak_icon = $(this).attr('data-icon') || '';
+            const badge_icon = $(this).attr('data-badge_icon') || '';
+            const level_icon = $(this).attr('data-level_icon') || '';
+            HandleStreakUpdate(userId);
+
+
 
             $('#modal-name, #modalProfileName').text(name);
             $('#modal-points, #modalProfilePoints').text(points);
+            $('#modal-hours').text(hours);
             $('#modal-profile-img, #modalProfileImage').attr('src', img);
+            $('.modal-level_name').text(level);
+
+            if (level_icon && level_icon !== 'N/A') {
+                $('#modal-level_icon').html(`
+<i class="${level_icon} zoom-blink" style="font-size: 24px;"></i>`);
+            } else {
+                $('#modal-level_icon').text('Not Available');
+            }
+
+            if (userId === rewardUserId) {
+                $('#modal-streak_name').text(streak);
+                $('#modal-badge_name').text(badge);
+
+                if (streak_icon && streak_icon !== 'N/A') {
+                    $('#modal-streak_icon').html(`<i class="${streak_icon}"></i>
+`);
+                } else {
+                    $('#modal-streak_icon').text('N/A');
+                }
+
+                if (badge_icon && badge_icon !== 'N/A') {
+                    $('#modal-badge_icon').html(`<i class="${badge_icon}" style="font-size: 24px;"></i>`);
+                } else {
+                    $('#modal-badge_icon').text('N/A');
+                }
+            } else {
+                $('#modal-streak_name').text('N/A');
+                $('#modal-badge_name').text('N/A');
+                $('#modal-streak_icon').text('N/A');
+                $('#modal-badge_icon').text('N/A');
+            }
 
             $('#profile_details').modal('show');
         });
+
+        const groupedStreaks = @json($rewardsGrouped['streak'] ?? []);
+        const groupedBadge = @json($rewardsGrouped['badge'] ?? []);
+
+        function HandleStreakUpdate(userId) {
+
+            const filteredStreaks = groupedStreaks.filter(streak => streak.user_id == userId);
+
+            const streakContainer = document.querySelector('#streak-container');
+            let streaksHTML = '';
+
+            filteredStreaks.forEach(streak => {
+                const iconHTML = streak.icon ?
+                    `<i class="${streak.icon} zoom-blink " style="font-size: 30px; color:gold;"></i>` :
+                    'N/A';
+
+
+                streaksHTML += `
+                <div class="text-center flex-shrink-0">
+                  <div>${iconHTML}
+                  </div>
+                    <h5 style="padding-left:25px;" class="mt-2">
+                        ${streak.reward_name || 'N/A'}
+                    </h5>
+                </div>`;
+            });
+
+            streakContainer.innerHTML = streaksHTML || `
+    <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+        <div class="text-center">No streaks found</div>
+    </div>
+`;
+
+            const filteredBadges = groupedBadge.filter(badge => badge.user_id == userId);
+
+            const badgeContainer = document.querySelector('#badge-container');
+            let badgesHTML = '';
+
+            filteredBadges.forEach(badge => {
+                const iconHTML = badge.icon ?
+                    `<i class="${badge.icon}  zoom-blink" style="font-size:30px; color:#008080;"></i>` :
+                    'N/A';
+
+                badgesHTML += `
+              <div class="text-center flex-shrink-0">
+    <div > 
+        ${iconHTML}
+    </div>
+    <h5 style="padding-left: 25px;" class="mt-2">
+        ${badge.reward_name || 'N/A'}
+    </h5>
+</div>
+
+`;
+            });
+
+            badgeContainer.innerHTML = badgesHTML || `
+    <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+        <div class="text-center">No Badge found</div>
+    </div>
+`;
+        }
+
     });
+</script>
+
+
+<script>
+    const rewardUserId = {
+        {
+            $rewardedUserId ?? 'null'
+        }
+    };
 </script>
 
 
