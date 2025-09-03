@@ -37,7 +37,7 @@
 
 
         <div class="section-body mt-2">
-           
+
             @if(strpos($screen_permission['permissions'], 'Create') !== false)
             <a type="button" style="font-size:15px;" class="btn btn-success btn-lg"
                 href="{{ route('designation.create') }}">Create</a>
@@ -101,6 +101,7 @@
                                         <thead>
                                             <tr>
                                                 <th>S.No</th>
+                                                <th>Role</th>
                                                 <th>Designation Name</th>
                                                 <th>Action</th>
                                             </tr>
@@ -108,8 +109,9 @@
                                         <tbody>
                                             @foreach($rows as $key => $row)
                                             <tr>
-                                                <td>{{ ++$key }}</td>
 
+                                                <td>{{ ++$key }}</td>
+                                                <td>{{ $row['role_name'] }}</td>
                                                 <td>{{ $row['designation_name'] }}</td>
 
                                                 <td class="text-center">

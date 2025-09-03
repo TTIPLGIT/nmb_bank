@@ -22,7 +22,8 @@
     }
 </style>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
 <div class="main-content">
     <section class="section">
@@ -71,10 +72,25 @@
                                         <label>Number of Course to achieve this Badge<span class="text-danger">*</span></label>
                                         <input type="number" class="form-control" name="badge_count" id="badge_count">
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <!-- <div class="form-group col-md-4">
                                         <label>Badge Icon<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="badge_icon" id="badge_icon">
+                                    </div> -->
+                                   
+                                    <div class="form-group col-md-4">
+                                        <label>Badge Icon <span class="text-danger">*</span></label>
+                                        <select class="form-control" data-live-search="true" name="badge_icon" id="badge_icon" style="width:100%">
+                                            <option value="">-- Select Badge Icon --</option>
+                                            @foreach($icons as $icon)
+                                                <option value="{{ $icon->icon }}">
+                                                    {{ $icon->icon}}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
+
+
+
                                 </div>
                                 <div class="form-group col-6">
 
@@ -126,9 +142,20 @@
                                     </div>
 
 
-                                    <div class="form-group col-6">
+                                    <!-- <div class="form-group col-6">
                                         <label>Streak Icon <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="streak_icon" id="achieve_icon">
+                                    </div> -->
+                                    <div class="form-group col-md-4">
+                                        <label>Streak Icon <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="streak_icon" id="achieve_icon" required>
+                                            <option value="">-- Select Streak Icon --</option>
+                                            @foreach($icons as $icon)
+                                            <option value="{{ $icon->icon }}">
+                                                <i class="{{ $icon->icon }}"></i> {{$icon->icon}}
+                                            </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
@@ -174,6 +201,11 @@
 
 <!-- JS -->
 <script>
+
+    $(document).ready(function() {
+    $('.selectpicker').selectpicker();
+});
+
     function gencre(event) {
         event.preventDefault();
 
@@ -270,13 +302,13 @@
             }
         }
 
-    
 
 
 
 
-    // Submit if all validations pass
-    $("#catagory_submit").submit();
+
+        // Submit if all validations pass
+        $("#catagory_submit").submit();
     }
 
     function toggleBadgeFields() {

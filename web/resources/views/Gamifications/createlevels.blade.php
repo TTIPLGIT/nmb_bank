@@ -64,13 +64,25 @@
 
 
                                         </div>
-                                        <div class="row mt-3">
-                                            <div class="col-6">
-                                                <label>Level Icons<span class="error-star" style="color:red;">*</span></label>
-                                                <input type="text" class="form-control default" id="level_icon" name="level_icon">
-                                            </div>
 
+                                        <!-- <div class="col-6">
+                                            <label>Level Icons<span class="error-star" style="color:red;">*</span></label>
+                                            <input type="text" class="form-control default" id="level_icon" name="level_icon">
+                                        </div> -->
+
+                                        <div class="col-6">
+                                            <label>Level Icon <span class="text-danger">*</span></label>
+                                            <select class="form-control selectpicker" data-live-search="true" id="level_icon" name="level_icon" required>
+                                                <option value="">-- Select Level Icon --</option>
+                                                @foreach($icons as $icon)
+                                                <option value="{{ $icon->icon }}" data-content="<i class='{{ $icon->icon }}'></i> {{ $icon->icon_name }}">
+                                                    {{ $icon->icon }}
+                                                </option>
+                                                @endforeach
+                                            </select>
                                         </div>
+
+
 
                                         <div class="row mt-4">
                                             <div class="col-12">
@@ -105,7 +117,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 <script>
     function gencre(event) {
-        event.preventDefault(); 
+        event.preventDefault();
 
         let existingLevels = @json($allRecords['levels']);
 
@@ -118,7 +130,7 @@
         var min_point = parseInt(min_point_val);
         var max_point = parseInt(max_point_val);
 
-      
+
         if (level_number === '') {
             Swal.fire("Please enter the Level Number", "", "error");
             return false;
@@ -140,13 +152,13 @@
             return false;
         }
 
-     
+
         if (!isNaN(min_point) && !isNaN(max_point) && min_point > max_point) {
             Swal.fire("Minimum Point should not be greater than Maximum Point", "", "error");
             return false;
         }
 
-     
+
         let conflict = existingLevels.some(level => {
             return level.min_point == min_point || level.max_point == max_point;
         });
@@ -156,7 +168,7 @@
             return false;
         }
 
-    
+
         $('#classsavebutton').css('pointer-events', 'none');
         document.getElementById("levels_submit").submit();
     }

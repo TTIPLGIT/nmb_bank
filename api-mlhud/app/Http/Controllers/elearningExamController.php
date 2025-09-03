@@ -22,13 +22,25 @@ class elearningExamController extends BaseController
             $method = 'Method =>  elearningExamController => index';
             $rows['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz  AS e left join elearning_localadaptation AS l ON e.quiz_id=l.quiz_id left join elearning_ethnictest AS et ON e.quiz_id=et.quiz_id left join elearning_classes AS ec ON e.quiz_id=ec.quiz_id WHERE l.quiz_id IS NULL AND et.quiz_id IS NULL and ec.quiz_id IS NULL AND e.drop_quiz=0');
             $rows['user_category'] = array(
-                'Graduate Trainee' => config('setting.roles.Student'),
-                'Professional Member' => config('setting.roles.Teacher'),
+                'Employee' => config('setting.roles.Student'),
+                'Manager' => config('setting.roles.Teacher'),
             );
             $this->WriteFileLog($rows);
 
 
-            $rows['quiz_list'] = DB::select('SELECT et.id,et.user_category,ur.role_name,et.exam_name,et.quiz_id,eq.quiz_name from elearning_exam as et inner join elearning_practice_quiz as eq  on eq.quiz_id = et.quiz_id INNER JOIN uam_roles AS ur ON ur.role_id = et.user_category where et.active_flag=0');
+            $rows['quiz_list'] = DB::select('
+    SELECT et.id, et.user_category, ur.role_name, et.exam_name, et.quiz_id, eq.quiz_name
+    FROM elearning_exam AS et
+    INNER JOIN elearning_practice_quiz AS eq ON eq.quiz_id = et.quiz_id
+    INNER JOIN uam_roles AS ur ON ur.role_id = et.user_category
+    WHERE et.active_flag = 0
+    ORDER BY et.id DESC
+');
+            $rows['quiz_dropdown'] = DB::table('elearning_practice_quiz as eq')
+                ->where('eq.drop_quiz', 0)
+                ->select('eq.quiz_id', 'eq.quiz_name')
+                ->get()
+                ->toArray();
 
 
             $response = [
@@ -66,9 +78,7 @@ class elearningExamController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $id)
-    {
-    }
+    public function create(Request $request, $id) {}
 
     /**
      * Store a newly created resource in storage.

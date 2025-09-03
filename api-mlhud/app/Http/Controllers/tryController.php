@@ -831,6 +831,7 @@ class tryController extends BaseController
 
         try {
             $method = 'Method => add course => course_store';
+         
             $inputArray = $request->requestData;
             $user_id = (auth()->check()) ? auth()->user()->id : $inputArray['user_id'];
 
@@ -896,9 +897,9 @@ class tryController extends BaseController
                 'expired_course_id' => $inputArray['expired_course_id'],
 
             ];
+// $this->WriteLog($input);
 
-
-
+// dd("welcome");
             $update_id = DB::transaction(function () use ($input) {
                 return DB::table('elearning_courses')
                     ->insertGetId([

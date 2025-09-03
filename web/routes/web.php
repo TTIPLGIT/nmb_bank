@@ -77,6 +77,7 @@ use App\Http\Controllers\governmentInstructionController;
 use App\Http\Controllers\coursecategoryController;
 
 use App\Http\Controllers\GamificationLevelController;
+use App\Http\Controllers\AttendanceController;
 
 Route::get('/check-openssl', function () {
     if (extension_loaded('openssl')) {
@@ -788,3 +789,6 @@ Route::post('/level_delete',[App\Http\Controllers\GamificationLevelController::c
 Route::get('/leaderboard',[App\Http\Controllers\GamificationLevelController::class, 'leaderboard'])->name('leaderboard');
 Route::post('/leaderboard/filter', [App\Http\Controllers\GamificationLevelController::class, 'leaderboardcondition'])->name('leaderboard.filter');
 Route::get('/leaderboard-data', [App\Http\Controllers\GamificationLevelController::class,'getLeaderboardData']);
+
+Route::get('/attendance_tracking', [App\Http\Controllers\AttendanceController::class,'index']);
+Route::post('/attendance/filter', [AttendanceController::class, 'filter'])->name('attendance.filter');

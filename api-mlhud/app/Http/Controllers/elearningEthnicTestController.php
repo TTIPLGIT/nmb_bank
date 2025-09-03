@@ -871,6 +871,7 @@ class elearningEthnicTestController extends BaseController
                 'base_url' => $base_url,
                 'attach' => $input['attach']
             );
+            // dd($data);
             $this->notifications_insert(null, auth()->user()->id, "Thankyou for completing the course-$course_name and certificate has sent to your mail", "/ethictest");
 
             // Mail::to($data['email'])->send(new coursecertificate($data));

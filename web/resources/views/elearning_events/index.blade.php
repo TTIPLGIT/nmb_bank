@@ -363,9 +363,9 @@
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
                                                         @if($data['user_category']=="42")
-                                                        <td>Student</td>
+                                                        <td>Employee</td>
                                                         @elseif($data['user_category']=="43")
-                                                        <td>Teacher</td>
+                                                        <td>Manager</td>
 
                                                         @else
                                                         <td>All</td>

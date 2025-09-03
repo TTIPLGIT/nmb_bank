@@ -303,8 +303,11 @@ class coursecategoryController extends BaseController
             $catagory_id = $input['catagory_id'];
 
             $rows = DB::select("SELECT * FROM course_catagory WHERE catagory_id = ?", [$catagory_id]);
+         
+        
             $response = [
                 'rows' => $rows,
+             
             ];
 
             $serviceResponse = array();

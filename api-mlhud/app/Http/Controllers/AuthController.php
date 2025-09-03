@@ -898,6 +898,19 @@ class AuthController extends BaseController
 				'status1' => 'logout'
 
 			]);
+		//yash
+		$user_id = auth()->id();
+
+		DB::table('cpt_points_hours_calculate')
+			->where('user_id', $user_id)
+			->whereNull('end_time') 
+			->update([
+				'end_time'   => now(),
+				'updated_at' => now(),
+			]);
+
+
+
 
 		$serviceResponse = array();
 		$serviceResponse['Code'] = config('setting.status_code.unauthenticated');

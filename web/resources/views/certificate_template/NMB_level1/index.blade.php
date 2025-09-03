@@ -256,6 +256,7 @@
                 <div class="col-3">
                     <div class="nmb-logo">
                         <a href="/">
+                            
                             <img class="img-responsive" src="https://www.nmbbank.co.tz/images/nmb-white-logo.png"
                                 alt="NMB Bank PLC">
                         </a>

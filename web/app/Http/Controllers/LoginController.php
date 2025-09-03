@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Stmt\Return_;
 use Psy\Readline\Hoa\Console;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends BaseController
 {
@@ -97,6 +98,7 @@ class LoginController extends BaseController
       $data['Mobile_no'] = $request->Mobile_no;
       $data['password'] = bcrypt($request->password);
       $data['password_confirmation'] = $request->password_confirmation;
+ 
       $mobile = 0;
       if (isset($request->mobile)) {
         $mobile = 1;
@@ -443,7 +445,7 @@ class LoginController extends BaseController
 
 
 
-        $tokenResponse = $this->setToken($input['email'], $input['password'], );
+        $tokenResponse = $this->setToken($input['email'], $input['password'],);
         if ($tokenResponse == 'Failure') {
           if (isset($request->mobile)) {
             return [
@@ -568,22 +570,26 @@ class LoginController extends BaseController
     try {
       $method = 'Method => LoginController => logout';
 
-
       $gatewayURL = config('setting.api_gateway_url') . '/user/logout';
-
       $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
-
-      // echo json_encode($response);exit;
       $response = json_decode($response);
 
+ 
 
 
       $request->session()->invalidate();
       return redirect(url('/'));
     } catch (\Exception $exc) {
-      return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+      return $this->sendLog(
+        $method,
+        $exc->getCode(),
+        $exc->getMessage(),
+        $exc->getTrace()[0]['line'],
+        $exc->getTrace()[0]['file']
+      );
     }
   }
+
 
 
 

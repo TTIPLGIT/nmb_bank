@@ -36,7 +36,7 @@ class elearningExamController extends BaseController
                 return redirect()->route('unauthenticated')->send();
             }
             $rows = json_decode(json_encode($objData->Data), true);
-
+// dd($rows);
             $menus = $this->FillMenu();
 
             if ($menus == "401") {
@@ -44,6 +44,7 @@ class elearningExamController extends BaseController
             }
             $screens = $menus['screens'];
             $modules = $menus['modules'];
+            // dd($rows);
 
             return view('elearningexam.index', compact('user_id', 'rows', 'menus', 'screens', 'modules'));
         } catch (\Exception $exc) {

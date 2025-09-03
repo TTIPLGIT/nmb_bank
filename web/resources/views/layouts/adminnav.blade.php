@@ -1136,6 +1136,7 @@
                     <li class="dropdown drop_bg">
                         <a data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"
                             style=" display:flex; align-items: center;flex-direction:column;">
+                         
                             @if($modules['data'] != "")
 
                             <div style="width: auto;height:auto">

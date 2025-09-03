@@ -184,36 +184,36 @@
                                 class="fa fa-plus" aria-hidden="true"></i></span></a>
                     @if (session('success'))
 
-                        <input type="hidden" name="session_data" id="session_data" class="session_data"
-                            value="{{ session('success') }}">
-                        <script type="text/javascript">
-                            window.onload = function () {
-                                var message = $('#session_data').val();
-                                swal.fire({
-                                    title: "Success",
-                                    text: message,
-                                    icon: "success",
-                                    type: "success",
-                                });
+                    <input type="hidden" name="session_data" id="session_data" class="session_data"
+                        value="{{ session('success') }}">
+                    <script type="text/javascript">
+                        window.onload = function() {
+                            var message = $('#session_data').val();
+                            swal.fire({
+                                title: "Success",
+                                text: message,
+                                icon: "success",
+                                type: "success",
+                            });
 
-                            }
-                        </script>
+                        }
+                    </script>
                     @elseif(session('error'))
 
-                        <input type="hidden" name="session_data" id="session_data1" class="session_data"
-                            value="{{ session('error') }}">
-                        <script type="text/javascript">
-                            window.onload = function () {
-                                var message = $('#session_data1').val();
-                                swal.fire({
-                                    title: "Info",
-                                    text: message,
-                                    icon: "info",
-                                    type: "info",
-                                });
+                    <input type="hidden" name="session_data" id="session_data1" class="session_data"
+                        value="{{ session('error') }}">
+                    <script type="text/javascript">
+                        window.onload = function() {
+                            var message = $('#session_data1').val();
+                            swal.fire({
+                                title: "Info",
+                                text: message,
+                                icon: "info",
+                                type: "info",
+                            });
 
-                            }
-                        </script>
+                        }
+                    </script>
                     @endif
 
 
@@ -242,34 +242,34 @@
 
                                                     @foreach($rows['rows']['quiz_list'] as $data)
 
-                                                        <tr>
-                                                            <td>{{$loop->iteration}}</td>
-                                                            <td>{{$data['role_name']}}</td>
-                                                            <td class="ellipsis">{{$data['exam_name']}}</td>
-                                                            <td class="ellipsis">{{$data['quiz_name']}}</td>
-                                                            <td style="display:flex;justify-content:space-evenly;">
+                                                    <tr>
+                                                        <td>{{$loop->iteration}}</td>
+                                                        <td>{{$data['role_name']}}</td>
+                                                        <td class="ellipsis">{{$data['exam_name']}}</td>
+                                                        <td class="ellipsis">{{$data['quiz_name']}}</td>
+                                                        <td style="display:flex;justify-content:space-evenly;">
 
-                                                                <a class="btn btn-link" title="Edit" id="edit"
-                                                                    onclick="fetch_update({{$data['id']}},'edit')"
-                                                                    data-toggle="modal" data-target="#addModal2"
-                                                                    style="padding-top: 6px;"><i class="fas fa-pencil-alt"
-                                                                        style="color: blue !important;"></i></a>
-                                                                <a class="btn btn-link" id="show"
-                                                                    onclick="fetch_update({{$data['id']}},'show')"
-                                                                    data-toggle="modal" data-target="#addModal3"
-                                                                    style="padding-top: 6px;" title="show"><i
-                                                                        class="fas fa-eye" style="color:green"></i></a>
-
-
-                                                                <button type="submit" title="Delete"
-                                                                    onclick="delete1(({{$data['id']}}))"
-                                                                    class="btn btn-link"><i class="far fa-trash-alt"
-                                                                        style="color:red"></i></button>
+                                                            <a class="btn btn-link" title="Edit" id="edit"
+                                                                onclick="fetch_update({{$data['id']}},'edit')"
+                                                                data-toggle="modal" data-target="#addModal2"
+                                                                style="padding-top: 6px;"><i class="fas fa-pencil-alt"
+                                                                    style="color: blue !important;"></i></a>
+                                                            <a class="btn btn-link" id="show"
+                                                                onclick="fetch_update({{$data['id']}},'show')"
+                                                                data-toggle="modal" data-target="#addModal3"
+                                                                style="padding-top: 6px;" title="show"><i
+                                                                    class="fas fa-eye" style="color:green"></i></a>
 
 
-                                                            </td>
+                                                            <button type="submit" title="Delete"
+                                                                onclick="delete1(({{$data['id']}}))"
+                                                                class="btn btn-link"><i class="far fa-trash-alt"
+                                                                    style="color:red"></i></button>
 
-                                                        </tr>
+
+                                                        </td>
+
+                                                    </tr>
 
                                                     @endforeach
                                                 </tbody>
@@ -322,7 +322,7 @@
                                     <option value="">Select User Category</option>
                                     @foreach($rows['rows']['user_category'] as $key => $row)
 
-                                        <option value="{{ $row }}">{{ $key }}</option>
+                                    <option value="{{ $row }}">{{$key }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -341,10 +341,12 @@
                                         style="color:red;">*</span></label>
                                 <select class="form-control" name="quiz_id" id="quiz_id">
                                     <option value="">Select Quiz Name</option>
+
                                     @foreach($rows['rows']['quiz_dropdown'] as $key => $row)
 
-                                        <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
+                                    <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
                                     @endforeach
+                                 
                                 </select>
                             </div>
                         </div>
@@ -399,7 +401,7 @@
                                     <option value="">Select User Category</option>
                                     @foreach($rows['rows']['user_category'] as $key => $row)
 
-                                        <option value="{{ $row }}">{{ $key }}</option>
+                                    <option value="{{ $row }}">{{ $key }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -420,7 +422,7 @@
                                     <option value="">Select Quiz Name</option>
                                     @foreach($rows['rows']['quiz_dropdown'] as $key => $row)
 
-                                        <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
+                                    <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -475,7 +477,7 @@
                                     <option value="">Select User Category</option>
                                     @foreach($rows['rows']['user_category'] as $key => $row)
 
-                                        <option value="{{ $row }}">{{ $key }}</option>
+                                    <option value="{{ $row }}">{{ $key }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -496,7 +498,7 @@
                                     <option value="">Select Quiz Name</option>
                                     @foreach($rows['rows']['quiz_dropdown'] as $key => $row)
 
-                                        <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
+                                    <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -527,8 +529,8 @@
 
 
 <script>
-    $(document).ready(function () {
-        $(document).on('hidden.bs.modal', function () {
+    $(document).ready(function() {
+        $(document).on('hidden.bs.modal', function() {
             // const form = this.querySelector('.reset');
 
             // form.reset();
@@ -597,11 +599,11 @@
 <script>
     var $j = jQuery.noConflict();
 
-    $j(document).ready(function () {
+    $j(document).ready(function() {
         $j('#quiz_id').select2();
         $j('#quiz_idedit').select2();
         //alert('egeg');
-        $(document).on('change', '#quiz_idedit', function () {
+        $(document).on('change', '#quiz_idedit', function() {
             // alert('fe');
             $j('#quiz_idedit').select2('destroy').select2();
 
@@ -627,7 +629,7 @@
 
             },
 
-            success: function (data) {
+            success: function(data) {
                 console.log(data);
                 if (type == "edit") {
                     $('#user_categoryedit').val(data.rows[0]['user_category']);
@@ -680,7 +682,7 @@
                     },
 
 
-                    success: function (data) {
+                    success: function(data) {
                         console.log(data);
                         if (result.value) {
 
@@ -711,7 +713,7 @@
 
     for (const myModals of myModal) {
 
-        myModals.addEventListener('hidden.bs.modal', function () {
+        myModals.addEventListener('hidden.bs.modal', function() {
 
             const form = this.querySelector('.reset');
 

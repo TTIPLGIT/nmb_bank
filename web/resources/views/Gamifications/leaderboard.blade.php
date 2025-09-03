@@ -381,6 +381,7 @@
                         <span style="font-size: 28px; font-weight: bold;">Leaderboard</span>
                     </div>
                 </div>
+
                 <div class="container dropdown-wrapper">
 
                     <div class="card p-3" style="border: none;">
@@ -392,7 +393,6 @@
                                 data-toggle="modal" data-target="#exampleModal">
                                 <i class="fa fa-filter me-2"></i>
                             </button>
-
 
                             <div class="btn-group" role="group">
                                 <button class="btn bg-white text-dark filter-btn" data-filter="ALL" style="margin-right:10px" onclick="applyFilter('ALL')">ALL</button>
@@ -411,24 +411,25 @@
                 <div class="row d-flex justify-content-center   ">
 
 
-                    @if(session('show_gif'))
                     <div class="gif-overlay">
                         <img src="{{ asset('images/leaderboard/Celebrate.gif') }}" alt="Celebration" />
                     </div>
 
                     <script>
-                        setTimeout(() => {
-                            document.querySelector('.gif-overlay').style.display = 'none';
-                        }, 3000);
+                        document.addEventListener('DOMContentLoaded', function() {
+                            setTimeout(() => {
+                                document.querySelector('.gif-overlay').style.display = 'none';
+                            }, 3000);
+                        });
                     </script>
-                    @endif
-                    @if(isset($filterMessageText))
+
+                    @if(isset($rows['rows']['filterMessageText']))
                     <div id="filterMessageAlert"
                         class="alert alert-success alert-dismissible fade show mx-auto position-relative"
                         role="alert"
                         style="background-color: transparent; color: white;  padding: 10px 20px; width: 100%; text-align: center;">
 
-                        <p class="mb-0">{!! $filterMessageText !!}</p>
+                        <p class="mb-0">{{$rows['rows']['filterMessageText'] }}</p>
                     </div>
 
                     <script>
@@ -446,20 +447,22 @@
                     @endif
 
 
-                    @if(isset($currentUserRank) && session('role_type') !== 'Admin')
+
+                    @if(isset($rows['rows']['currentUserRank']))
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-3 podium-card userscard text-center float-start"
-                                style="cursor: pointer;"
-                                data-toggle="modal"
-                                data-target="#addModal4"
-                                onclick="fetch_show({{ $user_id }}, 'show')">
+                            <div class="col-md-3 userscard text-center float-start"
+                                style="cursor: default; width:200px; height:100px">
 
-                                <img src="/images/leaderboard/rank 2.jpg" alt="{{ $currentUserRank['name'] }}" class="profile-img" />
-
-                                <div class="mt-3  fw-bold">
-                                    🎉 Congratulations <span class="text-success">{{ $currentUserRank['name'] }}</span><br>
-                                    You are ranked <span class="text-success">#{{ $currentUserRank['rank'] }}</span> with <span class="text-danger">{{ $currentUserRank['points'] }} pts</span>!
+                                <div class="mt-3 fw-bold">
+                                    🎉 Congratulations <span class="text-success">{{ $rows['rows']['currentUserRank']['name'] }}</span><br>
+                                    You are ranked <span class="text-success">#{{ $rows['rows']['currentUserRank']['rank'] }}</span>
+                                    with
+                                    @if($rows['rows']['metric_type'] === 'hours')
+                                    <span class="text-danger">{{ $rows['rows']['currentUserRank']['hours'] }} hrs</span>!
+                                    @else
+                                    <span class="text-danger">{{ $rows['rows']['currentUserRank']['points'] }} </span>!
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -469,126 +472,161 @@
 
 
 
+
+
+
+
+
                     @php
                     function getProfileImage($user) {
-                    return $user->profile_image
-                    ? config('setting.base_url') . $user->profile_image
+                    return !empty($user['profile_image'])
+                    ? config('setting.base_url') . $user['profile_image']
                     : asset('images/empty.jpg');
                     }
+
                     @endphp
+
 
                     <div class="podium d-flex justify-content-center">
 
-                        <div class="podium d-flex justify-content-center">
+                        {{-- SECOND PLACE --}}
+                        @if(isset($rows['rows']['top3'][1]))
+                        @php $user = $rows['rows']['top3'][1]; @endphp
 
-                            @if(isset($rows['top3'][1]))
-                            <div id="second-place"
-                                class="podium-card second position-relative text-center"
-                                data-toggle="modal"
-                                data-target="#profile_details"
-                                style="cursor: pointer;"
-                                data-name="{{ $rows['top3'][1]->name }}"
-                                data-points="{{ $rows['top3'][1]->total_points }}"
-                                data-hours="{{ $rows['top3'][1]->total_hours ?? 0 }}"
-                                data-img="{{ getProfileImage($rows['top3'][1]) }}"
-                                data-userid="{{ $rows['top3'][1]->id }}"
-                                data-level="{{ $rows['top3'][1]->level_name ?? 'N/A' }}"
-                                data-streak="{{ $rows['top3'][1]->streak_name ?? 'N/A' }}"
-                                data-badge="{{ $rows['top3'][1]->badge_name ?? 'N/A' }}"
-                                data-badge_icon="{{ $rows['top3'][1]->badge_icon ?? 'N/A' }}"
-                                data-icon="{{ $rows['top3'][1]->streak_icon ?? 'N/A' }}"
-                                data-level_icon="{{ $rows['top3'][1]->level_icon ?? 'N/A' }}">
+                        <div id="second-place"
+                            class="podium-card second position-relative text-center"
+                            data-toggle="modal"
+                            data-target="#profile_details"
+                            style="cursor: pointer;"
+                            data-id="{{ $user['id'] ?? 'N/A' }}"
+                            data-name="{{ $user['name'] ?? 'N/A' }}"
 
-                                <img id="second-img"
+                            data-points="{{ $user['total_points'] ?? 0 }}"
+                            data-hours="{{ $user['total_hours'] ?? 0 }}"
+                            data-userid="{{ $user['id'] ?? '' }}"
+                            data-level_name="{{ $user['level_name'] ?? 'N/A' }}"
+                            data-level_icon="{{ $user['level_icon'] ?? '' }}"
+                            data-img="{{ $user['profile_image']}}"
+                            data-streak='@json($user["streaks"] ?? [])'
+                            data-badge='@json($user["badges"] ?? [])'>
 
-                                    src="{{ getProfileImage($rows['top3'][1]) }}"
-                                    class="profile-img" />
-                                <h6 id="second-name">{{ $rows['top3'][1]->name }}</h6>
-                                <span class="score" id="second-points">{{ $rows['top3'][1]->total_points }} </span> Points<br>
+                            <img id="second-img" src="{{ getProfileImage($user) }}" class="profile-img" />
+                            <h6 id="second-name">{{ $user['name'] }}</h6>
+                            <span class="score" id="second-points">{{ $user['total_points'] ?? 0 }}</span> Points<br>
 
-                                @if(isset($rows['metric_type']) && $rows['metric_type'] === 'hours')
-                                <span class="score" id="second-hours">{{ $rows['top3'][1]->total_hours }} Hours</span>
-                                @endif
+                            @php
+                            $metricType = $rows['rows']['metric_type'] ?? 'points';
+                            $leaderboardUsers = $rows['rows']['leaderboard']['leaderboard'] ?? [];
+                            $userHours = null;
+                            foreach ($leaderboardUsers as $lbUser) {
+                            if ($lbUser['id'] == $user['id']) {
+                            $userHours = $lbUser['total_hours'] ?? null;
+                            break;
+                            }
+                            }
+                            @endphp
 
-                                <img src="/images/leaderboard/2nd.png" class="rank-badge" />
-                            </div>
+                            @if($metricType === 'hours' && !is_null($userHours))
+                            <span class="score" id="second-hours">{{ $userHours }} Hours</span>
+
+
                             @endif
 
-
-                            @if(isset($rows['top3'][0]))
-                            <div id="first-place"
-                                class="podium-card first position-relative text-center"
-                                data-toggle="modal"
-                                data-target="#profile_details"
-                                style="cursor: pointer;"
-                                data-name="{{ $rows['top3'][0]->name }}"
-                                data-points="{{ $rows['top3'][0]->total_points }}"
-                                data-hours="{{ $rows['top3'][0]->total_hours ?? 0 }}"
-                                data-img="{{ getProfileImage($rows['top3'][0]) }}"
-                                data-userid="{{ $rows['top3'][0]->id }}"
-                                data-level="{{ $rows['top3'][0]->level_name ?? 'N/A' }}"
-                                data-streak="{{ $rows['top3'][0]->streak_name ?? 'N/A' }}"
-                                data-badge="{{ $rows['top3'][0]->badge_name ?? 'N/A' }}"
-                                data-badge_icon="{{ $rows['top3'][0]->badge_icon ?? 'N/A' }}"
-                                data-icon="{{ $rows['top3'][0]->streak_icon ?? 'N/A' }}"
-                                data-level_icon="{{ $rows['top3'][0]->level_icon ?? 'N/A' }}">
-
-                                <img src="/images/leaderboard/crown.png" class="crown" />
-                                <img id="first-img" src="{{ getProfileImage($rows['top3'][0]) }}" class="profile-img" />
-                                <h6 id="first-name">{{ $rows['top3'][0]->name }}</h6>
-                                <span class="score" id="first-points">{{ $rows['top3'][0]->total_points }}</span> Points<br>
-
-                                @if(isset($rows['metric_type']) && $rows['metric_type'] === 'hours')
-                                <span class="score" id="first-hours">{{ $rows['top3'][0]->total_hours }} Hours</span>
-                                @endif
-
-                                <img src="/images/leaderboard/1st.png" class="rank-badge" />
-                            </div>
-                            @endif
-
-
-
-                            @if(isset($rows['top3'][2]))
-
-                            <div id="third-place"
-                                class="podium-card third position-relative text-center"
-                                data-toggle="modal"
-                                data-target="#profile_details"
-                                style="cursor: pointer;"
-                                data-name="{{ $rows['top3'][2]->name }}"
-                                data-points="{{ $rows['top3'][2]->total_points }}"
-                                data-hours="{{ $rows['top3'][2]->total_hours ?? 0 }}"
-                                data-img="{{ getProfileImage($rows['top3'][2]) }}"
-                                data-userid="{{ $rows['top3'][2]->id }}"
-                                data-level="{{ $rows['top3'][2]->level_name ?? 'N/A' }}"
-                                data-streak="{{ $rows['top3'][2]->streak_name ?? 'N/A' }}"
-                                data-badge="{{ $rows['top3'][2]->badge_name ?? 'N/A' }}"
-                                data-badge_icon="{{ $rows['top3'][2]->badge_icon ?? 'N/A' }}"
-                                data-icon="{{ $rows['top3'][2]->streak_icon ?? 'N/A' }}"
-                                data-level_icon="{{ $rows['top3'][2]->level_icon ?? 'N/A' }}">
-
-                                <img id="third-img"
-                                    src="{{ getProfileImage($rows['top3'][2]) }}"
-                                    class="profile-img" />
-
-                                <h6 id="third-name">{{ $rows['top3'][2]->name }}</h6>
-                                <span class="score" id="third-points">{{ $rows['top3'][2]->total_points }}</span> Points
-
-                                @if($rows['metric_type'] === 'hours')
-                                <br>
-                                <span class="score" id="third-hours">{{ $rows['top3'][2]->total_hours }} Hours</span>
-                                @endif
-
-                                <br>
-                                <img src="/images/leaderboard/3rd.png" class="rank-badge" />
-                            </div>
-                            @endif
-
-
+                            <br><img src="/images/leaderboard/2nd.png" class="rank-badge" />
                         </div>
+                        @endif
 
+                        {{-- FIRST PLACE --}}
+                        @if(isset($rows['rows']['top3'][0]))
+                        @php $user = $rows['rows']['top3'][0];@endphp
+                        <div id="first-place"
+                            class="podium-card first position-relative text-center"
+                            data-toggle="modal"
+                            data-target="#profile_details"
+                            style="cursor: pointer;"
+                            data-id="{{ $user['id'] ?? 'N/A' }}"
+                            data-name="{{ $user['name'] ?? 'N/A' }}"
+
+                            data-points="{{ $user['total_points'] ?? 0 }}"
+                            data-hours="{{ $user['total_hours'] ?? 0 }}"
+                            data-userid="{{ $user['id'] ?? '' }}"
+                            data-level_name="{{ $user['level_name'] ?? 'N/A' }}"
+                            data-level_icon="{{ $user['level_icon'] ?? '' }}"
+                            data-profile_image="{{ getProfileImage($user) }}"
+                            data-streak='@json($user["streaks"] ?? [])'
+                            data-badge='@json($user["badges"] ?? [])'>
+
+                            <img src="/images/leaderboard/crown.png" class="crown" />
+                            <img id="first-img" src="{{ getProfileImage($user) }}" class="profile-img" />
+                            <h6 id="first-name">{{ $user['name'] }}</h6>
+                            <span class="score" id="first-points">{{ $user['total_points'] ?? 0 }}</span> Points<br>
+
+                            @php
+                            $metricType = $rows['rows']['metric_type'] ?? 'points';
+                            $leaderboardUsers = $rows['rows']['leaderboard']['leaderboard'] ?? [];
+                            $userHours = null;
+                            foreach ($leaderboardUsers as $lbUser) {
+                            if ($lbUser['id'] == $user['id']) {
+                            $userHours = $lbUser['total_hours'] ?? null;
+                            break;
+                            }
+                            }
+                            @endphp
+
+                            @if($metricType === 'hours' && !is_null($userHours))
+                            <span class="score" id="first-hours">{{ $userHours }} Hours</span>
+                            @endif
+
+                            <br><img src="/images/leaderboard/1st.png" class="rank-badge" />
+                        </div>
+                        @endif
+
+                        {{-- THIRD PLACE --}}
+                        @if(isset($rows['rows']['top3'][2]))
+                        @php $user = $rows['rows']['top3'][2]; @endphp
+                        <div id="third-place"
+                            class="podium-card third position-relative text-center"
+                            data-toggle="modal"
+                            data-target="#profile_details"
+                            style="cursor: pointer;"
+                            data-id="{{ $user['id'] ?? 'N/A' }}"
+                            data-name="{{ $user['name'] ?? 'N/A' }}"
+                            data-points="{{ $user['total_points'] ?? 0 }}"
+                            data-hours="{{ $user['total_hours'] ?? 0 }}"
+                            data-userid="{{ $user['id'] ?? '' }}"
+                            data-level_name="{{ $user['level_name'] ?? 'N/A' }}"
+                            data-level_icon="{{ $user['level_icon'] ?? '' }}"
+                            data-profile_image="{{ getProfileImage($user) }}"
+                            data-streak='@json($user["streaks"] ?? [])'
+                            data-badge='@json($user["badges"] ?? [])'>
+
+                            <img id="third-img" src="{{ getProfileImage($user) }}" class="profile-img" />
+                            <h6 id="third-name">{{ $user['name'] }}</h6>
+                            <span class="score" id="third-points">{{ $user['total_points'] ?? 0 }}</span> Points<br>
+
+                            @php
+                            $metricType = $rows['rows']['metric_type'] ?? 'points';
+                            $leaderboardUsers = $rows['rows']['leaderboard']['leaderboard'] ?? [];
+                            $userHours = null;
+                            foreach ($leaderboardUsers as $lbUser) {
+                            if ($lbUser['id'] == $user['id']) {
+                            $userHours = $lbUser['total_hours'] ?? null;
+                            break;
+                            }
+                            }
+                            @endphp
+
+
+                            @if($metricType === 'hours' && !is_null($userHours))
+                            <span class="score" id="third-hours">{{ $userHours }} Hours</span>
+                            @endif
+
+                            <br><img src="/images/leaderboard/3rd.png" class="rank-badge" />
+                        </div>
+                        @endif
 
                     </div>
+
 
                 </div>
 
@@ -601,7 +639,7 @@
                             <th style="padding-left: 20px; width: 70px;">Rank</th>
                             <th style="padding-left: 10px; text-align: left;">Name</th>
                             <th style="padding-left: 320px; text-align:left;">Points</th>
-                            @if($rows['metric_type'] === 'hours')
+                            @if($rows['rows']['metric_type'] === 'hours')
                             <th style="padding-left: 80px; text-align: right;">Hours</th>
                             @endif
                         </tr>
@@ -609,41 +647,45 @@
                 </table>
 
                 @php
-                $remainingUsers = $rows['leaderboard']->skip(3);
+                $remainingUsers = array_slice($rows['rows']['leaderboard']['leaderboard'], 3);
                 @endphp
 
+                @if(count($remainingUsers) > 0)
                 <div class="leaderboard-scroll {{ count($remainingUsers) > 3 ? 'scroll-enabled' : '' }}">
                     <table class="leaderboard-table">
                         <tbody id="rankTableBody">
                             @foreach($remainingUsers as $key => $value)
-
                             <tr class="leaderboard-row"
                                 data-toggle="modal"
                                 data-target="#profile_details"
                                 style="cursor: pointer;"
-                                data-name="{{ $value->name }}"
-                                data-points="{{ $value->total_points }}"
-                                data-hours="{{ $value->total_hours ?? 0 }}"
-                                data-img="{{ $value->profile_image ? config('setting.base_url') . $value->profile_image : config('setting.base_url') . 'images/empty.jpg' }}"
-                                data-level="{{ $value->level_name ?? 'N/A' }}"
-                                data-streak="{{ $value->streak_name ?? 'N/A' }}"
-                                data-badge="{{ $value->badge_name ?? 'N/A' }}"
-                                data-badge_icon="{{ $value->badge_icon ?? 'N/A' }}"
-                                data-icon="{{ $value->streak_icon ?? 'N/A' }}"
-                                data-level_icon="{{ $value->level_icon ?? 'N/A' }}">
+                                data-id="{{ $value['id'] ?? 'N/A' }}"
+                                data-name="{{ $value['name'] ?? 'N/A' }}"
+                                data-points="{{ $value['total_points'] ?? 0 }}"
+                                data-hours="{{ $value['total_hours'] ?? 0 }}"
+                                data-img="{{ $value['profile_image'] ? config('setting.base_url') . $value['profile_image'] : config('setting.base_url') . 'images/empty.jpg' }}"
+                                data-level_name="{{ $value['level_name'] ?? 'N/A' }}"
+                                data-level_icon="{{ $value['level_icon'] ?? '' }}"
+                                data-profile_image="{{ getProfileImage($user) }}"
+                                data-streak='@json($value["streaks"] ?? [])'
+                                data-badge='@json($value["badges"] ?? [])'>
 
                                 <th style="padding-left: 20px; width: 70px;">{{ $key + 4 }}</th>
-                                <th style="padding-left: 10px; text-align: left;">{{ $value->name }}</th>
-                                <th style="padding-left: 200px; text-align: left;">{{ $value->total_points }}</th>
-
-                                @if($rows['metric_type'] === 'hours')
-                                <th style="padding-left: 80px; text-align: right;">{{ $value->total_hours ?? 0 }}</th>
-                                @endif
+                                <th style="padding-left: 10px; text-align: left;">{{ $value['name'] }}</th>
+                                <th style="padding-left: 200px; text-align: left;">
+                                    {{ $rows['rows']['metric_type'] === 'hours' ? ($value['total_hours'] ?? 0) . ' Hrs' : ($value['total_points'] ?? 0)  }}
+                                </th>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
+                @else
+                <div class="text-center text-white" style="padding: 20px;">
+                    No leaderboard data available
+                </div>
+                @endif
+
             </div>
 
 
@@ -678,9 +720,8 @@
 
                     <!-- Level Info -->
                     <div class="d-flex justify-content-center align-items-center gap-2 text-center mt-2" style="padding-bottom:10px">
-                        @if(!empty($currentUserRank['level_name']))
                         <div>
-                            <h4 class="fw-bold modal-level_name">{{ $currentUserRank['level_name'] }}</h4>
+                            <h4 class="fw-bold modal-level_name">{{ $currentUserRank['level_name'] ?? 'N/A' }}</h4>
                         </div>
                         <div id="modal-level_icon" style="margin-left: 10px;">
                             @if(!empty($currentUserRank['level_icon']))
@@ -689,8 +730,8 @@
                             <i class="fas fa-star" style="color: yellow; font-size: 14px;"></i>
                             @endif
                         </div>
-                        @endif
                     </div>
+
 
 
                 </div>
@@ -751,28 +792,21 @@
 
 
                     <!-- Streaks -->
-                    @if(isset($rewardsGrouped['streak']) && count($rewardsGrouped['streak']) > 0)
+
                     <div class="col-12 mb-3">
                         <div class="py-2 px-3" style="border-top: 3px solid #b9b6b6ff;">
                             <h2 class="text-center mb-2">🔥 Streaks</h2>
-
 
                             <div class="w-100 text-center">
                                 <div id="streak-container"
                                     class="d-inline-flex gap-3"
                                     style="max-height: 120px; overflow-x: auto;">
-                                    <!-- Dynamic streaks will be inserted here -->
+                                    <!-- Filled dynamically by JS -->
                                 </div>
                             </div>
-
                         </div>
                     </div>
-                    @endif
-
-
-
                     <!-- Badges -->
-                    @if(isset($rewardsGrouped['badge']) && count($rewardsGrouped['badge']) > 0)
                     <div class="col-12 mb-3">
                         <div class="py-2 px-3" style="border-top: 3px solid #b9b6b6ff;">
                             <h2 class="text-center mb-2">🏅 Badges</h2>
@@ -781,20 +815,12 @@
                                 <div id="badge-container"
                                     class="d-inline-flex gap-3"
                                     style="max-height: 120px; overflow-x: auto;">
-                                    <!-- Dynamic badge items will be inserted here -->
-                                    @foreach($rewardsGrouped['badge'] as $badge)
-                                    <div class="text-center" style="min-width: 100px;">
-                                        <div style="font-size: 28px;">
-                                            {!! $badge->icon ?? '🏅' !!}
-                                        </div>
-                                        <div class="fw-bold small mt-1">{{ $badge->name ?? 'Badge' }}</div>
-                                    </div>
-                                    @endforeach
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @endif
+
 
                 </div>
 
@@ -802,8 +828,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <!-- filter modal -->
@@ -829,13 +853,14 @@
                                 <div class="col-sm-8">
                                     <select class="form-control" name="role" id="role_id" onchange="filterDesignations()">
                                         <option value="">---Select Role---</option>
-                                        @foreach($rows['role'] as $values)
-                                        <option value="{{ $values->role_id }}"
-                                            {{ request()->input('role') == $values->role_id ? 'selected' : '' }}>
-                                            {{ $values->role_name }}
+                                        @foreach($rows['rows']['role'] as $values)
+                                        <option value="{{ $values['role_id'] }}"
+                                            {{ request()->input('role') == $values['role_id'] ? 'selected' : '' }}>
+                                            {{ $values['role_name'] }}
                                         </option>
                                         @endforeach
                                     </select>
+
                                 </div>
                             </div>
 
@@ -844,10 +869,10 @@
                                 <div class="col-sm-8">
                                     <select class="form-control" name="designation" id="designation_id">
                                         <option value="">---Select Designation---</option>
-                                        @foreach($rows['designation'] as $values)
-                                        <option value="{{ $values->designation_id }}"
-                                            {{ request()->input('designation') == $values->designation_id ? 'selected' : '' }}>
-                                            {{ $values->designation_name }}
+                                        @foreach($rows['rows']['designation'] as $values)
+                                        <option value="{{ $values['designation_id'] }}"
+                                            {{ request()->input('designation') == $values['designation_id'] ? 'selected' : '' }}>
+                                            {{ $values['designation_name'] }}
                                         </option>
                                         @endforeach
                                     </select>
@@ -859,10 +884,10 @@
                                 <div class="col-sm-8">
                                     <select class="form-control" name="course_catagory" id="course_category_id" onclick="category()">
                                         <option value="">---Select Category---</option>
-                                        @foreach($rows['elearning_courses'] as $data)
-                                        <option value="{{ $data->course_id }}"
-                                            {{ request()->input('course_catagory') == $data->course_id ? 'selected' : '' }}>
-                                            {{ $data->course_name }}
+                                        @foreach($rows['rows']['elearning_courses'] as $data)
+                                        <option value="{{ $data['course_id'] }}"
+                                            {{ request()->input('course_catagory') == $data['course_id'] ? 'selected' : '' }}>
+                                            {{ $data['course_name'] }}
                                         </option>
                                         @endforeach
                                     </select>
@@ -934,9 +959,9 @@
                 metric: currentMetric
             },
             success: function(response) {
-                updatePodium(response.top3);
-                updateLeaderboardTable(response.rankList);
-
+                const data = response.Data || response;
+                updatePodium(data.top3);
+                updateLeaderboardTable(data.rankList);
             },
             error: function(xhr) {
                 console.error('AJAX Error:', xhr.responseText);
@@ -944,48 +969,97 @@
         });
     }
 
-
     function updatePodium(top3) {
         const positions = ['first', 'second', 'third'];
 
         for (let i = 0; i < 3; i++) {
             const user = top3[i];
-            $('#' + positions[i] + '-name').text(user ? user.name : '---');
-            $('#' + positions[i] + '-points').text(user ? user.total_metric : 0);
-
-            const imgPath = user && user.profile_image ? baseUrl + user.profile_image : baseUrl + 'images/empty.jpg';
-            $('#' + positions[i] + '-img').attr('src', imgPath);
-
-            $(`#${positions[i]}-place`)
-                .attr('data-name', user ? user.name : '')
-                .attr('data-points', user ? user.total_metric : '')
-                .attr('data-img', imgPath);
+            const card = $(`#${positions[i]}-place`);
 
 
+            if (user) {
+                card.show();
+
+                $('#' + positions[i] + '-id').text(user.id);
+                $('#' + positions[i] + '-name').text(user.name);
+                $('#' + positions[i] + '-points').text(user.total_metric);
+                $('#' + positions[i] + '-level_name').text(user.level_name);
+                $('#' + positions[i] + '-level_icon').text(user.level_icon);
+                const imgPath = user.profile_image ? baseUrl + user.profile_image : baseUrl + 'images/empty.jpg';
+
+                $('#' + positions[i] + '-img').attr('src', imgPath);
+
+
+                card.attr({
+                    'data-id': user.id,
+                    'data-name': user.name,
+                    'data-points': user.total_metric,
+                    'data-img': imgPath,
+                    'data-level_name': user.level_name || 'N/A',
+                    'data-level_icon': user.level_icon || '',
+                    'data-streak': JSON.stringify(user.streak || []),
+                    'data-badge': JSON.stringify(user.badge || [])
+                });
+
+            } else {
+
+                card.hide();
+
+                $('#' + positions[i] + '-id').text('');
+                $('#' + positions[i] + '-name').text('');
+                $('#' + positions[i] + '-points').text('');
+                $('#' + positions[i] + '-level_name').text('');
+                $('#' + positions[i] + '-level_icon').text('');
+                $('#' + positions[i] + '-img').attr('src', baseUrl + 'images/empty.jpg');
+                card.removeAttr('data-name data-points data-img data-level_name data-level_icon data-streak data-badge');
+            }
         }
     }
 
+
     function updateLeaderboardTable(users) {
         let tbody = $('#rankTableBody');
+        let tableContainer = $('#leaderboardTableContainer'); // wrapper div for table
         tbody.empty();
 
-        $.each(users.slice(3), function(index, user) {
-            const imgPath = baseUrl + (user.profile_image || 'images/empty.jpg');
-
-            tbody.append(`
+        if (users && users.length > 0) {
+            tableContainer.show(); // show table when data exists
+            $.each(users, function(index, user) {
+                const imgPath = baseUrl + (user.profile_image || 'images/empty.jpg');
+                tbody.append(`
                 <tr class="leaderboard-row"
+                    data-id="${user.id}"    
                     data-name="${user.name}"
-                    data-points="${user.total_metric}"
-                    style="cursor: pointer;"
+                    data-points="${user.total_points || 0}"
+                    data-hours="${user.total_hours || 0}"
+                    data-img="${imgPath}"
+                    data-level_name="${user.level_name || 'N/A'}"
+                    data-level_icon="${user.level_icon || ''}"
+                    data-streak='${JSON.stringify(user.streak || [])}'
+                    data-badge='${JSON.stringify(user.badge || [])}'
+                    style="cursor: pointer;"    
                     data-toggle="modal"
                     data-target="#profile_details">
+
                     <th>${index + 4}</th>
-                    <th>${user.name}</th>
-                    <th>${user.total_metric}</th>
+                    <th>
+                        <img src="${imgPath}" alt="profile" class="rounded-circle" width="40" height="40" style="margin-right:8px;">
+                        ${user.name}
+                    </th>
+                    <th>
+                        ${user.total_metric || 0} ${metricType === 'hours' ? 'Hrs' : 'Pts'}
+                    </th>
                 </tr>
             `);
-        });
+            });
+            $('#noDataMessage').hide(); // hide no-data message
+        } else {
+            tableContainer.hide(); // hide table
+            $('#noDataMessage').show(); // show no-data text
+        }
     }
+
+
 
     function fetch_show(user_id, type) {
         $.ajax({
@@ -996,12 +1070,13 @@
                 _token: '{{ csrf_token() }}'
             },
             success: function(data) {
-                // handle show
+
             }
         });
     }
 
     function category() {
+
         var selectedValue = document.getElementById('course_category_id').value;
         var buttonsDiv = document.getElementById('filterbuttons');
         var pointsbutton = document.getElementById('pointsbutton');
@@ -1042,7 +1117,8 @@
         document.getElementById('designation_id').innerHTML = '<option value="">---Select Designation---</option>';
     }
 
-    const allDesignations = @json($rows['designation']);
+    const allDesignations = @json($rows['rows']['designation']);
+
 
     function filterDesignations() {
         const roleId = document.getElementById('role_id').value;
@@ -1067,123 +1143,78 @@
 
             applyFilter(filterType);
         });
+        const rewardGrouped = @json($rows['rows']['leaderboard']['rewardsGrouped']);
+
+        const leaderboardData = @json($rows['rows']['leaderboard']['leaderboard']);
+
+
         $(document).on('click', '.podium-card, .leaderboard-row', function() {
+            const userId = $(this).attr('data-id');
+
             const name = $(this).attr('data-name') || 'N/A';
             const points = $(this).attr('data-points') || 0;
-            const hours = $(this).attr('data-hours') || 0;
             const img = $(this).attr('data-img') || (baseUrl + 'images/empty.jpg');
-            const level = $(this).attr('data-level') || 'N/A';
 
-            const userId = parseInt($(this).attr('data-userid'));
-            const streak = $(this).attr('data-streak') || 'N/A';
-            const badge = $(this).attr('data-badge') || 'N/A';
-            const streak_icon = $(this).attr('data-icon') || '';
-            const badge_icon = $(this).attr('data-badge_icon') || '';
+            const level = $(this).attr('data-level_name') || 'N/A';
             const level_icon = $(this).attr('data-level_icon') || '';
-            HandleStreakUpdate(userId);
 
 
+            const userData = leaderboardData.find(u => u.id == userId);
 
-            $('#modal-name, #modalProfileName').text(name);
-            $('#modal-points, #modalProfilePoints').text(points);
-            $('#modal-hours').text(hours);
-            $('#modal-profile-img, #modalProfileImage').attr('src', img);
-            $('.modal-level_name').text(level);
+            let streaks = [];
+            let badges = [];
 
-            if (level_icon && level_icon !== 'N/A') {
-                $('#modal-level_icon').html(`
-<i class="${level_icon} zoom-blink" style="font-size: 24px;"></i>`);
-            } else {
-                $('#modal-level_icon').text('Not Available');
+            if (userData) {
+                streaks = userData.streaks || [];
+                badges = userData.badges || [];
             }
 
-            if (userId === rewardUserId) {
-                $('#modal-streak_name').text(streak);
-                $('#modal-badge_name').text(badge);
+            $('#modal-profile-img').attr('src', img);
+            $('#modal-name').text(name);
+            $('#modal-points').text(points);
+            $('.modal-level_name').text(level);
 
-                if (streak_icon && streak_icon !== 'N/A') {
-                    $('#modal-streak_icon').html(`<i class="${streak_icon}"></i>
-`);
-                } else {
-                    $('#modal-streak_icon').text('N/A');
-                }
-
-                if (badge_icon && badge_icon !== 'N/A') {
-                    $('#modal-badge_icon').html(`<i class="${badge_icon}" style="font-size: 24px;"></i>`);
-                } else {
-                    $('#modal-badge_icon').text('N/A');
-                }
+            if (level_icon) {
+                $('#modal-level_icon').html(`<i class="${level_icon}" style="font-size:32px; color:orange;"></i>`);
             } else {
-                $('#modal-streak_name').text('N/A');
-                $('#modal-badge_name').text('N/A');
-                $('#modal-streak_icon').text('N/A');
-                $('#modal-badge_icon').text('N/A');
+                $('#modal-level_icon').html(`<i class="fas fa-star" style="color: yellow; font-size: 14px;"></i>`);
+            }
+
+            // Streaks
+            $('#streak-container').empty();
+            if (streaks.length > 0) {
+                streaks.forEach(s => {
+                    $('#streak-container').append(`
+                <div class="text-center" style="min-width: 100px;">
+                    <div style="font-size: 28px;">${s.icon ? `<i class="${s.icon} zoom-blink" style="color:gold;"></i>` : '🔥'}</div>
+                    <div class="fw-bold small mt-1 pl-3">${s.reward_name || 'Streak'}</div>
+                </div>
+            `);
+                });
+            } else {
+                $('#streak-container').append(`<div class="text-center">No streaks found</div>`);
+            }
+
+            // Badges
+            $('#badge-container').empty();
+            if (badges.length > 0) {
+                badges.forEach(b => {
+                    $('#badge-container').append(`
+                <div class="text-center" style="min-width: 100px;">
+                    <div style="font-size: 28px;">${b.icon ? `<i class="${b.icon} zoom-blink" style="color:#008080;"></i>` : '🏅'}</div>
+                    <div class="fw-bold small mt-1 pl-3">${b.reward_name || 'Badge'}</div>
+                </div>
+            `);
+                });
+            } else {
+                $('#badge-container').append(`<div class="text-center">No badges found</div>`);
             }
 
             $('#profile_details').modal('show');
         });
 
-        const groupedStreaks = @json($rewardsGrouped['streak'] ?? []);
-        const groupedBadge = @json($rewardsGrouped['badge'] ?? []);
-
-        function HandleStreakUpdate(userId) {
-
-            const filteredStreaks = groupedStreaks.filter(streak => streak.user_id == userId);
-
-            const streakContainer = document.querySelector('#streak-container');
-            let streaksHTML = '';
-
-            filteredStreaks.forEach(streak => {
-                const iconHTML = streak.icon ?
-                    `<i class="${streak.icon} zoom-blink " style="font-size: 30px; color:gold;"></i>` :
-                    'N/A';
 
 
-                streaksHTML += `
-                <div class="text-center flex-shrink-0">
-                  <div>${iconHTML}
-                  </div>
-                    <h5 style="padding-left:25px;" class="mt-2">
-                        ${streak.reward_name || 'N/A'}
-                    </h5>
-                </div>`;
-            });
-
-            streakContainer.innerHTML = streaksHTML || `
-    <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
-        <div class="text-center">No streaks found</div>
-    </div>
-`;
-
-            const filteredBadges = groupedBadge.filter(badge => badge.user_id == userId);
-
-            const badgeContainer = document.querySelector('#badge-container');
-            let badgesHTML = '';
-
-            filteredBadges.forEach(badge => {
-                const iconHTML = badge.icon ?
-                    `<i class="${badge.icon}  zoom-blink" style="font-size:30px; color:#008080;"></i>` :
-                    'N/A';
-
-                badgesHTML += `
-              <div class="text-center flex-shrink-0">
-    <div > 
-        ${iconHTML}
-    </div>
-    <h5 style="padding-left: 25px;" class="mt-2">
-        ${badge.reward_name || 'N/A'}
-    </h5>
-</div>
-
-`;
-            });
-
-            badgeContainer.innerHTML = badgesHTML || `
-    <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
-        <div class="text-center">No Badge found</div>
-    </div>
-`;
-        }
 
     });
 </script>

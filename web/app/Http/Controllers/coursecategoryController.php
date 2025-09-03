@@ -10,8 +10,6 @@ use Illuminate\Http\Request;
 class coursecategoryController extends BaseController
 {
 
-    // Quiz Start
-
     public function index(Request $request)
     {
 
@@ -29,14 +27,14 @@ class coursecategoryController extends BaseController
         $method = "GET";
         $gatewayURL = config('setting.api_gateway_url') . '/categories/getAll';
         $categories = [];
-       
+
         $response = json_decode($this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method));
         if ($response->Status == 200 && $response->Success) {
             $objData = json_decode($this->decryptData($response->Data));
             $parant_data = json_decode(json_encode($objData->Data), true);
             $categories = $parant_data['categories'];
         }
-        
+
         return view("coursecategory.coursecategory", compact('screens', 'modules', 'categories'));
     }
 
@@ -47,7 +45,9 @@ class coursecategoryController extends BaseController
 
         $screens = $menus['screens'];
         $modules = $menus['modules'];
-        return view("coursecategory.coursecategorycreate", compact('screens', 'modules'));
+        $icons = DB::select("SELECT * FROM icons");
+     
+        return view("coursecategory.coursecategorycreate", compact('screens', 'modules','icons'));
     }
 
 
@@ -197,6 +197,7 @@ class coursecategoryController extends BaseController
             $response1 = json_decode($response);
             $objData = json_decode($this->decryptData($response1->Data));
             $rows = json_decode(json_encode($objData->Data), true);
+
             return $rows;
         } catch (\Exception $exc) {
             //echo $exc;

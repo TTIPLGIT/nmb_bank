@@ -1236,8 +1236,7 @@ label:hover~input:checked~label
 <div class="container-fluid" id="backToTopLink">
 
     <div class="col-md-8" style="display:flex;justify-content: space-between;align-items: center;">
-
-        <a href="/elearning/allCourses?sorted=Recently%20Added&tag=false&progress=false&q=false"
+        <a href="/elearning/allCourses?sorted=Recently%20Added&tag=false&progress=false&q=false&course_id={{$courseDetails[0]->course_id}}"
             class="btn btn-primary">Back</a>
         <h4>Course Contents</h4>
     </div>
@@ -1252,6 +1251,7 @@ label:hover~input:checked~label
     @endif
 
     @foreach($selected_class as $classContent)
+  
     @if($classContent->class_status == 1)
 
     <input type="hidden" class="course_id" id="course_id" value="{{$classContent->course_id}}">
