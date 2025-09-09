@@ -25,10 +25,6 @@ class GamificationLevelController extends BaseController
         $modules = $menus['modules'];
         $method = "GET";
         $gatewayURL = config('setting.api_gateway_url') . '/level/getAll';
-        $allRecords['levels'] = DB::table('gamification_levels')
-            ->where('active_flag', 1)
-            ->orderBy('level_id', 'desc')
-            ->get();
 
         $response = json_decode($this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method));
         if ($response->Status == 200 && $response->Success) {
@@ -37,7 +33,10 @@ class GamificationLevelController extends BaseController
             $levels = $parant_data['levels'];
             // dd($levels);
         }
-        return view("Gamifications.levels", compact('screens', 'modules', 'levels', 'allRecords'));
+        //    dd(json_decode($response->Data));
+        // dd($levels);
+
+        return view("Gamifications.levels", compact('screens', 'modules', 'levels'));
     }
 
     public function createpage(Request $request)
@@ -52,8 +51,8 @@ class GamificationLevelController extends BaseController
             ->orderBy('level_id', 'desc')
             ->get();
         $icons = DB::select("SELECT * FROM icons");
-// dd($icons);
-        return view("Gamifications.createlevels", compact('screens', 'modules', 'allRecords','icons'));
+        // dd($icons);
+        return view("Gamifications.createlevels", compact('screens', 'modules', 'allRecords', 'icons'));
     }
     public function store(Request $request)
     {

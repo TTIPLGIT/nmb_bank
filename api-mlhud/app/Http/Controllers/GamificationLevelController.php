@@ -212,6 +212,7 @@ class GamificationLevelController extends BaseController
                 ->where('active_flag', 1)
                 ->orderBy('level_id', 'desc')
                 ->get();
+           
 
             $this->WriteFileLog($allRecords['levels']);
 

@@ -135,6 +135,7 @@ class tryController extends BaseController
             $rows['course_catagory_name'] = DB::table('course_catagory')
                 ->select('*')
                 ->orderBy('catagory_id', 'desc')
+                ->where('active_flag', 0)
                 ->get();
 
 
@@ -897,6 +898,9 @@ class tryController extends BaseController
             $data['role_id'] = $request->role_id;
             $data['designation_id'] = $request->designation_id;
             $data['user_ids'] = $request->user_ids;
+        
+            $data['expiry_type'] = $request->expiry_type;
+            $data['expiry_input'] = $request->expiry_input;
 
 
             // dd($data);

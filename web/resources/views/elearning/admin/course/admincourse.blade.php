@@ -584,67 +584,32 @@
 
                                                         @endif
                                                         <td>
-                                                            @php
-                                                            $showHandleButton = false;
-                                                            $showReplacedMessage = false;
-                                                            $replacementMessage = '';
-
-                                                            $expiryDate = !empty($data->course_expiry_period) ?
-                                                            \Carbon\Carbon::parse($data->course_expiry_period) : null;
-                                                            $twoMonthsBefore = $expiryDate ?
-                                                            $expiryDate->copy()->subMonths(2) : null;
-                                                            $today = \Carbon\Carbon::today();
-
-
-                                                            $courseIsReplaced =
-                                                            collect(($rows1['elearning_courses']))->contains(function
-                                                            ($c) use
-                                                            ($data) {
-                                                            return $c->expired_course_id == $data->course_id;
-                                                            });
-
-                                                            if ($data->certificate_expiry == 1) {
-                                                            if ($courseIsReplaced) {
-                                                            $showReplacedMessage = true;
-                                                            $replacementMessage = 'This course has been replaced with a
-                                                            new or copied course.';
-                                                            } elseif (is_null($data->expired_course_id) && $expiryDate
-                                                            && $today->gte($twoMonthsBefore)) {
-                                                            $showHandleButton = true;
-                                                            }
-                                                            }
-                                                            @endphp
-
-
-
-
-
-                                                            <!-- <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal3" onclick="fetch_courseupdate_new({{$data->course_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a> -->
+                                                            <!-- Always show these action buttons -->
                                                             <a class="btn btn-link" title="show" data-toggle="modal"
                                                                 data-target="#addModal5"
-                                                                onclick="fetch_courseupdate_new({{$data->course_id}},'show')"><i
-                                                                    class="fas fa-eye" style="color:green"></i></a>
+                                                                onclick="fetch_courseupdate_new({{$data->course_id}},'show')">
+                                                                <i class="fas fa-eye" style="color:green"></i>
+                                                            </a>
 
                                                             <a type="button" title="Delete"
-                                                                onclick="course_delete(<?php echo $data->course_id ?>)"
-                                                                class="btn btn-link"><i class="far fa-trash-alt"
-                                                                    style="color:red"></i></a>
-                                                            @if($showHandleButton)
+                                                                onclick="course_delete({{ $data->course_id }})"
+                                                                class="btn btn-link">
+                                                                <i class="far fa-trash-alt" style="color:red"></i>
+                                                            </a>
+
+                                                            <!-- Show Handle Expired Course icon all the time -->
                                                             <a class="btn btn-link" title="Handle Expired Course"
                                                                 onclick="handleExpiredCourse({{ $data->course_id }})">
-                                                                <i class="fas fa-exclamation-circle"
-                                                                    style="color:orange"></i>
+                                                                <i class="fas fa-exclamation-circle" style="color:orange"></i>
                                                             </a>
-                                                            @elseif($showReplacedMessage)
+
+                                                            <!-- Show Course Replaced icon all the time
                                                             <a class="btn btn-link" title="Course Replaced"
                                                                 onclick="showReplacementMessage({{ $data->course_id }})">
                                                                 <i class="fas fa-info-circle" style="color:gray"></i>
-                                                            </a>
-                                                            @endif
-
-
-
+                                                            </a> -->
                                                         </td>
+
 
                                                     </tr>
                                                     @endforeach
@@ -1006,7 +971,7 @@
 <script>
     var allDesignations = @json($rows['designation']);
     var allUsers = @json($rows['users']);
-  
+
 
     function filterDesignations() {
         const roleId = document.getElementById('role_id').value;
@@ -1214,7 +1179,72 @@
                             </div>
                         </div>
 
+                        <div class="row mt-3" id="certificateFields" style="display: none;">
+                            <div class="col-md-3.5">
+                                <div class="form-group">
+                                    <label> Certificate Template:<span class="error-star"
+                                            style="color:red;">*</span></label>
+                                    <select class="form-control" name="cetificate_template" id="cetificate_template">
+                                        <option value="">---Select Certificate Template---</option>
+                                        @foreach($rows1['certificate_templates'] as $row)
+                                        <option value="{{ $row->certificate_templates_id }}">{{ $row->template_name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Certificate Expiry:<span class="error-star"
+                                            style="color:red;">*</span></label><br>
+                                    <input type="radio" class="btn-check certificate_expiry" name="certificate_expiry"
+                                        value="1" id="certificate_expiryyes" autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="certificate_expiryyes">Yes</label>
+
+                                    <input type="radio" class="btn-check certificate_expiry" name="certificate_expiry"
+                                        value="2" id="certificate_expiryno" autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="certificate_expiryno">No</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="expiryDateField" style="display: none;">
+                                <div class="form-group">
+                                    <!-- <label>Expiry Date:<span class="error-star" style="color:red;">*</span></label>
+                                    <input type='date' class="form-control default hasDatepicker"
+                                        id='course_expiry_period' name="course_expiry_period" placeholder="dd-mm-yy"
+                                        autocomplete="off"> -->
+                                    <div class="form-group ">
+                                        <label>Expiry Type:<span class="error-star" style="color:red;">*</span></label><br>
+                                        <div class="d-flex align-items-center gap-3">
+
+                                            <!-- Month radio -->
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="expiry_type" id="expiry_month" value="month">
+                                                <label class="btn btn-outline-primary" for="expiry_month" style="color:black">Month</label>
+                                            </div>
+
+                                            <!-- Year radio -->
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="expiry_type" id="expiry_year" value="year">
+                                                <label class="btn btn-outline-primary" for="expiry_year" style="color:black">Year</label>
+                                            </div>
+
+                                            <!-- Dynamic input box -->
+                                            <div id="expiry_input" style="display:none;">
+                                                <input type="number" class="form-control" name="expiry_input" placeholder="Enter the period" min="1" style="width:150px;">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
                     </div>
 
 
@@ -1269,44 +1299,7 @@
 
                             </div>
                         </div>
-                        <div class="row mt-3" id="certificateFields" style="display: none;">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label> Certificate Template:<span class="error-star"
-                                            style="color:red;">*</span></label>
-                                    <select class="form-control" name="cetificate_template" id="cetificate_template">
-                                        <option value="">---Select Certificate Template---</option>
-                                        @foreach($rows1['certificate_templates'] as $row)
-                                        <option value="{{ $row->certificate_templates_id }}">{{ $row->template_name }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Certificate Expiry:<span class="error-star"
-                                            style="color:red;">*</span></label><br>
-                                    <input type="radio" class="btn-check certificate_expiry" name="certificate_expiry"
-                                        value="1" id="certificate_expiryyes" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="certificate_expiryyes">Yes</label>
-
-                                    <input type="radio" class="btn-check certificate_expiry" name="certificate_expiry"
-                                        value="2" id="certificate_expiryno" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="certificate_expiryno">No</label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3" id="expiryDateField" style="display: none;">
-                                <div class="form-group">
-                                    <label>Expiry Date:<span class="error-star" style="color:red;">*</span></label>
-                                    <input type='date' class="form-control default hasDatepicker"
-                                        id='course_expiry_period' name="course_expiry_period" placeholder="dd-mm-yy"
-                                        autocomplete="off">
-                                </div>
-                            </div>
-                        </div>
 
 
                         <div class="col-md-6" id="paid" style="display:none;">
@@ -1969,7 +1962,13 @@
         });
     });
 </script>
-
+<script>
+    document.querySelectorAll('input[name="expiry_type"]').forEach((elem) => {
+        elem.addEventListener("change", function() {
+            document.getElementById("expiry_input").style.display = "block";
+        });
+    });
+</script>
 <style>
     /* .select2-container {
         min-width: 300px !important;
@@ -2164,7 +2163,13 @@
         placeholder: "Select User Name",
         allowClear: true
     });
-
+    $(document).ready(function() {
+        $('#user_id').select2({
+            placeholder: "Select users",
+            allowClear: true,
+            width: '100%'
+        });
+    });
     const $select = $('#user_id');
 
     $select.on('select2:select', function(e) {
@@ -2853,6 +2858,20 @@
             $('#classlist').css('display', 'block');
         }
 
+    });
+</script>
+
+<script>
+    document.querySelectorAll('input[name="expiry_type"]').forEach((elem) => {
+        elem.addEventListener("change", function() {
+            if (this.value === "month") {
+                document.getElementById("expiry_input").style.display = "block";
+
+            } else if (this.value === "year") {
+                document.getElementById("year_input").style.display = "block";
+                document.getElementById("expiry_input").style.display = "none";
+            }
+        });
     });
 </script>
 
@@ -4054,8 +4073,8 @@
             <label class="btn btn-outline-primary mb-2" for="certificate_expiryno">No</label>
 
             <div id="expiry_date_container" style="display:none; margin-top:10px;">
-                <label for="expiry_date">Expiry Date: <span style="color:red">*</span></label>
-                <input type="date" id="expiry_date" class="swal2-input" />
+                <label for="expiry_date">Expiry Month: <span style="color:red">*</span></label>
+                <input type="number" id="expiry_date" class="swal2-input" />
             </div>
         </div>
     `,

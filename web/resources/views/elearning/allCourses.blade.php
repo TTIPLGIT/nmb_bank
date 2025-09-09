@@ -521,6 +521,7 @@
                                         @if($showExpiryBadge)
                                         <a href="javascript:void(0);"
                                             onclick="highlightCopiedCourse({{ $value->course_id }})">
+                                            
                                             <span class="blinking-warning">
                                                 {{ \Carbon\Carbon::parse($value->course_expiry_period)->isPast() ? 'Certificate Expired' : 'Certificate Expiring Soon. Do the Re-Certification' }}
                                             </span>

@@ -15,8 +15,70 @@
         flex-direction: end;
         align-items: end;
     }
+
+    .custom-dropdown {
+        position: relative;
+        width: 100%;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .custom-dropdown .selected {
+        padding: 0px;
+    }
+
+    .custom-dropdown .dropdown-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        border: 1px solid #ccc;
+        background: #fff;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: none;
+        max-height: 200px;
+        overflow-y: auto;
+        border-radius: 5px;
+        z-index: 999;
+    }
+
+    .custom-dropdown .dropdown-list li {
+        display: flex;
+        justify-content: space-between;
+        /* text left, icon right */
+        align-items: center;
+        padding-top: 10px;
+        cursor: pointer;
+    }
+
+    .custom-dropdown .dropdown-list li:hover {
+        background-color: #f1f1f1;
+    }
+
+    .custom-dropdown .dropdown-list li {
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+    }
+
+    .custom-dropdown .dropdown-list li:hover {
+        background: #f0f0f0;
+    }
 </style>
+
+<!-- XLSX library -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"></script>
+
+<!-- Bootstrap Select (CSS + JS, single version) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
+
+
+
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -69,18 +131,27 @@
                                             <label>Level Icons<span class="error-star" style="color:red;">*</span></label>
                                             <input type="text" class="form-control default" id="level_icon" name="level_icon">
                                         </div> -->
-
-                                        <div class="col-6">
+                                        <div class="form-group col-6">
                                             <label>Level Icon <span class="text-danger">*</span></label>
-                                            <select class="form-control selectpicker" data-live-search="true" id="level_icon" name="level_icon" required>
-                                                <option value="">-- Select Level Icon --</option>
-                                                @foreach($icons as $icon)
-                                                <option value="{{ $icon->icon }}" data-content="<i class='{{ $icon->icon }}'></i> {{ $icon->icon_name }}">
-                                                    {{ $icon->icon }}
-                                                </option>
-                                                @endforeach
-                                            </select>
+                                            <div class="custom-dropdown form-control">
+                                                <div class="selected"
+                                                    style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                                                    <span>-- Select Level Icon --</span>
+                                                    <span>▼</span>
+                                                </div>
+                                                <ul class="dropdown-list">
+                                                    @foreach($icons as $icon)
+                                                    <li data-value="{{ $icon->icon }}">
+                                                        <span>{{ $icon->icon_name }}</span>
+                                                        <i class="{{ $icon->icon }}" style="color:blue; font-size:20px;"></i>
+                                                    </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                            <input type="hidden" name="level_icon" id="level_icon" />
                                         </div>
+
+
 
 
 
@@ -187,6 +258,35 @@
 </script>
 @endif
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const dropdown = document.querySelector(".custom-dropdown");
+        const selected = dropdown.querySelector(".selected");
+        const list = dropdown.querySelector(".dropdown-list");
+        const hiddenInput = document.getElementById("level_icon");
+
+
+        selected.addEventListener("click", () => {
+            list.style.display = list.style.display === "block" ? "none" : "block";
+        });
+
+
+        list.querySelectorAll("li").forEach(item => {
+            item.addEventListener("click", function() {
+                selected.innerHTML = this.innerHTML; // Show icon + text
+                hiddenInput.value = this.dataset.value; // Save the icon value
+                list.style.display = "none"; // Close dropdown
+            });
+        });
+
+
+        document.addEventListener("click", (e) => {
+            if (!dropdown.contains(e.target)) {
+                list.style.display = "none";
+            }
+        });
+    });
+</script>
 
 
 

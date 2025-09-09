@@ -46,8 +46,8 @@ class coursecategoryController extends BaseController
         $screens = $menus['screens'];
         $modules = $menus['modules'];
         $icons = DB::select("SELECT * FROM icons");
-     
-        return view("coursecategory.coursecategorycreate", compact('screens', 'modules','icons'));
+
+        return view("coursecategory.coursecategorycreate", compact('screens', 'modules', 'icons'));
     }
 
 
@@ -86,7 +86,7 @@ class coursecategoryController extends BaseController
                 'course_locked' => $request->course_locked,
                 'points_to_unlock' => $request->points_to_unlock,
             ];
-
+           
 
             $encryptArray = $this->encryptData($data);
             $requestPayload = ['requestData' => $encryptArray];
@@ -164,8 +164,8 @@ class coursecategoryController extends BaseController
                 $objData = json_decode($this->decryptData($response1->Data));
 
                 if ($objData->Code == 200) {
-                    return redirect()->route('catagory_list')->with('success', 'Category Updated successfully.');
                 }
+                return redirect()->route('catagory_list')->with('success', 'Category Updated successfully.');
 
                 return back()->with('fail', 'Not added: ' . ($objData->Message ?? 'Unknown error'));
             }
