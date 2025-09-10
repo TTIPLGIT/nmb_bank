@@ -938,6 +938,7 @@ class elearningEthnicTestController extends BaseController
                 return redirect(url('/'));
             }
             $id = Crypt::decrypt($id);
+            // dd($id,$user_id);
             $this->WriteFileLog($id);
             $courseDetails = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
             $courseDetailslist = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
@@ -1045,12 +1046,104 @@ class elearningEthnicTestController extends BaseController
                 'updated_at'      => now(),
             ]);
 
+             $isEnrolled = DB::select("SELECT * FROM user_course_relation WHERE user_id=$user_id AND course_id=$id");
+            // dd( $isEnrolled);
+            // dd($user_id);
+            if (empty($isEnrolled)) {
+
+                $userDetails = DB::select("SELECT * FROM users WHERE id=$user_id")[0];
+
+                $userName = $userDetails->name;
+
+                $userMail = $userDetails->email;
+                $userMobile = ($userDetails->mobile_no) == null ? 0 : $userDetails->mobile_no;
+                // dd($userMobile);
+                $courseId = $courseDetails[0]->course_id;
+                $courseName = $courseDetails[0]->course_name;
+
+                // $courseBonus = $courseDetails[0]->course_bonus;
+                $courseStatus = "Enrolled";
+                $courseEnrollDate = date("Y-m-d H:i:s", time());
+                //$course_statuslist=$course_status+1;
+                $courseProgress = "0";
+                $userPointsEarned = "0";
+                $userRatingsGiven = "0";
+                $mobileRemainder = "0";
+                $mailRemainder = "0";
+                //   dd($userDetails->name);
+                DB::table('user_course_relation')
+                    ->insert([
+                        'user_id' => "$user_id",
+                        'user_name' => "$userName",
+                        'user_email' => "$userMail",
+                        'user_mobile' => "$userMobile",
+                        'course_id' => "$courseId",
+                        'course_name' => "$courseName",
+                        // 'course_bonus' => "$courseBonus",
+
+                        'course_status' => "$courseStatus",
+                        'status' => 1,
+                        'course_enroll_date' => "$courseEnrollDate",
+                        'course_progress' => "$courseProgress",
+                        'user_points_earned' => "$userPointsEarned",
+                        'user_rating_given' => "$userRatingsGiven",
+                        'mobile_remainder' => "$mobileRemainder",
+                        'mail_remainder' => "$mailRemainder",
+                    ]);
+
+
+                }
+                  $usercourseDetails = DB::select("SELECT * FROM user_course_relation WHERE user_id=$user_id AND course_id=$id");
+
+                //$isEnrolled = DB::select("SELECT * FROM user_class_relation WHERE user_id=$user_id AND class_id=$id");
+                //dd($isEnrolled);
+
+                $userDetails = DB::select("SELECT * FROM users WHERE id=$user_id")[0];
+                $userName = $userDetails->name;
+                $userMail = $userDetails->email;
+                $this->WriteFileLog($courseDetails);
+                $courseId = $courseDetails[0]->course_id;
+                $course_classes = $courseDetails[0]->course_classes;
+                $courserelationId = $usercourseDetails[0]->id;
+                $classStatus = "Enrolled";
+                $classEnrollDate = date("Y-m-d H:i:s", time());
+                $course_classes = explode(',', $course_classes);
+
+                foreach ($course_classes as $key => $row) {
+
+                    DB::table('user_class_relation')
+                        ->insert([
+                            'user_id' => "$user_id",
+                            'user_name' => "$userName",
+                            'user_email' => "$userMail",
+                            'course_id' => "$courseId",
+                            'class_id' => "$row",
+                            'course_relation_id' => "$courserelationId",
+                            'class_status' => "$classStatus",
+                            'class_enroll_date' => "$classEnrollDate",
+                            'created_at' => NOW()
+
+                        ]);
+
+                    # code...
+                    // dd($courseId);
+                }
+                //dd($courseId);
+                // $is_pending = DB::table('user_class_relation')
+                //     ->where('course_id', $courseId)
+                //     ->where('status', 1)
+                //     ->where('user_id', $user_id);
+                $is_pending = DB::select("SELECT cr.* from user_class_relation as cr where cr.course_id=$courseId and cr.status=1 and cr.user_id=$user_id");
+                if ($is_pending == []) {
+                    DB::statement("UPDATE user_class_relation SET status = 1 WHERE user_id = $user_id AND status NOT IN (2) AND course_id = $courseId ORDER BY id ASC LIMIT 1");
+                }
+
+
+// dd($isEnrolled);
 
 
 
-
-
-            return view('elearning.courseOverview', compact('courseDetails', 'courseContents', 'courseresorces', 'classOrder', 'enrolled', 'modules', 'screens', 'menus', 'user_id', 'video_exist', 'audio_exist', 'pdf_exist', 'counts', 'courseProgress', 'isEnrolled', 'average_ratting', 'ratings', 'payment_details'));
+            return view('elearning.courseOverview', compact('isEnrolled','courseDetails', 'courseContents', 'courseresorces', 'classOrder', 'enrolled', 'modules', 'screens', 'menus', 'user_id', 'video_exist', 'audio_exist', 'pdf_exist', 'counts', 'courseProgress', 'isEnrolled', 'average_ratting', 'ratings', 'payment_details'));
         } catch (\Exception $exc) {
             $this->WriteFileLog($exc);
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
@@ -1525,7 +1618,9 @@ class elearningEthnicTestController extends BaseController
                     $expiryMessage = 'Certificate Expiring Soon. Contact the supervisor';
                 }
             }
-            //  dd( $expiryMessage);
+
+            
+        
             return view('elearning.class', compact('expiryMessage', 'courseDetails', 'classContents', 'selected_class', 'courseContents', 'classOrder', 'isForum', 'questionAdded', 'askedQuestions', 'noQuestionsYet', 'modules', 'screens', 'menus', 'user_id', 'courseresorces', 'counts', 'audio_exist', 'video_exist', 'pdf_exist', 'course_certificate', 'quizzesWithKey', 'quiz_results', 'ratings', 'average_ratting'));
         } catch (\Exception $exc) {
             // dd("welcome da");
@@ -2240,7 +2335,7 @@ class elearningEthnicTestController extends BaseController
             ]);
             // dd($pdf);
 
-            dd($data);
+            // dd($data);
 
 
 

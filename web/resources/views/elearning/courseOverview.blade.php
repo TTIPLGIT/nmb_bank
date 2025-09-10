@@ -393,7 +393,7 @@
                 @foreach($courseDetails as $courseDetail)
                 <div class="classOverview">
                     <div class="col" style="display:flex;">
-                      
+
                         <a href="/elearning/allCourses?sorted=Recently+Added&tag=false&progress=false&q=false&course_id={{ $courseDetail->course_id }}"
                             class="btn btn-primary">Back</a>
 
@@ -461,18 +461,29 @@
                     </div>
                     <div class="card noShadow classOverviewinfo mt-4 mt-md-0">
 
+                        @php
+                        $file = $courseDetail->course_introduction;
+                        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                        $fileUrl = url('uploads/course/126/' . $file);
+                        @endphp
 
+                        @if($extension === 'mp4')
                         <video class="mt-2" height="200px" controls
-                            poster="http://localhost:60159/uploads/course/126/{{$courseDetail->course_banner}}"
+                            poster="{{ url('uploads/course/126/' . $courseDetail->course_banner) }}"
                             preload="metadata" width="100%">
-                            <source
-                                src="http://localhost:60159/uploads/course/126/{{$courseDetail->course_introduction}}"
-                                type="video/mp4">
-                            Download the
-                            <a
-                                href="http://localhost:60159/uploads/course/126/{{$courseDetail->course_introduction}}">MP4</a>
-                            video.
+                            <source src="{{ $fileUrl }}" type="video/mp4">
+                            Download the <a href="{{ $fileUrl }}">MP4</a> video.
                         </video>
+                        @elseif(in_array($extension, ['png','jpg','jpeg','gif','webp']))
+                        <img src="{{ $fileUrl }}" alt="Course Image" class="mt-2" style="width:100%; max-height:300px; object-fit:contain;">
+                        @elseif($extension === 'pdf')
+                        <object data="{{ $fileUrl }}#toolbar=0" type="application/pdf" width="100%" height="500px">
+                            <p>No PDF viewer available. <a href="{{ $fileUrl }}">Download PDF</a></p>
+                        </object>
+                        @else
+                        <p>Unsupported file type: {{ $extension }}</p>
+                        @endif
+
                         <div class="card-body bgWhite">
                             @if($enrolled == "False")
 
@@ -586,7 +597,7 @@
 
                             <div class="d-flex flex-row justify-content-center mb-2">
                                 @php $id=Crypt::encrypt($courseDetail->course_id); @endphp
-                            
+
                                 @if($isEnrolled[0]->status != 2)
                                 <a href="{{ route('elearningCourse/class',$id) }}" class="btn btn-success addToCart">
                                     Continue Course
