@@ -53,6 +53,7 @@ class elearningdashboardgtController extends BaseController
                     $count = $parant_data['dasboardCount'];
                    
                     $recommended = $parant_data['recomment_courses'];
+                    
                     return view('elearning.dashboard', compact('rows', 'menus', 'screens', 'modules', 'user_id', 'recommended', 'count'));
                 }
             } else {

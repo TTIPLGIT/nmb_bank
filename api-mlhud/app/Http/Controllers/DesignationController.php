@@ -20,7 +20,13 @@ class DesignationController extends BaseController
             $method = 'Method => DesignationController => get_data';
 
 
-            $rows = DB::select('select `a`.* from `designation` as `a` where `a`.`active_flag` = 0 ');
+            $rows = DB::select("
+                  SELECT a.*, r.role_name
+                  FROM designation AS a
+                  INNER JOIN uam_roles AS r ON a.role_id = r.role_id
+                  WHERE a.active_flag = 0
+            ");
+
 
             $response = [
                 'rows' => $rows

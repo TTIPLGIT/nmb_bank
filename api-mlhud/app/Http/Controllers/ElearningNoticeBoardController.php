@@ -14,11 +14,11 @@ class ElearningNoticeBoardController extends BaseController
 {
     public function notice_store(Request $request)
     {
-        
+
 
         try {
             $method = 'Method => ElearningNoticeBoardController => notice_store';
-            $inputArray = $request->requestData;         
+            $inputArray = $request->requestData;
             $user_id = (auth()->check()) ? auth()->user()->id : $inputArray['user_id'];
 
 
@@ -31,7 +31,7 @@ class ElearningNoticeBoardController extends BaseController
                 'notice_date' => $inputArray['notice_date'],
                 'notice_author' => $inputArray['notice_author'],
             ];
-
+            
             $update_id = DB::transaction(function () use ($input) {
                 $role_id = DB::table('elearning_noticeboard')
                     ->insertGetId([
@@ -87,10 +87,12 @@ class ElearningNoticeBoardController extends BaseController
             $rows = DB::select("SELECT role_id from uam_user_roles  where user_id=$userID");
             $role_id = $rows[0]->role_id;
             $rows['user_category'] = array(
-                'Student' => config('setting.roles.Student'),
-                'Teacher' => config('setting.roles.Teacher'),
+                'Employee' => config('setting.roles.Student'),
+                'Manager' => config('setting.roles.Teacher'),
                 'All' => 0
             );
+            
+            
             // INNER JOIN uam_roles AS ur ON ur.role_id = et.user_category
 
             $rows['quiz_list'] =  DB::select("SELECT notice_id,notice_name,notice_banner,notice_date,notice_author,user_category from elearning_noticeboard as en where notice_status=0 ORDER BY created_at DESC");
@@ -280,7 +282,7 @@ class ElearningNoticeBoardController extends BaseController
 
             $this->WriteFileLog($input);
 
-            $update_id= DB::table('elearning_noticeboard')
+            $update_id = DB::table('elearning_noticeboard')
                 ->where('notice_id', $input['eid'])
                 ->update([
                     'user_category' => $input['user_category'],

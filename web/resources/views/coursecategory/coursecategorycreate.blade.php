@@ -20,9 +20,52 @@
         display: flex;
         justify-content: flex-end;
     }
+
+    .custom-dropdown {
+        position: relative;
+        width: 100%;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .custom-dropdown .selected {
+        padding: 5px 10px;
+    }
+
+    .custom-dropdown .dropdown-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        border: 1px solid #ccc;
+        background: #fff;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: none;
+        max-height: 200px;
+        overflow-y: auto;
+        border-radius: 5px;
+        z-index: 999;
+    }
+
+    .custom-dropdown .dropdown-list li {
+        display: flex;
+        justify-content: space-between;
+        /* text left, icon right */
+        align-items: center;
+        padding: 8px 12px;
+        cursor: pointer;
+        gap: 8px;
+    }
+
+    .custom-dropdown .dropdown-list li:hover {
+        background: #f0f0f0;
+    }
 </style>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
 <div class="main-content">
     <section class="section">
@@ -71,10 +114,32 @@
                                         <label>Number of Course to achieve this Badge<span class="text-danger">*</span></label>
                                         <input type="number" class="form-control" name="badge_count" id="badge_count">
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <!-- <div class="form-group col-md-4">
                                         <label>Badge Icon<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="badge_icon" id="badge_icon">
+                                    </div> -->
+                                    <div class="form-group col-md-4">
+                                        <label>Badge Icon <span class="text-danger">*</span></label>
+                                        <div class="custom-dropdown form-control">
+                                            <div class="selected"
+                                                style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                                                <span>-- Select Badge Icon --</span>
+                                                <span>▼</span>
+                                            </div>
+                                            <ul class="dropdown-list">
+                                                @foreach($icons as $icon)
+                                                <li data-value="{{ $icon->icon }}">
+                                                    <span>{{ $icon->icon_name }}</span>
+                                                    <i class="{{ $icon->icon }}" style="color:blue; font-size:20px;"></i>
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        <input type="hidden" name="badge_icon" id="badge_icon" />
                                     </div>
+
+
+
                                 </div>
                                 <div class="form-group col-6">
 
@@ -126,9 +191,28 @@
                                     </div>
 
 
-                                    <div class="form-group col-6">
+                                    <!-- <div class="form-group col-6">
                                         <label>Streak Icon <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="streak_icon" id="achieve_icon">
+                                    </div> -->
+                                    <div class="form-group col-md-4">
+                                        <label>Streak Icon <span class="text-danger">*</span></label>
+                                        <div class="custom-dropdown form-control">
+                                            <div class="selected"
+                                                style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                                                <span>-- Select Badge Icon --</span>
+                                                <span>▼</span>
+                                            </div>
+                                            <ul class="dropdown-list">
+                                                @foreach($icons as $icon)
+                                                <li data-value="{{ $icon->icon }}">
+                                                    <span>{{ $icon->icon_name }}</span>
+                                                    <i class="{{ $icon->icon }}" style="color:blue; font-size:20px;"></i>
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        <input type="hidden" name="streak_icon" id="achieve_icon" />
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
@@ -174,6 +258,10 @@
 
 <!-- JS -->
 <script>
+    $(document).ready(function() {
+        $('.selectpicker').selectpicker();
+    });
+
     function gencre(event) {
         event.preventDefault();
 
@@ -270,13 +358,13 @@
             }
         }
 
-    
 
 
 
 
-    // Submit if all validations pass
-    $("#catagory_submit").submit();
+
+        // Submit if all validations pass
+        $("#catagory_submit").submit();
     }
 
     function toggleBadgeFields() {
@@ -305,6 +393,37 @@
         }
     }
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".custom-dropdown").forEach(function(dropdown) {
+            const selected = dropdown.querySelector(".selected");
+            const list = dropdown.querySelector(".dropdown-list");
+            const hiddenInput = dropdown.nextElementSibling; // hidden input right after dropdown
+
+            // Toggle dropdown
+            selected.addEventListener("click", () => {
+                list.style.display = list.style.display === "block" ? "none" : "block";
+            });
+
+            // Handle option click
+            list.querySelectorAll("li").forEach(item => {
+                item.addEventListener("click", function() {
+                    selected.innerHTML = this.innerHTML; // Show icon + text
+                    hiddenInput.value = this.dataset.value; // Save icon class
+                    list.style.display = "none"; // Close dropdown
+                });
+            });
+
+            // Close if clicked outside
+            document.addEventListener("click", (e) => {
+                if (!dropdown.contains(e.target)) {
+                    list.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
 <script>
     function toggleUnlockPoints() {
         document.getElementById("unlockPointsDiv").style.display = document.getElementById("course_locked_yes").checked ? "block" : "none";

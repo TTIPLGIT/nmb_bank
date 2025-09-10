@@ -81,17 +81,18 @@ class ElearningEventController extends BaseController
     {
         $logMethod = 'Method => ElearningEventController => adminevent_list';
         try {
-            $this->WriteFileLog('hiife');
+            // $this->WriteFileLog('hiife');
             $userID = (auth()->check()) ? auth()->user()->id : $request['user_id'];
             $rows = array();
             $rows = DB::select("SELECT role_id from uam_user_roles  where user_id=$userID");
             $role_id = $rows[0]->role_id;
 
             $rows['user_category'] = array(
-                'Student' => config('setting.roles.Student'),
-                'Teacher' => config('setting.roles.Teacher'),
+                'Employee' => config('setting.roles.Student'),
+                'Manager' => config('setting.roles.Teacher'),
                 'All' => 0
             );
+            
             // INNER JOIN uam_roles AS ur ON ur.role_id = et.user_category
 
             $rows['quiz_list'] =  DB::select("SELECT event_id,event_name,event_image,event_date,user_category from elearning_events as en  where event_status=0 ORDER BY created_at DESC");

@@ -25,10 +25,6 @@ class GamificationLevelController extends BaseController
         $modules = $menus['modules'];
         $method = "GET";
         $gatewayURL = config('setting.api_gateway_url') . '/level/getAll';
-        $allRecords['levels'] = DB::table('gamification_levels')
-            ->where('active_flag', 1)
-            ->orderBy('level_id', 'desc')
-            ->get();
 
         $response = json_decode($this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method));
         if ($response->Status == 200 && $response->Success) {
@@ -37,7 +33,10 @@ class GamificationLevelController extends BaseController
             $levels = $parant_data['levels'];
             // dd($levels);
         }
-        return view("Gamifications.levels", compact('screens', 'modules', 'levels', 'allRecords'));
+        //    dd(json_decode($response->Data));
+        // dd($levels);
+
+        return view("Gamifications.levels", compact('screens', 'modules', 'levels'));
     }
 
     public function createpage(Request $request)
@@ -51,7 +50,9 @@ class GamificationLevelController extends BaseController
             ->where('active_flag', 1)
             ->orderBy('level_id', 'desc')
             ->get();
-        return view("Gamifications.createlevels", compact('screens', 'modules', 'allRecords'));
+        $icons = DB::select("SELECT * FROM icons");
+        // dd($icons);
+        return view("Gamifications.createlevels", compact('screens', 'modules', 'allRecords', 'icons'));
     }
     public function store(Request $request)
     {
@@ -275,275 +276,196 @@ class GamificationLevelController extends BaseController
             return redirect()->route('level_master_page');
         }
     }
-
     public function leaderboard(Request $request)
     {
-        $menus = $this->FillMenu();
-        $user_id = $request->session()->get("userID");
-        $screens = $menus['screens'];
-        $modules = $menus['modules'];
 
-        $rows['course_catagory'] = DB::table('course_catagory')->orderBy('catagory_id', 'desc')->get();
-        $rows['elearning_courses'] = DB::table('elearning_courses')->orderBy('course_id', 'desc')->get();
-        $rows['role'] = DB::table('uam_roles')->get();
-        $rows['designation'] = DB::table('designation')->orderBy('designation_id', 'desc')->get();
+        try {
+            $method = 'Method => GamificationLeaderboardController => leaderboard';
+            $menus = $this->FillMenu();
+            $screens = $menus['screens'];
+            $modules = $menus['modules'];
+            $data = [
+                'metric' => $request->input('metric', 'points'),
+                'user_id' => $request->session()->get("userID"),
+                'course_id' => $request->input('course_id'),
+            ];
 
-        session()->flash('show_gif', true);
+            $this->WriteFileLog($data);
 
+            $encryptArray = $this->encryptData($data);
+            $requestData = ['requestData' => $encryptArray];
 
-        $query = DB::table('user_cpt_points')
-            ->join('users', 'users.id', '=', 'user_cpt_points.user_id')
-            ->leftJoin('cpt_points_hours_calculate', function ($join) {
-                $join->on('users.id', '=', 'cpt_points_hours_calculate.user_id')
-                    ->on('user_cpt_points.course_id', '=', 'cpt_points_hours_calculate.course_id');
-            })
-            ->leftJoin('elearning_courses', 'elearning_courses.course_id', '=', 'user_cpt_points.course_id')
-            ->select(
-                'user_cpt_points.course_id',
-                'users.id as id',
-                'users.name',
-                'users.profile_image',
-                DB::raw('SUM(cpt_points_hours_calculate.hours) as total_hours'),
-                DB::raw('SUM(user_cpt_points.cpt_points) as total_points')
-            )
-            ->groupBy(
-                'user_cpt_points.course_id',
-                'users.id',
-                'users.name',
-                'users.profile_image'
+            $gatewayURL = config('setting.api_gateway_url') . '/leaderboard';
+            $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($requestData), $method);
+            $this->WriteFileLog($response);
+
+            $response1 = json_decode($response);
+            $objData = json_decode($this->decryptData($response1->Data));
+            $rows = json_decode(json_encode($objData->Data), true);
+            // dd($rows);
+            return view('Gamifications.leaderboard', compact('rows', 'modules', 'screens'));
+        } catch (\Exception $exc) {
+            return $this->sendLog(
+                $method,
+                $exc->getCode(),
+                $exc->getMessage(),
+                $exc->getTrace()[0]['line'],
+                $exc->getTrace()[0]['file']
             );
-
-        $rows['results'] = $query->get();
-        $rows['leaderboard'] = $query->orderByDesc('total_points')->get();
-        $rows['top3'] = $rows['leaderboard']->take(3);
-        session()->forget('first_time_leaderboard');
-
-        $rank = 1;
-        $currentUserRank = null;
-        foreach ($rows['leaderboard'] as $user) {
-            if ($user->id == $user_id) {
-                $currentUserRank = [
-                    'rank' => $rank,
-                    'name' => $user->name,
-                    'points' => $user->total_points,
-                    'profile_image' => $user->profile_image,
-                    'total_hours' => $user->total_hours,
-                ];
-                break;
-            }
-            $rank++;
         }
-        
-        $rows['metric_type']="points";
-
-        return view("Gamifications.leaderboard", compact('screens', 'modules', 'user_id', 'rows', 'currentUserRank'));
     }
+
     public function leaderboardcondition(Request $request)
     {
         $menus = $this->FillMenu();
-        $user_id = $request->session()->get("userID");
         $screens = $menus['screens'];
         $modules = $menus['modules'];
-        session()->flash('show_gif', true);
 
-        $role = $request->input('role');
-        $designation = $request->input('designation');
-        $course_catagory = $request->input('course_catagory');
-        $metric = $request->input('metric_type');
-        $filter = $request->input('filter', 'ALL');
+        $data = [
+            'user_id' => $request->session()->get("userID"),
+            'role' => $request->input('role'),
+            'designation' => $request->input('designation'),
+            'course_catagory' => $request->input('course_catagory'),
+            'metric' => $request->input('metric_type', 'points'),
+        ];
 
-        $rows['course_catagory'] = DB::table('course_catagory')->orderBy('catagory_id', 'desc')->get();
-        $rows['elearning_courses'] = DB::table('elearning_courses')->orderBy('course_id', 'desc')->get();
-        $rows['role'] = DB::table('uam_roles')->get();
-        $rows['designation'] = DB::table('designation')->orderBy('designation_id', 'desc')->get();
+        $encryptArray = $this->encryptData($data);
+        $requestData = ['requestData' => $encryptArray];
 
-        $userIds = null;
-        if (!empty($course_catagory)) {
-            $course = DB::table('elearning_courses')
-                ->where('course_id', $course_catagory)
-                ->select('user_ids')
-                ->first();
+        $gatewayURL = config('setting.api_gateway_url') . '/leaderboardCondition';
+        $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($requestData), 'leaderboardcondition');
+        $filterMessageText = $rows['filterMessageText'] ?? null;
+        $response1 = json_decode($response);
 
-            if ($course && !empty($course->user_ids)) {
-                $userIds = array_map('intval', explode(',', $course->user_ids));
-            } else {
-                $userIds = [];
-            }
-        }
-
-        if ($metric === 'hours') {
-            $query = DB::table('cpt_points_hours_calculate')
-                ->join('users', 'users.id', '=', 'cpt_points_hours_calculate.user_id')
-                ->join('user_cpt_points', function ($join) {
-                    $join->on('users.id', '=', 'user_cpt_points.user_id')
-                        ->on('cpt_points_hours_calculate.course_id', '=', 'user_cpt_points.course_id');
-                })
-                ->join('elearning_courses', 'elearning_courses.course_id', '=', 'cpt_points_hours_calculate.course_id')
-                ->select(
-                    'cpt_points_hours_calculate.course_id',
-                    'users.id as id',
-                    'users.profile_image',
-                    'users.name',
-                    DB::raw('SUM(cpt_points_hours_calculate.hours) as total_hours'),
-                    DB::raw('SUM(user_cpt_points.cpt_points) as total_points')
-                )
-                ->groupBy(
-                    'cpt_points_hours_calculate.course_id',
-                    'users.id',
-                    'users.name',
-                    'users.profile_image'
-                );
-
-
-
-            if (!empty($role)) {
-                $query->where('users.role_id', $role);
-            }
-            if (!empty($designation)) {
-                $query->where('users.designation_id', $designation);
-            }
-            if ($userIds !== null) {
-                $query->whereIn('users.id', $userIds);
-            }
-        } else {
-            $query = DB::table('user_cpt_points')
-                ->join('users', 'users.id', '=', 'user_cpt_points.user_id')
-                ->select(
-                    'users.id',
-                    'users.name',
-                    'users.profile_image',
-                    DB::raw('SUM(user_cpt_points.cpt_points) as total_points')
-                )
-                ->groupBy('users.id', 'users.name');
-
-            if (!empty($role)) {
-                $query->where('users.role_id', $role);
-            }
-            if (!empty($designation)) {
-                $query->where('users.designation_id', $designation);
-            }
-            if ($userIds !== null) {
-                $query->whereIn('users.id', $userIds);
-            }
-        }
-
-        if ($metric === 'hours') {
-            $query->orderBy('total_hours', 'asc');
-        } else {
-            $query->orderByDesc('total_points');
-        }
-
-        $rows['leaderboard'] = $query->get();
-        $rows['results'] = $rows['leaderboard'];
-        $rows['top3'] = $rows['leaderboard']->take(3);
-
-        session()->forget('first_time_leaderboard');
-
-        $rank = 1;
-        $currentUserRank = null;
-        foreach ($rows['leaderboard'] as $user) {
-            if ($user->id == $user_id) {
-                $currentUserRank = [
-                    'rank' => $rank,
-                    'name' => $user->name,
-                    'points' => $metric === 'hours' ? $user->total_hours : $user->total_points,
-                ];
-                break;
-            }
-            $rank++;
-        }
-
-        $filterMessage = [];
-
-        if ($role) {
-            $roleName = DB::table('uam_roles')->where('role_id', $role)->value('role_name');
-            $filterMessage[] = "Role: <strong>{$roleName}</strong>";
-        }
-        if ($designation) {
-            $designationName = DB::table('designation')->where('designation_id', $designation)->value('designation_name');
-            $filterMessage[] = "Designation: <strong>{$designationName}</strong>";
-        }
-        if ($course_catagory) {
-            $courseName = DB::table('elearning_courses')->where('course_id', $course_catagory)->value('course_name');
-            $filterMessage[] = "Course: <strong>{$courseName}</strong>";
-        }
-        if ($metric) {
-            $metricLabel = $metric === 'hours' ? 'Hours ' : 'Points ';
-            $filterMessage[] = "Based on : <strong>{$metricLabel}</strong>";
-        }
-
-        $filterMessageText = $filterMessage ? 'Leaderboard by: ' . implode(', ', $filterMessage) : null;
-
-        $rows['metric_type'] = $metric;
-
-        return view("Gamifications.leaderboard", compact('screens', 'modules', 'user_id', 'rows', 'currentUserRank', 'filterMessageText'));
+        $objData = json_decode($this->decryptData($response1->Data));
+        // dd($objData);
+        $rows = json_decode(json_encode($objData->Data), true);
+        // dd($rows);
+        return view("Gamifications.leaderboard", compact(
+            'screens',
+            'modules',
+            'rows',
+            'filterMessageText'
+        ));
     }
+
+    // public function getLeaderboardData(Request $request)
+    // {
+    //     $filter = $request->query('filter');
+    //     $metric = $request->query('metric_type');
+    //     $role = $request->query('role');
+    //     $designation = $request->query('designation');
+    //     $course_catagory = $request->query('course_catagory');
+
+    //     $userIds = null;
+
+    //     if (!empty($course_catagory)) {
+    //         $course = DB::table('elearning_courses')
+    //             ->where('course_id', $course_catagory)
+    //             ->select('user_ids')
+    //             ->first();
+
+    //         if ($course && !empty($course->user_ids)) {
+    //             $userIds = array_map('intval', explode(',', $course->user_ids));
+    //         } else {
+    //             $userIds = [];
+    //         }
+    //     }
+
+    //     if ($metric === 'hours') {
+    //         $query = DB::table('cpt_points_hours_calculate')
+    //             ->join('users', 'users.id', '=', 'cpt_points_hours_calculate.user_id')
+    //             ->select(
+    //                 'users.id as id',
+    //                 'users.name',
+    //                 'users.profile_image',
+    //                 DB::raw('SUM(cpt_points_hours_calculate.hours) as total_metric')
+    //             )
+    //             ->groupBy('users.id', 'users.name', 'users.profile_image');
+
+    //         if ($filter === 'WEEKLY') {
+    //             $query->whereBetween('cpt_points_hours_calculate.created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+    //         } elseif ($filter === 'MONTHLY') {
+    //             $query->whereMonth('cpt_points_hours_calculate.created_at', now()->month)
+    //                 ->whereYear('cpt_points_hours_calculate.created_at', now()->year);
+    //         }
+    //     } else {
+    //         $query = DB::table('user_cpt_points')
+    //             ->join('users', 'users.id', '=', 'user_cpt_points.user_id')
+    //             ->select(
+    //                 'users.id as id',
+    //                 'users.name',
+    //                 'users.profile_image',
+    //                 DB::raw('SUM(user_cpt_points.cpt_points) as total_metric')
+    //             )
+    //             ->groupBy('users.id', 'users.name', 'users.profile_image');
+
+    //         if ($filter === 'WEEKLY') {
+    //             $query->whereBetween('user_cpt_points.created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+    //         } elseif ($filter === 'MONTHLY') {
+    //             $query->whereMonth('user_cpt_points.created_at', now()->month)
+    //                 ->whereYear('user_cpt_points.created_at', now()->year);
+    //         }
+    //     }
+
+    //     if (!empty($course_catagory)) {
+    //         $query->where('course_id', $course_catagory);
+    //     }
+    //     if (!empty($role)) {
+    //         $query->where('users.role_id', $role);
+    //     }
+    //     if (!empty($designation)) {
+    //         $query->where('users.designation_id', $designation);
+    //     }
+    //     if ($userIds !== null) {
+    //         $query->whereIn('users.id', $userIds);
+    //     }
+
+    //     $query->orderByDesc('total_metric');
+    //     $rows = $query->get();
+
+    //     return response()->json([
+    //         'top3' => $rows->take(3),
+    //         'rankList' => $rows->skip(3)->values()
+    //     ]);
+    // }
     public function getLeaderboardData(Request $request)
     {
-        $filter = $request->query('filter', 'ALL');
+        $filter = $request->query('filter');
         $metric = $request->query('metric_type', 'points');
+        $role = $request->query('role');
+        $designation = $request->query('designation');
+        $course_catagory = $request->query('course_catagory');
 
-        $metricColumn = $metric === 'hours'
-            ? 'SUM(cpt_points_hours_calculate.hours)'
-            : 'SUM(user_cpt_points.cpt_points)';
 
-        if ($filter === 'ALL') {
-            $query = DB::table('user_cpt_points')
-                ->join('users', 'users.id', '=', 'user_cpt_points.user_id')
-                ->leftJoin('cpt_points_hours_calculate', function ($join) {
-                    $join->on('users.id', '=', 'cpt_points_hours_calculate.user_id')
-                        ->on('user_cpt_points.course_id', '=', 'cpt_points_hours_calculate.course_id');
-                })
-                ->leftJoin('elearning_courses', 'elearning_courses.course_id', '=', 'user_cpt_points.course_id')
-                ->select(
-                    'users.id as id',
-                    'users.name',
-                    'users.profile_image',
-                    DB::raw($metricColumn . ' as total_metric')
-                )
-                ->groupBy('users.id', 'users.name', 'users.profile_image')
-                ->orderByDesc('total_metric');
+        $data = [
+            'filter' => $filter,
+            'metric' => $metric,
+            'role' => $role,
+            'designation' => $designation,
+            'course_catagory' => $course_catagory,
+        ];
 
-            $rows = $query->get();
-        } else {
-            $query = DB::table('user_cpt_points')
-                ->join('users', 'users.id', '=', 'user_cpt_points.user_id')
-                ->leftJoin('cpt_points_hours_calculate', function ($join) {
-                    $join->on('users.id', '=', 'cpt_points_hours_calculate.user_id')
-                        ->on('user_cpt_points.course_id', '=', 'cpt_points_hours_calculate.course_id');
-                })
-                ->select(
-                    'users.id',
-                    'users.name',
-                    'users.profile_image',
-                    DB::raw($metricColumn . ' as total_metric')
-                )
-                ->groupBy('users.id', 'users.name', 'users.profile_image');
 
-            if ($filter === 'WEEKLY') {
-                if ($metric === 'hours') {
-                    $query->whereBetween('cpt_points_hours_calculate.created_at', [now()->startOfWeek(), now()->endOfWeek()]);
-                } else {
-                    $query->whereBetween('user_cpt_points.created_at', [now()->startOfWeek(), now()->endOfWeek()]);
-                }
-            } elseif ($filter === 'MONTHLY') {
-                if ($metric === 'hours') {
-                    $query->whereMonth('cpt_points_hours_calculate.created_at', now()->month)
-                        ->whereYear('cpt_points_hours_calculate.created_at', now()->year);
-                } else {
-                    $query->whereMonth('user_cpt_points.created_at', now()->month)
-                        ->whereYear('user_cpt_points.created_at', now()->year);
-                }
-            }
 
-            $query->orderByDesc('total_metric');
+        $encryptArray = $this->encryptData($data);
+        $requestData = ['requestData' => $encryptArray];
 
-            $rows = $query->get();
-        }
 
-        return response()->json([
-            'top3' => $rows->take(3),
-            'rankList' => $rows->skip(3)->values()
-        ]);
+        $gatewayURL = config('setting.api_gateway_url') . '/leaderboard-data';
+
+
+        $response = $this->serviceRequest(
+            $gatewayURL,
+            'GET',
+            json_encode($requestData),
+            'getLeaderboardData'
+        );
+
+
+        $response1 = json_decode($response);
+        $objData = json_decode($this->decryptData($response1->Data));
+
+        return response()->json($objData);
     }
 }

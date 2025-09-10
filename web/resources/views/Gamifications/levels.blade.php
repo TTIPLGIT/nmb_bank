@@ -69,7 +69,12 @@
                                                         <td>{{ $level['level_name'] }}</td>
                                                         <td>{{ $level['min_point'] }}</td>
                                                         <td>{{ $level['max_point'] }}</td>
-                                                        <td>{{ $level['level_icon'] }}</td>
+                                                        <td>
+                                                            <i class="{{ $level['level_icon'] }}" style="color:orange; font-size:24px;"></i>
+                                                        </td>
+
+
+
                                                         <td><a class="btn btn-link" title="Edit" type="GET" id="gcb"
                                                                 onclick="fetch_show({{$level['level_id']}},'edit')"
                                                                 data-toggle="modal" data-target="#editModal"><i
@@ -161,6 +166,7 @@
                     </div>
 
                 </div>
+
 
                 <div class="row mt-4">
                     <div class="col-12">

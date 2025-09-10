@@ -488,7 +488,7 @@
                 let falseSelector = document.querySelector(`#customRadio_${questionArray[0]}_false`).checked;
                 let boolean = "";
                 if (trueSelector == true) {
-                    boolean = "True";
+                    boolean = "on";
                     document.querySelector(`#boolean_${questionArray[0]}_error`).type = "hidden";
                     answersArray[answerIndex] = {
                         "questionId": `${questionArray[0]}`,
@@ -497,7 +497,7 @@
                     };
                     answerIndex++;
                 } else if (falseSelector == true) {
-                    boolean = "False";
+                    boolean = "off";
                     document.querySelector(`#boolean_${questionArray[0]}_error`).type = "hidden";
                     answersArray[answerIndex] = {
                         "questionId": `${questionArray[0]}`,

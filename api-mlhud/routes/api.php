@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Controllers;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LeaderboardController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -333,7 +334,7 @@ Route::middleware('auth:api')->group(function () {
   Route::get('/designation/data_edit/{id}', [\App\Http\Controllers\DesignationController::class, 'data_edit']);
   Route::post('/designation/storedata', [\App\Http\Controllers\DesignationController::class, 'storedata']);
   Route::post('/designation/updatedata', [\App\Http\Controllers\DesignationController::class, 'updatedata']);
-  
+
 
   //iyyappan //
 
@@ -361,8 +362,8 @@ Route::middleware('auth:api')->group(function () {
   Route::post('/elearning/course/store', [\App\Http\Controllers\tryController::class, 'course_store']);
   Route::get('/course/course_list', [\App\Http\Controllers\tryController::class, 'course_list']);
   Route::post('/course/course_delete', [\App\Http\Controllers\tryController::class, 'course_delete']);
-   Route::post('/course/course_delete', [\App\Http\Controllers\tryController::class, 'course_delete']);
-     Route::post('/course/course_copy', [\App\Http\Controllers\tryController::class, 'course_copy']);
+  Route::post('/course/course_delete', [\App\Http\Controllers\tryController::class, 'course_delete']);
+  Route::post('/course/course_copy', [\App\Http\Controllers\tryController::class, 'course_copy']);
 
   // Route::post('/elearning/quiz/store', [\App\Http\Controllers\tryController::class, 'quiz_store']);
   // Route::get('/quiz/quiz_list', [\App\Http\Controllers\tryController::class, 'quiz_list']);
@@ -784,7 +785,7 @@ Route::fallback(function () {
 
 Route::get('unauthenticated', [\App\Http\Controllers\AuthController::class, 'Unauthenticated'])->name('unauthenticated');
 
-Route::get('user/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+Route::get('/user/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 Route::POST('/user/unauthenticated', [\App\Http\Controllers\AuthController::class, 'user_unauthenticate']);
 Route::POST('/user/require_captcha', [\App\Http\Controllers\AuthController::class, 'require_captcha']);
@@ -870,10 +871,16 @@ Route::post('/course_catagory_delete', [App\Http\Controllers\coursecategoryContr
 Route::get('/level/getAll', [App\Http\Controllers\GamificationLevelController::class, 'getAll'])->name('getAll');
 Route::post('/level_create_store', [App\Http\Controllers\GamificationLevelController::class, 'store'])->name('level_create_store');
 Route::get('/level_show', [App\Http\Controllers\GamificationLevelController::class, 'show'])->name('level_show');
-Route::post('/level_update', [ App\Http\Controllers\GamificationLevelController::class,'update'])->name('level_update');
+Route::post('/level_update', [App\Http\Controllers\GamificationLevelController::class, 'update'])->name('level_update');
 
 Route::post('/level_delete',  [App\Http\Controllers\GamificationLevelController::class, 'delete'])->name('level_delete');
 
+Route::get('/leaderboard', [App\Http\Controllers\GamificationLevelController::class, 'leaderboard'])->name('leaderboard');
+Route::get('/leaderboardCondition', [App\Http\Controllers\GamificationLevelController::class, 'leaderboardCondition']);
+Route::get('/leaderboard-data', [App\Http\Controllers\GamificationLevelController::class, 'leaderboardData']);
 
 Route::get('/yourAchievements', [App\Http\Controllers\elearningController::class, 'yourAchievements'])->name('yourAchievements');
 
+Route::get('/attendance_tracking', [App\Http\Controllers\AttendanceController::class, 'getAll'])->name('getAll');
+
+Route::post('/api/attendance/filter', [App\Http\Controllers\AttendanceController::class, 'getAll'])->name('api.attendance.filter');

@@ -360,11 +360,10 @@
                                                     @foreach($rows['rows']['quiz_list'] as $data)
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
-                                                        @if($data['user_category']=="27")
-                                                        <td>Graduate Trainee</td>
-                                                        @elseif($data['user_category']=="34")
-                                                        <td>Professional Member</td>
-
+                                                        @if($data['user_category']=="42")
+                                                        <td>Employee</td>
+                                                        @elseif($data['user_category']=="43")
+                                                        <td>Manager</td>
                                                         @else
                                                         <td>All</td>
 

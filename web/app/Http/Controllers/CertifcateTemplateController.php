@@ -41,6 +41,7 @@ class CertifcateTemplateController extends BaseController
                     $modules = $menus['modules'];
                     $permission = $this->FillScreensByUser();
                     $screen_permission = $permission[0];
+                    // dd($rows);
                     return view('certificate_template.index', compact('rows', 'screens', 'modules', 'screen_permission'));
                 }
             } else {
@@ -59,85 +60,105 @@ class CertifcateTemplateController extends BaseController
     }
 
 
-public function store(Request $request)
-{
-    $method = 'Method => CertificateTemplateController => store';
+    public function store(Request $request)
+    {
 
-    try {
-        // Step 1: Validation
-        $rules = [
-            'name' => 'required|array|max:2',
-            'name.*' => 'required|string|max:255',
-            'designation' => 'required|array|max:2',
-            'designation.*' => 'required|string|max:255',
-            'signature.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'existing_signature.*' => 'nullable|string',
-        ];
+        $method = 'Method => CertificateTemplateController => store';
 
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
-        }
-
-        // Step 2: Prepare structured data
-        $entries = [];
-   
-        foreach ($request->input('name') as $i => $name) {
-            
-            $signatureFile = $request->file('signature')[$i] ?? null;
-            $existingSignature = $request->input('existing_signature')[$i] ?? null;
-
-            $entry = [
-                'name' => $name,
-                'designation' => $request->input('designation')[$i],
-                'certificate_templates_id' => $request->input('certificate_templates_id'),
-                'certificate_template_signatories_id' => $request->input('certificate_template_signatories_id')[$i] ?? '',
+        try {
+            // Step 1: Validation
+            $rules = [
+                'name' => 'required|array|max:2',
+                'name.*' => 'required|string|max:255',
+                'designation' => 'required|array|max:2',
+                'designation.*' => 'required|string|max:255',
+                'signature.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+                'existing_signature.*' => 'nullable|string',
+                // 'logo' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             ];
-   
-            if ($signatureFile) {
-                $entry['signature_file_name'] = $signatureFile->getClientOriginalName();
-                $entry['signature_file_content'] = base64_encode(file_get_contents($signatureFile->getRealPath()));
-                $entry['signature_mime_type'] = $signatureFile->getMimeType();
-            } elseif ($existingSignature) {
-                $entry['signature_path'] = $existingSignature;
+
+
+
+
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+
+                return Redirect::back()->withErrors($validator)->withInput();
             }
 
-            $entries[] = $entry;
-        }
-        
+            // Step 2: Prepare structured data
+            $entries = [];
 
-        // Step 3: Encrypt & call API
-        $encryptArray = $this->encryptData(['details' => $entries]);
+            foreach ($request->input('name') as $i => $name) {
 
-        $apiRequest = [
-            'requestData' => $encryptArray,
-        ];
+                $signatureFile = $request->file('signature')[$i] ?? null;
+                $existingSignature = $request->input('existing_signature')[$i] ?? null;
+                $logoFile = $request->file('logo')[$i] ?? null;
+                $existingLogo = $request->input('existing_logo')[$i] ?? null;
 
-        $gatewayURL = config('setting.api_gateway_url') . '/certificate-template/store';
-        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($apiRequest), $method);
-        $response1 = json_decode($response);
+                $entry = [
+                    'name' => $name,
+                    'designation' => $request->input('designation')[$i],
+                    'certificate_templates_id' => $request->input('certificate_templates_id'),
+                    'certificate_template_signatories_id' => $request->input('certificate_template_signatories_id')[$i] ?? '',
+                ];
 
-        // Step 4: Handle response
-        if ($response1->Status == 200 && $response1->Success) {
-            $objData = json_decode($this->decryptData($response1->Data), true);
 
-            if ($objData['Code'] == 200) {
-                return redirect()->route('certificate_template.index')->with('success', 'Certificate Template Saved Successfully');
-            } elseif ($objData['Code'] == 400) {
-                return Redirect::back()->with('fail', 'Template Already Exists')->withInput();
+
+                if ($signatureFile) {
+                    $entry['signature_file_name'] = $signatureFile->getClientOriginalName();
+                    $entry['signature_file_content'] = base64_encode(file_get_contents($signatureFile->getRealPath()));
+                    $entry['signature_mime_type'] = $signatureFile->getMimeType();
+                } elseif ($existingSignature) {
+                    $entry['signature_path'] = $existingSignature;
+                }
+
+                if ($logoFile) {
+                    $entry['logo_file_name'] = $logoFile->getClientOriginalName();
+                    $entry['logo_file_content'] = base64_encode(file_get_contents($logoFile->getRealPath()));
+                    $entry['logo_mime_type'] = $logoFile->getMimeType();
+                } elseif ($existingLogo) {
+                    $entry['logo_path'] = $existingLogo;
+                }
+
+                $entries[] = $entry;
+                // dd($entries);
             }
+
+
+            // Step 3: Encrypt & call API
+            $encryptArray = $this->encryptData(['details' => $entries]);
+            //    dd($validator);
+            // dd($entries);
+            $apiRequest = [
+                'requestData' => $encryptArray,
+            ];
+            //    dd($validator);
+            $gatewayURL = config('setting.api_gateway_url') . '/certificate-template/store';
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($apiRequest), $method);
+            $response1 = json_decode($response);
+
+            // Step 4: Handle response
+            if ($response1->Status == 200 && $response1->Success) {
+                $objData = json_decode($this->decryptData($response1->Data), true);
+
+                if ($objData['Code'] == 200) {
+                    return redirect()->route('certificate_template.index')->with('success', 'Certificate Template Saved Successfully');
+                } elseif ($objData['Code'] == 400) {
+                    return Redirect::back()->with('fail', 'Template Already Exists')->withInput();
+                }
+            }
+
+            return Redirect::back()->with('fail', 'Something went wrong')->withInput();
+        } catch (\Exception $exc) {
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
-
-        return Redirect::back()->with('fail', 'Something went wrong')->withInput();
-
-    } catch (\Exception $exc) {
-        return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
     }
-}
 
 
-   
+
 
 
 
@@ -154,7 +175,7 @@ public function store(Request $request)
                 $gatewayURL = config('setting.api_gateway_url') . '/certificate_template/data_edit_details/' . $this->encryptData($id);
                 $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
                 $response = json_decode($response);
-            
+
                 if ($response->Status == 200 && $response->Success) {
                     $objData = json_decode($this->decryptData($response->Data));
                     if ($objData->Code == 200) {
@@ -164,7 +185,8 @@ public function store(Request $request)
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
                         $modules = $menus['modules'];
-                        return view('certificate_template.details', compact('certificate_template_details', 'modules', 'screens','certificate_templates'));
+
+                        return view('certificate_template.details', compact('certificate_template_details', 'modules', 'screens', 'certificate_templates'));
                     }
                 } else {
                     $objData = json_decode($this->decryptData($response->Data));
@@ -190,20 +212,21 @@ public function store(Request $request)
                 $id = $this->decryptData($id);
                 $gatewayURL = config('setting.api_gateway_url') . '/certificate_template/data_edit/' . $this->encryptData($id);
                 $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+
+
                 $response = json_decode($response);
                 if ($response->Status == 200 && $response->Success) {
                     $objData = json_decode($this->decryptData($response->Data));
                     if ($objData->Code == 200) {
                         $parant_data = json_decode(json_encode($objData->Data), true);
                         $template =  $parant_data['rows'];
-                        
+
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
                         $modules = $menus['modules'];
+                        // dd($template);
 
-                       
-                       return view("certificate_template.{$template['template_name']}.preview", compact('template', 'modules', 'screens'));
-
+                        return view("certificate_template.{$template['template_name']}.preview", compact('template', 'modules', 'screens'));
                     }
                 } else {
                     $objData = json_decode($this->decryptData($response->Data));
@@ -219,37 +242,24 @@ public function store(Request $request)
     }
 
     public function verify($id)
-{
-   $decryptedId = Crypt::decryptString($id);
-    $certificate = DB::table('elearning_courses')
-                ->select('*')
-                ->where('course_id', $decryptedId)
-                ->first();
+    {
+        $decryptedId = Crypt::decryptString($id);
+        $certificate = DB::table('elearning_courses')
+            ->select('*')
+            ->where('course_id', $decryptedId)
+            ->first();
 
-    if ($certificate == null) {
-        return response()->json(['message' => 'Certificate not found.'], 404);
+        if ($certificate == null) {
+            return response()->json(['message' => 'Certificate not found.'], 404);
+        }
+
+        $isExpired = now()->gt($certificate->course_expiry_period);
+
+        return view('certificate_template.verification_result', [
+            'name' => $certificate->course_pay,
+            'course' => $certificate->course_name,
+            'date' => $certificate->course_expiry_period,
+            'status' => $isExpired ? 'Expired' : 'Valid',
+        ]);
     }
-    
-    $isExpired = now()->gt($certificate->course_expiry_period);
-
-    return view('certificate_template.verification_result', [
-        'name' => $certificate->course_pay,
-        'course' => $certificate->course_name,
-        'date' => $certificate->course_expiry_period,
-        'status' => $isExpired ? 'Expired' : 'Valid',
-    ]);
-}
-
-
-
-
-  
-
-
-
-
-
-
-
-
 }

@@ -459,12 +459,33 @@ class elearningEthnicTestController extends BaseController
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
     }
+    public function startCourseTime(Request $request)
+    {
+        $userId = $request->user_id;
+        $courseId = $request->course_id;
+
+
+
+
+        DB::table('cpt_points_hours_calculate')->insert([
+            'user_id' => $userId,
+            'course_id' => $courseId,
+            'start_time' => now(),
+            'end_time' => null,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+
+        return response()->json(['status' => 'success']);
+    }
+
     public function allCourses(Request $request)
     {
         // Authentication
 
         $method = 'Method => elearningEthnicTestController => allCourses';
-
+        $course_id = $request->query('course_id');
 
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
@@ -495,13 +516,13 @@ class elearningEthnicTestController extends BaseController
             //         ");
 
 
-           
 
 
-           
+
+
             $Courses = DB::table('elearning_courses')
                 ->where('drop_course', 0)
-                ->whereRaw("FIND_IN_SET(?, user_ids)", [$user_id ])
+                ->whereRaw("FIND_IN_SET(?, user_ids)", [$user_id])
                 ->get();
 
 
@@ -514,6 +535,7 @@ class elearningEthnicTestController extends BaseController
             $availableCourseIds = [];
             $time = time();
             $currentTime = date("Y-m-d H:i:s", $time);
+            // dd($currentTime);
             foreach ($Courses as $course) {
                 if ($course->course_start_period == "" || $course->course_end_period == "") {
                     array_splice($availableCourseIds, 1, 0, $course->course_id);
@@ -734,7 +756,20 @@ class elearningEthnicTestController extends BaseController
                 ->pluck('course_id')
                 ->toArray();
 
-            return view('elearning.allCourses', compact('Courses', 'availableCourses', 'availableTags', 'search', 'sort', 'tagFilter', 'progressFilter', 'modules', 'screens', 'menus', 'courseProgress', 'wishlistedCourseIds','user_id'));
+
+
+
+            DB::table('cpt_points_hours_calculate')
+                ->where('user_id', $user_id)
+                ->where('course_id', $course_id)
+                ->whereNull('end_time')
+                ->update([
+                    'end_time'   => now(),
+                    'updated_at' => now(),
+                ]);
+            // dd($Courses);
+            // dd($Courses);
+            return view('elearning.allCourses', compact('Courses', 'availableCourses', 'availableTags', 'search', 'sort', 'tagFilter', 'progressFilter', 'modules', 'screens', 'menus', 'courseProgress', 'wishlistedCourseIds', 'user_id'));
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
@@ -893,9 +928,11 @@ class elearningEthnicTestController extends BaseController
     public function courseOverview(Request $request, $id)
     {
 
+        // dd("welcome to overview page");
         $method = 'Method => elearningEthnicTestController => courseOverview';
         try {
             $user_id = $request->session()->get("userID");
+
             $this->WriteFileLog($user_id);
             if ($user_id == null) {
                 return redirect(url('/'));
@@ -904,12 +941,16 @@ class elearningEthnicTestController extends BaseController
             $this->WriteFileLog($id);
             $courseDetails = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
             $courseDetailslist = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
-
+            // dd($id);
+            // dd($courseDetails);
             foreach ($courseDetails as $courseDetail) {
                 $classOrder = $courseDetail->course_classes;
             }
             $this->WriteFileLog($courseDetails);
+            // dd($user_id,$id,$classOrder);
             $isEnrolled = DB::select("SELECT * FROM user_class_relation WHERE user_id=$user_id AND class_id=$id");
+            // dd($isEnrolled);
+            // dd($courseDetailslist);
             if (empty($isEnrolled)) {
                 $enrolled = "False";
                 $this->WriteFileLog($enrolled);
@@ -917,10 +958,11 @@ class elearningEthnicTestController extends BaseController
                 $enrolled = "True";
                 $this->WriteFileLog($enrolled);
             }
+            // dd($enrolled);
             $this->WriteFileLog("1");
-
+            // dd($user_id,$id);
             $isEnrolled = DB::select("SELECT * FROM user_course_relation WHERE user_id=$user_id AND course_id=$id");
-            // dd( $isEnrolled);
+            // dd($isEnrolled);
             $this->WriteFileLog($isEnrolled);
 
 
@@ -932,9 +974,10 @@ class elearningEthnicTestController extends BaseController
                 $enrolled = "True";
                 $this->WriteFileLog($enrolled);
             }
-
+            // dd($enrolled);
 
             $courseresorces = DB::select("SELECT ecl.* FROM elearning_classes as ecl inner join elearning_courses as ec on ec.course_classes = ecl.class_id WHERE ec.drop_course=0 AND ec.course_id=$id");
+            // dd($courseresorces);
             $this->WriteFileLog($courseresorces);
 
             $class_array = explode(',', $courseDetails[0]->course_classes);
@@ -987,6 +1030,25 @@ class elearningEthnicTestController extends BaseController
             //dd($courseProgress);
             $payment_details = DB::select("SELECT * FROM elearning_payment_details where  course_id = $id and user_id=$user_id");
 
+            $courseProgress = DB::table('user_course_relation')
+                ->where('course_id', $id)
+                ->where('user_id', $user_id)
+                ->value('course_progress');
+
+
+            DB::table('cpt_points_hours_calculate')->insert([
+                'user_id'         => $user_id,
+                'course_id'       => $id,
+                'start_time'      => now(),
+                'percentage'      => $courseProgress,
+                'created_at'      => now(),
+                'updated_at'      => now(),
+            ]);
+
+
+
+
+
 
             return view('elearning.courseOverview', compact('courseDetails', 'courseContents', 'courseresorces', 'classOrder', 'enrolled', 'modules', 'screens', 'menus', 'user_id', 'video_exist', 'audio_exist', 'pdf_exist', 'counts', 'courseProgress', 'isEnrolled', 'average_ratting', 'ratings', 'payment_details'));
         } catch (\Exception $exc) {
@@ -996,26 +1058,36 @@ class elearningEthnicTestController extends BaseController
     }
     public function takeCourse(Request $request, $id)
     {
-        //dd($request);
+
+        // dd("welcome to take now page");
         $method = 'Method => elearningEthnicTestController => takeCourse';
         try {
             $user_id = $request->session()->get("userID");
+
+
             // dd($user_id);
             if ($user_id == null) {
                 return redirect(url('/'));
             }
             $id = Crypt::decrypt($id);
-            //dd($id);
+            // dd($id);
             $courseDetails = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
+
+            //   dd($courseDetails);  
             foreach ($courseDetails as $courseDetail) {
                 $classOrder = $courseDetail->course_classes;
             }
-
+            // dd($courseDetails);
+            // dd($user_id,$id);
             $isEnrolled = DB::select("SELECT * FROM user_course_relation WHERE user_id=$user_id AND course_id=$id");
-            // dd($isEnrolled);
+            // dd( $isEnrolled);
+            // dd($user_id);
             if (empty($isEnrolled)) {
+
                 $userDetails = DB::select("SELECT * FROM users WHERE id=$user_id")[0];
+
                 $userName = $userDetails->name;
+
                 $userMail = $userDetails->email;
                 $userMobile = ($userDetails->mobile_no) == null ? 0 : $userDetails->mobile_no;
                 // dd($userMobile);
@@ -1031,6 +1103,7 @@ class elearningEthnicTestController extends BaseController
                 $userRatingsGiven = "0";
                 $mobileRemainder = "0";
                 $mailRemainder = "0";
+                //   dd($userDetails->name);
                 DB::table('user_course_relation')
                     ->insert([
                         'user_id' => "$user_id",
@@ -1053,6 +1126,7 @@ class elearningEthnicTestController extends BaseController
 
 
                 $classDetails = DB::select("SELECT * FROM elearning_classes WHERE drop_class=0 AND class_id=$id");
+                // dd($classDetails);
                 $usercourseDetails = DB::select("SELECT * FROM user_course_relation WHERE user_id=$user_id AND course_id=$id");
 
                 //$isEnrolled = DB::select("SELECT * FROM user_class_relation WHERE user_id=$user_id AND class_id=$id");
@@ -1086,6 +1160,7 @@ class elearningEthnicTestController extends BaseController
                         ]);
 
                     # code...
+                    // dd($courseId);
                 }
                 //dd($courseId);
                 // $is_pending = DB::table('user_class_relation')
@@ -1099,10 +1174,10 @@ class elearningEthnicTestController extends BaseController
 
 
 
-                // dd('completed');
+
                 $id = Crypt::encrypt($courseId);
 
-                //dd($id );
+                // dd($id );
 
                 $courseContents = DB::select("SELECT * FROM elearning_classes WHERE drop_class=0  ORDER BY FIELD(class_id,$classOrder)");
                 $this->WriteFileLog($courseContents);
@@ -1113,9 +1188,9 @@ class elearningEthnicTestController extends BaseController
                 //return view('elearning.courseOverview', compact('courseDetails', 'courseContents', 'classOrder', 'isEnrolled'));
 
             } else {
-                // 
+                // dd("welcome");
             }
-            //dd($id);
+            // dd($id);
             $isForum = "False";
             $questionAdded = "False";
             $perPage = 4;
@@ -1127,7 +1202,7 @@ class elearningEthnicTestController extends BaseController
                 ->where('course_id', $id)
                 ->where('f.active_flag', 0)
                 ->paginate($perPage);
-            //dd($askedQuestions);
+            // dd($askedQuestions);
 
 
             foreach ($askedQuestions as $askedQuestions_key => $row) {
@@ -1142,7 +1217,7 @@ class elearningEthnicTestController extends BaseController
                 }
                 $askedQuestions[$askedQuestions_key]->is_yours = $is_yours;
             }
-            //dd($askedQuestions);
+            // dd($askedQuestions);
             $noQuestionsYet = empty($askedQuestions) ? true : false;
             // dd(empty($askedQuestions));
             // dd($noQuestionsYet);
@@ -1151,15 +1226,15 @@ class elearningEthnicTestController extends BaseController
             // $courseContents['courseContents'] = DB::select("SELECT * from elearning_courses inner join elearning_classes on elearning_courses.course_classes=elearning_classes.class_id where drop_course = 0;");
 
             $course_certificate = DB::select("SELECT e.exam_name,c.pass_percentage,c.exam_date,c.course_exam,c.course_certificate,uc.status,uc.course_id,uc.get_certified,uc.user_id,uc.course_progress,uc.course_status,uc.exam_status FROM elearning_courses as c inner join user_course_relation as uc on c.course_id=uc.course_id left join elearning_exam as e on c.exam_id=e.id where c.course_id= $id and c.drop_course=0 and e.active_flag=0 and uc.user_id=$user_id");
-
+            // dd( $course_certificate);
             // $exam_list=DB::select("SELECT * from user_course_relation as c inner join of elearning_exam as e on c.exam_id=e.id where ");
             $courseContents = DB::select("SELECT * FROM elearning_classes WHERE drop_class=0  ORDER BY FIELD(class_id,$classOrder)");
-            //dd($courseContents);
+            // dd($courseContents);
             $classContents = DB::select("SELECT * FROM elearning_courses where course_id= $id and drop_course=0 ");
-            //dd($classContents);
+            // dd($classContents);
 
             $class_array = explode(',', $classContents[0]->course_classes);
-            //dd( $class_array);
+            // dd( $class_array);
             $selected_class = [];
             $quiz_results = [];
             $QizDetails = DB::select("SELECT * from elearning_coursequiz where course_id= $id and user_id = $user_id");
@@ -1169,17 +1244,23 @@ class elearningEthnicTestController extends BaseController
                 $quiz_results[$row->quiz_id] = $QizDetails[$key];
             }
 
+            // dd("wel"); 
 
             $quiz_results[] = $classContents[0];
+            // dd($class_array);
+
+
             foreach ($class_array as $key => $value) {
-                $classContents = DB::select("SELECT c.*,uc.course_id,uc.quiz_status,uc.user_id,uc.status as class_status,uc.bookmark FROM elearning_classes as c inner join user_class_relation as uc  where c.class_id= $value and c.drop_class=0 and c.class_id=uc.class_id and uc.user_id=$user_id and uc.course_id=$id ");
+                $classContents = DB::select("SELECT c.*,uc.course_id,uc.quiz_status,uc.user_id,uc.status as class_status,uc.bookmark
+                 FROM elearning_classes as c inner join user_class_relation as uc  where c.class_id= $value 
+                 and uc.course_id=$id ");
                 // dd($classContents);
                 $selected_class[$key] = $classContents[0];
 
 
                 # code...
             }
-            //dd($id);
+            // dd($id);
 
             $quizes = DB::select("SELECT * FROM elearning_practice_quiz where drop_quiz=0");
             // dd($quizes);
@@ -1330,8 +1411,124 @@ class elearningEthnicTestController extends BaseController
             $screens = $menus['screens'];
             $modules = $menus['modules'];
 
-            return view('elearning.class', compact('courseDetails', 'classContents', 'selected_class', 'courseContents', 'classOrder', 'isForum', 'questionAdded', 'askedQuestions', 'noQuestionsYet', 'modules', 'screens', 'menus', 'user_id', 'courseresorces', 'counts', 'audio_exist', 'video_exist', 'pdf_exist', 'course_certificate', 'quizzesWithKey', 'quiz_results', 'ratings', 'average_ratting'));
+            $results = DB::table('users')
+                ->where('id', $user_id)
+                ->select('total_cptpoints')
+                ->get();
+
+
+            // Fetch user points
+            $results = DB::table('users')
+                ->where('id', $user_id)
+                ->select('total_cptpoints')
+                ->first();
+
+            // Fetch course points
+            $courseDetailslist = DB::table('elearning_courses')
+                ->where('drop_course', 0)
+                ->where('course_id', $id)
+                ->first();
+
+            if ($results && $courseDetailslist) {
+                $old_cptPoints = $results->total_cptpoints;
+                $new_cptPoints = $courseDetailslist->course_cpt_points;
+
+                // Check: has this course’s points already been added?
+                $expectedPoints = $old_cptPoints + $new_cptPoints;
+
+                $alreadyAwarded = DB::table('users')
+                    ->where('id', $user_id)
+                    ->where('total_cptpoints', '>=', $expectedPoints)
+                    ->exists();
+
+                if (!$alreadyAwarded) {
+                    // First time → add points
+                    $updated_points = $old_cptPoints + $new_cptPoints;
+
+                    DB::table('users')
+                        ->where('id', $user_id)
+                        ->update([
+                            'total_cptpoints' => $updated_points,
+                            'updated_at'      => now(),
+                        ]);
+                }
+            }
+
+
+            $Courses = DB::table('elearning_courses as c')
+                ->join('course_catagory as cc', 'c.course_category', '=', 'cc.catagory_id')
+                ->select(
+                    'c.*',
+                    'cc.catagory_name',
+                    'cc.points_to_unlock'
+                )
+                ->where('c.drop_course', 0)
+                ->where('c.course_id', $id)
+                ->whereRaw("FIND_IN_SET(?, c.user_ids)", [$user_id])
+                ->get();
+            $points_to_unlock = $Courses[0]->points_to_unlock;
+
+            $results = DB::table('users')
+                ->where('id', $user_id)
+                ->select('total_cptpoints')
+                ->get();
+
+            $points_to_unlock_changes = $results[0]->total_cptpoints;
+            $changes = $points_to_unlock_changes - $points_to_unlock;
+            // dd($changes);
+
+
+
+            DB::table('users')
+                ->where('id', $user_id)
+                ->update([
+                    'total_cptpoints' => $changes,
+                    'updated_at'      => now(),
+                ]);
+            // dd(  $old_cptPoints, $updated_points, $changes);
+
+
+
+            $certificate_template = $courseDetails[0]->course_certificate;
+
+            $certificate_template_rows = DB::table('certificate_templates')
+                ->select(
+                    '*',
+                    DB::raw("CONCAT('" . config('setting.base_url') . "', logo) as logo_url")
+                )
+                ->where('certificate_templates_id', $certificate_template)
+                ->get();
+            //   dd($certificate_template_rows);  
+
+            // dd($courseDetails);
+
+
+            $showExpiryBadge = false;
+            $expiryMessage = '';
+            // dd($courseDetails[0]->expiry_type,$courseDetails[0]->certificate_expiry,$courseDetails[0]->expiry_input );
+            if ($courseDetails[0]->certificate_expiry == '1' && $courseDetails[0]->expiry_type == 'month' && !empty($courseDetails[0]->expiry_input)) {
+                $today = \Carbon\Carbon::today();
+
+                // Expiry date is from today + expiry_input months
+                $expiryDate = $today->copy()->addMonths($courseDetails[0]->expiry_input);
+
+                // 15 days before expiry
+                $before15Days = $expiryDate->copy()->subDays(15);
+
+                if ($today->gte($expiryDate)) {
+                    // Expired
+                    $showExpiryBadge = true;
+                    $expiryMessage = 'Certificate Expired';
+                } elseif ($today->gte($before15Days)) {
+                    // Expiring Soon
+                    $showExpiryBadge = true;
+                    $expiryMessage = 'Certificate Expiring Soon. Contact the supervisor';
+                }
+            }
+            //  dd( $expiryMessage);
+            return view('elearning.class', compact('expiryMessage', 'courseDetails', 'classContents', 'selected_class', 'courseContents', 'classOrder', 'isForum', 'questionAdded', 'askedQuestions', 'noQuestionsYet', 'modules', 'screens', 'menus', 'user_id', 'courseresorces', 'counts', 'audio_exist', 'video_exist', 'pdf_exist', 'course_certificate', 'quizzesWithKey', 'quiz_results', 'ratings', 'average_ratting'));
         } catch (\Exception $exc) {
+            // dd("welcome da");
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
     }
@@ -1981,36 +2178,71 @@ class elearningEthnicTestController extends BaseController
 
                 ]);
             $certificate_template_id = $course_details[0]->cetificate_template;
-          
+
             $signatories  = DB::table('certificate_template_signatories')
-             ->where('certificate_template_id', $certificate_template_id)
-                 ->orderBy('sort_order', 'asc')
+                ->where('certificate_template_id', $certificate_template_id)
+                ->orderBy('sort_order', 'asc')
                 ->get();
             $get_template  = DB::table('certificate_templates')
-             ->where('certificate_templates_id', $certificate_template_id)
-            ->first();
+                ->where('certificate_templates_id', $certificate_template_id)
+                ->first();
+            // dd($get_template);
+            $courseDetails = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
 
-             
+            $certificate_template = $courseDetails[0]->course_certificate;
+
+            $certificate_template_rows = DB::table('certificate_templates')
+                ->select(
+                    '*',
+                    DB::raw("CONCAT('" . config('setting.api_url') . "', logo) as logo_url")
+                )
+                ->where('certificate_templates_id', $certificate_template)
+                ->get();
+
+            $calculate_date = $courseDetails[0]->certificate_expiry;
+
+            if ($courseDetails[0]->expiry_type == 'month' && !empty($courseDetails[0]->expiry_input)) {
+
+                $today = \Carbon\Carbon::today();
+
+                // Store expiry date in a variable (today + expiry_input months)
+                $calculatedExpiryDate = $today->copy()->addMonths($courseDetails[0]->expiry_input);
+
+                // Example: show as YYYY-MM-DD
+                $calculatedExpiryDate->toDateString();  // "2025-10-09"
+
+                // Example: show as full datetime
+                $calculatedExpiryDate->toDateTimeString();  // "2025-10-09 00:00:00"
+
+                // Example: custom format (e.g., d-m-Y)
+                $calculatedExpiryDate->format('d-m-Y');
+                // Debugging check
+                $final_validation_date=$calculatedExpiryDate->toDateString();
+                // dd($final_validation_date);
+            }
             $data = [
-                 'date' => Carbon::today()->format('d-m-Y'),
+                'date' => Carbon::today()->format('d-m-Y'),
                 'course_name' => $course_name,
                 'name' => $name,
                 'signatories' => $signatories,
                 'course_id' => $course_id,
+                'logo_url' =>  $certificate_template_rows[0]->logo_url,
+                'validation_date'=>$final_validation_date,
 
             ];
 
-           
+
+            // dd($data['logo_url']);
 
 
-             
-           $pdf = PDF::loadView("certificate_template.{$get_template->template_name}.index", [
-    'data' => $data
-]);
+            $pdf = PDF::loadView("certificate_template.{$get_template->template_name}.index", [
+                'data' => $data
+            ]);
+            // dd($pdf);
+
+            dd($data);
 
 
-
-          
 
             $storagepath_user = public_path() . '/userdocuments/certificate/' . $user_id;
             if (!File::exists($storagepath_user)) {
@@ -2028,13 +2260,18 @@ class elearningEthnicTestController extends BaseController
 
             $pdf->save($output);
 
+
+
             $data = [
                 'date' => $date,
                 'course_name' => $course_name,
                 'name' => $name,
                 'attach' => $output,
+                'logo_url' =>  $certificate_template_rows[0]->logo_url,
+
 
             ];
+            // dd($data['logo_url']);  
 
             $encryptArray = $this->encryptData($data);
             $request = array();
@@ -2042,6 +2279,7 @@ class elearningEthnicTestController extends BaseController
             $request['requestData'] = $encryptArray;
 
             $gatewayURL = config('setting.api_gateway_url') . '/generatepdf/' . $id;
+            // dd('we');
 
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
 

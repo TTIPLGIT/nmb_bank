@@ -44,9 +44,8 @@ class ElearningEventController extends BaseController
             $encryptArray = $data;
 
             $storagepath_ursb_old = public_path() . '/uploads/notice/' . $user_id; //system_store_pdf
-            
+             
             $storagepath_ursb = '/uploads/notice/' . $user_id; //database_location
-
             if (!File::exists($storagepath_ursb_old)) {
                 File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
             }
@@ -72,7 +71,7 @@ class ElearningEventController extends BaseController
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
 
             $response1 = json_decode($response);
-
+          
             if ($response1->Status == 200 && $response1->Success) {
 
                 $objData = json_decode($this->decryptData($response1->Data));

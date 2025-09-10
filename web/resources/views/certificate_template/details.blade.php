@@ -66,6 +66,23 @@
                             @endif
                         </div>
 
+                        <div class="col-md-3">
+                            <label>Logo</label>
+
+                            <input type="file" name="logo[]" class="form-control"
+                                {{ !empty($entry['logo']) ? '' : 'required' }}>
+
+                            @if(!empty($entry['logo']))
+                            {{-- Display current image --}}
+                            <small class="text-muted">Current: {{ basename($entry['logo']) }}</small><br>
+                            <img src="{{ config('setting.image_path') . $entry['logo'] }}" width="100"
+                                class="mt-1 rounded border">
+
+                            {{-- Preserve old file path in hidden input --}}
+                            <input type="hidden" name="logo[]" value="{{ $entry['logo'] }}">
+                            @endif
+                        </div>
+
 
                         <div class="col-md-1">
                             <label>&nbsp;</label>
@@ -93,20 +110,20 @@
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    let entryCount = document.querySelectorAll('.entry-block').length;
-    const maxEntries = 2;
+    document.addEventListener('DOMContentLoaded', function() {
+        let entryCount = document.querySelectorAll('.entry-block').length;
+        const maxEntries = 2;
 
-    const addMoreBtn = document.getElementById('addMore');
-    const wrapper = document.getElementById('entryWrapper');
+        const addMoreBtn = document.getElementById('addMore');
+        const wrapper = document.getElementById('entryWrapper');
 
-    addMoreBtn.addEventListener('click', function() {
-        if (entryCount >= maxEntries) return;
+        addMoreBtn.addEventListener('click', function() {
+            if (entryCount >= maxEntries) return;
 
-        const block = document.createElement('div');
-        block.classList.add('row', 'entry-block', 'mb-3');
+            const block = document.createElement('div');
+            block.classList.add('row', 'entry-block', 'mb-3');
 
-        block.innerHTML = `
+            block.innerHTML = `
                 <div class="col-md-4">
                     <input type="text" name="name[]" class="form-control" placeholder="Name" required>
                 </div>
@@ -121,25 +138,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
 
-        wrapper.appendChild(block);
-        entryCount++;
+            wrapper.appendChild(block);
+            entryCount++;
+            updateRemoveButtons();
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn-remove')) {
+                e.target.closest('.entry-block').remove();
+                entryCount--;
+                updateRemoveButtons();
+            }
+        });
+
+        function updateRemoveButtons() {
+            document.querySelectorAll('.btn-remove').forEach(btn => {
+                btn.style.display = (entryCount > 1) ? 'inline-block' : 'none';
+            });
+        }
+
         updateRemoveButtons();
     });
-
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('btn-remove')) {
-            e.target.closest('.entry-block').remove();
-            entryCount--;
-            updateRemoveButtons();
-        }
-    });
-
-    function updateRemoveButtons() {
-        document.querySelectorAll('.btn-remove').forEach(btn => {
-            btn.style.display = (entryCount > 1) ? 'inline-block' : 'none';
-        });
-    }
-
-    updateRemoveButtons();
-});
 </script>

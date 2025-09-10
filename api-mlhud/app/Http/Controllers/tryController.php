@@ -831,6 +831,7 @@ class tryController extends BaseController
 
         try {
             $method = 'Method => add course => course_store';
+
             $inputArray = $request->requestData;
             $user_id = (auth()->check()) ? auth()->user()->id : $inputArray['user_id'];
 
@@ -894,11 +895,13 @@ class tryController extends BaseController
                 'certificate_expiry' => $inputArray['certificate_expiry'],
                 'course_expiry_period' => $inputArray['course_expiry_period'],
                 'expired_course_id' => $inputArray['expired_course_id'],
+                'expiry_input' => $inputArray['expiry_input'],
+                'expiry_type' => $inputArray['expiry_type'],
 
             ];
+            // $this->WriteLog($input);
 
-
-
+            // dd("welcome");
             $update_id = DB::transaction(function () use ($input) {
                 return DB::table('elearning_courses')
                     ->insertGetId([
@@ -940,6 +943,8 @@ class tryController extends BaseController
                         'role_id' => $input['role_id'],
                         'designation_id' => $input['designation_id'],
                         'user_ids' => $input['user_ids'],
+                        'expiry_type' => $input['expiry_type'],
+                        'expiry_input' => $input['expiry_input'],
 
 
 
@@ -974,7 +979,7 @@ class tryController extends BaseController
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
             $serviceResponse['Data'] = 1;
-             $serviceResponse['course_id'] = $update_id;
+            $serviceResponse['course_id'] = $update_id;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $sendServiceResponse;
@@ -1253,12 +1258,12 @@ class tryController extends BaseController
             $this->WriteFileLog($course_id);
             $rows = DB::select("SELECT pass_percentage,exam_id,exam_date,course_exam,course_id,course_category,course_name,course_instructor,course_banner,banner_path,course_start_period,course_end_period,course_pay,course_price,course_description,course_certificate,course_introduction,introduction_path,course_format,course_tags,course_skills_required,course_gain_skills,course_classes,course_cpt_points,CONCAT(banner_path,'/',course_banner) AS banner_path1, CONCAT(introduction_path,'/',course_introduction) AS introduction_path1,cetificate_template,course_expiry_period,certificate_expiry,role_id,designation_id,user_ids from elearning_courses  where course_id =$course_id");
 
-             $elearning_course = DB::table('elearning_courses')
-                        ->join('users', 'users.id', '=', 'elearning_courses.user_ids')
-                        ->select('elearning_courses.*', 'users.name as user_name')
-                        ->where('elearning_courses.course_id', $course_id)
-                        ->orderBy('elearning_courses.course_id', 'desc')
-                        ->get();
+            $elearning_course = DB::table('elearning_courses')
+                ->join('users', 'users.id', '=', 'elearning_courses.user_ids')
+                ->select('elearning_courses.*', 'users.name as user_name')
+                ->where('elearning_courses.course_id', $course_id)
+                ->orderBy('elearning_courses.course_id', 'desc')
+                ->get();
 
 
 
