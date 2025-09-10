@@ -527,7 +527,7 @@
                                             </span>
                                         </a>
                                         @endif
-                                    </h5>
+                                    </h5> 
                                 </div>
 
                                 <script>

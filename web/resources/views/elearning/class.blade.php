@@ -1225,7 +1225,7 @@
         overflow-y: scroll;
         /* Add a scrollbar for the container */
         max-height: 600px;
-        width: 670px;
+        width: 800px;
         /* Set a maximum height for the container */
 
     }
@@ -1268,6 +1268,7 @@
 
     @endif
     <?php if ($classContent->class_format == 'mp4' && $classContent->class_status == 1) { ?>
+      
         <video class="coursetypes videos" src="../../uploads/class/126/{{$classContent->resource_name}}"
             data-poster="../..{{$classContent->resource_path}}/{{$classContent->resource_name}}" frameborder="0"
             allowfullscreen controls width="100%">
@@ -1298,13 +1299,29 @@
         <center>
             <h1 style="color: green"></h1>
             <h3 style="overflow:hidden !important;">{{$classContent->class_name}}</h3>
-            <div class="pdf-containercompleted" id="pdf-containercompleted">
+            <!-- <div class="pdf-containercompleted" id="pdf-containercompleted">
 
-            </div>
+
+            </div> -->
+            @php
+            $courseIntroFullPath = $courseDetails[0]->introduction_path . '/' . $courseDetails[0]->course_introduction;
+            @endphp
+
+            <h5> Class  </h5>
             <object class="coursetypes" data="../../uploads/class/126/{{$classContent->resource_name}}#toolbar=0"
-                width="800" height="500">
+                width="500" height="500">
 
             </object>
+            <h5> Course  </h5>
+            <object class="coursetypes" data="{{$courseIntroFullPath}}#toolbar=0"
+                width="500" height="500">
+
+            </object>
+
+            <br>
+
+
+
 
             <br>
             <div class="pdf_complete">
@@ -1444,6 +1461,7 @@
 </div>
 <input type="hidden" class="isForum" name="isForum" value="{{ $isForum }}">
 <div class="container-fluid" id="overviewContent">
+
     @foreach($courseDetails as $courseDetail)
     <div class="card noShadow noBorder border-bottom classOverviewContent">
         <div class="card-body bgTransparent classOverviewContentBody">
