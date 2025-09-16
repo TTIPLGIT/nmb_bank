@@ -21,6 +21,9 @@ use App\Http\Controllers\LeaderboardController;
 //     return $request->user();
 // });
 
+Route::post('/data/decrypt', [\App\Http\Controllers\BaseController::class, 'DecryptDataAPI']);
+Route::post('/data/encrypt', [\App\Http\Controllers\BaseController::class, 'encryptDataAPI']);
+
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'Login']);
 Route::get('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 Route::get('/Register/member', [\App\Http\Controllers\AuthController::class, 'register']);
@@ -884,3 +887,7 @@ Route::get('/yourAchievements', [App\Http\Controllers\elearningController::class
 Route::get('/attendance_tracking', [App\Http\Controllers\AttendanceController::class, 'getAll'])->name('getAll');
 
 Route::post('/api/attendance/filter', [App\Http\Controllers\AttendanceController::class, 'getAll'])->name('api.attendance.filter');
+
+
+
+ 

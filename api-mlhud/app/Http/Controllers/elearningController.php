@@ -19,12 +19,13 @@ class elearningController extends BaseController
         $method = 'Method => elearningController => dashboard';
         try {
             $userID = auth()->user()->id;
+            $isMobile = isset($request['isMobile']);
 
             $rows = DB::select("SELECT role_id from uam_user_roles  where user_id=$userID");
-          
+
             $role_id = $rows[0]->role_id;
             $availablenotices = DB::select("SELECT * from elearning_noticeboard where (user_category =$role_id or user_category =0)and notice_status=0 ");
-            
+
 
             $filterd_noticearry = [];
             $currentDate = date('d-m-Y');
@@ -96,33 +97,33 @@ class elearningController extends BaseController
 
             //     }
             $row2['course_progress'] = DB::select("SELECT COUNT(*) AS course_progress  FROM user_course_relation where user_id=$userID and course_status='Enrolled'");
-          
             $row2['course_completed'] = DB::select("SELECT COUNT(*) AS course_completed  FROM user_course_relation WHERE user_id=$userID and course_status='Completed'");
             $row2['course_certificate'] = DB::select("SELECT COUNT(*) AS course_certificate  FROM user_course_relation WHERE user_id=$userID and get_certified=1");
             $row2['cpt_points'] = DB::select("SELECT total_cptpoints AS cpt_points  FROM users WHERE id=$userID and active_flag=0");
-          
-            $userPoints = DB::table('users')
-            ->where('id', $userID)
-            ->where('active_flag', 0)
-            ->value('total_cptpoints');
-            if ($row2['cpt_points'] !== null) {
-          
-            $level = DB::table('gamification_levels')
-                ->where('active_flag', 1)
-                ->where('min_point', '<=',  $userPoints)
-                ->where('max_point', '>=',  $userPoints)
-                ->first(); 
 
-           
-         
-            $row2['level_name'] = $level->level_name ?? 'Unranked';
-            $row2['level_icon'] = $level->level_icon ?? null;
-        } else {
-           
-            $row2['level_name'] = 'Unranked';
-            $row2['level_icon'] = null;
-        }
-          
+            $this->WriteFileLog($row2);
+            $userPoints = DB::table('users')
+                ->where('id', $userID)
+                ->where('active_flag', 0)
+                ->value('total_cptpoints');
+            if ($row2['cpt_points'] !== null) {
+
+                $level = DB::table('gamification_levels')
+                    ->where('active_flag', 1)
+                    ->where('min_point', '<=',  $userPoints)
+                    ->where('max_point', '>=',  $userPoints)
+                    ->first();
+
+
+
+                $row2['level_name'] = $level->level_name ?? 'Unranked';
+                $row2['level_icon'] = $level->level_icon ?? null;
+            } else {
+
+                $row2['level_name'] = 'Unranked';
+                $row2['level_icon'] = null;
+            }
+
 
 
             $response = [
@@ -136,7 +137,7 @@ class elearningController extends BaseController
             $serviceResponse['Message'] = config('setting.status_message.success');
             $serviceResponse['Data'] = $response;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
 
             return $sendServiceResponse;
         } catch (\Exception $exc) {
@@ -149,20 +150,20 @@ class elearningController extends BaseController
             $serviceResponse['Code'] = config('setting.status_code.exception');
             $serviceResponse['Message'] = $exc->getMessage();
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false, $isMobile);
             return $sendServiceResponse;
         }
     }
 
-     public function yourAchievements(Request $request)
+    public function yourAchievements(Request $request)
     {
         $method = 'Method => elearningController => dashboard';
         try {
             $userID = auth()->user()->id;
 
-      $userId = auth()->id(); // Get current user ID
+            $userId = auth()->id(); // Get current user ID
 
-$rawResults = DB::select("
+            $rawResults = DB::select("
     SELECT 
         badge_name AS name,
         CONCAT('Complete ', badge_count,' ',catagory_name , ' Course(s) in this Category') AS description,
@@ -194,15 +195,15 @@ $rawResults = DB::select("
         ) AS unlocked
     FROM course_catagory
     WHERE streak_challenge IS NOT NULL AND streak_name IS NOT NULL
-", [$userId, $userId]); 
+", [$userId, $userId]);
 
 
-          
+
 
 
             $response = [
                 'rawResults' => $rawResults
-               
+
             ];
 
             $serviceResponse = array();
@@ -229,25 +230,25 @@ $rawResults = DB::select("
     }
     public function events_fetch(Request $request)
     {
-       
+
 
         $method = 'Method => elearningController =>events_fetch';
         try {
-           
+
             $userID = auth()->user()->id;
             // $rows = DB::select("SELECT role_id from uam_roles  where user_id=$userID");
             // $role_id=$rows[0]->role_id;
             $inputArray = $this->decryptData($request->requestData);
-            
+
             $input = [
                 'event_date' => $inputArray['event_date'],
             ];
             $event_date = $input['event_date'];
             $rows = DB::select("SELECT role_id from uam_user_roles  where user_id=$userID");
             $role_id = $rows[0]->role_id;
-        
+
             $rows = DB::select("SELECT  * from elearning_events  where (user_category =$role_id or user_category = 0) and event_date ='$event_date' and event_status=0");
-          
+
             // $events = Event::select('event_date')->where('event_date', '>=', now()->startOfMonth())->get();
             // $eventDates = $events->pluck('event_date')->map(function ($date) {
             //     return \Carbon\Carbon::parse($date)->format('d-m-Y'); // Format as needed
