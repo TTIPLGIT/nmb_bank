@@ -18,11 +18,15 @@ class BaseController extends Controller
      * Date: 05/06/2021
      * Description: Return encrypted data for success.
      **/
-    public function SendServiceResponse($rows, $statusCode, $status)
+    public function SendServiceResponse($rows, $statusCode, $status, $isExternalAPI = false)
     {
         try {
 
-            $encryptedData = Crypt::encrypt($rows);
+            $decoded = json_decode($rows, true);
+           $encryptedData = $isExternalAPI
+    ? ($decoded['Data'] ?? (isset($decoded['access_token']) ? ['AccessToken' => $decoded['access_token']] : null))
+    : Crypt::encrypt($rows);
+
             $serviceResponse = [
                 'Success' => $status,
                 'Data' => $encryptedData,
@@ -323,6 +327,25 @@ class BaseController extends Controller
         } catch (\Exception $exc) {
             return ($exc);
             Log::error('Method => BaseController => get_user_role => get_user_role data error =>: [' . $exc->getCode() . '] ' . $exc->getMessage());
+            return 'Failure';
+        }
+    }
+
+    public function DecryptDataAPI(Request $request)
+    {
+        try {
+            return Crypt::decrypt($request->data);
+        } catch (\Exception $exc) {
+            Log::error('Method => BaseController => DecryptData => Decrypt data error =>: [' . $exc->getCode() . '] ' . $exc->getMessage());
+            return 'Failure';
+        }
+    }
+    public function encryptDataAPI(Request $request)
+    {
+        try {
+            return Crypt::encrypt($request->data);
+        } catch (\Exception $exc) {
+            Log::error('Method => BaseController => DecryptData => Decrypt data error =>: [' . $exc->getCode() . '] ' . $exc->getMessage());
             return 'Failure';
         }
     }

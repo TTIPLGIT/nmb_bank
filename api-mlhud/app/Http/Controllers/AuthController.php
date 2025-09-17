@@ -782,7 +782,7 @@ class AuthController extends BaseController
 				$serviceResponse['Code'] = config('setting.status_code.unauthenticated');
 				$serviceResponse['Message'] = config('setting.status_message.unauthenticated');
 				$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.unauthenticated'), false);
+				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.unauthenticated'), false,true);
 				return $sendServiceResponse;
 			}
 
@@ -813,7 +813,6 @@ class AuthController extends BaseController
 					'user_id' => auth()->user()->id,
 
 				]);
-
 
 
 

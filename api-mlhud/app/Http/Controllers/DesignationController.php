@@ -98,19 +98,25 @@ class DesignationController extends BaseController
 
     public function storedata(Request $request)
     {
+
         $userID = auth()->user()->id;
         try {
             $method = 'Method => DesignationController => storedata';
-            $inputArray = $this->decryptData($request->requestData);
+            $isMobile = isset($request['isMobile']);
+
+            $inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
+
             $input = [
                 'designation_name' => $inputArray['designation_name'],
                 'notes' => $inputArray['notes'],
                 'role_id' => $inputArray['role_id'],
+                'client_designation_id' => $inputArray['client_designation_id']
 
             ];
             $name = $input['designation_name'];
 
             $designation_check = DB::select("select * from designation where designation_name = '$name' ");
+          
 
             if ($designation_check == []) {
                 //return auth()->user()->id;
@@ -121,6 +127,7 @@ class DesignationController extends BaseController
                             'designation_name' => $input['designation_name'],
                             'role_id' => $input['role_id'],
                             'notes' => $input['notes'],
+                            'client_designation_id' => $input['client_designation_id'],
                             'created_by' => auth()->user()->id,
 
 
@@ -140,7 +147,7 @@ class DesignationController extends BaseController
                 $serviceResponse['Message'] = config('setting.status_message.success');
                 $serviceResponse['Data'] = 1;
                 $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
                 return $sendServiceResponse;
             } else {
                 $serviceResponse = array();
@@ -148,7 +155,7 @@ class DesignationController extends BaseController
                 $serviceResponse['Message'] = config('setting.status_message.success');
                 $serviceResponse['Data'] = 1;
                 $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
                 return $sendServiceResponse;
             }
         } catch (\Exception $exc) {
@@ -160,7 +167,7 @@ class DesignationController extends BaseController
             $serviceResponse['Code'] = config('setting.status_code.exception');
             $serviceResponse['Message'] = $exc->getMessage();
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false,$isMobile);
             return $sendServiceResponse;
         }
     }

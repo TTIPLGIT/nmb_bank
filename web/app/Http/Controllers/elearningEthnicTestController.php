@@ -482,16 +482,20 @@ class elearningEthnicTestController extends BaseController
 
     public function allCourses(Request $request)
     {
-        // Authentication
+        
+        try {
 
-        $method = 'Method => elearningEthnicTestController => allCourses';
+             $method = 'Method => elearningEthnicTestController => allCourses';
+        // dd($request);
+        $data = array();
+
+            $data['quizId'] = $request->quizId;
         $course_id = $request->query('course_id');
 
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return redirect(url('/'));
         }
-        try {
             // Sort and Filter Checking and Assignment
             if (!isset($_GET['sorted']) || !isset($_GET['tag']) || !isset($_GET['progress']) || !isset($_GET['q'])) {
                 return view('elearning.dashboard');
@@ -503,35 +507,11 @@ class elearningEthnicTestController extends BaseController
             }
             $searched = false;
             $sorted = "Recently Added";
-
-            // $Courses = DB::select("
-            //             SELECT elearning_courses.* 
-            //                         FROM elearning_courses 
-            //                         INNER JOIN users ON users.id = elearning_courses.user_ids
-            //                         INNER JOIN uam_roles ON uam_roles.role_id = users.role_id
-            //                         INNER JOIN designation ON designation.designation_id = users.designation_id
-            //                         WHERE elearning_courses.drop_course = 0 
-            //                         AND uam_roles.role_id = elearning_courses.role_id
-            //                         AND designation.designation_id = elearning_courses.designation_id
-            //         ");
-
-
-
-
-
-
             $Courses = DB::table('elearning_courses')
                 ->where('drop_course', 0)
                 ->whereRaw("FIND_IN_SET(?, user_ids)", [$user_id])
                 ->get();
 
-
-            // $Courses = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0");
-
-
-            // dd($Courses);
-
-            // Getting Currently Available Courses
             $availableCourseIds = [];
             $time = time();
             $currentTime = date("Y-m-d H:i:s", $time);

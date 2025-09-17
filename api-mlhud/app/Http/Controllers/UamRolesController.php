@@ -135,23 +135,20 @@ class UamRolesController extends BaseController
         }
     }
 
-
-
-
-
     public function storedata(Request $request)
     {
-       
+
         try {
             $method = 'Method => UamRolesController => storedata';
-            $inputArray = $this->decryptData($request->requestData);
-
+            $isMobile = isset($request['isMobile']);
+            $inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
             $input = [
-                'role_name' => $inputArray['role_name'],
-                'screen_id' => $inputArray['screen_id'],
-                'permission_id' => $inputArray['permission_id'],
-
+                'role_name'     => $inputArray['role_name'] ?? null,
+                'screen_id'     => $inputArray['screen_id'] ?? null,
+                'permission_id' => $inputArray['permission_id'] ?? null,
+                'client_role_id' => $inputArray['client_role_id'] ?? null
             ];
+
             $role_name = $input['role_name'];
 
             $role_name_check = DB::select("select * from uam_roles where role_name = '$role_name'");
@@ -161,14 +158,22 @@ class UamRolesController extends BaseController
 
 
                 DB::transaction(function () use ($input) {
+                    $nextId = DB::table('uam_roles')->max('role_id') + 1;
+                    // dd($input['client_role_id']);
                     $role_id = DB::table('uam_roles')
                         ->insertGetId([
+                            'role_id' =>$nextId,
                             'role_name' => $input['role_name'],
                             'active_flag' => 0,
                             'created_by' => auth()->user()->id,
+                            'client_role_id' => $input['client_role_id'],
                             'created_date' => NOW()
                         ]);
+
+                    
                     // Deepika
+                    // dd("we");
+
                     $notifications = DB::table('notifications')->insertGetId([
                         'user_id' => auth()->user()->id,
                         'notification_status' => 'Role Created',
@@ -181,7 +186,7 @@ class UamRolesController extends BaseController
 
 
 
-                    
+
 
                     $screen_unique = array_unique($input['screen_id']);
 
@@ -241,21 +246,23 @@ class UamRolesController extends BaseController
                     $role_name_fetch = $role_name[0]->role_name;
                     $this->auditLog('uam_roles', $role_id, 'Create', 'Create uam role', auth()->user()->id, NOW(), $role_name_fetch);
                 });
+                
 
                 $serviceResponse = array();
                 $serviceResponse['Code'] = config('setting.status_code.success');
                 $serviceResponse['Message'] = config('setting.status_message.success');
                 $serviceResponse['Data'] = 1;
                 $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
                 return $sendServiceResponse;
             } else {
+                dd("we;");
                 $serviceResponse = array();
                 $serviceResponse['Code'] = 400;
                 $serviceResponse['Message'] = config('setting.status_message.success');
                 $serviceResponse['Data'] = 1;
                 $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
                 return $sendServiceResponse;
             }
         } catch (\Exception $exc) {
@@ -267,17 +274,22 @@ class UamRolesController extends BaseController
             $serviceResponse['Code'] = config('setting.status_code.exception');
             $serviceResponse['Message'] = $exc->getMessage();
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false, $isMobile);
             return $sendServiceResponse;
         }
     }
 
 
 
+
+
+
+
+
     public function updatedata(Request $request)
     {
 
-       
+
 
         try {
             $method = 'Method => UamRolesController => updatedata';
@@ -290,12 +302,12 @@ class UamRolesController extends BaseController
 
             ];
 
-            
+
             $role_name = $input['role_name'];
             $role_id = $input['role_id'];
 
             $role_name_check = DB::select("select * from uam_roles where not role_id = '$role_id' and role_name = '$role_name' ");
-           
+
             if (json_encode($role_name_check) == '[]') {
 
 
@@ -484,15 +496,15 @@ class UamRolesController extends BaseController
 
     public function data_delete($id)
     {
-      
+
         try {
-            
-           
+
+
             $method = 'Method => UamRolesController => data_delete';
             $id = $this->decryptData($id);
 
             $role_check = DB::select("select * from uam_user_roles where role_id = '$id'");
-           
+
 
             if ($role_check == []) {
                 DB::table('uam_roles')
