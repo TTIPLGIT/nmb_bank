@@ -439,11 +439,12 @@ class UserController extends BaseController
                 $userRow['c_password'] = $request->confirm_password;
                 $userRow['user_type'] = $request->user_type;
                 // $userRow['directorate_department'] = $directorate_department;
-                $userRow['dashboard_list_id'] = $request->dashboard_list_id;
-                $userRow['designation'] = $request->designation_id;
+                $userRow['dashboard_list_id'] = $request->dashboard_list_id ?? null;
+                $userRow['designation'] = $request->designation_id ?? null;
                 // $userRow['parent_node_id'] = $request->parent_node_id;
                 // $userRow['directorate'] = $directorate;
                 // $userRow['array_department'] = $displayItems2_department;
+                $userRow['client_user_id']=$request->client_user_id?? null;
                 $encryptArray = $this->encryptData($userRow);
                 $request1 = array();
                 $request1['requestData'] = $encryptArray;

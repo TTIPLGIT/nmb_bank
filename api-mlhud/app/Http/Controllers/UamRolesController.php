@@ -246,6 +246,7 @@ class UamRolesController extends BaseController
                     $role_name_fetch = $role_name[0]->role_name;
                     $this->auditLog('uam_roles', $role_id, 'Create', 'Create uam role', auth()->user()->id, NOW(), $role_name_fetch);
                 });
+                
 
                 $serviceResponse = array();
                 $serviceResponse['Code'] = config('setting.status_code.success');

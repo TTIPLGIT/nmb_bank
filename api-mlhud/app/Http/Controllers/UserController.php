@@ -408,7 +408,7 @@ class UserController extends BaseController
 				->where('active_flag', 0)
 				->get();
 
-			
+
 
 			$project_roles = DB::table('project_roles')
 				->select('*')
@@ -529,13 +529,22 @@ class UserController extends BaseController
 	public function user_register(Request $request)
 	{
 		$logMethod = 'Method => UserController => user_register';
+		// $this->WriteFileLog(decrypt($request));
 
 		try {
-			$input = $this->decryptData($request->requestData);
+			$isMobile = isset($request['isMobile']);
+
+			$input = $isMobile ? $request : $this->decryptData($request->requestData);
+			$this->WriteFileLog($input);
 			$name  = $input['name'];
 			$email =  $input['email'];
+
+
+			// $this->WriteFileLog($input);
 			$rowsemail =  DB::select("select * from users where email ='$email'");
+
 			if (json_encode($rowsemail) != '[]') {
+
 				$serviceResponse = array();
 				$serviceResponse['Code'] = 400;
 				$serviceResponse['Message'] = config('setting.status_message.success');
@@ -544,23 +553,35 @@ class UserController extends BaseController
 				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
 				return $sendServiceResponse;
 			} else {
+				$isMobile = isset($request['isMobile']);
 
+				$input = $isMobile ? $request : $this->decryptData($request->requestData);
 				$user_inser_id = DB::transaction(function () use ($input) {
+					// $this->WriteFileLog($input);
+
 					$user_password = $input['password'];
 					// $dashboard_list_id = $input['dashboard_list_id'];
 					// $stringdashboard_list_id = implode(",", $dashboard_list_id);
 					// $directorate = $input['directorate'];
 					$input['password'] = bcrypt($input['password']);
+					$roles_data_id = $input['roles_id'];
+					$client_designation_id = DB::table('designation')
+						->where('client_designation_id', $input['client_designation_id'])
+						->value('designation_id');
+
+						$this->WriteFileLog($roles_data_id);
 					$user_id = DB::table('users')
 						->insertGetId([
 							'name' => $input['name'],
 							'email' => $input['email'],
-							'user_type' => $input['user_type'],
+							'user_type' => $input['user_type'] ,
 							'password' => $input['password'],
 							// 'array_dashboard_list' => $stringdashboard_list_id,
-							'designation_id' => $input['designation'],
-						]);
+							'role_id' => $roles_data_id,
+							'designation_id' =>  $client_designation_id,
+							'client_user_id' => $input['client_user_id']						]);
 
+					// $this->WriteFileLog($user_id);
 
 					$user_id  =  $user_id;
 					$input['user_id'] = $user_id;
@@ -818,11 +839,12 @@ class UserController extends BaseController
 				$serviceResponse['Message'] = config('setting.status_message.success');
 				$serviceResponse['Data'] = $user_inser_id;
 				$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
 				return $sendServiceResponse;
 			}
 		} catch (\Exception $exc) {
 			$exceptionResponse = array();
+
 			$exceptionResponse['ServiceMethod'] = $logMethod;
 			$exceptionResponse['Exception'] = $exc->getMessage();
 			$exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
@@ -830,8 +852,9 @@ class UserController extends BaseController
 			$serviceResponse = array();
 			$serviceResponse['Code'] = config('setting.status_code.exception');
 			$serviceResponse['Message'] = $exc->getMessage();
+
 			$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-			$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+			$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false, $isMobile);
 			return $sendServiceResponse;
 		}
 	}
@@ -2043,28 +2066,28 @@ class UserController extends BaseController
 
 			$Elearning_expiry_data = DB::select("select * from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id order by notification_id DESC;");
 			$Elearning_expiry_data_count = DB::select("select count(notification_url) as countflow from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id;");
-  			$row2['cpt_points'] = DB::select("SELECT total_cptpoints AS cpt_points  FROM users WHERE id=$id and active_flag=0");
-			 $userPoints = DB::table('users')
-            ->where('id', $id)
-            ->where('active_flag', 0)
-            ->value('total_cptpoints');
-            if ($row2['cpt_points'] !== null) {
-          
-            $level = DB::table('gamification_levels')
-                ->where('active_flag', 1)
-                ->where('min_point', '<=',  $userPoints)
-                ->where('max_point', '>=',  $userPoints)
-                ->first(); 
+			$row2['cpt_points'] = DB::select("SELECT total_cptpoints AS cpt_points  FROM users WHERE id=$id and active_flag=0");
+			$userPoints = DB::table('users')
+				->where('id', $id)
+				->where('active_flag', 0)
+				->value('total_cptpoints');
+			if ($row2['cpt_points'] !== null) {
 
-           
-         
-            $level_name = $level->level_name ?? 'Unranked';
-            $level_icon = $level->level_icon ?? null;
-        } else {
-           
-            $level_name = 'Unranked';
-            $level_icon = null;
-        }
+				$level = DB::table('gamification_levels')
+					->where('active_flag', 1)
+					->where('min_point', '<=',  $userPoints)
+					->where('max_point', '>=',  $userPoints)
+					->first();
+
+
+
+				$level_name = $level->level_name ?? 'Unranked';
+				$level_icon = $level->level_icon ?? null;
+			} else {
+
+				$level_name = 'Unranked';
+				$level_icon = null;
+			}
 
 
 			$response = [
@@ -2079,10 +2102,10 @@ class UserController extends BaseController
 				'Elearning_notifications_count' => $Elearning_notifications_count,
 				'Elearning_usernotifications_data' => $Elearning_usernotifications_data,
 				'Elearning_usernotifications_count' => $Elearning_usernotifications_count,
-				'Elearning_expiry_data' => $Elearning_expiry_data ,
-				'Elearning_expiry_data_count' => $Elearning_expiry_data_count ,
-				'level_name' =>$level_name,
-				'level_icon' =>$level_icon	
+				'Elearning_expiry_data' => $Elearning_expiry_data,
+				'Elearning_expiry_data_count' => $Elearning_expiry_data_count,
+				'level_name' => $level_name,
+				'level_icon' => $level_icon
 			];
 
 
@@ -2169,7 +2192,7 @@ class UserController extends BaseController
 
 				'rows' => $policy_link,
 			];
-			
+
 
 
 			$serviceResponse = array();
@@ -2178,7 +2201,7 @@ class UserController extends BaseController
 			$serviceResponse['Data'] = $response;
 			$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
 			$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-			
+
 			return $sendServiceResponse;
 		} catch (\Exception $exc) {
 			$exceptionResponse = array();

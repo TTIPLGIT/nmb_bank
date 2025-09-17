@@ -23,9 +23,10 @@ class BaseController extends Controller
         try {
 
             $decoded = json_decode($rows, true);
-            $encryptedData = $isExternalAPI
-                ? ($decoded['Data'] ?? null)
-                : Crypt::encrypt($rows);
+           $encryptedData = $isExternalAPI
+    ? ($decoded['Data'] ?? (isset($decoded['access_token']) ? ['AccessToken' => $decoded['access_token']] : null))
+    : Crypt::encrypt($rows);
+
             $serviceResponse = [
                 'Success' => $status,
                 'Data' => $encryptedData,

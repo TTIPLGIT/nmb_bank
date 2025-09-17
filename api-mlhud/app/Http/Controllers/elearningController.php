@@ -16,16 +16,19 @@ class elearningController extends BaseController
 {
     public function dashboard(Request $request)
     {
+
         $method = 'Method => elearningController => dashboard';
         try {
             $userID = auth()->user()->id;
-            $isMobile = isset($request['isMobile']);
 
+
+          
             $rows = DB::select("SELECT role_id from uam_user_roles  where user_id=$userID");
 
             $role_id = $rows[0]->role_id;
-            $availablenotices = DB::select("SELECT * from elearning_noticeboard where (user_category =$role_id or user_category =0)and notice_status=0 ");
+                       
 
+            $availablenotices = DB::select("SELECT * from elearning_noticeboard where (user_category =$role_id or user_category =0)and notice_status=0 ");
 
             $filterd_noticearry = [];
             $currentDate = date('d-m-Y');
@@ -43,6 +46,8 @@ class elearningController extends BaseController
                     $filterd_noticearry[$key] = $availablenotice;
                 }
             }
+
+            //  dd("we");
 
             $courses_classes_all = DB::select("SELECT course_name,course_id,course_banner,course_classes,course_pay,course_instructor,course_description FROM elearning_courses WHERE (drop_course=0 and course_category =$role_id) or course_category =0");
             $duration1 = '00:00:00';
@@ -137,7 +142,7 @@ class elearningController extends BaseController
             $serviceResponse['Message'] = config('setting.status_message.success');
             $serviceResponse['Data'] = $response;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
 
             return $sendServiceResponse;
         } catch (\Exception $exc) {
@@ -150,7 +155,7 @@ class elearningController extends BaseController
             $serviceResponse['Code'] = config('setting.status_code.exception');
             $serviceResponse['Message'] = $exc->getMessage();
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false, $isMobile);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
             return $sendServiceResponse;
         }
     }
