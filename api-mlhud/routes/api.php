@@ -888,6 +888,4 @@ Route::get('/attendance_tracking', [App\Http\Controllers\AttendanceController::c
 
 Route::post('/api/attendance/filter', [App\Http\Controllers\AttendanceController::class, 'getAll'])->name('api.attendance.filter');
 
-
-
- 
+Route::get('/elearning_allcourse_show', [\App\Http\Controllers\tryController::class, 'allcourse']);
