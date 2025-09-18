@@ -1561,6 +1561,7 @@ class tryController extends BaseController
         $userID = (auth()->check()) ? auth()->user()->id : $request['user_id'];
 
 
+        
         $courses = DB::table('elearning_courses as c')
             ->leftJoin('user_course_relation as ucr', function ($join) use ($userID) {
                 $join->on('c.course_id', '=', 'ucr.course_id')
@@ -1571,6 +1572,7 @@ class tryController extends BaseController
             ->select(
                 'c.*',
                 'ucr.course_progress'
+
             );
 
 
