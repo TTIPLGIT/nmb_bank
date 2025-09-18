@@ -902,6 +902,7 @@ class tryController extends BaseController
             // $this->WriteLog($input);
 
             // dd("welcome");
+
             $update_id = DB::transaction(function () use ($input) {
                 return DB::table('elearning_courses')
                     ->insertGetId([
@@ -1560,14 +1561,26 @@ class tryController extends BaseController
         $userID = (auth()->check()) ? auth()->user()->id : $request['user_id'];
 
 
-        $courses = DB::table('elearning_courses')
-            ->where('drop_course', 0)
-            ->whereRaw("FIND_IN_SET(?, user_ids)", [$userID]);
+        
+        $courses = DB::table('elearning_courses as c')
+            ->leftJoin('user_course_relation as ucr', function ($join) use ($userID) {
+                $join->on('c.course_id', '=', 'ucr.course_id')
+                    ->where('ucr.user_id', '=', $userID);
+            })
+            ->where('c.drop_course', 0)
+            ->whereRaw("FIND_IN_SET(?, c.user_ids)", [$userID])
+            ->select(
+                'c.*',
+                'ucr.course_progress'
+
+            );
+
 
         $result = [
             'list'  => $courses->get(),
-           
+
         ];
+
 
         $serviceResponse = array();
         $serviceResponse['Code'] = config('setting.status_code.success');
