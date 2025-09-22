@@ -47,7 +47,7 @@ class tryController extends BaseController
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
-
+                    // dd($count);
                     return view('elearning.admin.admindashboard', compact('rows', 'modules', 'screens', 'count', 'recommended', 'event_date'));
                 }
             } else {
@@ -960,7 +960,7 @@ class tryController extends BaseController
             $proposal_files2 = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
             $documentsb->move($storagepath_ursb_old2, $proposal_files2); //storing the file in the system
             $data['course_summary'] = $proposal_files2;
-            //dd($data);
+            // dd($data);
 
             $encryptArray = $data;
             $request = array();

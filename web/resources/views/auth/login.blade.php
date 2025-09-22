@@ -11,6 +11,32 @@
         padding-top: 5px;
         padding-bottom: 0px;
     }
+
+    .login-card {
+        position: relative;
+        /* anchor overlay here */
+        border-radius: 20px;
+        width: 76%;
+        z-index: 1;
+        overflow: visible !important;
+    }
+
+    .man-overlay {
+        position: absolute;
+        top: 0;
+        margin-top:165px;
+        right: -70px;
+
+        z-index: 2;
+
+        overflow: visible !important;
+    }
+
+    .man-overlay img {
+        width: 200px;
+
+        max-width: none;
+    }
 </style>
 @section('content')
 
@@ -213,8 +239,8 @@
                         </form>
                     </div>
                 </div>
-                <div class="" style= "position: absolute; overflow: visible!important;">
-                    <img class="" src="{{asset('assets/images/login_man.PNG')}}" alt="" style="width:50%; margin-left:83.2%; overflow: visible!important;">
+                <div class="man-overlay">
+                    <img src="{{ asset('assets/images/login_man.PNG') }}" alt="Login Man">
                 </div>
             </div>
         </div>

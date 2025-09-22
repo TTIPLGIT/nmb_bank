@@ -277,11 +277,15 @@ display: flex;align-items: center;">
     </div>
 
 
-    <div class="col-8 mt-2 col-sm-7 col-lg-1  col-xl-1 mt-xl-4 col-xl-1 mt-xl-4 mt-lg-4">
+   <div class="col-8 mt-2 col-sm-7 col-lg-1 col-xl-1 mt-xl-4 d-flex justify-content-end">
+    <a href="{{ url('/') }}" 
+       class="btn btn-primary font-weight-bold"
+       style="font-size: 18px; padding: 10px; background-color: #3490DC; color: white; border-radius: 25px;" 
+       title="Register / Login">
+       <b>LOGIN</b>
+    </a>
+</div>
 
-      <a type="button" href="{{url('/')}}" style="float:right !important; font: 18px Arial, sans-serif!important; padding:10px !important; background-color:#ffc002 !important;  color: black !important; border-radius:25px;" class="btn-primary" title="Register / Login"><b>LOGIN</b></a>
-
-    </div>
 
 
     <!-- <div class="col-lg-2" >

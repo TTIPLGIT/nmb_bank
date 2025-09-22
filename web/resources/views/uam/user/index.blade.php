@@ -125,7 +125,7 @@
                         <th>S.No</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Designation</th>
+                        <!-- <th>Designation</th> -->
                         <th>Action</th>
                         <th>Active Status</th>
                       </tr>
@@ -136,7 +136,7 @@
               <td>{{ ++$key }}</td>
               <td>{{$row['name'] }}</td>
               <td>{{ $row['email'] }}</td>
-              <td>{{ $row['role_designation'] }}</td>
+              <!-- <td>{{ $row['role_designation'] }}</td> -->
               <td class="text-center">
 
                 @if(strpos($screen_permission['permissions'], 'Edit') !== false)

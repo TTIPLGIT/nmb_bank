@@ -55,6 +55,7 @@ class LoginController extends BaseController
   {
     $method = 'Method => LoginController => Registermember_screen';
     try {
+
       $gatewayURL = config('setting.api_gateway_url') . '/Register/member';
       $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
 
@@ -98,7 +99,7 @@ class LoginController extends BaseController
       $data['Mobile_no'] = $request->Mobile_no;
       $data['password'] = bcrypt($request->password);
       $data['password_confirmation'] = $request->password_confirmation;
- 
+    
       $mobile = 0;
       if (isset($request->mobile)) {
         $mobile = 1;
@@ -574,7 +575,7 @@ class LoginController extends BaseController
       $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
       $response = json_decode($response);
 
- 
+
 
 
       $request->session()->invalidate();
