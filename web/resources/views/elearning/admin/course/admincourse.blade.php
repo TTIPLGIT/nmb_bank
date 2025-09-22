@@ -443,7 +443,7 @@
                                                         <th>S.No</th>
                                                         <th>Class Name</th>
                                                         <th>Class Duration</th>
-                                                        <th>Class Resource</th>
+                                                        <!-- <th>Class Resource</th> -->
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -456,7 +456,7 @@
                                                         <td>{{$data->class_name}}</td>
                                                         <td>{{$data->class_duration}} Mins</td>
 
-                                                        <?php if ($data->class_format == 'mp4') { ?>
+                                                        <!-- <?php if ($data->class_format == 'mp4') { ?>
                                                             <td> <img src="uploads/class/126/mp4.png" width="50px"
                                                                     height="50px" alt="..."></td>
                                                         <?php    } elseif ($data->class_format == 'mp3') { ?>
@@ -472,7 +472,9 @@
                                                         <?php    } else { ?>
                                                             <td> <img src="uploads/class/126/{{$data->resource_name}}"
                                                                     width="50px" height="50px" alt="Image" /></td>
-                                                        <?php    } ?>
+                                                        <?php    } ?> -->
+
+
                                                         <td>
                                                             <a class="btn btn-link" title="Edit" id="gcb"
                                                                 data-toggle="modal" data-target="#addModal4"
@@ -572,43 +574,54 @@
                                                             <td> <img src="uploads/class/126/empty.jpg" width="50px"
                                                                     height="50px" alt="..."></td>
                                                         <?php    } ?>
-                                                        <td>{{$data->course_start_period}}</td>
-                                                        <td>{{$data->course_end_period}}</td>
+
+                                                        @if(!empty($data->course_start_period))
+
+                                                        <td class="col-2"> Rs. {{$data->course_start_period}}</td>
+                                                        @else
+                                                        <td>NO</td>
+
+                                                        @endif
+
+                                                        @if(!empty($data->course_end_period))
+
+                                                        <td class="col-2">Rs. {{$data->course_end_period}}</td>
+                                                        @else
+                                                        <td>NO</td>
+
+                                                        @endif
+
+
                                                         @if(!empty($data->course_price))
 
                                                         <td>Rs. {{$data->course_price}}</td>
-                                                        <td>Rs. {{$data->course_price}}</td>
+
 
                                                         @else
                                                         <td>Rs. 0</td>
 
                                                         @endif
-                                                        <td>
-                                                            <!-- Always show these action buttons -->
-                                                            <a class="btn btn-link" title="show" data-toggle="modal"
-                                                                data-target="#addModal5"
-                                                                onclick="fetch_courseupdate_new({{$data->course_id}},'show')">
-                                                                <i class="fas fa-eye" style="color:green"></i>
-                                                            </a>
+                                                        <td class="col-1 text-center">
+                                                            <div class="d-flex justify-content-center align-items-center">
+                                                                <a class="btn btn-link p-0 mr-2" title="Show" data-toggle="modal"
+                                                                    data-target="#addModal5"
+                                                                    onclick="fetch_courseupdate_new({{ $data->course_id }}, 'show')">
+                                                                    <i class="fas fa-eye" style="color:green; padding:10px;"></i>
+                                                                </a>
 
-                                                            <a type="button" title="Delete"
-                                                                onclick="course_delete({{ $data->course_id }})"
-                                                                class="btn btn-link">
-                                                                <i class="far fa-trash-alt" style="color:red"></i>
-                                                            </a>
+                                                                <a type="button" title="Delete"
+                                                                    onclick="course_delete({{ $data->course_id }})"
+                                                                    class="btn btn-link p-0 mr-2">
+                                                                    <i class="far fa-trash-alt" style="color:red; padding:10px;"></i>
+                                                                </a>
 
-                                                            <!-- Show Handle Expired Course icon all the time -->
-                                                            <a class="btn btn-link" title="Handle Expired Course"
-                                                                onclick="handleExpiredCourse({{ $data->course_id }})">
-                                                                <i class="fas fa-exclamation-circle" style="color:orange"></i>
-                                                            </a>
-
-                                                            <!-- Show Course Replaced icon all the time
-                                                            <a class="btn btn-link" title="Course Replaced"
-                                                                onclick="showReplacementMessage({{ $data->course_id }})">
-                                                                <i class="fas fa-info-circle" style="color:gray"></i>
-                                                            </a> -->
+                                                                <a class="btn btn-link p-0" title="Handle Expired Course"
+                                                                    onclick="handleExpiredCourse({{ $data->course_id }})">
+                                                                    <i class="fas fa-exclamation-circle" style="color:orange; padding:10px;"></i>
+                                                                </a>
+                                                            </div>
                                                         </td>
+
 
 
                                                     </tr>
@@ -1110,7 +1123,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>User Name <span class="text-danger">*</span></label>
-                                <select class=" user_id_course form-control js-select2" name="user_ids[]" id="user_id"
+                                <select style="width:100%" class=" user_id_course form-control js-select2" name="user_ids[]" id="user_id"
                                     multiple="multiple">
                                     <option value="all">All</option>
                                     @foreach($rows['users'] as $data)
@@ -1286,21 +1299,15 @@
                         </div>
 
                         <div class="col-md-6">
-
-
                             <div class="form-group">
-                                <label> Course Type:<span class="error-star" style="color:red;">*</span></label>
-
-                                <select class="form-control " name="course_pay" id="course_pay">
+                                <label>Course Type:<span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="course_pay" id="course_pay">
                                     <option value="">---Select Course Type---</option>
                                     <option value="paid">Paid Course</option>
                                     <option value="free">Free Course</option>
                                 </select>
-
                             </div>
                         </div>
-
-
 
                         <div class="col-md-6" id="paid" style="display:none;">
                             <div class="form-group">
@@ -1308,45 +1315,39 @@
                                 <input type="number" class="form-control default" id="course_price"
                                     placeholder="Enter the Money(UGX)" name="course_price" autocomplete="off">
                             </div>
-
                         </div>
-                        <div class="col-md-6" id="free" style="display:none;">
-                            <div class="form-group">
-                                <label>Course Price:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" readonly class="form-control " id="" name="course_price"
-                                    autocomplete="off">
-                            </div>
 
-                        </div>
+
+
                     </div>
-                    <div class="row">
-                        <div class="col-md-12 form-group"
-                            style="display:flex;justify-content: space-evenly;align-items: center;"
-                            onclick="no_period()"><label>This Course has Start and End Period<span class="error-star"
-                                    style="color:red;">*</span></label>
-                            <div class="form-group">
-                                <input type="radio" class="btn-check answer_show_on course_noperiod"
-                                    name="course_noperiod" value="1" id="course_noperiodyes" autocomplete="off">
-                                <label class="btn btn-outline-primary answer_show_on1"
-                                    for="course_noperiodyes">Yes</label>
 
-                                <input type="radio" class="btn-check answer_show_off course_noperiod"
-                                    name="course_noperiod" value="2" id="course_noperiodno" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary answer_show_off1"
-                                    for="course_noperiodno">No</label>
+                    <div class="col-md-12 form-group"
+                        style="display:flex;justify-content: space-evenly;align-items: center;"
+                        onclick="no_period()"><label>This Course has Start and End Period<span class="error-star"
+                                style="color:red;">*</span></label>
+                        <div class="form-group">
+                            <input type="radio" class="btn-check answer_show_on course_noperiod"
+                                name="course_noperiod" value="1" id="course_noperiodyes" autocomplete="off">
+                            <label class="btn btn-outline-primary answer_show_on1"
+                                for="course_noperiodyes">Yes</label>
 
-                            </div>
-
-
+                            <input type="radio" class="btn-check answer_show_off course_noperiod"
+                                name="course_noperiod" value="2" id="course_noperiodno" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary answer_show_off1"
+                                for="course_noperiodno">No</label>
 
                         </div>
+
 
 
                     </div>
 
 
 
-                    <div class="row">
+
+
+
+                    <div class="row course_period_container" style="display: none;">
                         <div class="col-md-3"><label class="course_period">Course Period:<span class="error-star"
                                     style="color:red;">*</span></label></div>
 
@@ -1452,7 +1453,7 @@
                                                             <i class="fa fa-close"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="action_container" width="50px">
+                                                    <div style="margin-top:-10px" class="action_container" width="50px">
                                                         <button class="success" type="button"
                                                             onclick="create_tr('table_body')">
                                                             <i class="fa fa-plus"></i>
@@ -1500,7 +1501,7 @@
                                                             <i class="fa fa-close"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="action_container" width="50px">
+                                                    <div style="margin-top:-10px" class="action_container" width="50px">
                                                         <button class="success" type="button"
                                                             onclick="create_tr1('table_body1')">
                                                             <i class="fa fa-plus"></i>
@@ -1546,7 +1547,7 @@
                                                             <i class="fa fa-close"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="action_container" width="50px">
+                                                    <div style="margin-top:-10px" class="action_container" width="50px">
                                                         <button class="success" type="button"
                                                             onclick="create_tr3('table_body3')">
                                                             <i class="fa fa-plus"></i>
@@ -1585,7 +1586,7 @@
                                 <label>Classes:<span class="error-star" style="color:red;">*</span></label>
 
                                 <br>
-                                <select class="js-select2" name="course_classes[]" id="course_classes"
+                                <select style="width:100%" class="js-select2" name="course_classes[]" id="course_classes"
                                     multiple="multiple" style="width:220px !important;">
 
 
@@ -1858,6 +1859,7 @@
         padding: 8px 14px;
         cursor: pointer;
         transition: 0.3s ease-in-out;
+        border-radius: 50px;
     }
 
     .action_container1>* {
@@ -3118,39 +3120,42 @@
                         </div>
 
                     </div>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="form-group">
-                                <label>Class Resource:<span class="error-star" style="color:red;">*</span></label>
-                                <div class="col-md-10"
-                                    style="display: flex;justify-content: space-between;margin-bottom: 15px;">
-                                    <a class="btn btn-link btn-warning" onclick="changeimage(event);"
-                                        id="change_banner">Change Banner</a>
-                                    <a class="btn btn-link btn-warning" onclick="changeimage(event);" id="change_cancel"
-                                        style="display:none;">Cancel</a>
-
-                                </div>
-                                <input type="file" class="form-control default" id="resourse_nameedit"
-                                    name="resource_nameedit" style="display:none;" autocomplete="off"
-                                    accept=".pdf, .mp3,.mp4">
-
-                                <iframe class="img-fluid" alt="Banner Image" title=""></iframe>
-
-
-
-                            </div>
-                            <span style="color:red !important"><strong>Following files could be uploaded as
-                                    pdf,mp3,mp4</strong></span>
-
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label>Class Duration:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="class_durationedit"
-                                    name="class_durationedit" autocomplete="off">
-                            </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Class Duration:<span class="error-star" style="color:red;">*</span></label>
+                            <input type="text" class="form-control default" id="class_durationedit"
+                                name="class_durationedit" autocomplete="off">
                         </div>
                     </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+
+                            <label>Class Resource:<span class="error-star" style="color:red;">*</span></label>
+                            <div class="col-md-10"
+                                style="display: flex;justify-content: space-between;margin-bottom: 15px;">
+                                <a class="btn btn-link btn-warning" onclick="changeimage(event);"
+                                    id="change_banner">Change Resource</a>
+                                <a class="btn btn-link btn-warning" onclick="changeimage(event);" id="change_cancel"
+                                    style="display:none;">Cancel</a>
+
+                            </div>
+
+
+                            <input type="file" class="form-control default" id="resourse_nameedit"
+                                name="resource_nameedit" style="display:none;" autocomplete="off"
+                                accept=".pdf, .mp3,.mp4">
+
+                            <iframe style="height:300px;width:50% " class="img-fluid" alt="Banner Image" title=""></iframe>
+
+
+
+                        </div>
+                        <span style="color:red !important"><strong>Following files could be uploaded as
+                                pdf,mp3,mp4</strong></span>
+
+                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -3742,43 +3747,40 @@
                             </div>
                         </div>
 
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Course Introduction:<span class="error-star" style="color:red;">*</span></label>
-                                <div class="col-md-10"
-                                    style="display: flex;justify-content: space-between;margin-bottom: 15px;">
-                                    <iframe id="course_introductionshow" class="img-fluid1" alt="Banner Image"
-                                        width="300" height="150"></iframe>
-                                    <input type="file" class="form-control default" id="course_introductionshow"
-                                        name="course_introduction" style="display:none;" autocomplete="off">
+                        <div class="row">
+                            <!-- Course Introduction -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Course Introduction:<span class="error-star" style="color:red;">*</span></label>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <iframe id="course_introductionshow" class="img-fluid1" alt="Banner Image"
+                                            width="200" height="150"></iframe>
+                                        <input type="file" class="form-control default" id="course_introduction"
+                                            name="course_introduction" style="display:none;" autocomplete="off">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Course Banner:<span class="error-star" style="color:red;">*</span></label>
-
-                                <input type="file" class="form-control default" id="course_bannershow"
-                                    name="course_banner" style="display:none;" accept="image/*" autocomplete="off">
-
-                                <img class="img-fluid2" alt="Banner Image" title=""
-                                    style="width:200px;height:300px !important;">
+                            <!-- Course Banner -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Course Banner:<span class="error-star" style="color:red;">*</span></label>
+                                    <input type="file" class="form-control default" id="course_banner"
+                                        name="course_banner" style="display:none;" accept="image/*" autocomplete="off">
+                                    <img class="img-fluid2" alt="Banner Image" title=""
+                                        style="width:200px;height:200px !important;">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Course Summary for chatbot:<span class="error-star"
-                                        style="color:red;">*</span></label>
-
-                                <input type="file" class="form-control default" id="course_summaryshow"
-                                    name="course_summaryshow" style="display:none;" accept="image/*" autocomplete="off">
-
-                                <img class="img-fluid2" alt="Summary Image" title=""
-                                    style="width:200px;height:300px !important;">
+                            <!-- Course Summary -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Course Summary for chatbot:<span class="error-star" style="color:red;">*</span></label>
+                                    <input type="file" class="form-control default" id="course_summary"
+                                        name="course_summary" style="display:none;" accept="image/*" autocomplete="off">
+                                    <img class="img-fluid2" alt="Summary Image" title=""
+                                        style="width:200px;height:200px !important;">
+                                </div>
                             </div>
                         </div>
 
@@ -4077,7 +4079,7 @@
                 <input type="number" id="expiry_date" class="swal2-input" />
             </div>
         </div>
-    `,   
+    `,
                     showCancelButton: true,
                     confirmButtonText: 'Copy Course',
                     cancelButtonText: 'Cancel',
@@ -4866,7 +4868,43 @@
         }
     }
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const courseTypeSelect = document.getElementById('course_pay');
+        const priceDiv = document.getElementById('paid');
 
+        function togglePriceInput() {
+            if (courseTypeSelect.value === 'paid') {
+                priceDiv.style.display = 'block'; // Show input for Paid
+            } else {
+                priceDiv.style.display = 'none'; // Hide input for Free or empty
+            }
+        }
+
+        // Run when the value changes
+        courseTypeSelect.addEventListener('change', togglePriceInput);
+
+        // Run on page load in case a value is already selected
+        togglePriceInput();
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all radio buttons with name course_noperiod
+        const radios = document.querySelectorAll('input[name="course_noperiod"]');
+        const periodContainer = document.querySelector('.course_period_container');
+
+        radios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === '1') { // Yes selected
+                    periodContainer.style.display = 'flex'; // or 'block'
+                } else { // No selected
+                    periodContainer.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
 
 
 

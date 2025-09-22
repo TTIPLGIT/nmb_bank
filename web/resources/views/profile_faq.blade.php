@@ -272,7 +272,7 @@
     <h2><b style="font-size: 18px;">What do you need help with ?</b></h2>
     <div class="input-group">
       <input type="search" class="form-control rounded" id="module_name" name="module_name" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-      <button type="button" onclick="searchIt()" style="background: #ffc002 !important; color:black !important;font-weight: bold;" class="btn btn-primary"><i class="fa fa-fw  fa-search"></i></button>
+      <button type="button" onclick="searchIt()" style=" margin-left:10px; margin-bottom:10px;background: #3f5af8ff !important; color:black !important;font-weight: bold;" class="btn btn-primary"><i class="fa fa-fw  fa-search"></i></button>
     </div>
 
 

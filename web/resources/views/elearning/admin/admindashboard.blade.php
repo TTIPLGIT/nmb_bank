@@ -1326,15 +1326,26 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex flex-column justify-content-around notice_board_heading">
-                                    <h6 class="notice_board_event_name event-name ellipsis">
-                                        {{$row['notice_name']}}
-                                    </h6>
-                                    <span class="notice_board_event_organiser">
-                                        {{$row['name']}}
-                                    </span>
+                                <div class="notice_board_item d-flex align-items-center">
+                                    <!-- Plus Icon Wrapper -->
+                                    <div class="hover_plus_wrapper me-3">
+                                        <div class="hover_plus">
+                                            <i class="bi bi-plus" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+
+                                    <!-- Notice Details -->
+                                    <div class="d-flex flex-column justify-content-center text-center notice_board_heading">
+                                        <h6 class="notice_board_event_name event-name ellipsis mb-1">
+                                            {{ $row['notice_name'] }}
+                                        </h6>
+                                        <span class="notice_board_event_organiser">
+                                            {{ $row['name'] }}
+                                        </span>
+                                    </div>
                                 </div>
-                                <br>
+
+                                
 
                             </div>
                             @endforeach
