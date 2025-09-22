@@ -901,15 +901,21 @@
 
 
 
-                                                            <a class="btn btn-link" title="Edit" id="gcb" href=""
-                                                                onclick="fetch_update({{$data['id']}},'longedit')"
-                                                                data-toggle="modal" data-target="#addModal3"
-                                                                style="margin-top:0px;"><i class="fas fa-pencil-alt"
-                                                                    style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" title="show" id="gcb" href=""
-                                                                onclick="fetch_update({{$data['id']}},'longshow')"
-                                                                data-toggle="modal" data-target="#addModal4"><i
-                                                                    class="fas fa-eye" style="color:green"></i></a>
+                                                            <div class="d-flex justify-content-around align-items-center" style="gap:15px;">
+                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                    onclick="fetch_update({{ $data['id'] }},'longedit')"
+                                                                    data-toggle="modal" data-target="#addModal3"
+                                                                    style="margin-top:0px;">
+                                                                    <i class="fas fa-pencil-alt" style="color: blue !important"></i>
+                                                                </a>
+
+                                                                <a class="btn btn-link" title="Show" id="gcb" href=""
+                                                                    onclick="fetch_update({{ $data['id'] }},'longshow')"
+                                                                    data-toggle="modal" data-target="#addModal4">
+                                                                    <i class="fas fa-eye" style="color:green"></i>
+                                                                </a>
+                                                            </div>
+
 
                                                             @csrf
 
@@ -1918,6 +1924,7 @@
             This.closest('tr').remove();
         }
     }
+
     function remove_tr(button) {
         const row = button.closest('tr');
         if (document.querySelectorAll('#table_body tr').length > 1) {
@@ -2246,7 +2253,7 @@
                 // remove_tr(This);
 
                 let table_body3 = document.getElementById(table_id),
-                first_tr = table_body3.firstElementChild
+                    first_tr = table_body3.firstElementChild
                 tr_clone = first_tr.cloneNode(true);
 
                 table_body3.append(tr_clone);
@@ -2762,10 +2769,10 @@
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
-                            <div class="form-group">
+                            <div  class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="long_quistionedit" class="long_quistionedit" name="long_quistionedit"
+                                    <textarea id="long_quistionedit"  style="margin-left: -15px"class=" long_quistionedit" name="long_quistionedit"
                                         autocomplete="off"></textarea>
                                 </div>
 
@@ -2786,7 +2793,7 @@
                                         <table class="_table">
 
                                             <tbody id="table_long_edit">
-                                               
+
                                             </tbody>
                                         </table>
 
@@ -2892,9 +2899,9 @@
                         <div class="col-md-1"></div>
                     </div>
                     <div class="check_tab">
-                        <div class="row">
+                        <div class="row" style="margin-left:57px;">
 
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
 
@@ -2917,7 +2924,7 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     <label>Points:<span class="error-star" style="color:red;">*</span></label>
                                     <input type="text" class="form-control default" id="long_pointsshow"
@@ -2981,8 +2988,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10">
+                        
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div classs="col-md-10">
@@ -2992,13 +2999,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-1"></div>
+                        
                     </div>
 
                     <div class="check_tab">
                         <div class="row">
 
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     <label>Keywords:<span class="error-star" style="color:red;">*</span></label>
                                     <div class="wordquestion">
@@ -3020,7 +3027,7 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     <label>Points:<span class="error-star" style="color:red;">*</span></label>
                                     <input type="text" class="form-control default" id="short_pointsshow"
@@ -3229,7 +3236,7 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="short_quistionedit" class="short_quistionedit"
+                                    <textarea style="margin-left:-10px;"id="short_quistionedit" class="short_quistionedit"
                                         name="short_quistionedit" autocomplete="off"></textarea>
                                 </div>
                             </div>
@@ -3248,7 +3255,7 @@
                                         <table class="_table">
 
                                             <tbody id="table_short_edit">
-                                                
+
 
                                             </tbody>
 
@@ -3345,7 +3352,7 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="mcq_quistionedit" class="mcq_quistionedit" name="mcq_quistionedit"
+                                    <textarea  style="margin-left:-10px;" class="mcq_quistionedit" class="mcq_quistionedit" name="mcq_quistionedit"
                                         autocomplete="off"></textarea>
                                 </div>
                             </div>
@@ -3365,19 +3372,19 @@
 
                                         <tbody id="table_mcq_edit">
                                             <tr>
-                                               
+
                                             </tr>
-                                                
+
                                         </tbody>
 
 
                                     </table>
                                     <div class="action_container">
-                                            <button class="success" type="button"
-                                                onclick="create_tr('table_mcq_edit')">
-                                                Add
-                                            </button>
-                                        </div>
+                                        <button class="success" type="button"
+                                            onclick="create_tr('table_mcq_edit')">
+                                            Add
+                                        </button>
+                                    </div>
 
                                 </div>
                             </div>
@@ -3469,7 +3476,7 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="mcq_quistionshow" class="mcq_quistionshow" name="mcq_quistionshow"
+                                    <textarea  style="margin-left:-10px;" id="mcq_quistionshow" class="mcq_quistionshow" name="mcq_quistionshow"
                                         autocomplete="off" style="background-color: #e9ecef !important;"></textarea>
                                 </div>
                             </div>
@@ -3482,23 +3489,23 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Choices:<span class="error-star" style="color:red;">*</span></label>
-                               
+
 
                                 <div class="wordquestion">
-                                        <table class="_table">
-                                            <tbody id="keyword_mcqshow">
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" class="form-control default"
-                                                            id="keyword_mcq_show" name="keyword_mcq_show[]"
-                                                            autocomplete="off">
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <table class="_table">
+                                        <tbody id="keyword_mcqshow">
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class="form-control default"
+                                                        id="keyword_mcq_show" name="keyword_mcq_show[]"
+                                                        autocomplete="off">
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -3584,7 +3591,7 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="true_quistionedit" class="true_quistionedit" name="true_quistionedit"
+                                    <textarea style="margin-left:-15px;" id="true_quistionedit" class="true_quistionedit" name="true_quistionedit"
                                         autocomplete="off"></textarea>
                                 </div>
                             </div>
@@ -3661,7 +3668,7 @@
 
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-10">
                             <div class="form-group">
                                 <label>Question Tag:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="text" class="form-control default" id="true_qnameshow"
@@ -3671,11 +3678,11 @@
 
                     </div>
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="true_quistionshow" class="true_quistionshow" name="true_quistionshow"
+                                    <textarea  style="margin-left:-10px;" id="true_quistionshow" class="true_quistionshow" name="true_quistionshow"
                                         style="background-color: #e9ecef !important;"></textarea>
                                 </div>
 
@@ -3760,8 +3767,8 @@
                     console.log(keyarray);
                     let table_body2 = document.getElementById('table_long_edit');
                     if (table_body2.firstElementChild) {
-                            table_body2.firstElementChild.remove();
-                        }
+                        table_body2.firstElementChild.remove();
+                    }
                     // let first_tr = table_body2.firstElementChild;
                     for (const value of keyarray) {
                         let table_body2 = document.getElementById('table_long_edit');
@@ -3782,9 +3789,9 @@
                                 </div>
                             </td>
                         </tr>`;
-                        
+
                         table_body2.append(tr_clone);
-                        
+
 
                     }
 
@@ -3837,8 +3844,8 @@
                     }
                     let table_body2 = document.getElementById('table_short_edit');
                     if (table_body2.firstElementChild) {
-                            table_body2.firstElementChild.remove();
-                        }
+                        table_body2.firstElementChild.remove();
+                    }
                     for (const value of keyarray) {
                         let table_body2 = document.getElementById('table_short_edit');
                         tr_clone = document.createElement('tr');
@@ -3910,8 +3917,8 @@
                     }
                     let table_body2 = document.getElementById('table_mcq_edit');
                     if (table_body2.firstElementChild) {
-                            table_body2.firstElementChild.remove();
-                        }
+                        table_body2.firstElementChild.remove();
+                    }
                     for (const value of keyarray) {
                         let table_body2 = document.getElementById('table_mcq_edit');
                         tr_clone = document.createElement('tr');
@@ -3927,27 +3934,27 @@
                                     </button>
                                 </div>
                             </td>`
-                            table_body2.append(tr_clone);
-                }
-                let correctChoices = data.rows[0]['correct_choices']; 
-                if (typeof correctChoices === 'string') {
-                    correctChoices = JSON.parse(correctChoices); 
-                } else if (Array.isArray(correctChoices)) {
-                    correctChoices = correctChoices.map(choice => {
-                        try {
-                            return JSON.parse(choice); 
-                        } catch (error) {
-                            return choice; 
-                        }
-                    }).flat(); 
-                }
+                        table_body2.append(tr_clone);
+                    }
+                    let correctChoices = data.rows[0]['correct_choices'];
+                    if (typeof correctChoices === 'string') {
+                        correctChoices = JSON.parse(correctChoices);
+                    } else if (Array.isArray(correctChoices)) {
+                        correctChoices = correctChoices.map(choice => {
+                            try {
+                                return JSON.parse(choice);
+                            } catch (error) {
+                                return choice;
+                            }
+                        }).flat();
+                    }
                     $('#mcq_correct_choicesedit').empty(); // Clear dropdown
-                        keyarray.forEach(option => {
-                            console.log(keyarray, 'mcq');
-                            const isSelected = correctChoices.includes(option) ? 'selected' : '';
-                            console.log(isSelected, 'corectchoice');
-                            $('#mcq_correct_choicesedit').append(`<option value="${option}" ${isSelected}>${option}</option>`);
-                        });
+                    keyarray.forEach(option => {
+                        console.log(keyarray, 'mcq');
+                        const isSelected = correctChoices.includes(option) ? 'selected' : '';
+                        console.log(isSelected, 'corectchoice');
+                        $('#mcq_correct_choicesedit').append(`<option value="${option}" ${isSelected}>${option}</option>`);
+                    });
 
                     $('.mcq_correct_choicesedit').val(correctChoices).trigger('change');
                     $('#mcq_pointsedit').val(data.rows[0]['points']);
@@ -3964,7 +3971,7 @@
                     }
                     let tableBody = document.getElementById('keyword_mcqshow');
                     let firstRow = tableBody.firstElementChild;
-                        keyarrayhow.forEach((keyword, index) => {
+                    keyarrayhow.forEach((keyword, index) => {
                         let clonedRow = firstRow.cloneNode(true); // Clone the template row
                         clonedRow.querySelector('input').value = keyword; // Set the keyword value
                         clonedRow.querySelector('input').setAttribute("readonly", ""); // Make input read-only

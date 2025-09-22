@@ -448,10 +448,10 @@
             document.getElementById("mobileerror").innerHTML =
                 "**Please Enter the Mobile Number**";
 
-        } else if (!number.test(mobile.value)) {
-            $('#mobile').addClass('is-invalid');
-            document.getElementById("mobileerror").innerHTML =
-                "**Please Enter the Valid Mobile Number**";
+        // } else if (!number.test(mobile.value)) {
+        //     $('#mobile').addClass('is-invalid');
+        //     document.getElementById("mobileerror").innerHTML =
+        //         "**Please Enter the Valid Mobile Number**";
 
         } else {
             $('#mobile').removeClass('is-invalid');

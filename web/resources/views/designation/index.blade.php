@@ -39,7 +39,7 @@
         <div class="section-body mt-2">
 
             @if(strpos($screen_permission['permissions'], 'Create') !== false)
-            <a type="button" style="font-size:15px;" class="btn btn-success btn-lg"
+            <a type="button" style="font-size:15px; margin-bottom:15px"  class="btn btn-success btn-lg"
                 href="{{ route('designation.create') }}">Create</a>
             @endif
             <style>

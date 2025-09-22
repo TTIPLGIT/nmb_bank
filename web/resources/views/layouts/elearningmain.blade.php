@@ -1468,6 +1468,18 @@
                             </a>
                         </li>
                         @endif
+                        <li>
+                            <a href="/leaderboard" class="nav-link">
+                                <i class="sidebar-icons fa fa-star" aria-hidden="true"></i>
+                                <span>Leaderboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/elearningDashboard" class="nav-link">
+                                <i class="sidebar-icons fa fa-arrow-left" aria-hidden="true"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
                         <!-- <li>
                             <a href="{{ route('elearningAssessment') }}" class="nav-link sidebar_links">
                                 <i class="sidebar-icons fa fa-trophy" aria-hidden="true"></i>
@@ -1501,6 +1513,13 @@
                             </a>
                         </li>
                         @endif -->
+
+                    </ul>
+                    </break>
+                    <ul class="second_Menu sidebar-menu sidebar-secondary-menu">
+
+
+
                         <li>
                             <a href="#" class="nav-link sidebar_links"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -1514,15 +1533,7 @@
 
                             </form>
                         </li>
-                    </ul>
-                    </break>
-                    <ul class="second_Menu sidebar-menu sidebar-secondary-menu">
-                        <li>
-                            <a href="/admindashboard" class="nav-link">
-                                <i class="sidebar-icons fa fa-arrow-left" aria-hidden="true"></i>
-                                <span>Home</span>
-                            </a>
-                        </li>
+
                         <!-- <li>
                             <a href="" class="nav-link">
                                 <i class="sidebar-icons fa fa-info" aria-hidden="true"></i>

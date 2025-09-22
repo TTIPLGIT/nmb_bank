@@ -185,6 +185,7 @@ class CertifcateTemplateController extends BaseController
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
                         $modules = $menus['modules'];
+                        // dd($certificate_templates);
 
                         return view('certificate_template.details', compact('certificate_template_details', 'modules', 'screens', 'certificate_templates'));
                     }

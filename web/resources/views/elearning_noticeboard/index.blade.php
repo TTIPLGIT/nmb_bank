@@ -377,11 +377,28 @@
 
                                                         <td>
 
-                                                            <a class="" title="Edit" id="gcb" data-toggle="modal" data-target="#addModal4" onclick="fetch_update({{$data['notice_id']}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" title="show" data-toggle="modal" data-target="#addModal5" onclick="fetch_update({{$data['notice_id']}},'show')"><i class="fas fa-eye" style="color:green"></i></a>
+                                                            <div class="d-flex justify-content-around align-items-center" style="gap:15px;">
+                                                                <!-- Edit -->
+                                                                <a class="btn btn-link p-0" title="Edit" id="gcb"
+                                                                    data-toggle="modal" data-target="#addModal4"
+                                                                    onclick="fetch_update({{ $data['notice_id'] }},'edit')">
+                                                                    <i class="fas fa-pencil-alt" style="color: blue !important"></i>
+                                                                </a>
 
+                                                                <!-- Show -->
+                                                                <a class="btn btn-link p-0" title="Show"
+                                                                    data-toggle="modal" data-target="#addModal5"
+                                                                    onclick="fetch_update({{ $data['notice_id'] }},'show')">
+                                                                    <i class="fas fa-eye" style="color:green"></i>
+                                                                </a>
 
-                                                            <a type="button" title="Delete" onclick="notice_delete(<?php echo $data['notice_id'] ?>)" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></a>
+                                                                <!-- Delete -->
+                                                                <a type="button" title="Delete"
+                                                                    onclick="notice_delete({{ $data['notice_id'] }})"
+                                                                    class="btn btn-link p-0">
+                                                                    <i class="far fa-trash-alt" style="color:red"></i>
+                                                                </a>
+                                                            </div>
 
 
                                                         </td>
@@ -953,7 +970,7 @@
                     </div>
                     <div class="row">
 
-                        <div class="col-md-8">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label>Notice Banner:<span class="error-star" style="color:red;">*</span></label>
                             </div>

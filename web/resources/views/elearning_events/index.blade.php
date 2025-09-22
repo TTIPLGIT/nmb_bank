@@ -379,12 +379,28 @@
 
                                                         <td>
 
-                                                            <a class="" title="Edit" id="gcb" data-toggle="modal" data-target="#addModal4" onclick="fetch_update({{$data['event_id']}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" title="show" data-toggle="modal" data-target="#addModal5" onclick="fetch_update({{$data['event_id']}},'show')"><i class="fas fa-eye" style="color:green"></i></a>
+                                                            <div class="d-flex justify-content-around align-items-center" style="gap:10px;">
+                                                                <!-- Edit -->
+                                                                <a class="btn btn-link p-0" title="Edit" id="gcb"
+                                                                    data-toggle="modal" data-target="#addModal4"
+                                                                    onclick="fetch_update({{ $data['event_id'] }},'edit')">
+                                                                    <i class="fas fa-pencil-alt" style="color: blue !important"></i>
+                                                                </a>
 
+                                                                <!-- Show -->
+                                                                <a class="btn btn-link p-0" title="Show"
+                                                                    data-toggle="modal" data-target="#addModal5"
+                                                                    onclick="fetch_update({{ $data['event_id'] }},'show')">
+                                                                    <i class="fas fa-eye" style="color:green"></i>
+                                                                </a>
 
-                                                            <a type="button" title="Delete" onclick="event_delete(<?php echo $data['event_id'] ?>)" class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></a>
-
+                                                                <!-- Delete -->
+                                                                <a type="button" title="Delete"
+                                                                    onclick="event_delete({{ $data['event_id'] }})"
+                                                                    class="btn btn-link p-0">
+                                                                    <i class="far fa-trash-alt" style="color:red"></i>
+                                                                </a>
+                                                            </div>
 
                                                         </td>
 
@@ -581,7 +597,7 @@
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label class="control-label required">Category:<span class="error-star" style="color:red;">*</span></label>
-                                <select class="form-control" name="user_category" id="user_categoryshow"style="background-color: #e9ecef !important;">
+                                <select class="form-control" name="user_category" id="user_categoryshow" style="background-color: #e9ecef !important;">
                                     <option value="">Select User Category</option>
 
                                     @foreach($rows['rows']['user_category'] as $key=>$row)
@@ -1122,7 +1138,7 @@
                                 <span style="color:red !important"><strong>Following files could be uploaded such as jpeg,png,jpg,gif</strong></span>
 
                                 <input type="file" class="form-control default" id="event_imageedit" name="event_imageedit" style="display:none;" accept="image/*" autocomplete="off">
-                                
+
                                 <img class="img-fluid" alt="Event Image" title="">
                             </div>
                             <span style="color:red !important"><strong>Following files could be uploaded such as jpeg,png,jpg,gif</strong></span>
