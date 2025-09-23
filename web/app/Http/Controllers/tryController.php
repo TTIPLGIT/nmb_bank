@@ -179,7 +179,8 @@ class tryController extends BaseController
             $screens = $menus['screens'];
             $modules = $menus['modules'];
             $category = tryController::course_list($request);
-            $rows2['course_category'] = $category['rows2']['course_category'];
+            // $rows2['course_category'] = $category['rows2']['course_category'];
+         
 
             $rows3['elearning_classes'] = DB::table('elearning_classes')
                 ->select('*')
@@ -189,7 +190,7 @@ class tryController extends BaseController
 
 
 
-            return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'roles', 'user_id', 'rows1', 'rows2'));
+            return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'roles', 'user_id', 'rows1'));
         } catch (\Exception $exc) {
 
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);

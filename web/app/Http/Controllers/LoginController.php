@@ -7,12 +7,14 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use DateTime;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Stmt\Return_;
 use Psy\Readline\Hoa\Console;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends BaseController
 {
@@ -99,7 +101,7 @@ class LoginController extends BaseController
       $data['Mobile_no'] = $request->Mobile_no;
       $data['password'] = bcrypt($request->password);
       $data['password_confirmation'] = $request->password_confirmation;
-    
+
       $mobile = 0;
       if (isset($request->mobile)) {
         $mobile = 1;
@@ -904,5 +906,50 @@ class LoginController extends BaseController
     } catch (\Exception $exc) {
       return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
     }
+  }
+  public function handleLogin(Request $request)
+  {
+    if ($request->has('token')) {
+      try {
+        $token = $request->query('token');
+        $screen = $request->query('screen');
+        $course_id =$request->query('courseId');
+
+        session(['accessToken' => $token]);
+        $gatewayURL = config('setting.api_gateway_url') . '/login/user';
+
+        $response = $this->serviceRequest($gatewayURL, 'GET', '', '',);
+        $response = json_decode($response);
+        if ($response->Status == 200 && $response->Success) {
+          $data = json_decode($this->decryptData($response->Data));
+          $role_id = $data->Role;
+          session(['role_name' => $data->alter_name]);
+          session(['userID' => $data->Data->{0}->id]);
+          session(['gd_status' => $data->gd_status]);
+          session(['role_id' => $role_id]);
+          if ($screen === 'dashboard') {
+            if ($role_id == 1) {
+              return redirect()->route('admindashboard');
+            } else {
+              return redirect()->route('elearningDashboard');
+            }
+          } elseif ($screen === 'course') {
+            $course = DB::table('elearning_courses')->get();
+            $encrypt_id = Crypt::encrypt($course_id);
+            if ($role_id == 1) {
+              return redirect()->route('admincourse');
+            } else {
+              return redirect()->route('elearningCourse', ['id' => $encrypt_id]);
+            }
+          }
+        }
+      } catch (\Exception $e) {
+        dd($e);
+        return redirect()->route('login')
+          ->withErrors(['Invalid or malformed token.']);
+      }
+    }
+
+    return view('auth.login');
   }
 }
