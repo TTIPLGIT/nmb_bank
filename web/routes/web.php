@@ -86,9 +86,40 @@ Route::get('/check-openssl', function () {
         return 'OpenSSL is not loaded.';
     }
 });
-Route::get('/', function () {
-    return view('auth.login');
-});
+// Route::get('/', function (Request $request) {
+//     if ($request->has('token')) {
+//         try {
+//             $token = $request->query('token');
+//              session(['accessToken' => $token]);
+//               $role_id = session()->get("role_id");
+//               dd($role_id);
+//               return redirect()->route('admindashboard');
+//             // Example: decode token into email + password
+//             // [$email, $password] = explode(':', base64_decode($token));
+
+//             // // Use Laravel Auth attempt (your same logic)
+//             // if (!$jwt = auth()->attempt(['email' => $email, 'password' => $password, 'delete_status' => '0'])) {
+//             //     return redirect()->route('login')->withErrors(['Invalid credentials.']);
+//             // }
+
+//             // if (auth()->attempt(['email' => $email, 'password' => $password, 'active_flag' => '0'])) {
+//             //     // ✅ Token is valid
+//             //     return redirect()->route('dashboard');
+//             // } else {
+//             //     return redirect()->route('/')->withErrors(['Account not activated.']);
+//             // }
+
+//         } catch (\Exception $e) {
+//             dd($e);
+//             return redirect()->route('/')->withErrors(['Invalid or malformed token.']);
+//         }
+//     }
+
+//     return view('auth.login');
+// });
+
+
+Route::get('/', [LoginController::class, 'handleLogin'])->name('token.login');
 
 Route::get('/token', function (Request $request) {
     $token = $request->session()->token();
