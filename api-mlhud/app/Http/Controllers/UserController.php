@@ -569,18 +569,21 @@ class UserController extends BaseController
 						->where('client_designation_id', $input['client_designation_id'])
 						->value('designation_id');
 
-						$this->WriteFileLog($roles_data_id);
+					$this->WriteFileLog($roles_data_id);
 					$user_id = DB::table('users')
 						->insertGetId([
 							'name' => $input['name'],
 							'email' => $input['email'],
-							'user_type' => $input['user_type'] ,
+							'user_type' => $input['user_type'],
 							'password' => $input['password'],
 							// 'array_dashboard_list' => $stringdashboard_list_id,
 							'role_id' => $roles_data_id,
 							'designation_id' =>  $client_designation_id,
-							'client_user_id' => $input['client_user_id']						]);
+							'client_user_id' => $input['client_user_id']
+						]);
 
+
+					
 					// $this->WriteFileLog($user_id);
 
 					$user_id  =  $user_id;

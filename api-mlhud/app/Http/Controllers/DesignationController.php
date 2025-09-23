@@ -21,11 +21,11 @@ class DesignationController extends BaseController
 
 
             $rows = DB::select("
-                  SELECT a.*, r.role_name
-                  FROM designation AS a
-                  INNER JOIN uam_roles AS r ON a.role_id = r.role_id
-                  WHERE a.active_flag = 0
-            ");
+    SELECT *
+    FROM designation AS a
+    WHERE a.active_flag = 0
+");
+
 
 
             $response = [
@@ -105,15 +105,15 @@ class DesignationController extends BaseController
             $isMobile = isset($request['isMobile']);
 
             $inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
-       
+
             $input = [
                 'designation_name' => $inputArray['designation_name'],
                 'notes' => $inputArray['notes'],
                 'role_id' => $inputArray['role_id'],
-                'client_designation_id' => $inputArray['client_designation_id']?? null
+                'client_designation_id' => $inputArray['client_designation_id'] ?? null
 
             ];
-    //  $this->WriteFileLog($inputArray);
+            //  $this->WriteFileLog($inputArray);
 
 
             $name = $input['designation_name'];
