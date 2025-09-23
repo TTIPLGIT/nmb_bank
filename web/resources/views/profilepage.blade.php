@@ -115,9 +115,10 @@
                             <input class="file-upload" type="file" id="signature_attachment" name="signature_attachment"
                               placeholder="Enter Signature Attachment" accept="image/*"
                               style="padding: 3px 6px;margin: 0px;">
+                            
 
                             <input type="hidden" name="signature" id="signature"
-                              value="{{ $one_row[0]['profile_image'] }}">
+                              value="{{$one_row[0]['profile_image'] }}">
                           </div>
                         </div>
                       </div>

@@ -3235,19 +3235,7 @@
                     <input type="hidden" name="course_edit" class="course_edit" id="course_edit">
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label required">Course Category:<span class="error-star"
-                                        style="color:red;">*</span></label>
-                                <select class="form-control" name="course_category" id="course_categoryedit">
-                                    <option value="">Select User Category</option>
-                                    @foreach($rows2['course_category'] as $key => $row)
-
-                                    <option value="{{ $row }}">{{ $key }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                    
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -3613,19 +3601,8 @@
                     <input type="hidden" name="course_editshow" class="course_edit" id="course_editshow">
 
                     <div class="row">
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label required">Course Category:<span class="error-star"
-                                        style="color:red;">*</span></label>
-                                <select class="form-control" name="course_category" id="course_categoryshow">
-                                    <option value="">Select User Category</option>
-                                    @foreach($rows2['course_category'] as $key => $row)
-
-                                    <option value="{{ $row }}">{{ $key }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div> -->
+                       
+                        </div> 
 
                         <div class="col-md-6">
                             <div class="form-group">

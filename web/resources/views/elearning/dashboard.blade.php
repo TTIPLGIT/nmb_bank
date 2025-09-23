@@ -1220,6 +1220,7 @@
                                 src="{{asset('asset/image/progresscourse.png')}}" alt="Course in Progress" width="40%">
                         </div>
                         <div class="justify-content-between align-items-center">
+                         
                             <span class="overview_count">{{$count['course_progress'][0]['course_progress']}}</span><br>
                             <span class="card-span">Course in Progress</span>
                         </div>

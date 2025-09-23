@@ -101,7 +101,7 @@
                                         <thead>
                                             <tr>
                                                 <th>S.No</th>
-                                                <th>Role</th>
+                                            
                                                 <th>Designation Name</th>
                                                 <th>Action</th>
                                             </tr>
@@ -111,7 +111,7 @@
                                             <tr>
 
                                                 <td>{{ ++$key }}</td>
-                                                <td>{{ $row['role_name'] }}</td>
+                                                
                                                 <td>{{ $row['designation_name'] }}</td>
 
                                                 <td class="text-center">

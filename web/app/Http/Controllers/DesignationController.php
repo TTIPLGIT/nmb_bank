@@ -122,12 +122,17 @@ class DesignationController extends BaseController
                 $data['designation_name'] = $request->designation_name;
                 $data['notes'] = $request->designation_description;
                 $data['role_id'] = $request->role_id;
+
                 $encryptArray = $this->encryptData($data);
                 $request = array();
+               
                 $request['requestData'] = $encryptArray;
+                
                 $gatewayURL = config('setting.api_gateway_url') . '/designation/storedata';
                 $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+                //  dd($response);
                 $response1 = json_decode($response);
+                // dd($response);
             }
 
             if ($response1->Status == 200 && $response1->Success) {
@@ -207,11 +212,11 @@ class DesignationController extends BaseController
                     if ($objData->Code == 200) {
                         $parant_data = json_decode(json_encode($objData->Data), true);
                         $designation =  $parant_data['rows'];
-                          $roles =  $parant_data['roles'];
+                        $roles =  $parant_data['roles'];
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
                         $modules = $menus['modules'];
-                        return view('designation.show', compact('designation', 'modules', 'screens','roles'));
+                        return view('designation.show', compact('designation', 'modules', 'screens', 'roles'));
                     }
                 } else {
                     $objData = json_decode($this->decryptData($response->Data));
@@ -249,16 +254,16 @@ class DesignationController extends BaseController
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
-            
+
             if ($validator->fails()) {
                 return Redirect::back()->withErrors($validator);
             } else {
-               
+
                 $data['designation_name'] = $request->designation_name;
                 $data['notes'] = $request->notes;
                 $data['id'] = $request->id;
                 $data['role_id'] = $request->role_id;
-               
+
                 $encryptArray = $this->encryptData($data);
                 $request = array();
                 $request['requestData'] = $encryptArray;
@@ -266,11 +271,11 @@ class DesignationController extends BaseController
                 $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
                 $response1 = json_decode($response);
             }
-             
+
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
             }
-          
+
             if ($objData->Code == 200) {
                 return redirect(route('designation.index'))->with('success', 'Designation Updated Successfully');
             }

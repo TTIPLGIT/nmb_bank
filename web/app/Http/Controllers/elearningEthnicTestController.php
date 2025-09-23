@@ -907,44 +907,40 @@ class elearningEthnicTestController extends BaseController
 
     public function courseOverview(Request $request, $id)
     {
-
         // dd("welcome to overview page");
         $method = 'Method => elearningEthnicTestController => courseOverview';
         try {
             $user_id = $request->session()->get("userID");
 
-            $this->WriteFileLog($user_id);
             if ($user_id == null) {
                 return redirect(url('/'));
             }
             $id = Crypt::decrypt($id);
             // dd($id,$user_id);
-            $this->WriteFileLog($id);
+
             $courseDetails = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
             $courseDetailslist = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
             // dd($id);
             // dd($courseDetails);
+
             foreach ($courseDetails as $courseDetail) {
                 $classOrder = $courseDetail->course_classes;
             }
-            $this->WriteFileLog($courseDetails);
             // dd($user_id,$id,$classOrder);
             $isEnrolled = DB::select("SELECT * FROM user_class_relation WHERE user_id=$user_id AND class_id=$id");
             // dd($isEnrolled);
             // dd($courseDetailslist);
             if (empty($isEnrolled)) {
                 $enrolled = "False";
-                $this->WriteFileLog($enrolled);
             } else {
                 $enrolled = "True";
-                $this->WriteFileLog($enrolled);
             }
             // dd($enrolled);
             $this->WriteFileLog("1");
             // dd($user_id,$id);
             $isEnrolled = DB::select("SELECT * FROM user_course_relation WHERE user_id=$user_id AND course_id=$id");
             // dd($isEnrolled);
-            $this->WriteFileLog($isEnrolled);
+
 
 
             if (empty($isEnrolled)) {

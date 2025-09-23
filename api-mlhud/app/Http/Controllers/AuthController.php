@@ -49,7 +49,32 @@ class AuthController extends BaseController
 			return $sendServiceResponse;
 		}
 	}
-
+	public function checkUser()
+	{
+		try {
+			$userData = auth()->user();
+			if ($userData) {
+				$this->WriteFileLog($userData['role_id']);
+				$serviceResponse = array();
+				$serviceResponse['Code'] = $userData !== null ? config('setting.status_code.success') : config('setting.status_code.unauthenticated');
+				$serviceResponse['Message'] = config('setting.status_message.success');
+				$serviceResponse['Data'] =  auth()->user();
+				$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, true);
+				return $sendServiceResponse;
+			} else {
+				$serviceResponse = array();
+				$serviceResponse['Code'] = config('setting.status_code.unauthenticated');
+				$serviceResponse['Message'] = false;
+				$serviceResponse['Data'] = null;
+				$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, 401, false, true);
+				return $sendServiceResponse;
+			}
+		} catch (\Throwable $th) {
+			return ['code' => 401];
+		}
+	}
 	public function registerstore(Request $request)
 	{
 
@@ -782,7 +807,7 @@ class AuthController extends BaseController
 				$serviceResponse['Code'] = config('setting.status_code.unauthenticated');
 				$serviceResponse['Message'] = config('setting.status_message.unauthenticated');
 				$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.unauthenticated'), false,true);
+				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.unauthenticated'), false, true);
 				return $sendServiceResponse;
 			}
 
@@ -902,7 +927,7 @@ class AuthController extends BaseController
 
 		DB::table('cpt_points_hours_calculate')
 			->where('user_id', $user_id)
-			->whereNull('end_time') 
+			->whereNull('end_time')
 			->update([
 				'end_time'   => now(),
 				'updated_at' => now(),

@@ -59,6 +59,7 @@ Route::get('/elearningDashboard', [App\Http\Controllers\elearningController::cla
 Route::get('/dashboardevents/fetch', [App\Http\Controllers\elearningController::class, 'events_fetch'])->name('dashboardevents.fetch');
 
 
+Route::get('/checkUser', [\App\Http\Controllers\AuthController::class, 'checkUser']);
 Route::middleware('auth:api')->group(function () {
   Route::get('/Register/screenapl', [\App\Http\Controllers\RegistrationController::class, 'registerapl']);
   Route::get('/approvenrv/screenedit', [\App\Http\Controllers\RegistrationController::class, 'approvenrv_update']);

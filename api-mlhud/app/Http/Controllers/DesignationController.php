@@ -21,11 +21,11 @@ class DesignationController extends BaseController
 
 
             $rows = DB::select("
-                  SELECT a.*, r.role_name
-                  FROM designation AS a
-                  INNER JOIN uam_roles AS r ON a.role_id = r.role_id
-                  WHERE a.active_flag = 0
-            ");
+    SELECT *
+    FROM designation AS a
+    WHERE a.active_flag = 0
+");
+
 
 
             $response = [
@@ -110,13 +110,17 @@ class DesignationController extends BaseController
                 'designation_name' => $inputArray['designation_name'],
                 'notes' => $inputArray['notes'],
                 'role_id' => $inputArray['role_id'],
-                'client_designation_id' => $inputArray['client_designation_id']
+                'client_designation_id' => $inputArray['client_designation_id'] ?? null
 
             ];
+            //  $this->WriteFileLog($inputArray);
+
+
             $name = $input['designation_name'];
 
+
             $designation_check = DB::select("select * from designation where designation_name = '$name' ");
-          
+
 
             if ($designation_check == []) {
                 //return auth()->user()->id;
@@ -167,7 +171,7 @@ class DesignationController extends BaseController
             $serviceResponse['Code'] = config('setting.status_code.exception');
             $serviceResponse['Message'] = $exc->getMessage();
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false,$isMobile);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false, $isMobile);
             return $sendServiceResponse;
         }
     }
