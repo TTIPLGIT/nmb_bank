@@ -125,9 +125,9 @@ class DesignationController extends BaseController
 
                 $encryptArray = $this->encryptData($data);
                 $request = array();
-               
+
                 $request['requestData'] = $encryptArray;
-                
+
                 $gatewayURL = config('setting.api_gateway_url') . '/designation/storedata';
                 $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
                 //  dd($response);
@@ -267,13 +267,17 @@ class DesignationController extends BaseController
                 $encryptArray = $this->encryptData($data);
                 $request = array();
                 $request['requestData'] = $encryptArray;
+
                 $gatewayURL = config('setting.api_gateway_url') . '/designation/updatedata';
+                
                 $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+
                 $response1 = json_decode($response);
             }
-
+            
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
+               
             }
 
             if ($objData->Code == 200) {

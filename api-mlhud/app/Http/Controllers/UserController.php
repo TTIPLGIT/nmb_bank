@@ -583,7 +583,7 @@ class UserController extends BaseController
 						]);
 
 
-					
+
 					// $this->WriteFileLog($user_id);
 
 					$user_id  =  $user_id;
@@ -953,11 +953,17 @@ class UserController extends BaseController
 
 	public function updatedata(Request $request)
 	{
+
 		$method = 'Method => UserController => updatedata';
 		try {
-			$input = $this->decryptData($request->requestData);
+			$isMobile = isset($request['isMobile']);
+
+
+			$input = $isMobile ? $request : $this->decryptData($request->requestData);
+			// $input = $this->decryptData($request->requestData);
 			$id  = $input['user_id'];
 			$email =  $input['email'];
+
 			$rowsemail =  DB::select("select * from users where not id  = '$id' and email ='$email'");
 			if (json_encode($rowsemail) != '[]') {
 				$serviceResponse = array();
@@ -968,48 +974,38 @@ class UserController extends BaseController
 				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
 				return $sendServiceResponse;
 			} else {
+				if ($isMobile) {
+
+
+					$user_id = DB::table('users')
+						->where('active_flag', 0)
+						->where('client_user_id', $input['client_user_id'])
+						->value('id');
+
+					DB::table('users')
+						->where('id', $user_id)
+						->update([
+							'name'   => $input['name'],
+							'email' => $input['email'],
+							'active_flag'        => 0,
+
+							'updated_at' => NOW()
+						]);
+
+
+					$serviceResponse = array();
+					$serviceResponse['Code'] = config('setting.status_code.success');
+					$serviceResponse['Message'] = config('setting.status_message.success');
+					$serviceResponse['Data'] = 1;
+					$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+					$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
+					return $sendServiceResponse;
+				}
 				DB::transaction(function () use ($input) {
 					$user_id  = $input['user_id'];
 					$designation_id = $input['designation_id'];
 					$stringuser_id = $input['roles_id'];
-
-					// $dashboard_list_id = $input['dashboard_list_id'];
-					// $stringdashboard_list_id = implode(",", $dashboard_list_id);
-
-
-					// $directorate = $input['directorate'];
-
-
-					//KD
-
-					// $find_user = DB::select("SELECT * from users where id=" . $user_id . "");
-					// $previous_role = $find_user[0]->array_roles;
-
-
-					// if ($previous_role != $stringuser_id) {
-
-
-					// 	$get_data = DB::select("SELECT  current_role_id FROM userrole_audit WHERE user_id=" . $user_id . " ORDER BY action_date DESC LIMIT 1");
-
-
-
-					// 	$previous_id = $get_data[0]->current_role_id;
-
-					// 	$role_change_id = DB::table('userrole_audit')
-					// 		->insertGetId([
-
-
-					// 			'current_role_id' => $stringuser_id,
-					// 			'previous_role_id' => $previous_id,
-					// 			'user_id' => $user_id,
-					// 			'created_by' => auth()->user()->id,
-					// 			'audit_status' => "Updated"
-
-
-
-					// 		]);
-					// }
-					//KD
+					$client_user_id = $input['client_user_id'] ?? null;
 
 
 					DB::table('users')
@@ -1024,66 +1020,6 @@ class UserController extends BaseController
 							'project_role_id' => 1,
 
 						]);
-
-
-
-					// $delete_user_department_id  = DB::table('user_departments')->where('user_id', $user_id)->delete();
-
-
-					// $designation = $input['designation'];
-					// $screen_unique = array_unique($input['directorate_department']);
-					// $unique = array_values($screen_unique);
-					// $screenidcount = count($unique);
-
-
-					// $screen_array_department = array_unique($input['array_department']);
-					// $unique_array_department = array_values($screen_array_department);
-					// $screenunique_array_department = count($unique_array_department);
-
-
-					// for ($i = 0; $i < $screenidcount; $i++) {
-					// 	$iparr = explode(":", $unique[$i]);
-					// 	$user_departments_id = DB::table('user_departments')->insertGetId([
-					// 		'user_id' => $user_id,
-					// 		'parent_node_id' => $input['parent_node_id'],
-					// 		'directorate_id' => $iparr[0],
-					// 		'department_id' => $iparr[1],
-					// 		'designation_id' => $designation,
-					// 		//'array_department' => $unique_array_department[$i]
-					// 	]);
-					// };
-					// $delete_user_categories  = DB::table('users_document_categories')->where('user_id', $user_id)->delete();
-
-
-
-					// $screen_array_department = array_unique($input['array_department']);
-					// $unique_array_department = array_values($screen_array_department);
-					// $screenunique_array_department = count($unique_array_department);
-
-					// for ($i = 0; $i < $screenunique_array_department; $i++) {
-					// 	$iparr = explode("-", $unique_array_department[$i]);
-					// 	$user_departments_id = DB::table('users_document_categories')->insertGetId([
-					// 		'user_id' => $user_id,
-					// 		'document_category_id' => $iparr[3],
-					// 		'directorate_id' => $iparr[1],
-					// 		'department_id' => $iparr[2],
-					// 		'array_department' => $unique_array_department[$i]
-					// 	]);
-					// };
-
-
-
-					// $delete_dashboard_list_id  = DB::table('user_selected_dashboard_list')->where('user_id', $user_id)->delete();
-
-					// $screenidcount = count($input['dashboard_list_id']);
-					// for ($i = 0; $i < $screenidcount; $i++) {
-					// 	$user_selected_dashboard_list = DB::table('user_selected_dashboard_list')->insertGetId([
-					// 		'user_id' => $user_id,
-					// 		'user_dashboard_list_id' => $input['dashboard_list_id'][$i],
-					// 		'active_flag' => 0,
-					// 		'created_by' => $user_id,
-					// 	]);
-					// };
 
 
 
@@ -1709,35 +1645,14 @@ class UserController extends BaseController
 
 	public function delete($id)
 	{
-
+		// dd("we1111");
 		//return $id;
 		try {
 
 			$method = 'Method => UserController => delete';
 			$id = $this->decryptData($id);
-			// $document_process_check = DB::select("select * from document_processes where created_by = '$id'");
-			// if ($document_process_check != [] ) {
-			// 	$serviceResponse = array();
-			// 	$serviceResponse['Code'] = 800;
-			// 	$serviceResponse['Message'] = config('setting.status_message.success');
-			// 	$serviceResponse['Data'] = 1;
-			// 	$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-			// 	$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-			// 	return $sendServiceResponse;
-
-			// }
 
 
-			// $work_flow_check = DB::select("select * from tasks_common_all_list where created_by = '$id' or allocated_user_id = '$id'");
-			// if ($work_flow_check != [] ) {
-			// 	$serviceResponse = array();
-			// 	$serviceResponse['Code'] = 800;
-			// 	$serviceResponse['Message'] = config('setting.status_message.success');
-			// 	$serviceResponse['Data'] = 1;
-			// 	$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-			// 	$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-			// 	return $sendServiceResponse;
-			// }
 
 			$auth_user_id = auth()->user()->id;
 
@@ -2852,6 +2767,61 @@ class UserController extends BaseController
 			$serviceResponse['Message'] = $exc->getMessage();
 			$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
 			$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+			return $sendServiceResponse;
+		}
+	}
+	public function user_delete(Request $request)
+	{
+//  dd($request);
+		try {
+
+			$method = 'Method => UserController => user_delete';
+			$isMobile = isset($request['isMobile']);
+
+			$inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
+			$input = [
+				
+				'client_user_id' => $inputArray['client_user_id']
+
+			];
+			
+
+
+			if ($isMobile) {
+				// $this->WriteFileLog('jii1');
+
+
+				$user_id = DB::table('users')
+					->where('active_flag', 0)
+					->where('client_user_id', $input['client_user_id'])
+					->value('id');
+
+				DB::table('users')
+					->where('id', $user_id)
+					->update([
+
+						'active_flag'        => 1,
+
+					]);
+
+				$serviceResponse = array();
+				$serviceResponse['Code'] = config('setting.status_code.success');
+				$serviceResponse['Message'] = config('setting.status_message.success');
+				$serviceResponse['Data'] = 1;
+				$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
+				return $sendServiceResponse;
+			}
+		} catch (\Exception $exc) {
+			$exceptionResponse = array();
+			$exceptionResponse['ServiceMethod'] = $method;
+			$exceptionResponse['Exception'] = $exc->getMessage();
+			$exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+			$serviceResponse = array();
+			$serviceResponse['Code'] = config('setting.status_code.exception');
+			$serviceResponse['Message'] = $exc->getMessage();
+			$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+			$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false, $isMobile);
 			return $sendServiceResponse;
 		}
 	}

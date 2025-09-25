@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Validator;
-use DB;
+
+use Illuminate\Support\Facades\DB;
 use File;
 use Illuminate\Support\Str;
 
@@ -181,12 +182,15 @@ class DesignationController extends BaseController
 
         try {
             $method = 'Method => DesignationController => updatedata';
-            $inputArray = $this->decryptData($request->requestData);
+            $isMobile = isset($request['isMobile']);
+
+            $inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
             $input = [
                 'designation_name' => $inputArray['designation_name'],
                 'notes' => $inputArray['notes'],
                 'id' => $inputArray['id'],
                 'role_id' => $inputArray['role_id'],
+                'client_designation_id' => $inputArray['client_designation_id']??null
 
             ];
 
@@ -194,48 +198,75 @@ class DesignationController extends BaseController
 
             $id  =  $input['id'];
 
-            $designation_check = DB::select("select * from designation where designation_name = '$name' and designation_id != '$id' ");
+            if ($isMobile) {
+              
+
+                $designation_id = DB::table('designation')
+                    ->where('active_flag', 0)
+                    ->where('client_designation_id', $input['client_designation_id'])
+                    ->value('designation_id');
+
+                DB::table('designation')
+                    ->where('designation_id', $designation_id)
+                    ->update([
+                        'designation_name'   => $input['designation_name'],
+                         'notes' => $inputArray['notes'],
+                        'active_flag'        => 0,
+                        'last_modified_by'   => auth()->user()->id,
+                        'last_modified_date' => NOW()
+                    ]);
 
 
-
-
-            if ($designation_check == []) {
-
-                $this->WriteFileLog($input);
-                DB::transaction(function () use ($input) {
-                    DB::table('designation')
-                        ->where('designation_id', $input['id'])
-                        ->update([
-                            'designation_name' => $input['designation_name'],
-                            'notes' => $input['notes'],
-                            'role_id' => $input['role_id'],
-                            'last_modified_by' => auth()->user()->id,
-                            'last_modified_date' => NOW()
-                        ]);
-                    $role_name = DB::select("SELECT role_name FROM uam_roles AS ur
-                INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
-
-                    $role_name_fetch = $role_name[0]->role_name;
-                    $this->auditLog('designation', $input['id'], 'Update', 'Update Designation', auth()->user()->id, NOW(), $role_name_fetch);
-                });
-                $this->WriteFileLog('data');
                 $serviceResponse = array();
                 $serviceResponse['Code'] = config('setting.status_code.success');
                 $serviceResponse['Message'] = config('setting.status_message.success');
                 $serviceResponse['Data'] = 1;
                 $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
                 return $sendServiceResponse;
             } else {
 
+                $designation_check = DB::select("select * from designation where designation_name = '$name' and designation_id != '$id' ");
 
-                $serviceResponse = array();
-                $serviceResponse['Code'] = 400;
-                $serviceResponse['Message'] = config('setting.status_message.success');
-                $serviceResponse['Data'] = 1;
-                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-                return $sendServiceResponse;
+
+                if ($designation_check == []) {
+
+                    $this->WriteFileLog($input);
+                    DB::transaction(function () use ($input) {
+                        DB::table('designation')
+                            ->where('designation_id', $input['id'])
+                            ->update([
+                                'designation_name' => $input['designation_name'],
+                                'notes' => $input['notes'],
+                                'role_id' => $input['role_id'],
+                                'last_modified_by' => auth()->user()->id,
+                                'last_modified_date' => NOW()
+                            ]);
+                        $role_name = DB::select("SELECT role_name FROM uam_roles AS ur
+                INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
+
+                        $role_name_fetch = $role_name[0]->role_name;
+                        $this->auditLog('designation', $input['id'], 'Update', 'Update Designation', auth()->user()->id, NOW(), $role_name_fetch);
+                    });
+                    $this->WriteFileLog('data');
+                    $serviceResponse = array();
+                    $serviceResponse['Code'] = config('setting.status_code.success');
+                    $serviceResponse['Message'] = config('setting.status_message.success');
+                    $serviceResponse['Data'] = 1;
+                    $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                    $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
+                    return $sendServiceResponse;
+                } else {
+
+
+                    $serviceResponse = array();
+                    $serviceResponse['Code'] = 400;
+                    $serviceResponse['Message'] = config('setting.status_message.success');
+                    $serviceResponse['Data'] = 1;
+                    $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                    $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
+                    return $sendServiceResponse;
+                }
             }
         } catch (\Exception $exc) {
             $exceptionResponse = array();
@@ -246,7 +277,7 @@ class DesignationController extends BaseController
             $serviceResponse['Code'] = config('setting.status_code.exception');
             $serviceResponse['Message'] = $exc->getMessage();
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false, $isMobile);
             return $sendServiceResponse;
         }
     }
@@ -337,6 +368,65 @@ class DesignationController extends BaseController
             $serviceResponse['Message'] = $exc->getMessage();
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            return $sendServiceResponse;
+        }
+    }
+
+    public function delete_data(Request $request)
+    {
+
+        try {
+
+            $method = 'Method => DesignationController => deletedata';
+            $isMobile = isset($request['isMobile']);
+
+            $inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
+            $input = [
+                'designation_name' => $inputArray['designation_name'],
+                'notes' => $inputArray['notes'],
+                'id' => $inputArray['id'],
+                'role_id' => $inputArray['role_id'],
+                'client_designation_id' => $inputArray['client_designation_id']
+
+            ];
+
+
+            if ($isMobile) {
+                // $this->WriteFileLog('jii1');
+
+
+                $designation_id = DB::table('designation')
+                    ->where('active_flag', 0)
+                    ->where('client_designation_id', $input['client_designation_id'])
+                    ->value('designation_id');
+
+                DB::table('designation')
+                    ->where('designation_id', $designation_id)
+                    ->update([
+
+                        'active_flag'        => 1,
+
+                    ]);
+
+
+                $serviceResponse = array();
+                $serviceResponse['Code'] = config('setting.status_code.success');
+                $serviceResponse['Message'] = config('setting.status_message.success');
+                $serviceResponse['Data'] = 1;
+                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
+                return $sendServiceResponse;
+            }
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = $method;
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false, $isMobile);
             return $sendServiceResponse;
         }
     }

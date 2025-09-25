@@ -10,7 +10,7 @@
 
     <div class="section-body mt-1">
       <h5 class="heading_align"  style="color:darkblue">Roles Edit</h5>
-
+  
       {{ Breadcrumbs::render('uam_roles.edit',$rows[0]['role_id']) }}
 
       <div class="row">

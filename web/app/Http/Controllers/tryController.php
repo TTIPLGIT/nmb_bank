@@ -188,7 +188,7 @@ class tryController extends BaseController
                 ->orderBy('class_id', 'desc')
                 ->get();
 
-
+// dd($rows1['elearning_courses']);
 
             return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'roles', 'user_id', 'rows1'));
         } catch (\Exception $exc) {
