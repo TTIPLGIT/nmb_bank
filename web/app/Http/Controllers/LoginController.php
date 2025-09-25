@@ -403,7 +403,8 @@ class LoginController extends BaseController
         'password' => $request->password,
         //  'recaptcha' => $request->input('g-recaptcha-response')
       ];
-
+     
+     
       $rules = [
         'email' => 'required',
         'password' => 'required',
@@ -433,7 +434,7 @@ class LoginController extends BaseController
         $method = 'Method => LoginController => index';
         $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
 
-
+        dd($response);
         $response = json_decode($response);
 
         if ($response->Status == 200 && $response->Success) {
@@ -524,40 +525,7 @@ class LoginController extends BaseController
               return redirect(route('elearningDashboard'));
             }
 
-            // if ($role_id == '27') {
-            //   if ($request->exid != 0) {
-
-            //     return redirect(url('/' . $request->exid));
-            //   }
-            //   if ($active_flag == '0') {
-            //     if ($request->exid != 0) {
-            //       return redirect(url('/' . $request->exid));
-            //     }
-            //     return redirect(route('home'));
-            //   } else {
-            //     if ($request->exid != 0) {
-            //       return redirect(url('/' . $request->exid));
-            //     }
-            //     return redirect(route('home'));
-            //   }
-            // } else if ($role_id == '33') {
-            //   if ($request->exid != 0) {
-            //     return redirect(url('/' . $request->exid));
-            //   }
-            //   if ($active_flag == '1') {
-            //     if ($request->exid != 0) {
-            //       return redirect(url('/' . $request->exid));
-            //     }
-            //     return redirect(route('home'));
-            //   } else {
-            //     return redirect(route('firm_index'));
-            //   }
-            // } else {
-            //   if ($request->exid != 0) {
-            //     return redirect(config('setting.base_url') . $request->exid);
-            //   }
-            //   return redirect(route('home'));
-            // }
+           
           }
         }
       }
@@ -913,7 +881,7 @@ class LoginController extends BaseController
       try {
         $token = $request->query('token');
         $screen = $request->query('screen');
-        $course_id =$request->query('courseId');
+        $course_id = $request->query('courseId');
 
         session(['accessToken' => $token]);
         $gatewayURL = config('setting.api_gateway_url') . '/login/user';
@@ -934,11 +902,12 @@ class LoginController extends BaseController
               return redirect()->route('elearningDashboard');
             }
           } elseif ($screen === 'course') {
-            $course = DB::table('elearning_courses')->get();
             $encrypt_id = Crypt::encrypt($course_id);
+           
             if ($role_id == 1) {
               return redirect()->route('admincourse');
             } else {
+              //  dd($encrypt_id);
               return redirect()->route('elearningCourse', ['id' => $encrypt_id]);
             }
           }

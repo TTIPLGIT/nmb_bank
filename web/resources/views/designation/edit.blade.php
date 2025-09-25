@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="main-content">
+    
     {{ Breadcrumbs::render('designation.edit', $designation['designation_id']) }}
     @if (session('fail'))
     <div class="alert alert-danger">

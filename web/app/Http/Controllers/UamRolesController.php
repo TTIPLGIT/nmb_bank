@@ -349,6 +349,8 @@ class UamRolesController extends BaseController
           $request['requestData'] = $encryptArray;
           $gatewayURL = config('setting.api_gateway_url').'/uam_roles/updatedata';
           $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+        
+
           $response = json_decode($response);
           if($response->Status == 200 && $response->Success)
           {
