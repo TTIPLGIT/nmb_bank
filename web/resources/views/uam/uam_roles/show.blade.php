@@ -697,17 +697,7 @@ use App\Http\Controllers\UamRolesController;
           onlyEndNodes: false
         });
 
-        @if($rows != "")
-        @foreach($rows as $row)
-
-        $("#treeview").hummingbird("checkNode", {
-          attr: "data-id",
-          name: ["{{$row['array_permission']}}"],
-          expandParents: false
-        });
-        @endforeach
-        @endif
-
+     
 
 
 

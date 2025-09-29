@@ -2984,7 +2984,6 @@
 
 <script>
     function completion_doc(e) {
-        //alert("bjsa");
         if (e.target.id == "completed_doc") {
             Swal.fire({
                 title: "Are you sure,you want to complete the class?",
