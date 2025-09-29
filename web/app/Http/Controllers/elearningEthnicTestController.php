@@ -916,30 +916,28 @@ class elearningEthnicTestController extends BaseController
                 return redirect(url('/'));
             }
             $id = Crypt::decrypt($id);
-            // dd($id,$user_id);
+          
 
             $courseDetails = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
             $courseDetailslist = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
-            // dd($id);
-            // dd($courseDetails);
+           
 
             foreach ($courseDetails as $courseDetail) {
                 $classOrder = $courseDetail->course_classes;
             }
-            // dd($user_id,$id,$classOrder);
+           
             $isEnrolled = DB::select("SELECT * FROM user_class_relation WHERE user_id=$user_id AND class_id=$id");
-            // dd($isEnrolled);
-            // dd($courseDetailslist);
+           
             if (empty($isEnrolled)) {
                 $enrolled = "False";
             } else {
                 $enrolled = "True";
             }
-            // dd($enrolled);
+           
             $this->WriteFileLog("1");
-            // dd($user_id,$id);
+           
             $isEnrolled = DB::select("SELECT * FROM user_course_relation WHERE user_id=$user_id AND course_id=$id");
-            // dd($isEnrolled);
+           
 
 
 
@@ -951,10 +949,10 @@ class elearningEthnicTestController extends BaseController
                 $enrolled = "True";
                 $this->WriteFileLog($enrolled);
             }
-            // dd($enrolled);
+           
 
             $courseresorces = DB::select("SELECT ecl.* FROM elearning_classes as ecl inner join elearning_courses as ec on ec.course_classes = ecl.class_id WHERE ec.drop_course=0 AND ec.course_id=$id");
-            // dd($courseresorces);
+      
             $this->WriteFileLog($courseresorces);
 
             $class_array = explode(',', $courseDetails[0]->course_classes);
@@ -1004,7 +1002,7 @@ class elearningEthnicTestController extends BaseController
             $screens = $menus['screens'];
             $modules = $menus['modules'];
             $courseProgress = course::getCourseprogressbar($user_id);
-            //dd($courseProgress);
+          
             $payment_details = DB::select("SELECT * FROM elearning_payment_details where  course_id = $id and user_id=$user_id");
 
             $courseProgress = DB::table('user_course_relation')
@@ -1023,8 +1021,7 @@ class elearningEthnicTestController extends BaseController
             ]);
 
              $isEnrolled = DB::select("SELECT * FROM user_course_relation WHERE user_id=$user_id AND course_id=$id");
-            // dd( $isEnrolled);
-            // dd($user_id);
+            
             if (empty($isEnrolled)) {
 
                 $userDetails = DB::select("SELECT * FROM users WHERE id=$user_id")[0];
@@ -1071,8 +1068,7 @@ class elearningEthnicTestController extends BaseController
                 }
                   $usercourseDetails = DB::select("SELECT * FROM user_course_relation WHERE user_id=$user_id AND course_id=$id");
 
-                //$isEnrolled = DB::select("SELECT * FROM user_class_relation WHERE user_id=$user_id AND class_id=$id");
-                //dd($isEnrolled);
+             
 
                 $userDetails = DB::select("SELECT * FROM users WHERE id=$user_id")[0];
                 $userName = $userDetails->name;
@@ -1104,11 +1100,7 @@ class elearningEthnicTestController extends BaseController
                     # code...
                     // dd($courseId);
                 }
-                //dd($courseId);
-                // $is_pending = DB::table('user_class_relation')
-                //     ->where('course_id', $courseId)
-                //     ->where('status', 1)
-                //     ->where('user_id', $user_id);
+               
                 $is_pending = DB::select("SELECT cr.* from user_class_relation as cr where cr.course_id=$courseId and cr.status=1 and cr.user_id=$user_id");
                 if ($is_pending == []) {
                     DB::statement("UPDATE user_class_relation SET status = 1 WHERE user_id = $user_id AND status NOT IN (2) AND course_id = $courseId ORDER BY id ASC LIMIT 1");
@@ -2043,7 +2035,7 @@ class elearningEthnicTestController extends BaseController
     }
     public function status_update(Request $request)
     {
-        //$this->WriteFileLog("fwef");
+        // $this->WriteFileLog($request);
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return redirect(url('/'));

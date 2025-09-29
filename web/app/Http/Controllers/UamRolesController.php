@@ -201,8 +201,7 @@ class UamRolesController extends BaseController
     public function edit($id)
     {
 
-      
-
+     
         $permission_data = $this->FillScreensByUser();
         $screen_permission = $permission_data[0];
         if(strpos($screen_permission['permissions'], 'Edit') !== false){
@@ -225,6 +224,7 @@ class UamRolesController extends BaseController
                      $menus = $this->FillMenu();
                      $screens = $menus['screens'];
                      $modules = $menus['modules'];
+                    
                      return view('uam.uam_roles.edit',compact('module_data','screens_data','permissions_data','parent_module_data','rows','screens','modules'));
                  }
              } 

@@ -245,6 +245,8 @@ Route::middleware('auth:api')->group(function () {
   Route::post('/user/updatedata', [\App\Http\Controllers\UserController::class, 'updatedata']);
   Route::post('/user/updatedatapermission', [\App\Http\Controllers\UserController::class, 'updatedatapermission']);
   Route::get('/user/edit_permission/{id}', [\App\Http\Controllers\UserController::class, 'edit_permission']);
+  Route::post('/user/delete', [\App\Http\Controllers\UserController::class, 'user_delete']);
+  Route::post('/user/update', [\App\Http\Controllers\UserController::class, 'user_update']);
 
 
   Route::post('/user/notifications', [\App\Http\Controllers\UserController::class, 'notifications']);
@@ -338,7 +340,7 @@ Route::middleware('auth:api')->group(function () {
   Route::get('/designation/data_edit/{id}', [\App\Http\Controllers\DesignationController::class, 'data_edit']);
   Route::post('/designation/storedata', [\App\Http\Controllers\DesignationController::class, 'storedata']);
   Route::post('/designation/updatedata', [\App\Http\Controllers\DesignationController::class, 'updatedata']);
-
+  Route::post('/designation/delete', [\App\Http\Controllers\DesignationController::class, 'delete_data']);
 
   //iyyappan //
 

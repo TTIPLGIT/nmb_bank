@@ -577,6 +577,7 @@ class UserController extends BaseController
 							'user_type' => $input['user_type'],
 							'password' => $input['password'],
 							// 'array_dashboard_list' => $stringdashboard_list_id,
+							'total_cptpoints' => $input['total_cptpoints'] ?? 1000,
 							'role_id' => $roles_data_id,
 							'designation_id' =>  $client_designation_id,
 							'client_user_id' => $input['client_user_id']
@@ -974,23 +975,25 @@ class UserController extends BaseController
 				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
 				return $sendServiceResponse;
 			} else {
+
 				if ($isMobile) {
 
 
 					$user_id = DB::table('users')
 						->where('active_flag', 0)
 						->where('client_user_id', $input['client_user_id'])
-						->value('id');
+						->value('client_user_id');
+
 
 					DB::table('users')
-						->where('id', $user_id)
+						->where('client_user_id', $user_id)
 						->update([
-							'name'   => $input['name'],
-							'email' => $input['email'],
-							'active_flag'        => 0,
-
-							'updated_at' => NOW()
+							'name'        => $input['name'],
+							'email'       => $input['email'],
+							'active_flag' => 0,
+							'updated_at'  => NOW()
 						]);
+
 
 
 					$serviceResponse = array();
@@ -2772,7 +2775,7 @@ class UserController extends BaseController
 	}
 	public function user_delete(Request $request)
 	{
-//  dd($request);
+		//  dd($request);
 		try {
 
 			$method = 'Method => UserController => user_delete';
@@ -2780,11 +2783,11 @@ class UserController extends BaseController
 
 			$inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
 			$input = [
-				
+
 				'client_user_id' => $inputArray['client_user_id']
 
 			];
-			
+
 
 
 			if ($isMobile) {
@@ -2804,6 +2807,64 @@ class UserController extends BaseController
 
 					]);
 
+				$serviceResponse = array();
+				$serviceResponse['Code'] = config('setting.status_code.success');
+				$serviceResponse['Message'] = config('setting.status_message.success');
+				$serviceResponse['Data'] = 1;
+				$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
+				return $sendServiceResponse;
+			}
+		} catch (\Exception $exc) {
+			$exceptionResponse = array();
+			$exceptionResponse['ServiceMethod'] = $method;
+			$exceptionResponse['Exception'] = $exc->getMessage();
+			$exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+			$serviceResponse = array();
+			$serviceResponse['Code'] = config('setting.status_code.exception');
+			$serviceResponse['Message'] = $exc->getMessage();
+			$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+			$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false, $isMobile);
+			return $sendServiceResponse;
+		}
+	}
+
+
+	public function user_update(Request $request)
+	{
+		//  dd($request);
+		try {
+
+			$method = 'Method => UserController => user_update';
+			$isMobile = isset($request['isMobile']);
+
+			$inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
+			$input = [
+				'name'        =>  $inputArray['name'],
+				'email'       =>  $inputArray['email'],
+				'client_user_id' => $inputArray['client_user_id']
+
+			];
+
+
+			if ($isMobile) {
+				// dd($isMobile);
+
+				$user_id = DB::table('users')
+					->where('active_flag', 0)
+					->where('client_user_id', $input['client_user_id'])
+					->value('client_user_id');
+
+
+				DB::table('users')
+					->where('client_user_id', $user_id)
+					->update([
+						'name'        => $input['name'],
+						'email'       => $input['email'],
+						'active_flag' => 0,
+						'updated_at'  => NOW()
+					]);
+				// dd($user_id);
 				$serviceResponse = array();
 				$serviceResponse['Code'] = config('setting.status_code.success');
 				$serviceResponse['Message'] = config('setting.status_message.success');

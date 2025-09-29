@@ -1556,38 +1556,53 @@ class tryController extends BaseController
     }
     public function allcourse(Request $request)
     {
-
-
         $userID = (auth()->check()) ? auth()->user()->id : $request['user_id'];
 
-
-        
         $courses = DB::table('elearning_courses as c')
             ->leftJoin('user_course_relation as ucr', function ($join) use ($userID) {
                 $join->on('c.course_id', '=', 'ucr.course_id')
                     ->where('ucr.user_id', '=', $userID);
             })
+            ->leftJoin('certificate_templates as ct', 'c.course_certificate', '=', 'ct.certificate_templates_id')
+            ->leftJoin('users as u', 'u.id', '=', 'ucr.user_id')
             ->where('c.drop_course', 0)
             ->whereRaw("FIND_IN_SET(?, c.user_ids)", [$userID])
             ->select(
-                'c.*',
-                'ucr.course_progress'
+                'c.*',  // keep all course fields
+                'ucr.course_progress',
+                // new certificate fields
+                'ct.certificate_templates_id as ct_id',
+                'ct.template_name',
+                'ct.file_name',
+                'ct.company_name',
+                'ct.logo',
+                'ct.active_flag',
+                'ct.created_at as ct_created_at',
+                'ct.updated_at as ct_updated_at',
+                DB::raw("
+                CASE 
+                    WHEN ct.certificate_templates_id IS NOT NULL 
+                         AND ucr.course_progress = 100 
+                    THEN CONCAT('/userdocuments/certificate/', u.id, '/', c.course_id, '/certificate.pdf') 
+                    ELSE NULL 
+                END as certificate_url
+            ")
+            )
+            ->get();
 
-            );
+        $result = ['list' => $courses];
 
-
-        $result = [
-            'list'  => $courses->get(),
-
+        $serviceResponse = [
+            'Code'    => config('setting.status_code.success'),
+            'Message' => config('setting.status_message.success'),
+            'Data'    => $result
         ];
 
-
-        $serviceResponse = array();
-        $serviceResponse['Code'] = config('setting.status_code.success');
-        $serviceResponse['Message'] = config('setting.status_message.success');
-        $serviceResponse['Data'] = $result;
-        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, true);
-        return $sendServiceResponse;
+        return $this->SendServiceResponse(
+            json_encode($serviceResponse, JSON_FORCE_OBJECT),
+            config('setting.status_code.success'),
+            true,
+            true
+        );
     }
 }

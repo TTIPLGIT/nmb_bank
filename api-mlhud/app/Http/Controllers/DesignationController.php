@@ -204,13 +204,14 @@ class DesignationController extends BaseController
                 $designation_id = DB::table('designation')
                     ->where('active_flag', 0)
                     ->where('client_designation_id', $input['client_designation_id'])
-                    ->value('designation_id');
+                    ->value('client_designation_id');
 
                 DB::table('designation')
-                    ->where('designation_id', $designation_id)
+                    ->where('client_designation_id', $designation_id)
                     ->update([
                         'designation_name'   => $input['designation_name'],
-                         'notes' => $inputArray['notes'],
+                         'notes' => $input['notes'],
+                         'role_id' => $input['role_id'],
                         'active_flag'        => 0,
                         'last_modified_by'   => auth()->user()->id,
                         'last_modified_date' => NOW()

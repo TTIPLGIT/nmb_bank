@@ -10,7 +10,7 @@
 
     <div class="section-body mt-1">
       <h5 class="heading_align"  style="color:darkblue">Roles Edit</h5>
-  
+
       {{ Breadcrumbs::render('uam_roles.edit',$rows[0]['role_id']) }}
 
       <div class="row">
@@ -43,7 +43,6 @@
                     <label class="control-label">Modules and Screen Permission <span style="color: red;font-size: 16px;">*</span></label>
                     <ul id="treeview" class="hummingbird-base">
                       @if($module_data !="")
-
 
                       @foreach ($parent_module_data as $key => $parent_module_data_value)
 
@@ -727,17 +726,7 @@
           onlyEndNodes: false
         });
 
-        @if($rows != "")
-        @foreach($rows as $row)
-
-        $("#treeview").hummingbird("checkNode", {
-          attr: "data-id",
-          name: ["{{$row['array_permission']}}"],
-          expandParents: false
-        });
-        @endforeach
-        @endif
-
+        
 
 
       });

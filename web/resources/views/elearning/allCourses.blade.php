@@ -290,8 +290,9 @@
         width: 25% !important;
         border-radius: 20px;
         position: absolute;
-        padding: 6px 0px 0px 18px;
+        padding: 6px 0px 0px 15px;
         color: #ffffff;
+        align-items: center;
         margin-left: 2%;
         font-size: 16px;
         margin-bottom: 15px;
@@ -356,6 +357,9 @@
     }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+<?php
+
+use Carbon\Carbon; ?>
 
 <div class="main-content">
     <section class="section">
@@ -478,7 +482,6 @@
 
                         <div
                             class="card noShadow all_courses_courselist position-relative {{ $isLocked && !$canUnlock ? 'locked-course-card' : '' }}">
-
                             @if($isLocked && !$canUnlock)
                             <div class="locked-overlay">
                                 <i class="fa fa-lock lock-icon"></i>
@@ -513,69 +516,115 @@
                                     @endif
                                 </a>
                             </div>
+                            @php
 
-                            <div class="card-body">
-                                <div class="card-title" title="{{ $value->course_name }}">
-                                    <h5>{{ $value->course_name }}</h5>
-                                    <h5>
-                                        @if($showExpiryBadge)
-                                        <a href="javascript:void(0);"
-                                            onclick="highlightCopiedCourse({{ $value->course_id }})">
-                                            
-                                            <span class="blinking-warning">
-                                                {{ \Carbon\Carbon::parse($value->course_expiry_period)->isPast() ? 'Certificate Expired' : 'Certificate Expiring Soon. Do the Re-Certification' }}
-                                            </span>
-                                        </a>
-                                        @endif
-                                    </h5> 
-                                </div>
+                            $expiryMessage = null;
 
-                                <script>
-                                    function highlightCopiedCourse(originalCourseId) {
-                                        const matchingCard = document.querySelector(
-                                            `[data-expired-course-id='${originalCourseId}']`);
-                                        if (matchingCard) {
-                                            matchingCard.scrollIntoView({
-                                                behavior: 'smooth',
-                                                block: 'center'
-                                            });
-                                            matchingCard.classList.add('highlight-new-course');
-                                            setTimeout(() => {
-                                                matchingCard.classList.remove('highlight-new-course');
-                                            }, 2000);
-                                        } else {
-                                            Swal.fire({
-                                                title: "Please Contact your supervisor",
-                                                text: "The new or copied course is not yet created.",
-                                                icon: "info"
-                                            });
+                            // check user_course_relation for enrolled status
+                            $isEnrolled = DB::table('user_course_relation')
+                            ->where('course_id', $value->course_id)
+
+                            ->where('course_status', 'Enrolled')
+                            ->exists();
+
+                            if ($isEnrolled && !empty($value->expiry_type) && !empty($value->expiry_input)) {
+                            if ($value->expiry_type === 'month') {
+                            // expiry date = today + expiry_input months
+                            $expiryDate = Carbon::now()->addMonths($value->expiry_input);
+
+                            // days left
+                            $daysLeft = Carbon::now()->diffInDays($expiryDate, false);
+
+                            // show warning only if within 30 days
+                            if ($daysLeft <= 30 && $daysLeft>= 0) {
+                                $expiryMessage = "⚠️Your course will expire soon ";
+                                }
+                                }
+                                }
+                                @endphp
+
+                                <div class="card-body">
+                                    <div class="card-title" title="{{ $value->course_name }}">
+
+                                        <h5>{{ $value->course_name }}</h5>
+                                        <h5>
+                                            @if($showExpiryBadge)
+                                            <a href="javascript:void(0);"
+                                                onclick="highlightCopiedCourse({{ $value->course_id }})">
+
+                                                <span class="blinking-warning">
+                                                    {{ \Carbon\Carbon::parse($value->course_expiry_period)->isPast() ? 'Certificate Expired' : 'Certificate Expiring Soon. Do the Re-Certification' }}
+                                                </span>
+                                            </a>
+                                            @endif
+                                            @if($expiryMessage)
+                                             <a href="javascript:void(0);"
+                                                onclick="highlightCopiedCourse({{ $value->course_id }})">
+                                            <div style="
+                                               background-color: #f8d7da;   /* light red */
+                                               color: #721c24;             /* dark red text */
+                                               border-radius: 8px;
+                                               font-size:15px;
+                                               padding-right:10px;
+                                               margin: 20px auto;
+                                               width: fit-content;
+                                               box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                                            ">
+
+                                                <span>{!! $expiryMessage !!}</span>
+                                            </div>
+                                            @endif
+
+
+                                        </h5>
+                                    </div>
+
+                                    <script>
+                                        function highlightCopiedCourse(originalCourseId) {
+                                            const matchingCard = document.querySelector(
+                                                `[data-expired-course-id='${originalCourseId}']`);
+                                            if (matchingCard) {
+                                                matchingCard.scrollIntoView({
+                                                    behavior: 'smooth',
+                                                    block: 'center'
+                                                });
+                                                matchingCard.classList.add('highlight-new-course');
+                                                setTimeout(() => {
+                                                    matchingCard.classList.remove('highlight-new-course');
+                                                }, 2000);
+                                            } else {
+                                                Swal.fire({
+                                                    title: "Please Contact your supervisor",
+                                                    text: "The new or copied course is not yet created.",
+                                                    icon: "info"
+                                                });
+                                            }
                                         }
-                                    }
-                                </script>
+                                    </script>
 
-                                <div class="card-text">
-                                    <h6>
-                                        {{ $value->course_instructor }}
-                                        @if ($value->course_pay == 'paid')
-                                        <span style="background-color: #1d33d3;"
-                                            class="course_paid">{{ $value->course_pay }}</span>
-                                        @elseif ($value->course_pay == 'free')
-                                        <span style="background-color: #0ecf26;"
-                                            class="course_paid">{{ $value->course_pay }}</span>
-                                        @endif
-                                    </h6>
-                                </div>
+                                    <div class="card-text" style="margin:10px;">
+                                        <h6>
+                                            {{ $value->course_instructor }}
+                                            @if ($value->course_pay == 'paid')
+                                            <span style="background-color: #1d33d3;"
+                                                class="course_paid">{{ $value->course_pay }}</span>
+                                            @elseif ($value->course_pay == 'free')
+                                            <span style="background-color: #0ecf26;"
+                                                class="course_paid" style="padding:10px">{{ $value->course_pay }}</span>
+                                            @endif
+                                        </h6>
+                                    </div>
 
-                                <div class="progress course_total_progress">
-                                    <div class="progress-bar" role="progressbar"
-                                        style="width: {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%"
-                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress course_total_progress">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%"
+                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <span class="text-uppercase">
+                                        {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%
+                                        completed
+                                    </span>
                                 </div>
-                                <span class="text-uppercase">
-                                    {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%
-                                    completed
-                                </span>
-                            </div>
                         </div>
                     </div>
                     @endforeach

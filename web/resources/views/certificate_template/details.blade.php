@@ -58,7 +58,7 @@
                             @if(!empty($entry['signature_path']))
                             {{-- Display current image --}}
                             <small class="text-muted">Current: {{ basename($entry['signature_path']) }}</small><br>
-                            <img src="{{ config('setting.image_path') . $entry['signature_path'] }}" width="100"
+                            <img src="{{ config('setting.api_url') . $entry['signature_path'] }}" width="100"
                                 class="mt-1 rounded border">
 
                             {{-- Preserve old file path in hidden input --}}
@@ -72,16 +72,17 @@
                             <input type="file" name="logo[]" class="form-control"
                                 {{ !empty($entry['logo']) ? '' : 'required' }}>
 
-                            @if(!empty($entry['logo']))
+                            @if(!empty($certificate_templates['logo']))
                             {{-- Display current image --}}
-                            <small class="text-muted">Current: {{ basename($entry['logo']) }}</small><br>
-                            <img src="{{ config('setting.image_path') . $entry['logo'] }}" width="100"
+                            <small class="text-muted">Current: {{ basename($certificate_templates['logo']) }}</small><br>
+                            <img src="{{ config('setting.api_url') . $certificate_templates['logo'] }}" width="100"
                                 class="mt-1 rounded border">
 
                             {{-- Preserve old file path in hidden input --}}
-                            <input type="hidden" name="logo[]" value="{{ $entry['logo'] }}">
+                            <input type="hidden" name="existing_logo[]" value="{{ $certificate_templates['logo'] }}">
                             @endif
                         </div>
+
 
 
                         <div class="col-md-1">

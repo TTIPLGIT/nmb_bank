@@ -355,666 +355,710 @@
     }
 </style>
 
-<div class="main-content">
-    @if (session('success'))
+@php
+use Carbon\Carbon;
 
-    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-    <script type="text/javascript">
-        window.onload = function() {
-            var message = $('#session_data').val();
-            swal({
-                title: "Success",
-                text: message,
-                type: "success",
-            });
+$expiryMessage = null;
 
-        }
-    </script>
-    @elseif(session('error'))
+if (!empty($courseDetails[0]->expiry_type) && !empty($courseDetails[0]->expiry_input)) {
+if ($courseDetails[0]->expiry_type === 'month') {
+// expiry date = today + expiry_input months
+$expiryDate = Carbon::now()->addMonths($courseDetails[0]->expiry_input);
 
-    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-    <script type="text/javascript">
-        window.onload = function() {
-            var message = $('#session_data1').val();
-            swal({
-                title: "Info",
-                text: message,
-                type: "info",
-            });
+// days left
+$daysLeft = Carbon::now()->diffInDays($expiryDate, false);
 
-        }
-    </script>
-    @endif
-
-    <section class="section">
-        <div class="section-body mt-1">
-            <div class="row mb-3">
-                @php $count = 1;@endphp
-                @foreach($courseDetails as $courseDetail)
-                <div class="classOverview">
-                    <div class="col" style="display:flex;">
-
-                        <a href="/elearning/allCourses?sorted=Recently+Added&tag=false&progress=false&q=false&course_id={{ $courseDetail->course_id }}"
-                            class="btn btn-primary">Back</a>
+// check if expiry is within 15 days
+if ($daysLeft <= 30 && $daysLeft>= 0) {
+    $expiryMessage = "⚠️ Your course will expire on {$expiryDate->format('d M Y')} (in {$daysLeft} days).";
+    }
+    }
+    }
 
 
+
+    @endphp
+
+    <div class="main-content">
+        @if (session('success'))
+
+        <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+        <script type="text/javascript">
+            window.onload = function() {
+                var message = $('#session_data').val();
+                swal({
+                    title: "Success",
+                    text: message,
+                    type: "success",
+                });
+
+            }
+        </script>
+        @elseif(session('error'))
+
+        <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
+        <script type="text/javascript">
+            window.onload = function() {
+                var message = $('#session_data1').val();
+                swal({
+                    title: "Info",
+                    text: message,
+                    type: "info",
+                });
+
+            }
+        </script>
+        @endif
+
+
+
+
+        <section class="section">
+            <div class="section-body mt-1">
+                <div class="row mb-3">
+                    @php $count = 1;@endphp
+
+                    @if(!empty($expiryMessage))
+                    <div style="
+        background-color: #f8d7da;   /* light red */
+        color: #721c24;             /* dark red text */
+        padding: 15px 25px;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: bold;
+        margin: 20px auto;
+        width: fit-content;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    ">
+                        {{ $expiryMessage }}
                     </div>
-                    <br>
-                    <h4 class="col-md-7 d-flex justify-content-center over">Course Introduction</h4>
-                    <div class="card noShadow classOverviewContent">
-                        <div class="card-body bgWhite classOverviewContentBody">
-                            <h3 class="card-title">
-                                {{$courseDetail->course_name}}
-                            </h3>
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                {{$courseDetail->course_instructor}}
-                            </h6>
-                            <p class="card-text">
-                                {{$courseDetail->course_description}}
-                            </p>
+                    @endif
 
-                            <p class="card-text d-flex flex-row justify-content-start">
-                                <!-- <span class="course_rating">
+                    @foreach($courseDetails as $courseDetail)
+                    <div class="classOverview">
+                        <div class="col" style="display:flex;">
+
+                            <a href="/elearning/allCourses?sorted=Recently+Added&tag=false&progress=false&q=false&course_id={{ $courseDetail->course_id }}"
+                                class="btn btn-primary">Back</a>
+
+
+                        </div>
+                        <br>
+                        <h4 class="col-md-7 d-flex justify-content-center over">Course Introduction</h4>
+                        <div class="card noShadow classOverviewContent">
+                            <div class="card-body bgWhite classOverviewContentBody">
+                                <h3 class="card-title">
+                                    {{$courseDetail->course_name}}
+                                </h3>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {{$courseDetail->course_instructor}}
+                                </h6>
+                                <p class="card-text">
+                                    {{$courseDetail->course_description}}
+                                </p>
+
+                                <p class="card-text d-flex flex-row justify-content-start">
+                                    <!-- <span class="course_rating">
                                     4.5
                                 </span> -->
-                                <span class="mx-2 course_rating_list ratingsset{{$count}}">
-                                    @php
-                                    $ratings = !empty($ratings[0]->rating_point) ? $ratings[0]->rating_point : 0;
-                                    $averageRating = $ratings * 2;
-                                    $actual_rating = intval($averageRating / 2);
+                                    <span class="mx-2 course_rating_list ratingsset{{$count}}">
+                                        @php
+                                        $ratings = !empty($ratings[0]->rating_point) ? $ratings[0]->rating_point : 0;
+                                        $averageRating = $ratings * 2;
+                                        $actual_rating = intval($averageRating / 2);
 
 
-                                    @endphp
-                                    @for($i=1;$i<=5;$i++) @if($i<=$actual_rating) <i class="fa fa-star rating-color">
-                                        </i>
-                                        @else
-                                        <i class="fa fa-star unfilled-star"></i>
-                                        @endif
-                                        @endfor
-                                        @if($averageRating%2 !=0)
-                                        <script>
-                                            var fa_list = document.querySelector('.ratingsset{{$count}} .unfilled-star');
-                                            fa_list.classList.remove('fa-star');
-                                            fa_list.classList.add('fa-star-half-o');
-                                            fa_list.classList.add('rating-color');
-                                        </script>
-                                        @endif
-                                </span>
-                                <span class="course_rating_count">
-                                    {{ $ratings }}
-                                </span>
-                                @php $count++ @endphp
-                            </p>
-                            <input type="hidden" name="courseTags" class="courseTags"
-                                id="tags_{{$courseDetail->course_id}}" value="{{$courseDetail->course_tags}}" />
-                            <p class="card-text courseTagsHolder">
+                                        @endphp
+                                        @for($i=1;$i<=5;$i++) @if($i<=$actual_rating) <i class="fa fa-star rating-color">
+                                            </i>
+                                            @else
+                                            <i class="fa fa-star unfilled-star"></i>
+                                            @endif
+                                            @endfor
+                                            @if($averageRating%2 !=0)
+                                            <script>
+                                                var fa_list = document.querySelector('.ratingsset{{$count}} .unfilled-star');
+                                                fa_list.classList.remove('fa-star');
+                                                fa_list.classList.add('fa-star-half-o');
+                                                fa_list.classList.add('rating-color');
+                                            </script>
+                                            @endif
+                                    </span>
+                                    <span class="course_rating_count">
+                                        {{ $ratings }}
+                                    </span>
+                                    @php $count++ @endphp
+                                </p>
+                                <input type="hidden" name="courseTags" class="courseTags"
+                                    id="tags_{{$courseDetail->course_id}}" value="{{$courseDetail->course_tags}}" />
+                                <p class="card-text courseTagsHolder">
 
-                            </p>
-                            <input type="hidden" class="courseStartPeriod" id="startPeriod_{{$courseDetail->course_id}}"
-                                value="{{$courseDetail->course_start_period}}">
-                            <input type="hidden" class="courseEndPeriod" id="endPeriod_{{$courseDetail->course_id}}"
-                                value="{{$courseDetail->course_end_period}}">
-                            <p class="card-text courseDateHolder">
+                                </p>
+                                <input type="hidden" class="courseStartPeriod" id="startPeriod_{{$courseDetail->course_id}}"
+                                    value="{{$courseDetail->course_start_period}}">
+                                <input type="hidden" class="courseEndPeriod" id="endPeriod_{{$courseDetail->course_id}}"
+                                    value="{{$courseDetail->course_end_period}}">
+                                <p class="card-text courseDateHolder">
 
-                            </p>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card noShadow classOverviewinfo mt-4 mt-md-0">
+                        <div class="card noShadow classOverviewinfo mt-4 mt-md-0">
 
-                        @php
-                        $file = $courseDetail->course_introduction;
-                        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                        $fileUrl = url('uploads/course/126/' . $file);
-                        @endphp
+                            @php
+                            $file = $courseDetail->course_introduction;
+                            $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                            $fileUrl = url('uploads/course/126/' . $file);
+                            @endphp
 
-                        @if($extension === 'mp4')
-                        <video class="mt-2" height="200px" controls
-                            poster="{{ url('uploads/course/126/' . $courseDetail->course_banner) }}"
-                            preload="metadata" width="100%">
-                            <source src="{{ $fileUrl }}" type="video/mp4">
-                            Download the <a href="{{ $fileUrl }}">MP4</a> video.
-                        </video>
-                        @elseif(in_array($extension, ['png','jpg','jpeg','gif','webp']))
-                        <img src="{{ $fileUrl }}" alt="Course Image" class="mt-2" style="width:100%; max-height:300px; object-fit:contain;">
-                        @elseif($extension === 'pdf')
-                        <object data="{{ $fileUrl }}#toolbar=0" type="application/pdf" width="100%" height="500px">
-                            <p>No PDF viewer available. <a href="{{ $fileUrl }}">Download PDF</a></p>
-                        </object>
-                        @else
-                        <p>Unsupported file type: {{ $extension }}</p>
-                        @endif
+                            @if($extension === 'mp4')
+                            <video class="mt-2" height="200px" controls
+                                poster="{{ url('uploads/course/126/' . $courseDetail->course_banner) }}"
+                                preload="metadata" width="100%">
+                                <source src="{{ $fileUrl }}" type="video/mp4">
+                                Download the <a href="{{ $fileUrl }}">MP4</a> video.
+                            </video>
+                            @elseif(in_array($extension, ['png','jpg','jpeg','gif','webp']))
+                            <img src="{{ $fileUrl }}" alt="Course Image" class="mt-2" style="width:100%; max-height:300px; object-fit:contain;">
+                            @elseif($extension === 'pdf')
+                            <object data="{{ $fileUrl }}#toolbar=0" type="application/pdf" width="100%" height="500px">
+                                <p>No PDF viewer available. <a href="{{ $fileUrl }}">Download PDF</a></p>
+                            </object>
+                            @else
+                            <p>Unsupported file type: {{ $extension }}</p>
+                            @endif
 
-                        <div class="card-body bgWhite">
-                            @if($enrolled == "False")
+                            <div class="card-body bgWhite">
+                                @if($enrolled == "False")
 
-                            <?php if ($courseDetail->course_pay == "free") { ?>
-                                <h5 class="card-title coursePriceTag" style="display:none;">
+                                <?php if ($courseDetail->course_pay == "free") { ?>
+                                    <h5 class="card-title coursePriceTag" style="display:none;">
 
-                                </h5>
-                            <?php } else { ?>
+                                    </h5>
+                                <?php } else { ?>
 
-                                <h5 class="card-title coursePriceTag">
-                                    {{$courseDetail->course_price}} UGX
-                                </h5>
-                            <?php } ?>
-                            @if($courseDetail->course_pay == "paid")
-                            <div class="d-flex flex-row justify-content-between mb-2">
-                                @php $id=Crypt::encrypt($courseDetail->course_id);
-                                $course_id=$courseDetail->course_id;
-                                @endphp
-                                <?php
-                                $baseUrl = url('/');
-                                $filePath = app_path('Http/Controllers/basicfunctionController.php');
-                                include_once $filePath;
+                                    <h5 class="card-title coursePriceTag">
+                                        {{$courseDetail->course_price}} UGX
+                                    </h5>
+                                <?php } ?>
+                                @if($courseDetail->course_pay == "paid")
+                                <div class="d-flex flex-row justify-content-between mb-2">
+                                    @php $id=Crypt::encrypt($courseDetail->course_id);
+                                    $course_id=$courseDetail->course_id;
+                                    @endphp
+                                    <?php
+                                    $baseUrl = url('/');
+                                    $filePath = app_path('Http/Controllers/basicfunctionController.php');
+                                    include_once $filePath;
 
-                                $common_function = new common_function;
-                                $is_added = $common_function->add_to_cart($course_id);
+                                    $common_function = new common_function;
+                                    $is_added = $common_function->add_to_cart($course_id);
 
-                                ?>
+                                    ?>
 
-                                @if($is_added ==0)
-                                <a onclick="cart_store('{{$courseDetail->course_id}}');"
-                                    class="btn btn-success addToCart">
-                                    Add to Cart
-                                </a>
-                                <a onclick="move_wish(event,'{{ $courseDetail->course_id}}');"
-                                    class="btn btn-outline-danger wishList d-flex justify-content-center align-items-center"
-                                    title="Wishlist" id="move_btn">
-                                    <i class="fa fa-heart" aria-hidden="true" style="pointer-events: none;"></i>
-                                </a>
-                                @elseif($is_added ==1 )
-                                <a class="btn btn-success addToCart" href="{{ route('elearningCart',$id) }}">
-                                    Go to Cart
-                                </a>
-                                <!-- <a href="#" class="btn btn-outline-danger wishList d-flex justify-content-center align-items-center">
+                                    @if($is_added ==0)
+                                    <a onclick="cart_store('{{$courseDetail->course_id}}');"
+                                        class="btn btn-success addToCart">
+                                        Add to Cart
+                                    </a>
+                                    <a onclick="move_wish(event,'{{ $courseDetail->course_id}}');"
+                                        class="btn btn-outline-danger wishList d-flex justify-content-center align-items-center"
+                                        title="Wishlist" id="move_btn">
+                                        <i class="fa fa-heart" aria-hidden="true" style="pointer-events: none;"></i>
+                                    </a>
+                                    @elseif($is_added ==1 )
+                                    <a class="btn btn-success addToCart" href="{{ route('elearningCart',$id) }}">
+                                        Go to Cart
+                                    </a>
+                                    <!-- <a href="#" class="btn btn-outline-danger wishList d-flex justify-content-center align-items-center">
                                     <i class="fa fa-heart" aria-hidden="true"></i>
                                 </a> -->
+                                    @endif
+
+
+                                </div>
                                 @endif
+                                <?php if ($courseDetail->course_pay == "paid") { ?>
+                                    <?php
+                                    $baseUrl = url('/');
+                                    $filePath = app_path('Http/Controllers/basicfunctionController.php');
+                                    include_once $filePath;
 
+                                    $common_function = new common_function;
+                                    $is_added = $common_function->buy_to_take($courseDetail->course_id);
 
-                            </div>
-                            @endif
-                            <?php if ($courseDetail->course_pay == "paid") { ?>
-                                <?php
-                                $baseUrl = url('/');
-                                $filePath = app_path('Http/Controllers/basicfunctionController.php');
-                                include_once $filePath;
+                                    ?>
 
-                                $common_function = new common_function;
-                                $is_added = $common_function->buy_to_take($courseDetail->course_id);
-
-                                ?>
-
-                                <form action="{{ route('razorpaycoursepurchase')}}" method="post">
-                                    @csrf
-                                    <input type="hidden" id="course_id" name="course_id"
-                                        value="{{$courseDetail->course_id}}">
-                                    @if($is_added ==0)
-                                    <button class="btn btn-info buyNow">
-                                        Buy Now
-                                    </button>
-                                    <script src="https://checkout.razorpay.com/v1/checkout.js"
-                                        data-key="{{ config('setting.RAZORPAY_KEY') }}"
-                                        data-amount="{{$courseDetail->course_price*100}}" data-button='false'
-                                        data-name="TALENTRA Payment" data-description="Payment" data-prefill.name="name"
-                                        data-prefill.email="email" data-theme.color="#ff7529">
-                                    </script>
-                                    @else
-                                    @php $id=Crypt::encrypt($courseDetail->course_id); @endphp
-                                    <!-- <a href="{{ route('elearningCourse/class',$id) }}" class="btn btn-info buyNow">
+                                    <form action="{{ route('razorpaycoursepurchase')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" id="course_id" name="course_id"
+                                            value="{{$courseDetail->course_id}}">
+                                        @if($is_added ==0)
+                                        <button class="btn btn-info buyNow">
+                                            Buy Now
+                                        </button>
+                                        <script src="https://checkout.razorpay.com/v1/checkout.js"
+                                            data-key="{{ config('setting.RAZORPAY_KEY') }}"
+                                            data-amount="{{$courseDetail->course_price*100}}" data-button='false'
+                                            data-name="TALENTRA Payment" data-description="Payment" data-prefill.name="name"
+                                            data-prefill.email="email" data-theme.color="#ff7529">
+                                        </script>
+                                        @else
+                                        @php $id=Crypt::encrypt($courseDetail->course_id); @endphp
+                                        <!-- <a href="{{ route('elearningCourse/class',$id) }}" class="btn btn-info buyNow">
                                         Take Now
                                     </a> -->
-                                    <script src="https://checkout.razorpay.com/v1/checkout.js"
-                                        data-key="{{ config('setting.RAZORPAY_KEY') }}"
-                                        data-amount="{{$courseDetail->course_price*100}}" data-button='false'
-                                        data-name="TALENTRA Payment" data-description="Payment" data-prefill.name="name"
-                                        data-prefill.email="email" data-theme.color="#ff7529">
-                                    </script>
-                                    <input type="hidden" name="_token" value="{!!csrf_token()!!}">
-                                    @endif
-                                </form>
+                                        <script src="https://checkout.razorpay.com/v1/checkout.js"
+                                            data-key="{{ config('setting.RAZORPAY_KEY') }}"
+                                            data-amount="{{$courseDetail->course_price*100}}" data-button='false'
+                                            data-name="TALENTRA Payment" data-description="Payment" data-prefill.name="name"
+                                            data-prefill.email="email" data-theme.color="#ff7529">
+                                        </script>
+                                        <input type="hidden" name="_token" value="{!!csrf_token()!!}">
+                                        @endif
+                                    </form>
 
-                            <?php } else {  ?>
-                                @php $id=Crypt::encrypt($courseDetail->course_id); @endphp
-                                <a href="{{ route('elearningCourse/class',$id) }}" class="btn btn-info buyNow">
-                                    Take Now
-                                </a>
-
-
+                                <?php } else {  ?>
+                                    @php $id=Crypt::encrypt($courseDetail->course_id); @endphp
+                                    <a href="{{ route('elearningCourse/class',$id) }}" class="btn btn-info buyNow">
+                                        Take Now
+                                    </a>
 
 
-                            <?php } ?>
-                            @endif
-
-                            @if($enrolled == "True")
-                            <div class="progress mb-4 courseOverviewProgress">
-                                <div class="progress-bar bg-info" role="progressbar"
-                                    style="width: {{isset($courseProgress[$courseDetail->course_id]) ? $courseProgress[$courseDetail->course_id]->course_progress : '0'}}% ;"
-                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                    {{isset($courseProgress[$courseDetail->course_id]) ? $courseProgress[$courseDetail->course_id]->course_progress : '0'}}%
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-center mb-2">
-                                @php $id=Crypt::encrypt($courseDetail->course_id); @endphp
-
-                                @if($isEnrolled[0]->status != 2)
-                                <a href="{{ route('elearningCourse/class',$id) }}" class="btn btn-success addToCart">
-                                    Continue Course
-                                </a>
-                                @elseif($isEnrolled[0]->status == 2)
-
-                                <a href="{{ route('elearningCourse/class',$id) }}"
-                                    class="btn btn-success addToCart col-md-12 course_completion">
-                                    Completed
-                                </a>
 
 
+                                <?php } ?>
                                 @endif
+
+                                @if($enrolled == "True")
+                                <div class="progress mb-4 courseOverviewProgress">
+                                    <div class="progress-bar bg-info" role="progressbar"
+                                        style="width: {{isset($courseProgress[$courseDetail->course_id]) ? $courseProgress[$courseDetail->course_id]->course_progress : '0'}}% ;"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                        {{isset($courseProgress[$courseDetail->course_id]) ? $courseProgress[$courseDetail->course_id]->course_progress : '0'}}%
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-center mb-2">
+                                    @php $id=Crypt::encrypt($courseDetail->course_id); @endphp
+
+                                    @if($isEnrolled[0]->status != 2)
+                                    <a href="{{ route('elearningCourse/class',$id) }}" class="btn btn-success addToCart">
+                                        Continue Course
+                                    </a>
+                                    @elseif($isEnrolled[0]->status == 2)
+
+                                    <a href="{{ route('elearningCourse/class',$id) }}"
+                                        class="btn btn-success addToCart col-md-12 course_completion">
+                                        Completed
+                                    </a>
+
+
+                                    @endif
+                                </div>
+                                @endif
+
                             </div>
-                            @endif
-
                         </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-            <div class="row mb-3 willLearn">
-                <div class="card noShadow w-100">
-                    <div class="card-body">
-                        <h5 class="card-title mb-4">What You will Learn</h5>
-
-
-                        @foreach($courseDetails as $courseDetail)
-                        <input type="hidden" id="courseGainSkils" value="{{$courseDetail->course_gain_skills}}">
-                        <ul class="card-text d-flex flex-row justify-content-between align-items-center flex-wrap">
-                            <!-- Gain skills will be added here -->
-                        </ul>
                         @endforeach
                     </div>
                 </div>
-            </div>
-            <div class="row courseIncludes">
-                <div class="col-12 mb-3 p-0">
-                    <div class="card noShadow courseIncludesHeader">
-                        <div class="card-body p-0">
-                            <div class="card-title">
-                                <h5 class="line-align">
-                                    This Course Includes
-                                </h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="overflow-y: scroll;"
-                    class="col-12 col-sm-6 col-md-4 align-items-stretch px-2 px-md-4 pb-2 pb-md-0">
-
-
-                    @php $audio_exist=$audio_exist==0 ? 'd-none' :''; @endphp
-                    @php $video_exist=$video_exist==0 ? 'd-none' :''; @endphp
-                    @php $pdf_exist=$pdf_exist==0 ? 'd-none' :''; @endphp
-
-                    <div class="card noShadow hoursOfVideos img_shadow ">
-
-                        <span class="{{$audio_exist}}">
-                            <img src="{{asset('asset/image/play.png')}}" class="card-img-top img-size" alt="play-icon">
-                        </span>
-                        <span class="$video_exist">
-                            <img src="../../uploads/class/126/mp4.png" class="card-img-top img-size" alt="play-icon">
-                        </span>
-                        <span class="$pdf_exist">
-
-                            <img src="../../uploads/class/126/pdf.png" class="card-img-top img-size" alt="play-icon">
-                        </span>
-                    </div>
-
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 align-items-stretch px-2 px-md-4 pb-2 pb-md-0">
-                    <div class="card noShadow hoursOfVideos img_shadow">
-                        <img src="{{asset('asset/image/play.png')}}" class="card-img-top img-size" alt="play-icon">
+                <div class="row mb-3 willLearn">
+                    <div class="card noShadow w-100">
                         <div class="card-body">
-                            <h6 class="card-title" id="totalHours">
-                                <!-- total duration  -->
-                            </h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 align-items-stretch px-2 px-md-4 pb-2 pb-md-0">
-                    <div class="card noShadow hoursOfVideos img_shadow">
-                        <img src="{{asset('asset/image/resource.png')}}" class="card-img-top img-size" alt="play-icon">
-                        <div class="card-body">
-                            <h6 class="card-title">
-                                {{$counts}} resources
-                            </h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 align-items-stretch px-2 px-md-4 pb-2 pb-md-0">
+                            <h5 class="card-title mb-4">What You will Learn</h5>
 
-                    @foreach($courseDetails as $courseDetail)
-                    @if($courseDetail->course_certificate=='1')
 
-                    <div class="card noShadow hoursOfVideos img_shadow">
-                        <img src="{{asset('asset/image/completion-certificate.png')}}"
-                            class="card-img-top img-size mt-2 mt-md-4" alt="play-icon">
-                        <div class="card-body">
-                            <h6 class="card-title">
-                                Certificate of completion
-                            </h6>
-                        </div>
-                    </div>
-                    @elseif($courseDetail->course_certificate=='2')
-                    <div class="card noShadow hoursOfVideos img_shadow" style="display: none;">
-                        <img src="{{asset('asset/image/completion-certificate.png')}}"
-                            class="card-img-top img-size mt-2 mt-md-4" alt="play-icon">
-                        <div class="card-body">
-                            <h6 class="card-title">
-                                Certificate of completion
-                            </h6>
-                        </div>
-                    </div>
-                    @endif
-                    @endforeach
-                </div>
-            </div>
-
-            <div class="row mt-3 courseClassesAndPrerequisites">
-                <div class="col-12 col-md-6 p-0 pr-md-4">
-                    <div class="card noShadow">
-                        <h5 class="card-header courseClassHeader">
-                            Course Contents
-                        </h5>
-                        <div class="card-body">
                             @foreach($courseDetails as $courseDetail)
-                            @php
-                            $classIds = explode(',', $courseDetail->course_classes);
-                            $classes = DB::table('elearning_classes')->whereIn('class_id', $classIds)->get();
-                            @endphp
-                            <input type="hidden" id="availableClasses" value="class_{{$courseDetail->course_classes}}">
-                            <input type="hidden" id="classOrder" value="class_{{$classOrder}}">
-                            @foreach($classes as $class)
-                            <div
-                                class="list-group-item list-group-item-action d-flex flex-row align=items-center rounded-pill mb-3  courseClassHolder">
-                                <span
-                                    class="d-flex flex-row justify-content-center align-items-center bg-light p-1 my-auto mr-2 rounded-circle  mb-sm-1 courseClassNum">
-                                    {{$loop->iteration}}
-                                </span>
-
-                                <span>
-                                    {{$class->class_name}}
-                                </span>
-                                <input type="hidden" name="courseDuration" class="courseDuration"
-                                    id="duration_{{$loop->iteration}}" value="{{$class->class_duration}}">
-                            </div>
-                            @endforeach
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 p-0 mt-3 mt-md-0">
-                    <div class="card noShadow w-100 card-align">
-                        <div class="card-body">
-                            <h5 class="card-title mb-4">Prerequisites</h5>
-                            @foreach($courseDetails as $courseDetail)
-                            <input type="hidden" id="courseSkillsRequired"
-                                value="{{$courseDetail->course_skills_required}}">
-                            <ul class="card-text d-flex flex-column justify-content-center align-items-between">
-                                <!-- Skills Required will be added here -->
+                            <input type="hidden" id="courseGainSkils" value="{{$courseDetail->course_gain_skills}}">
+                            <ul class="card-text d-flex flex-row justify-content-between align-items-center flex-wrap">
+                                <!-- Gain skills will be added here -->
                             </ul>
                             @endforeach
                         </div>
                     </div>
                 </div>
-                <!-- Chatbot Floating Icon -->
-                <div id="chatIcon"
-                    style="position: fixed; bottom: 30px; right: 30px; background-color: #007bff; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999;">
-                    <i class="fa fa-comments" style="font-size: 24px;"></i>
-                </div>
+                <div class="row courseIncludes">
+                    <div class="col-12 mb-3 p-0">
+                        <div class="card noShadow courseIncludesHeader">
+                            <div class="card-body p-0">
+                                <div class="card-title">
+                                    <h5 class="line-align">
+                                        This Course Includes
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="overflow-y: scroll;"
+                        class="col-12 col-sm-6 col-md-4 align-items-stretch px-2 px-md-4 pb-2 pb-md-0">
 
 
-                <!-- Chatbot Window -->
-                <div id="chatbotContainer"
-                    style="position: fixed; bottom: 100px; right: 30px; width: 320px; display: none; z-index: 9999;">
-                    <div class="card shadow">
-                        <div
-                            class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                            TALENTRA Chatbot
-                            <button class="btn btn-sm btn-light close-chat" style="padding: 0 8px;">&times;</button>
+                        @php $audio_exist=$audio_exist==0 ? 'd-none' :''; @endphp
+                        @php $video_exist=$video_exist==0 ? 'd-none' :''; @endphp
+                        @php $pdf_exist=$pdf_exist==0 ? 'd-none' :''; @endphp
+
+                        <div class="card noShadow hoursOfVideos img_shadow ">
+
+                            <span class="{{$audio_exist}}">
+                                <img src="{{asset('asset/image/play.png')}}" class="card-img-top img-size" alt="play-icon">
+                            </span>
+                            <span class="$video_exist">
+                                <img src="../../uploads/class/126/mp4.png" class="card-img-top img-size" alt="play-icon">
+                            </span>
+                            <span class="$pdf_exist">
+
+                                <img src="../../uploads/class/126/pdf.png" class="card-img-top img-size" alt="play-icon">
+                            </span>
                         </div>
-                        <div class="card-body" style="height: 300px; overflow-y: auto;" id="chatLog"></div>
-                        <div class="card-footer p-2">
-                            <input type="text" class="form-control" id="chatInput" placeholder="Ask a question...">
-                            <button class="btn btn-primary btn-sm mt-2 w-100" id="sendBtn">Send</button>
+
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 align-items-stretch px-2 px-md-4 pb-2 pb-md-0">
+                        <div class="card noShadow hoursOfVideos img_shadow">
+                            <img src="{{asset('asset/image/play.png')}}" class="card-img-top img-size" alt="play-icon">
+                            <div class="card-body">
+                                <h6 class="card-title" id="totalHours">
+                                    <!-- total duration  -->
+                                </h6>
+                            </div>
                         </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 align-items-stretch px-2 px-md-4 pb-2 pb-md-0">
+                        <div class="card noShadow hoursOfVideos img_shadow">
+                            <img src="{{asset('asset/image/resource.png')}}" class="card-img-top img-size" alt="play-icon">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    {{$counts}} resources
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 align-items-stretch px-2 px-md-4 pb-2 pb-md-0">
+
+                        @foreach($courseDetails as $courseDetail)
+                        @if($courseDetail->course_certificate=='1')
+
+                        <div class="card noShadow hoursOfVideos img_shadow">
+                            <img src="{{asset('asset/image/completion-certificate.png')}}"
+                                class="card-img-top img-size mt-2 mt-md-4" alt="play-icon">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    Certificate of completion
+                                </h6>
+                            </div>
+                        </div>
+                        @elseif($courseDetail->course_certificate=='2')
+                        <div class="card noShadow hoursOfVideos img_shadow" style="display: none;">
+                            <img src="{{asset('asset/image/completion-certificate.png')}}"
+                                class="card-img-top img-size mt-2 mt-md-4" alt="play-icon">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    Certificate of completion
+                                </h6>
+                            </div>
+                        </div>
+                        @endif
+                        @endforeach
                     </div>
                 </div>
 
+                <div class="row mt-3 courseClassesAndPrerequisites">
+                    <div class="col-12 col-md-6 p-0 pr-md-4">
+                        <div class="card noShadow">
+                            <h5 class="card-header courseClassHeader">
+                                Course Contents
+                            </h5>
+                            <div class="card-body">
+                                @foreach($courseDetails as $courseDetail)
+                                @php
+                                $classIds = explode(',', $courseDetail->course_classes);
+                                $classes = DB::table('elearning_classes')->whereIn('class_id', $classIds)->get();
+                                @endphp
+                                <input type="hidden" id="availableClasses" value="class_{{$courseDetail->course_classes}}">
+                                <input type="hidden" id="classOrder" value="class_{{$classOrder}}">
+                                @foreach($classes as $class)
+                                <div
+                                    class="list-group-item list-group-item-action d-flex flex-row align=items-center rounded-pill mb-3  courseClassHolder">
+                                    <span
+                                        class="d-flex flex-row justify-content-center align-items-center bg-light p-1 my-auto mr-2 rounded-circle  mb-sm-1 courseClassNum">
+                                        {{$loop->iteration}}
+                                    </span>
 
+                                    <span>
+                                        {{$class->class_name}}
+                                    </span>
+                                    <input type="hidden" name="courseDuration" class="courseDuration"
+                                        id="duration_{{$loop->iteration}}" value="{{$class->class_duration}}">
+                                </div>
+                                @endforeach
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 p-0 mt-3 mt-md-0">
+                        <div class="card noShadow w-100 card-align">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">Prerequisites</h5>
+                                @foreach($courseDetails as $courseDetail)
+                                <input type="hidden" id="courseSkillsRequired"
+                                    value="{{$courseDetail->course_skills_required}}">
+                                <ul class="card-text d-flex flex-column justify-content-center align-items-between">
+                                    <!-- Skills Required will be added here -->
+                                </ul>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Chatbot Floating Icon -->
+                    <div id="chatIcon"
+                        style="position: fixed; bottom: 30px; right: 30px; background-color: #007bff; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999;">
+                        <i class="fa fa-comments" style="font-size: 24px;"></i>
+                    </div>
+
+
+                    <!-- Chatbot Window -->
+                    <div id="chatbotContainer"
+                        style="position: fixed; bottom: 100px; right: 30px; width: 320px; display: none; z-index: 9999;">
+                        <div class="card shadow">
+                            <div
+                                class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                TALENTRA Chatbot
+                                <button class="btn btn-sm btn-light close-chat" style="padding: 0 8px;">&times;</button>
+                            </div>
+                            <div class="card-body" style="height: 300px; overflow-y: auto;" id="chatLog"></div>
+                            <div class="card-footer p-2">
+                                <input type="text" class="form-control" id="chatInput" placeholder="Ask a question...">
+                                <button class="btn btn-primary btn-sm mt-2 w-100" id="sendBtn">Send</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
-        </div>
-    </section>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+        </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 
-<script>
-    function cart_store(course_id) {
-        //alert(course_id);
+    <script>
+        function cart_store(course_id) {
+            //alert(course_id);
 
-        //var reply_details = document.querySelector('#Question_reply').value;
-
-        $.ajax({
-            url: "{{ url('/elearningCart/store') }}",
-            type: 'post',
-            data: {
-                'course_id': course_id,
-                _token: '{{csrf_token()}}'
-            },
-            success: function(data) {
-                console.log(data);
-                if (data != 0) {
-                    Swal.fire("Success!", "Cart Added Successfully!", "success").then((result) => {
-
-                        location.reload();
-
-                    })
-                } else {
-                    Swal.fire("Error!", "Failed to add to Cart.", "error");
-                }
-
-
-
-            }
-        });
-
-
-
-
-
-    }
-    // appending tags
-    let courseTags = document.querySelector('.courseTags');
-    let courseTagsHolder = document.querySelector('.courseTagsHolder');
-    let tags = courseTags.value;
-    const tagList = tags.split(", ");
-    for (let tag of tagList) {
-        let span = document.createElement('span');
-        span.classList.add('badge-success');
-        span.classList.add('tags');
-        span.classList.add('mr-2');
-        span.innerHTML = `${tag}`;
-        courseTagsHolder.appendChild(span);
-    }
-    // appending course period
-    let courseStartPeriod = document.querySelector('.courseStartPeriod');
-    let courseEndPeriod = document.querySelector('.courseEndPeriod');
-    let courseDateHolder = document.querySelector('.courseDateHolder');
-    if (courseStartPeriod.value != "" && courseEndPeriod.value != "") {
-        const [startDateValue, startTimeValue] = courseStartPeriod.value.split(' ');
-        const [endDateValue, endTimeValue] = courseEndPeriod.value.split(' ');
-        let Date = document.createElement('span');
-        Date.innerText = `${startDateValue} - ${endDateValue}`;
-        courseDateHolder.appendChild(Date);
-    }
-    // appending Gain Skills
-    let courseGainSkils = document.querySelector('#courseGainSkils');
-    let courseGainSkilsContainer = document.querySelector('#courseGainSkils + ul');
-    let gainSkills = courseGainSkils.value;
-    const gainSkillsList = gainSkills.split(", ");
-    for (let gainskill of gainSkillsList) {
-        let gainLi = document.createElement('li');
-        gainLi.innerHTML = `${gainskill}`;
-        gainLi.classList.add('courseGainSkils');
-        courseGainSkilsContainer.appendChild(gainLi);
-    }
-    // appending Skills Required
-    let courseSkillsRequired = document.querySelector('#courseSkillsRequired');
-    let courseSkillsRequiredContainer = document.querySelector('#courseSkillsRequired + ul');
-    let SkillsRequired = courseSkillsRequired.value;
-    const SkillsRequiredList = SkillsRequired.split(", ");
-    for (let SkillRequired of SkillsRequiredList) {
-        let requiredLi = document.createElement('li');
-        requiredLi.innerHTML = `${SkillRequired}`;
-        requiredLi.classList.add('mb-2');
-        requiredLi.classList.add('courseSkillsRequired');
-        courseSkillsRequiredContainer.appendChild(requiredLi);
-    }
-    //addToCart function
-    // let addToCartButton = document.querySelector('.addToCart');
-    // function addTOCart(e){
-    //     let url = "";
-    // }
-    // addToCartButton.addEventListener("click", addTOCart)
-
-    // window.URL = window.URL || window.webkitURL;
-
-    // function getDuration(control) {
-    //     var video = document.createElement('video');
-    //     window.URL.revokeObjectURL(video.src);
-    //     alert("Duration : " + video.duration + " seconds");
-    // }
-
-    // Hours calculation
-    function getExtension(url) {
-        var file = url.split('.');
-        return file[file.length - 1];
-    }
-
-    function secondsToHms(second) {
-        d = Number(second);
-        var h = Math.floor(second / 3600);
-        var m = Math.floor(second % 3600 / 60);
-        var s = Math.floor(second % 3600 % 60);
-
-        var hDisplay = h > 0 ? h + (h == 1 ? " hour " : " hours ") : "";
-        var mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
-        var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-        return hDisplay + mDisplay + sDisplay;
-    }
-
-    function convertToSeconds(hours, minutes, seconds) {
-        return Number(hours) * 60 * 60 + Number(minutes) * 60 + Number(seconds);
-    }
-
-    let courseDurations = document.querySelectorAll('.courseDuration');
-    let totalHours = document.querySelector('#totalHours');
-    let second = 0;
-    for (let courseDuration of courseDurations) {
-        duration = courseDuration.value;
-        console.log(duration);
-        const [hours, minutes, seconds] = duration.split(':');
-        let time = convertToSeconds(hours, minutes, seconds);
-        second = second + time;
-    }
-    let totalDuration = secondsToHms(second);
-    document.querySelector('#totalHours').innerHTML = totalDuration;
-</script>
-<script>
-    function move_wish(e, id) {
-        if (e.target.id == "move_btn") {
-            Swal.fire({
-                title: "Are you sure,you want to proceed the wishlist?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "{{ url('/addWishList') }}",
-                        type: 'GET',
-                        data: {
-                            'id': id,
-                            _token: '{{csrf_token()}}'
-                        },
-                        error: function() {
-                            alert('Something went wrong');
-                        },
-
-                        success: function(data) {
-                            console.log(data);
-                            if (result.value) {
-                                Swal.fire("Success!", "Done!", "success").then((result) => {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire("Error!", "Failed to add to Wishlist.", "error");
-                            }
-                        }
-                    });
-                }
-            });
-        }
-    }
-</script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Toggle chatbot window
-        $('#chatIcon').on('click', function() {
-            $('#chatbotContainer').toggle();
-        });
-
-        $('.close-chat').on('click', function() {
-            $('#chatbotContainer').hide();
-        });
-
-        $('#sendBtn').on('click', function() {
-            const question = $('#chatInput').val();
-            const user_id = "{{ Auth::id() }}";
-            const course_id = "{{ isset($courseDetail) ? $courseDetail->course_id : 0 }}";
-
-            if (!question.trim()) return;
-
-            $('#chatLog').append(`<div class="mb-2"><strong>You:</strong> ${question}</div>`);
+            //var reply_details = document.querySelector('#Question_reply').value;
 
             $.ajax({
-                url: 'http://localhost:8000/ask/',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    question: question,
-                    course_id: course_id,
-                    user_id: user_id
-                }),
-                success: function(response) {
-                    $('#chatLog').append(
-                        `<div class="mb-2"><strong>Talentra:</strong> ${response.answer}</div>`
-                    );
-                    $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
+                url: "{{ url('/elearningCart/store') }}",
+                type: 'post',
+                data: {
+                    'course_id': course_id,
+                    _token: '{{csrf_token()}}'
                 },
-                error: function() {
-                    $('#chatLog').append(
-                        `<div class="mb-2 text-danger"><strong>Error:</strong> Could not get response.</div>`
-                    );
+                success: function(data) {
+                    console.log(data);
+                    if (data != 0) {
+                        Swal.fire("Success!", "Cart Added Successfully!", "success").then((result) => {
+
+                            location.reload();
+
+                        })
+                    } else {
+                        Swal.fire("Error!", "Failed to add to Cart.", "error");
+                    }
+
+
+
                 }
             });
 
-            $('#chatInput').val('');
-        });
-    });
-</script>
 
-@endsection
+
+
+
+        }
+        // appending tags
+        let courseTags = document.querySelector('.courseTags');
+        let courseTagsHolder = document.querySelector('.courseTagsHolder');
+        let tags = courseTags.value;
+        const tagList = tags.split(", ");
+        for (let tag of tagList) {
+            let span = document.createElement('span');
+            span.classList.add('badge-success');
+            span.classList.add('tags');
+            span.classList.add('mr-2');
+            span.innerHTML = `${tag}`;
+            courseTagsHolder.appendChild(span);
+        }
+        // appending course period
+        let courseStartPeriod = document.querySelector('.courseStartPeriod');
+        let courseEndPeriod = document.querySelector('.courseEndPeriod');
+        let courseDateHolder = document.querySelector('.courseDateHolder');
+        if (courseStartPeriod.value != "" && courseEndPeriod.value != "") {
+            const [startDateValue, startTimeValue] = courseStartPeriod.value.split(' ');
+            const [endDateValue, endTimeValue] = courseEndPeriod.value.split(' ');
+            let Date = document.createElement('span');
+            Date.innerText = `${startDateValue} - ${endDateValue}`;
+            courseDateHolder.appendChild(Date);
+        }
+        // appending Gain Skills
+        let courseGainSkils = document.querySelector('#courseGainSkils');
+        let courseGainSkilsContainer = document.querySelector('#courseGainSkils + ul');
+        let gainSkills = courseGainSkils.value;
+        const gainSkillsList = gainSkills.split(", ");
+        for (let gainskill of gainSkillsList) {
+            let gainLi = document.createElement('li');
+            gainLi.innerHTML = `${gainskill}`;
+            gainLi.classList.add('courseGainSkils');
+            courseGainSkilsContainer.appendChild(gainLi);
+        }
+        // appending Skills Required
+        let courseSkillsRequired = document.querySelector('#courseSkillsRequired');
+        let courseSkillsRequiredContainer = document.querySelector('#courseSkillsRequired + ul');
+        let SkillsRequired = courseSkillsRequired.value;
+        const SkillsRequiredList = SkillsRequired.split(", ");
+        for (let SkillRequired of SkillsRequiredList) {
+            let requiredLi = document.createElement('li');
+            requiredLi.innerHTML = `${SkillRequired}`;
+            requiredLi.classList.add('mb-2');
+            requiredLi.classList.add('courseSkillsRequired');
+            courseSkillsRequiredContainer.appendChild(requiredLi);
+        }
+        //addToCart function
+        // let addToCartButton = document.querySelector('.addToCart');
+        // function addTOCart(e){
+        //     let url = "";
+        // }
+        // addToCartButton.addEventListener("click", addTOCart)
+
+        // window.URL = window.URL || window.webkitURL;
+
+        // function getDuration(control) {
+        //     var video = document.createElement('video');
+        //     window.URL.revokeObjectURL(video.src);
+        //     alert("Duration : " + video.duration + " seconds");
+        // }
+
+        // Hours calculation
+        function getExtension(url) {
+            var file = url.split('.');
+            return file[file.length - 1];
+        }
+
+        function secondsToHms(second) {
+            d = Number(second);
+            var h = Math.floor(second / 3600);
+            var m = Math.floor(second % 3600 / 60);
+            var s = Math.floor(second % 3600 % 60);
+
+            var hDisplay = h > 0 ? h + (h == 1 ? " hour " : " hours ") : "";
+            var mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
+            var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+            return hDisplay + mDisplay + sDisplay;
+        }
+
+        function convertToSeconds(hours, minutes, seconds) {
+            return Number(hours) * 60 * 60 + Number(minutes) * 60 + Number(seconds);
+        }
+
+        let courseDurations = document.querySelectorAll('.courseDuration');
+        let totalHours = document.querySelector('#totalHours');
+        let second = 0;
+        for (let courseDuration of courseDurations) {
+            duration = courseDuration.value;
+            console.log(duration);
+            const [hours, minutes, seconds] = duration.split(':');
+            let time = convertToSeconds(hours, minutes, seconds);
+            second = second + time;
+        }
+        let totalDuration = secondsToHms(second);
+        document.querySelector('#totalHours').innerHTML = totalDuration;
+    </script>
+    <script>
+        function move_wish(e, id) {
+            if (e.target.id == "move_btn") {
+                Swal.fire({
+                    title: "Are you sure,you want to proceed the wishlist?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "{{ url('/addWishList') }}",
+                            type: 'GET',
+                            data: {
+                                'id': id,
+                                _token: '{{csrf_token()}}'
+                            },
+                            error: function() {
+                                alert('Something went wrong');
+                            },
+
+                            success: function(data) {
+                                console.log(data);
+                                if (result.value) {
+                                    Swal.fire("Success!", "Done!", "success").then((result) => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire("Error!", "Failed to add to Wishlist.", "error");
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Toggle chatbot window
+            $('#chatIcon').on('click', function() {
+                $('#chatbotContainer').toggle();
+            });
+
+            $('.close-chat').on('click', function() {
+                $('#chatbotContainer').hide();
+            });
+
+            $('#sendBtn').on('click', function() {
+                const question = $('#chatInput').val();
+                const user_id = "{{ Auth::id() }}";
+                const course_id = "{{ isset($courseDetail) ? $courseDetail->course_id : 0 }}";
+
+                if (!question.trim()) return;
+
+                $('#chatLog').append(`<div class="mb-2"><strong>You:</strong> ${question}</div>`);
+
+                $.ajax({
+                    url: 'http://localhost:8000/ask/',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        question: question,
+                        course_id: course_id,
+                        user_id: user_id
+                    }),
+                    success: function(response) {
+                        $('#chatLog').append(
+                            `<div class="mb-2"><strong>Talentra:</strong> ${response.answer}</div>`
+                        );
+                        $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
+                    },
+                    error: function() {
+                        $('#chatLog').append(
+                            `<div class="mb-2 text-danger"><strong>Error:</strong> Could not get response.</div>`
+                        );
+                    }
+                });
+
+                $('#chatInput').val('');
+            });
+        });
+    </script>
+
+    @endsection
