@@ -141,7 +141,7 @@
     .course_total_progress {
         height: 0.25rem !important;
         box-shadow: none !important;
-        margin-top: 30px;
+        margin-top: 50px;
     }
 
     /* paginnation sectiion */
@@ -509,7 +509,7 @@ use Carbon\Carbon; ?>
                                     $value->course_banner;
                                     @endphp
                                     @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
-                                    <img src="{{ $imageUrl }}" alt="Course Image" class="course_image">
+                                    <img src="{{ $imageUrl }}" alt="Course Image" class="course_image" style="width:250px">
                                     @else
                                     <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image"
                                         class="course_image">
@@ -558,9 +558,9 @@ use Carbon\Carbon; ?>
                                             </a>
                                             @endif
                                             @if($expiryMessage)
-                                             <a href="javascript:void(0);"
+                                            <a href="javascript:void(0);"
                                                 onclick="highlightCopiedCourse({{ $value->course_id }})">
-                                            <div style="
+                                                <div style="
                                                background-color: #f8d7da;   /* light red */
                                                color: #721c24;             /* dark red text */
                                                border-radius: 8px;
@@ -571,9 +571,9 @@ use Carbon\Carbon; ?>
                                                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
                                             ">
 
-                                                <span>{!! $expiryMessage !!}</span>
-                                            </div>
-                                            @endif
+                                                    <span>{!! $expiryMessage !!}</span>
+                                                </div>
+                                                @endif
 
 
                                         </h5>
@@ -602,15 +602,25 @@ use Carbon\Carbon; ?>
                                         }
                                     </script>
 
-                                    <div class="card-text" style="margin:10px;">
+                                    <div class="card-text" style="margin-bottom:10px;">
                                         <h6>
-                                            {{ $value->course_instructor }}
+                                            <span style="color:#000;">{{ $value->course_instructor }}</span>
                                             @if ($value->course_pay == 'paid')
-                                            <span style="background-color: #1d33d3;"
-                                                class="course_paid">{{ $value->course_pay }}</span>
+                                            <div style="display:flex; justify-content:end; align-items:right;margin-top:-30px;">
+
+                                                <span class="course_paid" style="background-color: #1d33d3; border-radius:4px; margin:10px;">
+                                                    {{ $value->course_pay }}
+                                                </span>
+                                            </div>
+
                                             @elseif ($value->course_pay == 'free')
-                                            <span style="background-color: #0ecf26;"
-                                                class="course_paid" style="padding:10px">{{ $value->course_pay }}</span>
+                                            <div style="display:flex; justify-content:end; align-items:right;margin-top:-30px;">
+
+                                                <span class="course_paid" style="background-color:#0ecf26; border-radius:4px; margin:10px;">
+                                                    {{ $value->course_pay }}
+                                                </span>
+                                            </div>
+
                                             @endif
                                         </h6>
                                     </div>
@@ -620,7 +630,7 @@ use Carbon\Carbon; ?>
                                             style="width: {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%"
                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <span class="text-uppercase">
+                                    <span class="text-uppercase" style="color:black">
                                         {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%
                                         completed
                                     </span>

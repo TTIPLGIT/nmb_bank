@@ -291,7 +291,6 @@
 
 
 
-
             @php
             use BaconQrCode\Renderer\ImageRenderer;
             use BaconQrCode\Renderer\RendererStyle\RendererStyle;
@@ -321,29 +320,32 @@
 
         </div>
 
-        <div style="display:flex; justify-content:space-between; font-weight:bold; margin-top:20px; margin-left:80px; margin-right:80px;">
+        <!-- <div style="display:flex; justify-content:space-between; font-weight:bold; margin-top:20px; margin-left:80px; margin-right:80px;">
             <span style="margin-left:40px">Valid From: {{ \Carbon\Carbon::parse($data['date'])->format('d/m/Y') }}</span>
             <span style="margin-left:30px">Valid Until: {{ \Carbon\Carbon::parse($data['validation_date'])->format('d/m/Y') }}</span>
-        </div>
+        </div> -->
 
 
 
 
         <div class="signatures-row">
+           
             @foreach ($data['signatories'] as $signatory)
-            <div class="signature">
+            
+            <div class="signature" style="margin-top:-100px;">
                 @if ($signatory->signature_path)
-                <img src="{{ config('setting.image_path') . $signatory->signature_path }}" class="signature-img">
+                <img src="{{ config('setting.api_url') . $signatory->signature_path }}" class="signature-img">
 
                 @endif
-                <div class="signature-line"></div>
+                <div class="signature-line" style="margin-top:-14px;"></div>
                 {{ $signatory->name }}<br>
                 <small>{{ $signatory->title }}</small>
+               
             </div>
             @endforeach
         </div>
 
-
+ 
 
     </div>
     </div>
