@@ -230,18 +230,23 @@ class CertificateTemplateController extends BaseController
             $rows = DB::table('certificate_templates')
                 ->select(
                     '*',
-                    DB::raw("CONCAT('" . config('setting.base_url') . "', logo) as logo_url")
+                    DB::raw("CONCAT('" . config('setting.api_url') . "', logo) as logo_url")
                 )
                 ->where('certificate_templates_id', $id)
                 ->first();
 
-           
+            $rows1 = DB::table('certificate_templates as ct')
+                ->join('certificate_template_signatories as cts', 'ct.certificate_templates_id', '=', 'cts.certificate_template_id')
+                ->select('ct.*', 'cts.*')
+                ->where('ct.certificate_templates_id', $id)
+                ->get();
+
 
 
             $response = [
-                'rows' => $rows
+                'rows' => $rows,
+                'rows1' => $rows1
             ];
-
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');

@@ -458,7 +458,8 @@ use Carbon\Carbon; ?>
                     $showExpiryBadge = false;
 
                     // Certificate Expiry Logic
-                    if ($value->certificate_expiry == '1' && !empty($value->course_expiry_period)) {
+
+                    if ($value->certificate_expiry === '1' && !empty($value->course_expiry_period)) {
                     $expiryDate = \Carbon\Carbon::parse($value->course_expiry_period);
                     $today = \Carbon\Carbon::today();
                     $oneMonthBefore = $expiryDate->copy()->subMonth();
@@ -492,30 +493,7 @@ use Carbon\Carbon; ?>
                             </div>
                             @endif
 
-                            <div class="card-header">
-                                @php $isWishlisted = in_array($value->course_id, $wishlistedCourseIds); @endphp
-                                <span class="btn btn-outline-danger wishList-badge"
-                                    title="{{ $isWishlisted ? 'Added to Wishlist' : 'Add to Wishlist ❤️' }}"
-                                    id="wish_{{$value->course_id}}">
-                                    <i class="{{ $isWishlisted ? 'fa fa-heart' : 'fa fa-heart-o' }}" aria-hidden="true"
-                                        id="wishHeart_{{$value->course_id}}"></i>
-                                </span>
 
-                                @php $id = Crypt::encrypt($value->course_id);
-                                @endphp
-                                <a href="{{ route('elearningCourse', $id) }}">
-                                    @php
-                                    $imageUrl = config('setting.base_url') . 'uploads/course/126/' .
-                                    $value->course_banner;
-                                    @endphp
-                                    @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
-                                    <img src="{{ $imageUrl }}" alt="Course Image" class="course_image" style="width:250px">
-                                    @else
-                                    <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image"
-                                        class="course_image">
-                                    @endif
-                                </a>
-                            </div>
                             @php
 
                             $expiryMessage = null;
@@ -537,12 +515,35 @@ use Carbon\Carbon; ?>
 
                             // show warning only if within 30 days
                             if ($daysLeft <= 30 && $daysLeft>= 0) {
-                                $expiryMessage = "⚠️Your course will expire soon ";
+                                $expiryMessage = "⚠️Your course will expire soon ".$daysLeft."days";
                                 }
                                 }
                                 }
                                 @endphp
+                                <!-- <div class="card-header">
+                                    @php $isWishlisted = in_array($value->course_id, $wishlistedCourseIds); @endphp
+                                    <span class="btn btn-outline-danger wishList-badge"
+                                        title="{{ $isWishlisted ? 'Added to Wishlist' : 'Add to Wishlist ❤️' }}"
+                                        id="wish_{{$value->course_id}}">
+                                        <i class="{{ $isWishlisted ? 'fa fa-heart' : 'fa fa-heart-o' }}" aria-hidden="true"
+                                            id="wishHeart_{{$value->course_id}}"></i>
+                                    </span>
 
+                                    @php $id = Crypt::encrypt($value->course_id);
+                                    @endphp
+                                    <a href="{{ route('elearningCourse', $id) }}">
+                                        @php
+                                        $imageUrl = config('setting.base_url') . 'uploads/course/126/' .
+                                        $value->course_banner;
+                                        @endphp
+                                        @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
+                                        <img src="{{ $imageUrl }}" alt="Course Image" class="course_image" style="width:250px">
+                                        @else
+                                        <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image"
+                                            class="course_image">
+                                        @endif
+                                    </a>
+                                </div>
                                 <div class="card-body">
                                     <div class="card-title" title="{{ $value->course_name }}">
 
@@ -634,7 +635,131 @@ use Carbon\Carbon; ?>
                                         {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%
                                         completed
                                     </span>
+                                </div> -->
+                                <div class="card"
+                                    style="border: 2px solid #dcdcdc;border-radius: 14px;background: #fff;box-shadow: 0 3px 8px rgba(0,0,0,0.08);padding: 15px;transition: all 0.3s ease-in-out;
+                                    text-align: center;width: 270px; margin: 15px auto; overflow: hidden;position: relative;min-height: 380px; /* consistent height */"
+                                    onmouseover="this.style.boxShadow='0 6px 14px rgba(0,0,0,0.15)'; this.style.borderColor='#6c63ff'; this.style.transform='translateY(-5px)';"
+                                    onmouseout="this.style.boxShadow='0 3px 8px rgba(0,0,0,0.08)'; this.style.borderColor='#dcdcdc'; this.style.transform='translateY(0)';">
+
+                                    {{-- ❤️ Wishlist Icon --}}
+                                    @php $isWishlisted = in_array($value->course_id, $wishlistedCourseIds); @endphp
+                                    <span class="btn btn-outline-danger wishList-badge"
+                                        title="{{ $isWishlisted ? 'Added to Wishlist' : 'Add to Wishlist ❤️' }}"
+                                        id="wish_{{$value->course_id}}"
+                                        style="position: absolute;top: 12px;right: 12px;background: #fff;border-radius: 50%;padding: 6px;
+                                              box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 5;">
+                                        <i class="{{ $isWishlisted ? 'fa fa-heart' : 'fa fa-heart-o' }}"
+                                            aria-hidden="true"
+                                            id="wishHeart_{{$value->course_id}}"
+                                            style="color: {{ $isWishlisted ? '#ff4b5c' : '#999' }}; font-size:18px;">
+                                        </i>
+                                    </span>
+
+                                    {{-- 📘 Course Image --}}
+                                    @php
+                                    $id = Crypt::encrypt($value->course_id);
+                                    $imageUrl = config('setting.base_url') . 'uploads/course/126/' . $value->course_banner;
+                                    @endphp
+                                    <a href="{{ route('elearningCourse', $id) }}">
+                                        @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
+                                        <img src="{{ $imageUrl }}" alt="Course Image" class="course_image"
+                                            style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;">
+                                        @else
+                                        <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image"
+                                            class="course_image"
+                                            style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;">
+                                        @endif
+                                    </a>
+
+                                    {{-- 🧾 Card Body --}}
+                                    <div class="card-body" style="padding: 10px 0;">
+                                        <div class="card-title" title="{{ $value->course_name }}">
+                                            <h5 style="color:#1e2a78; font-weight:600; font-size:16px; margin-bottom:8px;">
+                                                {{ $value->course_name }}
+                                            </h5>
+
+                                            {{-- 🔔 Expiry Section with Fixed Height --}}
+                                            <div style="min-height: 40px; display: flex; justify-content: center;align-items: center;margin-bottom: 8px">
+                                                @if($showExpiryBadge)
+                                                <a href="javascript:void(0);" onclick="highlightCopiedCourse({{ $value->course_id }})">
+                                                    <div style="background-color: #fff5e6; color: #b35c00; border-radius: 6px;
+                                                         font-size: 13px;padding:4px 8px;display:inline-block;box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                                        ⚠ {{ \Carbon\Carbon::parse($value->course_expiry_period)->isPast() ? 'Certificate Expired' : 'Your Course Will Expire Soon' }}
+                                                    </div>
+                                                </a>
+                                                @elseif($expiryMessage)
+                                                <a href="javascript:void(0);" onclick="highlightCopiedCourse({{ $value->course_id }})">
+                                                    <div style="background-color: #f8d7da;color: #721c24;border-radius: 8px;font-size:13px;padding:6px 12px;
+                                                           margin-top:-10px;box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                                                        {!! $expiryMessage !!}
+                                                    </div>
+                                                </a>
+                                                @else
+                                                {{-- Empty space to maintain height --}}
+                                                <div style="height: 20px; visibility: hidden;">placeholder</div>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        {{-- 👨‍🏫 Instructor + Paid/Free --}}
+                                        <div class="card-text" style="margin-bottom:10px;">
+                                            <h6 style="font-size:13px; color:#333;">
+                                                <span>{{ $value->course_instructor }}</span>
+                                                <span style="float:right;background-color: {{ $value->course_pay == 'paid' ? '#1d33d3' : '#0ecf26' }};
+                                                   color:#fff;border-radius:4px;padding:2px 8px; margin-top:-5px;font-size:18px;text-transform:capitalize;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+                                                    {{ $value->course_pay }}
+                                                </span>
+                                            </h6>
+                                        </div>
+
+                                        {{-- 📊 Progress Bar --}}
+                                        <div class="progress course_total_progress" style=" height:10px; border-radius:5px; overflow:hidden;
+                                             background-color:#eaeaea;margin-top:10px;">
+                                            <div class="progress-bar" role="progressbar"
+                                                style="width: {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%;
+                                                background: linear-gradient(90deg, #5cb85c, #9be15d);transition: width 0.6s ease;">
+                                            </div>
+                                        </div>
+
+                                        <span style="font-size:12px; color:#444; font-weight:500; display:block; margin-top:6px;">
+                                            {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}% COMPLETED
+                                        </span>
+                                    </div>
                                 </div>
+
+                                <script>
+                                    function highlightCopiedCourse(originalCourseId) {
+                                        const matchingCard = document.querySelector(`[data-expired-course-id='${originalCourseId}']`);
+                                        if (matchingCard) {
+                                            matchingCard.scrollIntoView({
+                                                behavior: 'smooth',
+                                                block: 'center'
+                                            });
+                                            matchingCard.classList.add('highlight-new-course');
+                                            setTimeout(() => {
+                                                matchingCard.classList.remove('highlight-new-course');
+                                            }, 2000);
+                                        } else {
+                                            Swal.fire({
+                                                title: "Please Contact your supervisor",
+                                                text: "The new or copied course is not yet created.",
+                                                icon: "info"
+                                            });
+                                        }
+                                    }
+                                </script>
+
+                                <style>
+                                    .highlight-new-course {
+                                        border: 3px solid #007bff !important;
+                                        box-shadow: 0 0 15px rgba(0, 123, 255, 0.6) !important;
+                                        transition: all 0.3s ease;
+                                    }
+                                </style>
+
+
+
                         </div>
                     </div>
                     @endforeach

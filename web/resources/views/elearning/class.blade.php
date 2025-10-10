@@ -1268,7 +1268,7 @@
 
     @endif
     <?php if ($classContent->class_format == 'mp4' && $classContent->class_status == 1) { ?>
-      
+
         <video class="coursetypes videos" src="../../uploads/class/126/{{$classContent->resource_name}}"
             data-poster="../..{{$classContent->resource_path}}/{{$classContent->resource_name}}" frameborder="0"
             allowfullscreen controls width="100%">
@@ -1307,17 +1307,41 @@
             $courseIntroFullPath = $courseDetails[0]->introduction_path . '/' . $courseDetails[0]->course_introduction;
             @endphp
 
-            <h5> Class  </h5>
-            <object class="coursetypes" data="../../uploads/class/126/{{$classContent->resource_name}}#toolbar=0"
-                width="500" height="500">
+            <div class="container mt-4">
+                <div class="row g-4 align-items-start">
+                    <!-- Left: Class -->
+                    <div class="col-md-6">
+                        <div class="card shadow-sm border-0 rounded-4">
+                            <div class="card-header bg-primary text-white fw-semibold text-center rounded-top-4">
+                                Class
+                            </div>
+                            <div class="card-body p-2 text-center" style="background-color: #f8f9fc;">
+                                <object class="coursetypes"
+                                    data="../../uploads/class/126/{{$classContent->resource_name}}#toolbar=0"
+                                    width="100%" height="400"
+                                    style="border-radius: 8px; border: 1px solid #ddd;">
+                                </object>
+                            </div>
+                        </div>
+                    </div>
 
-            </object>
-            <h5> Course  </h5>
-            <object class="coursetypes" data="{{$courseIntroFullPath}}#toolbar=0"
-                width="500" height="500">
-
-            </object>
-
+                    <!-- Right: Course Introduction -->
+                    <div class="col-md-6">
+                        <div class="card shadow-sm border-0 rounded-4">
+                            <div class="card-header bg-primary text-white fw-semibold text-center rounded-top-4">
+                                Course Introduction
+                            </div>
+                            <div class="card-body p-2 text-center" style="background-color: #f8f9fc;">
+                                <object class="coursetypes"
+                                    data="{{$courseIntroFullPath}}#toolbar=0"
+                                    width="100%" height="400"
+                                    style="border-radius: 8px; border: 1px solid #ddd;">
+                                </object>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <br>
 
 
@@ -1601,25 +1625,142 @@
     </div>
     <!-- Chatbot Floating Icon -->
     <div id="chatIcon1"
-        style="position: fixed; bottom: 30px; right: 30px; background-color: #007bff; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999;">
-        <i class="fa fa-comments" style="font-size: 24px;"></i>
+        style="
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: linear-gradient(135deg, #007bff, #00bfff);
+        color: white;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        z-index: 9999;
+        transition: transform 0.2s ease-in-out;
+    ">
+        <i class="fa fa-comments" style="font-size: 26px;"></i>
     </div>
 
     <!-- Chatbot Window -->
     <div id="chatbotContainer"
-        style="position: fixed; bottom: 100px; right: 30px; width: 320px; display: none; z-index: 9999;">
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                TALENTRA Chatbot
-                <button class="btn btn-sm btn-light close-chat1" style="padding: 0 8px;">&times;</button>
+        style="
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 360px;
+        display: none;
+        z-index: 9999;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        font-family: 'Segoe UI', sans-serif;
+    ">
+        <div class="card border-0 shadow rounded-4">
+            <!-- Header -->
+            <div class="card-header d-flex justify-content-between align-items-center"
+                style="
+                background: linear-gradient(135deg, #007bff, #00bfff);
+                color: #fff;
+                font-weight: 600;
+                font-size: 16px;
+                padding: 12px 15px;
+            ">
+                🤖 TALENTRA Chatbot
+                <button class="btn btn-sm btn-light close-chat1"
+                    style="
+                    font-size: 18px;
+                    font-weight: bold;        
+                    line-height: 1;
+                    color: #007bff;
+                ">&times;</button>
             </div>
-            <div class="card-body" style="height: 300px; overflow-y: auto;" id="chatLog"></div>
-            <div class="card-footer p-2">
-                <input type="text" class="form-control" id="chatInput" placeholder="Ask a question...">
-                <button class="btn btn-primary btn-sm mt-2 w-100" id="sendBtn1">Send</button>
+
+            <!-- Chat Body -->
+            <div class="card-body p-3" id="chatLog"
+                style="
+        height: 350px;
+        overflow-y: auto;
+        background: #f8f9fc;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 14px;
+    ">
+                <!-- Welcome message -->
+                <div class="p-2 rounded"
+                    style="
+            align-self: flex-start;
+            max-width: 85%;
+           
+            color: #333;
+            border-radius: 10px 10px 10px 0;
+        ">
+                    <p style="background: #e9ecef; color: #000;margin-left:-10px; padding: 8px 12px; border-radius: 10px; max-width:100%;">Hello! 👋 This is <b>TALENTRA</b> Chatbot. How can I help you today?</p>
+                </div>
             </div>
+
+
+            <!-- Footer -->
+            <div class="card-footer bg-white p-2 border-0" style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" class="form-control" id="chatInput"
+                    placeholder="Type your message..."
+                    style="
+            flex: 1;
+            background: #f1f3f6;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 16px;
+            font-size: 14px;
+            outline: none;
+        ">
+                <button id="sendBtn1"
+                    style="
+            padding: 10px 18px;
+            border-radius: 20px;
+            margin-top:-10px;
+            background: linear-gradient(135deg, #007bff, #00bfff);
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        "
+                    onmouseover="this.style.opacity='0.85'"
+                    onmouseout="this.style.opacity='1'">
+                    Send
+                </button>
+            </div>
+
         </div>
     </div>
+
+    <!-- Optional: Smooth Open/Close Animation -->
+    <style>
+        #chatbotContainer.show {
+            display: block;
+            animation: slideUp 0.4s ease-in-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        #chatIcon1:hover {
+            transform: scale(1.1);
+        }
+    </style>
 </div>
 <div class="container-fluid py-3 px-5" id="qAndAContent" style="display: none;">
 
@@ -3282,8 +3423,13 @@
 
             if (!question.trim()) return;
 
-            $('#chatLog').append(`<div class="mb-2"><strong>You:</strong> ${question}</div>`);
-
+            $('#chatLog').append(`
+  <div class="mb-2 d-flex justify-content-end">
+      <div style="background: #007bff; color: white; padding: 8px 12px; border-radius: 10px; max-width:100%;">
+          ${question}
+      </div>
+  </div>
+`);
             $.ajax({
                 url: 'http://localhost:8000/ask/',
                 method: 'POST',
@@ -3294,9 +3440,13 @@
                     user_id: user_id
                 }),
                 success: function(response) {
-                    $('#chatLog').append(
-                        `<div class="mb-2"><strong>Talentra:</strong> ${response.answer}</div>`
-                    );
+                    $('#chatLog').append(`
+  <div class="d-flex justify-content-start mb-2">
+      <div style="background: #e9ecef; color: #000; padding: 8px 12px; border-radius: 10px; max-width:80%;text-align: justify;">
+          ${response.answer}
+      </div>
+  </div>
+`);
                     $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
                 },
                 error: function() {
