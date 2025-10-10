@@ -458,8 +458,9 @@
                                     🎉 Congratulations <span class="text-success">{{ $rows['rows']['currentUserRank']['name'] }}</span><br>
                                     You are ranked <span class="text-success">#{{ $rows['rows']['currentUserRank']['rank'] }}</span>
                                     with
+                                  
                                     @if($rows['rows']['metric_type'] === 'hours')
-                                    <span class="text-danger">{{ $rows['rows']['currentUserRank']['hours'] }} hrs</span>!
+                                    <span class="text-danger">{{ $rows['rows']['currentUserRank']['total_hours'] }} hrs</span>!
                                     @else
                                     <span class="text-danger">{{ $rows['rows']['currentUserRank']['points'] }} </span>!
                                     @endif
