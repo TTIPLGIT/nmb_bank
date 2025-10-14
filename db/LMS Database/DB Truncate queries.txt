@@ -1,0 +1,12 @@
+TRUNCATE TABLE elearning_questions_long_answer;
+TRUNCATE TABLE elearning_questions_mcq;
+TRUNCATE TABLE elearning_questions_short_answer;
+TRUNCATE TABLE elearning_questions_true_false;
+TRUNCATE TABLE elearning_question_results;
+TRUNCATE TABLE elearning_quiz_results;
+TRUNCATE TABLE designation;
+TRUNCATE TABLE course_catagory;
+TRUNCATE TABLE elearning_classes;
+TRUNCATE TABLE elearning_courses;
+TRUNCATE TABLE elearning_events;
+TRUNCATE TABLE elearning_noticeboard;
