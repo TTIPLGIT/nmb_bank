@@ -813,9 +813,10 @@ if ($daysLeft <= 30 && $daysLeft>= 0) {
                     </div>
                     <!-- Chatbot Floating Icon -->
                     <!-- <div id="chatIcon"
+                    <!-- <div id="chatIcon"
                         style="position: fixed; bottom: 30px; right: 30px; background-color: #007bff; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999;">
                         <i class="fa fa-comments" style="font-size: 24px;"></i>
-                    </div>
+                    </div> -->
 
 
                     <div id="chatbotContainer"
@@ -832,6 +833,7 @@ if ($daysLeft <= 30 && $daysLeft>= 0) {
                                 <button class="btn btn-primary btn-sm mt-2 w-100" id="sendBtn">Send</button>
                             </div>
                         </div>
+                    </div> -->
                     </div> -->
 
 

@@ -247,7 +247,7 @@ class CertificateTemplateController extends BaseController
                 'rows' => $rows,
                 'rows1' => $rows1
             ];
-            $this->WriteFileLog($response);
+
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');

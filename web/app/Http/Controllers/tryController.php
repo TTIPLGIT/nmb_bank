@@ -154,6 +154,7 @@ class tryController extends BaseController
 
             $roles = DB::table('uam_roles')
                 ->select('*')
+                ->where('active_flag',0)
                 ->get();
 
 
