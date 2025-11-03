@@ -505,28 +505,28 @@ if ($daysLeft <= 30 && $daysLeft>= 0) {
                         </div>
                         <div class="card noShadow classOverviewinfo mt-4 mt-md-0">
 
-                            @php
-                            $file = $courseDetail->course_introduction;
-                            $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                            $fileUrl = url('uploads/course/126/' . $file);
-                            @endphp
+                        @php
+                        $file = $courseDetail->course_introduction;
+                        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                        $fileUrl = url('uploads/course/126/' . $file);
+                        @endphp
 
-                            @if($extension === 'mp4')
-                            <video class="mt-2" height="200px" controls
-                                poster="{{ url('uploads/course/126/' . $courseDetail->course_banner) }}"
-                                preload="metadata" width="100%">
-                                <source src="{{ $fileUrl }}" type="video/mp4">
-                                Download the <a href="{{ $fileUrl }}">MP4</a> video.
-                            </video>
-                            @elseif(in_array($extension, ['png','jpg','jpeg','gif','webp']))
-                            <img src="{{ $fileUrl }}" alt="Course Image" class="mt-2" style="width:100%; max-height:300px; object-fit:contain;">
-                            @elseif($extension === 'pdf')
-                            <object data="{{ $fileUrl }}#toolbar=0" type="application/pdf" width="100%" height="500px">
-                                <p>No PDF viewer available. <a href="{{ $fileUrl }}">Download PDF</a></p>
-                            </object>
-                            @else
-                            <p>Unsupported file type: {{ $extension }}</p>
-                            @endif
+                        @if($extension === 'mp4')
+                        <video class="mt-2" height="200px" controls
+                            poster="{{ url('uploads/course/126/' . $courseDetail->course_banner) }}"
+                            preload="metadata" width="100%">
+                            <source src="{{ $fileUrl }}" type="video/mp4">
+                            Download the <a href="{{ $fileUrl }}">MP4</a> video.
+                        </video>
+                        @elseif(in_array($extension, ['png','jpg','jpeg','gif','webp']))
+                        <img src="{{ $fileUrl }}" alt="Course Image" class="mt-2" style="width:100%; max-height:300px; object-fit:contain;">
+                        @elseif($extension === 'pdf')
+                        <object data="{{ $fileUrl }}#toolbar=0" type="application/pdf" width="100%" height="300px">
+                            <p>No PDF viewer available. <a href="{{ $fileUrl }}">Download PDF</a></p>
+                        </object>
+                        @else
+                        <p>Unsupported file type: {{ $extension }}</p>
+                        @endif
 
                             <div class="card-body bgWhite">
                                 @if($enrolled == "False")
@@ -812,13 +812,12 @@ if ($daysLeft <= 30 && $daysLeft>= 0) {
                         </div>
                     </div>
                     <!-- Chatbot Floating Icon -->
-                    <div id="chatIcon"
+                    <!-- <div id="chatIcon"
                         style="position: fixed; bottom: 30px; right: 30px; background-color: #007bff; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999;">
                         <i class="fa fa-comments" style="font-size: 24px;"></i>
                     </div>
 
 
-                    <!-- Chatbot Window -->
                     <div id="chatbotContainer"
                         style="position: fixed; bottom: 100px; right: 30px; width: 320px; display: none; z-index: 9999;">
                         <div class="card shadow">
@@ -833,7 +832,7 @@ if ($daysLeft <= 30 && $daysLeft>= 0) {
                                 <button class="btn btn-primary btn-sm mt-2 w-100" id="sendBtn">Send</button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
 
                 </div>

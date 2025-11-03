@@ -180,15 +180,16 @@ class tryController extends BaseController
             $modules = $menus['modules'];
             $category = tryController::course_list($request);
             // $rows2['course_category'] = $category['rows2']['course_category'];
-         
+
 
             $rows3['elearning_classes'] = DB::table('elearning_classes')
                 ->select('*')
                 ->where('drop_class', '0')
                 ->orderBy('class_id', 'desc')
                 ->get();
+            $rows1['quiz_name'] = DB::select("SELECT * from elearning_practice_quiz WHERE drop_quiz ='0'");
 
-// dd($rows1['elearning_courses']);
+
 
             return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'roles', 'user_id', 'rows1'));
         } catch (\Exception $exc) {
@@ -849,7 +850,7 @@ class tryController extends BaseController
         $validator = Validator::make($request->all(), [
             'course_summary' => 'required|mimes:pdf,txt,mp3,jpeg,png,jpg',
         ]);
-       
+
 
         if ($validator->fails()) {
             // Validation failed
@@ -904,8 +905,7 @@ class tryController extends BaseController
             $data['expiry_input'] = $request->expiry_input;
 
 
-            // dd($data);
-
+          
             $encryptArray = $data;
 
             $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
@@ -914,9 +914,9 @@ class tryController extends BaseController
             // dd($storagepath_ursb);
             // dd( $storagepath_ursb_old);
             if (!File::exists($storagepath_ursb_old)) {
-// dd($storagepath_ursb_old);
+                // dd($storagepath_ursb_old);
                 File::makeDirectory($storagepath_ursb_old);
-                 //folder_creation_when_folder_doesn't_esist
+                //folder_creation_when_folder_doesn't_esist
                 //  dd($storagepath_ursb_old);
             }
             //  dd("wel");
@@ -947,7 +947,7 @@ class tryController extends BaseController
             $documentsb->move($storagepath_ursb_old1, $proposal_files1); //storing the file in the system
             $data['course_banner'] = $proposal_files1;
 
-// dd($data);
+            // dd($data);
             $storagepath_ursb_old2 = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
             $storagepath_ursb2 = '/uploads/course/' . $user_id; //database_location
             if (!File::exists($storagepath_ursb_old2)) {
@@ -1648,6 +1648,7 @@ class tryController extends BaseController
 
     public function allCourses(Request $request)
     {
+
         // Authentication
         $method = 'Method => tryController => allCourses';
         try {

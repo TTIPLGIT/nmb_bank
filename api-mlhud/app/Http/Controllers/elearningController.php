@@ -134,7 +134,8 @@ class elearningController extends BaseController
             $response = [
                 'rows' => $filterd_noticearry,
                 'dasboardCount' => $row2,
-                'recomment_courses' => $courses_classes_all
+                'recomment_courses' => $courses_classes_all,
+                'role_id'=>$role_id
             ];
 
             $serviceResponse = array();
