@@ -403,7 +403,7 @@ class LoginController extends BaseController
         'password' => $request->password,
         //  'recaptcha' => $request->input('g-recaptcha-response')
       ];
-     
+      
      
       $rules = [
         'email' => 'required',
@@ -421,6 +421,7 @@ class LoginController extends BaseController
       $validator = Validator::make($input, $rules, $messages);
 
       if ($validator->fails()) {
+        
         $gatewayURL = config('setting.api_gateway_url') . '/user/require_captcha';
 
         $input = array();
@@ -447,8 +448,7 @@ class LoginController extends BaseController
         return back()->withErrors(['recaptcha' => ['Captcha is required']]);
       } else {
 
-
-
+        
         $tokenResponse = $this->setToken($input['email'], $input['password'],);
         if ($tokenResponse == 'Failure') {
           if (isset($request->mobile)) {
@@ -470,6 +470,7 @@ class LoginController extends BaseController
         }
 
         $gatewayURL = config('setting.api_gateway_url') . '/login/user';
+       
         $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
 
         $response = json_decode($response);
@@ -487,12 +488,12 @@ class LoginController extends BaseController
           return back()->withErrors(['recaptcha' => ['Invalid user name or password']]);
         }
 
-
+        
 
         //dd($response);
         if ($response->Status == 200 && $response->Success) {
           $objData = json_decode($this->decryptData($response->Data));
-
+         
           if ($objData->Code == 200) {
             $objRows = $objData->Data;
 
@@ -507,9 +508,11 @@ class LoginController extends BaseController
             session(['gd_status' => $gd_status]);
             session(['role_id' => $role_id]);
             // dd("sdaecsca");
+            
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
             $modules = $menus['modules'];
+            
             if (isset($request->mobile)) {
               $rows['role_id'] = $role_id;
               $rows['code'] = $objData->Code;
@@ -522,6 +525,7 @@ class LoginController extends BaseController
             if ($role_id == '1') {
               return redirect(route('admindashboard'));
             } else {
+              
               return redirect(route('elearningDashboard'));
             }
 

@@ -214,20 +214,20 @@ class CertifcateTemplateController extends BaseController
                 $gatewayURL = config('setting.api_gateway_url') . '/certificate_template/data_edit/' . $this->encryptData($id);
                 $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
 
-
+                // dd($response);
                 $response = json_decode($response);
+                
                 if ($response->Status == 200 && $response->Success) {
                     $objData = json_decode($this->decryptData($response->Data));
                     if ($objData->Code == 200) {
                         $parant_data = json_decode(json_encode($objData->Data), true);
                         $template =  $parant_data['rows'];
-
+                        $template1 =  $parant_data['rows1'];
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
                         $modules = $menus['modules'];
-                        // dd($template);
-
-                        return view("certificate_template.{$template['template_name']}.preview", compact('template', 'modules', 'screens'));
+                      
+                        return view("certificate_template.{$template['template_name']}.preview", compact('template1','template', 'modules', 'screens'));
                     }
                 } else {
                     $objData = json_decode($this->decryptData($response->Data));

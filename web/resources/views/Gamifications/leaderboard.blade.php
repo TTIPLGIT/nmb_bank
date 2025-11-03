@@ -459,9 +459,9 @@
                                     You are ranked <span class="text-success">#{{ $rows['rows']['currentUserRank']['rank'] }}</span>
                                     with
                                     @if($rows['rows']['metric_type'] === 'hours')
-                                    <span class="text-danger">{{ $rows['rows']['currentUserRank']['hours'] }} hrs</span>!
+                                    <span class="text-danger">{{ $rows['rows']['currentUserRank']['total_hours'] }} hrs</span>
                                     @else
-                                    <span class="text-danger">{{ $rows['rows']['currentUserRank']['points'] }} </span>!
+                                    <span class="text-danger">{{ $rows['rows']['currentUserRank']['points'] }} </span>
                                     @endif
                                 </div>
                             </div>
@@ -480,7 +480,7 @@
                     @php
                     function getProfileImage($user) {
                     return !empty($user['profile_image'])
-                    ? config('setting.base_url') . $user['profile_image']
+                    ? config('setting.profile_url') . $user['profile_image']
                     : asset('images/empty.jpg');
                     }
 
@@ -663,7 +663,7 @@
                                 data-name="{{ $value['name'] ?? 'N/A' }}"
                                 data-points="{{ $value['total_points'] ?? 0 }}"
                                 data-hours="{{ $value['total_hours'] ?? 0 }}"
-                                data-img="{{ $value['profile_image'] ? config('setting.base_url') . $value['profile_image'] : config('setting.base_url') . 'images/empty.jpg' }}"
+                                data-img="{{ $value['profile_image'] ? config('setting.profile_url') . $value['profile_image'] : config('setting.profile_url') . 'images/empty.jpg' }}"
                                 data-level_name="{{ $value['level_name'] ?? 'N/A' }}"
                                 data-level_icon="{{ $value['level_icon'] ?? '' }}"
                                 data-profile_image="{{ getProfileImage($user) }}"
@@ -713,8 +713,9 @@
                 <button type="button" style="color: red; margin-top: -130px; font-size: 24px; padding: 20px; margin-right: -30px; background: transparent; border: none; outline: none; box-shadow: none;" id="filterclose" class="close" data-dismiss="modal" aria-hidden="true" onfocus="this.blur();">&times;</button>
 
                 <!-- User Profile Content -->
+
                 <div class="text-center" style="margin-top:-50px;border-radius:10px; background-color: #f2f2f2;">
-                    <img id="modal-profile-img" src="/images/empty.jpg" class=""
+                    <img id="modal-profile-img" src="config('setting.profile_url')images/empty.jpg" class=""
                         style="width: 100px; height: 100px;margin-top:-50px; object-fit: cover; border: 4px solid #fff;;border-radius:20px" />
                     <h1 class="mt-3 fw-semibold" id="modal-name"></h1>
 

@@ -13,9 +13,6 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/Register",
@@ -29,10 +26,7 @@
       "UpstreamPathTemplate": "/api/gateway/Register/screen",
       "UpstreamHttpMethod": [
         "Post"
-      ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
+      ]  
     },
     {
       "DownstreamPathTemplate": "/api/Register/screenapl",
@@ -44,9 +38,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/Register/screenapl",
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
       "UpstreamHttpMethod": [
         "Get"
       ]
@@ -64,9 +55,6 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/Register/expcreate",
@@ -81,9 +69,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/Register/nrvexpcreate",
@@ -98,9 +84,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/Register/educreate",
@@ -115,9 +99,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/fileupload/fileupload_index",
@@ -132,9 +114,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/master/fileupload_store",
@@ -149,9 +129,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/master/fileupload_edit",
@@ -166,9 +144,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/master/fileupload_update",
@@ -183,9 +159,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/master/fileupload_delete",
@@ -200,9 +174,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/education/course_index",
@@ -217,9 +189,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/education/educationcourse_edit",
@@ -234,9 +204,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/master/educationcourse_store",
@@ -251,9 +219,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/education/educationcourse_update",
@@ -268,9 +234,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/education/education_delete",
@@ -285,9 +249,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/generaldetails/gdmasters_index",
@@ -302,9 +264,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/master/gdconstituency_store",
@@ -319,9 +279,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/master/gddistrict_store",
@@ -336,9 +294,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/gt_district/delete",
@@ -353,9 +309,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/master/gdvillage_store",
@@ -370,9 +324,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/gd/district_list",
@@ -387,9 +339,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/general/district_edit",
@@ -404,9 +354,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/gd/constituency_list",
@@ -421,9 +369,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/gd/village_list",
@@ -438,9 +384,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/education/coursename_list",
@@ -455,9 +399,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/gt_interview/delete",
@@ -472,9 +414,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/register/store",
@@ -489,9 +429,7 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/razorpay_payment",
@@ -506,9 +444,7 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/razorpay_payment/firm",
@@ -523,9 +459,7 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/registermember/store",
@@ -540,9 +474,7 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/Register/approvenrvstore",
@@ -557,9 +489,7 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/Register/approvenrv_index",
@@ -574,9 +504,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/nrv/screen",
@@ -591,9 +519,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/approve/update_store",
@@ -608,9 +534,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/nrv/approve",
@@ -625,9 +549,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/approvescreen/update",
@@ -642,9 +564,7 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/approvenrv/screenedit",
@@ -659,9 +579,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/register/otpsend",
@@ -676,9 +594,7 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/register/otpverify",
@@ -693,9 +609,7 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/login/background",
@@ -710,9 +624,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/user_general/store",
@@ -727,9 +639,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/stakeholder/allocation",
@@ -744,9 +654,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/user_general/updatedata",
@@ -761,9 +669,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/critical/report",
@@ -778,9 +684,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/critical/file_update",
@@ -795,9 +699,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/critical/criticalapprove",
@@ -812,9 +714,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/critial/decision",
@@ -829,9 +729,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/final/approve",
@@ -846,9 +744,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/final/assessment",
@@ -863,9 +759,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/interview/process",
@@ -880,9 +774,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/interview/update",
@@ -897,9 +789,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/interview/fetch",
@@ -914,9 +804,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/critical/store",
@@ -931,9 +819,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/interview/updatenew",
@@ -948,9 +834,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/interview/store",
@@ -965,9 +849,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/critical/approvegt",
@@ -982,9 +864,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/user_approve/updatedata",
@@ -999,9 +879,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/user_reject/updatedata",
@@ -1016,9 +894,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/razorpay_firmpayment",
@@ -1033,9 +909,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/user_approvereject",
@@ -1050,9 +924,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/user_rejecter",
@@ -1067,9 +939,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/firm_register/screen",
@@ -1084,9 +954,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/firmRegister/store",
@@ -1101,9 +969,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/education/education_edit",
@@ -1118,9 +984,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/firm/firm_index",
@@ -1135,9 +999,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/firm/firm_reg",
@@ -1152,9 +1014,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/firmapproval_index",
@@ -1169,9 +1029,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/firm_show",
@@ -1186,9 +1044,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/firm_approve/updatedata",
@@ -1203,9 +1059,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/firm_reject/updatedata",
@@ -1220,9 +1074,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/firm/register_show",
@@ -1237,9 +1089,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/firm/register_update",
@@ -1254,9 +1104,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/firm/active_update",
@@ -1271,9 +1119,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/firm/permission_store",
@@ -1288,9 +1134,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/firm_admin/fetch",
@@ -1305,9 +1149,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/firm/permission_update",
@@ -1322,9 +1164,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/firm_admin/leave",
@@ -1339,9 +1179,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/license/license_index",
@@ -1356,9 +1194,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/license/license_reg",
@@ -1373,9 +1209,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/user_general/storedynamic",
@@ -1390,9 +1224,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/valuerlist/user_certify",
@@ -1407,9 +1239,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/user_general/updatedynamicdata",
@@ -1424,9 +1254,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/user_general/updatedynamicdata1",
@@ -1441,9 +1269,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+   
     },
     {
       "DownstreamPathTemplate": "/api/valuer/approved/screen",
@@ -1458,9 +1284,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/district/fetch",
@@ -1475,9 +1299,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/constituency/fetch",
@@ -1492,9 +1314,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+   
     },
     {
       "DownstreamPathTemplate": "/api/valuer/certification/screen",
@@ -1509,9 +1329,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/master/storequestion",
@@ -1526,9 +1344,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+   
     },
     {
       "DownstreamPathTemplate": "/api/district/update",
@@ -1543,9 +1359,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+   
     },
     {
       "DownstreamPathTemplate": "/api/auditlog/vreg",
@@ -1560,9 +1374,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/auditlog/uam",
@@ -1577,9 +1389,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/Questionmaster/data_edit/",
@@ -1594,9 +1404,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/Questionmaster/index",
@@ -1611,9 +1419,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+   
     },
     {
       "DownstreamPathTemplate": "/api/Questionmaster/updatedata",
@@ -1628,9 +1434,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/master/data_delete/{id}",
@@ -1645,9 +1449,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/insrtuction/index",
@@ -1662,9 +1464,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/insrtuction/index_data",
@@ -1679,9 +1479,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/instruct/instruct_index",
@@ -1696,9 +1494,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/instruct/instruct_create/{id}",
@@ -1713,9 +1509,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/stakeholder/firm_update",
@@ -1730,9 +1524,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/instruct/show/{id}",
@@ -1747,9 +1539,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+   
     },
     {
       "DownstreamPathTemplate": "/api/instruct/firm_submit",
@@ -1764,9 +1554,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/instruct/edit/firmreject/{id}",
@@ -1781,9 +1569,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/instruct/firmreject/store",
@@ -1798,9 +1584,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/Professional/Competence",
@@ -1815,9 +1599,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/level/Competence/{id}",
@@ -1832,9 +1614,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/level/store",
@@ -1849,9 +1629,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/competency/fetch",
@@ -1866,9 +1644,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/competency/store",
@@ -1883,9 +1659,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/critical/analysis",
@@ -1900,9 +1674,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/insrtuction/create",
@@ -1917,9 +1689,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/stakeholder/storedata",
@@ -1934,9 +1704,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/stakeholder/show",
@@ -1951,9 +1719,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/stakeholder/update",
@@ -1968,9 +1734,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+   
     },
     {
       "DownstreamPathTemplate": "/api/stakeholder/delete/{id}",
@@ -1985,9 +1749,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+ 
     },
     {
       "DownstreamPathTemplate": "/api/instruction/store",
@@ -2002,9 +1764,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/instruction/reject/store",
@@ -2019,9 +1779,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/instruction/reject/stakeholder",
@@ -2036,9 +1794,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/instruction/approve",
@@ -2053,9 +1809,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/instruction/reject",
@@ -2070,9 +1824,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/instruction/edit/store",
@@ -2087,9 +1839,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/instruction/data/show",
@@ -2104,9 +1854,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/instruction/stakeholder/show/{id}",
@@ -2121,9 +1869,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/instruction/registar/show/{id}",
@@ -2138,9 +1884,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/instruction/stakeholder/approve",
@@ -2155,9 +1899,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/instruction/cgv/approve",
@@ -2172,9 +1914,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/instruction/cgv/approve/valuer/{id}",
@@ -2189,9 +1929,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/instruction/approve/cgv",
@@ -2206,9 +1944,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/instruction/stakeholder_feedback",
@@ -2223,9 +1959,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/instruction/valuer_feedback",
@@ -2240,9 +1974,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/instruction/edit/reject/{id}",
@@ -2257,9 +1989,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/instruction/registar_feedback",
@@ -2274,9 +2004,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/insrtuction/registar_index",
@@ -2291,9 +2019,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/user_general/storeeqans",
@@ -2308,9 +2034,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/insrtuction/create_data/{id}",
@@ -2325,9 +2049,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+ 
     },
     {
       "DownstreamPathTemplate": "/api/professional_show",
@@ -2342,9 +2064,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/user_general/updateeqans",
@@ -2359,9 +2079,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/user_general/deleteeqans",
@@ -2376,9 +2094,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/user_general/deletegen",
@@ -2393,9 +2109,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/user_general/deleteexp",
@@ -2410,9 +2124,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/user_general/deleteedu",
@@ -2427,9 +2139,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/user_general/storedynamic1",
@@ -2444,9 +2154,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+   
     },
     {
       "DownstreamPathTemplate": "/api/user_exp/nrustore",
@@ -2461,9 +2169,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+   
     },
     {
       "DownstreamPathTemplate": "/api/payment/store",
@@ -2478,9 +2184,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/valuerlist/storedata",
@@ -2495,9 +2199,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/valuer/screen",
@@ -2512,9 +2214,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/dummy/document_category/checking_data",
@@ -2529,9 +2229,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/login/user",
@@ -2546,9 +2244,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/user/logout",
@@ -2563,9 +2259,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/user/unauthenticated",
@@ -2580,9 +2274,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/user/require_captcha",
@@ -2597,9 +2289,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/user/create",
@@ -2614,9 +2304,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/user/ticket",
@@ -2631,9 +2319,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/site/dashboard",
@@ -2648,9 +2334,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/site/dashboard/workflowdetails",
@@ -2665,9 +2349,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/site/dashboard/workflow_inprogress",
@@ -2682,9 +2364,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/site/dashboard/workflow_closed",
@@ -2699,9 +2379,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/version_log",
@@ -2716,9 +2394,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/site/dashboard/form_scanned",
@@ -2733,9 +2409,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/site/dashboard/form_verified",
@@ -2750,9 +2424,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/site/dashboard/form_approved",
@@ -2767,9 +2439,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/site/dashboard/form_rejected",
@@ -2784,9 +2454,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/site/dashboard/disposal_initiated",
@@ -2801,9 +2469,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/site/dashboard/disposal_approved",
@@ -2818,9 +2484,7 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/processing/scanned/batch/file",
@@ -2835,9 +2499,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/processing/batch/show/{id}",
@@ -2852,9 +2514,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/move/scanned/claim/invoice/file/alfresco/{id}",
@@ -2869,9 +2529,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/document/download/file/{id}",
@@ -2886,9 +2544,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/approval/index",
@@ -2903,9 +2559,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/approval/verification/{id}",
@@ -2920,9 +2574,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/approval/approve",
@@ -2937,9 +2589,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/approval/reject",
@@ -2954,9 +2604,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/search",
@@ -2971,9 +2619,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/search/view/{id}",
@@ -2988,9 +2634,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/disposal/index",
@@ -3005,9 +2649,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/disposal/verification/{id}",
@@ -3022,9 +2664,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/disposal/approve",
@@ -3039,9 +2679,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/disposal/approval/index",
@@ -3056,9 +2694,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/disposal/approval/verification/{id}",
@@ -3073,9 +2709,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/disposal/approval/approve",
@@ -3090,9 +2724,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/disposal/approval/reject",
@@ -3107,9 +2739,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/view/{id}",
@@ -3124,9 +2754,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/requisition/document/create",
@@ -3141,9 +2769,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/file/department/edit/{id}",
@@ -3158,9 +2784,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/department/site/folder/department/delete",
@@ -3175,9 +2799,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/department/site/folder/department/delete1",
@@ -3192,9 +2814,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/department/site/folder/department/edit",
@@ -3209,9 +2829,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/index/{id}",
@@ -3226,9 +2844,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/documenthelp/site/folder/creation",
@@ -3243,9 +2859,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/list",
@@ -3260,9 +2874,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/move/list",
@@ -3277,9 +2889,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/view/{id}",
@@ -3294,9 +2904,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/creation",
@@ -3311,9 +2919,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/folder/file/create/{id}",
@@ -3328,9 +2934,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/creation",
@@ -3345,9 +2949,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ],
-      "UpstreamHttpMethod": [
-        "POST"
-      ],
+     
       "QoSOptions": {
         "TimeoutValue": 5000000
       }
@@ -3365,9 +2967,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/folder/file/view/{id}",
@@ -3382,9 +2982,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/folder/document/edit/properties/{id}",
@@ -3399,9 +2997,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/edit",
@@ -3416,9 +3012,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/copy",
@@ -3433,9 +3027,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/move",
@@ -3450,9 +3042,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/delete",
@@ -3467,9 +3057,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/lock",
@@ -3484,9 +3072,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/unlock",
@@ -3501,9 +3087,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/version",
@@ -3518,9 +3102,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+   
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/tag",
@@ -3535,9 +3117,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/create/comment",
@@ -3552,9 +3132,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/edit/comment",
@@ -3569,9 +3147,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/delete/comment",
@@ -3586,9 +3162,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/share",
@@ -3603,9 +3177,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/unshare",
@@ -3620,9 +3192,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/create/like",
@@ -3637,9 +3207,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+   
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/delete/like",
@@ -3654,9 +3222,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/create/favorite",
@@ -3671,9 +3237,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/delete/favorite",
@@ -3688,9 +3252,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+  
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/detail/{id}",
@@ -3705,9 +3267,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/site/folder/document/revert",
@@ -3722,9 +3282,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+   
     },
     {
       "DownstreamPathTemplate": "/api/document/processing/index/{id}",
@@ -3739,9 +3297,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/document/processing/view",
@@ -3756,9 +3312,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/document/processing/create",
@@ -3773,9 +3327,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/document/processing/form",
@@ -3790,9 +3342,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/processing/category/source",
@@ -3807,9 +3357,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/processing/document/view",
@@ -3824,9 +3372,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/document/processing/document/create",
@@ -3838,9 +3384,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/processing/document/create",
-      "UpstreamHttpMethod": [
-        "POST"
-      ],
+      
       "UpstreamHttpMethod": [
         "POST"
       ],
@@ -3861,9 +3405,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/verification/verify",
@@ -3878,9 +3420,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/verification/metadata_1_1/create",
@@ -3895,9 +3435,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/document/approval/index",
@@ -3912,9 +3450,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+    
     },
     {
       "DownstreamPathTemplate": "/api/document/approval/verify",
@@ -3929,9 +3465,7 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/document/approval/metadata_1_1/approve",
@@ -3943,9 +3477,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/approval/metadata_1_1/approve",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -3963,9 +3494,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/verification/metadata_2_7/create",
@@ -3977,9 +3505,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/verification/metadata_2_7/create",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -3997,9 +3522,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/disposal/initiate/index",
@@ -4011,9 +3533,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/disposal/initiate/index",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4031,9 +3550,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/disposal/initiate/create",
@@ -4045,9 +3561,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/disposal/initiate/create",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4065,9 +3578,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/disposal/approval/verify",
@@ -4079,9 +3589,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/disposal/approval/verify",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4099,9 +3606,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/disposal/approval/reject",
@@ -4116,9 +3620,7 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
+      
     },
     {
       "DownstreamPathTemplate": "/api/document/process/report/index",
@@ -4130,9 +3632,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/process/report/index",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4150,9 +3649,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/metadata_by_department/storedata",
@@ -4164,9 +3660,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/metadata_by_department/storedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4184,9 +3677,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/metadata_by_department/data_edit/{id}",
@@ -4198,9 +3688,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/metadata_by_department/data_edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4218,9 +3705,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/metadata_by_department/data_delete/{id}",
@@ -4232,9 +3716,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/metadata_by_department/data_delete/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4252,9 +3733,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/process/report/search/view",
@@ -4266,9 +3744,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/process/report/search/view",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4286,9 +3761,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/directorate/department/list",
@@ -4300,9 +3772,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/directorate/department/list",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4320,9 +3789,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/type/listbycategory",
@@ -4334,9 +3800,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/type/listbycategory",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4354,9 +3817,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/verification/metadata_1_3/create",
@@ -4368,9 +3828,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/verification/metadata_1_3/create",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4388,9 +3845,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/verification/metadata_1_9/create",
@@ -4402,9 +3856,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/verification/metadata_1_9/create",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4422,9 +3873,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/verification/metadata_2_5/create",
@@ -4436,9 +3884,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/verification/metadata_2_5/create",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4456,9 +3901,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/verification/metadata_2_8/create",
@@ -4470,9 +3912,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/verification/metadata_2_8/create",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4490,9 +3929,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/approval/metadata_1_2/approve",
@@ -4504,9 +3940,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/approval/metadata_1_2/approve",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4524,9 +3957,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/approval/metadata_1_4/approve",
@@ -4538,9 +3968,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/approval/metadata_1_4/approve",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4558,9 +3985,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/approval/metadata_1_28/approve",
@@ -4572,9 +3996,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/approval/metadata_1_28/approve",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4592,9 +4013,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/approval/metadata_2_6/approve",
@@ -4606,9 +4024,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/approval/metadata_2_6/approve",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4626,9 +4041,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/approval/metadata_2_11/approve",
@@ -4640,9 +4052,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/approval/metadata_2_11/approve",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4660,9 +4069,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/analysis/listpersontypes",
@@ -4674,9 +4080,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/analysis/listpersontypes",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4694,9 +4097,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document/metadata/fields/list",
@@ -4708,9 +4108,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document/metadata/fields/list",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4728,9 +4125,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/home/index",
@@ -4742,9 +4136,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/home/index",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4762,9 +4153,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_modules/storedata",
@@ -4776,9 +4164,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_modules/storedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4796,9 +4181,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_modules/data_delete/{id}",
@@ -4810,9 +4192,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_modules/data_delete/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4830,9 +4209,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/FAQ_modules/get_data",
@@ -4844,9 +4220,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/FAQ_modules/get_data",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4864,9 +4237,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/FAQ_modules/storedata",
@@ -4878,9 +4248,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/FAQ_modules/storedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -4898,9 +4265,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/FAQ_modules/data_delete/{id}",
@@ -4912,9 +4276,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/FAQ_modules/data_delete/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4932,9 +4293,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/certificate_template/get_data",
@@ -4946,9 +4304,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/certificate_template/get_data",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -4966,9 +4321,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/certificate_template/data_edit_details/{id}",
@@ -4980,9 +4332,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/certificate_template/data_edit_details/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5000,9 +4349,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/designation/get_data",
@@ -5014,9 +4360,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/designation/get_data",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5034,9 +4377,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/designation/storedata",
@@ -5048,9 +4388,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/designation/storedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5068,9 +4405,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/designation/updatedata",
@@ -5082,9 +4416,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/designation/updatedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5102,9 +4433,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_category/bulkdummyupload",
@@ -5116,9 +4444,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_category/bulkdummyupload",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5136,9 +4461,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_category/bulkdemodummyupload",
@@ -5150,9 +4472,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_category/bulkdemodummyupload",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5170,9 +4489,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/designation/data_delete/{id}",
@@ -5184,9 +4500,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/designation/data_delete/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5204,9 +4517,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/FAQ_question/get_data",
@@ -5218,9 +4528,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/FAQ_question/get_data",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5238,9 +4545,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/FAQ_question/storedata",
@@ -5252,9 +4556,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/FAQ_question/storedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5272,9 +4573,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/FAQ_question/data_delete/{id}",
@@ -5286,9 +4584,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/FAQ_question/data_delete/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5306,9 +4601,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_category/data_edit/{id}",
@@ -5320,9 +4612,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_category/data_edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5340,9 +4629,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_category/category_data_get",
@@ -5354,9 +4640,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_category/category_data_get",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5374,9 +4657,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_sub_category/data_edit/{id}",
@@ -5388,9 +4668,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_sub_category/data_edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5408,9 +4685,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_category_srm/updatedata",
@@ -5422,9 +4696,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_category_srm/updatedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5442,9 +4713,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/roles/data_edit/{id}",
@@ -5456,9 +4724,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/roles/data_edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5476,9 +4741,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/roles/data_delete/{id}",
@@ -5490,9 +4752,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/roles/data_delete/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5510,9 +4769,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/FAQ_questions_ans/get_search_ques",
@@ -5524,9 +4780,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/FAQ_questions_ans/get_search_ques",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5544,9 +4797,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/FAQ_questions/update_toggle",
@@ -5558,9 +4808,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/FAQ_questions/update_toggle",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5578,9 +4825,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_sub_category/update_toggle",
@@ -5592,9 +4836,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_sub_category/update_toggle",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5612,9 +4853,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_screens/getscreenpermission/{id}",
@@ -5626,9 +4864,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_screens/getscreenpermission/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5646,9 +4881,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_screens/storedata",
@@ -5660,9 +4892,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_screens/storedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5680,9 +4909,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_screens/data_delete/{id}",
@@ -5694,9 +4920,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_screens/data_delete/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5714,9 +4937,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/privacy/update/{id}",
@@ -5728,9 +4948,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/privacy/update/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5748,9 +4965,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/privacy/publish",
@@ -5762,9 +4976,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/privacy/publish",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5782,9 +4993,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_modules_screens/get_data",
@@ -5796,9 +5004,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/get_data",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5816,9 +5021,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_modules_screens/storedata",
@@ -5830,9 +5032,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/storedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5850,9 +5049,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_modules_screens/data_delete/{id}",
@@ -5864,9 +5060,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/data_delete/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5884,9 +5077,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_modules_screens/data_edit/{id}",
@@ -5898,9 +5088,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/data_edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5918,9 +5105,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_roles/getmodulesandscreens",
@@ -5932,9 +5116,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_roles/getmodulesandscreens",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -5952,9 +5133,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_roles/updatedata",
@@ -5966,9 +5144,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_roles/updatedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -5986,9 +5161,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_roles/get_roles_screen/{id}",
@@ -6000,9 +5172,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_roles/get_roles_screen/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6020,9 +5189,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/get_user_list",
@@ -6034,9 +5200,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/get_user_list",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6054,9 +5217,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/token_expire_data_update",
@@ -6068,9 +5228,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/token_expire_data_update",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6088,9 +5245,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/department_list",
@@ -6102,9 +5256,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/department_list",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6122,9 +5273,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/user_register",
@@ -6136,9 +5284,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/user_register",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6156,9 +5301,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/updatedata",
@@ -6170,9 +5312,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/updatedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6190,9 +5329,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/work_flow_stage/storedata",
@@ -6204,9 +5340,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/work_flow_stage/storedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6224,9 +5357,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/work_flow_stage/data_edit/{id}",
@@ -6238,9 +5368,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/work_flow_stage/data_edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6258,9 +5385,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/work_flow_settings/get_data",
@@ -6272,9 +5396,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/work_flow_settings/get_data",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6292,9 +5413,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/work_flow_settings/updatedata",
@@ -6306,9 +5424,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/work_flow_settings/updatedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6326,9 +5441,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/work_flow_settings/data_delete/{id}",
@@ -6340,9 +5452,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/work_flow_settings/data_delete/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6360,9 +5469,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/work_flow/get_stage_user_settings",
@@ -6374,9 +5480,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/work_flow/get_stage_user_settings",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6394,9 +5497,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/work_flow/onestoredata",
@@ -6408,9 +5508,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/work_flow/onestoredata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6428,9 +5525,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/work_flow/datacheck",
@@ -6442,9 +5536,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/work_flow/datacheck",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6462,9 +5553,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/work_flow/data_edit/{id}",
@@ -6476,9 +5564,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/work_flow/data_edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6496,9 +5581,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/get_department_list",
@@ -6510,9 +5592,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/get_department_list",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6530,9 +5609,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/edit_permission/{id}",
@@ -6544,9 +5620,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/edit_permission/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6564,9 +5637,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/profile_update",
@@ -6578,9 +5648,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/profile_update",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6598,9 +5665,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/notifications",
@@ -6612,9 +5676,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/notifications",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6632,9 +5693,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/policypage",
@@ -6646,9 +5704,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/policypage",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6666,9 +5721,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/updatedatapermission",
@@ -6680,9 +5732,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/updatedatapermission",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6700,9 +5749,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/itemrequisition/data_edit/{id}",
@@ -6714,9 +5760,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/itemrequisition/data_edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6734,9 +5777,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/itemrequisition/get_departments_stores",
@@ -6748,9 +5788,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/itemrequisition/get_departments_stores",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6768,9 +5805,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/itemrequisition/datacheck",
@@ -6782,9 +5816,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/itemrequisition/datacheck",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6802,9 +5833,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/itemrequisition/onestoredata",
@@ -6816,9 +5844,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/itemrequisition/onestoredata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6836,9 +5861,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/itemrequisition/activity_status_store",
@@ -6850,9 +5872,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/itemrequisition/activity_status_store",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6870,9 +5889,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/itemrequisition/bulkattachment",
@@ -6884,9 +5900,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/itemrequisition/bulkattachment",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6904,9 +5917,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/itemrequisition/folderstructuredata",
@@ -6918,9 +5928,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/itemrequisition/folderstructuredata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -6938,9 +5945,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/valuer/show/{id}",
@@ -6952,9 +5956,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/valuer/show/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -6972,9 +5973,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt/work_flow_edit/{id}",
@@ -6986,9 +5984,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt/work_flow_edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -7006,9 +6001,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt/get_data",
@@ -7020,9 +6012,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt/get_data",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -7040,9 +6029,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt/store_documentreceipt",
@@ -7054,9 +6040,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt/store_documentreceipt",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7074,9 +6057,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt/item_data",
@@ -7088,9 +6068,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt/item_data",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7108,9 +6085,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt/oneupdatedata",
@@ -7122,9 +6096,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt/oneupdatedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7142,9 +6113,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt/task_details_save",
@@ -7156,9 +6124,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt/task_details_save",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7176,9 +6141,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt/bulkattachment_new",
@@ -7190,9 +6152,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt/bulkattachment_new",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7210,9 +6169,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt/get_department_list",
@@ -7224,9 +6180,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt/get_department_list",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7244,9 +6197,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt/deleteimg",
@@ -7258,9 +6208,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt/deleteimg",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7278,9 +6225,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute/data_edit/{id}",
@@ -7292,9 +6236,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute/data_edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -7312,9 +6253,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute/get_departments_stores",
@@ -7326,9 +6264,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute/get_departments_stores",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -7346,9 +6281,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute/datacheck",
@@ -7360,9 +6292,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute/datacheck",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7380,9 +6309,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute/onestoredata",
@@ -7394,9 +6320,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute/onestoredata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7414,9 +6337,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute/activity_status_store",
@@ -7428,9 +6348,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute/activity_status_store",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7448,9 +6365,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute/bulkattachment",
@@ -7462,9 +6376,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute/bulkattachment",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7482,9 +6393,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute/folderstructuredata",
@@ -7496,9 +6404,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute/folderstructuredata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7516,9 +6421,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute/get_document_category_list",
@@ -7530,9 +6432,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute/get_document_category_list",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7550,9 +6449,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/analysis_monitoring/work_flow_edit/{id}",
@@ -7564,9 +6460,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/analysis_monitoring/work_flow_edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -7584,9 +6477,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/analysis_monitoring/get_data",
@@ -7598,9 +6488,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/analysis_monitoring/get_data",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -7618,9 +6505,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/analysis_monitoring/store_documentreceipt",
@@ -7632,9 +6516,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/analysis_monitoring/store_documentreceipt",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7652,9 +6533,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/analysis_monitoring/item_data",
@@ -7666,9 +6544,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/analysis_monitoring/item_data",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7686,9 +6561,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/analysis_monitoring/oneupdatedata",
@@ -7700,9 +6572,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/analysis_monitoring/oneupdatedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7720,9 +6589,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/analysis_monitoring/task_details_save",
@@ -7734,9 +6600,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/analysis_monitoring/task_details_save",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7754,9 +6617,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/analysis_monitoring/bulkattachment_new",
@@ -7768,9 +6628,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/analysis_monitoring/bulkattachment_new",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7788,9 +6645,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/analysis_monitoring/get_department_list",
@@ -7802,9 +6656,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/analysis_monitoring/get_department_list",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7822,9 +6673,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/analysis_monitoring/deleteimg",
@@ -7836,9 +6684,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/analysis_monitoring/deleteimg",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7856,9 +6701,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/auditlog/search",
@@ -7873,9 +6715,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/auditlog/search",
@@ -7887,9 +6726,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/auditlog/search",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7907,9 +6743,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/auditlog/activity",
@@ -7924,9 +6757,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/auditlog/login",
@@ -7941,9 +6771,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/auditlog/login",
@@ -7955,9 +6782,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/auditlog/login",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -7975,9 +6799,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/Activeoperation/login",
@@ -7992,9 +6813,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/auditlog/login_report",
@@ -8009,9 +6827,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/auditlog/login_report",
@@ -8023,9 +6838,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/auditlog/login_report",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8043,9 +6855,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reports/added_doc",
@@ -8060,9 +6869,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reports/deleted_doc",
@@ -8077,9 +6883,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reports/deleted_doc",
@@ -8091,9 +6894,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/reports/deleted_doc",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8111,9 +6911,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reports/archive_doc",
@@ -8128,9 +6925,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reports/grouped_count",
@@ -8145,9 +6939,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reports/grouped_count",
@@ -8159,9 +6950,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/reports/grouped_count",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8179,9 +6967,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reports/awaiting_auth",
@@ -8196,9 +6981,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reports/process_doc",
@@ -8213,9 +6995,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reports/process_doc",
@@ -8227,9 +7006,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/reports/process_doc",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8247,9 +7023,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reports/processflow",
@@ -8264,9 +7037,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reports/processflow",
@@ -8278,9 +7048,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/reports/processflow",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8295,9 +7062,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/reports/userrole",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8315,9 +7079,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/ajax_data/get_stake_data",
@@ -8329,9 +7090,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/ajax_data/get_stake_data",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8349,9 +7107,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/processing",
@@ -8363,9 +7118,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/claim/invoice/processing",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -8383,9 +7135,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/processing/batch/show/{id}",
@@ -8397,9 +7146,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/claim/invoice/processing/batch/show/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -8417,9 +7163,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/claim/invoice/verification/index/create",
@@ -8431,9 +7174,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/claim/invoice/verification/index/create",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8451,9 +7191,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_data/fillscreensbasedonuser/{id}",
@@ -8465,9 +7202,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_data/fillscreensbasedonuser/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -8485,9 +7219,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/uam_data/fillscreensbasedondocument/{id}",
@@ -8499,9 +7230,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/uam_data/fillscreensbasedondocument/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -8519,9 +7247,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/change_password_save",
@@ -8533,9 +7258,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/change_password_save",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8553,9 +7275,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/user/reset/{id}",
@@ -8567,9 +7286,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/user/reset/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -8587,9 +7303,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt_common/get_document_common_workflow",
@@ -8601,9 +7314,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt_common/get_document_common_workflow",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -8621,9 +7331,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt_common/next_user_data_get",
@@ -8635,9 +7342,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt_common/next_user_data_get",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8655,9 +7359,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt_common/all_directorate_by_user",
@@ -8669,9 +7370,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt_common/all_directorate_by_user",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8689,9 +7387,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt_common/deleteimg",
@@ -8703,9 +7398,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt_common/deleteimg",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8723,9 +7415,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt_common/user_task_deleteimg",
@@ -8737,9 +7426,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt_common/user_task_deleteimg",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8757,9 +7443,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt_common/store_secretary_documentreceipt",
@@ -8771,9 +7454,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt_common/store_secretary_documentreceipt",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8791,9 +7471,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt_common/getDocumentAllVersions",
@@ -8805,9 +7482,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt_common/getDocumentAllVersions",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8825,9 +7499,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_receipt_common/store_new_menthod",
@@ -8839,9 +7510,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_receipt_common/store_new_menthod",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8859,9 +7527,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute_common/get_document_common_workflow",
@@ -8873,9 +7538,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute_common/get_document_common_workflow",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -8893,9 +7555,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute_common/next_user_data_get",
@@ -8907,9 +7566,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute_common/next_user_data_get",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8927,9 +7583,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute_common/all_directorate_by_user",
@@ -8941,9 +7594,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute_common/all_directorate_by_user",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8961,9 +7611,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute_common/deleteimg",
@@ -8975,9 +7622,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute_common/deleteimg",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -8995,9 +7639,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute_common/user_task_deleteimg",
@@ -9009,9 +7650,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute_common/user_task_deleteimg",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9029,9 +7667,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute_common/store_secretary_documentreceipt",
@@ -9043,9 +7678,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute_common/store_secretary_documentreceipt",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9063,9 +7695,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/loose_minute_common/store_new_menthod",
@@ -9077,9 +7706,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/loose_minute_common/store_new_menthod",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9097,9 +7723,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/leave_application_form/get_document_common_workflow",
@@ -9111,9 +7734,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/leave_application_form/get_document_common_workflow",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9131,9 +7751,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/leave_application_form/next_user_data_get",
@@ -9145,9 +7762,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/leave_application_form/next_user_data_get",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9165,9 +7779,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/leave_application_form/all_directorate_by_user",
@@ -9179,9 +7790,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/leave_application_form/all_directorate_by_user",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9199,9 +7807,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/leave_application_form/deleteimg",
@@ -9213,9 +7818,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/leave_application_form/deleteimg",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9233,9 +7835,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/leave_application_form/user_task_deleteimg",
@@ -9247,9 +7846,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/leave_application_form/user_task_deleteimg",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9267,9 +7863,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/leave_application_form/store_secretary_documentreceipt",
@@ -9281,9 +7874,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/leave_application_form/store_secretary_documentreceipt",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9301,9 +7891,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_category/get_data",
@@ -9315,9 +7902,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_category/get_data",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9335,9 +7919,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_sub_category/search",
@@ -9349,9 +7930,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_sub_category/search",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9369,9 +7947,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_category/storedata",
@@ -9383,9 +7958,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_category/storedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9403,9 +7975,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/roles/get_data",
@@ -9417,9 +7986,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/roles/get_data",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9437,9 +8003,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_sub_category/storedata",
@@ -9451,9 +8014,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_sub_category/storedata",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9471,9 +8031,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/tender_notice/getdata",
@@ -9485,9 +8042,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/tender_notice/getdata",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9505,9 +8059,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/document_sub_category/department_category_get",
@@ -9519,9 +8070,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/document_sub_category/department_category_get",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9539,9 +8087,6 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/class/index",
@@ -9553,9 +8098,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/class/index",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9573,9 +8115,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/course/store",
@@ -9587,9 +8126,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/course/store",
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
       "UpstreamHttpMethod": [
         "Post"
       ]
@@ -9607,9 +8143,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/course/course_delete",
@@ -9621,9 +8154,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/course/course_delete",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9641,9 +8171,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/class/class_delete",
@@ -9655,9 +8182,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/class/class_delete",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9675,9 +8199,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/class/class_edit2",
@@ -9689,9 +8210,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/class/class_edit2",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9709,9 +8227,6 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/event/event_list",
@@ -9723,9 +8238,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/event/event_list",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9743,9 +8255,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/quiz/store",
@@ -9757,9 +8266,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/quiz/store",
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
       "UpstreamHttpMethod": [
         "Post"
       ]
@@ -9777,9 +8283,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/coursepreview/coursepreview_list",
@@ -9791,9 +8294,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/coursepreview/coursepreview_list",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9811,9 +8311,6 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/notice/notice_list",
@@ -9825,9 +8322,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/notice/notice_list",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9845,9 +8339,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/ethictest",
@@ -9859,9 +8350,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/ethictest",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9879,9 +8367,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/ethictest/show",
@@ -9893,9 +8378,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/ethictest/show",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9913,9 +8395,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/ethictest/update",
@@ -9927,9 +8406,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/ethictest/update",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -9947,9 +8423,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/ethictest/delete",
@@ -9961,9 +8434,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/ethictest/delete",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -9981,9 +8451,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/ethic/quiz",
@@ -9995,9 +8462,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/ethic/quiz",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10015,9 +8479,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/localadaptationtest",
@@ -10029,9 +8490,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/localadaptationtest",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10049,9 +8507,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/localadaptationtest/show",
@@ -10063,9 +8518,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/localadaptationtest/show",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10083,9 +8535,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/localadaptationtest/update",
@@ -10097,9 +8546,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/localadaptationtest/update",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -10117,9 +8563,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/localadaptationtest/delete",
@@ -10131,9 +8574,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/localadaptationtest/delete",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10151,9 +8591,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/localadaptation/quiz",
@@ -10165,9 +8602,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/localadaptation/quiz",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10185,9 +8619,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearningquestion",
@@ -10199,9 +8630,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearningquestion",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10219,9 +8647,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/question_long/show/{id}",
@@ -10233,9 +8658,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/question_long/show/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10253,9 +8675,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/question_long/update",
@@ -10267,9 +8686,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/question_long/update",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -10287,9 +8703,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/question_long/delete",
@@ -10301,9 +8714,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/question_long/delete",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10321,9 +8731,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/question_short/store",
@@ -10335,9 +8742,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/question_short/store",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -10355,9 +8759,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/question_short/edit/{id}",
@@ -10369,9 +8770,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/question_short/edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10389,9 +8787,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/question_mcq/store",
@@ -10403,9 +8798,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/question_mcq/store",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -10423,9 +8815,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/question_mcq/update",
@@ -10437,9 +8826,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/question_mcq/update",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -10457,9 +8843,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/question_true/edit/{id}",
@@ -10471,9 +8854,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/question_true/edit/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10491,9 +8871,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/question_true/show/{id}",
@@ -10505,9 +8882,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/question_true/show/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10525,9 +8899,6 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/examtest",
@@ -10539,9 +8910,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/examtest",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10559,9 +8927,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/question_quiz/store",
@@ -10573,9 +8938,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/question_quiz/store",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -10593,9 +8955,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearningadminqa",
@@ -10607,9 +8966,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearningadminqa",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10627,9 +8983,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/adminqa/fetch",
@@ -10641,9 +8994,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/adminqa/fetch",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10661,9 +9011,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reply/index",
@@ -10675,9 +9022,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/reply/index",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10695,9 +9039,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reply/store",
@@ -10709,9 +9050,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/reply/store",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -10729,9 +9067,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/question_quiz/update",
@@ -10743,9 +9078,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/question_quiz/update",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -10763,9 +9095,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/quiz/view",
@@ -10777,9 +9106,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/quiz/view",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10797,9 +9123,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/adminevent_list",
@@ -10811,9 +9134,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/adminevent_list",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10831,9 +9151,6 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/adminevent",
@@ -10845,9 +9162,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/adminevent",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10865,9 +9179,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/event/edit",
@@ -10879,9 +9190,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/event/edit",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10899,9 +9207,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/event/fetch",
@@ -10913,9 +9218,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/event/fetch",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10933,9 +9235,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/exam/fetch",
@@ -10947,9 +9246,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/exam/fetch",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -10967,9 +9263,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/examtest/edit",
@@ -10981,9 +9274,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/examtest/edit",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11001,9 +9291,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/examtest/delete",
@@ -11015,9 +9302,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/examtest/delete",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11035,9 +9319,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/exam/quiz",
@@ -11049,9 +9330,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/exam/quiz",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11069,9 +9347,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/reply/delete",
@@ -11083,9 +9358,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/reply/delete",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11103,9 +9375,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/notice/notice_edit",
@@ -11117,9 +9386,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/notice/notice_edit",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11137,9 +9403,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/notice/notice_update",
@@ -11151,9 +9414,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/notice/notice_update",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -11171,9 +9431,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/class/class_update",
@@ -11185,9 +9442,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/class/class_update",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -11205,9 +9459,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/class/quiz",
@@ -11219,9 +9470,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/class/quiz",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11239,9 +9487,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/generatepdf/{id}",
@@ -11253,9 +9498,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/generatepdf/{id}",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11273,9 +9515,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/course/course_update",
@@ -11287,9 +9526,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/course/course_update",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -11307,9 +9543,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/course/exam",
@@ -11321,9 +9554,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/course/exam",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11341,9 +9571,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearning/cpd",
@@ -11355,9 +9582,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearning/cpd",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11375,9 +9599,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/ratings/store",
@@ -11389,9 +9610,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/ratings/store",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11409,9 +9627,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearningCart",
@@ -11423,9 +9638,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearningCart",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11443,9 +9655,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/elearningCart/remove",
@@ -11457,9 +9666,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/elearningCart/remove",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11477,9 +9683,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/razorsummarypayment",
@@ -11491,9 +9694,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/razorsummarypayment",
-      "UpstreamHttpMethod": [
-        "Post"
-      ]
       "UpstreamHttpMethod": [
         "Post"
       ]
@@ -11511,9 +9711,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/webportal/member/store",
@@ -11525,9 +9722,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/webportal/member/store",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -11545,9 +9739,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/member/member_listDrupal",
@@ -11559,9 +9750,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/member/member_listDrupal",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11579,9 +9767,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/member/member_fetch",
@@ -11593,9 +9778,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/member/member_fetch",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11613,9 +9795,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/member/member_update",
@@ -11627,9 +9806,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/member/member_update",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -11647,9 +9823,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/webportal/member_bulk/store",
@@ -11661,9 +9834,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/webportal/member_bulk/store",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -11681,9 +9851,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/valuer/specialRequest",
@@ -11695,9 +9862,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/valuer/specialRequest",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11715,9 +9879,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/instruction/government/store",
@@ -11729,9 +9890,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/instruction/government/store",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11749,9 +9907,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/instruction/appointment",
@@ -11763,9 +9918,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/instruction/appointment",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11783,9 +9935,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/instruction/tasksubmission",
@@ -11797,9 +9946,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/instruction/tasksubmission",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -11817,9 +9963,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/instruction/task/store",
@@ -11831,9 +9974,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/instruction/task/store",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -11851,9 +9991,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/instruction/upwardapproval",
@@ -11865,9 +10002,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/instruction/upwardapproval",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -11885,9 +10019,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/instruction/stakeholderApproval",
@@ -11899,9 +10030,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/instruction/stakeholderApproval",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -11919,9 +10047,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/report/fetch",
@@ -11933,9 +10058,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/report/fetch",
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
       "UpstreamHttpMethod": [
         "Get"
       ]
@@ -11953,9 +10075,6 @@
       "UpstreamHttpMethod": [
         "GET"
       ]
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/catagory_create",
@@ -11967,9 +10086,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/catagory_create",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -11987,9 +10103,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/course/catagory_fetch",
@@ -12001,9 +10114,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/course/catagory_fetch",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -12021,9 +10131,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/level/getAll",
@@ -12035,9 +10142,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/level/getAll",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -12055,9 +10159,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/level_show",
@@ -12069,9 +10170,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/level_show",
-      "UpstreamHttpMethod": [
-        "GET"
-      ]
       "UpstreamHttpMethod": [
         "GET"
       ]
@@ -12089,9 +10187,6 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
     },
     {
       "DownstreamPathTemplate": "/api/level_update",
@@ -12103,9 +10198,6 @@
         }
       ],
       "UpstreamPathTemplate": "/api/gateway/level_update",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
       "UpstreamHttpMethod": [
         "POST"
       ]

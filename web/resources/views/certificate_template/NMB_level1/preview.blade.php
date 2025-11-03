@@ -188,7 +188,7 @@
     }
 
     .nmb-logo {
-       
+
         /* NMB blue or choose your color */
         padding: 10px;
         display: inline-block;
@@ -250,8 +250,7 @@
 
                                                 @if(!empty($template['logo_url']))
                                                 <img class="img-responsive"
-                                                
-                                                    src="{{ $template['logo_url'] }}"
+                                                    src="{{ config('setting.api_url') .  $template['logo_url'] }}"
                                                     alt="Certificate Logo">
                                                 @else
                                                 <p>No logo available</p>
@@ -305,6 +304,25 @@
 
 
                                         <div class="signatures">
+
+
+                                            @if(!empty($template1))
+                                            <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 40px;">
+                                                <div style="text-align: center;">
+                                                    <div style="margin-bottom: 5px;">
+                                                        <img src="{{ config('setting.api_url') . $template1[0]['signature_path'] }}"
+                                                            alt="Signature"
+                                                            style="width: 120px; height: auto;">
+                                                    </div>
+                                                    <div style="width: 150px; border-top: 1px solid #000; margin: 8px auto;"></div>
+                                                    <div style="font-size: 14px;">
+                                                        {{ $template1[0]['name'] }}<br>
+                                                        <small>{{ $template1[0]['title'] }}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @else
                                             <div class="signature"><br><br><br>
                                                 <img src="{{asset('images/Certificate_template/NMB_level1/lorna.PNG')}}"
                                                     alt="Lorna Signature" class="signature-img">
@@ -312,14 +330,8 @@
                                                 Lorna Alvarado<br>
                                                 <small>CEO of Wardiere Inc.</small>
                                             </div>
-                                            <div class="signature"><br><br><br>
-                                                <div class="newsign"><img
-                                                        src="{{asset('images/Certificate_template/NMB_level1/silva.PNG')}}"
-                                                        alt="Juliana Signature" class="signature-img"><br></div>
-                                                <div class="signature-line"></div>
-                                                Juliana Silva<br>
-                                                <small>Event Director</small>
-                                            </div>
+
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

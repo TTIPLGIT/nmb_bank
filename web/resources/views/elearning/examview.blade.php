@@ -291,7 +291,7 @@
     <section class="section">
         <div class="section-body mt-1">
             <div class="row">
-                {{ Breadcrumbs::render('exam.quiz') }}
+                <!-- {{ Breadcrumbs::render('exam.quiz') }} -->
                 <h2 id="quizHeader" class="col-12 mb-4 text-center">
                     {{$quizName}}
                 </h2>

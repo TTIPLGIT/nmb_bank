@@ -65,6 +65,7 @@ class AttendanceController extends BaseController
 
             $rows['courses'] = DB::table('elearning_courses')
                 ->select('course_id', 'course_name')
+                ->where('drop_course',0)
                 ->get();
 
 
