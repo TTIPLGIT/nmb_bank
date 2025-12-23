@@ -300,13 +300,7 @@
     <section class="section">
         <div class="section-body mt-1">
             <div class="row">
-                <div class="breadcrumb-inline">
-                    {{ Breadcrumbs::render('exam.quiz') }}
-                </div>
-
-
-
-
+                <!-- {{ Breadcrumbs::render('exam.quiz') }} -->
                 <h2 id="quizHeader" class="col-12 mb-4 text-center">
                     {{$quizName}}
                 </h2>

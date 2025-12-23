@@ -1217,6 +1217,7 @@
             font-size: 20px;
             font-weight: bold;
             background: #eaf6ff;
+            margin-right: -150px;
             /* soft blue background */
             color: #1c3f5e;
             /* dark blue text */
@@ -1474,6 +1475,11 @@
                                 <span>Leaderboard</span>
                             </a>
                         </li>
+
+
+
+
+
                         <li>
                             <a href="/elearningDashboard" class="nav-link">
                                 <i class="sidebar-icons fa fa-arrow-left" aria-hidden="true"></i>
@@ -1521,7 +1527,13 @@
 
 
                         <li>
-                            <a href="#" class="nav-link sidebar_links"
+                            <a href="http://20.255.58.187:8001/#/" class="nav-link sidebar_links">
+                                <i class="sidebar-icons fa fa-sign-out" aria-hidden="true"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a href="" class="nav-link sidebar_links"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="sidebar-icons fa fa-sign-out" aria-hidden="true"></i>
                                 <span>Logout</span>
@@ -1532,7 +1544,7 @@
                             </form>
 
                             </form>
-                        </li>
+                        </li> -->
 
                         <!-- <li>
                             <a href="" class="nav-link">
@@ -1652,11 +1664,10 @@
 
                 // Build new HTML with the returned data
                 var html = `
-       
-            <i id="level" class="${data.level_icon}"></i>
-            <span class="level-text">${data.level_name.toUpperCase()}</span>
-       
-    `;
+    <i id="level" class="${data.level_icon}"></i>
+    <span class="level-text"style="font-size:15px">${data.level_name.toUpperCase()}</span>
+`;
+
 
                 // Append it to the container
                 container.append(html);

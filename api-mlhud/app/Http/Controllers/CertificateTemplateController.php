@@ -247,6 +247,7 @@ class CertificateTemplateController extends BaseController
                 'rows' => $rows,
                 'rows1' => $rows1
             ];
+
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');

@@ -1496,6 +1496,15 @@ class elearningEthnicTestController extends BaseController
                 ->where('course_id', $id)
                 ->first();
 
+            $courseDetailsLists = DB::table('elearning_courses as ec')
+                ->leftJoin('course_catagory as cc', 'ec.course_category', '=', 'cc.catagory_id')
+                ->where('ec.drop_course', 0)
+                ->select(
+                    'ec.*',
+                    'cc.*'
+                )
+                ->get();
+// dd($courseDetailsLists);
             if ($results && $courseDetailslist) {
                 $old_cptPoints = $results->total_cptpoints;
                 $new_cptPoints = $courseDetailslist->course_cpt_points;
@@ -1595,6 +1604,8 @@ class elearningEthnicTestController extends BaseController
 
 
 
+            
+        
             return view('elearning.class', compact('expiryMessage', 'courseDetails', 'classContents', 'selected_class', 'courseContents', 'classOrder', 'isForum', 'questionAdded', 'askedQuestions', 'noQuestionsYet', 'modules', 'screens', 'menus', 'user_id', 'courseresorces', 'counts', 'audio_exist', 'video_exist', 'pdf_exist', 'course_certificate', 'quizzesWithKey', 'quiz_results', 'ratings', 'average_ratting'));
         } catch (\Exception $exc) {
             // dd("welcome da");
@@ -1657,7 +1668,7 @@ class elearningEthnicTestController extends BaseController
             $courseContents = DB::select("SELECT * FROM elearning_classes WHERE drop_class=0  ORDER BY FIELD(class_id,$classOrder)");
             //dd($courseContents);
             $classContents = DB::select("SELECT * FROM elearning_courses where course_id= $id and drop_course=0 ");
-            // dd($classContents);
+            dd($classContents);
 
             $class_array = explode(',', $classContents[0]->course_classes);
             $selected_class = [];

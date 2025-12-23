@@ -340,8 +340,13 @@ class GamificationLevelController extends BaseController
 
             $levels = DB::table('gamification_levels')->orderBy('min_point')->get();
             $uamRoles = DB::table('uam_roles')->get();
-            $designaiton = DB::table('designation')->get();
-            $elearning_courses = DB::table('elearning_courses')->get();
+            $designaiton = DB::table('designation')
+            ->where('active_flag', 0)
+            ->get();
+            $elearning_courses = DB::table('elearning_courses')
+            ->where('drop_course', 0)
+            ->get();
+        
             $default_level_icon = $levels->first()->level_icon ?? null;
 
             foreach ($leaderboard as $user) {
@@ -586,8 +591,8 @@ class GamificationLevelController extends BaseController
                     'top3'              => $enrichedLeaderboard->take(3),
                     'metric_type'       => $metric,
                     'role'              => DB::table('uam_roles')->get(),
-                    'designation'       => DB::table('designation')->get(),
-                    'elearning_courses' => DB::table('elearning_courses')->get(),
+                    'designation'       => DB::table('designation')->where('active_flag',0)->get(),
+                    'elearning_courses' => DB::table('elearning_courses')->where('drop_course',0)->get(),
                     'level_icon'        => $default_level_icon,
                     'rewardsGrouped'    => $rewardsGrouped,
                     'currentUserRank'   => $currentUserRank,

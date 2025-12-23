@@ -330,13 +330,12 @@
             
             <div class="signature" style="margin-top:-100px;">
                 @if ($signatory->signature_path)
-                <img src="{{ config('setting.api_url') . $signatory->signature_path }}" class="signature-img">
+                <img src="{{ config('setting.image_path') . $signatory->signature_path }}" class="signature-img">
 
                 @endif
-                <div class="signature-line" style="margin-top:-14px;"></div>
+                <div class="signature-line"></div>
                 {{ $signatory->name }}<br>
                 <small>{{ $signatory->title }}</small>
-               
             </div>
             @endforeach
         </div>

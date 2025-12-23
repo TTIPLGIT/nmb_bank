@@ -1,6 +1,7 @@
 @extends('layouts.course')
 
 @section('content')
+
 <style>
     /* remove card bocy shadow */
     .noShadow .card-body {
@@ -1269,6 +1270,7 @@
     @endif
     <?php if ($classContent->class_format == 'mp4' && $classContent->class_status == 1) { ?>
 
+
         <video class="coursetypes videos" src="../../uploads/class/126/{{$classContent->resource_name}}"
             data-poster="../..{{$classContent->resource_path}}/{{$classContent->resource_name}}" frameborder="0"
             allowfullscreen controls width="100%">
@@ -1342,6 +1344,7 @@
                     </div>
                 </div>
             </div>
+
             <br>
 
 
@@ -1623,9 +1626,9 @@
             </div>
         </div>
     </div>
-    <!-- Chatbot Floating Icon -->
-    <div id="chatIcon1"
-        style="
+   <!-- Chatbot Floating Icon -->
+<div id="chatIcon1"
+    style="
         position: fixed;
         bottom: 30px;
         right: 30px;
@@ -1642,125 +1645,24 @@
         z-index: 9999;
         transition: transform 0.2s ease-in-out;
     ">
-        <i class="fa fa-comments" style="font-size: 26px;"></i>
-    </div>
+    <i class="fa fa-comments" style="font-size: 26px;"></i>
+</div>
 
     <!-- Chatbot Window -->
     <div id="chatbotContainer"
-        style="
-        position: fixed;
-        bottom: 100px;
-        right: 30px;
-        width: 360px;
-        display: none;
-        z-index: 9999;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        font-family: 'Segoe UI', sans-serif;
-    ">
-        <div class="card border-0 shadow rounded-4">
-            <!-- Header -->
-            <div class="card-header d-flex justify-content-between align-items-center"
-                style="
-                background: linear-gradient(135deg, #007bff, #00bfff);
-                color: #fff;
-                font-weight: 600;
-                font-size: 16px;
-                padding: 12px 15px;
-            ">
-                🤖 TALENTRA Chatbot
-                <button class="btn btn-sm btn-light close-chat1"
-                    style="
-                    font-size: 18px;
-                    font-weight: bold;        
-                    line-height: 1;
-                    color: #007bff;
-                ">&times;</button>
+        style="position: fixed; bottom: 100px; right: 30px; width: 320px; display: none; z-index: 9999;">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                TALENTRA Chatbot
+                <button class="btn btn-sm btn-light close-chat1" style="padding: 0 8px;">&times;</button>
             </div>
-
-            <!-- Chat Body -->
-            <div class="card-body p-3" id="chatLog"
-                style="
-        height: 350px;
-        overflow-y: auto;
-        background: #f8f9fc;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        font-size: 14px;
-    ">
-                <!-- Welcome message -->
-                <div class="p-2 rounded"
-                    style="
-            align-self: flex-start;
-            max-width: 85%;
-           
-            color: #333;
-            border-radius: 10px 10px 10px 0;
-        ">
-                    <p style="background: #e9ecef; color: #000;margin-left:-10px; padding: 8px 12px; border-radius: 10px; max-width:100%;">Hello! 👋 This is <b>TALENTRA</b> Chatbot. How can I help you today?</p>
-                </div>
+            <div class="card-body" style="height: 300px; overflow-y: auto;" id="chatLog"></div>
+            <div class="card-footer p-2">
+                <input type="text" class="form-control" id="chatInput" placeholder="Ask a question...">
+                <button class="btn btn-primary btn-sm mt-2 w-100" id="sendBtn1">Send</button>
             </div>
-
-
-            <!-- Footer -->
-            <div class="card-footer bg-white p-2 border-0" style="display: flex; gap: 8px; align-items: center;">
-                <input type="text" class="form-control" id="chatInput"
-                    placeholder="Type your message..."
-                    style="
-            flex: 1;
-            background: #f1f3f6;
-            border: none;
-            border-radius: 25px;
-            padding: 12px 16px;
-            font-size: 14px;
-            outline: none;
-        ">
-                <button id="sendBtn1"
-                    style="
-            padding: 10px 18px;
-            border-radius: 20px;
-            margin-top:-10px;
-            background: linear-gradient(135deg, #007bff, #00bfff);
-            border: none;
-            color: #fff;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.3s;
-        "
-                    onmouseover="this.style.opacity='0.85'"
-                    onmouseout="this.style.opacity='1'">
-                    Send
-                </button>
-            </div>
-
         </div>
     </div>
-
-    <!-- Optional: Smooth Open/Close Animation -->
-    <style>
-        #chatbotContainer.show {
-            display: block;
-            animation: slideUp 0.4s ease-in-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(30px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        #chatIcon1:hover {
-            transform: scale(1.1);
-        }
-    </style>
 </div>
 <div class="container-fluid py-3 px-5" id="qAndAContent" style="display: none;">
 
@@ -3125,6 +3027,7 @@
 
 <script>
     function completion_doc(e) {
+
         if (e.target.id == "completed_doc") {
             Swal.fire({
                 title: "Are you sure,you want to complete the class?",
@@ -3314,7 +3217,7 @@
 @endif
 
 <script>
-    const dataAttribute = '<?php echo "../../uploads/class/126/" . $classContent->resource_name; ?>';
+    const dataAttribute = '<?php echo "../../uploads/class/594/" . $classContent->resource_name; ?>';
     console.log(dataAttribute);
 
     const pdfUrl1 = dataAttribute;
@@ -3404,7 +3307,13 @@
         }
     }
 </script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const courseData = @json($courseDetail ?? []);
+    const courseDatas= @json($courseDetailsLists ?? []);
+    console.log("values",courseDatas);
+</script>
 <script>
     $(document).ready(function() {
         // Toggle chatbot window
@@ -3430,16 +3339,24 @@
       </div>
   </div>
 `);
+
+var courseId = "{{ $courseDetails[0]->course_id }}";
+console.log(courseId);
             $.ajax({
-                url: 'http://localhost:8000/ask/',
+                url: 'http://20.164.0.23:8000/ask/',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
                     question: question,
                     course_id: course_id,
-                    user_id: user_id
+                    user_id: user_id,
+                    courseData:courseData,
+                    courseDatas:courseDatas
                 }),
                 success: function(response) {
+                
+console.log("hi",response)
+                    // For bot message (left side)
                     $('#chatLog').append(`
   <div class="d-flex justify-content-start mb-2">
       <div style="background: #e9ecef; color: #000; padding: 8px 12px; border-radius: 10px; max-width:80%;text-align: justify;">
@@ -3447,6 +3364,7 @@
       </div>
   </div>
 `);
+
                     $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
                 },
                 error: function() {
@@ -3460,4 +3378,5 @@
         });
     });
 </script>
+
 @endsection

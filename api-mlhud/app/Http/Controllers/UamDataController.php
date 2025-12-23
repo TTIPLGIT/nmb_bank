@@ -17,8 +17,10 @@ class UamDataController extends BaseController
     {
 
         try {
+
             $method = 'Method => UamDataController => menu_data';
             $user_id =  auth()->user()->id;
+
             $modules['data'] = DB::select("select DISTINCT  a.module_id, b.module_name, b.class_name,a.user_id from uam_user_screens as a inner join uam_modules as b on b.module_id = a.module_id where a.user_id = $user_id");
             $screens = DB::select("select DISTINCT a.display_order,a.route_url,a.screen_id,a.screen_name,a.screen_url,a.class_name, a.module_id, a.user_id from uam_user_screens as a inner join uam_screens as b on b.screen_id = a.screen_id where a.user_id = $user_id ORDER BY a.display_order");
 
@@ -28,7 +30,7 @@ class UamDataController extends BaseController
             $user_role = $user_id1[0]->role_id;
             $profile_image = $user_id1[0]->image;
             $role = DB::select("select * from uam_roles WHERE role_id=$user_role");
-            $modules['profile_image'] =$profile_image;
+            $modules['profile_image'] = $profile_image;
             $modules['user_role'] = $role[0]->role_name;
             $user_name = DB::select("SELECT * FROM users AS u INNER JOIN uam_user_roles AS uur on u.id=uur.user_id WHERE u.id=$user_id");
             $modules['user_name'] = $user_name[0]->name;
@@ -38,6 +40,7 @@ class UamDataController extends BaseController
             $alter_name = DB::select("Select alter_name from uam_roles where active_flag=0 and role_id= $user_role");
 
             $alter_name = $alter_name[0]->alter_name;
+            $this->WriteFileLog($screens);
 
             $response = [
                 'modules' => $modules,
@@ -46,8 +49,7 @@ class UamDataController extends BaseController
 
             ];
 
-
-
+            
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
@@ -60,7 +62,7 @@ class UamDataController extends BaseController
             $exceptionResponse['ServiceMethod'] = $method;
             $exceptionResponse['Exception'] = $exc->getMessage();
             $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
-            $this->WriteFileLog( $exceptionResponse);
+            $this->WriteFileLog($exceptionResponse);
 
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.exception');
@@ -150,8 +152,8 @@ class UamDataController extends BaseController
 
     public function fillscreensbasedondash($id)
     {
-    $method = 'Method => UamDataController => fillscreensbasedondash';
-        
+        $method = 'Method => UamDataController => fillscreensbasedondash';
+
         try {
             $id = $this->decryptData($id);
 

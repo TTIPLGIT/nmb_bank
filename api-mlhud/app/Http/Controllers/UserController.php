@@ -233,9 +233,10 @@ class UserController extends BaseController
 	public function User()
 	{
 		$logMethod = 'Method => UserController => User';
-
 		try {
 			$userID = auth()->user()->id;
+			$this->WriteFileLog($userID);
+
 			$role_data = DB::table('uam_user_roles')->select('uam_user_roles.role_id', 'uam_user_roles.active_flag', 'uam_roles.alter_name')
 				->join('uam_roles', 'uam_roles.role_id', '=', 'uam_user_roles.role_id')
 				->where('uam_user_roles.user_id', $userID)
