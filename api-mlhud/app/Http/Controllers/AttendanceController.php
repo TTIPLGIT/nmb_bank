@@ -88,4 +88,33 @@ class AttendanceController extends BaseController
             ], 500);
         }
     }
+    public function showAllTable()
+    {
+        try {
+            // Step 1: Fetch all rows from the 'elearning_courses' table in ttipl_lms
+            $rows = DB::table('ttipl_lms.elearning_courses')->get();
+
+            // Step 2: Prepare service response (same structure as getAll)
+            $serviceResponse = [];
+            $serviceResponse['Code'] = config('setting.status_code.success');
+            $serviceResponse['Message'] = config('setting.status_message.success');
+            $serviceResponse['Data'] = ['elearning_courses' => $rows];
+
+            // Step 3: Convert to JSON and return using standard response method
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+
+            return $this->SendServiceResponse(
+                $serviceResponse,
+                config('setting.status_code.success'),
+                true
+            );
+        } catch (\Throwable $th) {
+            // Step 4: Handle errors properly
+            return response()->json([
+                'Code' => 500,
+                'Message' => 'Internal Server Error',
+                'Error' => $th->getMessage()
+            ], 500);
+        }
+    }
 }

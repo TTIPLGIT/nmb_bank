@@ -611,7 +611,7 @@ class elearningEthnicTestController extends BaseController
     }
     public function class_quiz(Request $request)
     {
-
+       
         $method = 'Method => elearningEthnicTestController =>class_quiz';
         try {
 
@@ -626,7 +626,9 @@ class elearningEthnicTestController extends BaseController
             $class_id = $input['class_id'];
             $course_id = $input['course_id'];
             $random_quizid = DB::select("Select quiz_id from elearning_classes where class_id=$class_id");
+            $this->WriteFileLog($random_quizid, '1');
             $random_quizid = $random_quizid[0]->quiz_id;
+            $this->WriteFileLog($random_quizid, '2');
             $randomQuiz = DB::select("Select * from elearning_practice_quiz where quiz_id= $random_quizid");
             // $randomQuiz = DB::select("Select * from elearning_ethnictest inner join elearning_practice_quiz on elearning_practice_quiz.quiz_id = elearning_ethnictest.quiz_id  where elearning_ethnictest.quiz_id=$randomNumber");
 

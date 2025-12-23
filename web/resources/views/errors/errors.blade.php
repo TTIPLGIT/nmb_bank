@@ -31,7 +31,7 @@
                 <div class="col-md-1 "></div>
                 <div class="col-md-4 width-40  text-center">
 
-                    <div class="four_zero_four_bg ">
+                    <!-- <div class="four_zero_four_bg "> -->
 
 
 
