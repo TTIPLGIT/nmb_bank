@@ -320,10 +320,6 @@
 
         </div>
 
-        <!-- <div style="display:flex; justify-content:space-between; font-weight:bold; margin-top:20px; margin-left:80px; margin-right:80px;">
-            <span style="margin-left:40px">Valid From: {{ \Carbon\Carbon::parse($data['date'])->format('d/m/Y') }}</span>
-            <span style="margin-left:30px">Valid Until: {{ \Carbon\Carbon::parse($data['validation_date'])->format('d/m/Y') }}</span>
-        </div> -->
 
 
 

@@ -1592,7 +1592,7 @@ class elearningEthnicTestController extends BaseController
                     $expiryMessage = 'Certificate Expiring Soon. Contact the supervisor';
                 }
             }
-            
+
 
 
             return view('elearning.class', compact('expiryMessage', 'courseDetails', 'classContents', 'selected_class', 'courseContents', 'classOrder', 'isForum', 'questionAdded', 'askedQuestions', 'noQuestionsYet', 'modules', 'screens', 'menus', 'user_id', 'courseresorces', 'counts', 'audio_exist', 'video_exist', 'pdf_exist', 'course_certificate', 'quizzesWithKey', 'quiz_results', 'ratings', 'average_ratting'));
@@ -2292,6 +2292,7 @@ class elearningEthnicTestController extends BaseController
                 $final_validation_date = $calculatedExpiryDate->toDateString();
                 // dd($final_validation_date);
             }
+            // dd($final_validation_date);
             $data = [
                 'date' => Carbon::today()->format('d-m-Y'),
                 'course_name' => $course_name,
@@ -2299,14 +2300,14 @@ class elearningEthnicTestController extends BaseController
                 'signatories' => $signatories,
                 'course_id' => $course_id,
                 'logo_url' =>  $certificate_template_rows[0]->logo_url,
-                'validation_date' => $final_validation_date,
+                // 'validation_date' => $final_validation_date,
 
             ];
-
+            // dd($get_template->template_name);
 
             // dd($data['logo_url']);
 
-
+            // dd($get_template->template_name);
             $pdf = PDF::loadView("certificate_template.{$get_template->template_name}.index", [
                 'data' => $data
             ]);
@@ -2394,7 +2395,6 @@ class elearningEthnicTestController extends BaseController
     // }
     public function class_quiz(Request $request, $course_id, $class_id)
     {
-        //dd($course_id);
         $method = 'Method => elearningEthnicTestController => class_quiz';
 
         try {
@@ -2407,7 +2407,7 @@ class elearningEthnicTestController extends BaseController
             $request['class_id'] = $class_id;
             $request['mlhud_id'] = $user_id;
 
-            //dd($request);
+            // dd($request);
             $encryptArray = $this->encryptData($request);
             $request = array();
 
@@ -2415,7 +2415,7 @@ class elearningEthnicTestController extends BaseController
             $gatewayURL = config('setting.api_gateway_url') . '/class/quiz';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
-            //dd($response);
+            // dd($response);
 
 
             $objData = json_decode($this->decryptData($response->Data));

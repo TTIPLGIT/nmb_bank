@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
-class AttendanceController extends BaseController
+class Elearning_chartsController extends BaseController
 {
     public function index(Request $request)
     {
@@ -24,33 +24,34 @@ class AttendanceController extends BaseController
         $screens = $menus['screens'];
         $modules = $menus['modules'];
 
-        $gatewayURL = config('setting.api_gateway_url') . '/attendance_tracking';
+        // $gatewayURL = config('setting.api_gateway_url') . '/attendance_tracking';
 
 
-        $response = json_decode(
-            $this->serviceRequest($gatewayURL, 'GET', null, 'GET')
-        );
+        // $response = json_decode(
+        //     $this->serviceRequest($gatewayURL, 'GET', null, 'GET')
+        // );
 
-        $rows = [];
-        if ($response && $response->Status == 200 && $response->Success) {
-            $objData = json_decode($this->decryptData($response->Data));
-            $parant_data = json_decode(json_encode($objData->Data), true);
-            $rows = $parant_data['rows'];
-        }
+        // $rows = [];
+        // if ($response && $response->Status == 200 && $response->Success) {
+        //     $objData = json_decode($this->decryptData($response->Data));
+        //     $parant_data = json_decode(json_encode($objData->Data), true);
+        //     $rows = $parant_data['rows'];
+        // }
 
 
-        return view("Attendance Tracking.attendance_tracking", compact('screens', 'modules', 'rows'));
+        return view("elearning_charts.charts", compact('screens', 'modules'));
+        // return view("elearning_charts.charts");
     }
 
-    public function showAllTables()
-    {
-        $tables = DB::select('SHOW TABLES');
-        $tableKey = "Tables_in_ttipl_lms";
-        $allData = [];
-        // dd($tables );
+    // public function showAllTables()
+    // {
+    //     $tables = DB::select('SHOW TABLES');
+    //     $tableKey = "Tables_in_ttipl_lms";
+    //     $allData = [];
+    //     // dd($tables );
 
-        return response()->json($tables);
-    }
+    //     return response()->json($tables);
+    // }
     //       public function showAllTables()
     //     {
     //         $tables = DB::select('SHOW TABLES');

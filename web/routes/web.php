@@ -78,6 +78,7 @@ use App\Http\Controllers\coursecategoryController;
 
 use App\Http\Controllers\GamificationLevelController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\Elearning_chartsController;
 
 Route::get('/check-openssl', function () {
     if (extension_loaded('openssl')) {
@@ -823,3 +824,6 @@ Route::get('/leaderboard-data', [App\Http\Controllers\GamificationLevelControlle
 
 Route::get('/attendance_tracking', [App\Http\Controllers\AttendanceController::class,'index']);
 Route::post('/attendance/filter', [AttendanceController::class, 'filter'])->name('attendance.filter');
+
+Route::get('/show-all-tables', [AttendanceController::class, 'showAllTables']);
+Route::get('/charts', [Elearning_chartsController::class, 'index']);

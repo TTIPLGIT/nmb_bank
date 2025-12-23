@@ -1374,7 +1374,7 @@
                     <div class="col-md-4">
                         <div class="form-group quiz">
                             <label class="">Quiz
-                                Name:</label><span>{{$quizzesWithKey[$classContent->quiz_id]->quiz_name}}</span>
+                                Name:</label><span>{{ $quizzesWithKey[$classContent->quiz_id]->quiz_name ?? 'No Quiz Assigned' }}</span>
                         </div>
                     </div>
                     <div class="col-md-4">
