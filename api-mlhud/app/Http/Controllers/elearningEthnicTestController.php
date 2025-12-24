@@ -903,8 +903,9 @@ class elearningEthnicTestController extends BaseController
 
         $method = 'Method => elearningEthnicTestController =>course_exam';
         try {
-
+           
             $userID = auth()->user()->id;
+            // $inputArray =$request;
             $inputArray = $this->decryptData($request->requestData);
 
             $input = [
@@ -912,9 +913,10 @@ class elearningEthnicTestController extends BaseController
                 'class_id' => $inputArray['class_id'],
 
             ];
+           
             $class_id = $input['class_id'];
             $course_id = $input['course_id'];
-
+            
             $random_quizid = DB::select("SELECT c.exam_id,c.*,e.exam_name,e.quiz_id from elearning_courses as c inner join elearning_exam  as e on c.exam_id=e.id where course_id=$course_id");
             $random_quizid = $random_quizid[0]->quiz_id;
 
@@ -980,6 +982,7 @@ class elearningEthnicTestController extends BaseController
     {
 
         try {
+           
             $method = 'Method => elearningEthnicTestController => exam_store';
             $user_id = auth()->user()->id;
             //$inputArray = $this->decryptData($request->requestData);
@@ -1139,7 +1142,7 @@ class elearningEthnicTestController extends BaseController
                     //         'updated_at'      => now(),
                     //     ]);
                 }
-                Mail::to($data['email'])->send(new exammail($data));
+               
             } else {
                 DB::table('user_course_relation')
                     ->where('course_id', $course_id)
@@ -1171,7 +1174,7 @@ class elearningEthnicTestController extends BaseController
                 //         'updated_at'      => now(),
                 //     ]);
 
-                Mail::to($data['email'])->send(new exammail2($data));
+                
             }
 
             $response = [

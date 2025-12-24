@@ -1504,7 +1504,7 @@ class elearningEthnicTestController extends BaseController
                     'cc.*'
                 )
                 ->get();
-// dd($courseDetailsLists);
+            // dd($courseDetailsLists);
             if ($results && $courseDetailslist) {
                 $old_cptPoints = $results->total_cptpoints;
                 $new_cptPoints = $courseDetailslist->course_cpt_points;
@@ -1604,8 +1604,8 @@ class elearningEthnicTestController extends BaseController
 
 
 
-            
-        
+
+
             return view('elearning.class', compact('expiryMessage', 'courseDetails', 'classContents', 'selected_class', 'courseContents', 'classOrder', 'isForum', 'questionAdded', 'askedQuestions', 'noQuestionsYet', 'modules', 'screens', 'menus', 'user_id', 'courseresorces', 'counts', 'audio_exist', 'video_exist', 'pdf_exist', 'course_certificate', 'quizzesWithKey', 'quiz_results', 'ratings', 'average_ratting'));
         } catch (\Exception $exc) {
             // dd("welcome da");
@@ -1668,7 +1668,7 @@ class elearningEthnicTestController extends BaseController
             $courseContents = DB::select("SELECT * FROM elearning_classes WHERE drop_class=0  ORDER BY FIELD(class_id,$classOrder)");
             //dd($courseContents);
             $classContents = DB::select("SELECT * FROM elearning_courses where course_id= $id and drop_course=0 ");
-            dd($classContents);
+            // dd($classContents);
 
             $class_array = explode(',', $classContents[0]->course_classes);
             $selected_class = [];
@@ -2524,7 +2524,7 @@ class elearningEthnicTestController extends BaseController
     }
     public function course_exam(Request $request, $course_id, $class_id)
     {
-        //dd($course_id);
+        
         $method = 'Method => elearningEthnicTestController => course_exam';
 
         try {
@@ -2532,14 +2532,16 @@ class elearningEthnicTestController extends BaseController
             if ($user_id == null) {
                 return view('auth.login');
             }
+           
             $request = array();
+           
             $request['course_id'] = $course_id;
             $request['class_id'] = $class_id;
             $request['mlhud_id'] = $user_id;
 
             $encryptArray = $this->encryptData($request);
             $request = array();
-
+           
             $request['requestData'] = $encryptArray;
             $gatewayURL = config('setting.api_gateway_url') . '/course/exam';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
@@ -2587,7 +2589,7 @@ class elearningEthnicTestController extends BaseController
     }
     public function exam_store(Request $request)
     {
-
+        // dd($request);
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return view('auth.login');
@@ -2604,20 +2606,21 @@ class elearningEthnicTestController extends BaseController
             $data['total_scores'] = $request->total_scores;
             $data['course_id'] = $request->course_id;
             $data['class_id'] = $request->class_id;
+            // dd($data);
             $course_id = $request->course_id;
 
             $encryptArray = $this->encryptData($data);
             $request = array();
 
             $request['requestData'] = $encryptArray;
-
+            // dd($request);
             $gatewayURL = config('setting.api_gateway_url') . '/course/exam/store';
 
-            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-
+            $response = $this->serviceRequest($gatewayURL, 'POST',json_encode($request), $method);
+           
             $response1 = json_decode($response);
 
-
+            
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 //dd($objData);

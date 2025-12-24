@@ -1249,6 +1249,7 @@
         <h4>Course Contents</h4>
     </div>
     <br>
+ 
     @if(isset($course_certificate[0]->get_certified) && $course_certificate[0]->get_certified == 1)
 
 
@@ -1300,7 +1301,7 @@
 
         <center>
             <h1 style="color: green"></h1>
-            <h3 style="overflow:hidden !important;">{{$classContent->class_name}}</h3>
+            <!-- <h3 style="overflow:hidden !important;">{{$classContent->class_name}}</h3> -->
             <!-- <div class="pdf-containercompleted" id="pdf-containercompleted">
 
 
@@ -1312,14 +1313,14 @@
             <div class="container mt-4">
                 <div class="row g-4 align-items-start">
                     <!-- Left: Class -->
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card shadow-sm border-0 rounded-4">
-                            <div class="card-header bg-primary text-white fw-semibold text-center rounded-top-4">
+                            <!-- <div class="card-header bg-primary text-white fw-semibold text-center rounded-top-4">
                                 Class
-                            </div>
+                            </div> -->
                             <div class="card-body p-2 text-center" style="background-color: #f8f9fc;">
                                 <object class="coursetypes"
-                                    data="../../uploads/class/126/{{$classContent->resource_name}}#toolbar=0"
+                                    data="../../uploads/class/126/{{$classContent->resource_name}}"
                                     width="100%" height="400"
                                     style="border-radius: 8px; border: 1px solid #ddd;">
                                 </object>
@@ -1328,7 +1329,7 @@
                     </div>
 
                     <!-- Right: Course Introduction -->
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <div class="card shadow-sm border-0 rounded-4">
                             <div class="card-header bg-primary text-white fw-semibold text-center rounded-top-4">
                                 Course Introduction
@@ -1341,7 +1342,7 @@
                                 </object>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

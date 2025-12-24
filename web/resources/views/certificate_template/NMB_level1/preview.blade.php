@@ -304,7 +304,7 @@
 
 
                                         <div class="signatures">
-
+                                            
 
                                             @if(!empty($template1))
                                             <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 40px;">

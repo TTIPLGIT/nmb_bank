@@ -343,7 +343,7 @@
                 @foreach ($data['signatories'] as $signatory)
                 <div class="signature">
                     @if ($signatory->signature_path)
-                    <img src="{{ config('setting.image_path') . $signatory->signature_path }}" class="signature-img">
+                    <img src="{{ config('setting.logo_url') . $signatory->signature_path }}" class="signature-img">
 
                     @endif
                     <div class="signature-line"></div>
