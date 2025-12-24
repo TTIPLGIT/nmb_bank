@@ -14,7 +14,7 @@ class elearningdashboardgtController extends BaseController
 {
     public function dashboard(Request $request)
     {
-      
+
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return view('auth.login');
@@ -30,7 +30,7 @@ class elearningdashboardgtController extends BaseController
             $gatewayURL = config('setting.api_gateway_url') . '/elearningDashboard';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
-           
+
             $objData = json_decode($this->decryptData($response->Data));
             $code = $objData->Code;
             if ($code == "401") {
@@ -44,17 +44,19 @@ class elearningdashboardgtController extends BaseController
             $screens = $menus['screens'];
             $modules = $menus['modules'];
 
-            
+
             if ($response->Status == 200 && $response->Success) {
                 $objData = json_decode($this->decryptData($response->Data));
                 if ($objData->Code == 200) {
                     $parant_data = json_decode(json_encode($objData->Data), true);
                     $rows = $parant_data['rows'];
                     $count = $parant_data['dasboardCount'];
-                   
+
                     $recommended = $parant_data['recomment_courses'];
-                    
-                    return view('elearning.dashboard', compact('rows', 'menus', 'screens', 'modules', 'user_id', 'recommended', 'count'));
+                    $total_cpd_points = $parant_data['total_cpd_points'];
+                    $completed_courses = $parant_data['completed_courses'];
+                  
+                    return view('elearning.dashboard', compact('rows', 'menus', 'screens', 'modules', 'user_id', 'recommended', 'count', 'total_cpd_points'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -67,9 +69,9 @@ class elearningdashboardgtController extends BaseController
         }
     }
 
-     public function your_achievements(Request $request)
+    public function your_achievements(Request $request)
     {
-      
+
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return view('auth.login');
@@ -85,7 +87,7 @@ class elearningdashboardgtController extends BaseController
             $gatewayURL = config('setting.api_gateway_url') . '/yourAchievements';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
-           
+
             $objData = json_decode($this->decryptData($response->Data));
             $code = $objData->Code;
             if ($code == "401") {
@@ -99,15 +101,15 @@ class elearningdashboardgtController extends BaseController
             $screens = $menus['screens'];
             $modules = $menus['modules'];
 
-           
+
             if ($response->Status == 200 && $response->Success) {
                 $objData = json_decode($this->decryptData($response->Data));
                 if ($objData->Code == 200) {
                     $rawResults = json_decode(json_encode($objData->Data), true);
-                   
-                
-                   
-                   
+
+
+
+
                     return view('achievements.your_achievement', compact('menus', 'screens', 'modules', 'rawResults'));
                 }
             } else {
@@ -148,7 +150,7 @@ class elearningdashboardgtController extends BaseController
                 // $this->WriteFileLog($filePath);
 
                 $filePath = substr($filePath, 1);
-                 $this->WriteFileLog('$rows');
+                $this->WriteFileLog('$rows');
                 //     $this->WriteFileLog('uploads/notice/126/Screenshot-(4).png');
                 if (file_exists($filePath)) {
                 } else {

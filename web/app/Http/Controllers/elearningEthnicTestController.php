@@ -2234,7 +2234,7 @@ class elearningEthnicTestController extends BaseController
 
     public function generatePDF(Request $request, $id)
     {
-        // dd($id);
+
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return redirect(url('/'));
@@ -2252,7 +2252,7 @@ class elearningEthnicTestController extends BaseController
 
             $name = $this->getusername($user_id);
 
-
+            //  dd($id);
             DB::table('user_course_relation')
                 ->where('course_id', $id)
                 ->where('user_id', $user_id)
@@ -2260,6 +2260,7 @@ class elearningEthnicTestController extends BaseController
                     'get_certified' => "1",
 
                 ]);
+
             $certificate_template_id = $course_details[0]->cetificate_template;
 
             $signatories  = DB::table('certificate_template_signatories')
@@ -2283,7 +2284,7 @@ class elearningEthnicTestController extends BaseController
                 ->get();
 
             $calculate_date = $courseDetails[0]->certificate_expiry;
-
+           
             if ($courseDetails[0]->expiry_type == 'month' && !empty($courseDetails[0]->expiry_input)) {
 
                 $today = \Carbon\Carbon::today();
@@ -2304,6 +2305,7 @@ class elearningEthnicTestController extends BaseController
                 // dd($final_validation_date);
             }
             // dd($final_validation_date);
+            
             $data = [
                 'date' => Carbon::today()->format('d-m-Y'),
                 'course_name' => $course_name,
@@ -2314,6 +2316,7 @@ class elearningEthnicTestController extends BaseController
                 // 'validation_date' => $final_validation_date,
 
             ];
+           
             // dd($get_template->template_name);
 
             // dd($data['logo_url']);
@@ -2322,7 +2325,7 @@ class elearningEthnicTestController extends BaseController
             $pdf = PDF::loadView("certificate_template.{$get_template->template_name}.index", [
                 'data' => $data
             ]);
-            // dd($pdf);
+            
 
             // dd($data);
 
@@ -2524,7 +2527,7 @@ class elearningEthnicTestController extends BaseController
     }
     public function course_exam(Request $request, $course_id, $class_id)
     {
-        
+
         $method = 'Method => elearningEthnicTestController => course_exam';
 
         try {
@@ -2532,16 +2535,16 @@ class elearningEthnicTestController extends BaseController
             if ($user_id == null) {
                 return view('auth.login');
             }
-           
+
             $request = array();
-           
+
             $request['course_id'] = $course_id;
             $request['class_id'] = $class_id;
             $request['mlhud_id'] = $user_id;
 
             $encryptArray = $this->encryptData($request);
             $request = array();
-           
+
             $request['requestData'] = $encryptArray;
             $gatewayURL = config('setting.api_gateway_url') . '/course/exam';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
@@ -2616,11 +2619,11 @@ class elearningEthnicTestController extends BaseController
             // dd($request);
             $gatewayURL = config('setting.api_gateway_url') . '/course/exam/store';
 
-            $response = $this->serviceRequest($gatewayURL, 'POST',json_encode($request), $method);
-           
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+
             $response1 = json_decode($response);
 
-            
+
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 //dd($objData);
@@ -2655,7 +2658,7 @@ class elearningEthnicTestController extends BaseController
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/cpd';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
-            //dd($response);
+            // dd($response);
 
             $objData = json_decode($this->decryptData($response->Data));
             //dd($objData);

@@ -909,7 +909,6 @@ class tryController extends BaseController
             $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
 
             $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
-
             // dd( $storagepath_ursb_old);
             if (!File::exists($storagepath_ursb_old)) {
 

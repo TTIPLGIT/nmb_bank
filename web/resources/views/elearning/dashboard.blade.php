@@ -1278,7 +1278,7 @@
                                 src="{{asset('asset/image/trophy.png')}}" alt="Credits Earned" width="40%">
                         </div>
                         <div class="justify-content-between align-items-center">
-                            <span class="overview_count">{{$count['cpt_points'][0]['cpt_points']}}</span><br>
+                            <span class="overview_count">{{ $total_cpd_points['total_points'] }}</span><br>
                             <span class="card-span">Credits Earned</span>
                         </div>
                     </div>
