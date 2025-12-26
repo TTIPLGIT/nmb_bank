@@ -1301,11 +1301,11 @@
 
         <center>
             <h1 style="color: green"></h1>
-            <!-- <h3 style="overflow:hidden !important;">{{$classContent->class_name}}</h3> -->
-            <!-- <div class="pdf-containercompleted" id="pdf-containercompleted">
+            <h3 style="overflow:hidden !important;">{{$classContent->class_name}}</h3>
+            <div class="pdf-containercompleted" id="pdf-containercompleted">
 
 
-            </div> -->
+            </div>
             @php
             $courseIntroFullPath = $courseDetails[0]->introduction_path . '/' . $courseDetails[0]->course_introduction;
             @endphp
