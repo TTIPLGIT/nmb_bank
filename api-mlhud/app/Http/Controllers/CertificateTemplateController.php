@@ -60,7 +60,7 @@ class CertificateTemplateController extends BaseController
         try {
             $inputArray = $this->decryptData($request->requestData);
             $entries = $inputArray['details'] ?? [];
-            // $this->WriteFileLog($inputArray);
+            
 
             // $template_id = $inputArray['details'][0]['certificate_templates_id'];
             // $this->WriteFileLog($template_id);
@@ -71,125 +71,73 @@ class CertificateTemplateController extends BaseController
                     false
                 );
             }
-
-
-
             DB::transaction(function () use ($entries, $userID) {
+
                 $certificateTemplateId = $entries[0]['certificate_templates_id'] ?? null;
+
+                if (empty($certificateTemplateId)) {
+
+                    $certificateTemplateId = DB::table('certificate_templates')->insertGetId([
+                        'template_name' => $entries[0]['name'],
+                        'file_name' => $entries[0]['name'],
+                        'active_flag' => 1,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+
                 $submittedIds = [];
                 $sort = 1;
 
                 foreach ($entries as $entry) {
 
-                    $signatoryId = $entry['certificate_template_signatories_id']  ?? null;
-                    $template_id = $entry['certificate_templates_id'];
-                    // $this->WriteFileLog($template_id);
+                    $signatoryId = $entry['certificate_template_signatories_id'] ?? null;
 
-                    $name = $entry['name'];
-                    $title = $entry['designation'];
+                    // ---- SIGNATURE FILE ----
                     $relativePath = null;
-                    // $this->WriteFileLog($entry['logo_file_content']);
-
-                    // Handle new file upload or use existing path
                     if (!empty($entry['signature_file_content'])) {
-                        $fileName = $entry['signature_file_name'];
                         $fileContent = base64_decode($entry['signature_file_content']);
-
-                        $storagePath = public_path('images/signatures');
-                        if (!file_exists($storagePath)) {
-                            mkdir($storagePath, 0755, true);
-                        }
-
-                        $uniqueFileName = uniqid() . '_' . $fileName;
-                        $filePath = $storagePath . '/' . $uniqueFileName;
-                        file_put_contents($filePath, $fileContent);
-
+                        $uniqueFileName = uniqid() . '_' . $entry['signature_file_name'];
+                        file_put_contents(public_path('images/signatures/' . $uniqueFileName), $fileContent);
                         $relativePath = 'images/signatures/' . $uniqueFileName;
-                    } elseif (!empty($entry['signature_path'])) {
-                        $relativePath = $entry['signature_path'];
-                    }
-
-                    if (!empty($entry['logo_file_content'])) {
-                        $fileName1 = $entry['logo_file_name'];
-                        $fileContent1 = base64_decode($entry['logo_file_content']);
-
-                        $storagePath = public_path('images/logo');
-                        if (!file_exists($storagePath)) {
-                            mkdir($storagePath, 0755, true);
-                        }
-
-                        $uniqueFileName1 = uniqid() . '_' . $fileName1;
-                        $filePath1 = $storagePath . '/' . $uniqueFileName1;
-                        file_put_contents($filePath1, $fileContent1);
-
-                        $relativePath1 = 'images/logo/' . $uniqueFileName1;
-                    } elseif (!empty($entry['logo_path'])) {
-                        $relativePath1 = $entry['logo_path'];
-                    }
-                    if ($template_id) {
-
-                        DB::table('certificate_templates')
-                            ->where('certificate_templates_id', $template_id)
-                            ->update([
-                                'logo' => $relativePath1,
-                                'updated_at' => now(),
-                            ]);
-                    } else {
-
-                        DB::table('certificate_templates')->insertGetId([
-                            'template_name' => $templateName ?? 'New Template',
-                            'file_name'     => $fileName ?? null,
-                            'company_name'  => $companyName ?? null,
-                            'logo'          => $relativePath1,
-                            'active_flag'   => 1,
-                            'created_at'    => now(),
-                            'updated_at'    => now(),
-                        ]);
                     }
 
                     if ($signatoryId) {
-                        // Update existing signatory
-
-
                         DB::table('certificate_template_signatories')
                             ->where('certificate_template_signatories_id', $signatoryId)
                             ->update([
-                                'name' => $name,
-                                'title' => $title,
+                                'name' => $entry['name'],
+                                'title' => $entry['designation'],
                                 'signature_path' => $relativePath,
                                 'sort_order' => $sort++,
                                 'updated_at' => now(),
                             ]);
 
-
-
-                        if (!empty($signatoryId)) {
-                            $submittedIds[] = $signatoryId;
-                        }
+                        $submittedIds[] = $signatoryId;
                     } else {
-                        // Insert new signatory
                         $newId = DB::table('certificate_template_signatories')->insertGetId([
                             'certificate_template_id' => $certificateTemplateId,
-                            'name' => $name,
-                            'title' => $title,
+                            'name' => $entry['name'],
+                            'title' => $entry['designation'],
                             'signature_path' => $relativePath,
                             'sort_order' => $sort++,
                             'created_at' => now(),
                             'updated_at' => now(),
                         ]);
 
-
-
                         $submittedIds[] = $newId;
                     }
                 }
 
-                // Delete removed signatories
                 DB::table('certificate_template_signatories')
                     ->where('certificate_template_id', $certificateTemplateId)
                     ->whereNotIn('certificate_template_signatories_id', $submittedIds)
                     ->delete();
             });
+
+
+
+
 
             $serviceResponse = [
                 'Code' => config('setting.status_code.success'),

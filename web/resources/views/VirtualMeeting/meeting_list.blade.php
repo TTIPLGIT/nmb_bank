@@ -54,10 +54,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-12 text-center">
-                                    <h4>List of Certificate Template</h4>
+                                    <h4>Meeting List</h4>
                                 </div>
                                 <div class="row" style="justify-content:end">
-                                    <a type="button" href="{{route('certificate_template.create')}}" class="btn btn-labeled btn-success mb-2" title="New Template" style="border-color:#a9ca !important; color:white !important;margin: 0 0 2px 15px;">
+                                    <a type="button" class="btn btn-labeled btn-success mb-2" title="New Template" style="border-color:#a9ca !important; color:white !important;margin: 0 0 2px 15px;" data-toggle="modal" data-target="#addeducationcourseModal">
                                     <span class="btn-label" style="font-size:15px !important; padding:8px !important"><i class="fa fa-plus"></i></span><span style="font-size:15px !important; padding:8px !important">New Template</span></a>
                                 </div>
                             </div>
@@ -106,33 +106,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($rows as $key => $row)
-                                            <tr>
-                                                <td>{{ ++$key }}</td>
+                                           <tr>
 
-                                                <td>{{ $row['template_name'] }}</td>
-
-                                                <td class="text-center">
-
-
-                                                    @if(strpos($screen_permission['permissions'], 'Show') !== false)
-                                                    <a class="btn btn-link" title="Show"
-                                                        href="{{ route('certificate_template.show', \Crypt::encrypt($row['certificate_templates_id'])) }}"><i
-                                                            class="fas fa-eye" style="color:blue"></i></a>
-                                                    @endif
-                                                    @if(strpos($screen_permission['permissions'], 'Show') !== false)
-                                                    <a class="btn btn-link" title="Edit"
-                                                        href="{{ route('certificate_template.edit', \Crypt::encrypt($row['certificate_templates_id'])) }}">
-                                                        <i class="fas fa-edit" style="color:green"></i>
-                                                    </a>
-                                                    @endif
-
-
-
-                                                </td>
-
-                                            </tr>
-                                            @endforeach
+                                           </tr>
                                         </tbody>
 
                                     </table>
@@ -165,35 +141,6 @@
 
 </div>
 
-
-<script>
-    function myFunction(id) {
-
-        swal({
-            message: "Are You Sure to delete this data.",
-            title: "Confirmation For Delete ?",
-            centerVertical: true,
-            buttons: {
-                confirm: {
-                    label: 'Yes',
-                    className: 'btn-success'
-                },
-                cancel: {
-                    label: 'No',
-                    className: 'btn-danger'
-                }
-            },
-            callback: function(result) {
-                if (result == true) {
-                    var url = $('#' + id).val();
-                    window.location.href = url;
-                }
-            }
-        });
-
-
-    }
-</script>
 
 
 @endsection

@@ -67,7 +67,6 @@
     <link href="{{asset('assets/css/updated-ui.css')}}" rel="stylesheet" type="text/css" />
 
 
-
     <!-- loading gif -->
     <!-- Ck editor -->
     <script src="https://cdn.tiny.cloud/1/3r7kjxhafm9hbckihumdmitzncsve258qw14txq1wqt2jo50/tinymce/5/tinymce.min.js"
@@ -1128,6 +1127,7 @@
                                     </ul>
                                 </div>
                             </li>
+
                         </ul>
 
                     </nav>
@@ -1136,7 +1136,7 @@
                     <li class="dropdown drop_bg">
                         <a data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"
                             style=" display:flex; align-items: center;flex-direction:column;">
-                         
+
                             @if($modules['data'] != "")
 
                             <div style="width: auto;height:auto">
@@ -1145,7 +1145,7 @@
                                         <?php if (!empty($modules['profile_image'])) { ?>
                                             <img class="prof_admin" value="" src="{{ $modules['profile_image']}}">
                                         <?php  } else {   ?>
-                                            <img class="prof_admin" value="" src="{{url()->to('/')}}/images/empty.jpg">
+                                            <img class="prof_admin" value="" src="{{config('profile_url')}}/images/user_profile.jpg">
 
                                         <?php  } ?>
                                     </span>
@@ -1160,15 +1160,7 @@
                                             title="{{$modules['user_role']}}"> {{$modules['user_role']}}</span>
                                     </div>
                                 </div>
-                                <!-- <div class="profile-container" style="display: flex; justify-content:center">
-              <div class="profile-image-container">
-              <img src="http://localhost:6061/user_signature/126/YXZhdGFyNS5wbmc=.png" style="width: 25%;">
-              </div>
-              <div class="profile-details">
-              <span>Viruma</span>
-              <p>Admin</p>
-              </div>
-          </div> -->
+
                             </div>
                         </a>
 
@@ -1200,6 +1192,18 @@
                             </form>
                         </div>
                     </li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" style="display:flex;align-items:center">
+                            <i class="fa fa-language" aria-hidden="true"></i>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ route('lang.change','en') }}">English</a>
+                            <a class="dropdown-item" href="{{ route('lang.change','ta') }}">தமிழ்</a>
+                            <a class="dropdown-item" href="{{ route('lang.change','fr') }}">French</a>
+                        </div>
+                    </li>
+
 
 
                 </ul>
@@ -1219,7 +1223,7 @@
                     <ul class="sidebar-menu">
                         @if(session()->get("gd_status") != '2')
                         <li class="dropdown "><a href="{{route('admindashboard')}}" class="nav-link"><i
-                                    class="fas fa-home"></i><span>Dashboard</span></a>
+                                    class="fas fa-home"></i><span>{{ __('dashboard.dashboard') }}</span></a>
 
                         </li>
                         @endif
@@ -1264,7 +1268,7 @@
                             <a class="nav-link has-dropdown">
                                 <i class="{{$module['class_name']}}" aria-hidden="true"></i>
                                 <span>
-                                    {{$module['module_name']}}
+                                    {{ __('dashboard.'.$module['module_name']) }}
                                 </span>
                             </a>
 
@@ -1359,240 +1363,240 @@
         });
 
 
-    $.ajax({
-        url: "{{ url('/user/notifications')}}",
-        type: "POST",
-        dataType: "json",
-        async: false,
-        data: {
-            id: id,
-            _token: '{{csrf_token()}}'
-        },
-        success: function(data) {
-            //alert("das");
-            var data2 = data;
-            console.log(data2, 'A');
-            var count = data2['registration_count'][0].countflow;
-            var count2 = data2['General_notifications_count'][0].countflow;
-            var count3 = data2['approval_nrv_count'][0].countflow;
-            var count4 = data2['Elearning_notifications_count'][0].countflow;
-
-            // var count_data_1 = data2['count_data'][0].countflow;
-            // $('.badgeworkflow').text(count_data_1);
-
-            if (count == 0 && count3 == 0) {
-                $('.registration_data_list').append(
-                    '<div class="fade-in-text no_notification "><p>No new notifications</p></div>');
-            } else {
-                $('.user_name_alert').append('<span class="label user_name_alert2">' + count + '</span>');
-                for (var count = 0; count < data2['registration_data'].length; count++) {
-                    var notification_id = data2['registration_data'][count].notification_id;
-                    var alert_meg = data2['registration_data'][count].alert_meg;
-                    $('.registration_data_list').append('<li onclick="notification(' + notification_id +
-                        ')" class="notification-list-item"><p class="message">' + alert_meg +
-                        '</p></li>');
-                }
-                // NRU //
-                if ($('.user_name_alert span')) {
-                    var exist_count = $('.user_name_alert span').val();
-                }
-                for (var count = 0; count < data2['approval_nrv_data'].length; count++) {
-                    var notification_id = data2['approval_nrv_data'][count].notification_id;
-                    var alert_meg = data2['approval_nrv_data'][count].alert_meg;
-                    $('.registration_data_list').append('<li onclick="notification(' + notification_id +
-                        ')" class="notification-list-item"><p class="message">' + alert_meg +
-                        '</p></li>');
-
         $.ajax({
-            url: "{{ url('/user/notifications')}}",
-            type: "POST",
-            dataType: "json",
-            async: false,
-            data: {
-                id: id,
-                _token: '{{csrf_token()}}'
-            },
-            success: function(data) {
-                //alert("das");
-                var data2 = data;
-                console.log(data2, 'A');
-                var count = data2['registration_count'][0].countflow;
-                var count2 = data2['General_notifications_count'][0].countflow;
-                var count3 = data2['approval_nrv_count'][0].countflow;
-                var count4 = data2['Elearning_notifications_count'][0].countflow;
+                    url: "{{ url('/user/notifications')}}",
+                    type: "POST",
+                    dataType: "json",
+                    async: false,
+                    data: {
+                        id: id,
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function(data) {
+                            //alert("das");
+                            var data2 = data;
+                            console.log(data2, 'A');
+                            var count = data2['registration_count'][0].countflow;
+                            var count2 = data2['General_notifications_count'][0].countflow;
+                            var count3 = data2['approval_nrv_count'][0].countflow;
+                            var count4 = data2['Elearning_notifications_count'][0].countflow;
 
-                // var count_data_1 = data2['count_data'][0].countflow;
-                // $('.badgeworkflow').text(count_data_1);
+                            // var count_data_1 = data2['count_data'][0].countflow;
+                            // $('.badgeworkflow').text(count_data_1);
 
-                if (count == 0 && count3 == 0) {
-                    $('.registration_data_list').append(
-                        '<div class="fade-in-text no_notification "><p>No new notifications</p></div>');
-                } else {
-                    $('.user_name_alert').append('<span class="label user_name_alert2">' + count + '</span>');
-                    for (var count = 0; count < data2['registration_data'].length; count++) {
-                        var notification_id = data2['registration_data'][count].notification_id;
-                        var alert_meg = data2['registration_data'][count].alert_meg;
-                        $('.registration_data_list').append('<li onclick="notification(' + notification_id +
-                            ')" class="notification-list-item"><p class="message">' + alert_meg +
-                            '</p></li>');
-                    }
-                    // NRU //
-                    if ($('.user_name_alert span')) {
-                        var exist_count = $('.user_name_alert span').val();
-                    }
-                    for (var count = 0; count < data2['approval_nrv_data'].length; count++) {
-                        var notification_id = data2['approval_nrv_data'][count].notification_id;
-                        var alert_meg = data2['approval_nrv_data'][count].alert_meg;
-                        $('.registration_data_list').append('<li onclick="notification(' + notification_id +
-                            ')" class="notification-list-item"><p class="message">' + alert_meg +
-                            '</p></li>');
-                    }
+                            if (count == 0 && count3 == 0) {
+                                $('.registration_data_list').append(
+                                    '<div class="fade-in-text no_notification "><p>No new notifications</p></div>');
+                            } else {
+                                $('.user_name_alert').append('<span class="label user_name_alert2">' + count + '</span>');
+                                for (var count = 0; count < data2['registration_data'].length; count++) {
+                                    var notification_id = data2['registration_data'][count].notification_id;
+                                    var alert_meg = data2['registration_data'][count].alert_meg;
+                                    $('.registration_data_list').append('<li onclick="notification(' + notification_id +
+                                        ')" class="notification-list-item"><p class="message">' + alert_meg +
+                                        '</p></li>');
+                                }
+                                // NRU //
+                                if ($('.user_name_alert span')) {
+                                    var exist_count = $('.user_name_alert span').val();
+                                }
+                                for (var count = 0; count < data2['approval_nrv_data'].length; count++) {
+                                    var notification_id = data2['approval_nrv_data'][count].notification_id;
+                                    var alert_meg = data2['approval_nrv_data'][count].alert_meg;
+                                    $('.registration_data_list').append('<li onclick="notification(' + notification_id +
+                                        ')" class="notification-list-item"><p class="message">' + alert_meg +
+                                        '</p></li>');
 
-                }
+                                    $.ajax({
+                                        url: "{{ url('/user/notifications')}}",
+                                        type: "POST",
+                                        dataType: "json",
+                                        async: false,
+                                        data: {
+                                            id: id,
+                                            _token: '{{csrf_token()}}'
+                                        },
+                                        success: function(data) {
+                                            //alert("das");
+                                            var data2 = data;
+                                            console.log(data2, 'A');
+                                            var count = data2['registration_count'][0].countflow;
+                                            var count2 = data2['General_notifications_count'][0].countflow;
+                                            var count3 = data2['approval_nrv_count'][0].countflow;
+                                            var count4 = data2['Elearning_notifications_count'][0].countflow;
 
+                                            // var count_data_1 = data2['count_data'][0].countflow;
+                                            // $('.badgeworkflow').text(count_data_1);
 
+                                            if (count == 0 && count3 == 0) {
+                                                $('.registration_data_list').append(
+                                                    '<div class="fade-in-text no_notification "><p>No new notifications</p></div>');
+                                            } else {
+                                                $('.user_name_alert').append('<span class="label user_name_alert2">' + count + '</span>');
+                                                for (var count = 0; count < data2['registration_data'].length; count++) {
+                                                    var notification_id = data2['registration_data'][count].notification_id;
+                                                    var alert_meg = data2['registration_data'][count].alert_meg;
+                                                    $('.registration_data_list').append('<li onclick="notification(' + notification_id +
+                                                        ')" class="notification-list-item"><p class="message">' + alert_meg +
+                                                        '</p></li>');
+                                                }
+                                                // NRU //
+                                                if ($('.user_name_alert span')) {
+                                                    var exist_count = $('.user_name_alert span').val();
+                                                }
+                                                for (var count = 0; count < data2['approval_nrv_data'].length; count++) {
+                                                    var notification_id = data2['approval_nrv_data'][count].notification_id;
+                                                    var alert_meg = data2['approval_nrv_data'][count].alert_meg;
+                                                    $('.registration_data_list').append('<li onclick="notification(' + notification_id +
+                                                        ')" class="notification-list-item"><p class="message">' + alert_meg +
+                                                        '</p></li>');
+                                                }
 
-                if (count2 == 0) {
-                    $('.user_alert_list').append('<div class="fade-in-text"><p>No new notifications</p></div>');
-                } else {
-                    $('.user_name_alert1').append('<span class="label  user_name_alert1">' + count2 +
-                        '</span>');
-                    for (var count_1 = 0; count_1 < data2['General_notifications_data'].length; count_1++) {
-                        var notification_id = data2['General_notifications_data'][count_1].notification_id;
-                        var alert_meg = data2['General_notifications_data'][count_1].alert_meg;
-
-                        $('.user_alert_list').append('<li onclick="notification(' + notification_id +
-                            ')" class="notification-list-item"><p class="message">' + alert_meg +
-                            '</p></li>');
-                    }
-                }
-
-                function formatDateDifference(formatted_date) {
-                    var created_date = new Date(formatted_date);
-                    var current_date = new Date();
-                    var time_difference = current_date - created_date;
-                    var seconds = Math.floor(time_difference / 1000);
-                    var minutes = Math.floor(seconds / 60);
-                    var hours = Math.floor(minutes / 60);
-                    var days = Math.floor(hours / 24);
-                    var weeks = Math.floor(days / 7);
-                    var months = current_date.getMonth() - created_date.getMonth() + (12 * (current_date
-                        .getFullYear() - created_date.getFullYear()));
-                    var years = Math.floor(months / 12);
-
-                    if (years >= 1) {
-                        return years + (years === 1 ? ' year ago' : ' years ago');
-                    } else if (months >= 1) {
-                        return months + (months === 1 ? ' month ago' : ' months ago');
-                    } else if (weeks >= 1) {
-                        return weeks + (weeks === 1 ? ' week ago' : ' weeks ago');
-                    } else if (days >= 1) {
-                        return days + (days === 1 ? ' day ago' : ' days ago');
-                    } else if (hours >= 1) {
-                        return hours + (hours === 1 ? ' hour ago' : ' hours ago');
-                    } else if (minutes >= 1) {
-                        return minutes + (minutes === 1 ? ' minute ago' : ' minutes ago');
-                    } else {
-                        return 'just now';
-                    }
-                }
-
-                if (count4 == 0) {
-                    $('.user_alert_list_elearning').append(
-                        '<div class="fade-in-text"><p>No new notifications</p></div>');
-                } else {
-                    $('.user_name_alertelearning').append('<span class="label  user_name_alertelearning">' +
-                        count4 + '</span>');
-                    for (var count_4 = 0; count_4 < data2['Elearning_notifications_data'].length; count_4++) {
-                        var notification_id = data2['Elearning_notifications_data'][count_4].notification_id;
-                        var alert_meg = data2['Elearning_notifications_data'][count_4].alert_meg;
-                        var created_at = data2['Elearning_notifications_data'][count_4].created_at;
-                        var parts = created_at.split('-');
-                        var year = parts[0];
-                        var month = parts[1];
-                        var day = parts[2];
-
-                        // Create the formatted date in "dd-mm-yy" format
-                        var formatted_date = day + '-' + month + '-' + year;
-
-
-                        var time_ago = formatDateDifference(formatted_date);
-
-                        $('.user_alert_list_elearning').append('<li onclick="notification(' + notification_id +
-                            ')" class="notification-list-item"><p class="message">' + alert_meg +
-                            '</p><p>' + formatted_date + '</span></li>');
-                    }
-                }
-
-
-                // if (count3 == 0 && count == 0) {
-                //   $('.no_notification').remove();
-                //   $('.registration_data_list').append('<div class="fade-in-text no_notification"><p>No new notifications</p></div>');
-                // } else {
-                //   $('.no_notification').remove();
-                //   $('.user_name_alert1').append('<span class="label user_name_alert1">' + count3 + '</span>');
-                //   for (var count_2 = 0; count_2 < data2['approval_nrv_cdata'].length; count_2++) {
-                //     var notification_id = data2['approval_nrv_cdata'][count_2].notification_id;
-                //     var alert_meg = data2['approval_nrv_cdata'][count_2].alert_meg;
-                //     $('.registration_data_list').append('<li onclick="notification(' + notification_id + ')" class="notification-list-item"><p class="message">' + alert_meg + '</p></li>');
-                //   }
-                // }
-                var count = data2['registration_count'][0].countflow;
-                var count2 = data2['General_notifications_count'][0].countflow;
-                var count3 = data2['approval_nrv_count'][0].countflow;
-                var count4 = data2['Elearning_notifications_count'][0].countflow;
+                                            }
 
 
 
-                var usercount = count + count2 + count3 + count4;
-                $('.notify').append('<span class="badge badge-light bell_notification">' + usercount +
-                    '</span>');
-            },
-        });
+                                            if (count2 == 0) {
+                                                $('.user_alert_list').append('<div class="fade-in-text"><p>No new notifications</p></div>');
+                                            } else {
+                                                $('.user_name_alert1').append('<span class="label  user_name_alert1">' + count2 +
+                                                    '</span>');
+                                                for (var count_1 = 0; count_1 < data2['General_notifications_data'].length; count_1++) {
+                                                    var notification_id = data2['General_notifications_data'][count_1].notification_id;
+                                                    var alert_meg = data2['General_notifications_data'][count_1].alert_meg;
 
-    }
-    $(document).ready(function() {
-        //alert('fefe');
+                                                    $('.user_alert_list').append('<li onclick="notification(' + notification_id +
+                                                        ')" class="notification-list-item"><p class="message">' + alert_meg +
+                                                        '</p></li>');
+                                                }
+                                            }
 
-        notification_fetch();
+                                            function formatDateDifference(formatted_date) {
+                                                var created_date = new Date(formatted_date);
+                                                var current_date = new Date();
+                                                var time_difference = current_date - created_date;
+                                                var seconds = Math.floor(time_difference / 1000);
+                                                var minutes = Math.floor(seconds / 60);
+                                                var hours = Math.floor(minutes / 60);
+                                                var days = Math.floor(hours / 24);
+                                                var weeks = Math.floor(days / 7);
+                                                var months = current_date.getMonth() - created_date.getMonth() + (12 * (current_date
+                                                    .getFullYear() - created_date.getFullYear()));
+                                                var years = Math.floor(months / 12);
+
+                                                if (years >= 1) {
+                                                    return years + (years === 1 ? ' year ago' : ' years ago');
+                                                } else if (months >= 1) {
+                                                    return months + (months === 1 ? ' month ago' : ' months ago');
+                                                } else if (weeks >= 1) {
+                                                    return weeks + (weeks === 1 ? ' week ago' : ' weeks ago');
+                                                } else if (days >= 1) {
+                                                    return days + (days === 1 ? ' day ago' : ' days ago');
+                                                } else if (hours >= 1) {
+                                                    return hours + (hours === 1 ? ' hour ago' : ' hours ago');
+                                                } else if (minutes >= 1) {
+                                                    return minutes + (minutes === 1 ? ' minute ago' : ' minutes ago');
+                                                } else {
+                                                    return 'just now';
+                                                }
+                                            }
+
+                                            if (count4 == 0) {
+                                                $('.user_alert_list_elearning').append(
+                                                    '<div class="fade-in-text"><p>No new notifications</p></div>');
+                                            } else {
+                                                $('.user_name_alertelearning').append('<span class="label  user_name_alertelearning">' +
+                                                    count4 + '</span>');
+                                                for (var count_4 = 0; count_4 < data2['Elearning_notifications_data'].length; count_4++) {
+                                                    var notification_id = data2['Elearning_notifications_data'][count_4].notification_id;
+                                                    var alert_meg = data2['Elearning_notifications_data'][count_4].alert_meg;
+                                                    var created_at = data2['Elearning_notifications_data'][count_4].created_at;
+                                                    var parts = created_at.split('-');
+                                                    var year = parts[0];
+                                                    var month = parts[1];
+                                                    var day = parts[2];
+
+                                                    // Create the formatted date in "dd-mm-yy" format
+                                                    var formatted_date = day + '-' + month + '-' + year;
 
 
-    });
+                                                    var time_ago = formatDateDifference(formatted_date);
 
-    // $(document).click(function(){
-    //   $('ul.dropdown').children().remove();
-    //   notification_fetch();
-    // })
-
-    function notification(notificationid) {
-        var id = notificationid;
+                                                    $('.user_alert_list_elearning').append('<li onclick="notification(' + notification_id +
+                                                        ')" class="notification-list-item"><p class="message">' + alert_meg +
+                                                        '</p><p>' + formatted_date + '</span></li>');
+                                                }
+                                            }
 
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            url: "{{ url('/user/notified')}}",
-            type: "POST",
-            dataType: "json",
-            async: false,
-            data: {
-                id: id,
-                _token: '{{csrf_token()}}'
-            },
-            success: function(data) {
-
-                var url = data['notify_link'][0].notification_url;
-                window.location.href = url;
-
-            },
-        });
+                                            // if (count3 == 0 && count == 0) {
+                                            //   $('.no_notification').remove();
+                                            //   $('.registration_data_list').append('<div class="fade-in-text no_notification"><p>No new notifications</p></div>');
+                                            // } else {
+                                            //   $('.no_notification').remove();
+                                            //   $('.user_name_alert1').append('<span class="label user_name_alert1">' + count3 + '</span>');
+                                            //   for (var count_2 = 0; count_2 < data2['approval_nrv_cdata'].length; count_2++) {
+                                            //     var notification_id = data2['approval_nrv_cdata'][count_2].notification_id;
+                                            //     var alert_meg = data2['approval_nrv_cdata'][count_2].alert_meg;
+                                            //     $('.registration_data_list').append('<li onclick="notification(' + notification_id + ')" class="notification-list-item"><p class="message">' + alert_meg + '</p></li>');
+                                            //   }
+                                            // }
+                                            var count = data2['registration_count'][0].countflow;
+                                            var count2 = data2['General_notifications_count'][0].countflow;
+                                            var count3 = data2['approval_nrv_count'][0].countflow;
+                                            var count4 = data2['Elearning_notifications_count'][0].countflow;
 
 
-    }
+
+                                            var usercount = count + count2 + count3 + count4;
+                                            $('.notify').append('<span class="badge badge-light bell_notification">' + usercount +
+                                                '</span>');
+                                        },
+                                    });
+
+                                }
+                                $(document).ready(function() {
+                                    //alert('fefe');
+
+                                    notification_fetch();
+
+
+                                });
+
+                                // $(document).click(function(){
+                                //   $('ul.dropdown').children().remove();
+                                //   notification_fetch();
+                                // })
+
+                                function notification(notificationid) {
+                                    var id = notificationid;
+
+
+                                    $.ajaxSetup({
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        }
+                                    });
+
+                                    $.ajax({
+                                        url: "{{ url('/user/notified')}}",
+                                        type: "POST",
+                                        dataType: "json",
+                                        async: false,
+                                        data: {
+                                            id: id,
+                                            _token: '{{csrf_token()}}'
+                                        },
+                                        success: function(data) {
+
+                                            var url = data['notify_link'][0].notification_url;
+                                            window.location.href = url;
+
+                                        },
+                                    });
+
+
+                                }
 </script>
 
 <script>

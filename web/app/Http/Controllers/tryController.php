@@ -906,9 +906,13 @@ class tryController extends BaseController
             $data['expiry_type'] = $request->expiry_type;
             $data['expiry_input'] = $request->expiry_input;
 
+            $data['restricted_access'] = $request->restricted_access;
+            $data['course_pin'] = rand(100000, 999999);
+            $data['course_pin_created_at'] = now();
 
 
-          
+
+
             $encryptArray = $data;
 
             $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
@@ -964,7 +968,6 @@ class tryController extends BaseController
             $proposal_files2 = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
             $documentsb->move($storagepath_ursb_old2, $proposal_files2); //storing the file in the system
             $data['course_summary'] = $proposal_files2;
-            //dd($data);
 
             $encryptArray = $data;
             $request = array();
@@ -973,15 +976,14 @@ class tryController extends BaseController
 
 
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/course/store';
-
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+
             $menus = $this->FillMenu();
 
             $screens = $menus['screens'];
             $modules = $menus['modules'];
 
             $response1 = json_decode($response);
-
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
@@ -1858,5 +1860,20 @@ class tryController extends BaseController
         }
 
         //
+    }
+    public function verifyPin(Request $request)
+    {
+        $courseId = Crypt::decrypt($request->course_id);
+
+        $course = Course::where('course_id', $courseId)->first();
+
+        if ($course && $course->course_pin == $request->pin) {
+            return response()->json([
+                'status' => true,
+                'redirect' => route('elearningCourse', $request->course_id)
+            ]);
+        }
+
+        return response()->json(['status' => false]);
     }
 }
