@@ -10288,6 +10288,146 @@
         "GET",
         "POST"
       ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auditlog/logdetails",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/auditlog/logdetails",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auditlog/logdetails",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/auditlog/logdetails",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ai/course_list",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ai/course_list",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ai/ai_course_create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ai/ai_course_create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/meeting/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/meeting/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/meeting/list",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/meeting/list",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/adaptive/learning/list",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/adaptive/learning/list",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/adaptive_learning/{user_id}/{course_id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/adaptive/decide-from-db/{user_id}/{course_id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ai/recommendations/run",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ai/recommendations/run",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ai/predictive-analysis/run",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ai/predictive-analysis/run",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
     }
   ],
   "GlobalConfiguration": {
