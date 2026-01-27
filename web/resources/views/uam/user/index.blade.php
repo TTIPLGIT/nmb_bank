@@ -47,7 +47,7 @@
 
       <div class="d-flex flex-row justify-content-between user_space">
         <a type="button" style="font-size:15px;" class="btn btn-success btn-lg user_create customesize mb-2"
-          href="{{ route('user.create') }}">Create</a>
+          href="{{ route('user.create') }}">{{ autoTranslate("Create") }}</a>
         <div class="userrolecontainer">
           @if(strpos($screen_permission['permissions'], 'Create') !== false)
         <!-- <a href="{{ route('user.project_roles_list') }}" class="btn btn-warning customesize">Project Role list</a> -->

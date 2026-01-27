@@ -155,12 +155,10 @@ class tryController extends BaseController
             $comma_separated_class_ids = implode(", ", $sanitized_class_ids);
             // Run the query to retrieve course information for each class ID
             $course_mapping = DB::select("SELECT * FROM elearning_courses WHERE FIND_IN_SET(course_classes, '$comma_separated_class_ids') > 0 AND drop_course = 0");
-            $this->WriteFileLog($course_mapping);
             // Add the result to the course_mappings array
             // $course_mappings = $course_mapping;
 
             if (!empty($course_mapping)) {
-                $this->WriteFileLog("sndew");
                 $serviceResponse = array();
                 $serviceResponse['Code'] = config('setting.status_code.exception');
                 $serviceResponse['Message'] = "depend";
@@ -793,7 +791,6 @@ class tryController extends BaseController
                 $course_id = $courses_classes_single->course_id;
                 $users_course_relation = DB::select("SELECT COUNT('id') as enrolled_count FROM user_course_relation WHERE course_id=$course_id");
                 $single_course_enrolles_count = $users_course_relation[0]->enrolled_count;
-                // $this->WriteFileLog('unique in ');
                 // $co= DB::select('SELECT COUNT(course_id) AS numberofcourses  FROM user_course_relation where course_status="Enrolled"');
                 $courses_classes_all[$key1]->total_student = $single_course_enrolles_count;
             }
@@ -831,7 +828,6 @@ class tryController extends BaseController
 
         try {
             $method = 'Method => add course => course_store';
-
             $inputArray = $request->requestData;
             $user_id = (auth()->check()) ? auth()->user()->id : $inputArray['user_id'];
 
@@ -897,6 +893,8 @@ class tryController extends BaseController
                 'expired_course_id' => $inputArray['expired_course_id'],
                 'expiry_input' => $inputArray['expiry_input'],
                 'expiry_type' => $inputArray['expiry_type'],
+                'restricted_access' => $inputArray['restricted_access'],
+                'course_pin' => $inputArray['course_pin'],
 
             ];
             // $this->WriteLog($input);
@@ -946,6 +944,9 @@ class tryController extends BaseController
                         'user_ids' => $input['user_ids'],
                         'expiry_type' => $input['expiry_type'],
                         'expiry_input' => $input['expiry_input'],
+                        'restricted_access' => $input['restricted_access'],
+                        'course_pin' => $input['course_pin'],
+                        'course_pin_created_at' =>now(),
 
 
 
@@ -959,22 +960,27 @@ class tryController extends BaseController
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_courses', $update_id, 'Create', 'Course Creation', auth()->user()->id, NOW(), $role_name_fetch);
+            
+            $userIds = explode(',', $input['user_ids']);
 
-            // $email = $this->getusermail($user_id);
-            // $name = $this->getusername($user_id);
-            // $base_url = config('setting.base_url');
+            $users = DB::table('users')
+                ->whereIn('id', $userIds)
+                ->select('id', 'email', 'name')
+                ->get();
+            foreach ($users as $user) {
 
-            // $data = array(
-            //     'name' => $name,
-            //     'email' => $email,
-            //     'score' => $input['score'],
-            //     'base_url' => $base_url
-            // );
+                // Optional log to verify
+                $this->WriteFileLog($user->email, 'Sending Course PIN');
 
-            // //Mail::to($data['email'])->send(new coursecreationmail($data));
-
-            // Mail::to($data['email'])->send(new coursecreationmail($data));
-            // dispatch(new coursecreationmail($data))->dailyAt('8:00');
+                Mail::to($user->email)->send(
+                    new coursecreationmail([
+                        'name'       => $user->name,
+                        'course_pin' => $input['course_pin'],
+                        'course_name'=> $input['course_name'],
+                    ])
+                );
+            }
+            
 
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
@@ -1221,7 +1227,6 @@ class tryController extends BaseController
                 'rows' => $row,
             ];
 
-            $this->WriteFileLog($row['users']);
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');

@@ -301,6 +301,7 @@ Route::Post('/designation/update', [\App\Http\Controllers\DesignationController:
 Route::Post('/designation/store', [\App\Http\Controllers\DesignationController::class, 'store'])->name('designation.store');
 
 Route::get('/certificate_template', [\App\Http\Controllers\CertifcateTemplateController::class, 'index'])->name('certificate_template.index');
+Route::get('/certificate_template/create', [\App\Http\Controllers\CertifcateTemplateController::class, 'create'])->name('certificate_template.create');
 Route::get('/certificate_template/show/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'show'])->name('certificate_template.show');
 Route::get('/certificate_template/edit/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'edit'])->name('certificate_template.edit');
 Route::Post('/certificate_template/store', [\App\Http\Controllers\CertifcateTemplateController::class, 'store'])->name('certificate_template.store');
@@ -325,6 +326,9 @@ Route::get('/auditlog', [auditlogController::class, 'login_index'])->name('login
 Route::post('/auditlog/login', [\App\Http\Controllers\auditlogController::class, 'login_search'])->name('auditlog.login');
 Route::get('uamlog', [auditlogcontroller::class, 'uamlog'])->name('uamlog');
 Route::get('vreglog', [auditlogcontroller::class, 'vreglog'])->name('vreglog');
+Route::get('log_details', [auditlogcontroller::class, 'log_details'])->name('log_details');
+Route::post('/log_details_data', [\App\Http\Controllers\auditlogController::class, 'log_details_data'])->name('log_details_data');
+
 
 // DEEPIKA//
 // active/operation details
@@ -827,3 +831,16 @@ Route::post('/attendance/filter', [AttendanceController::class, 'filter'])->name
 
 Route::get('/show-all-tables', [AttendanceController::class, 'showAllTables']);
 Route::get('/charts', [Elearning_chartsController::class, 'index']);
+
+// AI ROUTES
+Route::get('/ai_course_list', [App\Http\Controllers\AIController::class, 'ai_course_list'])->name('ai_course_list');
+Route::get('/ai_course_create', [App\Http\Controllers\AIController::class, 'ai_course_create'])->name('ai_course_create');
+Route::get('/create-course', [App\Http\Controllers\AIController::class, 'ai_createcourse'])->name('create-course');
+Route::post('/verify-course-pin',[App\Http\Controllers\tryController::class,'verifyPin'])->name('verify.course.pin');
+Route::get('/meeting_list', [App\Http\Controllers\MeetingController::class, 'meeting_list'])->name('meeting_list');
+Route::get('/virtual_meeting', [App\Http\Controllers\MeetingController::class, 'virtual_meeting'])->name('virtual_meeting');
+Route::post('/meeting_store',[App\Http\Controllers\MeetingController::class,'meeting_store'])->name('meeting_store');
+Route::get('lang/{lang}', [App\Http\Controllers\LanguageController::class, 'change'])->name('lang.change');
+Route::get('adaptive/learning/list', [App\Http\Controllers\AIController::class, 'adaptive_learning_list'])->name('adaptive_learning_list');
+Route::get('adaptive/learning', [App\Http\Controllers\AIController::class, 'adaptive_learning'])->name('adaptive_learning');
+

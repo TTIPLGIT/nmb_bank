@@ -403,7 +403,6 @@ class LoginController extends BaseController
         'password' => $request->password,
         //  'recaptcha' => $request->input('g-recaptcha-response')
       ];
-      
      
       $rules = [
         'email' => 'required',
@@ -434,12 +433,9 @@ class LoginController extends BaseController
         $request['requestData'] = $encryptArray;
         $method = 'Method => LoginController => index';
         $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-
-        dd($response);
         $response = json_decode($response);
 
         if ($response->Status == 200 && $response->Success) {
-
           $modules = '';
           $screens = '';
           echo $validator->errors();
@@ -469,13 +465,11 @@ class LoginController extends BaseController
           return back()->withErrors(['recaptcha' => ['User disabled contact TALENTRA Administrator']]);
         }
 
-        $gatewayURL = config('setting.api_gateway_url') . '/login/user';
-       
+        $gatewayURL = config('setting.api_gateway_url') . '/login/user';       
         $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
 
         $response = json_decode($response);
-
-
+      // $gatewayURL = 'http://20.164.0.23:3300/ai/predictive-analysis/run/' . $data['user_id'] . '/' . $data['course_id'];
 
         if ($response->Status == 401) {
           if (isset($request->mobile)) {

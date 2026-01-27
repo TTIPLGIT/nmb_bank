@@ -1,5 +1,5 @@
 @extends('layouts.adminnav')
-
+{{ __('menu.profile') }}
 @section('content')
 <style>
   .error {

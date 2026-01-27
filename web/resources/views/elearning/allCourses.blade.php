@@ -355,6 +355,27 @@
         font-size: 25px;
         color: #000000ff;
     }
+
+    .modal-backdrop.show {
+        opacity: 0 !important;
+    }
+
+    .modal-backdrop {
+        pointer-events: none !important;
+    }
+
+    .open_modal {
+        z-index: 99999 !important;
+    }
+
+    .open_modal_contents {
+        pointer-events: auto !important;
+    }
+
+    #entered_pin {
+        pointer-events: auto !important;
+        background: #fff !important;
+    }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 <?php
@@ -661,73 +682,79 @@ use Carbon\Carbon; ?>
                                     $id = Crypt::encrypt($value->course_id);
                                     $imageUrl = config('setting.base_url') . 'uploads/course/126/' . $value->course_banner;
                                     @endphp
-                                    <a href="{{ route('elearningCourse', $id) }}">
-                                        @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
-                                        <img src="{{ $imageUrl }}" alt="Course Image" class="course_image"
-                                            style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;">
-                                        @else
+                                    @if($value->restricted_access == 1)
+                                    <a href="javascript:void(0)" onclick="openPinModal('{{ $id }}')">
                                         <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image"
                                             class="course_image"
                                             style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;">
+                                        @else
+                                        <a href="{{ route('elearningCourse', $id) }}">
+                                            @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
+                                            <img src="{{ $imageUrl }}" alt="Course Image" class="course_image"
+                                                style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;">
+                                            @else
+                                            <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image"
+                                                class="course_image"
+                                                style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;">
+                                            @endif
+                                        </a>
                                         @endif
-                                    </a>
 
-                                    {{-- 🧾 Card Body --}}
-                                    <div class="card-body" style="padding: 10px 0;">
-                                        <div class="card-title" title="{{ $value->course_name }}">
-                                            <h5 style="color:#1e2a78; font-weight:600; font-size:16px; margin-bottom:8px;">
-                                                {{ $value->course_name }}
-                                            </h5>
+                                        {{-- 🧾 Card Body --}}
+                                        <div class="card-body" style="padding: 10px 0;">
+                                            <div class="card-title" title="{{ $value->course_name }}">
+                                                <h5 style="color:#1e2a78; font-weight:600; font-size:16px; margin-bottom:8px;">
+                                                    {{ $value->course_name }}
+                                                </h5>
 
-                                            {{-- 🔔 Expiry Section with Fixed Height --}}
-                                            <div style="min-height: 40px; display: flex; justify-content: center;align-items: center;margin-bottom: 8px">
-                                                @if($showExpiryBadge)
-                                                <a href="javascript:void(0);" onclick="highlightCopiedCourse({{ $value->course_id }})">
-                                                    <div style="background-color: #fff5e6; color: #b35c00; border-radius: 6px;
+                                                {{-- 🔔 Expiry Section with Fixed Height --}}
+                                                <div style="min-height: 40px; display: flex; justify-content: center;align-items: center;margin-bottom: 8px">
+                                                    @if($showExpiryBadge)
+                                                    <a href="javascript:void(0);" onclick="highlightCopiedCourse({{ $value->course_id }})">
+                                                        <div style="background-color: #fff5e6; color: #b35c00; border-radius: 6px;
                                                          font-size: 13px;padding:4px 8px;display:inline-block;box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                                                        ⚠ {{ \Carbon\Carbon::parse($value->course_expiry_period)->isPast() ? 'Certificate Expired' : 'Your Course Will Expire Soon' }}
-                                                    </div>
-                                                </a>
-                                                @elseif($expiryMessage)
-                                                <a href="javascript:void(0);" onclick="highlightCopiedCourse({{ $value->course_id }})">
-                                                    <div style="background-color: #f8d7da;color: #721c24;border-radius: 8px;font-size:13px;padding:6px 12px;
+                                                            ⚠ {{ \Carbon\Carbon::parse($value->course_expiry_period)->isPast() ? 'Certificate Expired' : 'Your Course Will Expire Soon' }}
+                                                        </div>
+                                                    </a>
+                                                    @elseif($expiryMessage)
+                                                    <a href="javascript:void(0);" onclick="highlightCopiedCourse({{ $value->course_id }})">
+                                                        <div style="background-color: #f8d7da;color: #721c24;border-radius: 8px;font-size:13px;padding:6px 12px;
                                                            margin-top:-10px;box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                                                        {!! $expiryMessage !!}
-                                                    </div>
-                                                </a>
-                                                @else
-                                                {{-- Empty space to maintain height --}}
-                                                <div style="height: 20px; visibility: hidden;">placeholder</div>
-                                                @endif
+                                                            {!! $expiryMessage !!}
+                                                        </div>
+                                                    </a>
+                                                    @else
+                                                    {{-- Empty space to maintain height --}}
+                                                    <div style="height: 20px; visibility: hidden;">placeholder</div>
+                                                    @endif
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        {{-- 👨‍🏫 Instructor + Paid/Free --}}
-                                        <div class="card-text" style="margin-bottom:10px;">
-                                            <h6 style="font-size:13px; color:#333;">
-                                                <span>{{ $value->course_instructor }}</span>
-                                                <span style="float:right;background-color: {{ $value->course_pay == 'paid' ? '#1d33d3' : '#0ecf26' }};
+                                            {{-- 👨‍🏫 Instructor + Paid/Free --}}
+                                            <div class="card-text" style="margin-bottom:10px;">
+                                                <h6 style="font-size:13px; color:#333;">
+                                                    <span>{{ $value->course_instructor }}</span>
+                                                    <span style="float:right;background-color: {{ $value->course_pay == 'paid' ? '#1d33d3' : '#0ecf26' }};
                                                    color:#fff;border-radius:4px;padding:2px 8px; margin-top:-5px;font-size:18px;text-transform:capitalize;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-                                                    {{ $value->course_pay }}
-                                                </span>
-                                            </h6>
-                                        </div>
-
-                                        {{-- 📊 Progress Bar --}}
-                                        <div class="progress course_total_progress" style=" height:10px; border-radius:5px; overflow:hidden;
-                                             background-color:#eaeaea;margin-top:10px;">
-                                            <div class="progress-bar" role="progressbar"
-                                                style="width: {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%;
-                                                background: linear-gradient(90deg, #5cb85c, #9be15d);transition: width 0.6s ease;">
+                                                        {{ $value->course_pay }}
+                                                    </span>
+                                                </h6>
                                             </div>
+
+                                            {{-- 📊 Progress Bar --}}
+                                            <div class="progress course_total_progress" style=" height:10px; border-radius:5px; overflow:hidden;
+                                             background-color:#eaeaea;margin-top:10px;">
+                                                <div class="progress-bar" role="progressbar"
+                                                    style="width: {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%;
+                                                background: linear-gradient(90deg, #5cb85c, #9be15d);transition: width 0.6s ease;">
+                                                </div>
+                                            </div>
+
+                                            <span style="font-size:12px; color:#444; font-weight:500; display:block; margin-top:6px;">
+                                                {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}% COMPLETED
+                                            </span>
                                         </div>
-
-                                        <span style="font-size:12px; color:#444; font-weight:500; display:block; margin-top:6px;">
-                                            {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}% COMPLETED
-                                        </span>
-                                    </div>
                                 </div>
-
                                 <script>
                                     function highlightCopiedCourse(originalCourseId) {
                                         const matchingCard = document.querySelector(`[data-expired-course-id='${originalCourseId}']`);
@@ -750,19 +777,68 @@ use Carbon\Carbon; ?>
                                     }
                                 </script>
 
-                                <style>
-                                    .highlight-new-course {
-                                        border: 3px solid #007bff !important;
-                                        box-shadow: 0 0 15px rgba(0, 123, 255, 0.6) !important;
-                                        transition: all 0.3s ease;
-                                    }
-                                </style>
-
-
-
                         </div>
                     </div>
                     @endforeach
+
+                    <div class="modal fade open_modal" id="pinModal" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content open_modal_contents">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">🔐 Enter Course PIN</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <input type="password" id="entered_pin" class="form-control" placeholder="Enter PIN">
+                                    <input type="hidden" id="pin_course_id">
+                                    <div class="text-danger mt-2" id="pinError"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" onclick="verifyPin()">Access Course</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        $('#pinModal').on('shown.bs.modal', function() {
+                            $('#entered_pin').trigger('focus');
+                        });
+
+                        function openPinModal(courseId) {
+                            $('#pin_course_id').val(courseId);
+                            $('#entered_pin').val('');
+                            $('#pinError').hide();
+                            $('#pinModal').modal('show');
+                        }
+
+                        function verifyPin() {
+                            let pin = $('#entered_pin').val();
+                            let courseId = $('#pin_course_id').val();
+
+                            if (pin == '') {
+                                $('#pinError').text('Please enter PIN').show();
+                                return;
+                            }
+
+                            $.ajax({
+                                url: "{{ route('verify.course.pin') }}",
+                                type: "POST",
+                                data: {
+                                    _token: "{{ csrf_token() }}",
+                                    course_id: courseId,
+                                    pin: pin
+                                },
+                                success: function(res) {
+                                    if (res.status == true) {
+                                        window.location.href = res.redirect;
+                                    } else {
+                                        $('#pinError').text('Invalid PIN').show();
+                                    }
+                                }
+                            });
+                        }
+                    </script>
 
                 </div>
                 <div class="d-flex flex-row justify-content-center allCoursePagination">

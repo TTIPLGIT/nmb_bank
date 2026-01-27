@@ -63,6 +63,35 @@ class BaseController extends Controller
         }
     }
 
+    public function AIserviceRequest($gatewayURL, $action, $body, $method)
+    {
+        try {
+            $client = new Client();
+            $serviceResponse = $client->request($action, $gatewayURL, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Cache-Control' => 'no-cache'
+                ],
+                'body' => $body
+            ])->getBody()->getContents();
+            $objServiceResponse = json_decode($serviceResponse);
+
+            if ($objServiceResponse->status == 401) {
+                return redirect()->route('unauthenticated')->send();
+                return $serviceResponse;
+            } else {
+                return $serviceResponse;
+            }
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = 'Method => BaseController => serviceRequest';
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+            return 'Failure';
+        }
+    }
     /**
      * Author: Anbukani
      * Date: 16/09/2019
