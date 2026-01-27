@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="main-content">
+    @php $isLocked = ($certificate_templates['status'] ?? '') == 'Active'; @endphp
     {{ Breadcrumbs::render('certificate_template.edit', $certificate_templates['certificate_templates_id']) }}
     @if (session('fail'))
     <div class="alert alert-danger">
@@ -19,6 +20,24 @@
                 @if(isset($certificate_template_details))
                 @method('POST')
                 @endif
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label>Status</label>
+                        <select name="status" class="form-control">
+                            <option value="Draft" {{ ($certificate_templates['status'] ?? '')=='Draft'?'selected':'' }}>Draft</option>
+                            <option value="Approved" {{ ($certificate_templates['status'] ?? '')=='Approved'?'selected':'' }}>Approved</option>
+                            <option value="Active" {{ ($certificate_templates['status'] ?? '')=='Active'?'selected':'' }}>Active</option>
+                            <option value="Inactive" {{ ($certificate_templates['status'] ?? '')=='Inactive'?'selected':'' }}>Inactive</option>
+                            <option value="Archived" {{ ($certificate_templates['status'] ?? '')=='Archived'?'selected':'' }}>Archived</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Version</label>
+                        <input type="text" class="form-control"
+                            value="{{ $certificate_templates['version'] ?? 1 }}" readonly>
+                    </div>
+                </div>
 
                 <div id="entryWrapper">
                     @php
@@ -99,8 +118,22 @@
                 <br>
                 <div class="row text-center">
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                        <a href="{{ route('certificate_template.index') }}" class="btn btn-danger">Cancel</a>
+                        <!-- <button type="submit" class="btn btn-success">Submit</button>
+                        <a href="{{ route('certificate_template.index') }}" class="btn btn-danger">Cancel</a> -->
+
+                        @if(($certificate_templates['status'] ?? 'Draft') == 'Draft')
+                        <button class="btn btn-success">Save Draft</button>
+                        <button name="action" value="submit_for_approval" class="btn btn-primary">Submit for Approval</button>
+                        @endif
+
+                        @if(($certificate_templates['status'] ?? '') == 'Approved')
+                        <button name="action" value="activate" class="btn btn-success">Activate</button>
+                        @endif
+
+                        @if(($certificate_templates['status'] ?? '') == 'Active')
+                        <button name="action" value="archive" class="btn btn-warning">Archive</button>
+                        @endif
+
                     </div>
                 </div>
             </form>

@@ -58,13 +58,56 @@ class CertifcateTemplateController extends BaseController
         //    return redirect()->route('not_allow');
         // }
     }
+    public function create(Request $request)
+    {
+
+        $permission_data = $this->FillScreensByUser();
+        $screen_permission = $permission_data[0];
+
+        // else if(strpos($screen_permission['permissions'], 'View') !== false){
+        try {
+            $method = 'Method => DesignationController => index';
+            $serviceResponse = array();
+
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $gatewayURL = config('setting.api_gateway_url') . '/certificate_template/get_data';
+            $response = $this->serviceRequest($gatewayURL, 'GET', $serviceResponse, $method);
+
+            $response = json_decode($response);
+
+            if ($response->Status == 200 && $response->Success) {
+                $objData = json_decode($this->decryptData($response->Data));
+                if ($objData->Code == 200) {
+                    $parant_data = json_decode(json_encode($objData->Data), true);
+                    $rows =  $parant_data['rows'];
+                    $menus = $this->FillMenu();
+                    $screens = $menus['screens'];
+                    $modules = $menus['modules'];
+                    $permission = $this->FillScreensByUser();
+                    $screen_permission = $permission[0];
+                    // dd($rows);
+                    return view('certificate_template.create', compact('rows', 'screens', 'modules', 'screen_permission'));
+                }
+            } else {
+                $objData = json_decode($this->decryptData($response->Data));
+                echo json_encode($objData->Code);
+                exit;
+            }
+        } catch (\Exception $exc) {
+            echo $exc;
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        }
+        // }
+        // else{
+        //    return redirect()->route('not_allow');
+        // }
+    }
 
 
     public function store(Request $request)
     {
 
         $method = 'Method => CertificateTemplateController => store';
-
         try {
             // Step 1: Validation
             $rules = [
@@ -137,6 +180,7 @@ class CertifcateTemplateController extends BaseController
             ];
             //    dd($validator);
             $gatewayURL = config('setting.api_gateway_url') . '/certificate-template/store';
+
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($apiRequest), $method);
             $response1 = json_decode($response);
 

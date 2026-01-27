@@ -1355,7 +1355,7 @@
 
                 </div>
             </div>
-            <div class="container-fluid">
+            <!-- <div class="container-fluid">
                 <div class="row justify-content-between">
                     <div class="card noShadow course">
                         <div class="card-header d-flex flex-row justify-content-between align-items-center">
@@ -1374,8 +1374,6 @@
                             <div id="line_top_x"></div>
                         </div>
                     </div>
-
-
                     <div class="col-12 col-sm-6 col-lg-6">
                         <div class="card noShadow recommended_courses_list">
                             <div class="card-header">
@@ -1441,10 +1439,8 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 </div>

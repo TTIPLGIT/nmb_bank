@@ -32,7 +32,7 @@ class UsersendMail extends Mailable
 
          $email_id = config('setting.email_id');
 
-        return $this->from($email_id)->subject('Account Creation Successful: NRU Program Access Details')->view('email.nrumail')->with('data',$this->data);
+        return $this->from($email_id)->subject('Account Creation Successfull')->view('email.nrumail')->with('data',$this->data);
     }
 
 }

@@ -64,5 +64,9 @@ class coursecreationmail extends Mailable
                 }
             }
         }
+
+         return $this->subject('Course Access PIN')
+            ->view('email.course_pin')
+            ->with($this->data);
     }
 }

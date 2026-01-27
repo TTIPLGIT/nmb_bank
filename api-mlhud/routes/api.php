@@ -303,6 +303,9 @@ Route::middleware('auth:api')->group(function () {
   Route::post('/auditlog/login', [\App\Http\Controllers\AuditlogController::class, 'login_search']);
 
   Route::get('/uam_data/menu_data', [\App\Http\Controllers\UamDataController::class, 'menu_data']);
+  Route::get('/auditlog/logdetails', [\App\Http\Controllers\AuditlogController::class, 'logdetails']);
+  Route::post('/auditlog/logdetails', [\App\Http\Controllers\AuditlogController::class, 'logdetailsdata']);
+
 
   // faq_modules
   // deepika
@@ -895,3 +898,10 @@ Route::get('/elearning_allcourse_show', [\App\Http\Controllers\tryController::cl
 
 
 Route::get('/show-all-tables', [App\Http\Controllers\AttendanceController::class, 'showAllTable']);
+
+// AI Course
+Route::get('/ai/ai_course_list', [App\Http\Controllers\AIController::class, 'ai_course_list']);
+Route::get('/ai/ai_course_create', [App\Http\Controllers\AIController::class, 'ai_course_create']);
+Route::get('/meeting/list', [App\Http\Controllers\AIController::class, 'meeting_list']);
+Route::get('/meeting/create', [App\Http\Controllers\AIController::class, 'meeting_create']);
+Route::get('/adaptive/learning/list', [App\Http\Controllers\AIController::class, 'adaptive_learning_list']);
