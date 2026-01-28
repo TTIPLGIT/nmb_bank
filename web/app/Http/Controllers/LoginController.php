@@ -388,12 +388,7 @@ class LoginController extends BaseController
 
   public function login(Request $request)
   {
-    // $remember_me = $request->has('remember_me') ? true : false; 
-
-
-    //  echo "hihui";exit;
-
-
+   
     try {
       // $hashedPassword = Hash::make('A1C194DB21969CA899D4D8E2028D5BFC');
       // dd($hashedPassword);
@@ -469,7 +464,6 @@ class LoginController extends BaseController
         $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
 
         $response = json_decode($response);
-      // $gatewayURL = 'http://20.164.0.23:3300/ai/predictive-analysis/run/' . $data['user_id'] . '/' . $data['course_id'];
 
         if ($response->Status == 401) {
           if (isset($request->mobile)) {
@@ -502,7 +496,14 @@ class LoginController extends BaseController
             session(['gd_status' => $gd_status]);
             session(['role_id' => $role_id]);
             // dd("sdaecsca");
+            $user_id = $row[0]['id'];
+            $recommendations = 'http://20.164.0.23:3300/ai/recommendations/run';
+            $predictive_analysis = 'http://20.164.0.23:3300/ai/predictive-analysis/run';
             
+              $response2 = $this->AIserviceRequest($recommendations, 'POST', '', $method);
+              $recommendation = json_decode($response2, true);
+              $response3 = $this->AIserviceRequest($predictive_analysis, 'POST', '', $method);
+              $predective = json_decode($response3, true);
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
             $modules = $menus['modules'];
@@ -517,11 +518,21 @@ class LoginController extends BaseController
               return "2";
             }
             if ($role_id == '1') {
-              return redirect(route('admindashboard'));
-            } else {
-              
-              return redirect(route('elearningDashboard'));
-            }
+                  return redirect()
+                      ->route('admindashboard')
+                      ->with([
+                          'recommendation' => $recommendation,
+                          'predective'     => $predective
+                      ]);
+              } else {
+                  return redirect()
+                      ->route('elearningDashboard')
+                      ->with([
+                          'recommendation' => $recommendation,
+                          'predective'     => $predective
+                      ]);
+              }
+
 
            
           }

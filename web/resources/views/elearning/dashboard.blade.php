@@ -1358,96 +1358,124 @@
                 </div>
             </div>
 
-            <div class="course_and_schedule_container" style="margin-top:2%;display:none;">
-                <div class="col-12 d-flex">
-                    <div class="col-6 pl-0">
-                        <div class="card noShadow course">
-                            <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                                <h2 class="course_heading">
-                                    Study Statistics
-                                </h2>
 
-                                <select class="custom-select course_filter">
-                                    <option value="Weekly" selected>Weekly</option>
-                                    <option value="Monthly">Monthly</option>
-                                    <option value="Yearly">Yearly</option>
-                                    <option value="Yearly">Overall</option>
-                                </select>
-                            </div>
-                            <div class="card-body">
-                                <div id="line_top_x"></div>
-                            </div>
+            <div class="course_and_schedule_container" style="margin-top:2%;">
+            <div class="col-12 d-flex">
+                <div class="col-12 pr-0">
+                    <div class="card noShadow recommended_courses_list">
+                        <div class="card-header d-flex flex-row justify-content-between align-items-center">
+                            Recommended Courses
                         </div>
-                    </div>
-                    <div class="col-6 pr-0">
-                        <div class="card noShadow recommended_courses_list">
-                            <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                                Recommended Courses
-                            </div>
-                            <div class="card-body">
-                                @if(count($recommended) == 0)
-                                    <div class="d-flex flex-row justify-content-around recommended_courses">
 
-                                        <span style="margin-top: 48px;font-weight: 600;font-size: 22px !important;">No
-                                            Recommended Courses</span>
-                                    </div>
+                        <div class="card-body">
 
-                                @endif
-                                @foreach($recommended as $key => $row)
-                                    <div class="d-flex flex-row justify-content-around recommended_courses">
-                                        <!--  -->
-                                        @if(file_exists('uploads/class/126/' . $row['course_banner']))
-                                            <img class="recommended_courses_poster recommendedfancy"
-                                                src="uploads/class/126/{{$row['course_banner']}}" alt="Recommended Course"
-                                                onclick="makeFancy(event, 'recommendedfancy')">
-                                            <span class="caption">{!!html_entity_decode($row['course_description'])!!}</span>
+                            {{-- No Recommendations --}}
+                            @if(empty($recommended) || count($recommended) == 0)
+                                <div class="d-flex flex-row justify-content-around recommended_courses">
+                                    <span style="margin-top:48px;font-weight:600;font-size:22px;">
+                                        No Recommended Courses
+                                    </span>
+                                </div>
+                            @endif
 
+                            {{-- Recommended Courses --}}
+                            @foreach($recommended as $key => $row)
+                                <div class="d-flex flex-row justify-content-around recommended_courses">
 
-                                        @else
-                                            <img class="recommended_courses_poster recommendedfancy"
-                                                src="uploads/class/126/empty.jpg" alt="Recommended Course"
-                                                onclick="makeFancy(event, 'recommendedfancy')">
-                                            <span class="caption">{!!html_entity_decode($row['course_description'])!!}</span>
+                                    {{-- Course Image --}}
+                                    @php
+                                        $bannerPath = 'uploads/class/126/' . ($row['course_banner'] ?? '');
+                                    @endphp
 
+                                    @if(!empty($row['course_banner']) && file_exists(public_path($bannerPath)))
+                                        <img class="recommended_courses_poster recommendedfancy"
+                                            src="{{ asset($bannerPath) }}"
+                                            alt="Recommended Course"
+                                            onclick="makeFancy(event, 'recommendedfancy')">
+                                    @else
+                                        <img class="recommended_courses_poster recommendedfancy"
+                                            src="{{ asset('uploads/class/126/empty.jpg') }}"
+                                            alt="Recommended Course"
+                                            onclick="makeFancy(event, 'recommendedfancy')">
+                                    @endif
 
-                                        @endif
+                                    {{-- Caption --}}
+                                    <span class="caption">
+                                        {!! html_entity_decode($row['course_description'] ?? '') !!}
+                                    </span>
 
-                                        <!-- <img class="recommended_courses_poster recommendedfancy" src="uploads/class/126/{{$row['course_banner']}}" data-caption="{{$row['course_name']}}" alt="Recommended Course" onclick="makeFancy(event, 'recommendedfancy')"> -->
+                                    {{-- Course Details --}}
+                                    <div class="d-flex flex-column justify-content-between recommended_course_details">
 
+                                        {{-- Header --}}
+                                        <div class="recommended_course_header">
+                                            <h6 class="recommended_course_name">
+                                                {{ $row['course_name'] ?? 'Untitled Course' }}
+                                            </h6>
 
+                                            <span class="recommended_course_instructor">
+                                                {{ $row['course_instructor'] ?? 'N/A' }}
+                                            </span>
 
-                                        <div class="d-flex flex-column justify-content-between recommended_course_details">
-                                            <div class="recommended_course_header">
-                                                <h6 class="recommended_course_name">
-                                                    {{$row['course_name']}}
-                                                </h6>
-                                                <span class="recommended_course_instructor">
-                                                    {{$row['course_instructor']}}
-                                                </span>
-                                            </div>
-                                            <div class="recommended_course_footer">
-                                                <span class="recommended_course_time">
-                                                    {{$row['duration']}}
-                                                </span>
-                                                <span class="recommended_course_divider">
-                                                    -
-                                                </span>
-                                                <span class="recommended_course_learners">
-                                                    @php    $exist = $row['total_student'] == 0 ? "No Students Enrolled" : "Students" @endphp
-                                                    @if($row['total_student'] != 0){{$row['total_student']}}@endif
-                                                    {{$exist}}
-                                                </span>
-                                            </div>
+                                            {{-- AI Recommendation Type --}}
+                                            @if(!empty($row['recommendation_type']))
+                                                <div class="mt-1">
+                                                    <span class="badge badge-info">
+                                                        {{ ucfirst(str_replace('_', ' ', $row['recommendation_type'])) }}
+                                                    </span>
+                                                </div>
+                                            @endif
 
+                                            {{-- AI Reason --}}
+                                            @if(!empty($row['reason']))
+                                                <small class="text-muted d-block mt-1"
+                                                    title="{{ $row['reason'] }}">
+                                                    <i class="fa fa-info-circle"></i>
+                                                    {{ \Illuminate\Support\Str::limit($row['reason'], 70) }}
+                                                </small>
+                                            @endif
                                         </div>
-                                    </div>
-                                @endforeach
 
-                            </div>
+                                        {{-- Footer --}}
+                                        <div class="recommended_course_footer">
+                                            <span class="recommended_course_time">
+                                                {{ $row['duration'] ?? '-' }}
+                                            </span>
+
+                                            <span class="recommended_course_divider">-</span>
+
+                                            <span class="recommended_course_learners">
+                                                @php
+                                                    $exist = ($row['total_student'] ?? 0) == 0
+                                                        ? 'No Students Enrolled'
+                                                        : 'Students';
+                                                @endphp
+
+                                                @if(($row['total_student'] ?? 0) != 0)
+                                                    {{ $row['total_student'] }}
+                                                @endif
+                                                {{ $exist }}
+                                            </span>
+
+                                            {{-- AI Confidence --}}
+                                            @if(isset($row['confidence_score']))
+                                                <span class="recommended_course_divider">|</span>
+                                                <span class="text-primary font-weight-bold">
+                                                    AI {{ round($row['confidence_score'] * 100) }}%
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                    </div>
+                                </div>
+                            @endforeach
+
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
         </div>
 
 

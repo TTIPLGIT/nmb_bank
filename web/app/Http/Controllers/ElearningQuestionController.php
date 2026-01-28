@@ -808,6 +808,7 @@ class ElearningQuestionController extends BaseController
             $data['quiz_name'] = $request->q_name;
             $data['quiz_questions'] = $request->quiz_question;
             $data['points'] = $request->q_points;
+            $data['evaluation'] = $request->evaluation;
 
 
             $encryptArray = $this->encryptData($data);
@@ -930,6 +931,8 @@ class ElearningQuestionController extends BaseController
             $data['quiz_questions'] = $request->quiz_questionedit;
             $data['points'] = $request->q_pointsedit;
             $data['quiz_edit'] = $request->quiz_edit;
+            $data['evaluation'] = $request->evaluation_edit;
+
 
             $encryptArray = $this->encryptData($data);
             $request = array();

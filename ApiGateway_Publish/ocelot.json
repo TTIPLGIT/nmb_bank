@@ -10426,7 +10426,7 @@
       ],
       "UpstreamPathTemplate": "/api/gateway/ai/predictive-analysis/run",
       "UpstreamHttpMethod": [
-        "GET"
+        "POST"
       ]
     }
   ],

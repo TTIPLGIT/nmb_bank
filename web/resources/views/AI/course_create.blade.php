@@ -94,30 +94,48 @@
                                 }
                             </script>
                             @endif
-
                             <div class="card">
-                                <form action="{{route('create-course')}}" method="Post">
+                                <form action="{{route('create_course')}}" method="post">
                                     @csrf
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Course Category <span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" name="category" placeholder="Enter Course Category" required>
+                                                    <select class="form-control" name="course_category_id" id="course_category_id_show">
+                                                        <option value="">---Select Category---</option>
+
+                                                        @foreach($rows['course_catagory_name'] as $data)
+                                                        <option value="{{$data['catagory_id']}}" data-badge="">{{$data['catagory_name']}}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Role <span style="color: red;">*</span></label>
-                                                    <select name="role" id="" class="form-control">
+                                                    <select name="role" id="role" class="form-control" required>
+                                                        <option value="">Select Role</option>
 
+                                                        @foreach($rows['rows'] as $role)
+                                                            <option value="{{ $role['role_id'] }}">
+                                                                {{ $role['role_name'] }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Designation <span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" name="designation" placeholder="Enter Designation" required>
+                                                    <select class="form-control" name="designation_id" id="designation_id_show">
+                                                        <!-- <option value="">Please Select Designation</option> -->
+                                                        @foreach( $rows['designation'] as $values)
+                                                        <option value="{{ $values['designation_id'] }}">{{ $values['designation_name'] }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

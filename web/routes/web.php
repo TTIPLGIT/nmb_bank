@@ -835,7 +835,7 @@ Route::get('/charts', [Elearning_chartsController::class, 'index']);
 // AI ROUTES
 Route::get('/ai_course_list', [App\Http\Controllers\AIController::class, 'ai_course_list'])->name('ai_course_list');
 Route::get('/ai_course_create', [App\Http\Controllers\AIController::class, 'ai_course_create'])->name('ai_course_create');
-Route::get('/create-course', [App\Http\Controllers\AIController::class, 'ai_createcourse'])->name('create-course');
+Route::post('/create_course', [App\Http\Controllers\AIController::class, 'ai_createcourse'])->name('create_course');
 Route::post('/verify-course-pin',[App\Http\Controllers\tryController::class,'verifyPin'])->name('verify.course.pin');
 Route::get('/meeting_list', [App\Http\Controllers\MeetingController::class, 'meeting_list'])->name('meeting_list');
 Route::get('/virtual_meeting', [App\Http\Controllers\MeetingController::class, 'virtual_meeting'])->name('virtual_meeting');
@@ -843,4 +843,5 @@ Route::post('/meeting_store',[App\Http\Controllers\MeetingController::class,'mee
 Route::get('lang/{lang}', [App\Http\Controllers\LanguageController::class, 'change'])->name('lang.change');
 Route::get('adaptive/learning/list', [App\Http\Controllers\AIController::class, 'adaptive_learning_list'])->name('adaptive_learning_list');
 Route::get('adaptive/learning', [App\Http\Controllers\AIController::class, 'adaptive_learning'])->name('adaptive_learning');
+Route::get('predictive/analysis', [App\Http\Controllers\AIController::class, 'predictive_analysis'])->name('predictive_analysis');
 
