@@ -1453,7 +1453,20 @@
     <!-- for pdf -->
     <!-- <iframe src="http://infolab.stanford.edu/pub/papers/google.pdf#toolbar=0&amp;navpanes=0&amp;scrollbar=0" frameborder="0" scrolling="auto" height="100%" width="100%" style="height: 70vh;"></iframe> -->
 </div>
+
+    
+
 <div class="container-fluid border-bottom subMenuWrapper">
+    <div class="card mt-3">
+        <div class="card-header">
+            <h4>AI EVALUATION</h4>
+        </div>
+        <div class="card-body">
+            <div class="col-md-12">
+                <p>Total Score Earned :</p>
+            </div>
+        </div>
+    </div>
     <ul class="d-flex flex-row mb-0 subMenu">
         <li class="subMenuItem">
             <a class="subMenuLink active" id="overview" href="">Overview</a>

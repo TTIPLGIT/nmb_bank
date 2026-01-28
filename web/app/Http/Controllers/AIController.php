@@ -64,7 +64,7 @@ class AIController extends BaseController
                 $modules = $menus['modules'];
                 $permission = $this->FillScreensByUser();
 
-                return view('AI.course_create', compact('menus', 'screens', 'modules'));
+                return view('AI.course_create', compact('rows','menus', 'screens', 'modules'));
             }
             if ($objData->Code == "401") {
                 return redirect(url('/'))->with('danger', 'User session Exipired');
@@ -73,21 +73,23 @@ class AIController extends BaseController
     }
     public function ai_createcourse(Request $request)
     {
+        $method = 'Method => AIController => ai_createcourse';
 
-        $user_id = $request->session()->get("userID");
+       
+        try {
+             $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return view('auth.login');
         }
-        $method = 'Method => AIController => ai_createcourse';
-        try {
             $data = array();
-            $data['category'] = $request->question_id;
-            $data['role'] = $request->course_id;
-            $data['designation'] = $request->course_reply_id;
-            $data['course_name'] = $request->reply_details;
-            $data['course_type'] = $request->add_reply;
-            $data['class_count'] = $request->add_reply;
-            $data['course_duration'] = $request->add_reply;
+            $data['category'] = $request->course_category_id;
+            $data['role'] = $request->role;
+            $data['designation'] = $request->designation_id;
+            $data['course_name'] = $request->course_name;
+            $data['course_description'] = $request->course_description;
+            $data['course_type'] = $request->course_type;
+            $data['class_count'] = $request->class_count;
+            $data['course_duration'] = $request->class_count;
 
 
             $encryptArray = $this->encryptData($data);
@@ -95,9 +97,10 @@ class AIController extends BaseController
 
             $request['requestData'] = $encryptArray;
 
-            $gatewayURL = config('setting.api_gateway_url') . '/reply/store';
+            $gatewayURL = 'http://20.164.0.23:3300/create-course/';
 
-            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+            $response = $this->AIserviceRequest($gatewayURL, 'POST', '', $method);
+        dd($response);
 
             $response1 = json_decode($response);
 
@@ -181,6 +184,35 @@ class AIController extends BaseController
                     ['data' => $response1],
                     compact('menus', 'screens', 'modules')
                 ));
+            }
+        } catch (\Exception $exc) {
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        }
+    }
+
+    public function predictive_analysis(Request $request)
+    {
+        $method = 'Method=> AIController => taskSubmission';
+        try {
+            $user_id = $request->session()->get("userID");
+
+
+            $gatewayURL = 'http://20.164.0.23:3300/ai/predictive-analysis/run';
+            $response = $this->AIserviceRequest($gatewayURL, 'POST', '', $method);
+dd($response);
+
+            if ($response->Status == 200 && $response->Success) {
+                $objData = json_decode($this->decryptData($response->Data));
+                if ($objData->Code == 200) {
+                    $parant_data = json_decode(json_encode($objData->Data), true);
+                    $rows =  $parant_data;
+                    $alter_name = $this->get_user_role();
+                    $menus = $this->FillMenu();
+                    $screens = $menus['screens'];
+                    $modules = $menus['modules'];
+                    $permission = $this->FillScreensByUser();
+                    return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'rows'));
+                }
             }
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);

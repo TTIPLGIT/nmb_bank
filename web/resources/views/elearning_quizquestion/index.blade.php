@@ -1185,7 +1185,7 @@
                             <div class="form-group">
                                 <label>Quiz Name:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="text" class="form-control default comma" id="q_name" name="q_name"
-                                    autocomplete="off" placeholder="Enter the Quiz Name">
+                                autocomplete="off" placeholder="Enter the Quiz Name">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -1207,6 +1207,16 @@
                                 <label>Total Points:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="text" class="form-control default" id="q_points" name="q_points"
                                     autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Evaluation:<span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="evaluation" id="evaluation">
+                                    <option value="">---select---</option>
+                                    <option value="1">AI Evaluation</option>
+                                    <option value="2">Manual Evaluation</option>
+                                </select>
                             </div>
                         </div>
 
@@ -2697,7 +2707,13 @@
             if (quiz_question == '') {
                 swal.fire("Please Select the  Quiz Question", "", "error");
                 return false;
-            } else {
+            }
+            var evaluation = $("#evaluation").val(); 
+            if (evaluation == '') {
+                swal.fire("Please Select the  Evaluation", "", "error");
+                return false;
+            }
+            else {
                 //$('#savebutton').css('pointer-events', 'none');
                 $('#savebutton').prop('disabled', true);
 
@@ -2716,7 +2732,12 @@
             if (quiz_questionedit == '') {
                 swal.fire("Please Select the Quiz Question", "", "error");
                 return false;
-            } else {
+            }var evaluation = $("#evaluation_edit").val(); 
+            if (evaluation == '') {
+                swal.fire("Please Select the  Evaluation", "", "error");
+                return false;
+            } 
+            else {
                 document.getElementById('quizedit_form').submit();
             }
         }
@@ -3101,7 +3122,16 @@
                                     autocomplete="off">
                             </div>
                         </div>
-
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Evaluation:<span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="evaluation_edit" id="evaluation_edit">
+                                    <option value="0">---select---</option>
+                                    <option value="1">AI Evaluation</option>
+                                    <option value="2">Manual Evaluation</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12 text-center">
@@ -3175,6 +3205,16 @@
                                 <label>Total Points:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="text" class="form-control default" id="q_pointsshow" name="q_pointsshow"
                                     autocomplete="off" style="background-color: #e9ecef !important;">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Evaluation:<span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="evaluation_show" id="evaluation_show">
+                                    <option value="0">---select---</option>
+                                    <option value="1">AI Evaluation</option>
+                                    <option value="2">Manual Evaluation</option>
+                                </select>
                             </div>
                         </div>
 

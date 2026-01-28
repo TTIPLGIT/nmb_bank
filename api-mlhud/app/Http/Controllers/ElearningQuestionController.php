@@ -1023,6 +1023,7 @@ class ElearningQuestionController extends BaseController
                 'quiz_name' => $inputArray['quiz_name'],
                 'quiz_questions' =>  $stringsettings_id,
                 'points' => $inputArray['points'],
+                'evaluation' => $inputArray['evaluation'],
 
             ];
 
@@ -1033,6 +1034,7 @@ class ElearningQuestionController extends BaseController
                         'quiz_questions' => $input['quiz_questions'],
                         'points' => $input['points'],
                         'drop_quiz' => '0',
+                        'evaluation' =>$input['evaluation'],
                         'created_by' => auth()->user()->id,
                         'created_at' => NOW()
                     ]);
@@ -1209,6 +1211,7 @@ class ElearningQuestionController extends BaseController
                 'quiz_questions' =>  $stringsettings_id,
                 'points' => $inputArray['points'],
                 'quiz_edit' => $inputArray['quiz_edit'],
+                'evaluation' => $inputArray['evaluation'],
 
             ];
 
@@ -1217,6 +1220,7 @@ class ElearningQuestionController extends BaseController
                 ->update([
                     'quiz_name' => $input['quiz_name'],
                     'quiz_questions' => $input['quiz_questions'],
+                    'evaluation' => $input['evaluation'],
                     'points' => $input['points'],
                     'drop_quiz' => '0',
                     'updated_by' => auth()->user()->id,

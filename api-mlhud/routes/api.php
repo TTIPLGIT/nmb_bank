@@ -905,3 +905,4 @@ Route::get('/ai/ai_course_create', [App\Http\Controllers\AIController::class, 'a
 Route::get('/meeting/list', [App\Http\Controllers\AIController::class, 'meeting_list']);
 Route::get('/meeting/create', [App\Http\Controllers\AIController::class, 'meeting_create']);
 Route::get('/adaptive/learning/list', [App\Http\Controllers\AIController::class, 'adaptive_learning_list']);
+Route::get('/predictive/analysis/list', [App\Http\Controllers\AIController::class, 'predictive_analysis']);
