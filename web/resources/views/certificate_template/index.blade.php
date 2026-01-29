@@ -102,6 +102,7 @@
                                             <tr>
                                                 <th>S.No</th>
                                                 <th>Certificate Name</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -111,6 +112,7 @@
                                                 <td>{{ ++$key }}</td>
 
                                                 <td>{{ $row['template_name'] }}</td>
+                                                <td>{{ $row['status'] }}</td>
 
                                                 <td class="text-center">
 

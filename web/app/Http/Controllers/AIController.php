@@ -81,41 +81,36 @@ class AIController extends BaseController
         if ($user_id == null) {
             return view('auth.login');
         }
-            $data = array();
-            $data['category'] = $request->course_category_id;
-            $data['role'] = $request->role;
-            $data['designation'] = $request->designation_id;
-            $data['course_name'] = $request->course_name;
-            $data['course_description'] = $request->course_description;
-            $data['course_type'] = $request->course_type;
-            $data['class_count'] = $request->class_count;
-            $data['course_duration'] = $request->class_count;
+            $data = (object) [
+                'category'           => $request->course_category_id,
+                'role'               => $request->role,
+                'designation'        => $request->designation_id,
+                'course_name'        => $request->course_name,
+                'course_description' => $request->course_description,
+                'course_type'        => $request->course_type,
+                'class_count'        => (int) $request->class_count,        
+                'video_duration'     => $request->course_duration,
+            ];
 
+            
 
-            $encryptArray = $this->encryptData($data);
-            $request = array();
+            // $gatewayURL = 'http://20.164.0.23:3300/create-course/';
 
-            $request['requestData'] = $encryptArray;
-
-            $gatewayURL = 'http://20.164.0.23:3300/create-course/';
-
-            $response = $this->AIserviceRequest($gatewayURL, 'POST', '', $method);
-        dd($response);
-
-            $response1 = json_decode($response);
-
-            if ($response1->Status == 200 && $response1->Success) {
-                $objData = json_decode($this->decryptData($response1->Data));
-
-
-                if ($objData->Code == 200) {
-                    return redirect()->back()->with('success', 'Reply Added Successfully');
-                }
-
-                if ($objData->Code == 400) {
-                    return redirect(route('adminquestion.reply_index'))->with('fail', 'Reply Not Added');
-                }
-            }
+            // $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
+           
+            // $response1 = json_decode($response, true);
+            // dd($response);
+            
+            // if (!$response1) {
+            //     return "Invalid JSON response from API";
+            // }
+            $menus = $this->FillMenu();
+            $screens = $menus['screens'];
+            $modules = $menus['modules'];
+                return view('AI.cource_preview', array_merge(
+                    ['data' => 1],
+                    compact('menus', 'screens', 'modules')
+                ));
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
@@ -199,7 +194,6 @@ class AIController extends BaseController
 
             $gatewayURL = 'http://20.164.0.23:3300/ai/predictive-analysis/run';
             $response = $this->AIserviceRequest($gatewayURL, 'POST', '', $method);
-dd($response);
 
             if ($response->Status == 200 && $response->Success) {
                 $objData = json_decode($this->decryptData($response->Data));

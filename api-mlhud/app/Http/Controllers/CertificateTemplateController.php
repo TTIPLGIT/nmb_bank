@@ -22,7 +22,7 @@ class CertificateTemplateController extends BaseController
             $method = 'Method => CertificateTemplateController => get_data';
 
 
-            $rows = DB::select('select `a`.* from `certificate_templates` as `a` where `a`.`active_flag` = 0 ');
+            $rows = DB::select('select `a`.* from `certificate_templates` as `a`');
 
             $response = [
                 'rows' => $rows

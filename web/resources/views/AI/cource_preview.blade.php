@@ -3,17 +3,18 @@
 @section('content')
 
 <div class="main-content">
+@php $index =1; $sIndex=1; @endphp
 
     <div class="card mb-4">
         <div class="card-body">
-            <h4 class="text-primary">{{ $course['course_name'] }}</h4>
-            <p>{{ $course['course_description'] }}</p>
+            <h4 class="text-primary"></h4>
+            <p></p>
 
             <div class="row">
-                <div class="col-md-3"><strong>Category:</strong> {{ $course['category'] }}</div>
-                <div class="col-md-3"><strong>Role:</strong> {{ $course['role'] }}</div>
-                <div class="col-md-3"><strong>Designation:</strong> {{ $course['designation'] }}</div>
-                <div class="col-md-3"><strong>Duration:</strong> {{ $course['course_duration'] }}</div>
+                <div class="col-md-3"><strong>Category:</strong> </div>
+                <div class="col-md-3"><strong>Role:</strong> </div>
+                <div class="col-md-3"><strong>Designation:</strong> </div>
+                <div class="col-md-3"><strong>Duration:</strong> </div>
             </div>
         </div>
     </div>
@@ -36,26 +37,25 @@
 
             <div class="accordion" id="classAccordion">
 
-                @foreach($course['classes'] as $index => $class)
+                
                 <div class="card">
                     <div class="card-header">
                         <button class="btn btn-link" data-toggle="collapse"
                             data-target="#class{{ $index }}">
-                            {{ $class['class_name'] }}
+                            
                         </button>
                     </div>
 
                     <div id="class{{ $index }}" class="collapse">
                         <div class="card-body">
 
-                            <p>{{ $class['class_description'] }}</p>
+                            <p></p>
 
                             <h6>Slides</h6>
                             <ul class="list-group">
-                                @foreach($class['video_slides'] as $sIndex => $slide)
+                                
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span>{{ $slide['title'] }}</span>
-
+                                    <span></span>
                                     <button class="btn btn-sm btn-primary"
                                         data-toggle="modal"
                                         data-target="#slideModal{{ $index }}{{ $sIndex }}">
@@ -69,21 +69,21 @@
                                         <div class="modal-content">
 
                                             <div class="modal-header">
-                                                <h5 class="modal-title">{{ $slide['title'] }}</h5>
+                                                <h5 class="modal-title"></h5>
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
 
                                             <div class="modal-body">
                                                 {{-- Render slide HTML --}}
                                                 <div class="p-3 border">
-                                                    {!! $slide['visual_text'] !!}
+                                                    
                                                 </div>
 
                                                 {{-- Voice-over Player --}}
                                                 <hr>
                                                 <h6>Voice-over</h6>
                                                 <audio controls style="width:100%;">
-                                                    <source src="{{ $slide['voiceover_audio_url'] ?? '' }}" type="audio/mpeg">
+                                                    <source src="" type="audio/mpeg">
                                                     Your browser does not support audio.
                                                 </audio>
 
@@ -91,7 +91,7 @@
                                                 <div class="mt-3">
                                                     <h6>Voice Script</h6>
                                                     <p class="text-muted">
-                                                        {{ $slide['voiceover_script'] }}
+                                                        
                                                     </p>
                                                 </div>
                                             </div>
@@ -99,48 +99,41 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endforeach
                             </ul>
 
 
                         </div>
                     </div>
                 </div>
-                @endforeach
 
             </div>
         </div>
 
         <div class="tab-pane fade" id="quiz">
 
-            @foreach($course['classes'] as $class)
-            <h5 class="text-primary mt-3">{{ $class['class_name'] }}</h5>
+            <h5 class="text-primary mt-3"></h5>
 
             {{-- MCQ --}}
             <h6>MCQ</h6>
-            @foreach($class['quiz']['mcq'] as $q)
+            
             <div class="mb-2">
-                <strong>{{ $q['question_text'] }}</strong>
+                <strong></strong>
                 <ul>
-                    @foreach($q['options'] as $opt)
-                    <li>{{ $opt['option_id'] }}. {{ $opt['text'] }}</li>
-                    @endforeach
+                    
+                    <li></li>
                 </ul>
                 <span class="badge badge-success">
-                    Correct: {{ $q['correct_option_id'] }}
+                    Correct: 
                 </span>
             </div>
-            @endforeach
 
             {{-- Short --}}
             <h6 class="mt-3">Short Answers</h6>
-            @foreach($class['quiz']['short'] as $q)
-            <p><strong>{{ $q['question_text'] }}</strong><br>
-                <em>{{ $q['answer'] }}</em>
+           
+            <p><strong></strong><br>
+                <em></em>
             </p>
-            @endforeach
 
-            @endforeach
 
         </div>
 
@@ -150,27 +143,24 @@
 
             {{-- MCQ --}}
             <h6>MCQ</h6>
-            @foreach($course['final_exam']['mcq'] as $q)
+           
             <div class="mb-2">
-                <strong>{{ $q['question_text'] }}</strong>
+                <strong></strong>
                 <ul>
-                    @foreach($q['options'] as $opt)
-                    <li>{{ $opt['option_id'] }}. {{ $opt['text'] }}</li>
-                    @endforeach
+                    
+                    <li></li>
                 </ul>
                 <span class="badge badge-success">
-                    Correct: {{ $q['correct_option_id'] }}
+                    Correct: test answer
                 </span>
             </div>
-            @endforeach
 
             {{-- Long --}}
             <h6 class="mt-3">Long Answers</h6>
-            @foreach($course['final_exam']['long'] as $q)
-            <p><strong>{{ $q['question_text'] }}</strong><br>
-                <em>{{ $q['answer'] }}</em>
+            
+            <p><strong></strong><br>
+                <em></em>
             </p>
-            @endforeach
 
         </div>
 
