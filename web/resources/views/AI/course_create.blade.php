@@ -168,8 +168,6 @@
                                                     <select name="course_duration" id="course_duration" class="form-control">
                                                         <option value="15">15 - Mins</option>
                                                         <option value="30">30 - Mins</option>
-                                                        <option value="1">1 HRS</option>
-                                                        <option value="2">2 HRS</option>
                                                     </select>
                                                 </div>
                                             </div>

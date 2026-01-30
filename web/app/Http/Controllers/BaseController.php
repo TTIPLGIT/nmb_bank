@@ -73,14 +73,20 @@ class BaseController extends Controller
                     'Accept' => 'application/json',
                     'Cache-Control' => 'no-cache'
                 ],
-                'json' => $body
+                'json' => $body,
+                'http_errors' => false
             ])->getBody()->getContents();
 
             $objServiceResponse = json_decode($serviceResponse);
-            if ($objServiceResponse->status == 401) {
-                return redirect()->route('unauthenticated')->send();
+            if (isset($objServiceResponse->status)) {
+                if ($objServiceResponse->status == 401) {
+                    // dd('jii');
+                    return redirect()->route('unauthenticated')->send();
+                    return $serviceResponse;
+                } 
                 return $serviceResponse;
-            } else {
+            }
+            else{
                 return $serviceResponse;
             }
         } catch (\Exception $exc) {
