@@ -391,7 +391,6 @@ class LoginController extends BaseController
    
     try {
       // $hashedPassword = Hash::make('A1C194DB21969CA899D4D8E2028D5BFC');
-      // dd($hashedPassword);
       $method = 'Method => LoginController => login';
       $input = [
         'email' => $request->email,
@@ -422,7 +421,6 @@ class LoginController extends BaseController
         $input['email'] = $request->email;
         $input['password'] = $request->password;
         $input['remember_me'] = $request->has('remember_me');
-
         $encryptArray = $this->encryptData($input);
         $request = array();
         $request['requestData'] = $encryptArray;
@@ -478,7 +476,6 @@ class LoginController extends BaseController
 
         
 
-        //dd($response);
         if ($response->Status == 200 && $response->Success) {
           $objData = json_decode($this->decryptData($response->Data));
          

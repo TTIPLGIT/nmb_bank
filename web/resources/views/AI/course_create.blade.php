@@ -166,10 +166,8 @@
                                                 <div class="form-group">
                                                     <label>Course Duration <span style="color: red;">*</span></label>
                                                     <select name="course_duration" id="course_duration" class="form-control">
-                                                        <option value="15 mins">15 - Mins</option>
-                                                        <option value="30 mins">30 - Mins</option>
-                                                        <option value="1 hour">1 HRS</option>
-                                                        <option value="2 hour">2 HRS</option>
+                                                        <option value="15">15 - Mins</option>
+                                                        <option value="30">30 - Mins</option>
                                                     </select>
                                                 </div>
                                             </div>

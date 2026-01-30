@@ -836,6 +836,8 @@ Route::get('/charts', [Elearning_chartsController::class, 'index']);
 Route::get('/ai_course_list', [App\Http\Controllers\AIController::class, 'ai_course_list'])->name('ai_course_list');
 Route::get('/ai_course_create', [App\Http\Controllers\AIController::class, 'ai_course_create'])->name('ai_course_create');
 Route::post('/create_course', [App\Http\Controllers\AIController::class, 'ai_createcourse'])->name('create_course');
+Route::post('ai_course_store', [App\Http\Controllers\AIController::class, 'ai_course_store'])->name('ai_course_store');
+
 Route::post('/verify-course-pin',[App\Http\Controllers\tryController::class,'verifyPin'])->name('verify.course.pin');
 Route::get('/meeting_list', [App\Http\Controllers\MeetingController::class, 'meeting_list'])->name('meeting_list');
 Route::get('/virtual_meeting', [App\Http\Controllers\MeetingController::class, 'virtual_meeting'])->name('virtual_meeting');

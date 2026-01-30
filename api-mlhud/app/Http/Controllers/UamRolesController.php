@@ -462,13 +462,14 @@ class UamRolesController extends BaseController
             $method = 'Method => UamRolesController => data_edit';
 
             $id = $this->decryptData($id);
-            // $this->WriteFileLog(($id));
+
             $rows = DB::table('uam_roles')
                 ->select('*')
                 ->where([['role_id', $id], ['active_flag', 0]])
                 ->get();
 
-           
+            $rows = DB::select("select a.role_id,a.role_name,c.array_permission from uam_roles as a 
+            inner join uam_role_screen_permissions as c on c.role_id = a.role_id where a.role_id = '$id' and a.active_flag = 0");
 
 
 
