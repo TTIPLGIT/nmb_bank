@@ -12,9 +12,12 @@ class AIController extends BaseController
     {
         try {
             $method = 'Method => AIController => get_data';
-            
+            $ai_courses = DB::table('ai_course_response')
+                ->select('*')
+               
+                ->get();
             $response = [
-                
+                'ai_courses'=> $ai_courses
             ];
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');

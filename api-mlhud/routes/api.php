@@ -900,7 +900,7 @@ Route::get('/elearning_allcourse_show', [\App\Http\Controllers\tryController::cl
 Route::get('/show-all-tables', [App\Http\Controllers\AttendanceController::class, 'showAllTable']);
 
 // AI Course
-Route::get('/ai/ai_course_list', [App\Http\Controllers\AIController::class, 'ai_course_list']);
+Route::get('/ai/course_list', [App\Http\Controllers\AIController::class, 'ai_course_list']);
 Route::get('/ai/ai_course_create', [App\Http\Controllers\AIController::class, 'ai_course_create']);
 Route::get('/meeting/list', [App\Http\Controllers\AIController::class, 'meeting_list']);
 Route::get('/meeting/create', [App\Http\Controllers\AIController::class, 'meeting_create']);
