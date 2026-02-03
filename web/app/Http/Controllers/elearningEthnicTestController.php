@@ -2324,7 +2324,7 @@ class elearningEthnicTestController extends BaseController
             ]);
             // dd($pdf);
 
-            // dd($data);
+            
 
 
 
@@ -2355,7 +2355,7 @@ class elearningEthnicTestController extends BaseController
 
 
             ];
-            // dd($data['logo_url']);  
+             
 
             $encryptArray = $this->encryptData($data);
             $request = array();
@@ -2368,7 +2368,7 @@ class elearningEthnicTestController extends BaseController
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
 
             $response1 = json_decode($response);
-
+ 
             if ($pdf->download('certificate.pdf')) {
                 return redirect()->back()->with('success', 'Your Certificate has been Issued Successfully');
             } else {

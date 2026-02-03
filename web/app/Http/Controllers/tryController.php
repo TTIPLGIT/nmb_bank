@@ -1863,11 +1863,12 @@ class tryController extends BaseController
     }
     public function verifyPin(Request $request)
     {
+     
         $courseId = Crypt::decrypt($request->course_id);
 
         $course = Course::where('course_id', $courseId)->first();
-
-        if ($course && $course->course_pin == $request->pin) {
+      
+        if ($course->course_pin == $request->pin) {
             return response()->json([
                 'status' => true,
                 'redirect' => route('elearningCourse', $request->course_id)

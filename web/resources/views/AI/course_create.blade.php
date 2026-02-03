@@ -105,7 +105,7 @@
                                                 <div class="form-group">
                                                     <label>Course Category <span style="color: red;">*</span></label>
                                                     <select class="form-control" name="course_category_id"
-                                                        id="course_category_id_show">
+                                                        id="course_category_id_show" required>
                                                         <option value="">---Select Category---</option>
 
                                                         @foreach($rows['course_catagory_name'] as $data)
@@ -134,7 +134,7 @@
                                                 <div class="form-group">
                                                     <label>Designation <span style="color: red;">*</span></label>
                                                     <select class="form-control" name="designation_id"
-                                                        id="designation_id_show">
+                                                        id="designation_id_show" required>
                                                         <!-- <option value="">Please Select Designation</option> -->
                                                         @foreach( $rows['designation'] as $values)
                                                         <option value="{{ $values['designation_id'] }}">
@@ -151,6 +151,7 @@
                                                         placeholder="Enter Course Name" required>
                                                 </div>
                                             </div>
+                                            
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Course Description <span style="color: red;">*</span></label>
@@ -158,13 +159,7 @@
                                                         placeholder="Enter Description" required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Course Type <span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" name="course_type"
-                                                        placeholder="Enter Course Type" required>
-                                                </div>
-                                            </div>
+
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Class Count <span style="color: red;">*</span></label>
@@ -176,7 +171,7 @@
                                                 <div class="form-group">
                                                     <label>Video Duration <span style="color: red;">*</span></label>
                                                     <select name="course_duration" id="course_duration"
-                                                        class="form-control">
+                                                        class="form-control" required>
                                                         <option value="15">15 - Mins</option>
                                                         <option value="30">30 - Mins</option>
                                                     </select>
@@ -185,8 +180,20 @@
                                         </div>
                                     </div>
                                     <div style="text-align:center">
-                                        <button class="btn btn-success" type="submit">Submit</button>
+                                        <button class="btn btn-success" type="submit" id="submitBtn">
+                                            Submit
+                                        </button>
+
+                                        <div id="aiLoader" style="display:none; margin-top:15px;">
+                                            <div class="spinner-border text-success" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                            <p style="margin-top:10px; font-weight:600; color:#155724;">
+                                                Course is generating by AI, please wait...
+                                            </p>
+                                        </div>
                                     </div>
+
                                 </form>
 
                             </div>
@@ -239,6 +246,49 @@ window.onload = function() {
 
 <script src="{{ asset('js/table2excel.js') }}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script>
+$(document).ready(function() {
+
+    $('#role').change(function() {
+
+        let role_id = $(this).val();
+        let designationSelect = $('#designation_id_show');
+
+        designationSelect.html('<option value="">Loading...</option>');
+
+        if (role_id === '') {
+            designationSelect.html('<option value="">Please Select Designation</option>');
+            return;
+        }
+
+        $.ajax({
+            url: "{{ route('get.designation.by.role') }}",
+            type: "POST",
+            data: {
+                role_id: role_id,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(response) {
+
+                designationSelect.html(
+                    '<option value="">Please Select Designation</option>');
+
+                if (response.length > 0) {
+                    $.each(response, function(key, value) {
+                        designationSelect.append(
+                            '<option value="' + value.designation_id + '">' +
+                            value.designation_name +
+                            '</option>'
+                        );
+                    });
+                }
+            }
+        });
+    });
+
+});
+</script>
+
 
 
 

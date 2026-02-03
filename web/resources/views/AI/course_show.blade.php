@@ -584,13 +584,19 @@ window.onload = function() {
 
                                                         @if($question->question_type == 'mcq' &&
                                                         !empty($question->choices))
+
                                                         <div class="mt-2">
                                                             <small class="text-muted">Options:</small>
                                                             <ul class="mb-0 ps-3">
-                                                                @foreach(json_decode($question->choices, true) as
-                                                                $choice)
-                                                                <li style="word-break: break-word;">{{ $choice }}</li>
+
+                                                                @php
+                                                                $choices = explode(',', $question->choices);
+                                                                @endphp
+
+                                                                @foreach ($choices as $choice)
+                                                                <p>{{ trim($choice) }}</p>
                                                                 @endforeach
+
                                                             </ul>
                                                             <small class="text-success">
                                                                 <i class="fas fa-check mr-1"></i>
@@ -625,6 +631,7 @@ window.onload = function() {
                                 </div>
 
                                 <!-- Final Exam Tab -->
+
                                 @if($exam)
                                 <div class="tab-pane fade" id="exam" role="tabpanel">
                                     <h4 class="mb-4">Final Exam</h4>
@@ -651,23 +658,23 @@ window.onload = function() {
                                                     <div class="text-center mb-3 mb-md-0"
                                                         style="flex: 1 1 25%; min-width: 120px;">
                                                         <strong>Total Points</strong>
-                                                        <div class="h3 text-primary">{{ $exam->points }}</div>
+                                                        <div class="h3 ">{{ $exam->points }}</div>
                                                     </div>
                                                     <div class="text-center mb-3 mb-md-0"
                                                         style="flex: 1 1 25%; min-width: 120px;">
                                                         <strong>Questions</strong>
-                                                        <div class="h3 text-primary">{{ count($exam->questions ?? []) }}
+                                                        <div class="h3 ">{{ count($exam->questions ?? []) }}
                                                         </div>
                                                     </div>
                                                     <div class="text-center mb-3 mb-md-0"
                                                         style="flex: 1 1 25%; min-width: 120px;">
                                                         <strong>Duration</strong>
-                                                        <div class="h3 text-primary">120 min</div>
+                                                        <div class="h3 ">120 min</div>
                                                     </div>
                                                     <div class="text-center mb-3 mb-md-0"
                                                         style="flex: 1 1 25%; min-width: 120px;">
                                                         <strong>Passing Score</strong>
-                                                        <div class="h3 text-success">70%</div>
+                                                        <div class="h3">70%</div>
                                                     </div>
                                                 </div>
 
@@ -834,15 +841,14 @@ window.onload = function() {
                     enctype="multipart/form-data" id="publish_course_form" class="reset">
                     @csrf
                     <input type="hidden" id="expired_course_id" name="expired_course_id" value="">
-
-
+                    <input type="hidden" id="original_exam_id" name="original_exam_id" value="{{ $course->exam_id }}">
 
                     <div class="row">
                         <!-- Role Selection -->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Role <span class="error-star" style="color:red;">*</span></label>
-                                <select class="form-control" name="role_id" id="role_id">
+                                <select class="form-control" name="role_id" id="role_id" disabled>
                                     <option value="">---Select Role---</option>
                                     @foreach($roles as $values)
                                     <option value="{{ $values->role_id }}"
@@ -851,6 +857,7 @@ window.onload = function() {
                                     </option>
                                     @endforeach
                                 </select>
+                                <small class="text-muted">Role cannot be changed after course creation</small>
                             </div>
                         </div>
 
@@ -858,7 +865,7 @@ window.onload = function() {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Designation <span class="error-star" style="color:red;">*</span></label>
-                                <select class="form-control" name="designation_id" id="designation_id">
+                                <select class="form-control" name="designation_id" id="designation_id" disabled>
                                     <option value="">Please Select Designation</option>
                                     @foreach($rows['designation'] as $designation)
                                     <option value="{{ $designation->designation_id }}"
@@ -867,6 +874,7 @@ window.onload = function() {
                                     </option>
                                     @endforeach
                                 </select>
+                                <small class="text-muted">Designation cannot be changed after course creation</small>
                             </div>
                         </div>
                     </div>
@@ -877,17 +885,50 @@ window.onload = function() {
                                 <label>User Name <span class="text-danger">*</span></label>
                                 <select class="user_id_course form-control js-select2" name="user_ids[]" id="user_id"
                                     multiple="multiple">
-                                    <option value="all">All</option>
                                     @php
-                                    $selectedUserIds = json_decode($course->user_ids, true) ?? [];
+                                    // Initialize variables
+                                    $selectedUserIds = [];
+                                    $userIdsString = $course->user_ids ?? '';
+
+                                    // Try to decode as JSON first
+                                    if (!empty($userIdsString) && is_string($userIdsString)) {
+                                    $decoded = json_decode($userIdsString, true);
+                                    if (json_last_error() === JSON_ERROR_NONE) {
+                                    $selectedUserIds = $decoded;
+                                    } else {
+                                    // If not JSON, try comma-separated
+                                    $selectedUserIds = explode(',', $userIdsString);
+                                    }
+                                    }
+
+                                    // Ensure it's an array
+                                    if (!is_array($selectedUserIds)) {
+                                    $selectedUserIds = [];
+                                    }
+
+                                    // Check if "all" is selected
+                                    $allSelected = in_array('all', $selectedUserIds);
                                     @endphp
+
+                                    @php
+                                    // Generate all user IDs
+                                    $allUserIds = $rows['users']->pluck('id')->implode(',');
+                                    @endphp
+                                    <option value="{{ $allUserIds }}">All</option>
                                     @foreach($rows['users'] as $data)
-                                    <option value="{{ $data->id }}"
-                                        {{ in_array($data->id, $selectedUserIds) ? 'selected' : '' }}>
+                                    @php
+                                    // Check if this user ID is selected (only if "all" is not selected)
+                                    $isSelected = false;
+                                    if (!$allSelected) {
+                                    $isSelected = in_array((string)$data->id, array_map('strval', $selectedUserIds));
+                                    }
+                                    @endphp
+                                    <option value="{{ $data->id }}" {{ $isSelected ? 'selected' : '' }}>
                                         {{ $data->name }}
                                     </option>
                                     @endforeach
                                 </select>
+                                <small class="text-muted">Select "All" to assign to all users</small>
                             </div>
                         </div>
 
@@ -895,7 +936,8 @@ window.onload = function() {
                             <div class="form-group">
                                 <label>Course Name:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="text" class="form-control default" id="course_name" name="course_name"
-                                    value="{{ $course->course_name }}" autocomplete="off">
+                                    value="{{ $course->course_name }}" readonly>
+                                <small class="text-muted">Course name cannot be changed</small>
                             </div>
                         </div>
                     </div>
@@ -906,7 +948,8 @@ window.onload = function() {
                                 <label>Course Description:<span class="error-star"
                                         style="color:red;">*</span></label><br>
                                 <textarea id="course_description" name="course_description" rows="3"
-                                    class="form-control">{{ $course->course_description }}</textarea>
+                                    class="form-control" readonly>{{ $course->course_description }}</textarea>
+                                <small class="text-muted">Course description cannot be changed</small>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -942,8 +985,6 @@ window.onload = function() {
 
 
                     <div class="row">
-
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Type:<span class="error-star" style="color:red;">*</span></label>
@@ -956,10 +997,21 @@ window.onload = function() {
                                 </select>
                             </div>
                         </div>
+
+                        <div class="col-md-6" id="paid"
+                            style="display: {{ $course->course_pay == 'paid' ? 'block' : 'none' }};">
+                            <div class="form-group">
+                                <label>Course Price:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="number" class="form-control default" id="course_price"
+                                    placeholder="Enter the Money(UGX)" name="course_price"
+                                    value="{{ $course->course_price }}" autocomplete="off">
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- Certificate Template Fields -->
-                    <div class="row mt-3" id="certificateFields"
+                    <div class="row" id="certificateFields"
                         style="display: {{ $course->course_certificate == '1' ? 'block' : 'none' }};">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -1005,28 +1057,8 @@ window.onload = function() {
                     </div>
 
                     <!-- Course Price Fields -->
-                    <div class="row mt-3" id="paid"
-                        style="display: {{ $course->course_pay == 'paid' ? 'block' : 'none' }};">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Course Price:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" class="form-control default" id="course_price"
-                                    placeholder="Enter the Money(UGX)" name="course_price"
-                                    value="{{ $course->course_price }}" autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row mt-3" id="free"
-                        style="display: {{ $course->course_pay == 'free' ? 'block' : 'none' }};">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Course Price:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="number" readonly class="form-control" id="free_course_price"
-                                    name="course_price" value="0" autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div class="row">
                         <div class="col-md-12 form-group"
@@ -1083,13 +1115,28 @@ window.onload = function() {
                                     <label class="control-label required">Exam Name:<span class="error-star"
                                             style="color:red;">*</span></label>
 
-                                    <select class="form-control" name="exam_name" id="exam_name">
+                                    <select class="form-control" name="exam_name" id="exam_name" disabled>
                                         <option value="">Select Exam Name</option>
-
+                                        @php
+                                        // Get the exam name from practice_quiz table using exam_id
+                                        $examId = $course->exam_id;
+                                        $examName = '';
+                                        if ($examId) {
+                                        $exam = DB::table('elearning_practice_quiz')
+                                        ->where('quiz_id', $examId)
+                                        ->first();
+                                        $examName = $exam ? $exam->quiz_name : '';
+                                        }
+                                        @endphp
                                         @foreach($rows1['exam_list'] as $key => $row)
-                                        <option value="{{ $row->id }}" {{ $row->exam_name }} </option>
-                                            @endforeach
+                                        <option value="{{ $row->id }}" {{ $row->id == $examId ? 'selected' : '' }}>
+                                            {{ $row->quiz_name ?? $row->exam_name }}
+                                        </option>
+                                        @endforeach
                                     </select>
+                                    @if($examId && !empty($examName))
+                                    <small class="text-muted">Current exam: {{ $examName }}</small>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -1125,129 +1172,6 @@ window.onload = function() {
                                     autocomplete="off">
                             </div>
                         </div>
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Course Tags:<span class="error-star" style="color:red;">*</span></label>
-                                <div class="wordquestion">
-                                    <table class="_table">
-                                        <tbody id="table_body">
-                                            @php
-                                            $tags = json_decode($course->course_tags, true) ?? [''];
-                                            @endphp
-                                            @foreach($tags as $index => $tag)
-                                            <tr>
-                                                <td>
-                                                    <input type="text" class="form-control default" name="course_tags[]"
-                                                        value="{{ $tag }}" autocomplete="off">
-                                                </td>
-                                                <td>
-                                                    @if($index == 0)
-                                                    <div class="action_container" width="50px">
-                                                        <button class="success" type="button"
-                                                            onclick="create_tr('table_body')">
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                    @else
-                                                    <div class="action_container">
-                                                        <button class="danger" type="button" onclick="remove_tr(this)">
-                                                            <i class="fa fa-close"></i>
-                                                        </button>
-                                                    </div>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div> -->
-                    </div>
-
-                    <div class="row">
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Skill Required:<span class="error-star" style="color:red;">*</span></label>
-                                <div class="wordquestion">
-                                    <table class="_table">
-                                        <tbody id="table_body1">
-                                            @php
-                                            $skills = json_decode($course->course_skills_required, true) ?? [''];
-                                            @endphp
-                                            @foreach($skills as $index => $skill)
-                                            <tr>
-                                                <td>
-                                                    <input type="text" class="form-control default"
-                                                        name="course_skills_required[]" value="{{ $skill }}"
-                                                        autocomplete="off">
-                                                </td>
-                                                <td>
-                                                    @if($index == 0)
-                                                    <div class="action_container" width="50px">
-                                                        <button class="success" type="button"
-                                                            onclick="create_tr1('table_body1')">
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                    @else
-                                                    <div class="action_container">
-                                                        <button class="danger" type="button" onclick="remove_tr(this)">
-                                                            <i class="fa fa-close"></i>
-                                                        </button>
-                                                    </div>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Gain Skill:<span class="error-star" style="color:red;">*</span></label>
-                                <div class="wordquestion">
-                                    <table class="_table">
-                                        <tbody id="table_body3">
-                                            @php
-                                            $gainSkills = json_decode($course->course_gain_skills, true) ?? [''];
-                                            @endphp
-                                            @foreach($gainSkills as $index => $gainSkill)
-                                            <tr>
-                                                <td>
-                                                    <input type="text" class="form-control default"
-                                                        name="course_gain_skills[]" value="{{ $gainSkill }}"
-                                                        autocomplete="off">
-                                                </td>
-                                                <td>
-                                                    @if($index == 0)
-                                                    <div class="action_container" width="50px">
-                                                        <button class="success" type="button"
-                                                            onclick="create_tr3('table_body3')">
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                    @else
-                                                    <div class="action_container">
-                                                        <button class="danger" type="button" onclick="remove_tr(this)">
-                                                            <i class="fa fa-close"></i>
-                                                        </button>
-                                                    </div>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div> -->
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>CPD Points: <span class="error-star" style="color:red;">*</span></label>
@@ -1256,6 +1180,10 @@ window.onload = function() {
                                     autocomplete="off">
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
+
 
                     </div>
 
@@ -1286,8 +1214,6 @@ window.onload = function() {
                             </div>
                         </div>
                     </div>
-
-
 
                     <div class="row">
                         <div class="col-lg-12 text-center">
@@ -1556,16 +1482,250 @@ $(document).ready(function() {
     // Prevent horizontal scroll
     $('body').css('overflow-x', 'hidden');
 
-    // Initialize Bootstrap tabs
-    var triggerTabList = [].slice.call(document.querySelectorAll('#courseTabs button'))
-    triggerTabList.forEach(function(triggerEl) {
-        var tabTrigger = new bootstrap.Tab(triggerEl)
-        triggerEl.addEventListener('click', function(event) {
-            event.preventDefault()
-            tabTrigger.show()
-        })
+    // Initialize Select2 with better "All" handling
+    $('.js-select2').select2({
+        width: '100%',
+        placeholder: "Select options",
+        allowClear: true,
+        closeOnSelect: false
+    });
+
+    // Handle "All" selection logic
+    $('#user_id').on('select2:select', function(e) {
+        var data = e.params.data;
+
+        if (data.id === 'all') {
+            // If "All" is selected, deselect all other options
+            $('#user_id').val(['all']).trigger('change');
+        } else {
+            // If any other option is selected, remove "all" if it exists
+            var currentValues = $('#user_id').val();
+            if (currentValues && currentValues.includes('all')) {
+                currentValues = currentValues.filter(function(value) {
+                    return value !== 'all';
+                });
+                $('#user_id').val(currentValues).trigger('change');
+            }
+        }
+    });
+
+    $('#user_id').on('select2:unselect', function(e) {
+        var data = e.params.data;
+
+        if (data.id === 'all') {
+            // If "All" is deselected, ensure no other options remain
+            $('#user_id').val(null).trigger('change');
+        }
+    });
+    // Initialize fields based on current values
+    function initializeFields() {
+        // Show/Hide certificate fields
+        if ($('input[name="course_certificate"]:checked').val() == '1') {
+            $('#certificateFields').show();
+        } else {
+            $('#certificateFields').hide();
+        }
+
+        // Show/Hide exam fields
+        if ($('input[name="course_exam"]:checked').val() == '1') {
+            $('.examname').show();
+        } else {
+            $('.examname').hide();
+        }
+
+        // Show/Hide course period fields
+        if ($('input[name="course_noperiod"]:checked').val() == '1') {
+            $('#coursePeriodFields').show();
+        } else {
+            $('#coursePeriodFields').hide();
+        }
+
+        // Show/Hide PIN field
+        if ($('input[name="restricted_access"]:checked').val() == '1') {
+            $('#pinField').show();
+        } else {
+            $('#pinField').hide();
+        }
+
+        // Show/Hide expiry date field
+        if ($('input[name="certificate_expiry"]:checked').val() == '1') {
+            $('#expiryDateField').show();
+        } else {
+            $('#expiryDateField').hide();
+        }
+    }
+
+    // Initialize fields on page load
+    initializeFields();
+
+    // Event handlers for field changes
+    $('input[name="course_certificate"]').change(function() {
+        if ($(this).val() == '1') {
+            $('#certificateFields').show();
+        } else {
+            $('#certificateFields').hide();
+            $('#expiryDateField').hide();
+        }
+    });
+
+    $('input[name="course_exam"]').change(function() {
+        if ($(this).val() == '1') {
+            $('.examname').show();
+        } else {
+            $('.examname').hide();
+        }
+    });
+
+    $('#course_pay').change(function() {
+        if ($(this).val() == 'paid') {
+            $('#paid').show();
+        } else {
+            $('#paid').hide();
+        }
+    });
+
+    $('input[name="course_noperiod"]').change(function() {
+        if ($(this).val() == '1') {
+            $('#coursePeriodFields').show();
+        } else {
+            $('#coursePeriodFields').hide();
+        }
+    });
+
+    $('input[name="restricted_access"]').change(function() {
+        if ($(this).val() == '1') {
+            $('#pinField').show();
+        } else {
+            $('#pinField').hide();
+        }
+    });
+
+    $('input[name="certificate_expiry"]').change(function() {
+        if ($(this).val() == '1') {
+            $('#expiryDateField').show();
+        } else {
+            $('#expiryDateField').hide();
+        }
+    });
+
+    // Initialize Bootstrap modal
+    var publishModal = new bootstrap.Modal(document.getElementById('publishModal'));
+
+    // Add click handler for the publish button
+    $('button[data-target="#publishModal"]').click(function(e) {
+        e.preventDefault();
+        // Make sure the exam ID is properly populated
+        var examId = $('#original_exam_id').val();
+        if (examId) {
+            // Set the exam name dropdown
+            $('#exam_name').val(examId).trigger('change');
+        }
+        publishModal.show();
+    });
+
+    // Initialize fields on modal show
+    $('#publishModal').on('shown.bs.modal', function() {
+        initializeFields();
+
+        // Disable non-editable fields
+        $('#role_id, #designation_id, #course_name, #course_description').prop('disabled', true);
+
+        // Add readonly styling
+        $('#course_name, #course_description').css({
+            'background-color': '#f8f9fa',
+            'cursor': 'not-allowed'
+        });
+    });
+
+    $('#publish_course_form').submit(function(e) {
+        e.preventDefault();
+
+        // Process user_ids - if "all" is selected, convert to comma-separated all user IDs
+        var selectedUserIds = $('#user_id').val();
+        var allUserIds = [];
+
+        if (selectedUserIds && selectedUserIds.includes('all')) {
+            // Get all user IDs except "all"
+            $('#user_id option').each(function() {
+                var value = $(this).val();
+                if (value !== 'all' && value !== '') {
+                    allUserIds.push(value);
+                }
+            });
+
+            // Create hidden input with all user IDs
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'user_ids[]',
+                value: 'all' // Send 'all' as a special value
+            }).appendTo('#publish_course_form');
+
+            // Also store the actual IDs in another field
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'all_user_ids_string',
+                value: allUserIds.join(',')
+            }).appendTo('#publish_course_form');
+
+            console.log('All User IDs selected, sending "all" as value');
+
+            // Clear the original user_ids field to prevent conflict
+            $('#user_id').val('');
+        } else {
+            // If specific users are selected, ensure it's not empty
+            if (!selectedUserIds || selectedUserIds.length === 0) {
+                Swal.fire({
+                    title: "Error",
+                    text: "Please select at least one user or select 'All'",
+                    icon: "error",
+                    confirmButtonColor: "#dc3545",
+                    confirmButtonText: "OK",
+                    customClass: {
+                        confirmButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                });
+                return false;
+            }
+        }
+
+        // Show confirmation dialog
+        Swal.fire({
+            title: "Confirm Publication",
+            text: "Are you sure you want to publish this course? Once published, it will be available to enrolled users.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745",
+            confirmButtonText: "Yes, publish it!",
+            cancelButtonText: "Cancel",
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit the form
+                $(this).off('submit').submit();
+            }
+        });
+    });
+
+    // Re-enable fields when modal is hidden
+    $('#publishModal').on('hidden.bs.modal', function() {
+        $('#role_id, #designation_id, #course_name, #course_description').prop('disabled', false);
+        $('#course_name, #course_description').css({
+            'background-color': '',
+            'cursor': ''
+        });
+        // Remove any hidden inputs added
+        $('input[name="all_user_ids"]').remove();
     });
 });
+
+function resetSelect2() {
+    $('.js-select2').val(null).trigger('change');
+}
 </script>
 
 @endsection

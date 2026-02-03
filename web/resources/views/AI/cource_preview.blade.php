@@ -483,7 +483,7 @@ body.sidebar-collapsed .sticky-footer {
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#exam">
+            <a class="nav-link" data-toggle="tab" href="#exam_section">
                 <i class="fas fa-graduation-cap mr-2"></i>Final Exam
             </a>
         </li>
@@ -500,7 +500,7 @@ body.sidebar-collapsed .sticky-footer {
                             <div class="d-flex align-items-center">
                                 <!-- ADD THIS CHECKBOX -->
                                 <input type="checkbox" class="form-check-input class-check" id="class_{{ $cIndex }}"
-                                    data-index="{{ $cIndex }}" checked>
+                                    data-index="{{ $cIndex }}" checked disabled>
                                 <label class="mb-0 ml-2 fw-bold" for="class_{{ $cIndex }}">
                                     <i class="fas fa-chalkboard-teacher mr-2 text-primary"></i>
                                     {{ $class['class_name'] }}
@@ -676,7 +676,7 @@ body.sidebar-collapsed .sticky-footer {
             </div>
 
             <!-- Final Exam Tab -->
-            <div class="tab-pane fade" id="exam">
+            <div class="tab-pane fade" id="exam_section">
                 <div class="select-all-container">
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="selectAllExam">
@@ -864,7 +864,9 @@ body.sidebar-collapsed .sticky-footer {
 </div>
 
 <script>
-// Simple toggle function for classes
+// ==========================
+// Class toggle
+// ==========================
 function toggleClass(index) {
     const details = document.getElementById('classDetails' + index);
     const icon = document.getElementById('classIcon' + index);
@@ -880,7 +882,9 @@ function toggleClass(index) {
     }
 }
 
-// Show slide modal
+// ==========================
+// Slide modal
+// ==========================
 function showSlideModal(title, content, script, audioUrl) {
     document.getElementById('slideModalTitle').textContent = title;
     document.getElementById('slideContent').innerHTML = content;
@@ -900,43 +904,58 @@ function showSlideModal(title, content, script, audioUrl) {
     $('#slideModal').modal('show');
 }
 
-// Update selection counts
+// ==========================
+// Update counts
+// ==========================
 function updateCounts() {
     const classCount = document.querySelectorAll('.class-check:checked').length;
     const quizCount = document.querySelectorAll('#quiz .question-check:checked').length;
-    const examCount = document.querySelectorAll('#exam .question-check:checked').length;
+    const examCount = document.querySelectorAll('#exam_section .question-check:checked').length;
 
     document.getElementById('classCount').textContent = `Classes: ${classCount}`;
     document.getElementById('quizCount').textContent = `Quiz: ${quizCount}`;
     document.getElementById('examCount').textContent = `Exam: ${examCount}`;
 }
 
-// Select all functionality - ONLY for quiz and exam (NOT for classes)
+// ==========================
+// Select All (Quiz / Exam)
+// ==========================
 const selectAllQuiz = document.getElementById('selectAllQuiz');
 const selectAllExam = document.getElementById('selectAllExam');
 
 if (selectAllQuiz) {
     selectAllQuiz.addEventListener('change', function() {
-        document.querySelectorAll('#quiz .question-check').forEach(cb => cb.checked = this.checked);
+        document
+            .querySelectorAll('#quiz .question-check')
+            .forEach(cb => cb.checked = this.checked);
         updateCounts();
     });
 }
 
 if (selectAllExam) {
     selectAllExam.addEventListener('change', function() {
-        document.querySelectorAll('#exam .question-check').forEach(cb => cb.checked = this.checked);
+        document
+            .querySelectorAll('#exam_section .question-check')
+            .forEach(cb => cb.checked = this.checked);
         updateCounts();
     });
 }
 
-// Listen for checkbox changes
+// ==========================
+// Checkbox change listener
+// ==========================
 document.addEventListener('change', function(e) {
     if (e.target.matches('.class-check, .question-check')) {
         updateCounts();
     }
 });
 
-// Form submission
+// ==========================
+// Form submit
+// ==========================
+// ==========================
+// Form submit
+// ==========================
 document.getElementById('courseForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -946,51 +965,119 @@ document.getElementById('courseForm').addEventListener('submit', function(e) {
         exam: []
     };
 
-    // Get selected classes
+    // Classes
     document.querySelectorAll('.class-check:checked').forEach(cb => {
         selected.classes.push(parseInt(cb.dataset.index));
     });
 
-    // Get selected quiz questions
-    document.querySelectorAll('#quiz .question-check:checked').forEach(cb => {
-        selected.quiz.push({
-            type: cb.dataset.type,
-            classIndex: parseInt(cb.dataset.class),
-            questionIndex: parseInt(cb.dataset.index)
-        });
+    // Quiz questions
+    document.querySelectorAll('#quiz .question-check').forEach(cb => {
+        if (cb.checked) {
+            selected.quiz.push({
+                type: cb.dataset.type,
+                classIndex: parseInt(cb.dataset.class),
+                questionIndex: parseInt(cb.dataset.index)
+            });
+        }
     });
 
-    // Get selected exam questions
-    document.querySelectorAll('#exam .question-check:checked').forEach(cb => {
-        selected.exam.push({
-            type: cb.dataset.type,
-            questionIndex: parseInt(cb.dataset.index)
-        });
+    // Exam questions
+    document.querySelectorAll('#exam_section .question-check').forEach(cb => {
+        if (cb.checked) {
+            selected.exam.push({
+                type: cb.dataset.type,
+                questionIndex: parseInt(cb.dataset.index)
+            });
+        }
     });
 
-    console.log('Selected data:', selected);
-    console.log('Course data exists:', document.getElementById('courseData').value ? 'Yes' : 'No');
+    // Get original course data
+    const originalCourseData = JSON.parse(document.getElementById('courseData').value);
+    const filteredCourseData = JSON.parse(JSON.stringify(originalCourseData)); // Deep clone
 
-    // Update hidden fields
+    // Filter quiz questions
+    filteredCourseData.classes = filteredCourseData.classes.map((classItem, classIndex) => {
+        if (!selected.classes.includes(classIndex)) {
+            // Remove quiz from unselected classes
+            delete classItem.quiz;
+            return classItem;
+        }
+
+        // For selected classes, filter quiz questions
+        if (classItem.quiz) {
+            const filteredQuiz = {};
+
+            // Filter each question type
+            ['long', 'mcq', 'short', 'true_false'].forEach(type => {
+                if (classItem.quiz[type]) {
+                    filteredQuiz[type] = classItem.quiz[type].filter((question, qIndex) => {
+                        return selected.quiz.some(s =>
+                            s.classIndex === classIndex &&
+                            s.type === type &&
+                            s.questionIndex === qIndex
+                        );
+                    });
+                }
+            });
+
+            classItem.quiz = filteredQuiz;
+        }
+
+        return classItem;
+    });
+
+    // Filter final exam questions
+    if (filteredCourseData.final_exam) {
+        const filteredExam = {};
+
+        ['long', 'mcq', 'short', 'true_false'].forEach(type => {
+            if (filteredCourseData.final_exam[type]) {
+                filteredExam[type] = filteredCourseData.final_exam[type].filter((question, qIndex) => {
+                    return selected.exam.some(s =>
+                        s.type === type &&
+                        s.questionIndex === qIndex
+                    );
+                });
+            }
+        });
+
+        filteredCourseData.final_exam = filteredExam;
+    }
+
+    // Remove classes that weren't selected
+    filteredCourseData.classes = filteredCourseData.classes.filter((_, index) =>
+        selected.classes.includes(index)
+    );
+
+    // Update counts in the course data
+    filteredCourseData.class_count = filteredCourseData.classes.length;
+
+    // Update course data in the hidden field
+    document.getElementById('courseData').value = JSON.stringify(filteredCourseData);
     document.getElementById('selectedQuestions').value = JSON.stringify(selected);
 
-    // Show confirmation
-    if (confirm(
-            `Submit with ${selected.classes.length} classes, ${selected.quiz.length} quiz questions, and ${selected.exam.length} exam questions?`
-        )) {
-        // Submit the form
+    if (
+        confirm(
+            `Submit with ${selected.classes.length} classes, ` +
+            `${selected.quiz.length} quiz questions, ` +
+            `${selected.exam.length} exam questions?`
+        )
+    ) {
+        console.log('Filtered course data:', filteredCourseData);
         this.submit();
     }
 });
 
-// Adjust layout based on sidebar state
+// ==========================
+// Layout adjustment
+// ==========================
 function adjustLayoutForSidebar() {
     const body = document.body;
     const contentWrapper = document.querySelector('.content-wrapper');
     const stickyFooter = document.querySelector('.sticky-footer');
 
-    // Check if sidebar is collapsed
-    const isCollapsed = body.classList.contains('sidebar-collapsed') ||
+    const isCollapsed =
+        body.classList.contains('sidebar-collapsed') ||
         body.classList.contains('collapsed') ||
         body.classList.contains('mini-sidebar');
 
@@ -1007,41 +1094,41 @@ function adjustLayoutForSidebar() {
     }
 }
 
-// Initialize on load
+// ==========================
+// Init
+// ==========================
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize counts
     updateCounts();
 
-    // Open first class by default
     if (document.querySelector('.class-card')) {
         toggleClass(0);
     }
 
-    // Log initial data for debugging
-    console.log('Course Data hidden field value:', document.getElementById('courseData').value.substring(0,
-        100) + '...');
-    console.log('Selected Questions hidden field initial value:', document.getElementById('selectedQuestions')
-        .value);
+    console.log(
+        'Course Data:',
+        document.getElementById('courseData').value.substring(0, 100) + '...'
+    );
+    console.log(
+        'Selected Questions:',
+        document.getElementById('selectedQuestions').value
+    );
 
-    // Adjust layout
     adjustLayoutForSidebar();
 
-    // Set up observer for sidebar changes
     const observer = new MutationObserver(adjustLayoutForSidebar);
     observer.observe(document.body, {
         attributes: true,
         attributeFilter: ['class']
     });
 
-    // Bootstrap tab activation
     $('#courseTabs a').on('click', function(e) {
         e.preventDefault();
         $(this).tab('show');
     });
 });
 
-// Listen for window resize
 window.addEventListener('resize', adjustLayoutForSidebar);
 </script>
+
 
 @endsection

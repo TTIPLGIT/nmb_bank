@@ -77,7 +77,7 @@ class AIController extends BaseController
     {
         $method = 'Method => AIController => ai_createcourse';
 
-
+    
         try {
             $user_id = $request->session()->get("userID");
             if ($user_id == null) {
@@ -89,22 +89,73 @@ class AIController extends BaseController
                 'designation'        => $request->designation_id,
                 'course_name'        => $request->course_name,
                 'course_description' => $request->course_description,
-                'course_type'        => $request->course_type,
+                'course_type'        => "",
                 'class_count'        => (int) $request->class_count,
                 'video_duration'     => $request->course_duration,
             ];
 
 
 
-            $gatewayURL = 'http://20.164.0.23:3300/create-course/';
+            // $gatewayURL = 'http://20.164.0.23:3300/create-course/';
 
-            $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
-            $response = is_string($response)
-                ? json_decode($response, true)
-                : $response;
+            // $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
+            // $response = is_string($response)
+            //     ? json_decode($response, true)
+            //     : $response;
             // dd($response['classes']);
             // Start
-            DB::beginTransaction();
+            $filePath = 'C:\Apache24\htdocs\nmb_bank\web\storage\app\static_course_data.json';
+                $jsonContent = file_get_contents($filePath);
+                $response = json_decode($jsonContent, true);
+           
+    
+    $result = [
+        "course_name" => $response['course_name'],
+        "classes" => []
+    ];
+    
+    foreach ($response['classes'] as $class) {
+        $transformedClass = [
+            "class_name" => $class['class_name'],
+            "slides" => []
+        ];
+        
+        foreach ($class['video_slides'] as $slide) {
+            $transformedSlide = [
+                "title" => $slide['title'],
+                "visual_text" => $slide['visual_text'],
+                "voiceover_script" => $slide['voiceover_script']
+            ];
+            
+            $transformedClass['slides'][] = $transformedSlide;
+        }
+        
+        $result['classes'][] = $transformedClass;
+    }
+    
+   
+
+            $gatewayURL = 'http://20.164.0.23:3300/generate-course-video/';
+
+            // Method for the API request
+            $method = 'POST';
+
+            // Send the data to the API
+            $apiResponse = $this->AIServiceRequest($gatewayURL, 'POST', $result,$method);
+
+            // Process the response
+            $response2 = is_string($apiResponse) 
+                ? json_decode($apiResponse, true) 
+                : $apiResponse;
+
+            // Debug/check the response
+           
+                if ($response === null) {
+                    // Handle JSON parsing error
+                    $error = json_last_error_msg();
+                    // Error handling logic
+                }
+                DB::beginTransaction();
 
             try {
 
@@ -123,10 +174,13 @@ class AIController extends BaseController
                     'course_banner_url'         => $response['course_banner_url'],
                     'course_introduction'       => $response['course_introduction'],
                     'certification_html'        => $response['certification_html'],
+                      'category_id'           => $request->course_category_id,
+                        'role_id'               => $request->role,
+                        'designation_id'        => $request->designation_id,
                     'final_exam'                => json_encode($response['final_exam'], JSON_UNESCAPED_UNICODE),
                 ]);
 
-
+               
                 foreach ($response['classes'] as $index => $class) {
                     DB::table('ai_course_response_classes')->insert([
                         'ai_course_response_id' => $courseId,
@@ -140,6 +194,7 @@ class AIController extends BaseController
                         'video_url'             => $class['video_url'],
                         'video_slides'          => json_encode($class['video_slides'], JSON_UNESCAPED_UNICODE),
                         'quiz'                  => json_encode($class['quiz'], JSON_UNESCAPED_UNICODE),
+                        'task_id' => $response2['tasks'][$index]['task_id'],
                     ]);
                 }
 
@@ -290,378 +345,293 @@ public function ai_course_store(Request $request)
 
     try {
         $user_id = $request->session()->get("userID");
-        if ($user_id == null) {
+        if (!$user_id) {
             return view('auth.login');
         }
 
-        // Get the selected questions data
         $selectedQuestions = json_decode($request->selected_questions, true);
-        
-        // Get the full course data
-        $courseData = json_decode($request->course_data, true);
-        
-        // Get the course ID from the stored response
-        $course = DB::table('ai_course_response')
-            ->where('course_name', $courseData['course_name'])
-            ->orderBy('id', 'desc')
-            ->first();
-            
-        if (!$course) {
-            return redirect()->back()->with('error', 'Course not found!');
-        }
-
-        // Get all classes for this course
-        $allClasses = DB::table('ai_course_response_classes')
-            ->where('ai_course_response_id', $course->id)
-            ->orderBy('class_order')
-            ->get();
-
-        // Filter selected classes
-        $selectedClassIndices = $selectedQuestions['classes'] ?? [];
-        $selectedClasses = [];
-        
-        foreach ($allClasses as $index => $class) {
-            if (in_array($index, $selectedClassIndices)) {
-                $selectedClasses[] = $class;
-            }
-        }
-
-        // Start transaction
+        $filteredCourseData = json_decode($request->course_data, true);
+       
         DB::beginTransaction();
 
         try {
-            // 1. Create the main course record
-            
+            /* =====================================================
+               1. CREATE COURSE
+            ===================================================== */
             $courseID = DB::table('elearning_courses')->insertGetId([
-                'course_name' => $courseData['course_name'],
-                'course_description' => $courseData['course_description'],
-                'course_category' => '26',
-                // 'course_duration' => $courseData['course_duration'],
-                // 'course_quota' => 0,
-                // 'course_type' => $courseData['course_type'],
-                // 'points_required' => 0,
-                // 'drop_course' => '0',
-                // 'cover_photo' => $courseData['course_banner_url'] ?? null,
-                // 'created_at' => now(),
-                // 'updated_at' => now()
-            ]);
-           
-            // 2. Create each selected class with its quiz
-            foreach ($selectedClasses as $classIndex => $class) {
-                $quizData = json_decode($class->quiz, true);
-                $selectedQuizQuestions = $selectedQuestions['quiz'] ?? [];
+                'course_name'        => $filteredCourseData['course_name'],
+                'course_description' => $filteredCourseData['course_description'],
                 
-                // Filter quiz questions for this specific class
-                $classQuizQuestions = array_filter($selectedQuizQuestions, function($q) use ($classIndex) {
-                    return $q['classIndex'] == $classIndex;
-                });
+                'drop_course'        => 0,
+               
+            ], 'course_id');
+            
+            // Update AI response table with course ID if needed
+            DB::table('ai_course_response')
+                ->where('course_name', $filteredCourseData['course_name'])
+                ->orderBy('id', 'desc')
+                ->limit(1)
+                ->update([
+                    'course_id' => $courseID,
+                    'updated_at' => now()
+                ]);
 
-                // Prepare quiz questions array
+            /* =====================================================
+               2. CREATE CLASSES + QUIZZES
+            ===================================================== */
+            $classIds = [];
+            $totalCoursePoints = 0;
+
+            foreach ($filteredCourseData['classes'] as $classIndex => $class) {
+                $quizData = $class['quiz'] ?? [];
                 $quiz_questions = [];
                 $points = 0;
 
-                // Process LONG questions for this class
-                $longQuestions = $quizData['long'] ?? [];
-                foreach ($longQuestions as $qIndex => $q) {
-                    // Check if this question is selected
-                    $isSelected = false;
-                    foreach ($classQuizQuestions as $selectedQ) {
-                        if ($selectedQ['type'] == 'long' && $selectedQ['questionIndex'] == $qIndex) {
-                            $isSelected = true;
-                            break;
-                        }
-                    }
-                    
-                    if ($isSelected) {
-                        $quizLong = DB::table('elearning_questions_long_answer')->insertGetId([
-                            'question_name' => substr($q['question_text'], 0, 100),
-                            'question'      => $q['question_text'],
-                            'keywords'      => json_encode([$q['answer']]),
-                            'points'        => 10,
-                            'question_type' => 'long',
-                            'drop_question' => '0',
-                            'created_at'    => now()
-                        ]);
-                        $quiz_questions[] = $quizLong . '-long';
-                        $points += 10;
-                    }
+                /* ---------- LONG QUESTIONS ---------- */
+                foreach ($quizData['long'] ?? [] as $qIndex => $q) {
+                    $qid = DB::table('elearning_questions_long_answer')->insertGetId([
+                        'question_name' => substr($q['question_text'], 0, 100),
+                        'question'      => $q['question_text'],
+                        'keywords'      => json_encode([$q['answer']]),
+                        'points'        => 10,
+                        'question_type' => 'long',
+                        'drop_question' => 0,
+                        'created_at'    => now(),
+                        'updated_at'    => now(),
+                    ]);
+
+                    $quiz_questions[] = $qid . '-long';
+                    $points += 10;
+                    $totalCoursePoints += 10;
                 }
 
-                // Process MCQ questions for this class
-                $mcqQuestions = $quizData['mcq'] ?? [];
-                foreach ($mcqQuestions as $qIndex => $q) {
-                    // Check if this question is selected
-                    $isSelected = false;
-                    foreach ($classQuizQuestions as $selectedQ) {
-                        if ($selectedQ['type'] == 'mcq' && $selectedQ['questionIndex'] == $qIndex) {
-                            $isSelected = true;
-                            break;
-                        }
-                    }
-                    
-                    if ($isSelected) {
-                        // Format options for database
-                        $choices = [];
-                        foreach ($q['options'] as $option) {
-                            $choices[] = $option['text'];
-                        }
-                        
-                        $quizMCQ = DB::table('elearning_questions_mcq')->insertGetId([
-                            'question_name'    => substr($q['question_text'], 0, 100),
-                            'question'         => $q['question_text'],
-                            'choices'          => json_encode($choices),
-                            'correct_choices'  => $q['correct_option_id'],
-                            'points'           => 5,
-                            'question_type'    => 'mcq',
-                            'drop_question'    => '0',
-                            'created_at'       => now()
-                        ]);
-                        $quiz_questions[] = $quizMCQ . '-mcq';
-                        $points += 5;
-                    }
+                /* ---------- MCQ QUESTIONS ---------- */
+                foreach ($quizData['mcq'] ?? [] as $qIndex => $q) {
+                    $choices = array_column($q['options'], 'text');
+
+                    $qid = DB::table('elearning_questions_mcq')->insertGetId([
+                        'question_name'    => substr($q['question_text'], 0, 100),
+                        'question'         => $q['question_text'],
+                        'choices'          => json_encode($choices),
+                        'correct_choices'  => $q['correct_option_id'],
+                        'points'           => 5,
+                        'question_type'    => 'mcq',
+                        'drop_question'    => 0,
+                        'created_at'       => now(),
+                        'updated_at'       => now(),
+                    ]);
+
+                    $quiz_questions[] = $qid . '-mcq';
+                    $points += 5;
+                    $totalCoursePoints += 5;
                 }
 
-                // Process SHORT questions for this class
-                $shortQuestions = $quizData['short'] ?? [];
-                foreach ($shortQuestions as $qIndex => $q) {
-                    // Check if this question is selected
-                    $isSelected = false;
-                    foreach ($classQuizQuestions as $selectedQ) {
-                        if ($selectedQ['type'] == 'short' && $selectedQ['questionIndex'] == $qIndex) {
-                            $isSelected = true;
-                            break;
-                        }
-                    }
-                    
-                    if ($isSelected) {
-                        $quizShort = DB::table('elearning_questions_short_answer')->insertGetId([
-                            'question_name' => substr($q['question_text'], 0, 100),
-                            'question'      => $q['question_text'],
-                            'keywords'      => $q['answer'],
-                            'points'        => 5,
-                            'question_type' => 'short',
-                            'drop_question' => '0',
-                            'created_at'    => now()
-                        ]);
-                        $quiz_questions[] = $quizShort . '-short';
-                        $points += 5;
-                    }
+                /* ---------- SHORT QUESTIONS ---------- */
+                foreach ($quizData['short'] ?? [] as $qIndex => $q) {
+                    $qid = DB::table('elearning_questions_short_answer')->insertGetId([
+                        'question_name' => substr($q['question_text'], 0, 100),
+                        'question'      => $q['question_text'],
+                        'keywords'      => $q['answer'],
+                        'points'        => 5,
+                        'question_type' => 'short',
+                        'drop_question' => 0,
+                        'created_at'    => now(),
+                        'updated_at'    => now(),
+                    ]);
+
+                    $quiz_questions[] = $qid . '-short';
+                    $points += 5;
+                    $totalCoursePoints += 5;
                 }
 
-                // Process TRUE/FALSE questions for this class
-                $tfQuestions = $quizData['true_false'] ?? [];
-                foreach ($tfQuestions as $qIndex => $q) {
-                    // Check if this question is selected
-                    $isSelected = false;
-                    foreach ($classQuizQuestions as $selectedQ) {
-                        if ($selectedQ['type'] == 'true_false' && $selectedQ['questionIndex'] == $qIndex) {
-                            $isSelected = true;
-                            break;
-                        }
-                    }
-                    
-                    if ($isSelected) {
-                        $boolean = DB::table('elearning_questions_true_false')->insertGetId([
-                            'question_name' => substr($q['question_text'], 0, 100),
-                            'question' => $q['question_text'],
-                            'answer' => strtolower($q['answer']) === 'true' ? 'on' : 'off',
-                            'points' => 5,
-                            'question_type' => "boolean",
-                            'drop_question' => '0',
-                            'created_at' => now()
-                        ]);
-                        $quiz_questions[] = $boolean . '-boolean';
-                        $points += 5;
-                    }
+                /* ---------- TRUE / FALSE ---------- */
+                foreach ($quizData['true_false'] ?? [] as $qIndex => $q) {
+                    $qid = DB::table('elearning_questions_true_false')->insertGetId([
+                        'question_name' => substr($q['question_text'], 0, 100),
+                        'question'      => $q['question_text'],
+                        'answer'        => strtolower($q['answer']) === 'true' ? 'on' : 'off',
+                        'points'        => 5,
+                        'question_type' => 'boolean',
+                        'drop_question' => 0,
+                        'created_at'    => now(),
+                        'updated_at'    => now(),
+                    ]);
+
+                    $quiz_questions[] = $qid . '-boolean';
+                    $points += 5;
+                    $totalCoursePoints += 5;
                 }
 
-                // Create quiz if there are questions
                 $quizID = null;
                 if (!empty($quiz_questions)) {
                     $quizID = DB::table('elearning_practice_quiz')->insertGetId([
-                        'quiz_name' => 'Quiz-' . str_pad($classIndex + 1, 3, '0', STR_PAD_LEFT),
-                        'quiz_questions' => implode(",", $quiz_questions),
-                        'points' => $points,
-                        'drop_quiz' => '0',
-                        'evaluation' => 1,
-                        'created_at' => now()
+                        'quiz_name'      => 'Quiz-' . ($classIndex + 1),
+                        'quiz_questions' => implode(',', $quiz_questions),
+                        'points'         => $points,
+                        'drop_quiz'      => 0,
+                        'evaluation'     => 1,
+                        'created_at'     => now(),
+                        'updated_at'     => now(),
                     ]);
                 }
 
-                // Create the class
                 $classID = DB::table('elearning_classes')->insertGetId([
-                    'class_name' => $class->class_name,
-                    'resource_name' => $class->class_name,
-                    'class_duration' => $class->target_video_duration,
-                    'class_format' => 'mp4',
-                    'class_description' => $class->class_description,
-                    'quiz_id' => $quizID,
-                    'class_quiz' => $quizID ? 'yes' : 'no',
-                    // 'created_at' => now(),
-                    // 'updated_at' => now()
+                    'class_name'        => $class['class_name'],
+                    'resource_name'     => $class['class_name'],
+                    'class_duration'    => $class['estimated_duration'] ?? $class['target_video_duration'] ?? '30 mins',
+                    'class_format'      => 'mp4',
+                    'class_description' => $class['class_description'],
+                    'quiz_id'           => $quizID,
+                    'class_quiz'        => $quizID ? 'yes' : 'no',
+                    'drop_class'        => 0,
+                  
+                ]);
+                $classIds[] = $classID;
+            }
+            
+            /* =====================================================
+               3. CREATE FINAL EXAM
+            ===================================================== */
+            $finalExamQuestions = [];
+            $finalExamPoints = 0;
+            
+            if (isset($filteredCourseData['final_exam'])) {
+                $finalExamData = $filteredCourseData['final_exam'];
+                
+                /* ---------- LONG QUESTIONS ---------- */
+                foreach ($finalExamData['long'] ?? [] as $qIndex => $q) {
+                    $qid = DB::table('elearning_questions_long_answer')->insertGetId([
+                        'question_name' => substr($q['question_text'], 0, 100),
+                        'question'      => $q['question_text'],
+                        'keywords'      => json_encode([$q['answer']]),
+                        'points'        => 20,
+                        'question_type' => 'long',
+                        'drop_question' => 0,
+                        'created_at'    => now(),
+                        'updated_at'    => now(),
+                    ]);
+
+                    $finalExamQuestions[] = $qid . '-long';
+                    $finalExamPoints += 20;
+                    $totalCoursePoints += 20;
+                }
+
+                /* ---------- MCQ QUESTIONS ---------- */
+                foreach ($finalExamData['mcq'] ?? [] as $qIndex => $q) {
+                    $choices = array_column($q['options'], 'text');
+
+                    $qid = DB::table('elearning_questions_mcq')->insertGetId([
+                        'question_name'    => substr($q['question_text'], 0, 100),
+                        'question'         => $q['question_text'],
+                        'choices'          => json_encode($choices),
+                        'correct_choices'  => $q['correct_option_id'],
+                        'points'           => 10,
+                        'question_type'    => 'mcq',
+                        'drop_question'    => 0,
+                        'created_at'       => now(),
+                        'updated_at'       => now(),
+                    ]);
+
+                    $finalExamQuestions[] = $qid . '-mcq';
+                    $finalExamPoints += 10;
+                    $totalCoursePoints += 10;
+                }
+
+                /* ---------- SHORT QUESTIONS ---------- */
+                foreach ($finalExamData['short'] ?? [] as $qIndex => $q) {
+                    $qid = DB::table('elearning_questions_short_answer')->insertGetId([
+                        'question_name' => substr($q['question_text'], 0, 100),
+                        'question'      => $q['question_text'],
+                        'keywords'      => $q['answer'],
+                        'points'        => 10,
+                        'question_type' => 'short',
+                        'drop_question' => 0,
+                        'created_at'    => now(),
+                        'updated_at'    => now(),
+                    ]);
+
+                    $finalExamQuestions[] = $qid . '-short';
+                    $finalExamPoints += 10;
+                    $totalCoursePoints += 10;
+                }
+
+                /* ---------- TRUE / FALSE ---------- */
+                foreach ($finalExamData['true_false'] ?? [] as $qIndex => $q) {
+                    $qid = DB::table('elearning_questions_true_false')->insertGetId([
+                        'question_name' => substr($q['question_text'], 0, 100),
+                        'question'      => $q['question_text'],
+                        'answer'        => strtolower($q['answer']) === 'true' ? 'on' : 'off',
+                        'points'        => 10,
+                        'question_type' => 'boolean',
+                        'drop_question' => 0,
+                        'created_at'    => now(),
+                        'updated_at'    => now(),
+                    ]);
+
+                    $finalExamQuestions[] = $qid . '-boolean';
+                    $finalExamPoints += 10;
+                    $totalCoursePoints += 10;
+                }
+            }
+
+            $finalExamID = null;
+            if (!empty($finalExamQuestions)) {
+                $finalExamID = DB::table('elearning_practice_quiz')->insertGetId([
+                    'quiz_name'      => 'Final Exam - ' . $filteredCourseData['course_name'],
+                    'quiz_questions' => implode(',', $finalExamQuestions),
+                    'points'         => $finalExamPoints,
+                    'drop_quiz'      => 0,
+                    'evaluation'     => 1,
+                    
+                    'created_at'     => now(),
+                    'updated_at'     => now(),
                 ]);
 
-                // // Link class to course
-                // DB::table('elearning_course_classes')->insert([
-                //     'course_id' => $courseID,
-                //     'class_id' => $classID,
-                //     'class_order' => $classIndex + 1,
-                //     'created_at' => now()
-                // ]);
+                 $finalExamID = DB::table('elearning_exam')->insertGetId([
+                    'exam_name'      => 'Final Exam - ' . $filteredCourseData['course_name'],
+                    'quiz_id' => $finalExamID,
+                    'user_category'         => '42',
+                    'created_at'     => now(),
+                    'updated_at'     => now(),
+                ]);
+
+                 DB::table('elearning_courses')
+                ->where('course_id', $courseID)
+                ->update([
+                    'exam_id' => $finalExamID,
+                 
+                    
+                ]);
             }
 
-            
+             $ai_course_response = DB::table('ai_course_response')
+                ->where('course_id', $courseID)
+                ->orderBy('id', 'desc')
+                ->first();
+                
 
-            // 3. Create final exam if selected
-            $finalExamData = $courseData['final_exam'] ?? [];
-            $selectedExamQuestions = $selectedQuestions['exam'] ?? [];
-            
-            if (!empty($selectedExamQuestions) && !empty($finalExamData)) {
-                $final_quiz_questions = [];
-                $final_points = 0;
-
-                // Process final exam LONG questions
-                $longQuestions = $finalExamData['long'] ?? [];
-                foreach ($longQuestions as $qIndex => $q) {
-                    // Check if selected
-                    $isSelected = false;
-                    foreach ($selectedExamQuestions as $selectedQ) {
-                        if ($selectedQ['type'] == 'long' && $selectedQ['questionIndex'] == $qIndex) {
-                            $isSelected = true;
-                            break;
-                        }
-                    }
+            /* =====================================================
+               4. UPDATE COURSE WITH CLASSES AND FINAL EXAM
+            ===================================================== */
+            DB::table('elearning_courses')
+                ->where('course_id', $courseID)
+                ->update([
+                    'course_classes' => implode(',', $classIds),
+                    'role_id' => $ai_course_response->role_id,
+                    'designation_id' => $ai_course_response->designation_id,
+                    'course_category'    => $ai_course_response->category_id,
+                 
                     
-                    if ($isSelected) {
-                        $quizLong = DB::table('elearning_questions_long_answer')->insertGetId([
-                            'question_name' => substr($q['question_text'], 0, 100),
-                            'question'      => $q['question_text'],
-                            'keywords'      => json_encode([$q['answer']]),
-                            'points'        => 15,
-                            'question_type' => 'long',
-                            'drop_question' => '0',
-                            'created_at'    => now()
-                        ]);
-                        $final_quiz_questions[] = $quizLong . '-long';
-                        $final_points += 15;
-                    }
-                }
+                ]);
 
-                // Process final exam MCQ questions
-                $mcqQuestions = $finalExamData['mcq'] ?? [];
-                foreach ($mcqQuestions as $qIndex => $q) {
-                    // Check if selected
-                    $isSelected = false;
-                    foreach ($selectedExamQuestions as $selectedQ) {
-                        if ($selectedQ['type'] == 'mcq' && $selectedQ['questionIndex'] == $qIndex) {
-                            $isSelected = true;
-                            break;
-                        }
-                    }
-                    
-                    if ($isSelected) {
-                        $choices = [];
-                        foreach ($q['options'] as $option) {
-                            $choices[] = $option['text'];
-                        }
-                        
-                        $quizMCQ = DB::table('elearning_questions_mcq')->insertGetId([
-                            'question_name'    => substr($q['question_text'], 0, 100),
-                            'question'         => $q['question_text'],
-                            'choices'          => json_encode($choices),
-                            'correct_choices'  => $q['correct_option_id'],
-                            'points'           => 10,
-                            'question_type'    => 'mcq',
-                            'drop_question'    => '0',
-                            'created_at'       => now()
-                        ]);
-                        $final_quiz_questions[] = $quizMCQ . '-mcq';
-                        $final_points += 10;
-                    }
-                }
-
-                // Process final exam SHORT questions
-                $shortQuestions = $finalExamData['short'] ?? [];
-                foreach ($shortQuestions as $qIndex => $q) {
-                    // Check if selected
-                    $isSelected = false;
-                    foreach ($selectedExamQuestions as $selectedQ) {
-                        if ($selectedQ['type'] == 'short' && $selectedQ['questionIndex'] == $qIndex) {
-                            $isSelected = true;
-                            break;
-                        }
-                    }
-                    
-                    if ($isSelected) {
-                        $quizShort = DB::table('elearning_questions_short_answer')->insertGetId([
-                            'question_name' => substr($q['question_text'], 0, 100),
-                            'question'      => $q['question_text'],
-                            'keywords'      => $q['answer'],
-                            'points'        => 10,
-                            'question_type' => 'short',
-                            'drop_question' => '0',
-                            'created_at'    => now()
-                        ]);
-                        $final_quiz_questions[] = $quizShort . '-short';
-                        $final_points += 10;
-                    }
-                }
-
-                // Process final exam TRUE/FALSE questions
-                $tfQuestions = $finalExamData['true_false'] ?? [];
-                foreach ($tfQuestions as $qIndex => $q) {
-                    // Check if selected
-                    $isSelected = false;
-                    foreach ($selectedExamQuestions as $selectedQ) {
-                        if ($selectedQ['type'] == 'true_false' && $selectedQ['questionIndex'] == $qIndex) {
-                            $isSelected = true;
-                            break;
-                        }
-                    }
-                    
-                    if ($isSelected) {
-                        $boolean = DB::table('elearning_questions_true_false')->insertGetId([
-                            'question_name' => substr($q['question_text'], 0, 100),
-                            'question' => $q['question_text'],
-                            'answer' => strtolower($q['answer']) === 'true' ? 'on' : 'off',
-                            'points' => 5,
-                            'question_type' => "boolean",
-                            'drop_question' => '0',
-                            'created_at' => now()
-                        ]);
-                        $final_quiz_questions[] = $boolean . '-boolean';
-                        $final_points += 5;
-                    }
-                }
-
-                // Create final exam quiz
-                if (!empty($final_quiz_questions)) {
-                    $finalQuizID = DB::table('elearning_practice_quiz')->insertGetId([
-                        'quiz_name' => 'Final-Exam',
-                        'quiz_questions' => implode(",", $final_quiz_questions),
-                        'points' => $final_points,
-                        'drop_quiz' => '0',
-                        'evaluation' => 1,
-                        'created_at' => now()
-                    ]);
-
-                    // Link final exam to course
-                    DB::table('elearning_exam')->insert([
-                        'user_category' => '20',
-                        'quiz_id' => $finalQuizID,
-                        'exam_name' =>$courseData['course_name'],
-                        'created_at' => now()
-                    ]);
-                }
-            }
-
-         
+           
 
             DB::commit();
 
-            // Redirect with success message
-            return redirect()->route('ai_course_list')
-                ->with('success', 'Course created successfully!');
+            return redirect()
+                ->route('ai_course_list')
+                ->with('success', 'Course "' . $filteredCourseData['course_name'] . '" created successfully with ' . 
+                       count($filteredCourseData['classes']) . ' classes and final exam!');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -669,9 +639,16 @@ public function ai_course_store(Request $request)
         }
 
     } catch (\Exception $exc) {
-        return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        return $this->sendLog(
+            $method,
+            $exc->getCode(),
+            $exc->getMessage(),
+            $exc->getTrace()[0]['line'],
+            $exc->getTrace()[0]['file']
+        );
     }
 }
+
     public function adaptive_learning_list(Request $request)
     {
         $method = 'Method=> governmentInstructionController => taskSubmission';
@@ -813,12 +790,14 @@ public function ai_course_store(Request $request)
                 });
         }
 
+
+       
         // Get final exam for this course
         $exam = DB::table('elearning_exam')
             ->join('elearning_practice_quiz', 'elearning_exam.quiz_id', '=', 'elearning_practice_quiz.quiz_id')
-            ->where('elearning_exam.quiz_id', '29')
+            ->where('elearning_exam.id', $course->exam_id)
             ->first();
-
+        
         if ($exam) {
             $exam->questions = $this->parseQuizQuestions($exam->quiz_questions);
         }
@@ -1052,7 +1031,27 @@ private function parseQuizQuestions($quizQuestions)
             ->first();
 
         $category_name = $category ? $category->catagory_name : '';
-
+                 $user_ids = '';
+            
+    if ($request->has('user_ids')) {
+        $selectedUserIds = $request->user_ids;
+       
+        // Check if "all" was selected
+        if (in_array('all', $selectedUserIds)) {
+            // "All" was selected - get all user IDs
+            if ($request->has('all_user_ids_string')) {
+                // Use the comma-separated list from the hidden field
+                $user_ids = $request->all_user_ids_string;
+            } else {
+                // Fallback: fetch all user IDs from database
+                $allUsers = DB::table('users')->where('status', 1)->pluck('id')->toArray();
+                $user_ids = implode(',', $allUsers);
+            }
+        } else {
+            // Specific users were selected
+            $user_ids = is_array($selectedUserIds) ? implode(',', $selectedUserIds) : $selectedUserIds;
+        }
+    }
         // Prepare update data
         $updateData = [
           
@@ -1112,6 +1111,14 @@ private function parseQuizQuestions($quizQuestions)
             $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
     }
 }
+public function getDesignationByRole(Request $request)
+{
+    return DB::table('designation')
+        ->where('role_id', $request->role_id)
+        ->select('designation_id', 'designation_name')
+        ->get();
+}
+
 
 
 }

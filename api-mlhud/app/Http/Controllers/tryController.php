@@ -1460,9 +1460,10 @@ class tryController extends BaseController
                     $this_duration = $course_class[0]->class_duration;
 
                     $duration_parts = explode('.', $this_duration);
-                    $minutes = intval($duration_parts[0]);
 
-                    $seconds = intval($duration_parts[1]);
+                    $minutes = intval($duration_parts[0] ?? 0);
+                    $seconds = intval($duration_parts[1] ?? 0);
+
 
                     // Convert minutes and seconds to seconds
                     $total_seconds += $minutes * 60 + $seconds;

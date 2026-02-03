@@ -848,3 +848,5 @@ Route::get('adaptive/learning', [App\Http\Controllers\AIController::class, 'adap
 Route::get('predictive/analysis', [App\Http\Controllers\AIController::class, 'predictive_analysis'])->name('predictive_analysis');
 Route::get('/ai-courses/{id}', [App\Http\Controllers\AIController::class, 'ai_course_show'])->name('ai_course.show');
 Route::post('/course/publish/{id}', [App\Http\Controllers\AIController::class, 'course_publish'])->name('course_publish');
+Route::post('/get-designation-by-role', [App\Http\Controllers\AIController::class, 'getDesignationByRole'])
+    ->name('get.designation.by.role');
