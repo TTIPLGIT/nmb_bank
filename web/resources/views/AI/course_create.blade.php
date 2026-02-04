@@ -97,7 +97,7 @@
                             </script>
                             @endif
                             <div class="card">
-                                <form action="{{route('create_course')}}" method="post">
+                                <form action="{{route('create_course')}}" method="post" id="createCourseForm">
                                     @csrf
                                     <div class="card-body">
                                         <div class="row">
@@ -151,7 +151,7 @@
                                                         placeholder="Enter Course Name" required>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Course Description <span style="color: red;">*</span></label>
@@ -286,6 +286,15 @@ $(document).ready(function() {
         });
     });
 
+});
+document.getElementById('createCourseForm').addEventListener('submit', function() {
+    // Hide the button
+    document.getElementById('submitBtn').style.display = 'none';
+
+    // Show the loader
+    document.getElementById('aiLoader').style.display = 'block';
+
+    // Form will submit normally and redirect
 });
 </script>
 

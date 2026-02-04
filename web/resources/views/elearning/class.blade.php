@@ -1454,7 +1454,7 @@ label:hover~input:checked~label
 
 
 <div class="container-fluid border-bottom subMenuWrapper">
-    <div class="card mt-3">
+    <!-- <div class="card mt-3">
         <div class="card-header">
             <h4>AI EVALUATION</h4>
         </div>
@@ -1463,7 +1463,7 @@ label:hover~input:checked~label
                 <p>Total Score Earned :</p>
             </div>
         </div>
-    </div>
+    </div> -->
     <ul class="d-flex flex-row mb-0 subMenu">
         <li class="subMenuItem">
             <a class="subMenuLink active" id="overview" href="">Overview</a>
@@ -1543,79 +1543,115 @@ label:hover~input:checked~label
     <input type="hidden" name="courseDuration" class="courseDuration" id="duration_{{$loop->iteration}}"
         value="{{$courseContent->class_duration}}">
     @endforeach
-    <div class="row border-bottom pt-4 courseIncludes">
-        <div class="col-12 mb-3">
-            <div class="card noShadow courseIncludesHeader">
-                <div class="card-body p-0">
-                    <div class="card-title">
-                        <h5>
-                            This Course Includes
-                        </h5>
+    <div class="row course-includes-section py-4">
+        <div class="col-12 mb-4">
+            <h2 class="section-title mb-0">
+                <i class="bi bi-card-checklist me-2"></i>
+                Course Includes
+            </h2>
+            <p class="text-muted mb-0">Everything you'll get with this course</p>
+        </div>
+
+        <!-- Media Type Indicator -->
+        <div class="col-12 col-sm-6 col-lg-3 mb-3">
+            <div class="card h-100 border-0 shadow-sm hover-lift">
+                <div class="card-body text-center p-4">
+                    <div class="media-indicators mb-3">
+                        @if($audio_exist != 0)
+                        <div class="media-type-badge audio">
+                            <i class="bi bi-mic-fill"></i>
+                            <span class="badge-text">Audio</span>
+                        </div>
+                        @endif
+
+                        @if($video_exist != 0)
+                        <div class="media-type-badge video">
+                            <i class="bi bi-play-circle-fill"></i>
+                            <span class="badge-text">Video</span>
+                        </div>
+                        @endif
+
+                        @if($pdf_exist != 0)
+                        <div class="media-type-badge document">
+                            <i class="bi bi-file-earmark-pdf-fill"></i>
+                            <span class="badge-text">PDF</span>
+                        </div>
+                        @endif
+                    </div>
+                    <h6 class="card-title fw-bold mb-2">Content Format</h6>
+                    <p class="card-text text-muted small">
+                        Multiple learning formats available
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Duration -->
+        <div class="col-12 col-sm-6 col-lg-3 mb-3">
+            <div class="card h-100 border-0 shadow-sm hover-lift">
+                <div class="card-body text-center p-4">
+                    <div class="icon-wrapper bg-primary bg-opacity-10 text-primary rounded-circle mb-3 mx-auto"
+                        style="width: 64px; height: 64px; line-height: 64px;">
+                        <i class="bi bi-clock-fill fs-4"></i>
+                    </div>
+                    <h6 class="card-title fw-bold mb-1">Course Duration</h6>
+                    <div class="duration-display">
+                        <span class="h4 fw-bold text-primary" id="totalHours">0h 0m</span>
+                        <p class="text-muted small mb-0">of engaging content</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-sm-6 col-md-4 align-items-stretch">
-            @php $audio_exist=$audio_exist==0 ? 'd-none' :''; @endphp
-            @php $video_exist=$video_exist==0 ? 'd-none' :''; @endphp
-            @php $pdf_exist=$pdf_exist==0 ? 'd-none' :''; @endphp
+        <!-- Resources -->
+        <div class="col-12 col-sm-6 col-lg-3 mb-3">
+            <div class="card h-100 border-0 shadow-sm hover-lift">
+                <div class="card-body text-center p-4">
+                    <div class="icon-wrapper bg-success bg-opacity-10 text-success rounded-circle mb-3 mx-auto"
+                        style="width: 64px; height: 64px; line-height: 64px;">
+                        <i class="bi bi-collection-fill fs-4" style="color:white;"></i>
+                    </div>
+                    <h6 class="card-title fw-bold mb-1">Learning Resources</h6>
+                    <div class="resource-count">
+                        <span class="h4 fw-bold text-success">{{ $counts }}</span>
 
-            <div class="card noShadow hoursOfVideos img_shadow ">
-
-                <span class="{{$audio_exist}}">
-                    <img src="{{asset('asset/image/play.png')}}" class="card-img-top img-size" alt="play-icon">
-                </span>
-                <span class="$video_exist">
-                    <img src="../../uploads/class/126/mp4.png" class="card-img-top img-size" alt="play-icon">
-                </span>
-                <span class="$pdf_exist">
-
-                    <img src="../../uploads/class/126/pdf.png" class="card-img-top img-size" alt="play-icon">
-                </span>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-4 align-items-stretch">
-            <div class="card noShadow hoursOfVideos">
-                <img src="{{asset('asset/image/play.png')}}" class="card-img-top" alt="play-icon">
-                <div class="card-body">
-                    <h6 class="card-title" id="totalHours">
-                        <!-- total duration  -->
-                    </h6>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-4 align-items-stretch">
-            <div class="card noShadow hoursOfVideos">
-                <img src="{{asset('asset/image/resource.png')}}" class="card-img-top" alt="play-icon">
-                <div class="card-body">
-                    <h6 class="card-title">
-                        {{$counts}} resources
-                    </h6>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-4 align-items-stretch">
+
+        <!-- Certificate -->
+        <div class="col-12 col-sm-6 col-lg-3 mb-3">
             @foreach($courseDetails as $courseDetail)
-            @if($courseDetail->course_certificate=='1')
+            @if($courseDetail->course_certificate == '1')
+            <div class="card h-100 border-0 shadow-sm hover-lift">
+                <div class="card-body text-center p-4">
+                    <div class="icon-wrapper bg-warning bg-opacity-10 text-warning rounded-circle mb-3 mx-auto"
+                        style="width: 64px; height: 64px; line-height: 64px;">
+                        <i class="bi bi-award-fill fs-4" style="
+    color: white;
+"></i>
+                    </div>
+                    <h6 class="card-title fw-bold mb-1">Certificate</h6>
+                    <div class="certificate-info">
 
-            <div class="card noShadow hoursOfVideos img_shadow">
-                <img src="{{asset('asset/image/completion-certificate.png')}}"
-                    class="card-img-top img-size mt-2 mt-md-4" alt="play-icon">
-                <div class="card-body">
-                    <h6 class="card-title">
-                        Certificate of completion
-                    </h6>
+                        <p class="text-muted small mb-0">Certificate of completion</p>
+                        <p class="text-muted small mb-0">Shareable on LinkedIn</p>
+                    </div>
                 </div>
             </div>
-            @elseif($courseDetail->course_certificate=='2')
-            <div class="card noShadow hoursOfVideos img_shadow" style="display: none;">
-                <img src="{{asset('asset/image/completion-certificate.png')}}"
-                    class="card-img-top img-size mt-2 mt-md-4" alt="play-icon">
-                <div class="card-body">
-                    <h6 class="card-title">
-                        Certificate of completion
-                    </h6>
+            @elseif($courseDetail->course_certificate == '2')
+            <div class="card h-100 border-0 shadow-sm bg-light">
+                <div class="card-body text-center p-4">
+                    <div class="icon-wrapper bg-secondary bg-opacity-10 text-secondary rounded-circle mb-3 mx-auto"
+                        style="width: 64px; height: 64px; line-height: 64px;">
+                        <i class="bi bi-award fs-4" style="color:white;"></i>
+                    </div>
+                    <h6 class="card-title fw-bold mb-1">Certificate</h6>
+                    <div class="certificate-info">
+                        <span class="badge bg-secondary mb-2">Not Included</span>
+                        <p class="text-muted small mb-0">No certificate provided</p>
+                    </div>
                 </div>
             </div>
             @endif

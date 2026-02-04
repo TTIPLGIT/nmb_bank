@@ -119,6 +119,7 @@
                                                 <th>Sl. No.</th>
                                                 <th>Course Name</th>
                                                 <th>Course Duration</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -132,11 +133,25 @@
                                                     </a>
                                                 </td>
                                                 <td>{{ $ai_courses['course_duration'] }}</td>
+                                                @if($ai_courses['is_published'] == 1)
+                                                <td>
 
-                                                <td><a href="{{ route('ai_course.show', $ai_courses['course_id']) }}"
-                                                        class="btn btn-info btn-sm">
-                                                        <i class="fas fa-eye"></i> View
-                                                    </a></td>
+                                                    Published
+
+                                                </td>
+                                                @else
+                                                <td>
+                                                    Submitted
+                                                </td>
+                                                @endif
+                                                <td>
+                                                    <a href="{{ route('ai_course.show', encrypt($ai_courses['course_id'])) }}"
+                                                        class="btn {{ $ai_courses['is_published'] == 1 ? 'btn-info' : 'btn-warning' }} btn-sm">
+                                                        <i
+                                                            class="fas {{ $ai_courses['is_published'] == 1 ? 'fa-eye' : 'fa-cloud-upload-alt' }}"></i>
+                                                        {{ $ai_courses['is_published'] == 1 ? 'View' : 'Publish' }}
+                                                    </a>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>

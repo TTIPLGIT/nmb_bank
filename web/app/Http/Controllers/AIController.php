@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Crypt;
+use App\Models\User;
 
 class AIController extends BaseController
 {
@@ -96,17 +98,17 @@ class AIController extends BaseController
 
 
 
-            // $gatewayURL = 'http://20.164.0.23:3300/create-course/';
+            $gatewayURL = 'http://20.164.0.23:3300/create-course/';
 
-            // $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
-            // $response = is_string($response)
-            //     ? json_decode($response, true)
-            //     : $response;
+            $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
+            $response = is_string($response)
+                ? json_decode($response, true)
+                : $response;
             // dd($response['classes']);
             // Start
-            $filePath = 'C:\Apache24\htdocs\nmb_bank\web\storage\app\static_course_data.json';
-                $jsonContent = file_get_contents($filePath);
-                $response = json_decode($jsonContent, true);
+            // $filePath = 'C:\Apache24\htdocs\nmb_bank\web\storage\app\static_course_data.json';
+            //     $jsonContent = file_get_contents($filePath);
+            //     $response = json_decode($jsonContent, true);
            
     
     $result = [
@@ -358,10 +360,16 @@ public function ai_course_store(Request $request)
             /* =====================================================
                1. CREATE COURSE
             ===================================================== */
+            
+            $multipletags = implode(", ", $filteredCourseData['tags']);
+            $multipleskills = implode(", ", $filteredCourseData['skills_required']);
+            $multiplegainskills = implode(", ", $filteredCourseData['skills_gained']);
             $courseID = DB::table('elearning_courses')->insertGetId([
                 'course_name'        => $filteredCourseData['course_name'],
                 'course_description' => $filteredCourseData['course_description'],
-                
+                'course_tags'               => $multipletags,
+                'course_skills_required'    => $multipleskills,
+                'course_gain_skills'      => $multiplegainskills,
                 'drop_course'        => 0,
                
             ], 'course_id');
@@ -376,12 +384,20 @@ public function ai_course_store(Request $request)
                     'updated_at' => now()
                 ]);
 
+             DB::table('ai_course_response')
+                ->where('course_id', $courseID)
+                ->update([
+                    'is_submitted' => '1',
+                 
+                    
+                ]);
+
             /* =====================================================
                2. CREATE CLASSES + QUIZZES
             ===================================================== */
             $classIds = [];
             $totalCoursePoints = 0;
-
+           
             foreach ($filteredCourseData['classes'] as $classIndex => $class) {
                 $quizData = $class['quiz'] ?? [];
                 $quiz_questions = [];
@@ -392,8 +408,8 @@ public function ai_course_store(Request $request)
                     $qid = DB::table('elearning_questions_long_answer')->insertGetId([
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
-                        'keywords'      => json_encode([$q['answer']]),
-                        'points'        => 10,
+                        'keywords'      => substr($q['answer'], 0, 100),
+                        'points'        => $q['points'],
                         'question_type' => 'long',
                         'drop_question' => 0,
                         'created_at'    => now(),
@@ -401,8 +417,8 @@ public function ai_course_store(Request $request)
                     ]);
 
                     $quiz_questions[] = $qid . '-long';
-                    $points += 10;
-                    $totalCoursePoints += 10;
+                    $points += $q['points'];
+                    $totalCoursePoints += $q['points'];
                 }
 
                 /* ---------- MCQ QUESTIONS ---------- */
@@ -414,7 +430,7 @@ public function ai_course_store(Request $request)
                         'question'         => $q['question_text'],
                         'choices'          => json_encode($choices),
                         'correct_choices'  => $q['correct_option_id'],
-                        'points'           => 5,
+                        'points'           => $q['points'],
                         'question_type'    => 'mcq',
                         'drop_question'    => 0,
                         'created_at'       => now(),
@@ -422,8 +438,8 @@ public function ai_course_store(Request $request)
                     ]);
 
                     $quiz_questions[] = $qid . '-mcq';
-                    $points += 5;
-                    $totalCoursePoints += 5;
+                    $points += $q['points'];
+                    $totalCoursePoints += $q['points'];
                 }
 
                 /* ---------- SHORT QUESTIONS ---------- */
@@ -432,7 +448,7 @@ public function ai_course_store(Request $request)
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
                         'keywords'      => $q['answer'],
-                        'points'        => 5,
+                        'points'        => $q['points'],
                         'question_type' => 'short',
                         'drop_question' => 0,
                         'created_at'    => now(),
@@ -440,8 +456,8 @@ public function ai_course_store(Request $request)
                     ]);
 
                     $quiz_questions[] = $qid . '-short';
-                    $points += 5;
-                    $totalCoursePoints += 5;
+                    $points += $q['points'];
+                    $totalCoursePoints += $q['points'];
                 }
 
                 /* ---------- TRUE / FALSE ---------- */
@@ -450,7 +466,7 @@ public function ai_course_store(Request $request)
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
                         'answer'        => strtolower($q['answer']) === 'true' ? 'on' : 'off',
-                        'points'        => 5,
+                        'points'        => $q['points'],
                         'question_type' => 'boolean',
                         'drop_question' => 0,
                         'created_at'    => now(),
@@ -458,8 +474,8 @@ public function ai_course_store(Request $request)
                     ]);
 
                     $quiz_questions[] = $qid . '-boolean';
-                    $points += 5;
-                    $totalCoursePoints += 5;
+                    $points += $q['points'];
+                    $totalCoursePoints += $q['points'];
                 }
 
                 $quizID = null;
@@ -504,7 +520,7 @@ public function ai_course_store(Request $request)
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
                         'keywords'      => json_encode([$q['answer']]),
-                        'points'        => 20,
+                        'points'        => $q['points'],
                         'question_type' => 'long',
                         'drop_question' => 0,
                         'created_at'    => now(),
@@ -512,8 +528,8 @@ public function ai_course_store(Request $request)
                     ]);
 
                     $finalExamQuestions[] = $qid . '-long';
-                    $finalExamPoints += 20;
-                    $totalCoursePoints += 20;
+                    $finalExamPoints += $q['points'];
+                    $totalCoursePoints += $q['points'];
                 }
 
                 /* ---------- MCQ QUESTIONS ---------- */
@@ -525,7 +541,7 @@ public function ai_course_store(Request $request)
                         'question'         => $q['question_text'],
                         'choices'          => json_encode($choices),
                         'correct_choices'  => $q['correct_option_id'],
-                        'points'           => 10,
+                        'points'           => $q['points'],
                         'question_type'    => 'mcq',
                         'drop_question'    => 0,
                         'created_at'       => now(),
@@ -533,8 +549,8 @@ public function ai_course_store(Request $request)
                     ]);
 
                     $finalExamQuestions[] = $qid . '-mcq';
-                    $finalExamPoints += 10;
-                    $totalCoursePoints += 10;
+                    $finalExamPoints += $q['points'];
+                    $totalCoursePoints += $q['points'];
                 }
 
                 /* ---------- SHORT QUESTIONS ---------- */
@@ -543,7 +559,7 @@ public function ai_course_store(Request $request)
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
                         'keywords'      => $q['answer'],
-                        'points'        => 10,
+                        'points'        => $q['points'],
                         'question_type' => 'short',
                         'drop_question' => 0,
                         'created_at'    => now(),
@@ -551,8 +567,8 @@ public function ai_course_store(Request $request)
                     ]);
 
                     $finalExamQuestions[] = $qid . '-short';
-                    $finalExamPoints += 10;
-                    $totalCoursePoints += 10;
+                    $finalExamPoints += $q['points'];
+                    $totalCoursePoints += $q['points'];
                 }
 
                 /* ---------- TRUE / FALSE ---------- */
@@ -561,7 +577,7 @@ public function ai_course_store(Request $request)
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
                         'answer'        => strtolower($q['answer']) === 'true' ? 'on' : 'off',
-                        'points'        => 10,
+                        'points'        => $q['points'],
                         'question_type' => 'boolean',
                         'drop_question' => 0,
                         'created_at'    => now(),
@@ -569,8 +585,8 @@ public function ai_course_store(Request $request)
                     ]);
 
                     $finalExamQuestions[] = $qid . '-boolean';
-                    $finalExamPoints += 10;
-                    $totalCoursePoints += 10;
+                    $finalExamPoints += $q['points'];
+                    $totalCoursePoints += $q['points'];
                 }
             }
 
@@ -681,7 +697,7 @@ public function ai_course_store(Request $request)
     public function adaptive_learning(Request $request)
     {
 
-
+       
         $method = 'Method => AIController => adaptive_learning';
         try {
             $data = array();
@@ -717,34 +733,158 @@ public function ai_course_store(Request $request)
         }
     }
 
-    public function predictive_analysis(Request $request)
-    {
-        $method = 'Method=> AIController => taskSubmission';
-        try {
-            $user_id = $request->session()->get("userID");
-
-
-            $gatewayURL = 'http://20.164.0.23:3300/ai/predictive-analysis/run';
-            $response = $this->AIserviceRequest($gatewayURL, 'POST', '', $method);
-
-            if ($response->Status == 200 && $response->Success) {
-                $objData = json_decode($this->decryptData($response->Data));
-                if ($objData->Code == 200) {
-                    $parant_data = json_decode(json_encode($objData->Data), true);
-                    $rows =  $parant_data;
-                    $alter_name = $this->get_user_role();
-                    $menus = $this->FillMenu();
-                    $screens = $menus['screens'];
-                    $modules = $menus['modules'];
-                    $permission = $this->FillScreensByUser();
-                    return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'rows'));
-                }
-            }
-        } catch (\Exception $exc) {
-            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+public function predictive_analysis(Request $request)
+{
+    $method = 'Method=> AIController => predictive_analysis';
+    
+    try {
+        $user_id = $request->session()->get("userID");
+        if ($user_id == null) {
+            return view('auth.login');
         }
+        
+        // Prepare request body exactly like in your example
+        $data = (object) [
+            'user_id' => (int)$user_id
+        ];
+
+        $gatewayURL = 'http://20.164.0.23:3300/ai/predictive-analysis/run';
+
+        // Make the API call
+        $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
+        
+        // Decode the response
+        $response = is_string($response)
+            ? json_decode($response, true)
+            : $response;
+            
+        // Check if response is valid
+        if (!$response || isset($response['error'])) {
+            // Return empty data structure if API fails
+            $processedData = $this->getEmptyDataStructure();
+            $menus = $this->FillMenu();
+            $screens = $menus['screens'];
+            $modules = $menus['modules'];
+            
+            return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData'))
+                ->with('error', 'Invalid response from API');
+        }
+        
+        // Process the response data
+        $processedData = $this->processRiskAnalysisData($response);
+        
+        $menus = $this->FillMenu();
+        $screens = $menus['screens'];
+        $modules = $menus['modules'];
+
+        return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData'));
+        
+    } catch (\Exception $exc) {
+        // Log the error
+        $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        
+        // Return empty data structure
+        $processedData = $this->getEmptyDataStructure();
+        $menus = $this->FillMenu();
+        $screens = $menus['screens'];
+        $modules = $menus['modules'];
+        
+        return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData'))
+            ->with('error', 'An error occurred: ' . $exc->getMessage());
     }
-   public function ai_course_show($id)
+}
+private function processRiskAnalysisData($data)
+{
+    // Initialize counters
+    $totalUsers = 0;
+    $processedUsers = 0;
+    $riskSummary = [
+        'high' => 0,
+        'medium' => 0,
+        'low' => 0
+    ];
+    
+    $processedData = [];
+    
+    // Check if data is in the expected format (single user with courses)
+    if (isset($data['mode']) && isset($data['user_id']) && isset($data['courses'])) {
+        $userData = $data;
+        
+        // Count total users (1 in this case)
+        $totalUsers = 1;
+        $processedUsers = 1;
+        
+        // Process courses for this user
+        $userCourses = [];
+        foreach ($userData['courses'] as $course) {
+            // Convert risk level to lowercase for consistency
+            $riskLevel = strtolower($course['risk_level']);
+            
+            // Update risk summary
+            if (isset($riskSummary[$riskLevel])) {
+                $riskSummary[$riskLevel]++;
+            }
+            
+            $userCourses[] = [
+                'course_id' => $course['course_id'],
+                'risk_level' => strtoupper($course['risk_level']), // Keep uppercase for display
+                'probability' => $course['probability'],
+                'reason' => $course['reason'],
+                'prediction_type' => $course['prediction_type']
+            ];
+        }
+        
+        $processedData[] = [
+            'user_id' => $userData['user_id'],
+            'courses' => $userCourses,
+            'total_courses' => count($userCourses)
+        ];
+    }
+    
+    // Calculate percentages for risk distribution
+    $totalCourses = array_sum($riskSummary);
+    $riskPercentages = [
+        'high' => $totalCourses > 0 ? round(($riskSummary['high'] / $totalCourses) * 100) : 0,
+        'medium' => $totalCourses > 0 ? round(($riskSummary['medium'] / $totalCourses) * 100) : 0,
+        'low' => $totalCourses > 0 ? round(($riskSummary['low'] / $totalCourses) * 100) : 0
+    ];
+    
+    return [
+        'total_users' => $totalUsers,
+        'processed_users' => $processedUsers,
+        'total_courses' => $totalCourses,
+        'risk_summary' => $riskSummary,
+        'risk_percentages' => $riskPercentages,
+        'data' => $processedData
+    ];
+}
+
+/**
+ * Return empty data structure for when API fails
+ */
+private function getEmptyDataStructure()
+{
+    return [
+        'total_users' => 0,
+        'processed_users' => 0,
+        'total_courses' => 0,
+        'risk_summary' => [
+            'high' => 0,
+            'medium' => 0,
+            'low' => 0
+        ],
+        'risk_percentages' => [
+            'high' => 0,
+            'medium' => 0,
+            'low' => 0
+        ],
+        'data' => []
+    ];
+}
+
+
+
+   public function ai_course_show($encryptedId)
 {
     $method = 'Method => AIController => ai_course_show';
 
@@ -753,8 +893,9 @@ public function ai_course_store(Request $request)
         if ($user_id == null) {
             return view('auth.login');
         }
-
+         $id = Crypt::decrypt($encryptedId);
         // Get the main course
+       
         $course = DB::table('elearning_courses')
             ->where('course_id', $id)
             ->first();
@@ -990,6 +1131,14 @@ private function parseQuizQuestions($quizQuestions)
         $course = DB::table('elearning_courses')
             ->where('course_id', $id)
             ->first();
+        DB::table('ai_course_response')
+                ->where('course_id', $id)
+                ->update([
+                    'is_published' => '1',
+                 
+                    
+                ]);
+
 
         if (!$course) {
             return redirect()->back()->with('error', 'Course not found!');
@@ -1032,32 +1181,19 @@ private function parseQuizQuestions($quizQuestions)
 
         $category_name = $category ? $category->catagory_name : '';
                  $user_ids = '';
-            
-    if ($request->has('user_ids')) {
-        $selectedUserIds = $request->user_ids;
-       
-        // Check if "all" was selected
-        if (in_array('all', $selectedUserIds)) {
-            // "All" was selected - get all user IDs
-            if ($request->has('all_user_ids_string')) {
-                // Use the comma-separated list from the hidden field
-                $user_ids = $request->all_user_ids_string;
-            } else {
-                // Fallback: fetch all user IDs from database
-                $allUsers = DB::table('users')->where('status', 1)->pluck('id')->toArray();
-                $user_ids = implode(',', $allUsers);
-            }
-        } else {
-            // Specific users were selected
-            $user_ids = is_array($selectedUserIds) ? implode(',', $selectedUserIds) : $selectedUserIds;
-        }
-    }
+   $userIds = $request->input('user_ids');
+
+        if (in_array('All', $userIds)) {
+            $user_ids = User::pluck('id')->toArray();
+            $userIds = implode(',', $user_ids);
+        } 
+    // dd($request->all(),$userIds);
         // Prepare update data
         $updateData = [
           
            
             'designation_id' => $request->designation_id,
-            'user_ids' => $user_ids,
+            'user_ids' => $userIds,
             'course_certificate' => $request->course_certificate,
             'course_exam' => $request->course_exam,
             'course_introduction' => $course_introduction,
@@ -1099,7 +1235,7 @@ private function parseQuizQuestions($quizQuestions)
            
            
 
-            return redirect()->route('ai_course.show', $id)
+            return redirect()->route('ai_course_list')
                 ->with('success', 'Course has been successfully published!');
         } else {
             return redirect()->back()

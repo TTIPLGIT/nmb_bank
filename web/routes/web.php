@@ -844,9 +844,9 @@ Route::get('/virtual_meeting', [App\Http\Controllers\MeetingController::class, '
 Route::post('/meeting_store',[App\Http\Controllers\MeetingController::class,'meeting_store'])->name('meeting_store');
 Route::get('lang/{lang}', [App\Http\Controllers\LanguageController::class, 'change'])->name('lang.change');
 Route::get('adaptive/learning/list', [App\Http\Controllers\AIController::class, 'adaptive_learning_list'])->name('adaptive_learning_list');
-Route::get('adaptive/learning', [App\Http\Controllers\AIController::class, 'adaptive_learning'])->name('adaptive_learning');
+Route::POST('adaptive/learning', [App\Http\Controllers\AIController::class, 'adaptive_learning'])->name('adaptive_learning');
 Route::get('predictive/analysis', [App\Http\Controllers\AIController::class, 'predictive_analysis'])->name('predictive_analysis');
-Route::get('/ai-courses/{id}', [App\Http\Controllers\AIController::class, 'ai_course_show'])->name('ai_course.show');
+Route::get('/ai-courses/{encryptedId}', [App\Http\Controllers\AIController::class, 'ai_course_show'])->name('ai_course.show');
 Route::post('/course/publish/{id}', [App\Http\Controllers\AIController::class, 'course_publish'])->name('course_publish');
 Route::post('/get-designation-by-role', [App\Http\Controllers\AIController::class, 'getDesignationByRole'])
     ->name('get.designation.by.role');

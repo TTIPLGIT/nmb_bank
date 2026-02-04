@@ -825,8 +825,11 @@ body.sidebar-collapsed .sticky-footer {
                     </div>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-success btn-lg px-4 py-2">
-                        <i class="fas fa-paper-plane mr-2"></i>Submit Course
+                    <button type="submit" class="btn btn-success btn-lg px-4 py-2" id="submitBtn">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        <span id="submitText">Submit Course</span>
+                        <span id="submitSpinner" class="spinner-border spinner-border-sm ml-2 d-none" role="status"
+                            aria-hidden="true"></span>
                     </button>
                 </div>
             </div>
@@ -1056,16 +1059,16 @@ document.getElementById('courseForm').addEventListener('submit', function(e) {
     document.getElementById('courseData').value = JSON.stringify(filteredCourseData);
     document.getElementById('selectedQuestions').value = JSON.stringify(selected);
 
-    if (
-        confirm(
-            `Submit with ${selected.classes.length} classes, ` +
-            `${selected.quiz.length} quiz questions, ` +
-            `${selected.exam.length} exam questions?`
-        )
-    ) {
-        console.log('Filtered course data:', filteredCourseData);
-        this.submit();
-    }
+    // if (
+    //     confirm(
+    //         `Submit with ${selected.classes.length} classes, ` +
+    //         `${selected.quiz.length} quiz questions, ` +
+    //         `${selected.exam.length} exam questions?`
+    //     )
+    // ) {
+    // console.log('Filtered course data:', filteredCourseData);
+    this.submit();
+    // }
 });
 
 // ==========================
@@ -1128,6 +1131,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('resize', adjustLayoutForSidebar);
+</script>
+<script>
+document.getElementById('courseForm').addEventListener('submit', function() {
+    // Get elements
+
+    const spinner = document.getElementById('submitSpinner');
+    const button = document.getElementById('submitBtn');
+    const buttonText = document.getElementById('submitText');
+
+    // Disable button and show spinner
+    spinner.classList.remove('d-none');
+    button.disabled = true;
+    buttonText.textContent = 'Submitting...';
+
+    // The form will submit normally and redirect to your list page
+    // No need for async/await or fetch if you're doing server-side redirect
+});
 </script>
 
 

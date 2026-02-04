@@ -2426,8 +2426,7 @@ class elearningEthnicTestController extends BaseController
             $gatewayURL = config('setting.api_gateway_url') . '/class/quiz';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
-            // dd($response);
-
+             
 
             $objData = json_decode($this->decryptData($response->Data));
 
@@ -2488,7 +2487,7 @@ class elearningEthnicTestController extends BaseController
             $data['course_id'] = $request->course_id;
             $data['class_id'] = $request->class_id;
             $course_id = $request->course_id;
-
+            
             $encryptArray = $this->encryptData($data);
             $request = array();
 

@@ -219,6 +219,17 @@ body {
     margin: 0;
 }
 
+/* Add to your CSS file */
+.modal-header .close {
+    z-index: 9999 !important;
+    position: relative;
+}
+
+.modal-header {
+    position: relative;
+    z-index: 1;
+}
+
 /* Responsive fixes */
 @media (max-width: 768px) {
     .main-content {
@@ -479,13 +490,64 @@ window.onload = function() {
                             </div>
                         </div>
 
-                        <!-- Course Description -->
+
                         <div class="content-card">
                             <h3 class="mb-4">
                                 <i class="fas fa-info-circle mr-2"></i>Course Overview
                             </h3>
                             <div class="bg-light p-4 rounded">
-                                <p class="mb-0" style="word-break: break-word;">{{ $course->course_description }}</p>
+                                <p class="mb-3" style="word-break: break-word;">{{ $course->course_description }}</p>
+
+                                <!-- Display Course Tags -->
+                                @if($course->course_tags)
+                                <div class="mt-4">
+                                    <h6><i class="fas fa-tags mr-2"></i>Course Tags</h6>
+                                    <div class="info-badge-container">
+                                        @php
+                                        $tags = explode(',', $course->course_tags);
+                                        @endphp
+                                        @foreach($tags as $tag)
+                                        @if(trim($tag))
+                                        <span class="info-badge primary">{{ trim($tag) }}</span>
+                                        @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                @endif
+
+                                <!-- Display Skills Required -->
+                                @if($course->course_skills_required)
+                                <div class="mt-4">
+                                    <h6><i class="fas fa-tools mr-2"></i>Skills Required</h6>
+                                    <div class="info-badge-container">
+                                        @php
+                                        $skills = explode(',', $course->course_skills_required);
+                                        @endphp
+                                        @foreach($skills as $skill)
+                                        @if(trim($skill))
+                                        <span class="info-badge success">{{ trim($skill) }}</span>
+                                        @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                @endif
+
+                                <!-- Display Skills Gained -->
+                                @if($course->course_gain_skills)
+                                <div class="mt-4">
+                                    <h6><i class="fas fa-graduation-cap mr-2"></i>Skills You'll Gain</h6>
+                                    <div class="info-badge-container">
+                                        @php
+                                        $gainSkills = explode(',', $course->course_gain_skills);
+                                        @endphp
+                                        @foreach($gainSkills as $skill)
+                                        @if(trim($skill))
+                                        <span class="info-badge warning">{{ trim($skill) }}</span>
+                                        @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                         </div>
 
@@ -532,11 +594,11 @@ window.onload = function() {
                                                         <i class="fas fa-clock mr-1"></i> {{ $class->class_duration }}
                                                     </p>
                                                 </div>
-                                                @if($class->class_quiz == 'yes')
+                                                <!-- @if($class->class_quiz == 'yes')
                                                 <span class="badge bg-success mt-2 mt-md-0">
                                                     <i class="fas fa-question-circle mr-1"></i> Quiz Included
                                                 </span>
-                                                @endif
+                                                @endif -->
                                             </div>
                                         </div>
 
@@ -575,9 +637,9 @@ window.onload = function() {
                                                             <strong style="word-break: break-word;">Question
                                                                 {{ $qIndex + 1 }}
                                                                 ({{ $question->question_type }}):</strong>
-                                                            <span
+                                                            <!-- <span
                                                                 class="badge bg-info mt-1 mt-md-0">{{ $question->points }}
-                                                                points</span>
+                                                                points</span> -->
                                                         </div>
                                                         <p class="mb-2" style="word-break: break-word;">
                                                             {{ $question->question }}</p>
@@ -809,12 +871,15 @@ window.onload = function() {
                                         <i class="fas fa-list mr-2"></i> Back to List
                                     </a>
                                 </div>
+                                @if($course->user_ids == '')
+
                                 <div>
                                     <button type="button" class="btn btn-success ms-0 ms-md-2" data-toggle="modal"
                                         data-target="#publishModal">
                                         <i class="fas fa-play mr-2"></i> Publish Course
                                     </button>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -848,7 +913,7 @@ window.onload = function() {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Role <span class="error-star" style="color:red;">*</span></label>
-                                <select class="form-control" name="role_id" id="role_id" disabled>
+                                <select class="form-control" name="role_id" id="role_id" disabled required>
                                     <option value="">---Select Role---</option>
                                     @foreach($roles as $values)
                                     <option value="{{ $values->role_id }}"
@@ -865,7 +930,8 @@ window.onload = function() {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Designation <span class="error-star" style="color:red;">*</span></label>
-                                <select class="form-control" name="designation_id" id="designation_id" disabled>
+                                <select class="form-control" name="designation_id" id="designation_id" disabled
+                                    required>
                                     <option value="">Please Select Designation</option>
                                     @foreach($rows['designation'] as $designation)
                                     <option value="{{ $designation->designation_id }}"
@@ -883,45 +949,14 @@ window.onload = function() {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>User Name <span class="text-danger">*</span></label>
-                                <select class="user_id_course form-control js-select2" name="user_ids[]" id="user_id"
-                                    multiple="multiple">
-                                    @php
-                                    // Initialize variables
-                                    $selectedUserIds = [];
-                                    $userIdsString = $course->user_ids ?? '';
-
-                                    // Try to decode as JSON first
-                                    if (!empty($userIdsString) && is_string($userIdsString)) {
-                                    $decoded = json_decode($userIdsString, true);
-                                    if (json_last_error() === JSON_ERROR_NONE) {
-                                    $selectedUserIds = $decoded;
-                                    } else {
-                                    // If not JSON, try comma-separated
-                                    $selectedUserIds = explode(',', $userIdsString);
-                                    }
-                                    }
-
-                                    // Ensure it's an array
-                                    if (!is_array($selectedUserIds)) {
-                                    $selectedUserIds = [];
-                                    }
-
-                                    // Check if "all" is selected
-                                    $allSelected = in_array('all', $selectedUserIds);
-                                    @endphp
-
-                                    @php
-                                    // Generate all user IDs
-                                    $allUserIds = $rows['users']->pluck('id')->implode(',');
-                                    @endphp
-                                    <option value="{{ $allUserIds }}">All</option>
+                                <select name="user_ids[]" class="user_id_course form-control js-select2" id="user_id"
+                                    required multiple="multiple">
+                                    <option value="All" selected>All</option>
                                     @foreach($rows['users'] as $data)
                                     @php
                                     // Check if this user ID is selected (only if "all" is not selected)
                                     $isSelected = false;
-                                    if (!$allSelected) {
-                                    $isSelected = in_array((string)$data->id, array_map('strval', $selectedUserIds));
-                                    }
+
                                     @endphp
                                     <option value="{{ $data->id }}" {{ $isSelected ? 'selected' : '' }}>
                                         {{ $data->name }}
@@ -936,7 +971,7 @@ window.onload = function() {
                             <div class="form-group">
                                 <label>Course Name:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="text" class="form-control default" id="course_name" name="course_name"
-                                    value="{{ $course->course_name }}" readonly>
+                                    value="{{ $course->course_name }}" readonly required>
                                 <small class="text-muted">Course name cannot be changed</small>
                             </div>
                         </div>
@@ -948,20 +983,21 @@ window.onload = function() {
                                 <label>Course Description:<span class="error-star"
                                         style="color:red;">*</span></label><br>
                                 <textarea id="course_description" name="course_description" rows="3"
-                                    class="form-control" readonly>{{ $course->course_description }}</textarea>
+                                    class="form-control" readonly required>{{ $course->course_description }}</textarea>
                                 <small class="text-muted">Course description cannot be changed</small>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Course Certificate:</label><br>
+                                <label>Course Certificate:<span class="error-star"
+                                        style="color:red;">*</span></label><br>
                                 <input type="radio" class="btn-check" name="course_certificate" value="1"
-                                    id="course_certificate_yes" autocomplete="off"
+                                    id="course_certificate_yes" autocomplete="off" required
                                     {{ $course->course_certificate == '1' ? 'checked' : '' }}>
                                 <label class="btn btn-outline-primary" for="course_certificate_yes">Yes</label>
 
                                 <input type="radio" class="btn-check" name="course_certificate" value="2"
-                                    id="course_certificate_no" autocomplete="off"
+                                    id="course_certificate_no" autocomplete="off" required
                                     {{ $course->course_certificate == '2' ? 'checked' : '' }}>
                                 <label class="btn btn-outline-primary" for="course_certificate_no">No</label>
                             </div>
@@ -971,12 +1007,12 @@ window.onload = function() {
                             <div class="form-group">
                                 <label>Course Exam:<span class="error-star" style="color:red;">*</span></label><br>
                                 <input type="radio" class="btn-check course_exam" name="course_exam" value="1"
-                                    id="course_examyes" autocomplete="off"
+                                    id="course_examyes" autocomplete="off" required
                                     {{ $course->course_exam == '1' ? 'checked' : '' }}>
                                 <label class="btn btn-outline-primary" for="course_examyes">Yes</label>
 
                                 <input type="radio" class="btn-check course_exam" name="course_exam" value="2"
-                                    id="course_examno" autocomplete="off"
+                                    id="course_examno" autocomplete="off" required
                                     {{ $course->course_exam == '2' ? 'checked' : '' }}>
                                 <label class="btn btn-outline-primary" for="course_examno">No</label>
                             </div>
@@ -988,7 +1024,7 @@ window.onload = function() {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Type:<span class="error-star" style="color:red;">*</span></label>
-                                <select class="form-control" name="course_pay" id="course_pay">
+                                <select class="form-control" name="course_pay" id="course_pay" required>
                                     <option value="">---Select Course Type---</option>
                                     <option value="paid" {{ $course->course_pay == 'paid' ? 'selected' : '' }}>Paid
                                         Course</option>
@@ -1004,7 +1040,7 @@ window.onload = function() {
                                 <label>Course Price:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="number" class="form-control default" id="course_price"
                                     placeholder="Enter the Money(UGX)" name="course_price"
-                                    value="{{ $course->course_price }}" autocomplete="off">
+                                    value="{{ $course->course_price }}" autocomplete="off" min="0" step="0.01">
                             </div>
                         </div>
 
@@ -1016,8 +1052,8 @@ window.onload = function() {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Certificate Template:<span class="error-star" style="color:red;">*</span></label>
-                                <select class="form-control" name="cetificate_template" id="cetificate_template">
-                                    <option value="">---Select Certificate Template---</option>
+                                <select class="form-control" name="certificate_template" id="cetificate_template">
+
                                     @foreach($rows1['certificate_templates'] as $row)
                                     <option value="{{ $row->certificate_templates_id }}"
                                         {{ $course->cetificate_template == $row->certificate_templates_id ? 'selected' : '' }}>
@@ -1051,14 +1087,10 @@ window.onload = function() {
                                 <input type='date' class="form-control default" id='course_expiry_period'
                                     name="course_expiry_period" placeholder="dd-mm-yy"
                                     value="{{ $course->course_expiry_period ? date('Y-m-d', strtotime($course->course_expiry_period)) : '' }}"
-                                    autocomplete="off">
+                                    autocomplete="off" min="{{ date('Y-m-d') }}">
                             </div>
                         </div>
                     </div>
-
-                    <!-- Course Price Fields -->
-
-
 
                     <div class="row">
                         <div class="col-md-12 form-group"
@@ -1067,13 +1099,13 @@ window.onload = function() {
                                     style="color:red;">*</span></label>
                             <div class="form-group">
                                 <input type="radio" class="btn-check answer_show_on course_noperiod"
-                                    name="course_noperiod" value="1" id="course_noperiodyes" autocomplete="off"
+                                    name="course_noperiod" value="1" id="course_noperiodyes" autocomplete="off" required
                                     {{ $course->course_noperiod == '1' ? 'checked' : '' }}>
                                 <label class="btn btn-outline-primary answer_show_on1"
                                     for="course_noperiodyes">Yes</label>
 
                                 <input type="radio" class="btn-check answer_show_off course_noperiod"
-                                    name="course_noperiod" value="2" id="course_noperiodno" autocomplete="off"
+                                    name="course_noperiod" value="2" id="course_noperiodno" autocomplete="off" required
                                     {{ $course->course_noperiod == '2' ? 'checked' : '' }}>
                                 <label class="btn btn-outline-primary answer_show_off1"
                                     for="course_noperiodno">No</label>
@@ -1091,7 +1123,7 @@ window.onload = function() {
                                 <input type='date' class="form-control default" id='course_start_period'
                                     name="course_start_period" title="Course Start Date"
                                     value="{{ $course->course_start_period ? date('Y-m-d', strtotime($course->course_start_period)) : '' }}"
-                                    autocomplete="off">
+                                    autocomplete="off" min="{{ date('Y-m-d') }}">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -1100,7 +1132,7 @@ window.onload = function() {
                                 <input type='date' class="form-control default" id='course_end_period'
                                     name="course_end_period" title="Course End Date"
                                     value="{{ $course->course_end_period ? date('Y-m-d', strtotime($course->course_end_period)) : '' }}"
-                                    autocomplete="off">
+                                    autocomplete="off" min="{{ date('Y-m-d') }}">
                             </div>
                         </div>
                     </div>
@@ -1114,8 +1146,7 @@ window.onload = function() {
                                 <div class="form-group">
                                     <label class="control-label required">Exam Name:<span class="error-star"
                                             style="color:red;">*</span></label>
-
-                                    <select class="form-control" name="exam_name" id="exam_name" disabled>
+                                    <select class="form-control" name="exam_name" id="exam_name" disabled required>
                                         <option value="">Select Exam Name</option>
                                         @php
                                         // Get the exam name from practice_quiz table using exam_id
@@ -1145,7 +1176,7 @@ window.onload = function() {
                                     <input type='date' class="form-control default" id="exam_date" name="exam_date"
                                         title="Course Exam Date"
                                         value="{{ $course->exam_date ? date('Y-m-d', strtotime($course->exam_date)) : '' }}"
-                                        autocomplete="off">
+                                        autocomplete="off" min="{{ date('Y-m-d') }}">
                                 </div>
                             </div>
                         </div>
@@ -1168,23 +1199,18 @@ window.onload = function() {
                             <div class="form-group">
                                 <label>Course Instructor:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="text" class="form-control default" id="course_instructor"
-                                    name="course_instructor" value="{{ $course->course_instructor }}"
-                                    autocomplete="off">
+                                    name="course_instructor" value="{{ $course->course_instructor }}" autocomplete="off"
+                                    required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>CPD Points: <span class="error-star" style="color:red;">*</span></label>
                                 <input type="number" class="form-control default" id="course_cpt_points"
-                                    name="course_cpt_points" value="{{ $course->course_cpt_points }}"
-                                    autocomplete="off">
+                                    name="course_cpt_points" value="{{ $course->course_cpt_points }}" autocomplete="off"
+                                    min="0" step="0.5" required>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-
-
                     </div>
 
                     <div class="row">
@@ -1193,12 +1219,12 @@ window.onload = function() {
                                 <label>Restricted Course Access:<span class="error-star"
                                         style="color:red;">*</span></label><br>
                                 <input type="radio" class="btn-check" name="restricted_access" value="1"
-                                    id="restricted_yes" autocomplete="off"
+                                    id="restricted_yes" autocomplete="off" required
                                     {{ $course->restricted_access == '1' ? 'checked' : '' }}>
                                 <label class="btn btn-outline-primary" for="restricted_yes">Yes</label>
 
                                 <input type="radio" class="btn-check" name="restricted_access" value="0"
-                                    id="restricted_no" autocomplete="off"
+                                    id="restricted_no" autocomplete="off" required
                                     {{ $course->restricted_access == '0' ? 'checked' : '' }}>
                                 <label class="btn btn-outline-primary" for="restricted_no">No</label>
                             </div>
@@ -1210,7 +1236,7 @@ window.onload = function() {
                                 <label>Access PIN:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="password" class="form-control default" name="course_pin" id="course_pin"
                                     placeholder="Enter 4-6 digit PIN" value="{{ $course->course_pin }}"
-                                    autocomplete="off">
+                                    autocomplete="off" title="Enter 4-6 digit numeric PIN">
                             </div>
                         </div>
                     </div>
@@ -1218,17 +1244,41 @@ window.onload = function() {
                     <div class="row">
                         <div class="col-lg-12 text-center">
                             <button class="btn btn-success btn-space savebutton" type="submit" id="publishbutton">
-                                <i class="fas fa-check mr-2"></i> Publish Course
+                                <i class="fas fa-check mr-2"></i> <span id="publishText">Publish Course</span>
+                                <span id="publishSpinner" class="spinner-border spinner-border-sm ml-2 d-none"
+                                    role="status" aria-hidden="true"></span>
                             </button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="resetSelect2()"
                                 value="Cancel">
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Add this JavaScript for dynamic validation and loader -->
+
+
+<style>
+.invalid-feedback {
+    display: block !important;
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+/* Optional: Add some spacing */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+</style>
 
 <!-- Select2 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -1385,30 +1435,30 @@ $(document).ready(function() {
     });
 
     // Form submission with SweetAlert confirmation
-    $('#publish_course_form').submit(function(e) {
-        e.preventDefault();
+    // $('#publish_course_form').submit(function(e) {
+    //     e.preventDefault();
 
-        // Show confirmation dialog
-        Swal.fire({
-            title: "Confirm Publication",
-            text: "Are you sure you want to publish this course? Once published, it will be available to enrolled users.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#28a745",
-            confirmButtonText: "Yes, publish it!",
-            cancelButtonText: "Cancel",
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-secondary'
-            },
-            buttonsStyling: false
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Remove the event handler to allow default form submission
-                $('#publish_course_form').off('submit').submit();
-            }
-        });
-    });
+    //     // Show confirmation dialog
+    //     Swal.fire({
+    //         title: "Confirm Publication",
+    //         text: "Are you sure you want to publish this course? Once published, it will be available to enrolled users.",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#28a745",
+    //         confirmButtonText: "Yes, publish it!",
+    //         cancelButtonText: "Cancel",
+    //         customClass: {
+    //             confirmButton: 'btn btn-success',
+    //             cancelButton: 'btn btn-secondary'
+    //         },
+    //         buttonsStyling: false
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             // Remove the event handler to allow default form submission
+    //             $('#publish_course_form').off('submit').submit();
+    //         }
+    //     });
+    // });
 });
 
 // Function to add new row to tables
@@ -1726,6 +1776,303 @@ $(document).ready(function() {
 function resetSelect2() {
     $('.js-select2').val(null).trigger('change');
 }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get form and button elements
+    const form = document.getElementById('publish_course_form');
+    const publishButton = document.getElementById('publishbutton');
+    const publishText = document.getElementById('publishText');
+    const publishSpinner = document.getElementById('publishSpinner');
+
+    // Flag to track if we're submitting
+    let isSubmitting = false;
+
+    // Form submit handler
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Always prevent default first
+        e.stopPropagation(); // Stop event bubbling
+
+        console.log('Form submit event triggered'); // Debug
+
+        // Prevent multiple submissions
+        if (isSubmitting) {
+            console.log('Already submitting, ignoring');
+            return false;
+        }
+
+        // Validate form before submission
+        const isValid = validateForm();
+        console.log('Validation result:', isValid); // Debug
+
+        if (!isValid) {
+            console.log('Validation failed - stopping submission');
+
+            // Show error message
+            Swal.fire({
+                title: "Validation Error",
+                text: "Please correct the errors in the form before submitting.",
+                icon: "error",
+                confirmButtonColor: "#dc3545",
+            });
+
+            return false; // Stop execution
+        }
+
+
+
+        // Set submitting flag
+        isSubmitting = true;
+
+        // Show loader and disable button
+        publishButton.disabled = true;
+        publishText.textContent = 'Publishing...';
+        publishSpinner.classList.remove('d-none');
+
+        // Create a new form element and submit it to avoid event listeners
+        setTimeout(() => {
+            console.log('Executing form submission');
+
+            // Method 1: Clone the form and submit the clone
+            const formClone = form.cloneNode(true);
+            formClone.style.display = 'none';
+            document.body.appendChild(formClone);
+
+            // Remove event listeners from clone
+            const newForm = formClone.cloneNode(true);
+            formClone.parentNode.replaceChild(newForm, formClone);
+
+            // Submit the clean form
+            newForm.submit();
+
+            // Method 2: Use AJAX instead (better approach)
+            // submitFormViaAjax();
+
+        }, 500);
+
+        return false;
+    });
+
+    // Form validation function
+    function validateForm() {
+        let isValid = true;
+
+        console.log('Starting validation...'); // Debug
+
+        // Clear previous error messages
+        clearErrors();
+
+        // Validate Course Type
+        const courseType = document.getElementById('course_pay');
+        if (!courseType.value) {
+            showError(courseType, 'Course Type is required');
+            isValid = false;
+            console.log('Course Type validation failed');
+        }
+
+        // If paid course, validate price
+        if (courseType.value === 'paid') {
+            const coursePrice = document.getElementById('course_price');
+            if (!coursePrice.value || parseFloat(coursePrice.value) <= 0) {
+                showError(coursePrice, 'Valid course price is required for paid courses');
+                isValid = false;
+                console.log('Course Price validation failed');
+            }
+        }
+
+        // Validate Certificate Template if certificate is yes
+        const certificateYes = document.getElementById('course_certificate_yes');
+        if (certificateYes.checked) {
+            const certificateTemplate = document.getElementById('cetificate_template');
+            if (!certificateTemplate.value) {
+                showError(certificateTemplate, 'Certificate Template is required when certificate is enabled');
+                isValid = false;
+                console.log('Certificate Template validation failed');
+            }
+
+            // Validate expiry date if certificate expiry is yes
+            const expiryYes = document.getElementById('certificate_expiryyes');
+            if (expiryYes.checked) {
+                const expiryDate = document.getElementById('course_expiry_period');
+                if (!expiryDate.value) {
+                    showError(expiryDate, 'Expiry Date is required when certificate expiry is enabled');
+                    isValid = false;
+                    console.log('Expiry Date validation failed');
+                }
+            }
+        }
+
+        // Validate Course Period dates if enabled
+        const periodYes = document.getElementById('course_noperiodyes');
+        if (periodYes.checked) {
+            const startDate = document.getElementById('course_start_period');
+            const endDate = document.getElementById('course_end_period');
+
+            if (!startDate.value) {
+                showError(startDate, 'Start Date is required');
+                isValid = false;
+                console.log('Start Date validation failed');
+            }
+            if (!endDate.value) {
+                showError(endDate, 'End Date is required');
+                isValid = false;
+                console.log('End Date validation failed');
+            }
+
+            // Validate date range
+            if (startDate.value && endDate.value) {
+                const start = new Date(startDate.value);
+                const end = new Date(endDate.value);
+                if (start >= end) {
+                    showError(endDate, 'End Date must be after Start Date');
+                    isValid = false;
+                    console.log('Date Range validation failed');
+                }
+            }
+        }
+
+        // Validate Exam fields if exam is enabled
+        const examYes = document.getElementById('course_examyes');
+        if (examYes.checked) {
+            const examDate = document.getElementById('exam_date');
+            const passPercentage = document.getElementById('pass_percentage');
+
+            if (!examDate.value) {
+                showError(examDate, 'Exam Date is required');
+                isValid = false;
+                console.log('Exam Date validation failed');
+            }
+
+            if (!passPercentage.value || passPercentage.value < 1 || passPercentage.value > 100) {
+                showError(passPercentage, 'Pass Percentage must be between 1 and 100');
+                isValid = false;
+                console.log('Pass Percentage validation failed');
+            }
+        }
+
+        // Validate CPD Points
+        const cpdPoints = document.getElementById('course_cpt_points');
+        if (!cpdPoints.value || parseFloat(cpdPoints.value) < 0) {
+            showError(cpdPoints, 'Valid CPD Points are required');
+            isValid = false;
+            console.log('CPD Points validation failed');
+        }
+
+        // Validate Instructor
+        const instructor = document.getElementById('course_instructor');
+        if (!instructor.value.trim()) {
+            showError(instructor, 'Course Instructor is required');
+            isValid = false;
+            console.log('Instructor validation failed');
+        }
+
+        // Validate PIN if restricted access is yes
+        const restrictedYes = document.getElementById('restricted_yes');
+        if (restrictedYes.checked) {
+            const pin = document.getElementById('course_pin');
+            if (!pin.value || !/^\d{4,6}$/.test(pin.value)) {
+                showError(pin, 'PIN must be 4-6 digits');
+                isValid = false;
+                console.log('PIN validation failed');
+            }
+        }
+
+        // Validate User selection
+        const userId = document.getElementById('user_id');
+        // For Select2, get the value differently
+        const selectedUsers = $(userId).val(); // Using jQuery for Select2
+        if (!selectedUsers || selectedUsers.length === 0) {
+            showError(userId, 'At least one user must be selected');
+            isValid = false;
+            console.log('User selection validation failed');
+        }
+
+        console.log('Validation complete. Is valid?', isValid);
+        return isValid;
+    }
+
+    function showError(element, message) {
+        // Add error class to element
+        element.classList.add('is-invalid');
+
+        // Create error message element
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'invalid-feedback d-block';
+        errorDiv.textContent = message;
+
+        // Insert after element
+        element.parentNode.appendChild(errorDiv);
+
+        // Scroll to first error
+        if (!window.scrolledToError) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+            window.scrolledToError = true;
+        }
+    }
+
+    function clearErrors() {
+        // Remove error classes
+        document.querySelectorAll('.is-invalid').forEach(el => {
+            el.classList.remove('is-invalid');
+        });
+
+        // Remove error messages
+        document.querySelectorAll('.invalid-feedback').forEach(el => {
+            el.remove();
+        });
+
+        window.scrolledToError = false;
+    }
+
+
+    // Better: Only handle display, NOT required attributes
+    document.getElementById('course_pay').addEventListener('change', function() {
+        const priceField = document.getElementById('paid');
+        if (this.value === 'paid') {
+            priceField.style.display = 'block';
+        } else {
+            priceField.style.display = 'none';
+        }
+    });
+});
+$(document).ready(function() {
+    function closeModalForce() {
+        console.log('Force closing modal');
+
+        // Method 1: Standard Bootstrap
+        $('#publishModal').modal('hide');
+
+        // Method 2: Trigger dismiss event
+        $('#publishModal').trigger('click.dismiss.bs.modal');
+
+        // Method 3: Manually hide
+        $('#publishModal').removeClass('show');
+        $('#publishModal').css('display', 'none');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+
+        // Method 4: Use data attributes
+        $('#publishModal').data('bs.modal', null);
+    }
+
+    // Bind events
+    $('#publishModal .close').on('click', function(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        closeModalForce();
+        return false;
+    });
+
+    $('#publishModal .btn-danger[data-dismiss="modal"]').on('click', function(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        closeModalForce();
+        return false;
+    });
+});
 </script>
 
 @endsection
