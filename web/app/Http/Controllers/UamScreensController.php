@@ -155,12 +155,13 @@ else{
           if ($objData->Code == 200) {
             $parant_data = json_decode(json_encode($objData->Data), true);
             $rows =  $parant_data['rows'];
+            $uam_screen_permissions =  $parant_data['uam_screen_permissions'];
             // $work_flow_row =  $parant_data['work_flow_row'];
             $menus = $this->FillMenu();  
             $screens = $menus['screens'];
             $modules = $menus['modules'];
             $permissions = config('permission.screen_permission');
-            return view('uam.uam_screens.show', compact('rows','permissions','screens','modules'));
+            return view('uam.uam_screens.show', compact('rows','permissions','screens','modules','uam_screen_permissions'));
         }  
     }
     else {
@@ -199,12 +200,13 @@ else{
               if ($objData->Code == 200) {
                 $parant_data = json_decode(json_encode($objData->Data), true);
                 $rows =  $parant_data['rows'];
+                $uam_screen_permissions =  $parant_data['uam_screen_permissions'];
                 // $work_flow_row =  $parant_data['work_flow_row'];
                 $menus = $this->FillMenu();  
                 $screens = $menus['screens'];
                 $modules = $menus['modules'];
                 $permissions = config('permission.screen_permission');
-                return view('uam.uam_screens.edit', compact('rows','permissions','screens','modules'));
+                return view('uam.uam_screens.edit', compact('rows','permissions','screens','modules','uam_screen_permissions'));
             }  
         }
         else {

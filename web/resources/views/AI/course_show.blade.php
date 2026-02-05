@@ -61,12 +61,12 @@ body {
     overflow-x: hidden;
 }
 
-.main-content {
+/* .main-content {
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
     padding: 15px;
-}
+} */
 
 .section {
     width: 100%;
@@ -653,10 +653,12 @@ window.onload = function() {
 
                                                                 @php
                                                                 $choices = explode(',', $question->choices);
+                                                                $letters = range('A', 'Z'); // A, B, C, ...
                                                                 @endphp
 
-                                                                @foreach ($choices as $choice)
-                                                                <p>{{ trim($choice) }}</p>
+                                                                @foreach ($choices as $index => $choice)
+                                                                <p><strong>{{ $letters[$index] }}.</strong>{{ trim($choice) }}
+                                                                </p>
                                                                 @endforeach
 
                                                             </ul>
@@ -762,23 +764,26 @@ window.onload = function() {
 
                                                         @if($question->question_type == 'mcq' &&
                                                         !empty($question->choices))
-                                                        <div class="mt-3">
+
+                                                        <div class="mt-2">
                                                             <small class="text-muted">Options:</small>
-                                                            <div class="row mt-2">
-                                                                @foreach(json_decode($question->choices, true) as
-                                                                $choiceIndex => $choice)
-                                                                <div class="col-12 col-sm-6 mb-2">
-                                                                    <div class="p-2 border rounded {{ strpos($question->correct_choices, (string)($choiceIndex + 1)) !== false ? 'bg-success text-white' : '' }}"
-                                                                        style="word-break: break-word;">
-                                                                        {{ $choice }}
-                                                                        @if(strpos($question->correct_choices,
-                                                                        (string)($choiceIndex + 1)) !== false)
-                                                                        <i class="fas fa-check ms-2"></i>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
+                                                            <ul class="mb-0 ps-3">
+
+                                                                @php
+                                                                $choices = explode(',', $question->choices);
+                                                                $letters = range('A', 'Z'); // A, B, C, ...
+                                                                @endphp
+
+                                                                @foreach ($choices as $index => $choice)
+                                                                <p><strong>{{ $letters[$index] }}.</strong>{{ trim($choice) }}
+                                                                </p>
                                                                 @endforeach
-                                                            </div>
+
+                                                            </ul>
+                                                            <small class="text-success">
+                                                                <i class="fas fa-check mr-1"></i>
+                                                                Correct Answer: {{ $question->correct_choices }}
+                                                            </small>
                                                         </div>
                                                         @elseif($question->question_type == 'boolean')
                                                         <div class="mt-3">

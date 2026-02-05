@@ -217,7 +217,7 @@ class tryController extends BaseController
 
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
-    }
+    }   
 
 
     // ****** Class Start // 

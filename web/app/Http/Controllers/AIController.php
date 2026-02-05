@@ -104,7 +104,7 @@ class AIController extends BaseController
             $response = is_string($response)
                 ? json_decode($response, true)
                 : $response;
-            // dd($response['classes']);
+            // dd($response);
             // Start
             // $filePath = 'C:\Apache24\htdocs\nmb_bank\web\storage\app\static_course_data.json';
             //     $jsonContent = file_get_contents($filePath);
@@ -408,7 +408,7 @@ public function ai_course_store(Request $request)
                     $qid = DB::table('elearning_questions_long_answer')->insertGetId([
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
-                        'keywords'      => substr($q['answer'], 0, 100),
+                        'keywords'      => $q['answer'],
                         'points'        => $q['points'],
                         'question_type' => 'long',
                         'drop_question' => 0,
@@ -424,11 +424,12 @@ public function ai_course_store(Request $request)
                 /* ---------- MCQ QUESTIONS ---------- */
                 foreach ($quizData['mcq'] ?? [] as $qIndex => $q) {
                     $choices = array_column($q['options'], 'text');
-
+                    $choicesText = implode(', ', $choices);
                     $qid = DB::table('elearning_questions_mcq')->insertGetId([
                         'question_name'    => substr($q['question_text'], 0, 100),
                         'question'         => $q['question_text'],
-                        'choices'          => json_encode($choices),
+                       
+                        'choices'     => $choicesText,
                         'correct_choices'  => $q['correct_option_id'],
                         'points'           => $q['points'],
                         'question_type'    => 'mcq',
@@ -519,7 +520,7 @@ public function ai_course_store(Request $request)
                     $qid = DB::table('elearning_questions_long_answer')->insertGetId([
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
-                        'keywords'      => json_encode([$q['answer']]),
+                        'keywords'      => $q['answer'],
                         'points'        => $q['points'],
                         'question_type' => 'long',
                         'drop_question' => 0,
@@ -535,11 +536,11 @@ public function ai_course_store(Request $request)
                 /* ---------- MCQ QUESTIONS ---------- */
                 foreach ($finalExamData['mcq'] ?? [] as $qIndex => $q) {
                     $choices = array_column($q['options'], 'text');
-
+                     $choicesText = implode(', ', $choices);
                     $qid = DB::table('elearning_questions_mcq')->insertGetId([
                         'question_name'    => substr($q['question_text'], 0, 100),
                         'question'         => $q['question_text'],
-                        'choices'          => json_encode($choices),
+                        'choices'          => $choicesText,
                         'correct_choices'  => $q['correct_option_id'],
                         'points'           => $q['points'],
                         'question_type'    => 'mcq',
@@ -1189,6 +1190,7 @@ private function parseQuizQuestions($quizQuestions)
         } 
     // dd($request->all(),$userIds);
         // Prepare update data
+        
         $updateData = [
           
            
@@ -1201,7 +1203,7 @@ private function parseQuizQuestions($quizQuestions)
             'course_summary' => $course_summary,
             'course_pay' => $request->course_pay,
             'course_price' => $request->course_price ?? 0,
-            'cetificate_template' => $request->cetificate_template,
+            'cetificate_template' => $request->certificate_template,
             'certificate_expiry' => $request->certificate_expiry,
             'course_expiry_period' => $request->course_expiry_period,
             'course_noperiod' => $request->course_noperiod,

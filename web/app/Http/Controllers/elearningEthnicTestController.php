@@ -1313,21 +1313,35 @@ class elearningEthnicTestController extends BaseController
 
             // dd("wel"); 
 
-            $quiz_results[] = $classContents[0];
-            // dd($class_array);
+            $quiz_results['class'] = $classContents[0];
+             
 
 
             foreach ($class_array as $key => $value) {
-                $classContents = DB::select("SELECT c.*,uc.course_id,uc.quiz_status,uc.user_id,uc.status as class_status,uc.bookmark
-                 FROM elearning_classes as c inner join user_class_relation as uc  where c.class_id= $value 
-                 and uc.course_id=$id ");
-                // dd($classContents);
+               $classContents = DB::select("
+                    SELECT 
+                        c.*,
+                        uc.course_id,
+                        uc.quiz_status,
+                        uc.user_id,
+                        uc.status AS class_status,
+                        uc.id AS user_class_relation_id,
+                        uc.bookmark
+                    FROM elearning_classes AS c
+                    INNER JOIN user_class_relation AS uc
+                        ON uc.class_id = c.class_id
+                    WHERE 
+                        c.class_id = ?
+                        AND uc.user_id = ?
+                        AND uc.course_id = ?
+                ", [$value, $user_id, $id]);
+
                 $selected_class[$key] = $classContents[0];
 
 
                 # code...
             }
-            // dd($id);
+            
 
             $quizes = DB::select("SELECT * FROM elearning_practice_quiz where drop_quiz=0");
             // dd($quizes);
@@ -1668,8 +1682,7 @@ class elearningEthnicTestController extends BaseController
             $courseContents = DB::select("SELECT * FROM elearning_classes WHERE drop_class=0  ORDER BY FIELD(class_id,$classOrder)");
             //dd($courseContents);
             $classContents = DB::select("SELECT * FROM elearning_courses where course_id= $id and drop_course=0 ");
-            dd($classContents);
-
+            
             $class_array = explode(',', $classContents[0]->course_classes);
             $selected_class = [];
             foreach ($class_array as $key => $value) {
@@ -2028,7 +2041,7 @@ class elearningEthnicTestController extends BaseController
 
     public function bookmark(Request $request)
     {
-        $this->WriteFileLog("snkas");
+        
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return redirect(url('/'));
@@ -2061,7 +2074,7 @@ class elearningEthnicTestController extends BaseController
         $method = 'Method => elearningEthnicTestController => status_update';
         $course_id = $request->course_id;
         $class_id = $request->class_id;
-        $this->WriteFileLog($class_id);
+       
         try {
 
             DB::table('user_class_relation')

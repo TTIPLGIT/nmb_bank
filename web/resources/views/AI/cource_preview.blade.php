@@ -56,7 +56,7 @@
     margin-top: 20px;
 }
 
-/* Class Cards */
+
 .class-card {
     border: 1px solid #dee2e6;
     border-radius: 8px;
@@ -89,7 +89,7 @@
     background: white;
 }
 
-/* Slide Items */
+
 .slide-item {
     display: flex;
     justify-content: space-between;
@@ -185,37 +185,14 @@
     transition: left 0.3s ease, width 0.3s ease;
 }
 
-/* Main Content Wrapper */
-.content-wrapper {
-    padding: 20px;
-    min-height: calc(100vh - 120px);
-    transition: margin-left 0.3s ease, width 0.3s ease;
-}
 
-/* Default when sidebar is open */
-body:not(.sidebar-collapsed) .content-wrapper {
-    margin-left: 250px;
-    width: calc(100% - 250px);
-}
 
-/* When sidebar is collapsed */
-body.sidebar-collapsed .content-wrapper {
-    margin-left: 70px;
-    width: calc(100% - 70px);
-}
 
-/* Adjust footer for collapsed sidebar */
-body.sidebar-collapsed .sticky-footer {
-    left: 70px;
-    width: calc(100% - 70px);
-}
-
-/* Ensure content doesn't hide behind footer */
 .tab-content-area {
     padding-bottom: 100px;
 }
 
-/* Select All Containers */
+
 .select-all-container {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     padding: 12px 20px;
@@ -224,7 +201,7 @@ body.sidebar-collapsed .sticky-footer {
     border-left: 4px solid #667eea;
 }
 
-/* Navigation Tabs */
+
 .nav-tabs {
     border-bottom: 2px solid #dee2e6;
     margin-bottom: 20px;

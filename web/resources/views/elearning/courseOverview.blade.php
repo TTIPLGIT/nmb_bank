@@ -836,7 +836,7 @@ if ($daysLeft <= 30 && $daysLeft>= 0) {
                                 <h6 class="card-title fw-bold mb-1">Learning Resources</h6>
                                 <div class="resource-count">
                                     <span class="h4 fw-bold text-success">{{ $counts }}</span>
-
+                                    <p class="text-muted small mb-0">Downloadable Resources</p>
                                 </div>
                             </div>
                         </div>
@@ -939,7 +939,7 @@ if ($daysLeft <= 30 && $daysLeft>= 0) {
                         <i class="fa fa-comments" style="font-size: 24px;"></i>
                     </div> -->
 
-
+                    <!-- 
                     <div id="chatbotContainer"
                         style="position: fixed; bottom: 100px; right: 30px; width: 320px; display: none; z-index: 9999;">
                         <div class="card shadow">
@@ -954,13 +954,13 @@ if ($daysLeft <= 30 && $daysLeft>= 0) {
                                 <button class="btn btn-primary btn-sm mt-2 w-100" id="sendBtn">Send</button>
                             </div>
                         </div>
-                    </div> -->
-                </div> -->
+                    </div>  -->
+                    <!-- </div>  -->
 
 
+                </div>
             </div>
-    </div>
-    </section>
+        </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 
