@@ -1207,7 +1207,7 @@ class elearningmainController extends BaseController
    public function quizresult(Request $request)
 {
     $this->WriteFileLog($request);
-
+                        // dd($request);
     $quizAttendDate = now();
 
     // Authentication
@@ -1303,8 +1303,18 @@ class elearningmainController extends BaseController
             $q = DB::table('elearning_questions_mcq')
                 ->where('question_id', $questionId)->first();
 
-            $correctChoices = array_map('trim', explode(",", $q->correct_choices));
-            $answerGiven = array_map('trim', explode(",", $answer));
+            // $correctChoices = array_map('trim', explode(",", $q->correct_choices));
+            // $answerGiven = array_map('trim', explode(",", $answer));
+
+            $correctChoices = array_map(
+        fn($c) => strtoupper(trim($c)),
+        explode(",", $q->correct_choices)
+    );
+
+    $answerGiven = array_map(
+        fn($a) => strtoupper(trim($a)),
+        explode(",", $answer)
+    );
 
             $totalAvailablePoints += $q->points;
             $pointPerChoice = $q->points / count($correctChoices);
