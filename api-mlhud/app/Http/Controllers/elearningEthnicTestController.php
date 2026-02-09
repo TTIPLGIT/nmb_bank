@@ -715,7 +715,8 @@ class elearningEthnicTestController extends BaseController
             $totalpoints = DB::select("SELECT points from elearning_practice_quiz where quiz_id=$quizId");
             $passpercentage = DB::select("SELECT pass_percentage from elearning_courses where course_id=$course_id");
             $totalpoints = $totalpoints[0]->points;
-            $pass_percentage = $passpercentage[0]->pass_percentage;
+            // $pass_percentage = $passpercentage[0]->pass_percentage;
+            $pass_percentage = 35; // default pass percentage for class quiz as we are not fetching it from anywhere and it is not present in any table as of now
             $calc = ($pass_percentage / 100) * intval($totalpoints);
             
             if ($inputArray['score'] >= $calc) {

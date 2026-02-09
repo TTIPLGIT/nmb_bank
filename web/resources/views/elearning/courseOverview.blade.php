@@ -593,12 +593,12 @@ if ($daysLeft <= 30 && $daysLeft>= 0) {
                             @php
                             $file = $courseDetail->course_introduction;
                             $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                            $fileUrl = url('uploads/course/126/' . $file);
+                            $fileUrl = url('uploads/course/{{$courseDetail->course_id}}/' . $file);
                             @endphp
 
                             @if($extension === 'mp4')
                             <video class="mt-2" height="200px" controls
-                                poster="{{ url('uploads/course/126/' . $courseDetail->course_banner) }}"
+                                poster="{{ url('uploads/course/$courseDetail->course_id/' . $courseDetail->course_banner) }}"
                                 preload="metadata" width="100%">
                                 <source src="{{ $fileUrl }}" type="video/mp4">
                                 Download the <a href="{{ $fileUrl }}">MP4</a> video.
@@ -611,7 +611,7 @@ if ($daysLeft <= 30 && $daysLeft>= 0) {
                                 <p>No PDF viewer available. <a href="{{ $fileUrl }}">Download PDF</a></p>
                             </object>
                             @else
-                            <p>Unsupported file type: {{ $extension }}</p>
+                            <!-- <p>Unsupported file type: {{ $extension }}</p> -->
                             @endif
 
                             <div class="card-body bgWhite">

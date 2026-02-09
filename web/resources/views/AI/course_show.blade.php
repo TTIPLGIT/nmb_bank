@@ -985,6 +985,15 @@ window.onload = function() {
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label>Course Banner:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="file" class="form-control default" id="course_banner" name="course_banner"
+                                    accept="image/*" autocomplete="off" required>
+                                <span style="color:red !important"><strong>Following files could be uploaded as
+                                        jpeg,png,jpg</strong></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label>Course Description:<span class="error-star"
                                         style="color:red;">*</span></label><br>
                                 <textarea id="course_description" name="course_description" rows="3"
@@ -992,6 +1001,11 @@ window.onload = function() {
                                 <small class="text-muted">Course description cannot be changed</small>
                             </div>
                         </div>
+
+                    </div>
+
+
+                    <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Course Certificate:<span class="error-star"
@@ -1022,10 +1036,6 @@ window.onload = function() {
                                 <label class="btn btn-outline-primary" for="course_examno">No</label>
                             </div>
                         </div>
-                    </div>
-
-
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Type:<span class="error-star" style="color:red;">*</span></label>

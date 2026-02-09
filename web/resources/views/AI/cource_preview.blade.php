@@ -15,7 +15,7 @@
 
 .course-banner {
     width: 100%;
-    height: 300px;
+    height: 80px;
     background-size: cover;
     background-position: center;
     border-radius: 8px;
@@ -387,17 +387,12 @@
 <!-- Main Content Wrapper -->
 <div class="content-wrapper">
     <!-- Course Banner -->
-    @if(isset($course['course_banner_url']) && $course['course_banner_url'])
-    <div class="course-banner" style="background-image: url('{{ $course['course_banner_url'] }}');">
-        @if(!$course['course_banner_url'] || strpos($course['course_banner_url'], 'localhost') !== false)
-        <div class="course-banner-placeholder">
-            <i class="fas fa-image fa-3x mb-3"></i>
-            <p class="mb-0">Banner will be generated based on prompt</p>
-            <small>{{ $course['course_banner_prompt'] ?? 'No banner prompt available' }}</small>
-        </div>
-        @endif
+
+    <div class="course-banner">
+
+
     </div>
-    @endif
+
 
     <!-- Course Header -->
     <div class="course-header">

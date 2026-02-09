@@ -850,3 +850,7 @@ Route::get('/ai-courses/{encryptedId}', [App\Http\Controllers\AIController::clas
 Route::post('/course/publish/{id}', [App\Http\Controllers\AIController::class, 'course_publish'])->name('course_publish');
 Route::post('/get-designation-by-role', [App\Http\Controllers\AIController::class, 'getDesignationByRole'])
     ->name('get.designation.by.role');
+
+Route::get('/text-to-audio', [App\Http\Controllers\AIController::class, 'text_to_audio'])->name('text_to_audio');
+Route::post('/text-to-audio', [App\Http\Controllers\AIController::class, 'text_to_audio']);
+Route::delete('/delete-audio/{id}', [App\Http\Controllers\AIController::class, 'delete_audio'])->name('delete_audio');

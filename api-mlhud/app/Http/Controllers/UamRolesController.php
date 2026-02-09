@@ -296,19 +296,19 @@ class UamRolesController extends BaseController
             $isMobile = isset($request['isMobile']);
 
             $inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
-            // $this->WriteFileLog($isMobile);
+            
             $input = [
                 'role_name' => $inputArray['role_name'],
                 'role_id' => $inputArray['role_id'],
                 'screen_id' => $inputArray['screen_id'],
                 'permission_id' => $inputArray['permission_id'],
-                'client_role_id' => $inputArray['client_role_id']
+                'client_role_id' => '1',
 
             ];
 
             $role_name = $input['role_name'];
             $role_id = $input['role_id'];
-            $this->WriteFileLog($role_id);
+            
 
             if ($isMobile) {
                 $this->WriteFileLog('jii1');
@@ -332,7 +332,7 @@ class UamRolesController extends BaseController
                 $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
                 return $sendServiceResponse;
             } else {
-                $this->WriteFileLog($role_id);
+               
                 $role_name_check = DB::select("select * from uam_roles where not role_id = '$role_id' and role_name = '$role_name' ");
                 if (json_encode($role_name_check) == '[]') {
 
@@ -374,7 +374,7 @@ class UamRolesController extends BaseController
                         for ($i = 0; $i < $screenidcount; $i++) {
 
                             $iparr = explode(":", $unique[$i]);
-
+$this->WriteFileLog($iparr);
                             $rowsdata =  DB::select("select a.module_screen_id from uam_module_screens as a where a.module_id = $iparr[0]   and a.screen_id = $iparr[1] ");
 
 
@@ -388,6 +388,7 @@ class UamRolesController extends BaseController
                                 'created_date' => NOW()
                             ]);
                         }
+                         
 
                         $permissioncount = count($input['permission_id']);
 
@@ -418,6 +419,7 @@ class UamRolesController extends BaseController
                             ]);
                         }
                         // Deepika
+                        
                         $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
                         $role_name_fetch = $role_name[0]->role_name;
                         $this->auditLog('uam_roles', $input['role_id'], 'Update', 'Update uam role', auth()->user()->id, NOW(), $role_name_fetch);
@@ -468,8 +470,8 @@ class UamRolesController extends BaseController
                 ->where([['role_id', $id], ['active_flag', 0]])
                 ->get();
 
-            $rows = DB::select("select a.role_id,a.role_name,c.array_permission from uam_roles as a 
-            inner join uam_role_screen_permissions as c on c.role_id = a.role_id where a.role_id = '$id' and a.active_flag = 0");
+            // $rows = DB::select("select a.role_id,a.role_name,c.array_permission from uam_roles as a 
+            // inner join uam_role_screen_permissions as c on c.role_id = a.role_id where a.role_id = '$id' and a.active_flag = 0");
 
 
 
@@ -490,13 +492,22 @@ class UamRolesController extends BaseController
                 ->select('*')
                 ->get();
 
-
+             $uam_role_screen_permissions = DB::table('uam_role_screen_permissions')
+                ->select('*')
+                ->where('role_id', $id)
+                ->get();
+            $uam_role_screens = DB::table('uam_role_screens')
+                ->select('*')
+                ->where('role_id', $id)
+                ->get();
             $response = [
                 'rows' => $rows,
                 'parent_module_data' => $parent_module_data,
                 'module_data' => $module_data,
                 'screens_data' => $screens_data,
-                'permissions_data' => $permissions_data
+                'permissions_data' => $permissions_data,
+                'uam_role_screen_permissions' => $uam_role_screen_permissions,
+                'uam_role_screens' => $uam_role_screens,
             ];
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 
 class AIController extends BaseController
 {
@@ -1126,7 +1127,7 @@ private function parseQuizQuestions($quizQuestions)
         }
  
         
-      
+       
 
         // Get the existing course
         $course = DB::table('elearning_courses')
@@ -1147,30 +1148,25 @@ private function parseQuizQuestions($quizQuestions)
 
         // Handle file uploads
         $course_introduction = $course->course_introduction;
-        $course_banner = $course->course_banner;
+        // $course_banner = $course->course_banner;
         $course_summary = $course->course_summary;
 
-        if ($request->hasFile('course_introduction')) {
-            $file = $request->file('course_introduction');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/courses/introduction'), $filename);
-            $course_introduction = 'uploads/courses/introduction/' . $filename;
-        }
+               
 
-        if ($request->hasFile('course_banner')) {
-            $file = $request->file('course_banner');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/courses/banner'), $filename);
-            $course_banner = 'uploads/courses/banner/' . $filename;
-        }
-
-        if ($request->hasFile('course_summary')) {
-            $file = $request->file('course_summary');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/courses/summary'), $filename);
-            $course_summary = 'uploads/courses/summary/' . $filename;
-        }
-
+        $storagepath_ursb_old1 = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
+            $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
+            if (!File::exists($storagepath_ursb_old1)) {
+                File::makeDirectory($storagepath_ursb_old1); //folder_creation_when_folder_doesn't_esist
+            }
+            $data['banner_path'] = $storagepath_ursb;
+            $documentsb =  $request->course_banner;
+            $files = $documentsb->getClientOriginalName();
+            $findspace = array(' ', '&', "'", '"');
+            $replacewith = array('-', '-');
+            $proposal_files1 = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
+            $documentsb->move($storagepath_ursb_old1, $proposal_files1); //storing the file in the system
+            // $data['course_banner'] = $proposal_files1;
+            // dd($proposal_files1);
         // Process arrays to JSON
         $user_ids = $request->has('user_ids') ? json_encode($request->user_ids) : null;
      
@@ -1182,7 +1178,7 @@ private function parseQuizQuestions($quizQuestions)
 
         $category_name = $category ? $category->catagory_name : '';
                  $user_ids = '';
-   $userIds = $request->input('user_ids');
+            $userIds = $request->input('user_ids');
 
         if (in_array('All', $userIds)) {
             $user_ids = User::pluck('id')->toArray();
@@ -1199,7 +1195,7 @@ private function parseQuizQuestions($quizQuestions)
             'course_certificate' => $request->course_certificate,
             'course_exam' => $request->course_exam,
             'course_introduction' => $course_introduction,
-            'course_banner' => $course_banner,
+            'course_banner' => $proposal_files1,
             'course_summary' => $course_summary,
             'course_pay' => $request->course_pay,
             'course_price' => $request->course_price ?? 0,
@@ -1255,6 +1251,117 @@ public function getDesignationByRole(Request $request)
         ->where('role_id', $request->role_id)
         ->select('designation_id', 'designation_name')
         ->get();
+}
+
+public function text_to_audio(Request $request)
+{
+    $method = 'Method=> AIController => text_to_audio';
+    
+    try {
+        $user_id = $request->session()->get("userID");
+        if ($user_id == null) {
+            return view('auth.login');
+        }
+        
+        // Handle form submission for new audio generation
+        if ($request->isMethod('post')) {
+            $request->validate([
+                'text' => 'required|string|max:5000',
+                'language' => 'required|string|max:10',
+                'speaker' => 'required|string|max:50'
+            ]);
+            
+            // Prepare request body for API
+            $data = (object) [
+                'text' => $request->text,
+                'language' => $request->language,
+                'speaker' => $request->speaker
+            ];
+
+            $gatewayURL = 'http://20.164.0.23:3300/tools/text-to-audio/generate';
+
+            // Make the API call
+            $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
+            
+            // Decode the response
+            $response = is_string($response)
+                ? json_decode($response, true)
+                : $response;
+                
+            // Check if response is valid
+            if (!$response || isset($response['error'])) {
+                return redirect()->back()
+                    ->with('error', 'Failed to generate audio: ' . ($response['error'] ?? 'Unknown error'))
+                    ->withInput();
+            }
+            
+            // Save to database
+            DB::table('audio_conversions')->insert([
+                'user_id' => $user_id,
+                'text' => $request->text,
+                'language' => $request->language,
+                'speaker' => $request->speaker,
+                'audio_url' => $response['audio_url'] ?? null,
+                'file_name' => basename($response['audio_url'] ?? ''),
+                'file_path' => $response['audio_url'] ?? null,
+                'status' => 'completed',
+                'message' => $response['message'] ?? 'Audio generated successfully',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+            
+            return redirect()->back()
+                ->with('success', 'Audio generated successfully!');
+        }
+        
+        // Get all audio files for the user
+        $audioFiles = DB::table('audio_conversions')
+            ->where('user_id', $user_id)
+            ->whereNull('deleted_at')
+            ->orderBy('created_at', 'desc')
+            ->get();
+         $menus = $this->FillMenu();
+        $screens = $menus['screens'];
+        $modules = $menus['modules'];
+
+        return view('AI.text_to_audio', compact('audioFiles', 'menus', 'screens', 'modules'));
+        
+    } catch (\Exception $exc) {
+        // Log the error
+        $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        
+        return redirect()->back()
+            ->with('error', 'An error occurred: ' . $exc->getMessage());
+    }
+}
+
+// Function to delete audio entry (soft delete)
+public function delete_audio(Request $request, $id)
+{
+    try {
+        $user_id = $request->session()->get("userID");
+        if ($user_id == null) {
+            return view('auth.login');
+        }
+        
+        // Soft delete by updating deleted_at
+        $deleted = DB::table('audio_conversions')
+            ->where('id', $id)
+            ->where('user_id', $user_id)
+            ->update([
+                'deleted_at' => now()
+            ]);
+            
+        if ($deleted) {
+            return redirect()->route('text_to_audio')
+                ->with('success', 'Audio deleted successfully!');
+        } else {
+            return redirect()->back()->with('error', 'Audio not found or already deleted!');
+        }
+            
+    } catch (\Exception $exc) {
+        return redirect()->back()->with('error', 'Delete failed: ' . $exc->getMessage());
+    }
 }
 
 

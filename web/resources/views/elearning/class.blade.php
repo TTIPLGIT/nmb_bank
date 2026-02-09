@@ -1271,7 +1271,8 @@ label:hover~input:checked~label
     <?php if ($classContent->class_format == 'mp4' && $classContent->class_status == 1) { ?>
 
 
-    <video class="coursetypes videos" src="http://localhost:6061/uploads/class/126/Introduction%20to%20DBMS.mp4"
+    <video class="coursetypes videos"
+        src="http://localhost:6061/uploads/class/$classContent->course_id/Introduction%20to%20DBMS.mp4"
         data-poster=" ../..{{$classContent->resource_path}}/{{$classContent->resource_name}}" frameborder="0"
         allowfullscreen controls width="100%">
 
@@ -1289,7 +1290,8 @@ label:hover~input:checked~label
             <img class="mlhud_img" src="{{asset('assets/images/main.png')}}" alt="">
         </div>
         <audio class="coursetypes" controls='controls'>
-            <source src="../../uploads/class/126/{{$classContent->resource_name}}" type='audio/mp3'>
+            <source src="../../uploads/class/$classContent->course_id/{{$classContent->resource_name}}"
+                type='audio/mp3'>
         </audio>
     </div>
     <!-- <audio class="coursetypes" id="music" preload="true">
@@ -1319,8 +1321,8 @@ label:hover~input:checked~label
                         </div>
                         <div class="card-body p-2 text-center" style="background-color: #f8f9fc;">
                             <object class="coursetypes"
-                                data="../../uploads/class/126/{{$classContent->resource_name}}#toolbar=0" width="100%"
-                                height="400" style="border-radius: 8px; border: 1px solid #ddd;">
+                                data="../../uploads/class/$classContent->course_id/{{$classContent->resource_name}}#toolbar=0"
+                                width="100%" height="400" style="border-radius: 8px; border: 1px solid #ddd;">
                             </object>
                         </div>
                     </div>
