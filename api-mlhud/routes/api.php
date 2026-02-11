@@ -906,3 +906,9 @@ Route::get('/meeting/list', [App\Http\Controllers\AIController::class, 'meeting_
 Route::get('/meeting/create', [App\Http\Controllers\AIController::class, 'meeting_create']);
 Route::get('/adaptive/learning/list', [App\Http\Controllers\AIController::class, 'adaptive_learning_list']);
 Route::get('/predictive/analysis/list', [App\Http\Controllers\AIController::class, 'predictive_analysis']);
+
+// Add these API routes
+Route::post('/elearning/question_quiz/update-with-version', [App\Http\Controllers\ElearningQuestionController::class, 'quiz_update_with_version']);
+Route::post('/elearning/question_quiz/get-versions', [App\Http\Controllers\ElearningQuestionController::class, 'get_quiz_versions']);
+Route::post('/elearning/question_quiz/restore-version', [App\Http\Controllers\ElearningQuestionController::class, 'restore_quiz_version']);
+Route::post('/elearning/question_quiz/get-quiz-data', [App\Http\Controllers\ElearningQuestionController::class, 'get_quiz_data']);

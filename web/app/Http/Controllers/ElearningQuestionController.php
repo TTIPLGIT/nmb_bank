@@ -915,46 +915,175 @@ class ElearningQuestionController extends BaseController
             return redirect()->route('not_allow');
         }
     }
+    // public function quiz_update(Request $request, $id)
+    // {
+
+    //     try {
+
+    //         $user_id = $request->session()->get("userID");
+    //         if ($user_id == null) {
+    //             return view('auth.login');
+    //         }
+    //         $method = 'Method => ElearningQuestionController => true_update';
+
+    //         $data = array();
+    //         $data['quiz_name'] = $request->q_nameedit;
+    //         $data['quiz_questions'] = $request->quiz_questionedit;
+    //         $data['points'] = $request->q_pointsedit;
+    //         $data['quiz_edit'] = $request->quiz_edit;
+    //         $data['evaluation'] = $request->evaluation_edit;
+
+
+    //         $encryptArray = $this->encryptData($data);
+    //         $request = array();
+    //         $request['requestData'] = $encryptArray;
+    //         $gatewayURL = config('setting.api_gateway_url') . '/elearning/question_quiz/update';
+
+    //         $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+
+
+    //         $response1 = json_decode($response);
+
+    //         if ($response1->Status == 200 && $response1->Success) {
+    //             return redirect(route('elearningquestion.index'))->with('success', 'Quiz Updated Successfully');
+    //         } else {
+    //             $objData = json_decode($this->decryptData($response1->Data));
+    //             return view('errors.errors');
+    //             exit;
+    //         }
+    //     } catch (\Exception $exc) {
+    //         return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+    //     }
+    // }
+
     public function quiz_update(Request $request, $id)
-    {
-
-        try {
-
-            $user_id = $request->session()->get("userID");
-            if ($user_id == null) {
-                return view('auth.login');
-            }
-            $method = 'Method => ElearningQuestionController => true_update';
-
-            $data = array();
-            $data['quiz_name'] = $request->q_nameedit;
-            $data['quiz_questions'] = $request->quiz_questionedit;
-            $data['points'] = $request->q_pointsedit;
-            $data['quiz_edit'] = $request->quiz_edit;
-            $data['evaluation'] = $request->evaluation_edit;
-
-
-            $encryptArray = $this->encryptData($data);
-            $request = array();
-            $request['requestData'] = $encryptArray;
-            $gatewayURL = config('setting.api_gateway_url') . '/elearning/question_quiz/update';
-
-            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-
-
-            $response1 = json_decode($response);
-
-            if ($response1->Status == 200 && $response1->Success) {
-                return redirect(route('elearningquestion.index'))->with('success', 'Quiz Updated Successfully');
-            } else {
-                $objData = json_decode($this->decryptData($response1->Data));
-                return view('errors.errors');
-                exit;
-            }
-        } catch (\Exception $exc) {
-            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+{
+    try {
+        $user_id = $request->session()->get("userID");
+        if ($user_id == null) {
+            return view('auth.login');
         }
+        $method = 'Method => ElearningQuestionController => true_update';
+
+        $data = array();
+        $data['quiz_name'] = $request->q_nameedit;
+        $data['quiz_questions'] = $request->quiz_questionedit;
+        $data['points'] = $request->q_pointsedit;
+        $data['quiz_edit'] = $request->quiz_edit;
+        $data['evaluation'] = $request->evaluation_edit;
+        
+        // Add version control data
+        $data['version_type'] = $request->version_type;
+        $data['change_notes'] = $request->change_notes;
+        $data['current_major_version'] = $request->current_major_version;
+        $data['current_minor_version'] = $request->current_minor_version;
+
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        // Call API gateway
+        $gatewayURL = config('setting.api_gateway_url') . '/elearning/question_quiz/update-with-version';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+
+        $response1 = json_decode($response);
+
+        if ($response1->Status == 200 && $response1->Success) {
+            return redirect(route('elearningquestion.index'))->with('success', 'Quiz Updated Successfully with Version Control');
+        } else {
+            $objData = json_decode($this->decryptData($response1->Data));
+            return redirect()->back()->with('error', 'Update failed: ' . ($objData->message ?? 'Unknown error'));
+        }
+    } catch (\Exception $exc) {
+        return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
     }
+}
+
+// New method to get version history for a quiz
+public function getQuizVersions($id)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => getQuizVersions';
+        
+        $data = array();
+        $data['quiz_id'] = $id;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        $gatewayURL = config('setting.api_gateway_url') . '/elearning/question_quiz/get-versions';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+        
+        $response1 = json_decode($response);
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            $decryptedData = $this->decryptData($response1->Data);
+            return response()->json(json_decode($decryptedData, true));
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to load versions']);
+        }
+    } catch (\Exception $exc) {
+        return response()->json(['success' => false, 'message' => $exc->getMessage()]);
+    }
+}
+
+// New method to restore a version
+public function restoreVersion(Request $request)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => restoreVersion';
+        
+        $data = array();
+        $data['quiz_id'] = $request->quiz_id;
+        $data['version_id'] = $request->version_id;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        $gatewayURL = config('setting.api_gateway_url') . '/elearning/question_quiz/restore-version';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+        
+        $response1 = json_decode($response);
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            return response()->json(['success' => true, 'message' => 'Version restored successfully']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to restore version']);
+        }
+    } catch (\Exception $exc) {
+        return response()->json(['success' => false, 'message' => $exc->getMessage()]);
+    }
+}
+
+public function getQuizData($id)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => getQuizData';
+        
+        $data = array();
+        $data['quiz_id'] = $id;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        $gatewayURL = config('setting.api_gateway_url') . '/elearning/question_quiz/get-quiz-data';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+        
+        $response1 = json_decode($response);
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            $decryptedData = $this->decryptData($response1->Data);
+            return response()->json(['success' => true, 'data' => json_decode($decryptedData, true)]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to load quiz data']);
+        }
+    } catch (\Exception $exc) {
+        return response()->json(['success' => false, 'message' => $exc->getMessage()]);
+    }
+}
 
     public function quiz(Request $request)
     {

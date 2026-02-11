@@ -374,7 +374,7 @@ class UamRolesController extends BaseController
                         for ($i = 0; $i < $screenidcount; $i++) {
 
                             $iparr = explode(":", $unique[$i]);
-$this->WriteFileLog($iparr);
+
                             $rowsdata =  DB::select("select a.module_screen_id from uam_module_screens as a where a.module_id = $iparr[0]   and a.screen_id = $iparr[1] ");
 
 

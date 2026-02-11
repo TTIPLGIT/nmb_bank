@@ -854,3 +854,9 @@ Route::post('/get-designation-by-role', [App\Http\Controllers\AIController::clas
 Route::get('/text-to-audio', [App\Http\Controllers\AIController::class, 'text_to_audio'])->name('text_to_audio');
 Route::post('/text-to-audio', [App\Http\Controllers\AIController::class, 'text_to_audio']);
 Route::delete('/delete-audio/{id}', [App\Http\Controllers\AIController::class, 'delete_audio'])->name('delete_audio');
+
+// Add these routes
+Route::post('/elearning/quiz_update/{id}', [App\Http\Controllers\ElearningQuestionController::class, 'quiz_update'])->name('elearning.quiz_update');
+Route::get('/elearning/quiz/versions/{id}', [App\Http\Controllers\ElearningQuestionController::class, 'getQuizVersions']);
+Route::post('/elearning/quiz/restore-version', [App\Http\Controllers\ElearningQuestionController::class, 'restoreVersion']);
+Route::get('/elearning/quiz/get-quiz-data/{id}', [App\Http\Controllers\ElearningQuestionController::class, 'getQuizData']);

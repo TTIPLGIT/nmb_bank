@@ -32,8 +32,10 @@ class UserController extends BaseController
         if (strpos($screen_permission['permissions'], 'View') !== false) {
             try {
                 $method = 'Method => UserController => index';
+                
                 $gatewayURL = config('setting.api_gateway_url') . '/user/get_user_list';
                 $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+                
                 $response = json_decode($response);
                 if ($response->Status == 200 && $response->Success) {
                     $objData = json_decode($this->decryptData($response->Data));
@@ -51,6 +53,7 @@ class UserController extends BaseController
                         //      return $rows;
                         //    }
                         //    else{
+                       
                         return view('uam.user.index', compact('rows', 'screens', 'modules', 'screen_permission'));
                         //  }
                     }

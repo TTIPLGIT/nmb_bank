@@ -63,7 +63,7 @@ class CertificateTemplateController extends BaseController
             
 
             // $template_id = $inputArray['details'][0]['certificate_templates_id'];
-            // $this->WriteFileLog($template_id);
+             
             if (empty($entries)) {
                 return $this->SendServiceResponse(
                     json_encode(['Code' => 422, 'Message' => 'No data provided', 'Data' => null], JSON_FORCE_OBJECT),
@@ -75,6 +75,7 @@ class CertificateTemplateController extends BaseController
 
                 $certificateTemplateId = $entries[0]['certificate_templates_id'] ?? null;
 
+                
                 if (empty($certificateTemplateId)) {
 
                     $certificateTemplateId = DB::table('certificate_templates')->insertGetId([
@@ -83,6 +84,27 @@ class CertificateTemplateController extends BaseController
                         'active_flag' => 1,
                         'created_at' => now(),
                         'updated_at' => now(),
+                    ]);
+                }
+                else
+                {
+                   
+                    if (!empty($entries[0]['logo_file_content'])) {
+                        // $this->WriteFileLog('A');
+                        $fileContent = base64_decode($entries[0]['logo_file_content']);
+                        $uniqueFileName = uniqid() . '_' . $entries[0]['logo_file_name'];
+                         
+                        file_put_contents(public_path('images/logo/' . $uniqueFileName), $fileContent);
+                         $logoPath = 'images/logo/' . $uniqueFileName;
+                        
+                        
+                    }
+                    DB::table('certificate_templates')
+                    ->where('certificate_templates_id', $certificateTemplateId)
+                    ->update([
+                        
+                        'logo' => $logoPath,
+                        
                     ]);
                 }
 
@@ -95,12 +117,16 @@ class CertificateTemplateController extends BaseController
 
                     // ---- SIGNATURE FILE ----
                     $relativePath = null;
+                   
                     if (!empty($entry['signature_file_content'])) {
+                       
                         $fileContent = base64_decode($entry['signature_file_content']);
                         $uniqueFileName = uniqid() . '_' . $entry['signature_file_name'];
+                         
                         file_put_contents(public_path('images/signatures/' . $uniqueFileName), $fileContent);
+                        
                         $relativePath = 'images/signatures/' . $uniqueFileName;
-                    }
+                    } 
 
                     if ($signatoryId) {
                         DB::table('certificate_template_signatories')
@@ -128,13 +154,12 @@ class CertificateTemplateController extends BaseController
                         $submittedIds[] = $newId;
                     }
                 }
-
+               
                 DB::table('certificate_template_signatories')
                     ->where('certificate_template_id', $certificateTemplateId)
                     ->whereNotIn('certificate_template_signatories_id', $submittedIds)
                     ->delete();
             });
-
 
 
 

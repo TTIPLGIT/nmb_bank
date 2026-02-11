@@ -716,6 +716,7 @@ public function ai_course_store(Request $request)
 
             $response = $this->AIserviceRequest($gatewayURL, 'GET', '', $method);
             $response1 = json_decode($response, true);
+            dd($response1,$data['user_id'],$data['course_id']);
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
             $modules = $menus['modules'];

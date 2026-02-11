@@ -2,11 +2,11 @@
 
 @section('content')
 <style>
-    input[type=checkbox] {
-        display: inline-block;
-    }
+input[type=checkbox] {
+    display: inline-block;
+}
 
-    /* div#align1_length {
+/* div#align1_length {
         position: relative;
         top: 35px;
     }
@@ -29,309 +29,362 @@
         top: 35px;
     } */
 
-    .js-select2 {
-        min-width: 258px !important;
-        /* Adjust the width value as needed */
+.js-select2 {
+    min-width: 258px !important;
+    /* Adjust the width value as needed */
+}
+
+.js-select1 {
+    min-width: 258px !important;
+    /* Adjust the width value as needed */
+}
+
+.select2-search__field {
+    width: initial !important;
+}
+
+div#align4_filter {
+    float: right;
+}
+
+div#align_length {
+    position: relative;
+    top: 30px;
+}
+
+div#align_filter {
+    float: right;
+}
+
+.no-arrow {
+    -moz-appearance: textfield;
+}
+
+.no-arrow::-webkit-inner-spin-button {
+    display: none;
+}
+
+.no-arrow::-webkit-outer-spin-button,
+.no-arrow::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.nav-tabs {
+    background-color: #0068a7 !important;
+    border-radius: 29px !important;
+    padding: 1px !important;
+
+}
+
+.nav-item.active {
+    background-image: linear-gradient(to right, #2a675a, #2a675a, #2a675a, #2a675a, #2a675a);
+    border-radius: 31px !important;
+    height: 100% !important;
+}
+
+.nav-link.active {
+    background-image: linear-gradient(to right, #2a675a, #2a675a, #2a675a, #2a675a, #2a675a);
+    border-radius: 31px !important;
+    height: 100% !important;
+}
+
+:root {
+    --borderWidth: 5px;
+    --height: 24px;
+    --width: 12px;
+    --borderColor: #78b13f;
+}
+
+
+
+
+.nav-justified {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.gender {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.egc {
+    display: flex;
+    border: 1px solid #350756;
+    padding: 8px 25px 8px 8px;
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.dq {
+    font-size: 16px;
+    width: 80%;
+    font-weight: 600;
+}
+
+.answer {
+    width: 15%;
+    display: flex;
+    color: #04092e !important;
+    justify-content: space-around;
+}
+
+.questions {
+    color: #000c62 !important
+}
+
+input[type='radio']:checked:after {
+    background-color: #34395e !important;
+}
+
+input[type='radio']:after {
+    background-color: #34395e !important;
+}
+
+/* radiocss */
+.switch-field {
+    display: flex;
+
+
+}
+
+.switch-field input {
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+}
+
+.switch-field label {
+    background-color: #e4e4e4;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    line-height: 1;
+    text-align: center;
+    padding: 8px 16px;
+    margin-right: -1px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.1s ease-in-out;
+}
+
+.switch-field label:hover {
+    cursor: pointer;
+}
+
+.switch-field input:checked+label {
+    background-color: #a5dc86;
+    box-shadow: none;
+}
+
+.switch-field label:first-of-type {
+    border-radius: 4px 0 0 4px;
+}
+
+.switch-field label:last-of-type {
+    border-radius: 0 4px 4px 0;
+}
+
+/* endcss */
+.vl {
+    border-left: 1px solid #350756;
+    height: 40px;
+}
+
+.close {
+    color: red;
+    opacity: 1;
+}
+
+.close:hover {
+
+    color: red;
+
+}
+
+.note {
+    background-image: linear-gradient(to right, #3f9a9d, #3f9a9d, #3f9a9d, #3f9a9d, #3f9a9d);
+}
+
+a.btn.btn-success.btn-lg.question {
+    /* float: right; */
+}
+
+.card.longquestion {
+    padding: 15px;
+}
+
+.wordquestion {
+    display: flex;
+}
+
+h4.modal-title.long {
+
+    text-align: center;
+    padding: 20px;
+    font-size: 25px;
+
+}
+
+h4.modal-title.mcq {
+    text-align: center;
+    padding: 20px;
+    font-size: 25px;
+}
+
+h4.modal-title.short {
+    text-align: center;
+    padding: 20px;
+    font-size: 25px;
+}
+
+h4.modal-title.true {
+    text-align: center;
+    padding: 20px;
+    font-size: 25px;
+}
+
+.container.edit.longquestion {
+    padding: 17px;
+}
+
+form.longqustionsform {
+
+    margin: 15px;
+    margin-right: 0px;
+    margin-left: 37px;
+}
+
+.btn>i {
+
+    /* background-color: darkolivegreen; */
+}
+
+@media only screen and (max-width: 425px) {
+    .col-sm-2.addquizmodal {
+        margin-bottom: 12px;
     }
 
-    .js-select1 {
-        min-width: 258px !important;
-        /* Adjust the width value as needed */
+    textarea#quistion {
+        width: 100%;
     }
 
-    .select2-search__field {
-        width: initial !important;
+    textarea#quistions2 {
+        width: 100%;
     }
 
-    div#align4_filter {
-        float: right;
+    textarea#quistion11 {
+        width: 100%;
     }
+}
 
-    div#align_length {
-        position: relative;
-        top: 30px;
-    }
-
-    div#align_filter {
-        float: right;
-    }
-
-    .no-arrow {
-        -moz-appearance: textfield;
-    }
-
-    .no-arrow::-webkit-inner-spin-button {
-        display: none;
-    }
-
-    .no-arrow::-webkit-outer-spin-button,
-    .no-arrow::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    .nav-tabs {
-        background-color: #0068a7 !important;
-        border-radius: 29px !important;
-        padding: 1px !important;
-
-    }
-
-    .nav-item.active {
-        background-image: linear-gradient(to right, #2a675a, #2a675a, #2a675a, #2a675a, #2a675a);
-        border-radius: 31px !important;
-        height: 100% !important;
-    }
-
-    .nav-link.active {
-        background-image: linear-gradient(to right, #2a675a, #2a675a, #2a675a, #2a675a, #2a675a);
-        border-radius: 31px !important;
-        height: 100% !important;
-    }
-
-    :root {
-        --borderWidth: 5px;
-        --height: 24px;
-        --width: 12px;
-        --borderColor: #78b13f;
-    }
-
-
-
-
-    .nav-justified {
-        display: flex !important;
-        align-items: center !important;
-    }
-
-    .gender {
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-    }
-
-    .egc {
-        display: flex;
-        border: 1px solid #350756;
-        padding: 8px 25px 8px 8px;
-        align-items: center;
-
-        justify-content: space-between;
-    }
-
-    .dq {
-        font-size: 16px;
-        width: 80%;
-        font-weight: 600;
-    }
-
-    .answer {
-        width: 15%;
-        display: flex;
-        color: #04092e !important;
-        justify-content: space-around;
-    }
-
-    .questions {
-        color: #000c62 !important
-    }
-
-    input[type='radio']:checked:after {
-        background-color: #34395e !important;
-    }
-
-    input[type='radio']:after {
-        background-color: #34395e !important;
-    }
-
-    /* radiocss */
-    .switch-field {
-        display: flex;
-
-
-    }
-
-    .switch-field input {
-        position: absolute !important;
-        clip: rect(0, 0, 0, 0);
-        height: 1px;
-        width: 1px;
-        border: 0;
-        overflow: hidden;
-    }
-
-    .switch-field label {
-        background-color: #e4e4e4;
-        color: rgba(0, 0, 0, 0.6);
-        font-size: 14px;
-        line-height: 1;
-        text-align: center;
-        padding: 8px 16px;
-        margin-right: -1px;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
-        transition: all 0.1s ease-in-out;
-    }
-
-    .switch-field label:hover {
-        cursor: pointer;
-    }
-
-    .switch-field input:checked+label {
-        background-color: #a5dc86;
-        box-shadow: none;
-    }
-
-    .switch-field label:first-of-type {
-        border-radius: 4px 0 0 4px;
-    }
-
-    .switch-field label:last-of-type {
-        border-radius: 0 4px 4px 0;
-    }
-
-    /* endcss */
-    .vl {
-        border-left: 1px solid #350756;
-        height: 40px;
-    }
-
-    .close {
-        color: red;
-        opacity: 1;
-    }
-
-    .close:hover {
-
-        color: red;
-
-    }
-
-    .note {
-        background-image: linear-gradient(to right, #3f9a9d, #3f9a9d, #3f9a9d, #3f9a9d, #3f9a9d);
-    }
-
-    a.btn.btn-success.btn-lg.question {
-        /* float: right; */
-    }
-
-    .card.longquestion {
-        padding: 15px;
-    }
-
-    .wordquestion {
-        display: flex;
-    }
-
-    h4.modal-title.long {
-
-        text-align: center;
-        padding: 20px;
-        font-size: 25px;
-
-    }
-
-    h4.modal-title.mcq {
-        text-align: center;
-        padding: 20px;
-        font-size: 25px;
-    }
-
-    h4.modal-title.short {
-        text-align: center;
-        padding: 20px;
-        font-size: 25px;
-    }
-
-    h4.modal-title.true {
-        text-align: center;
-        padding: 20px;
-        font-size: 25px;
-    }
-
-    .container.edit.longquestion {
-        padding: 17px;
-    }
-
-    form.longqustionsform {
-
-        margin: 15px;
-        margin-right: 0px;
-        margin-left: 37px;
-    }
-
-    .btn>i {
-
-        /* background-color: darkolivegreen; */
-    }
-
-    @media only screen and (max-width: 425px) {
-        .col-sm-2.addquizmodal {
-            margin-bottom: 12px;
-        }
-
-        textarea#quistion {
-            width: 100%;
-        }
-
-        textarea#quistions2 {
-            width: 100%;
-        }
-
-        textarea#quistion11 {
-            width: 100%;
-        }
-    }
-
-    @media only screen and (max-width: 1024px) {
-        .btn.btn-lg {
-            padding: 10px 9px;
-            font-size: 12px;
-        }
-    }
-
+@media only screen and (max-width: 1024px) {
     .btn.btn-lg {
-        padding: 10px 10px;
+        padding: 10px 9px;
         font-size: 12px;
     }
+}
 
-    .form-control.default::-webkit-inner-spin-button,
-    .form-control.default::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+.btn.btn-lg {
+    padding: 10px 10px;
+    font-size: 12px;
+}
 
-    .form-control.default {
-        -moz-appearance: textfield;
-    }
+.form-control.default::-webkit-inner-spin-button,
+.form-control.default::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.form-control.default {
+    -moz-appearance: textfield;
+}
 </style>
 
 
 <style>
-    #counselorerroredit {
-        color: red;
-    }
+#counselorerroredit {
+    color: red;
+}
 
-    #supervisorerroredit {
-        color: red;
-    }
+#supervisorerroredit {
+    color: red;
+}
 
-    .breadcrumb {
-        display: inline-block !important;
-        overflow: hidden !important;
-        border-radius: 5px !important;
-        counter-reset: flag !important;
-        width: 258px;
-        margin-left: 16px;
-    }
+.breadcrumb {
+    display: inline-block !important;
+    overflow: hidden !important;
+    border-radius: 5px !important;
+    counter-reset: flag !important;
+    width: 258px;
+    margin-left: 16px;
+}
 
-    .ellipsis,
-    .ellipsis p {
-        overflow: hidden !important;
-        white-space: nowrap !important;
-        text-overflow: ellipsis !important;
-        max-width: 100px !important;
-        /* Adjust the value to fit your desired width */
+.ellipsis,
+.ellipsis p {
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    max-width: 100px !important;
+    /* Adjust the value to fit your desired width */
+}
+
+.long_quistion {
+    width: 240px !important;
+    border: 1px solid black !important;
+}
+
+.long_quistionedit {
+    width: 240px !important;
+    border: 1px solid black !important;
+
+}
+
+.short_quistionedit {
+    width: 240px !important;
+    border: 1px solid black !important;
+}
+
+.mcq_quistionedit {
+    width: 240px !important;
+    border: 1px solid black !important;
+}
+
+.mcq_quistionshow {
+    width: 240px !important;
+    border: 1px solid black !important;
+}
+
+.short_quistion {
+    width: 240px !important;
+    border: 1px solid black !important;
+}
+
+.true_quistion {
+    width: 240px !important;
+    border: 1px solid black !important;
+}
+
+.true_quistionshow {
+    width: 240px !important;
+    border: 1px solid black !important;
+}
+
+.mcq_quistion {
+    width: 240px !important;
+    border: 1px solid black !important;
+}
+
+
+@media (min-width: 576px) {
+    .true_quistion {
+        width: 240px !important;
+        border: 1px solid black !important;
     }
 
     .long_quistion {
@@ -350,7 +403,22 @@
         border: 1px solid black !important;
     }
 
+    .true_quistionedit {
+        width: 240px !important;
+        border: 1px solid black !important;
+    }
+
+    .mcq_quistion {
+        width: 240px !important;
+        border: 1px solid black !important;
+    }
+
     .mcq_quistionedit {
+        width: 240px !important;
+        border: 1px solid black !important;
+    }
+
+    .true_quistionshow {
         width: 240px !important;
         border: 1px solid black !important;
     }
@@ -365,301 +433,233 @@
         border: 1px solid black !important;
     }
 
-    .true_quistion {
+    .short_quistionshow {
         width: 240px !important;
+        border: 1px solid black !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .true_quistion {
+        width: 357px !important;
+        height: 76px !important;
+        border: 1px solid black !important;
+    }
+
+    .true_quistionedit {
+        width: 357px !important;
+        height: 76px !important;
         border: 1px solid black !important;
     }
 
     .true_quistionshow {
-        width: 240px !important;
+        width: 357px !important;
+        height: 76px !important;
+        border: 1px solid black !important;
+    }
+
+    .long_quistion {
+        width: 357px !important;
+        height: 76px !important;
+        border: 1px solid black !important;
+    }
+
+    .long_quistionedit {
+        width: 357px !important;
+        height: 76px !important;
+        border: 1px solid black !important;
+    }
+
+    .short_quistionedit {
+        width: 357px !important;
+        height: 76px !important;
         border: 1px solid black !important;
     }
 
     .mcq_quistion {
-        width: 240px !important;
+        width: 357px !important;
+        height: 76px !important;
+        border: 1px solid black !important;
+    }
+
+    .mcq_quistionedit {
+        width: 357px !important;
+        height: 76px !important;
+        border: 1px solid black !important;
+    }
+
+    .mcq_quistionshow {
+        width: 357px !important;
+        height: 76px !important;
+        border: 1px solid black !important;
+    }
+
+    .short_quistion {
+        width: 357px !important;
+        height: 76px !important;
+        border: 1px solid black !important;
+    }
+
+    .short_quistionshow {
+        width: 357px !important;
+        height: 76px !important;
+        border: 1px solid black !important;
+    }
+
+}
+
+
+
+@media (min-width: 992px) {
+    .true_quistion {
+        width: 610px !important;
+        height: 80px;
+        border: 1px solid black !important;
+    }
+
+    .true_quistionshow {
+        width: 610px !important;
+        height: 80px;
+        border: 1px solid black !important;
+    }
+
+    .long_quistion {
+        width: 610px !important;
+        height: 80px;
+        border: 1px solid black !important;
+    }
+
+    .long_quistionedit {
+        width: 610px !important;
+        height: 80px;
+        border: 1px solid black !important;
+    }
+
+    .true_quistionedit {
+        width: 610px !important;
+        height: 80px;
+        border: 1px solid black !important;
+    }
+
+    .short_quistionedit {
+        width: 610px !important;
+        height: 80px;
+        border: 1px solid black !important;
+    }
+
+    .mcq_quistion {
+        width: 610px !important;
+        height: 80px;
+        border: 1px solid black !important;
+    }
+
+    .mcq_quistionedit {
+        width: 610px !important;
+        height: 80px;
+        border: 1px solid black !important;
+    }
+
+    .mcq_quistionshow {
+        width: 610px !important;
+        height: 80px;
+        border: 1px solid black !important;
+    }
+
+    .short_quistion {
+        width: 610px !important;
+        height: 80px;
+        border: 1px solid black !important;
+    }
+
+    .short_quistionshow {
+        width: 610px !important;
+        height: 80px;
+        border: 1px solid black !important;
+    }
+
+}
+
+@media (min-width: 1200px) {
+    .true_quistion {
+        height: 119px !important;
+        width: 605px !important;
+        border: 1px solid black !important;
+    }
+
+    .true_quistionshow {
+        height: 119px !important;
+        width: 605px !important;
         border: 1px solid black !important;
     }
 
 
-    @media (min-width: 576px) {
-        .true_quistion {
-            width: 240px !important;
-            border: 1px solid black !important;
-        }
-
-        .long_quistion {
-            width: 240px !important;
-            border: 1px solid black !important;
-        }
-
-        .long_quistionedit {
-            width: 240px !important;
-            border: 1px solid black !important;
-
-        }
-
-        .short_quistionedit {
-            width: 240px !important;
-            border: 1px solid black !important;
-        }
-
-        .true_quistionedit {
-            width: 240px !important;
-            border: 1px solid black !important;
-        }
-
-        .mcq_quistion {
-            width: 240px !important;
-            border: 1px solid black !important;
-        }
-
-        .mcq_quistionedit {
-            width: 240px !important;
-            border: 1px solid black !important;
-        }
-
-        .true_quistionshow {
-            width: 240px !important;
-            border: 1px solid black !important;
-        }
-
-        .mcq_quistionshow {
-            width: 240px !important;
-            border: 1px solid black !important;
-        }
-
-        .short_quistion {
-            width: 240px !important;
-            border: 1px solid black !important;
-        }
-
-        .short_quistionshow {
-            width: 240px !important;
-            border: 1px solid black !important;
-        }
+    .long_quistion {
+        height: 119px !important;
+        width: 605px !important;
+        border: 1px solid black !important;
     }
 
-    @media (min-width: 768px) {
-        .true_quistion {
-            width: 357px !important;
-            height: 76px !important;
-            border: 1px solid black !important;
-        }
-
-        .true_quistionedit {
-            width: 357px !important;
-            height: 76px !important;
-            border: 1px solid black !important;
-        }
-
-        .true_quistionshow {
-            width: 357px !important;
-            height: 76px !important;
-            border: 1px solid black !important;
-        }
-
-        .long_quistion {
-            width: 357px !important;
-            height: 76px !important;
-            border: 1px solid black !important;
-        }
-
-        .long_quistionedit {
-            width: 357px !important;
-            height: 76px !important;
-            border: 1px solid black !important;
-        }
-
-        .short_quistionedit {
-            width: 357px !important;
-            height: 76px !important;
-            border: 1px solid black !important;
-        }
-
-        .mcq_quistion {
-            width: 357px !important;
-            height: 76px !important;
-            border: 1px solid black !important;
-        }
-
-        .mcq_quistionedit {
-            width: 357px !important;
-            height: 76px !important;
-            border: 1px solid black !important;
-        }
-
-        .mcq_quistionshow {
-            width: 357px !important;
-            height: 76px !important;
-            border: 1px solid black !important;
-        }
-
-        .short_quistion {
-            width: 357px !important;
-            height: 76px !important;
-            border: 1px solid black !important;
-        }
-
-        .short_quistionshow {
-            width: 357px !important;
-            height: 76px !important;
-            border: 1px solid black !important;
-        }
-
+    .long_quistionedit {
+        height: 119px !important;
+        width: 605px !important;
+        border: 1px solid black !important;
     }
 
-
-
-    @media (min-width: 992px) {
-        .true_quistion {
-            width: 610px !important;
-            height: 80px;
-            border: 1px solid black !important;
-        }
-
-        .true_quistionshow {
-            width: 610px !important;
-            height: 80px;
-            border: 1px solid black !important;
-        }
-
-        .long_quistion {
-            width: 610px !important;
-            height: 80px;
-            border: 1px solid black !important;
-        }
-
-        .long_quistionedit {
-            width: 610px !important;
-            height: 80px;
-            border: 1px solid black !important;
-        }
-
-        .true_quistionedit {
-            width: 610px !important;
-            height: 80px;
-            border: 1px solid black !important;
-        }
-
-        .short_quistionedit {
-            width: 610px !important;
-            height: 80px;
-            border: 1px solid black !important;
-        }
-
-        .mcq_quistion {
-            width: 610px !important;
-            height: 80px;
-            border: 1px solid black !important;
-        }
-
-        .mcq_quistionedit {
-            width: 610px !important;
-            height: 80px;
-            border: 1px solid black !important;
-        }
-
-        .mcq_quistionshow {
-            width: 610px !important;
-            height: 80px;
-            border: 1px solid black !important;
-        }
-
-        .short_quistion {
-            width: 610px !important;
-            height: 80px;
-            border: 1px solid black !important;
-        }
-
-        .short_quistionshow {
-            width: 610px !important;
-            height: 80px;
-            border: 1px solid black !important;
-        }
-
+    .true_quistionedit {
+        height: 119px !important;
+        width: 605px !important;
+        border: 1px solid black !important;
     }
 
-    @media (min-width: 1200px) {
-        .true_quistion {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
-        .true_quistionshow {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
-
-        .long_quistion {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
-        .long_quistionedit {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
-        .true_quistionedit {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
-        .short_quistionshow {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
-        .long_quistionshow {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
-        #mcq_quistion {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
-        .mcq_quistionedit {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
-        .mcq_quistionshow {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
-        .short_quistion {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
-        .short_quistionedit {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
-        .true_quistionedit {
-            height: 119px !important;
-            width: 605px !important;
-            border: 1px solid black !important;
-        }
-
+    .short_quistionshow {
+        height: 119px !important;
+        width: 605px !important;
+        border: 1px solid black !important;
     }
+
+    .long_quistionshow {
+        height: 119px !important;
+        width: 605px !important;
+        border: 1px solid black !important;
+    }
+
+    #mcq_quistion {
+        height: 119px !important;
+        width: 605px !important;
+        border: 1px solid black !important;
+    }
+
+    .mcq_quistionedit {
+        height: 119px !important;
+        width: 605px !important;
+        border: 1px solid black !important;
+    }
+
+    .mcq_quistionshow {
+        height: 119px !important;
+        width: 605px !important;
+        border: 1px solid black !important;
+    }
+
+    .short_quistion {
+        height: 119px !important;
+        width: 605px !important;
+        border: 1px solid black !important;
+    }
+
+    .short_quistionedit {
+        height: 119px !important;
+        width: 605px !important;
+        border: 1px solid black !important;
+    }
+
+    .true_quistionedit {
+        height: 119px !important;
+        width: 605px !important;
+        border: 1px solid black !important;
+    }
+
+}
 </style>
 
 
@@ -744,6 +744,14 @@
                                                                         class="fas fa-pencil-alt"
                                                                         style="color: blue !important"></i></a>
 
+                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                    data-toggle="modal" data-target="#addModaleditquiz"
+                                                                    onclick="loadQuizWithVersions({{$data['quiz_id']}})"
+                                                                    style="margin-top: 0px !important;">
+                                                                    <i class="fas fa-pencil-alt"
+                                                                        style="color: blue !important"></i>
+                                                                </a>
+
                                                                 <a class="btn btn-link" title="show" data-toggle="modal"
                                                                     data-target="#addModalshowquiz"
                                                                     onclick="fetch_update({{$data['quiz_id']}},'quizshow')"><i
@@ -806,11 +814,11 @@
                         value="{{ session('type') }}">
 
                     <script type="text/javascript">
-                        window.onload = function() {
+                    window.onload = function() {
 
-                            var value = $('#session_data').val();
-                            $('#result1').val(value).change()
-                        }
+                        var value = $('#session_data').val();
+                        $('#result1').val(value).change()
+                    }
                     </script>
 
                     @endif
@@ -819,54 +827,54 @@
                     <input type="hidden" name="session_data" id="session_data" class="session_data"
                         value="{{ session('success') }}">
                     <script type="text/javascript">
-                        window.onload = function() {
-                            var message = $('#session_data').val();
-                            // alert(message);
-                            swal.fire({
-                                title: "Success",
-                                text: message,
-                                icon: "success",
-                                type: "success",
-                            });
-                            if (message == 'Quiz Created Successfully') {
-                                setTimeout(function() {
-                                    document.getElementById('quizlist').scrollIntoView({
-                                        behavior: 'smooth'
-                                    });
-                                }, 500);
-                            } else if (message == 'Quiz Updated Successfully') {
-                                setTimeout(function() {
-                                    document.getElementById('quizlist').scrollIntoView({
-                                        behavior: 'smooth'
-                                    });
-                                }, 500);
-                            } else {
-                                // alert("ASdae");
-                                setTimeout(function() {
-                                    document.getElementById('truelist').scrollIntoView({
-                                        behavior: 'smooth'
-                                    });
-                                }, 500);
-                            }
-
-
+                    window.onload = function() {
+                        var message = $('#session_data').val();
+                        // alert(message);
+                        swal.fire({
+                            title: "Success",
+                            text: message,
+                            icon: "success",
+                            type: "success",
+                        });
+                        if (message == 'Quiz Created Successfully') {
+                            setTimeout(function() {
+                                document.getElementById('quizlist').scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            }, 500);
+                        } else if (message == 'Quiz Updated Successfully') {
+                            setTimeout(function() {
+                                document.getElementById('quizlist').scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            }, 500);
+                        } else {
+                            // alert("ASdae");
+                            setTimeout(function() {
+                                document.getElementById('truelist').scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            }, 500);
                         }
+
+
+                    }
                     </script>
                     @elseif(session('error'))
 
                     <input type="hidden" name="session_data" id="session_data1" class="session_data"
                         value="{{ session('error') }}">
                     <script type="text/javascript">
-                        window.onload = function() {
-                            var message = $('#session_data1').val();
-                            swal.fire({
-                                title: "Info",
-                                text: message,
-                                icon: "info",
-                                type: "info",
-                            });
+                    window.onload = function() {
+                        var message = $('#session_data1').val();
+                        swal.fire({
+                            title: "Info",
+                            text: message,
+                            icon: "info",
+                            type: "info",
+                        });
 
-                        }
+                    }
                     </script>
                     @endif
 
@@ -901,12 +909,14 @@
 
 
 
-                                                            <div class="d-flex justify-content-around align-items-center" style="gap:15px;">
+                                                            <div class="d-flex justify-content-around align-items-center"
+                                                                style="gap:15px;">
                                                                 <a class="btn btn-link" title="Edit" id="gcb" href=""
                                                                     onclick="fetch_update({{ $data['id'] }},'longedit')"
                                                                     data-toggle="modal" data-target="#addModal3"
                                                                     style="margin-top:0px;">
-                                                                    <i class="fas fa-pencil-alt" style="color: blue !important"></i>
+                                                                    <i class="fas fa-pencil-alt"
+                                                                        style="color: blue !important"></i>
                                                                 </a>
 
                                                                 <a class="btn btn-link" title="Show" id="gcb" href=""
@@ -1185,7 +1195,7 @@
                             <div class="form-group">
                                 <label>Quiz Name:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="text" class="form-control default comma" id="q_name" name="q_name"
-                                autocomplete="off" placeholder="Enter the Quiz Name">
+                                    autocomplete="off" placeholder="Enter the Quiz Name">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -1690,489 +1700,578 @@
 
 
 <style>
-    /* tr:first-child .danger {
+/* tr:first-child .danger {
         display: none;
     } */
 
-    .container {
-        max-width: 900px;
-        width: 100%;
-        background-color: #fff;
-        margin: auto;
-        padding: 15px;
-        box-shadow: 0 2px 20px #0001, 0 1px 6px #0001;
-        border-radius: 5px;
-        overflow-x: auto;
-    }
+.container {
+    max-width: 900px;
+    width: 100%;
+    background-color: #fff;
+    margin: auto;
+    padding: 15px;
+    box-shadow: 0 2px 20px #0001, 0 1px 6px #0001;
+    border-radius: 5px;
+    overflow-x: auto;
+}
 
-    .action_container1 {
-        float: right;
-        position: relative;
-        left: 60px;
-        top: 40px;
-        z-index: 999;
-    }
+.action_container1 {
+    float: right;
+    position: relative;
+    left: 60px;
+    top: 40px;
+    z-index: 999;
+}
 
-    .action_container2 {
-        float: right;
-        position: relative;
-        left: 60px;
-        top: 40px;
-        z-index: 999;
-    }
+.action_container2 {
+    float: right;
+    position: relative;
+    left: 60px;
+    top: 40px;
+    z-index: 999;
+}
 
-    .action_container3 {
-        /* float: right; */
-        position: relative;
-        /* left: 5px;
+.action_container3 {
+    /* float: right; */
+    position: relative;
+    /* left: 5px;
         top: 3px; */
-        z-index: 999;
-    }
+    z-index: 999;
+}
 
-    .action_container4 {
-        float: right;
-        position: relative;
-        left: 5px;
-        top: 3px;
-        z-index: 999;
+.action_container4 {
+    float: right;
+    position: relative;
+    left: 5px;
+    top: 3px;
+    z-index: 999;
 
-    }
+}
 
-    div .action_container3.custom {
-        float: right;
-        position: relative;
-        left: -39px !important;
-        top: 40px;
-        z-index: 999;
-    }
+div .action_container3.custom {
+    float: right;
+    position: relative;
+    left: -39px !important;
+    top: 40px;
+    z-index: 999;
+}
 
-    ._table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+._table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-    ._table :is(th, td) {}
+._table :is(th, td) {}
 
-    /* form field design start */
-    .form_control {
-        border: 1px solid #0002;
-        background-color: transparent;
-        outline: none;
-        padding: 8px 12px;
-        font-family: 1.2rem;
-        width: 100%;
-        color: #333;
-        font-family: Arial, Helvetica, sans-serif;
-        transition: 0.3s ease-in-out;
-    }
+/* form field design start */
+.form_control {
+    border: 1px solid #0002;
+    background-color: transparent;
+    outline: none;
+    padding: 8px 12px;
+    font-family: 1.2rem;
+    width: 100%;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.3s ease-in-out;
+}
 
-    .form_control::placeholder {
-        color: inherit;
-        opacity: 0.5;
-    }
+.form_control::placeholder {
+    color: inherit;
+    opacity: 0.5;
+}
 
-    .form_control:is(:focus, :hover) {
-        box-shadow: inset 0 1px 6px #0002;
-    }
+.form_control:is(:focus, :hover) {
+    box-shadow: inset 0 1px 6px #0002;
+}
 
-    /* form field design end */
+/* form field design end */
 
 
-    .success {
-        background-color: #24b96f !important;
-    }
+.success {
+    background-color: #24b96f !important;
+}
 
-    .warning {
-        background-color: #ebba33 !important;
-    }
+.warning {
+    background-color: #ebba33 !important;
+}
 
-    .primary {
-        background-color: #259dff !important;
-    }
+.primary {
+    background-color: #259dff !important;
+}
 
-    .secondery {
-        background-color: #00bcd4 !important;
-    }
+.secondery {
+    background-color: #00bcd4 !important;
+}
 
-    .danger {
-        background-color: #ff5722 !important;
-    }
+.danger {
+    background-color: #ff5722 !important;
+}
 
-    .action_container {}
+.action_container {}
 
-    .action_container>* {
-        border: none;
-        outline: none;
-        color: #fff;
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 14px;
-        cursor: pointer;
-        transition: 0.3s ease-in-out;
-    }
+.action_container>* {
+    border: none;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
 
-    .action_container1>* {
-        border: none;
-        outline: none;
-        color: #fff;
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 14px;
-        cursor: pointer;
-        transition: 0.3s ease-in-out;
-    }
+.action_container1>* {
+    border: none;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
 
-    .action_container2>* {
-        border: none;
-        outline: none;
-        color: #fff;
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 14px;
-        cursor: pointer;
-        transition: 0.3s ease-in-out;
-    }
+.action_container2>* {
+    border: none;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
 
-    .action_container3>* {
-        border: none;
-        outline: none;
-        color: #fff;
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 14px;
-        cursor: pointer;
-        transition: 0.3s ease-in-out;
-    }
+.action_container3>* {
+    border: none;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
 
-    .action_container4>* {
-        border: none;
-        outline: none;
-        color: #fff;
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 14px;
-        cursor: pointer;
-        transition: 0.3s ease-in-out;
-    }
+.action_container4>* {
+    border: none;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 <script>
-    document.querySelector("[type='number']").addEventListener("keypress", function(evt) {
-        if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
-            evt.preventDefault();
+document.querySelector("[type='number']").addEventListener("keypress", function(evt) {
+    if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
+        evt.preventDefault();
+    }
+});
+
+function choice_callback() {
+
+
+    // $(`#${option}`).remove();
+    var data = document.querySelectorAll("#keyword_mcq");
+    // var clear = document.querySelector('.select2-selection__clear');
+    // clear.click();
+    $("#mcq_correct_choices").empty();
+    // document.querySelector('#mcq_correct_choices').innerHTML = '<option value="" data-badge="">Select Correct Choices</option>';
+    for (let iterator of data) {
+
+
+        $('#mcq_correct_choices').append(`<option data-badge=""  id="${iterator.value}">${iterator.value}</option`);
+
+    }
+
+}
+$(document).on('focusout', '#keyword_mcq', function(e) {
+    choice_callback();
+});
+const correct_choices = [];
+
+function choice_callbackedit() {
+
+    var keyword_edit = document.querySelectorAll("#keyword_mcqedit");
+    //var keyword_correct = document.querySelectorAll(".correct_choicesedit");
+
+
+    //     $("#mcq_correct_choices").empty();
+    //     for (let iterator of correct_choices) {
+    //         $('#mcq_correct_choicesedit').append(`<option data-badge="" selected id="${iterator}">${iterator}</option`);
+
+    //     }
+
+}
+
+// $(document).on('focusout', '#keyword_mcqedit', function(e) {
+//     choice_callbackedit();
+// });
+
+
+// function create_tr(table_id) {
+
+//     let table_body = document.getElementById(table_id),
+//     first_tr = table_body.firstElementChild
+//     tr_clone = first_tr.cloneNode(true);
+//     table_body.append(tr_clone);
+//     clean_first_tr(table_body.lastElementChild);
+// }
+
+function clean_first_tr(firstTr) {
+    let children = firstTr.children;
+    children = Array.isArray(children) ? children : Object.values(children);
+    children.forEach(x => {
+        if (x !== firstTr.lastElementChild) {
+            x.firstElementChild.value = '';
         }
     });
-
-    function choice_callback() {
-
-
-        // $(`#${option}`).remove();
-        var data = document.querySelectorAll("#keyword_mcq");
-        // var clear = document.querySelector('.select2-selection__clear');
-        // clear.click();
-        $("#mcq_correct_choices").empty();
-        // document.querySelector('#mcq_correct_choices').innerHTML = '<option value="" data-badge="">Select Correct Choices</option>';
-        for (let iterator of data) {
+}
 
 
-            $('#mcq_correct_choices').append(`<option data-badge=""  id="${iterator.value}">${iterator.value}</option`);
 
-        }
+function remove_tr(This) {
+    if (This.closest('tbody').childElementCount == 1) {
+        alert("You Don't have Permission to Delete This ?");
+    } else {
+        This.closest('tr').remove();
+    }
+}
+
+function remove_tr(button) {
+    const row = button.closest('tr');
+    if (document.querySelectorAll('#table_body tr').length > 1) {
+        row.remove();
+    } else {
+        swal.fire("At least one row must remain", "", "warning");
+    }
+}
+</script>
+
+<script>
+// function create_tr(table_id) {
+
+
+//     let table_body1 = document.getElementById(table_id),
+//         first_tr = table_body1.firstElementChild
+//     tr_clone = first_tr.cloneNode(true);
+
+//     table_body1.append(tr_clone);
+
+//     clean_first_tr(table_body1.firstElementChild);
+// }
+
+// function clean_first_tr(firstTr) {
+//     let children = firstTr.children;
+
+//     children = Array.isArray(children) ? children : Object.values(children);
+//     children.forEach(x => {
+//         if (x !== firstTr.lastElementChild) {
+//             x.firstElementChild.value = '';
+//         }
+//     });
+// }
+
+
+
+// function remove_tr(This) {
+//     if (This.closest('tbody').childElementCount == 1) {
+//         alert("You Don't have Permission to Delete This ?");
+//     } else {
+//         This.closest('tr').remove();
+//     }
+// }
+</script>
+<script>
+function mcqeditremovechoice() {
+
+    var keyword = document.querySelectorAll('keyword_mcqedit');
+
+    $("#mcq_correct_choices").empty();
+    for (let keywords of keyword) {
+        $('#mcq_correct_choicesedit').append(`<option data-badge="">${keywords.value}</option`);
 
     }
-    $(document).on('focusout', '#keyword_mcq', function(e) {
-        choice_callback();
-    });
-    const correct_choices = [];
 
-    function choice_callbackedit() {
-
-        var keyword_edit = document.querySelectorAll("#keyword_mcqedit");
-        //var keyword_correct = document.querySelectorAll(".correct_choicesedit");
+}
+</script>
 
 
-        //     $("#mcq_correct_choices").empty();
-        //     for (let iterator of correct_choices) {
-        //         $('#mcq_correct_choicesedit').append(`<option data-badge="" selected id="${iterator}">${iterator}</option`);
-
-        //     }
-
-    }
-
-    // $(document).on('focusout', '#keyword_mcqedit', function(e) {
-    //     choice_callbackedit();
-    // });
+<script>
+// function create_tr(table_id) {
 
 
-    // function create_tr(table_id) {
+//     let table_body3 = document.getElementById(table_id),
+//         first_tr = table_body3.firstElementChild
+//     tr_clone = first_tr.cloneNode(true);
 
-    //     let table_body = document.getElementById(table_id),
-    //     first_tr = table_body.firstElementChild
-    //     tr_clone = first_tr.cloneNode(true);
-    //     table_body.append(tr_clone);
-    //     clean_first_tr(table_body.lastElementChild);
-    // }
+//     table_body3.append(tr_clone);
 
-    function clean_first_tr(firstTr) {
-        let children = firstTr.children;
-        children = Array.isArray(children) ? children : Object.values(children);
-        children.forEach(x => {
-            if (x !== firstTr.lastElementChild) {
-                x.firstElementChild.value = '';
-            }
-        });
-    }
+//     clean_first_tr(table_body3.firstElementChild);
+// }
+
+// function clean_first_tr(firstTr) {
+//     let children = firstTr.children;
+
+//     children = Array.isArray(children) ? children : Object.values(children);
+//     children.forEach(x => {
+//         if (x !== firstTr.lastElementChild) {
+//             x.firstElementChild.value = '';
+//         }
+//     });
+// }
 
 
 
-    function remove_tr(This) {
-        if (This.closest('tbody').childElementCount == 1) {
-            alert("You Don't have Permission to Delete This ?");
+// function remove_tr(This) {
+//     if (This.closest('tbody').childElementCount == 1) {
+//         alert("You Don't have Permission to Delete This ?");
+//     } else {
+//         This.closest('tr').remove();
+//     }
+// }
+</script>
+
+
+<script>
+function create_tr(table_id) {
+
+
+    if (table_id == "table_body") {
+
+        var keyword_long = $("#keyword_long").val();
+        if (keyword_long == '') {
+            swal.fire("Please Enter the Question Keywords", "", "error");
+            return false;
         } else {
-            This.closest('tr').remove();
-        }
-    }
+            // let table_body2 = document.getElementById(table_id),
+            //     first_tr = table_body2.firstElementChild
+            // tr_clone = first_tr.cloneNode(true);
 
-    function remove_tr(button) {
-        const row = button.closest('tr');
-        if (document.querySelectorAll('#table_body tr').length > 1) {
-            row.remove();
+            // table_body2.append(tr_clone);
+
+            // clean_first_tr(table_body2.firstElementChild);
+            // const tableBody = document.getElementById(table_id);
+            // const firstRow = tableBody.firstElementChild;
+            // const newRow = firstRow.cloneNode(true);
+            // // Remove the "Add" button from the cloned row
+            // const addButton = newRow.querySelector('.success');
+            // if (addButton) {
+            //     addButton.remove();
+            // }
+
+            // // Clear the value of the input in the new row
+            // newRow.querySelector('input').value = '';
+
+            // tableBody.appendChild(newRow);
+            const tableBody = document.getElementById(table_id);
+            const rows = tableBody.querySelectorAll('tr');
+            let isValid = true;
+
+            // Validate all input fields in the table
+            rows.forEach(row => {
+                const input = row.querySelector('input');
+                if (input && input.value.trim() === '') {
+                    isValid = false;
+                }
+            });
+
+            // If any input field is empty, show an error and do not add a new row
+            if (!isValid) {
+                swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                return;
+            }
+
+            // Proceed to add a new row if validation passes
+            const firstRow = tableBody.firstElementChild;
+            const newRow = firstRow.cloneNode(true);
+
+            // Remove the "Add" button from the cloned row
+            const addButton = newRow.querySelector('.success');
+            if (addButton) {
+                addButton.remove();
+            }
+
+            // Clear the value of the input in the new row
+            newRow.querySelector('input').value = '';
+
+            // Add the "Add" button back to the original row if needed
+            const originalAddButton = tableBody.querySelector('.success');
+            if (originalAddButton) {
+                originalAddButton.style.display = 'inline';
+            }
+
+            // Append the new row to the table body
+            tableBody.appendChild(newRow);
+        }
+    } else if (table_id == "table_long_edit") {
+        let table_body2 = document.getElementById(table_id),
+            first_tr = table_body2.firstElementChild
+        tr_clone = first_tr.cloneNode(true);
+
+        table_body2.append(tr_clone);
+
+        clean_first_tr(table_body2.lastElementChild);
+        remove_tr(This);
+
+    } else if (table_id == "short_body") {
+
+
+        var keyword_short = $("#keyword_short").val();
+        if (keyword_short == '') {
+            swal.fire("Please Enter the Question Keywords", "", "error");
+            return false;
         } else {
-            swal.fire("At least one row must remain", "", "warning");
-        }
-    }
-</script>
+            // let table_body3 = document.getElementById(table_id),
+            //     first_tr = table_body3.firstElementChild
+            // tr_clone = first_tr.cloneNode(true);
 
-<script>
-    // function create_tr(table_id) {
+            // table_body3.append(tr_clone);
 
+            // clean_first_tr(table_body3.firstElementChild);
+            // document.querySelector('#short_body').parentElement.previousElementSibling.classList.add('custom');
 
-    //     let table_body1 = document.getElementById(table_id),
-    //         first_tr = table_body1.firstElementChild
-    //     tr_clone = first_tr.cloneNode(true);
+            const tableBody = document.getElementById(table_id);
+            const rows = tableBody.querySelectorAll('tr');
+            let isValid = true;
 
-    //     table_body1.append(tr_clone);
-
-    //     clean_first_tr(table_body1.firstElementChild);
-    // }
-
-    // function clean_first_tr(firstTr) {
-    //     let children = firstTr.children;
-
-    //     children = Array.isArray(children) ? children : Object.values(children);
-    //     children.forEach(x => {
-    //         if (x !== firstTr.lastElementChild) {
-    //             x.firstElementChild.value = '';
-    //         }
-    //     });
-    // }
-
-
-
-    // function remove_tr(This) {
-    //     if (This.closest('tbody').childElementCount == 1) {
-    //         alert("You Don't have Permission to Delete This ?");
-    //     } else {
-    //         This.closest('tr').remove();
-    //     }
-    // }
-</script>
-<script>
-    function mcqeditremovechoice() {
-
-        var keyword = document.querySelectorAll('keyword_mcqedit');
-
-        $("#mcq_correct_choices").empty();
-        for (let keywords of keyword) {
-            $('#mcq_correct_choicesedit').append(`<option data-badge="">${keywords.value}</option`);
-
-        }
-
-    }
-</script>
-
-
-<script>
-    // function create_tr(table_id) {
-
-
-    //     let table_body3 = document.getElementById(table_id),
-    //         first_tr = table_body3.firstElementChild
-    //     tr_clone = first_tr.cloneNode(true);
-
-    //     table_body3.append(tr_clone);
-
-    //     clean_first_tr(table_body3.firstElementChild);
-    // }
-
-    // function clean_first_tr(firstTr) {
-    //     let children = firstTr.children;
-
-    //     children = Array.isArray(children) ? children : Object.values(children);
-    //     children.forEach(x => {
-    //         if (x !== firstTr.lastElementChild) {
-    //             x.firstElementChild.value = '';
-    //         }
-    //     });
-    // }
-
-
-
-    // function remove_tr(This) {
-    //     if (This.closest('tbody').childElementCount == 1) {
-    //         alert("You Don't have Permission to Delete This ?");
-    //     } else {
-    //         This.closest('tr').remove();
-    //     }
-    // }
-</script>
-
-
-<script>
-    function create_tr(table_id) {
-
-
-        if (table_id == "table_body") {
-
-            var keyword_long = $("#keyword_long").val();
-            if (keyword_long == '') {
-                swal.fire("Please Enter the Question Keywords", "", "error");
-                return false;
-            } else {
-                // let table_body2 = document.getElementById(table_id),
-                //     first_tr = table_body2.firstElementChild
-                // tr_clone = first_tr.cloneNode(true);
-
-                // table_body2.append(tr_clone);
-
-                // clean_first_tr(table_body2.firstElementChild);
-                // const tableBody = document.getElementById(table_id);
-                // const firstRow = tableBody.firstElementChild;
-                // const newRow = firstRow.cloneNode(true);
-                // // Remove the "Add" button from the cloned row
-                // const addButton = newRow.querySelector('.success');
-                // if (addButton) {
-                //     addButton.remove();
-                // }
-
-                // // Clear the value of the input in the new row
-                // newRow.querySelector('input').value = '';
-
-                // tableBody.appendChild(newRow);
-                const tableBody = document.getElementById(table_id);
-                const rows = tableBody.querySelectorAll('tr');
-                let isValid = true;
-
-                // Validate all input fields in the table
-                rows.forEach(row => {
-                    const input = row.querySelector('input');
-                    if (input && input.value.trim() === '') {
-                        isValid = false;
-                    }
-                });
-
-                // If any input field is empty, show an error and do not add a new row
-                if (!isValid) {
-                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
-                    return;
+            // Validate all input fields in the table
+            rows.forEach(row => {
+                const input = row.querySelector('input');
+                if (input && input.value.trim() === '') {
+                    isValid = false;
                 }
+            });
 
-                // Proceed to add a new row if validation passes
-                const firstRow = tableBody.firstElementChild;
-                const newRow = firstRow.cloneNode(true);
-
-                // Remove the "Add" button from the cloned row
-                const addButton = newRow.querySelector('.success');
-                if (addButton) {
-                    addButton.remove();
-                }
-
-                // Clear the value of the input in the new row
-                newRow.querySelector('input').value = '';
-
-                // Add the "Add" button back to the original row if needed
-                const originalAddButton = tableBody.querySelector('.success');
-                if (originalAddButton) {
-                    originalAddButton.style.display = 'inline';
-                }
-
-                // Append the new row to the table body
-                tableBody.appendChild(newRow);
+            // If any input field is empty, show an error and do not add a new row
+            if (!isValid) {
+                swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                return;
             }
-        } else if (table_id == "table_long_edit") {
-            let table_body2 = document.getElementById(table_id),
-                first_tr = table_body2.firstElementChild
-            tr_clone = first_tr.cloneNode(true);
 
-            table_body2.append(tr_clone);
+            // Proceed to add a new row if validation passes
+            const firstRow = tableBody.firstElementChild;
+            const newRow = firstRow.cloneNode(true);
 
-            clean_first_tr(table_body2.lastElementChild);
-            remove_tr(This);
-
-        } else if (table_id == "short_body") {
-
-
-            var keyword_short = $("#keyword_short").val();
-            if (keyword_short == '') {
-                swal.fire("Please Enter the Question Keywords", "", "error");
-                return false;
-            } else {
-                // let table_body3 = document.getElementById(table_id),
-                //     first_tr = table_body3.firstElementChild
-                // tr_clone = first_tr.cloneNode(true);
-
-                // table_body3.append(tr_clone);
-
-                // clean_first_tr(table_body3.firstElementChild);
-                // document.querySelector('#short_body').parentElement.previousElementSibling.classList.add('custom');
-
-                const tableBody = document.getElementById(table_id);
-                const rows = tableBody.querySelectorAll('tr');
-                let isValid = true;
-
-                // Validate all input fields in the table
-                rows.forEach(row => {
-                    const input = row.querySelector('input');
-                    if (input && input.value.trim() === '') {
-                        isValid = false;
-                    }
-                });
-
-                // If any input field is empty, show an error and do not add a new row
-                if (!isValid) {
-                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
-                    return;
-                }
-
-                // Proceed to add a new row if validation passes
-                const firstRow = tableBody.firstElementChild;
-                const newRow = firstRow.cloneNode(true);
-
-                // Remove the "Add" button from the cloned row
-                const addButton = newRow.querySelector('.success');
-                if (addButton) {
-                    addButton.remove();
-                }
-
-                // Clear the value of the input in the new row
-                newRow.querySelector('input').value = '';
-
-                // Add the "Add" button back to the original row if needed
-                const originalAddButton = tableBody.querySelector('.success');
-                if (originalAddButton) {
-                    originalAddButton.style.display = 'inline';
-                }
-
-                // Append the new row to the table body
-                tableBody.appendChild(newRow);
-                clean_first_tr(table_body3.firstElementChild);
-                document.querySelector('#short_body').parentElement.previousElementSibling.classList.add('custom');
-
-
+            // Remove the "Add" button from the cloned row
+            const addButton = newRow.querySelector('.success');
+            if (addButton) {
+                addButton.remove();
             }
-        } else if (table_id == "table_short_edit") {
+
+            // Clear the value of the input in the new row
+            newRow.querySelector('input').value = '';
+
+            // Add the "Add" button back to the original row if needed
+            const originalAddButton = tableBody.querySelector('.success');
+            if (originalAddButton) {
+                originalAddButton.style.display = 'inline';
+            }
+
+            // Append the new row to the table body
+            tableBody.appendChild(newRow);
+            clean_first_tr(table_body3.firstElementChild);
+            document.querySelector('#short_body').parentElement.previousElementSibling.classList.add('custom');
+
+
+        }
+    } else if (table_id == "table_short_edit") {
+        let table_body3 = document.getElementById(table_id),
+            first_tr = table_body3.firstElementChild
+        tr_clone = first_tr.cloneNode(true);
+
+        table_body3.append(tr_clone);
+
+        clean_first_tr(table_body3.lastElementChild);
+        remove_tr(This);
+
+
+    } else if (table_id == "mcq_body") {
+
+
+        var keyword_mcq = $("#keyword_mcq").val();
+        if (keyword_mcq == '') {
+            swal.fire("Please Enter the Choices", "", "error");
+            return false;
+        } else {
+            // let table_body3 = document.getElementById(table_id),
+            //     first_tr = table_body3.firstElementChild
+            // tr_clone = first_tr.cloneNode(true);
+            // tr_clone.querySelector('input').setAttribute("readonly", "");
+            // table_body3.append(tr_clone);
+
+            // clean_first_tr(table_body3.firstElementChild);
+            // document.querySelector('#mcq_body').parentElement.previousElementSibling.classList.add('custom');
+
+            const tableBody = document.getElementById(table_id);
+            const rows = tableBody.querySelectorAll('tr');
+            let isValid = true;
+
+            // Validate all input fields in the table
+            rows.forEach(row => {
+                const input = row.querySelector('input');
+                if (input && input.value.trim() === '') {
+                    isValid = false;
+                }
+            });
+
+            // If any input field is empty, show an error and do not add a new row
+            if (!isValid) {
+                swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                return;
+            }
+
+            // Proceed to add a new row if validation passes
+            const firstRow = tableBody.firstElementChild;
+            const newRow = firstRow.cloneNode(true);
+
+            // Remove the "Add" button from the cloned row
+            const addButton = newRow.querySelector('.success');
+            if (addButton) {
+                addButton.remove();
+            }
+
+            // Clear the value of the input in the new row
+            newRow.querySelector('input').value = '';
+
+            // Add the "Add" button back to the original row if needed
+            const originalAddButton = tableBody.querySelector('.success');
+            if (originalAddButton) {
+                originalAddButton.style.display = 'inline';
+            }
+
+            // Append the new row to the table body
+            tableBody.appendChild(newRow);
+            clean_first_tr(table_body3.firstElementChild);
+            document.querySelector('#mcq_body').parentElement.previousElementSibling.classList.add('custom');
+
+        }
+    } else if (table_id == "table_mcq_edit") {
+
+
+        var keyword_mcqedit = $("#keyword_mcqedit").val();
+        if (keyword_mcqedit == '') {
+            swal.fire("Please Enter the Choices", "", "error");
+            return false;
+        } else {
+            // let table_body3 = document.getElementById(table_id),
+
+            //     first_tr = table_body3.firstElementChild
+            // tr_clone = first_tr.cloneNode(true);
+            // tr_clone.querySelector('input').setAttribute("readonly", "");
+            // table_body3.append(tr_clone);
+
+
+            // clean_first_tr(table_body3.firstElementChild);
+            // remove_tr(This);
+
             let table_body3 = document.getElementById(table_id),
                 first_tr = table_body3.firstElementChild
             tr_clone = first_tr.cloneNode(true);
@@ -2183,567 +2282,275 @@
             remove_tr(This);
 
 
-        } else if (table_id == "mcq_body") {
 
+            // document.querySelector('#short_body').parentElement.previousElementSibling.classList.add('custom');
 
-            var keyword_mcq = $("#keyword_mcq").val();
-            if (keyword_mcq == '') {
-                swal.fire("Please Enter the Choices", "", "error");
-                return false;
-            } else {
-                // let table_body3 = document.getElementById(table_id),
-                //     first_tr = table_body3.firstElementChild
-                // tr_clone = first_tr.cloneNode(true);
-                // tr_clone.querySelector('input').setAttribute("readonly", "");
-                // table_body3.append(tr_clone);
-
-                // clean_first_tr(table_body3.firstElementChild);
-                // document.querySelector('#mcq_body').parentElement.previousElementSibling.classList.add('custom');
-
-                const tableBody = document.getElementById(table_id);
-                const rows = tableBody.querySelectorAll('tr');
-                let isValid = true;
-
-                // Validate all input fields in the table
-                rows.forEach(row => {
-                    const input = row.querySelector('input');
-                    if (input && input.value.trim() === '') {
-                        isValid = false;
-                    }
-                });
-
-                // If any input field is empty, show an error and do not add a new row
-                if (!isValid) {
-                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
-                    return;
-                }
-
-                // Proceed to add a new row if validation passes
-                const firstRow = tableBody.firstElementChild;
-                const newRow = firstRow.cloneNode(true);
-
-                // Remove the "Add" button from the cloned row
-                const addButton = newRow.querySelector('.success');
-                if (addButton) {
-                    addButton.remove();
-                }
-
-                // Clear the value of the input in the new row
-                newRow.querySelector('input').value = '';
-
-                // Add the "Add" button back to the original row if needed
-                const originalAddButton = tableBody.querySelector('.success');
-                if (originalAddButton) {
-                    originalAddButton.style.display = 'inline';
-                }
-
-                // Append the new row to the table body
-                tableBody.appendChild(newRow);
-                clean_first_tr(table_body3.firstElementChild);
-                document.querySelector('#mcq_body').parentElement.previousElementSibling.classList.add('custom');
-
-            }
-        } else if (table_id == "table_mcq_edit") {
-
-
-            var keyword_mcqedit = $("#keyword_mcqedit").val();
-            if (keyword_mcqedit == '') {
-                swal.fire("Please Enter the Choices", "", "error");
-                return false;
-            } else {
-                // let table_body3 = document.getElementById(table_id),
-
-                //     first_tr = table_body3.firstElementChild
-                // tr_clone = first_tr.cloneNode(true);
-                // tr_clone.querySelector('input').setAttribute("readonly", "");
-                // table_body3.append(tr_clone);
-
-
-                // clean_first_tr(table_body3.firstElementChild);
-                // remove_tr(This);
-
-                let table_body3 = document.getElementById(table_id),
-                    first_tr = table_body3.firstElementChild
-                tr_clone = first_tr.cloneNode(true);
-
-                table_body3.append(tr_clone);
-
-                clean_first_tr(table_body3.lastElementChild);
-                remove_tr(This);
-
-
-
-                // document.querySelector('#short_body').parentElement.previousElementSibling.classList.add('custom');
-
-            }
         }
-
     }
 
-    $(document).on('change', '#keyword_mcqedit', function() {
-        var new_value = $('#keyword_mcqedit').val();
-        var new_valuecount = document.querySelectorAll('#keyword_mcqedit').length;
-        var new_correctcount = document.querySelector('#mcq_correct_choicesedit').children.length;
+}
 
-        if (new_valuecount == new_correctcount || new_value == "") {
-            var parentelement = document.querySelector('#mcq_correct_choicesedit');
-            var lastchild = parentelement.lastChild;
-            parentelement.removeChild(lastchild);
-        }
+$(document).on('change', '#keyword_mcqedit', function() {
+    var new_value = $('#keyword_mcqedit').val();
+    var new_valuecount = document.querySelectorAll('#keyword_mcqedit').length;
+    var new_correctcount = document.querySelector('#mcq_correct_choicesedit').children.length;
 
-        const new_option = `<option value='${new_value}'>${new_value}</option>`;
-        $('#mcq_correct_choicesedit').append(new_option);
+    if (new_valuecount == new_correctcount || new_value == "") {
+        var parentelement = document.querySelector('#mcq_correct_choicesedit');
+        var lastchild = parentelement.lastChild;
+        parentelement.removeChild(lastchild);
+    }
 
-    });
+    const new_option = `<option value='${new_value}'>${new_value}</option>`;
+    $('#mcq_correct_choicesedit').append(new_option);
 
-    // function clean_first_tr(firstTr) {
-    //     let children = firstTr.children;
+});
 
-    //     children = Array.isArray(children) ? children : Object.values(children);
-    //     children.forEach(x => {
-    //         if (x !== firstTr.lastElementChild) {
-    //             x.firstElementChild.value = '';
-    //         }
-    //     });
-    // }
+// function clean_first_tr(firstTr) {
+//     let children = firstTr.children;
+
+//     children = Array.isArray(children) ? children : Object.values(children);
+//     children.forEach(x => {
+//         if (x !== firstTr.lastElementChild) {
+//             x.firstElementChild.value = '';
+//         }
+//     });
+// }
 
 
 
-    function remove_tr(This) {
+function remove_tr(This) {
 
-        if (This.closest('tbody').childElementCount == 1) {
-            alert("You Don't have Permission to Delete This ?");
-        } else {
-            var remove_value = This.closest('tr').firstElementChild.firstElementChild.value;
-            const optionschoices = $('#mcq_correct_choices').children();
+    if (This.closest('tbody').childElementCount == 1) {
+        alert("You Don't have Permission to Delete This ?");
+    } else {
+        var remove_value = This.closest('tr').firstElementChild.firstElementChild.value;
+        const optionschoices = $('#mcq_correct_choices').children();
+        // alert(remove_value);
+        for (const optionschoice of optionschoices) {
+            // alert($(option).text());
             // alert(remove_value);
-            for (const optionschoice of optionschoices) {
-                // alert($(option).text());
-                // alert(remove_value);
-                // alert($(option).text() == remove_value);
-                if ($(optionschoice).text() == remove_value) {
-                    $(optionschoice).remove();
-                }
-
+            // alert($(option).text() == remove_value);
+            if ($(optionschoice).text() == remove_value) {
+                $(optionschoice).remove();
             }
-            const options = $('#mcq_correct_choicesedit').children();
 
-
-            for (const option of options) {
-                // alert($(option).text());
-                // alert(remove_value);
-                // alert($(option).text() == remove_value);
-                if ($(option).text() == remove_value) {
-                    $(option).remove();
-                }
-
-            }
-            This.closest('tr').remove();
         }
+        const options = $('#mcq_correct_choicesedit').children();
 
-        // if (This.closest('tbody').childElementCount == 1) {
 
-        //     alert("You Don't have Permission to Delete This ?");
-        // } else {
-        //     This.closest('tr').remove();
-        //     mcqeditremovechoice();
+        for (const option of options) {
+            // alert($(option).text());
+            // alert(remove_value);
+            // alert($(option).text() == remove_value);
+            if ($(option).text() == remove_value) {
+                $(option).remove();
+            }
 
-        //     if (document.getElementById('mcq').style.display != "none") {
-        //         choice_callback();
-        //     }
-
-        // }
+        }
+        This.closest('tr').remove();
     }
+
+    // if (This.closest('tbody').childElementCount == 1) {
+
+    //     alert("You Don't have Permission to Delete This ?");
+    // } else {
+    //     This.closest('tr').remove();
+    //     mcqeditremovechoice();
+
+    //     if (document.getElementById('mcq').style.display != "none") {
+    //         choice_callback();
+    //     }
+
+    // }
+}
 </script>
 
 
 <script>
-    function calcQuestionType(id) {
-        if ($(`#${id}`).val() === 'Long Question') {
-            $('#longquestion').css('display', 'block');
-            $('#mcq').css('display', 'none');
-            $('#shortanswer').css('display', 'none');
-            $('#true').css('display', 'none');
-        } else if ($(`#${id}`).val() === 'MCQ') {
-            $('#mcq').css('display', 'block');
-            $('#longquestion').css('display', 'none');
-            $('#shortanswer').css('display', 'none');
-            $('#true').css('display', 'none');
+function calcQuestionType(id) {
+    if ($(`#${id}`).val() === 'Long Question') {
+        $('#longquestion').css('display', 'block');
+        $('#mcq').css('display', 'none');
+        $('#shortanswer').css('display', 'none');
+        $('#true').css('display', 'none');
+    } else if ($(`#${id}`).val() === 'MCQ') {
+        $('#mcq').css('display', 'block');
+        $('#longquestion').css('display', 'none');
+        $('#shortanswer').css('display', 'none');
+        $('#true').css('display', 'none');
 
-        } else if ($(`#${id}`).val() === 'ShortAnswer') {
-            $('#shortanswer').css('display', 'block');
-            $('#longquestion').css('display', 'none');
-            $('#mcq').css('display', 'none');
-            $('#true').css('display', 'none');
-        } else if ($(`#${id}`).val() === 'True/False') {
-            $('#true').css('display', 'block');
-            $('#longquestion').css('display', 'none');
-            $('#mcq').css('display', 'none');
-            $('#shortanswer').css('display', 'none');
-        } else {
-            $('#longquestion').css('display', 'none');
-            $('#mcq').css('display', 'none');
-            $('#shortanswer').css('display', 'none');
-            $('#true').css('display', 'none');
-        }
+    } else if ($(`#${id}`).val() === 'ShortAnswer') {
+        $('#shortanswer').css('display', 'block');
+        $('#longquestion').css('display', 'none');
+        $('#mcq').css('display', 'none');
+        $('#true').css('display', 'none');
+    } else if ($(`#${id}`).val() === 'True/False') {
+        $('#true').css('display', 'block');
+        $('#longquestion').css('display', 'none');
+        $('#mcq').css('display', 'none');
+        $('#shortanswer').css('display', 'none');
+    } else {
+        $('#longquestion').css('display', 'none');
+        $('#mcq').css('display', 'none');
+        $('#shortanswer').css('display', 'none');
+        $('#true').css('display', 'none');
     }
-    $('#result').on('change', function(e) {
-        calcQuestionType(e.target.id);
-    });
+}
+$('#result').on('change', function(e) {
+    calcQuestionType(e.target.id);
+});
 </script>
 
 <script>
-    $('#result1').on('change', function() {
+$('#result1').on('change', function() {
 
-        // alert('asda');
-        if ($(this).val() === 'LongQuestionlist') {
-            $('#longquestionlist').css('display', 'block');
-            $('#truelist').css('display', 'none');
-            $('#mcqlist').css('display', 'none');
-            $('#shortanswerlist').css('display', 'none');
+    // alert('asda');
+    if ($(this).val() === 'LongQuestionlist') {
+        $('#longquestionlist').css('display', 'block');
+        $('#truelist').css('display', 'none');
+        $('#mcqlist').css('display', 'none');
+        $('#shortanswerlist').css('display', 'none');
 
-        }
-        if ($(this).val() === 'MCQlist') {
-            $('#mcqlist').css('display', 'block');
-            $('#truelist').css('display', 'none');
-            $('#shortanswerlist').css('display', 'none');
-            $('#longquestionlist').css('display', 'none');
+    }
+    if ($(this).val() === 'MCQlist') {
+        $('#mcqlist').css('display', 'block');
+        $('#truelist').css('display', 'none');
+        $('#shortanswerlist').css('display', 'none');
+        $('#longquestionlist').css('display', 'none');
 
-        }
-        if ($(this).val() === 'ShortAnswerlist') {
-            $('#shortanswerlist').css('display', 'block');
-            $('#truelist').css('display', 'none');
-            $('#longquestionlist').css('display', 'none');
-            $('#mcqlist').css('display', 'none');
-        }
-        if ($(this).val() === 'True/Falselist') {
-            $('#truelist').css('display', 'block');
-            $('#mcqlist').css('display', 'none');
-            $('#shortanswerlist').css('display', 'none');
-            $('#longquestionlist').css('display', 'none');
+    }
+    if ($(this).val() === 'ShortAnswerlist') {
+        $('#shortanswerlist').css('display', 'block');
+        $('#truelist').css('display', 'none');
+        $('#longquestionlist').css('display', 'none');
+        $('#mcqlist').css('display', 'none');
+    }
+    if ($(this).val() === 'True/Falselist') {
+        $('#truelist').css('display', 'block');
+        $('#mcqlist').css('display', 'none');
+        $('#shortanswerlist').css('display', 'none');
+        $('#longquestionlist').css('display', 'none');
 
-        }
-    });
+    }
+});
 </script>
 
 <!-- Deepika -->
 <script>
-    $(document).ready(function() {
-        $(document).on('hidden.bs.modal', function() {
-            // const form = this.querySelector('.reset');
+$(document).ready(function() {
+    $(document).on('hidden.bs.modal', function() {
+        // const form = this.querySelector('.reset');
 
-            // form.reset();
-            const form_count = document.querySelectorAll('form.reset');
-            for (let index = 0; index < form_count.length; index++) {
+        // form.reset();
+        const form_count = document.querySelectorAll('form.reset');
+        for (let index = 0; index < form_count.length; index++) {
 
-                reinitializeSelect2(".js-select1");
-                $("form.reset .js-select1").val('');
-                $('.reset')[index].reset();
-                $('#result').val("");
-                calcQuestionType("result");
+            reinitializeSelect2(".js-select1");
+            $("form.reset .js-select1").val('');
+            $('.reset')[index].reset();
+            $('#result').val("");
+            calcQuestionType("result");
 
-            }
-
-        })
+        }
 
     })
 
-    function gencre(id) {
+})
 
-        // event.preventDefault(); // Prevent default form action
-        if (id == "1") {
-            var long_qname = $("#long_qname").val();
-            if (long_qname == '') {
-                swal.fire("Please Enter the Question Name", "", "error");
-                return false;
-            }
-            var long_quistion = $("#long_quistion").val();
-            if (long_quistion == '') {
-                swal.fire("Please Enter the Question Description", "", "error");
-                return false;
-            }
-            var keyword_long = $("#keyword_long").val();
-            if (keyword_long == '') {
-                swal.fire("Please Enter the Question Keywords", "", "error");
-                return false;
-            }
-            var long_points = $("#long_points").val();
-            if (long_points == '') {
-                swal.fire("Please Enter the Question Points", "", "error");
-                return false;
-            } else {
-                //$('#savebutton').css('pointer-events', 'none');
-                $('#savebutton').prop('disabled', true);
-                document.getElementById('longcreateform').submit();
-                document.getElementById('truelist').scrollIntoView({
-                    behavior: 'smooth'
-                }); // Scroll to the question-row
+function gencre(type) {
+    if (type === 'quizedit') {
+        // Validate required fields
+        let quizName = $('#q_nameedit').val().trim();
+        let quizQuestions = $('#quiz_questionedit').val();
+        let evaluation = $('#evaluation_edit').val();
 
-            }
-
-
+        if (!quizName) {
+            Swal.fire("Error!", "Quiz Name is required", "error");
+            return;
         }
-        if (id == "longedit") {
 
+        if (!quizQuestions || quizQuestions.length === 0) {
+            Swal.fire("Error!", "Please select at least one question", "error");
+            return;
+        }
 
-            var long_qnameedit = $("#long_qnameedit").val();
-            if (long_qnameedit == '') {
-                swal.fire("Please Enter the Question Name", "", "error");
-                return false;
-            }
-            var long_quistionedit = $("#long_quistionedit").val();
-            if (long_quistionedit == '') {
-                swal.fire("Please Enter the Question Description", "", "error");
-                return false;
-            }
-            var keyword_longedit = document.querySelectorAll('#keyword_longedit');
-            var keyword_key = 0;
-            for (const long_edit of keyword_longedit) {
-                if (keyword_key != 0 && long_edit.value == '') {
-                    swal.fire("Please Enter the Question Keywords", "", "error");
-                    return false;
+        if (!evaluation) {
+            Swal.fire("Error!", "Please select evaluation type", "error");
+            return;
+        }
+
+        let versionType = $('input[name="version_type"]:checked').val();
+
+        if (versionType === 'none') {
+            // Direct update without version change
+            Swal.fire({
+                title: 'Save Changes?',
+                text: 'You are updating the quiz without creating a new version.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Add version_type to form
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'version_type',
+                        value: 'none'
+                    }).appendTo('#quizedit_form');
+
+                    $('#quizedit_form').submit();
                 }
-                keyword_key++;
+            });
+        } else {
+            // Version update
+            let currentVersion = $('#current_version_display').text();
+            let newMajor = parseInt($('#current_major_version').val());
+            let newMinor = parseInt($('#current_minor_version').val());
 
+            if (versionType === 'major') {
+                newMajor += 1;
+                newMinor = 0;
+            } else {
+                newMinor += 1;
             }
-            var keyword_long_show = document.querySelectorAll('#keyword_long_show');
-            var keyword_key = 0;
-            for (const long_edit of keyword_long_show) {
-                if (keyword_key != 0 && long_edit.value == '') {
-                    swal.fire("Please Enter the Question Keywords", "", "error");
-                    return false;
+
+            let changeNotes = $('#change_notes').val();
+
+            if (!changeNotes) {
+                Swal.fire("Error!", "Please enter change notes for this version", "error");
+                return;
+            }
+
+            Swal.fire({
+                title: 'Create New Version?',
+                html: `Current version: ${currentVersion}<br>
+                       New version will be: ${newMajor}.${newMinor}`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Create Version',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'version_type',
+                        value: versionType
+                    }).appendTo('#quizedit_form');
+
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'change_notes',
+                        value: changeNotes
+                    }).appendTo('#quizedit_form');
+
+                    $('#quizedit_form').submit();
                 }
-                keyword_key++;
-
-            }
-            // if (keyword_longedit == '') {
-            //     swal.fire("Please Enter the Question Keywords", "", "error");
-            //     return false;
-            // }
-            var long_pointsedit = $("#long_pointsedit").val();
-            if (long_pointsedit == '') {
-                swal.fire("Please Enter the Question Points", "", "error");
-                return false;
-            } else {
-                document.getElementById('longedit_form').submit();
-            }
+            });
         }
-        if (id == "2") {
-            var short_qname = $("#short_qname").val();
-            if (short_qname == '') {
-                swal.fire("Please Enter the Question Name", "", "error");
-                return false;
-            }
-            var short_quistion = $("#short_quistion").val();
-            if (short_quistion == '') {
-                swal.fire("Please Enter the Question Description", "", "error");
-                return false;
-            }
-            var keyword_short = $("#keyword_short").val();
-            if (keyword_short == '') {
-                swal.fire("Please Enter the Question Keywords", "", "error");
-                return false;
-            }
-            var short_points = $("#short_points").val();
-            if (short_points == '') {
-                swal.fire("Please Enter the Question Points", "", "error");
-                return false;
-            } else {
-                // $('#savebutton').css('pointer-events', 'none');
-                $('#savebutton').prop('disabled', true);
-
-                document.getElementById('shortcreateform').submit();
-            }
-        }
-        if (id == "shortedit") {
-            var short_qnameedit = $("#short_qnameedit").val();
-            if (short_qnameedit == '') {
-                swal.fire("Please Enter the Question Name", "", "error");
-                return false;
-            }
-            var short_quistionedit = $("#short_quistionedit").val();
-            if (short_quistionedit == '') {
-                swal.fire("Please Enter the Question Description", "", "error");
-                return false;
-            }
-            var keyword_shortedit = document.querySelectorAll('#keyword_shortedit');
-            var keyword_key = 0;
-            for (const short_edit of keyword_shortedit) {
-                if (keyword_key != 0 && short_edit.value == '') {
-                    swal.fire("Please Enter the Question Keywords", "", "error");
-                    return false;
-                }
-                keyword_key++;
-
-            }
-            // if (keyword_longedit == '') {
-            //     swal.fire("Please Enter the Question Keywords", "", "error");
-            //     return false;
-            // }
-            var short_pointsedit = $("#short_pointsedit").val();
-            if (short_pointsedit == '') {
-                swal.fire("Please Enter the Question Points", "", "error");
-                return false;
-            } else {
-                document.getElementById('shortedit_form').submit();
-            }
-
-        }
-        if (id == "3") {
-            var mcq_qname = $("#mcq_qname").val();
-            if (mcq_qname == '') {
-                swal.fire("Please Enter the Question Name", "", "error");
-                return false;
-            }
-            var mcq_quistion = $("#mcq_quistion").val();
-            if (mcq_quistion == '') {
-                swal.fire("Please Enter the Question Description", "", "error");
-                return false;
-            }
-            var keyword_mcq = $("#keyword_mcq").val();
-            if (keyword_mcq == '') {
-                swal.fire("Please Enter the Choices", "", "error");
-                return false;
-            }
-            var mcq_correct_choices = $("#mcq_correct_choices").val();
-            if (mcq_correct_choices == '') {
-                swal.fire("Please Select the Choices", "", "error");
-                return false;
-            }
-
-            var mcq_points = $("#mcq_points").val();
-            if (mcq_points == '') {
-                swal.fire("Please Enter the Question Points", "", "error");
-                return false;
-            } else {
-                //$('#savebutton').css('pointer-events', 'none');
-                $('#savebutton').prop('disabled', true);
-
-                document.getElementById('mcqcreateform').submit();
-            }
-        }
-        if (id == "mcqedit") {
-            var keyword_mcqedit = $("#keyword_mcqedit").val();
-            if (keyword_mcqedit == '') {
-                swal.fire("Please Enter the Choices", "", "error");
-                return false;
-            }
-            document.getElementById('mcqedit_form').submit();
-        }
-
-        if (id == "4") {
-            var true_qname = $("#true_qname").val();
-            if (true_qname == '') {
-                swal.fire("Please Enter the Question Name", "", "error");
-                return false;
-            }
-            var true_quistion = $("#true_quistion").val();
-            if (true_quistion == '') {
-                swal.fire("Please Enter the Question Description", "", "error");
-                return false;
-            }
-            const input_array = document.querySelectorAll('#answer');
-            let AnswerSelected = false;
-            for (let row of input_array) {
-                if (row.checked === true) {
-                    AnswerSelected = true;
-                }
-            }
-            if (AnswerSelected === false) {
-
-                swal.fire("Please Select the Answer", "", "error");
-                return false;
-            }
-            var true_points = $("#true_points").val();
-            if (true_points == '') {
-                swal.fire("Please Enter the Question Points", "", "error");
-                return false;
-            } else {
-                // $('#savebutton').css('pointer-events', 'none');
-                $('#savebutton').prop('disabled', true);
-
-                document.getElementById('truecreateform').submit();
-            }
-        }
-        if (id == "truedit") {
-            var true_qnameedit = $("#true_qnameedit").val();
-            if (true_qnameedit == '') {
-                swal.fire("Please Enter the Question Name", "", "error");
-                return false;
-            }
-            var true_quistionedit = $("#true_quistionedit").val();
-            if (true_quistionedit == '') {
-                swal.fire("Please Enter the Question Description", "", "error");
-                return false;
-            }
-            const input_array = document.querySelectorAll('#answer_edit');
-            let AnswerSelected = false;
-            for (let row of input_array) {
-                if (row.checked === true) {
-                    AnswerSelected = true;
-                }
-            }
-            if (AnswerSelected === false) {
-
-                swal.fire("Please Select the Answer", "", "error");
-                return false;
-            }
-            var true_pointsedit = $("#true_pointsedit").val();
-            if (true_pointsedit == '') {
-                swal.fire("Please Enter the Question Name", "", "error");
-                return false;
-            } else {
-                document.getElementById('trueedit_form').submit();
-            }
-        }
-        if (id == "5") {
-
-            var quiz_name = $("#q_name").val();
-            if (quiz_name == '') {
-                swal.fire("Please Enter the Quiz Name", "", "error");
-                return false;
-            }
-            var quiz_question = $("#quiz_question").val();
-            if (quiz_question == '') {
-                swal.fire("Please Select the  Quiz Question", "", "error");
-                return false;
-            }
-            var evaluation = $("#evaluation").val(); 
-            if (evaluation == '') {
-                swal.fire("Please Select the  Evaluation", "", "error");
-                return false;
-            }
-            else {
-                //$('#savebutton').css('pointer-events', 'none');
-                $('#savebutton').prop('disabled', true);
-
-                document.getElementById('quizcreate_form').submit();
-            }
-
-        }
-        if (id == "quizedit") {
-
-            var q_nameedit = $("#q_nameedit").val();
-            if (q_nameedit == '') {
-                swal.fire("Please Enter the Quiz Name", "", "error");
-                return false;
-            }
-            var quiz_questionedit = $("#quiz_questionedit").val();
-            if (quiz_questionedit == '') {
-                swal.fire("Please Select the Quiz Question", "", "error");
-                return false;
-            }var evaluation = $("#evaluation_edit").val(); 
-            if (evaluation == '') {
-                swal.fire("Please Select the  Evaluation", "", "error");
-                return false;
-            } 
-            else {
-                document.getElementById('quizedit_form').submit();
-            }
-        }
-
-
     }
+}
 </script>
 <!-- end create -->
 <!-- addquiz function -->
@@ -2790,10 +2597,11 @@
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
-                            <div  class="form-group">
+                            <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea id="long_quistionedit"  style="margin-left: -15px"class=" long_quistionedit" name="long_quistionedit"
+                                    <textarea id="long_quistionedit" style="margin-left: -15px"
+                                        class=" long_quistionedit" name="long_quistionedit"
                                         autocomplete="off"></textarea>
                                 </div>
 
@@ -3009,7 +2817,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
@@ -3020,7 +2828,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
 
                     <div class="check_tab">
@@ -3075,25 +2883,24 @@
 <!-- Edit quiz -->
 <div class="modal fade" id="addModaleditquiz">
     <div class="modal-dialog modal-lg">
-
         <div class="modal-content">
-
             <form method="POST" id="quizedit_form" action="{{route('elearning.quiz_update', 1)}}"
                 enctype="multipart/form-data">
                 {{ csrf_field() }}
-
                 <input type="hidden" name="quiz_edit" class="quiz_edit" id="quiz_edit">
+                <input type="hidden" name="current_major_version" id="current_major_version" value="">
+                <input type="hidden" name="current_minor_version" id="current_minor_version" value="">
 
                 <div class="modal-header mh">
                     <h4 class="modal-title">Edit Quiz</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
+
                 <div class="modal-body" style="background-color: #f8fffb !important;">
                     <input type="hidden" class="form-control" id="user_id" name="user_id" value="">
                     <input type="hidden" class="form-control" id="user_details" name="user_details" value="general">
 
                     <div class="row">
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quiz Name:<span class="error-star" style="color:red;">*</span></label>
@@ -3107,15 +2914,13 @@
                                     name="quiz_questionedit[]" multiple="multiple" onchange="dataedit();">
                                     <option value="" data-badge="">Select Quiz Question</option>
                                     @foreach($rows['rows']['quiz_question'] as $key => $row)
-
                                     <option value="{{ $row['question_id'] }}">{{ $row['name'] }}</option>
                                     @endforeach
-
                                 </select>
                             </div>
                         </div>
 
-                        <div class="col-md-6 ">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Total Points:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="text" class="form-control default" id="q_pointsedit" name="q_pointsedit"
@@ -3133,24 +2938,95 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12 text-center">
 
+                    <!-- Version Control Section -->
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Version Control</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Current Version: <span id="current_version_display">1.0</span></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Version Update Type:<span class="error-star"
+                                                style="color:red;">*</span></label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="version_type"
+                                                id="version_none" value="none" checked>
+                                            <label class="form-check-label" for="version_none">
+                                                No Version Update - Save changes without creating new version
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="version_type"
+                                                id="version_minor" value="minor">
+                                            <label class="form-check-label" for="version_minor">
+                                                Minor Update (e.g., 1.0 → 1.1) - Small changes, bug fixes
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="version_type"
+                                                id="version_major" value="major">
+                                            <label class="form-check-label" for="version_major">
+                                                Major Update (e.g., 1.0 → 2.0) - Significant changes
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="change_notes_group" style="display: none;">
+                                        <label>Change Notes:</label>
+                                        <textarea class="form-control" id="change_notes" name="change_notes" rows="3"
+                                            placeholder="Describe what changed in this version"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Version History -->
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Version History</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="version_history_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Version</th>
+                                                    <th>Quiz Name</th>
+                                                    <th>No of Questions</th>
+                                                    <!-- <th>Status</th> -->
+                                                    <!-- <th>Created Date</th> -->
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="version_history_body">
+                                                <!-- Will be populated by JavaScript -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-lg-12 text-center">
                             <button class="btn btn-success btn-space" type="button" onclick="gencre('quizedit')"
-                                id="savebutton">Update</button>
+                                id="savebutton">Update with Version Control</button>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
                 </div>
-
             </form>
         </div>
-
-
-
-
     </div>
-
 </div>
 
 
@@ -3276,8 +3152,9 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea style="margin-left:-10px;"id="short_quistionedit" class="short_quistionedit"
-                                        name="short_quistionedit" autocomplete="off"></textarea>
+                                    <textarea style="margin-left:-10px;" id="short_quistionedit"
+                                        class="short_quistionedit" name="short_quistionedit"
+                                        autocomplete="off"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -3392,8 +3269,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea  style="margin-left:-10px;" class="mcq_quistionedit" class="mcq_quistionedit" name="mcq_quistionedit"
-                                        autocomplete="off"></textarea>
+                                    <textarea style="margin-left:-10px;" class="mcq_quistionedit"
+                                        class="mcq_quistionedit" name="mcq_quistionedit" autocomplete="off"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -3420,8 +3297,7 @@
 
                                     </table>
                                     <div class="action_container">
-                                        <button class="success" type="button"
-                                            onclick="create_tr('table_mcq_edit')">
+                                        <button class="success" type="button" onclick="create_tr('table_mcq_edit')">
                                             Add
                                         </button>
                                     </div>
@@ -3516,8 +3392,9 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea  style="margin-left:-10px;" id="mcq_quistionshow" class="mcq_quistionshow" name="mcq_quistionshow"
-                                        autocomplete="off" style="background-color: #e9ecef !important;"></textarea>
+                                    <textarea style="margin-left:-10px;" id="mcq_quistionshow" class="mcq_quistionshow"
+                                        name="mcq_quistionshow" autocomplete="off"
+                                        style="background-color: #e9ecef !important;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -3631,7 +3508,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea style="margin-left:-15px;" id="true_quistionedit" class="true_quistionedit" name="true_quistionedit"
+                                    <textarea style="margin-left:-15px;" id="true_quistionedit"
+                                        class="true_quistionedit" name="true_quistionedit"
                                         autocomplete="off"></textarea>
                                 </div>
                             </div>
@@ -3722,7 +3600,8 @@
                             <div class="form-group">
                                 <label>Question:<span class="error-star" style="color:red;">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea  style="margin-left:-10px;" id="true_quistionshow" class="true_quistionshow" name="true_quistionshow"
+                                    <textarea style="margin-left:-10px;" id="true_quistionshow"
+                                        class="true_quistionshow" name="true_quistionshow"
                                         style="background-color: #e9ecef !important;"></textarea>
                                 </div>
 
@@ -3778,43 +3657,43 @@
 <!-- end -->
 
 <script>
-    function fetch_update(id, type) {
+function fetch_update(id, type) {
 
 
 
-        $.ajax({
-            url: "{{ url('/elearning/question_long/fetch') }}",
-            type: 'GET',
-            data: {
-                'id': id,
-                'type': type,
-                _token: '{{csrf_token()}}'
+    $.ajax({
+        url: "{{ url('/elearning/question_long/fetch') }}",
+        type: 'GET',
+        data: {
+            'id': id,
+            'type': type,
+            _token: '{{csrf_token()}}'
 
-            },
+        },
 
-            success: function(data) {
-                // correct_choices = data.rows[0]['correct_choices'].split(',');
+        success: function(data) {
+            // correct_choices = data.rows[0]['correct_choices'].split(',');
 
 
-                if (type == "longedit") {
-                    $('#table_long_edit tr:not(:first)').remove();
-                    $('#long_qnameedit').val(data.rows[0]['question_name']);
-                    $('#long_quistionedit').val(data.rows[0]['question']);
-                    const keyarray = data.rows[0]['keywords'].split(',');
-                    if (keyarray[0] === "") {
-                        keyarray.shift();
-                    }
-                    console.log(keyarray);
+            if (type == "longedit") {
+                $('#table_long_edit tr:not(:first)').remove();
+                $('#long_qnameedit').val(data.rows[0]['question_name']);
+                $('#long_quistionedit').val(data.rows[0]['question']);
+                const keyarray = data.rows[0]['keywords'].split(',');
+                if (keyarray[0] === "") {
+                    keyarray.shift();
+                }
+                console.log(keyarray);
+                let table_body2 = document.getElementById('table_long_edit');
+                if (table_body2.firstElementChild) {
+                    table_body2.firstElementChild.remove();
+                }
+                // let first_tr = table_body2.firstElementChild;
+                for (const value of keyarray) {
                     let table_body2 = document.getElementById('table_long_edit');
-                    if (table_body2.firstElementChild) {
-                        table_body2.firstElementChild.remove();
-                    }
-                    // let first_tr = table_body2.firstElementChild;
-                    for (const value of keyarray) {
-                        let table_body2 = document.getElementById('table_long_edit');
-                        let tr_clone = document.createElement('tr');
-                        // first_tr = table_body2.firstElementChild
-                        tr_clone.innerHTML = ` <tr>
+                    let tr_clone = document.createElement('tr');
+                    // first_tr = table_body2.firstElementChild
+                    tr_clone.innerHTML = ` <tr>
 
                             <td>
                                 <input type="text" class="form-control default"
@@ -3830,66 +3709,67 @@
                             </td>
                         </tr>`;
 
-                        table_body2.append(tr_clone);
+                    table_body2.append(tr_clone);
 
 
-                    }
+                }
 
-                    $('#long_pointsedit').val(data.rows[0]['points']);
-                    $('#eid').val(data.rows[0]['question_id']);
+                $('#long_pointsedit').val(data.rows[0]['points']);
+                $('#eid').val(data.rows[0]['question_id']);
 
-                } else if (type == "longshow") {
-                    $('#keyword_longshow tr:not(:first)').remove();
-                    $('#long_qnameshow').val(data.rows[0]['question_name']);
-                    $('#long_quistionshow').val(data.rows[0]['question']);
+            } else if (type == "longshow") {
+                $('#keyword_longshow tr:not(:first)').remove();
+                $('#long_qnameshow').val(data.rows[0]['question_name']);
+                $('#long_quistionshow').val(data.rows[0]['question']);
 
-                    const keyarrayhow = data.rows[0]['keywords'].split(',');
-                    if (keyarrayhow[0] === "") {
-                        keyarrayhow.shift();
-                    }
+                const keyarrayhow = data.rows[0]['keywords'].split(',');
+                if (keyarrayhow[0] === "") {
+                    keyarrayhow.shift();
+                }
 
-                    let tableBody = document.getElementById('keyword_longshow');
-                    let firstRow = tableBody.firstElementChild;
-                    keyarrayhow.forEach((keyword, index) => {
-                        let clonedRow = firstRow.cloneNode(true); // Clone the template row
-                        clonedRow.querySelector('input').value = keyword; // Set the keyword value
-                        clonedRow.querySelector('input').setAttribute("readonly", ""); // Make input read-only
-                        tableBody.appendChild(clonedRow); // Append the cloned row to the table
-                    });
+                let tableBody = document.getElementById('keyword_longshow');
+                let firstRow = tableBody.firstElementChild;
+                keyarrayhow.forEach((keyword, index) => {
+                    let clonedRow = firstRow.cloneNode(true); // Clone the template row
+                    clonedRow.querySelector('input').value = keyword; // Set the keyword value
+                    clonedRow.querySelector('input').setAttribute("readonly",
+                        ""); // Make input read-only
+                    tableBody.appendChild(clonedRow); // Append the cloned row to the table
+                });
 
-                    tableBody.removeChild(firstRow);
+                tableBody.removeChild(firstRow);
 
-                    let choices = data.rows[0]['keywords'];
-                    const pieces = choices.split(',');
-                    const result = pieces.join(', \n ');
-                    // $('#keyword_longshow').html(result);
-                    $('#long_pointsshow').val(data.rows[0]['points']);
-                    $('#eidshow').val(data.rows[0]['id']);
+                let choices = data.rows[0]['keywords'];
+                const pieces = choices.split(',');
+                const result = pieces.join(', \n ');
+                // $('#keyword_longshow').html(result);
+                $('#long_pointsshow').val(data.rows[0]['points']);
+                $('#eidshow').val(data.rows[0]['id']);
 
-                    $('#long_qnameshow').prop('disabled', true);
-                    $('#long_quistionshow').prop('disabled', true);
-                    $('#keyword_long_show input').prop('disabled', true);
-                    $('#long_pointsshow').prop('disabled', true);
+                $('#long_qnameshow').prop('disabled', true);
+                $('#long_quistionshow').prop('disabled', true);
+                $('#keyword_long_show input').prop('disabled', true);
+                $('#long_pointsshow').prop('disabled', true);
 
-                    $('#eidshow').attr('Action', '');
+                $('#eidshow').attr('Action', '');
 
 
-                } else if (type == "shortedit") {
-                    $('#table_short_edit tr:not(:first)').remove();
-                    $('#short_qnameedit').val(data.rows[0]['question_name']);
-                    $('#short_quistionedit').val(data.rows[0]['question']);
-                    const keyarray = data.rows[0]['keywords'].split(',');
-                    if (keyarray[0] === "") {
-                        keyarray.shift();
-                    }
+            } else if (type == "shortedit") {
+                $('#table_short_edit tr:not(:first)').remove();
+                $('#short_qnameedit').val(data.rows[0]['question_name']);
+                $('#short_quistionedit').val(data.rows[0]['question']);
+                const keyarray = data.rows[0]['keywords'].split(',');
+                if (keyarray[0] === "") {
+                    keyarray.shift();
+                }
+                let table_body2 = document.getElementById('table_short_edit');
+                if (table_body2.firstElementChild) {
+                    table_body2.firstElementChild.remove();
+                }
+                for (const value of keyarray) {
                     let table_body2 = document.getElementById('table_short_edit');
-                    if (table_body2.firstElementChild) {
-                        table_body2.firstElementChild.remove();
-                    }
-                    for (const value of keyarray) {
-                        let table_body2 = document.getElementById('table_short_edit');
-                        tr_clone = document.createElement('tr');
-                        tr_clone.innerHTML = ` <tr>
+                    tr_clone = document.createElement('tr');
+                    tr_clone.innerHTML = ` <tr>
                         <td>
                             <input type="text" class="form-control default"
                                 id="keyword_shortedit" value="${value}" name="keyword_shortedit[]"
@@ -3904,65 +3784,66 @@
 
                         </td></tr>`
 
-                        // clean_first_tr(table_body2.firstElementChild);
-                        table_body2.append(tr_clone);
-                    }
+                    // clean_first_tr(table_body2.firstElementChild);
+                    table_body2.append(tr_clone);
+                }
 
-                    $('#short_pointsedit').val(data.rows[0]['points']);
-                    $('#short_edit').val(data.rows[0]['question_id']);
+                $('#short_pointsedit').val(data.rows[0]['points']);
+                $('#short_edit').val(data.rows[0]['question_id']);
 
-                } else if (type == "shortshow") {
-                    $('#keyword_shortshow tr:not(:first)').remove();
-                    $('#keyword_shortshow').val(data.rows[0]['keywords']);
-                    $('#short_qnameshow').val(data.rows[0]['question_name']);
-                    $('#short_quistionshow').val(data.rows[0]['question']);
+            } else if (type == "shortshow") {
+                $('#keyword_shortshow tr:not(:first)').remove();
+                $('#keyword_shortshow').val(data.rows[0]['keywords']);
+                $('#short_qnameshow').val(data.rows[0]['question_name']);
+                $('#short_quistionshow').val(data.rows[0]['question']);
 
-                    const keyarrayhow = data.rows[0]['keywords'].split(',');
-                    if (keyarrayhow[0] === "") {
-                        keyarrayhow.shift();
-                    }
+                const keyarrayhow = data.rows[0]['keywords'].split(',');
+                if (keyarrayhow[0] === "") {
+                    keyarrayhow.shift();
+                }
 
-                    let tableBody = document.getElementById('keyword_shortshow');
-                    let firstRow = tableBody.firstElementChild;
-                    keyarrayhow.forEach((keyword, index) => {
-                        let clonedRow = firstRow.cloneNode(true); // Clone the template row
-                        clonedRow.querySelector('input').value = keyword; // Set the keyword value
-                        clonedRow.querySelector('input').setAttribute("readonly", ""); // Make input read-only
-                        tableBody.appendChild(clonedRow); // Append the cloned row to the table
-                    });
+                let tableBody = document.getElementById('keyword_shortshow');
+                let firstRow = tableBody.firstElementChild;
+                keyarrayhow.forEach((keyword, index) => {
+                    let clonedRow = firstRow.cloneNode(true); // Clone the template row
+                    clonedRow.querySelector('input').value = keyword; // Set the keyword value
+                    clonedRow.querySelector('input').setAttribute("readonly",
+                        ""); // Make input read-only
+                    tableBody.appendChild(clonedRow); // Append the cloned row to the table
+                });
 
-                    tableBody.removeChild(firstRow);
-                    let choices = data.rows[0]['keywords'];
-                    const pieces = choices.split(',');
-                    const result = pieces.join(', \n ');
-                    $('#keyword_short_show').html(result);
-                    $('#short_pointsshow').val(data.rows[0]['points']);
-                    $('#short_show').val(data.rows[0]['id']);
+                tableBody.removeChild(firstRow);
+                let choices = data.rows[0]['keywords'];
+                const pieces = choices.split(',');
+                const result = pieces.join(', \n ');
+                $('#keyword_short_show').html(result);
+                $('#short_pointsshow').val(data.rows[0]['points']);
+                $('#short_show').val(data.rows[0]['id']);
 
-                    $('#short_qnameshow').prop('disabled', true);
-                    $('#short_quistionshow').prop('disabled', true);
-                    $('#keyword_shortshow').prop('disabled', true);
-                    $('#short_pointsshow').prop('disabled', true);
+                $('#short_qnameshow').prop('disabled', true);
+                $('#short_quistionshow').prop('disabled', true);
+                $('#keyword_shortshow').prop('disabled', true);
+                $('#short_pointsshow').prop('disabled', true);
 
-                    $('#short_show').attr('Action', '');
+                $('#short_show').attr('Action', '');
 
 
-                } else if (type == "mcqedit") {
-                    $('#table_mcq_edit tr:not(:first)').remove();
-                    $('#mcq_qnameedit').val(data.rows[0]['question_name']);
-                    $('#mcq_quistionedit').val(data.rows[0]['question']);
-                    const keyarray = data.rows[0]['choices'].split(',');
-                    if (keyarray[0] === "") {
-                        keyarray.shift();
-                    }
+            } else if (type == "mcqedit") {
+                $('#table_mcq_edit tr:not(:first)').remove();
+                $('#mcq_qnameedit').val(data.rows[0]['question_name']);
+                $('#mcq_quistionedit').val(data.rows[0]['question']);
+                const keyarray = data.rows[0]['choices'].split(',');
+                if (keyarray[0] === "") {
+                    keyarray.shift();
+                }
+                let table_body2 = document.getElementById('table_mcq_edit');
+                if (table_body2.firstElementChild) {
+                    table_body2.firstElementChild.remove();
+                }
+                for (const value of keyarray) {
                     let table_body2 = document.getElementById('table_mcq_edit');
-                    if (table_body2.firstElementChild) {
-                        table_body2.firstElementChild.remove();
-                    }
-                    for (const value of keyarray) {
-                        let table_body2 = document.getElementById('table_mcq_edit');
-                        tr_clone = document.createElement('tr');
-                        tr_clone.innerHTML = `
+                    tr_clone = document.createElement('tr');
+                    tr_clone.innerHTML = `
                             <td>
                                 <input type="text" class="form-control default" id="keyword_mcqedit"
                                 name="keyword_mcqedit[]" value="${value}" autocomplete="off">
@@ -3974,525 +3855,724 @@
                                     </button>
                                 </div>
                             </td>`
-                        table_body2.append(tr_clone);
+                    table_body2.append(tr_clone);
+                }
+                let correctChoices = data.rows[0]['correct_choices'];
+                if (typeof correctChoices === 'string') {
+                    correctChoices = JSON.parse(correctChoices);
+                } else if (Array.isArray(correctChoices)) {
+                    correctChoices = correctChoices.map(choice => {
+                        try {
+                            return JSON.parse(choice);
+                        } catch (error) {
+                            return choice;
+                        }
+                    }).flat();
+                }
+                $('#mcq_correct_choicesedit').empty(); // Clear dropdown
+                keyarray.forEach(option => {
+                    console.log(keyarray, 'mcq');
+                    const isSelected = correctChoices.includes(option) ? 'selected' : '';
+                    console.log(isSelected, 'corectchoice');
+                    $('#mcq_correct_choicesedit').append(
+                        `<option value="${option}" ${isSelected}>${option}</option>`);
+                });
+
+                $('.mcq_correct_choicesedit').val(correctChoices).trigger('change');
+                $('#mcq_pointsedit').val(data.rows[0]['points']);
+                $('#mcq_edit').val(data.rows[0]['question_id']);
+
+            } else if (type == "mcqshow") {
+                $('#keyword_mcqshow tr:not(:first)').remove();
+                $('#mcq_qnameshow').val(data.rows[0]['question_name']);
+                $('#mcq_quistionshow').val(data.rows[0]['question']);
+
+                const keyarrayhow = data.rows[0]['choices'].split(',');
+                if (keyarrayhow[0] === "") {
+                    keyarrayhow.shift();
+                }
+                let tableBody = document.getElementById('keyword_mcqshow');
+                let firstRow = tableBody.firstElementChild;
+                keyarrayhow.forEach((keyword, index) => {
+                    let clonedRow = firstRow.cloneNode(true); // Clone the template row
+                    clonedRow.querySelector('input').value = keyword; // Set the keyword value
+                    clonedRow.querySelector('input').setAttribute("readonly",
+                        ""); // Make input read-only
+                    tableBody.appendChild(clonedRow); // Append the cloned row to the table
+                });
+                let choices = data.rows[0]['choices'];
+                const pieces = choices.split(',');
+                const result = pieces.join(', \n ');
+                $('#keyword_mcq_show').html(result);
+
+
+                // $('.mcq_correct_choicesshow').val(data.rows[0]['correct_choices']);
+                let crtchoices = data.rows[0]['correct_choices'];
+                const crtpieces = crtchoices.split(',');
+                const crtresult = crtpieces.join(', \n ');
+                $('.mcq_correct_choicesshow').html(crtresult);
+
+                $('#mcq_pointsshow').val(data.rows[0]['points']);
+                $('#mcq_show').val(data.rows[0]['id']);
+
+                $('#mcq_qnameshow').prop('disabled', true);
+                $('#mcq_quistionshow').prop('disabled', true);
+                $('#keyword_mcqshow').prop('disabled', true);
+                $('.mcq_correct_choicesshow').prop('disabled', true);
+                $('#mcq_pointsshow').prop('disabled', true);
+
+                $('#mcq_show').attr('Action', '');
+
+
+            } else if (type == "trueedit") {
+
+                $('#true_qnameedit').val(data.rows[0]['question_name']);
+                $('#true_quistionedit').val(data.rows[0]['question']);
+                if (data.rows[0]['answer'] == "on") {
+                    $('.answer_edit_on').prop('checked', true)
+
+                } else {
+                    $('.answer_edit_off').prop('checked', true)
+
+                }
+                $('#answer_edit').val(data.rows[0]['answer']);
+                $('#true_pointsedit').val(data.rows[0]['points']);
+                $('#true_edit').val(data.rows[0]['question_id']);
+            } else if (type == "trueshow") {
+                $('#true_qnameshow').val(data.rows[0]['question_name']);
+                $('#true_quistionshow').val(data.rows[0]['question']);
+                if (data.rows[0]['answer'] == "on") {
+                    $('.answer_show_on').prop('checked', true)
+
+                } else {
+                    $('.answer_show_off').prop('checked', true)
+
+                }
+                $('#answer_show').val(data.rows[0]['answer']);
+                $('#true_pointsshow').val(data.rows[0]['points']);
+                $('#true_show').val(data.rows[0]['id']);
+
+                $('#true_qnameshow').prop('disabled', true);
+                $('#true_quistionshow').prop('disabled', true);
+                $('#answer_show').prop('disabled', true);
+                $('#true_pointsshow').prop('disabled', true);
+
+                $('#true_show').attr('Action', '');
+
+            } else if (type == "quizedit") {
+                //alert("cbjds");
+
+                $('#q_nameedit').val(data.rows[0]['quiz_name']);
+
+                $('.quiz_questionedit').val(data.rows[0]['quiz_questions'].split(','));
+                $('#q_pointsedit').val(data.rows[0]['points']);
+                $('#quiz_edit').val(data.rows[0]['quiz_id']);
+                reinitializeSelect2(".js-select1");
+
+                // $('.quiz_questionedit').val('1-long');
+
+                $('#q_pointsedit').prop('readonly', true);
+            } else if (type == "quizshow") {
+
+
+                $('#q_nameshow').val(data.rows[0]['quiz_name']);
+
+                $('.quiz_questionshow').val(data.rows[0]['quiz_questions'].split(','));
+                // let choices = data.rows[0]['quiz_questions'];
+                // const pieces = choices.split(',');
+                // const result = pieces.join(', \n ');
+                // $('.quiz_questionshow').html(result);
+                $('#q_pointsshow').val(data.rows[0]['points']);
+                $('#quiz_show').val(data.rows[0]['quiz_id']);
+
+
+                $('#q_nameshow').prop('disabled', true);
+                $('#quiz_questionshow').prop('disabled', true);
+                $('#q_pointsshow').prop('disabled', true);
+                $('#quiz_show').attr('Action', '');
+                reinitializeSelect2(".js-select1");
+
+
+
+
+            }
+        }
+    });
+
+
+
+}
+</script>
+
+<script>
+function delete1(id, tabletype) {
+
+    Swal.fire({
+        title: "Are you Sure,you want to Delete the Quiz?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Delete",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "{{ url('/elearning/question_long/delete') }}",
+                type: 'GET',
+                data: {
+                    'id': id,
+                    'tabletype': tabletype,
+                    _token: '{{csrf_token()}}'
+
+                },
+
+
+                success: function(data) {
+                    //exit();
+                    if (data['data'] == 0) {
+                        Swal.fire("Info!", data['message_cus'], "info", data['message_cus'])
+                        return false
                     }
-                    let correctChoices = data.rows[0]['correct_choices'];
-                    if (typeof correctChoices === 'string') {
-                        correctChoices = JSON.parse(correctChoices);
-                    } else if (Array.isArray(correctChoices)) {
-                        correctChoices = correctChoices.map(choice => {
-                            try {
-                                return JSON.parse(choice);
-                            } catch (error) {
-                                return choice;
-                            }
-                        }).flat();
+
+                    if (result.value) {
+                        Swal.fire("Success!", data['message_cus'], "success").then((result) => {
+
+                            location.replace(`/elearningquestion`);
+                            setTimeout(function() {
+                                document.getElementById('quizlist').scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            }, 500); // Delay before scrolling
+
+                        })
                     }
-                    $('#mcq_correct_choicesedit').empty(); // Clear dropdown
-                    keyarray.forEach(option => {
-                        console.log(keyarray, 'mcq');
-                        const isSelected = correctChoices.includes(option) ? 'selected' : '';
-                        console.log(isSelected, 'corectchoice');
-                        $('#mcq_correct_choicesedit').append(`<option value="${option}" ${isSelected}>${option}</option>`);
-                    });
 
-                    $('.mcq_correct_choicesedit').val(correctChoices).trigger('change');
-                    $('#mcq_pointsedit').val(data.rows[0]['points']);
-                    $('#mcq_edit').val(data.rows[0]['question_id']);
-
-                } else if (type == "mcqshow") {
-                    $('#keyword_mcqshow tr:not(:first)').remove();
-                    $('#mcq_qnameshow').val(data.rows[0]['question_name']);
-                    $('#mcq_quistionshow').val(data.rows[0]['question']);
-
-                    const keyarrayhow = data.rows[0]['choices'].split(',');
-                    if (keyarrayhow[0] === "") {
-                        keyarrayhow.shift();
-                    }
-                    let tableBody = document.getElementById('keyword_mcqshow');
-                    let firstRow = tableBody.firstElementChild;
-                    keyarrayhow.forEach((keyword, index) => {
-                        let clonedRow = firstRow.cloneNode(true); // Clone the template row
-                        clonedRow.querySelector('input').value = keyword; // Set the keyword value
-                        clonedRow.querySelector('input').setAttribute("readonly", ""); // Make input read-only
-                        tableBody.appendChild(clonedRow); // Append the cloned row to the table
-                    });
-                    let choices = data.rows[0]['choices'];
-                    const pieces = choices.split(',');
-                    const result = pieces.join(', \n ');
-                    $('#keyword_mcq_show').html(result);
+                    // $('#long_qnameedit').val(data.rows[0]['question_name']);
+                    // $('#long_quistionedit').val(data.rows[0]['question']);
+                    // $('#keyword_longedit').val(data.rows[0]['keywords']);
+                    // $('#long_pointsedit').val(data.rows[0]['points']);
+                    // $('#eid').val(data.rows[0]['question_id']);
 
 
-                    // $('.mcq_correct_choicesshow').val(data.rows[0]['correct_choices']);
-                    let crtchoices = data.rows[0]['correct_choices'];
-                    const crtpieces = crtchoices.split(',');
-                    const crtresult = crtpieces.join(', \n ');
-                    $('.mcq_correct_choicesshow').html(crtresult);
-
-                    $('#mcq_pointsshow').val(data.rows[0]['points']);
-                    $('#mcq_show').val(data.rows[0]['id']);
-
-                    $('#mcq_qnameshow').prop('disabled', true);
-                    $('#mcq_quistionshow').prop('disabled', true);
-                    $('#keyword_mcqshow').prop('disabled', true);
-                    $('.mcq_correct_choicesshow').prop('disabled', true);
-                    $('#mcq_pointsshow').prop('disabled', true);
-
-                    $('#mcq_show').attr('Action', '');
-
-
-                } else if (type == "trueedit") {
-
-                    $('#true_qnameedit').val(data.rows[0]['question_name']);
-                    $('#true_quistionedit').val(data.rows[0]['question']);
-                    if (data.rows[0]['answer'] == "on") {
-                        $('.answer_edit_on').prop('checked', true)
-
-                    } else {
-                        $('.answer_edit_off').prop('checked', true)
-
-                    }
-                    $('#answer_edit').val(data.rows[0]['answer']);
-                    $('#true_pointsedit').val(data.rows[0]['points']);
-                    $('#true_edit').val(data.rows[0]['question_id']);
-                } else if (type == "trueshow") {
-                    $('#true_qnameshow').val(data.rows[0]['question_name']);
-                    $('#true_quistionshow').val(data.rows[0]['question']);
-                    if (data.rows[0]['answer'] == "on") {
-                        $('.answer_show_on').prop('checked', true)
-
-                    } else {
-                        $('.answer_show_off').prop('checked', true)
-
-                    }
-                    $('#answer_show').val(data.rows[0]['answer']);
-                    $('#true_pointsshow').val(data.rows[0]['points']);
-                    $('#true_show').val(data.rows[0]['id']);
-
-                    $('#true_qnameshow').prop('disabled', true);
-                    $('#true_quistionshow').prop('disabled', true);
-                    $('#answer_show').prop('disabled', true);
-                    $('#true_pointsshow').prop('disabled', true);
-
-                    $('#true_show').attr('Action', '');
-
-                } else if (type == "quizedit") {
-                    //alert("cbjds");
-
-                    $('#q_nameedit').val(data.rows[0]['quiz_name']);
-
-                    $('.quiz_questionedit').val(data.rows[0]['quiz_questions'].split(','));
-                    $('#q_pointsedit').val(data.rows[0]['points']);
-                    $('#quiz_edit').val(data.rows[0]['quiz_id']);
-                    reinitializeSelect2(".js-select1");
-
-                    // $('.quiz_questionedit').val('1-long');
-
-                    $('#q_pointsedit').prop('readonly', true);
-                } else if (type == "quizshow") {
-
-
-                    $('#q_nameshow').val(data.rows[0]['quiz_name']);
-
-                    $('.quiz_questionshow').val(data.rows[0]['quiz_questions'].split(','));
-                    // let choices = data.rows[0]['quiz_questions'];
-                    // const pieces = choices.split(',');
-                    // const result = pieces.join(', \n ');
-                    // $('.quiz_questionshow').html(result);
-                    $('#q_pointsshow').val(data.rows[0]['points']);
-                    $('#quiz_show').val(data.rows[0]['quiz_id']);
-
-
-                    $('#q_nameshow').prop('disabled', true);
-                    $('#quiz_questionshow').prop('disabled', true);
-                    $('#q_pointsshow').prop('disabled', true);
-                    $('#quiz_show').attr('Action', '');
-                    reinitializeSelect2(".js-select1");
 
 
 
 
                 }
-            }
-        });
-
-
-
-    }
-</script>
-
-<script>
-    function delete1(id, tabletype) {
-
-        Swal.fire({
-            title: "Are you Sure,you want to Delete the Quiz?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Delete",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "{{ url('/elearning/question_long/delete') }}",
-                    type: 'GET',
-                    data: {
-                        'id': id,
-                        'tabletype': tabletype,
-                        _token: '{{csrf_token()}}'
-
-                    },
-
-
-                    success: function(data) {
-                        //exit();
-                        if (data['data'] == 0) {
-                            Swal.fire("Info!", data['message_cus'], "info", data['message_cus'])
-                            return false
-                        }
-
-                        if (result.value) {
-                            Swal.fire("Success!", data['message_cus'], "success").then((result) => {
-
-                                location.replace(`/elearningquestion`);
-                                setTimeout(function() {
-                                    document.getElementById('quizlist').scrollIntoView({
-                                        behavior: 'smooth'
-                                    });
-                                }, 500); // Delay before scrolling
-
-                            })
-                        }
-
-                        // $('#long_qnameedit').val(data.rows[0]['question_name']);
-                        // $('#long_quistionedit').val(data.rows[0]['question']);
-                        // $('#keyword_longedit').val(data.rows[0]['keywords']);
-                        // $('#long_pointsedit').val(data.rows[0]['points']);
-                        // $('#eid').val(data.rows[0]['question_id']);
+            });
+        }
+    })
 
 
 
 
-
-
-                    }
-                });
-            }
-        })
-
-
-
-
-    }
-    // 
+}
+// 
 </script>
 <style>
-    .select2-container {
-        min-width: 300px !important;
-        display: unset !important;
+.select2-container {
+    min-width: 300px !important;
+    display: unset !important;
 
-    }
+}
 
-    .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
-        list-style: none;
-        color: #000 !important;
-    }
+.select2-container--default .select2-selection--multiple .select2-selection__rendered li {
+    list-style: none;
+    color: #000 !important;
+}
 
-    .select2-container--default .select2-search--inline .select2-search__field {
-        width: 300px !important;
-    }
+.select2-container--default .select2-search--inline .select2-search__field {
+    width: 300px !important;
+}
 
-    .select2-results__option {
-        padding-right: 20px;
-        vertical-align: middle;
-    }
+.select2-results__option {
+    padding-right: 20px;
+    vertical-align: middle;
+}
 
-    .select2-results__option:before {
-        content: "";
-        display: inline-block;
-        position: relative;
-        height: 25px;
-        width: 20px;
-        border: 2px solid #e9e9e9;
-        border-radius: 4px;
-        background-color: #fff;
-        margin-right: 20px;
-        vertical-align: middle;
-    }
+.select2-results__option:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    height: 25px;
+    width: 20px;
+    border: 2px solid #e9e9e9;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-right: 20px;
+    vertical-align: middle;
+}
 
-    .select2-results__option[aria-selected=true]:before {
-        font-family: fontAwesome;
-        content: "\f00c";
-        color: #fff;
-        background-color: #f77750;
-        border: 0;
-        /* display: inline-block; */
-        padding-left: 3px;
-    }
+.select2-results__option[aria-selected=true]:before {
+    font-family: fontAwesome;
+    content: "\f00c";
+    color: #fff;
+    background-color: #f77750;
+    border: 0;
+    /* display: inline-block; */
+    padding-left: 3px;
+}
 
-    .select2-container--default .select2-results__option[aria-selected=true] {
-        background-color: #fff;
-    }
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #fff;
+}
 
-    .select2-container--default .select2-results__option--highlighted[aria-selected] {
-        background-color: #78f1f1;
-        color: #272727;
-        font-weight: bold;
-    }
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #78f1f1;
+    color: #272727;
+    font-weight: bold;
+}
 
-    .select2-results__option[aria-selected] {
-        cursor: pointer;
-        color: #060606 !important;
-        font-weight: bold;
-    }
+.select2-results__option[aria-selected] {
+    cursor: pointer;
+    color: #060606 !important;
+    font-weight: bold;
+}
 
-    .select2-container--default .select2-selection--multiple {
-        margin-bottom: 10px;
-    }
+.select2-container--default .select2-selection--multiple {
+    margin-bottom: 10px;
+}
 
-    .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
-        border-radius: 4px;
-    }
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+    border-radius: 4px;
+}
 
-    .select2-container--default.select2-container--focus .select2-selection--multiple {
-        border-color: #f77750;
-        border-width: 2px;
-    }
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #f77750;
+    border-width: 2px;
+}
 
-    .select2-container--default .select2-selection--multiple {
-        border-width: 2px;
-    }
+.select2-container--default .select2-selection--multiple {
+    border-width: 2px;
+}
 
-    .select2-container--open .select2-dropdown--below {
+.select2-container--open .select2-dropdown--below {
 
-        border-radius: 6px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
-    }
+}
 
-    .select2-selection .select2-selection--multiple:after {
-        content: 'hhghgh';
-    }
+.select2-selection .select2-selection--multiple:after {
+    content: 'hhghgh';
+}
 
-    /* select with icons badges single*/
-    .select-icon .select2-selection__placeholder .badge {
-        display: none;
-    }
+/* select with icons badges single*/
+.select-icon .select2-selection__placeholder .badge {
+    display: none;
+}
 
 
 
-    .select-icon .select2-results__option:before,
-    .select-icon .select2-results__option[aria-selected=true]:before {
-        display: none !important;
+.select-icon .select2-results__option:before,
+.select-icon .select2-results__option[aria-selected=true]:before {
+    display: none !important;
 
-    }
+}
 
-    .select-icon .select2-search--dropdown {
-        display: none;
-    }
+.select-icon .select2-search--dropdown {
+    display: none;
+}
 
-    .course_period {
-        font-size: 18px;
-        float: right;
-        margin-top: 30px;
-        font-weight: bold;
+.course_period {
+    font-size: 18px;
+    float: right;
+    margin-top: 30px;
+    font-weight: bold;
 
-    }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 <script>
-    $(".js-select2").select2({
+$(".js-select2").select2({
+    closeOnSelect: false,
+    placeholder: "Select Correct Choices",
+    // allowHtml: true,
+    allowClear: true,
+    tags: true, // создает новые опции на лету
+    language: {
+        noResults: function() {
+            return "No Choices Added";
+        }
+    }
+});
+</script>
+<script>
+function reinitializeSelect2(element) {
+    if ($(element).data('select2')) {
+
+        $(element).select2('destroy');
+    }
+
+
+    $(element).select2({
         closeOnSelect: false,
-        placeholder: "Select Correct Choices",
-        // allowHtml: true,
+        placeholder: "Select Quiz Question",
         allowClear: true,
-        tags: true, // создает новые опции на лету
+        tags: true,
         language: {
             noResults: function() {
-                return "No Choices Added";
+                return "No Question Added";
             }
         }
     });
+}
+
+
+$(document).ready(function() {
+    // Call the reinitialization function after the select2 library is loaded
+    $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function() {
+        reinitializeSelect2(".js-select1");
+    });
+});
+
+
+
+
+// document.querySelector("[type='number']").addEventListener("keypress", function(evt) {
+//     if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57 ||(evt.which === 46)) {
+//         //Math.trunc(evt);
+//         evt.preventDefault();
+
+//     }
+// });
 </script>
 <script>
-    function reinitializeSelect2(element) {
-        if ($(element).data('select2')) {
+function data() {
 
-            $(element).select2('destroy');
+    var id = $("select[id='quiz_question']").val();
+    $.ajax({
+        url: "{{ url('/elearning/question_quiz/get_points') }}",
+        type: 'GET',
+        data: {
+            'id': id,
+            _token: '{{csrf_token()}}'
+
+        },
+        success: function(data) {
+            if (id == "") {
+                $('.quizpoints').css('display', 'none');
+
+            } else {
+
+                $('.quizpoints').css('display', 'block');
+
+                $('#q_points').val(data);
+                $('#q_points').prop('readonly', true);
+
+
+
+            }
+
+
+
         }
 
+    })
+    $('.select2-selection__clear').on('click', function() {
+        $('.quizpoints').css('display', 'none');
 
-        $(element).select2({
-            closeOnSelect: false,
-            placeholder: "Select Quiz Question",
-            allowClear: true,
-            tags: true,
-            language: {
-                noResults: function() {
-                    return "No Question Added";
-                }
-            }
-        });
+    });
+
+
+
+}
+
+function dataedit() {
+
+    var id = $("select[id='quiz_questionedit']").val();
+    $.ajax({
+        url: "{{ url('/elearning/question_quiz/get_points') }}",
+        type: 'GET',
+        data: {
+            'id': id,
+            _token: '{{csrf_token()}}'
+
+        },
+        success: function(data) {
+
+            $('#q_pointsedit').val(data);
+
+
+
+
+        }
+
+    })
+    $('.select2-selection__clear').on('click', function() {
+        $('.quizpoints').css('display', 'none');
+
+    });
+
+
+
+}
+</script>
+
+<script>
+function resetSelect2() {
+    // Get the Select2 element by its ID
+    // $(".js-select1").empty();
+    $(".js-select2").empty();
+
+
+}
+$('.close').on('click', function() {
+    resetSelect2();
+});
+</script>
+
+<script>
+document.querySelector("[name='short_points']").addEventListener("keypress", function(evt) {
+    if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
+        evt.preventDefault();
     }
+});
+document.querySelector("[name='short_pointsedit']").addEventListener("keypress", function(evt) {
+    if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
+        evt.preventDefault();
+    }
+});
 
 
-    $(document).ready(function() {
-        // Call the reinitialization function after the select2 library is loaded
-        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function() {
+document.querySelector("[name='long_points']").addEventListener("keypress", function(evt) {
+    if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)) {
+        evt.preventDefault();
+    }
+});
+document.querySelector("[name='long_pointsedit']").addEventListener("keypress", function(evt) {
+    if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)) {
+        evt.preventDefault();
+    }
+});
+
+document.querySelector("[name='true_points']").addEventListener("keypress", function(evt) {
+    if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
+        evt.preventDefault();
+    }
+});
+document.querySelector("[name='true_pointsedit']").addEventListener("keypress", function(evt) {
+    if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
+        evt.preventDefault();
+    }
+});
+
+document.querySelector("[name='mcq_points']").addEventListener("keypress", function(evt) {
+    if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
+        evt.preventDefault();
+    }
+});
+document.querySelector("[name='mcq_pointsedit']").addEventListener("keypress", function(evt) {
+    if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
+        evt.preventDefault();
+    }
+});
+document.querySelector(".comma").addEventListener("keypress", function(evt) {
+    var charCode = evt.which || evt.keyCode;
+    var charStr = String.fromCharCode(charCode);
+
+    if (/[\.,\/;:`]/.test(charStr)) {
+        evt.preventDefault(); // Prevent entering the character
+    }
+});
+</script>
+<script>
+function loadQuizWithVersions(quizId) {
+    // Show loading state
+    $('#current_version_display').text('Loading...');
+    $('#version_history_body').html('<tr><td colspan="6" class="text-center">Loading version history...</td></tr>');
+
+    // First load the quiz data using existing fetch_update
+    $.ajax({
+        url: "{{ url('/elearning/question_long/fetch') }}",
+        type: 'GET',
+        data: {
+            'id': quizId,
+            'type': 'quizedit',
+            _token: '{{csrf_token()}}'
+        },
+        success: function(data) {
+            // Populate basic form fields from fetch_update
+            $('#q_nameedit').val(data.rows[0]['quiz_name']);
+            $('.quiz_questionedit').val(data.rows[0]['quiz_questions'].split(','));
+            $('#q_pointsedit').val(data.rows[0]['points']);
+            $('#quiz_edit').val(data.rows[0]['quiz_id']);
+            $('#q_pointsedit').prop('readonly', true);
+
+            // Set evaluation if available
+            if (data.rows[0]['evaluation']) {
+                $('#evaluation_edit').val(data.rows[0]['evaluation']);
+            }
+
+            // Set current version from the quiz data
+            let major = data.rows[0]['version_major'] || 1;
+            let minor = data.rows[0]['version_minor'] || 0;
+            $('#current_version_display').text(`${major}.${minor}`);
+            $('#current_major_version').val(major);
+            $('#current_minor_version').val(minor);
+
+            // Reinitialize Select2
             reinitializeSelect2(".js-select1");
-        });
+
+            // Now load version history using the dedicated endpoint
+            loadVersionHistory(quizId);
+        },
+        error: function() {
+            Swal.fire("Error!", "Failed to load quiz data", "error");
+            $('#version_history_body').html(
+                '<tr><td colspan="6" class="text-center text-danger">Failed to load quiz data</td></tr>'
+            );
+        }
     });
+}
+
+function loadVersionHistory(quizId) {
+    $.ajax({
+        url: "{{ url('/elearning/quiz/versions') }}/" + quizId,
+        type: 'GET',
+        success: function(response) {
+            console.log('Version history response:', response); // Debug log
+
+            // Check if the response has the expected structure
+            if (response.Code === 200 && response.Data && response.Data.versions) {
+                let html = '';
+                let versions = response.Data.versions;
+
+                // Sort versions by version number (newest first)
+                versions.sort((a, b) => {
+                    if (b.version_major !== a.version_major) {
+                        return b.version_major - a.version_major;
+                    }
+                    return b.version_minor - a.version_minor;
+                });
+
+                versions.forEach(function(version) {
+                    console.log('Processing version:', version); // Debug log
 
 
 
+                    let questionCount = 0;
+                    if (version.quiz_questions && version.quiz_questions.trim() !== '') {
+                        questionCount = version.quiz_questions.split(',').length;
+                    }
 
-    // document.querySelector("[type='number']").addEventListener("keypress", function(evt) {
-    //     if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57 ||(evt.which === 46)) {
-    //         //Math.trunc(evt);
-    //         evt.preventDefault();
+                    let createdDate = 'N/A';
+                    if (version.created_at) {
+                        createdDate = new Date(version.created_at).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                    }
 
-    //     }
-    // });
-</script>
-<script>
-    function data() {
+                    // Use version_id if available, otherwise fallback to original_quiz_id
+                    let versionId = version.version_id || version.original_quiz_id;
 
-        var id = $("select[id='quiz_question']").val();
-        $.ajax({
-            url: "{{ url('/elearning/question_quiz/get_points') }}",
-            type: 'GET',
-            data: {
-                'id': id,
-                _token: '{{csrf_token()}}'
+                    html += `<tr>
+                        <td><strong>${version.version_major || 1}.${version.version_minor || 0}</strong></td>
+                        <td>${version.quiz_name || 'N/A'}</td>
+                        <td>${questionCount} question${questionCount !== 1 ? 's' : ''}</td>
+                        
+                        
+                        <td>
+                            ${version.is_active === 0 || version.is_active === false ? 
+                                `<button class="btn btn-sm btn-warning restore-version" 
+                                    data-id="${version.original_quiz_id}" 
+                                    data-version-id="${versionId}">
+                                    Restore
+                                </button>` : 
+                                `<span class="text-muted">Current</span>`
+                            }
+                        </td>
+                    </tr>`;
+                });
 
-            },
-            success: function(data) {
-                if (id == "") {
-                    $('.quizpoints').css('display', 'none');
-
-                } else {
-
-                    $('.quizpoints').css('display', 'block');
-
-                    $('#q_points').val(data);
-                    $('#q_points').prop('readonly', true);
-
-
-
+                if (html === '') {
+                    html = `<tr>
+                        <td colspan="6" class="text-center">No version history found</td>
+                    </tr>`;
                 }
 
-
-
+                $('#version_history_body').html(html);
+            } else {
+                $('#version_history_body').html(`
+                    <tr>
+                        <td colspan="6" class="text-center text-danger">
+                            Failed to load version history: ${response.Message || 'Unknown error'}
+                        </td>
+                    </tr>
+                `);
             }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error loading version history:', error);
+            $('#version_history_body').html(`
+                <tr>
+                    <td colspan="6" class="text-center text-danger">
+                        Error loading version history. Please try again.
+                    </td>
+                </tr>
+            `);
+        }
+    });
+}
 
-        })
-        $('.select2-selection__clear').on('click', function() {
-            $('.quizpoints').css('display', 'none');
+// Handle restore version button click
+$(document).on('click', '.restore-version', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
 
-        });
+    let quizId = $(this).data('id');
+    let versionId = $(this).data('version-id');
+    let button = $(this);
 
+    if (confirm('Are you sure you want to restore this version? The current version will be archived.')) {
+        button.prop('disabled', true).text('Restoring...');
 
-
-    }
-
-    function dataedit() {
-
-        var id = $("select[id='quiz_questionedit']").val();
         $.ajax({
-            url: "{{ url('/elearning/question_quiz/get_points') }}",
-            type: 'GET',
+            url: '/elearning/quiz/restore-version',
+            type: 'POST',
             data: {
-                'id': id,
-                _token: '{{csrf_token()}}'
-
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                quiz_id: quizId,
+                version_id: versionId
             },
-            success: function(data) {
-
-                $('#q_pointsedit').val(data);
-
-
-
-
+            success: function(response) {
+                if (response.success) {
+                    alert(response.message || 'Version restored successfully!');
+                    // Reload the version history
+                    loadVersionHistory(quizId);
+                } else {
+                    alert(response.message || 'Failed to restore version');
+                    button.prop('disabled', false).text('Restore');
+                }
+            },
+            error: function() {
+                alert('Error restoring version');
+                button.prop('disabled', false).text('Restore');
             }
-
-        })
-        $('.select2-selection__clear').on('click', function() {
-            $('.quizpoints').css('display', 'none');
-
         });
-
-
-
     }
+});
+
+
+$(document).ready(function() {
+    // Show/hide change notes based on version type selection
+    $('input[name="version_type"]').on('change', function() {
+        if ($(this).val() === 'none') {
+            $('#change_notes_group').hide();
+            $('#change_notes').removeAttr('required');
+        } else {
+            $('#change_notes_group').show();
+            $('#change_notes').attr('required', true);
+        }
+    });
+});
 </script>
 
-<script>
-    function resetSelect2() {
-        // Get the Select2 element by its ID
-        // $(".js-select1").empty();
-        $(".js-select2").empty();
 
-
-    }
-    $('.close').on('click', function() {
-        resetSelect2();
-    });
-</script>
-
-<script>
-    document.querySelector("[name='short_points']").addEventListener("keypress", function(evt) {
-        if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
-            evt.preventDefault();
-        }
-    });
-    document.querySelector("[name='short_pointsedit']").addEventListener("keypress", function(evt) {
-        if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
-            evt.preventDefault();
-        }
-    });
-
-
-    document.querySelector("[name='long_points']").addEventListener("keypress", function(evt) {
-        if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)) {
-            evt.preventDefault();
-        }
-    });
-    document.querySelector("[name='long_pointsedit']").addEventListener("keypress", function(evt) {
-        if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)) {
-            evt.preventDefault();
-        }
-    });
-
-    document.querySelector("[name='true_points']").addEventListener("keypress", function(evt) {
-        if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
-            evt.preventDefault();
-        }
-    });
-    document.querySelector("[name='true_pointsedit']").addEventListener("keypress", function(evt) {
-        if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
-            evt.preventDefault();
-        }
-    });
-
-    document.querySelector("[name='mcq_points']").addEventListener("keypress", function(evt) {
-        if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
-            evt.preventDefault();
-        }
-    });
-    document.querySelector("[name='mcq_pointsedit']").addEventListener("keypress", function(evt) {
-        if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
-            evt.preventDefault();
-        }
-    });
-    document.querySelector(".comma").addEventListener("keypress", function(evt) {
-        var charCode = evt.which || evt.keyCode;
-        var charStr = String.fromCharCode(charCode);
-
-        if (/[\.,\/;:`]/.test(charStr)) {
-            evt.preventDefault(); // Prevent entering the character
-        }
-    });
-</script>
 
 
 
