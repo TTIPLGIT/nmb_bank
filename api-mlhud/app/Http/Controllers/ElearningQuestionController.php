@@ -1494,16 +1494,11 @@ public function get_quiz_versions(Request $request)
     )
     ->first();
 
-// Get all archived versions EXCLUDING the current version's major/minor
+
+// Get all archived versions, but ensure no duplicates
 $oldVersions = DB::table('elearning_practice_quiz_versions')
     ->where('original_quiz_id', $quizId)
-    ->where(function($query) use ($currentVersion) {
-        if ($currentVersion) {
-            // Exclude the current version's major/minor combination
-            $query->where('version_major', '!=', $currentVersion->version_major)
-                  ->orWhere('version_minor', '!=', $currentVersion->version_minor);
-        }
-    })
+    ->where('is_active', 0)
     ->select(
         'original_quiz_id',
         'quiz_name',
@@ -1518,7 +1513,11 @@ $oldVersions = DB::table('elearning_practice_quiz_versions')
     )
     ->orderBy('version_major', 'desc')
     ->orderBy('version_minor', 'desc')
-    ->get();
+    ->get()
+    ->unique(function($item) {
+        return $item->version_major . '.' . $item->version_minor;
+    })
+    ->values();
 
         // Combine versions - current first, then archived
         $allVersions = [];

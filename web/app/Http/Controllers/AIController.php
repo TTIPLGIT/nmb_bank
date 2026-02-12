@@ -398,6 +398,11 @@ public function ai_course_store(Request $request)
             ===================================================== */
             $classIds = [];
             $totalCoursePoints = 0;
+
+              $ai_course_response = DB::table('ai_course_response')
+                ->where('course_id', $courseID)
+                ->orderBy('id', 'desc')
+                ->first();
            
             foreach ($filteredCourseData['classes'] as $classIndex => $class) {
                 $quizData = $class['quiz'] ?? [];
@@ -504,6 +509,15 @@ public function ai_course_store(Request $request)
                     'drop_class'        => 0,
                   
                 ]);
+                // Update AI response classes table with actual LMS class ID
+                DB::table('ai_course_response_classes')
+                    ->where('ai_course_response_id', $ai_course_response->id)
+                    ->where('class_name', $class['class_name'])
+                    ->update([
+                        'class_id'   => $classID,
+                        'updated_at' => now()
+                    ]);
+
                 $classIds[] = $classID;
             }
             
@@ -622,10 +636,7 @@ public function ai_course_store(Request $request)
                 ]);
             }
 
-             $ai_course_response = DB::table('ai_course_response')
-                ->where('course_id', $courseID)
-                ->orderBy('id', 'desc')
-                ->first();
+           
                 
 
             /* =====================================================
@@ -716,7 +727,7 @@ public function ai_course_store(Request $request)
 
             $response = $this->AIserviceRequest($gatewayURL, 'GET', '', $method);
             $response1 = json_decode($response, true);
-            dd($response1,$data['user_id'],$data['course_id']);
+            
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
             $modules = $menus['modules'];

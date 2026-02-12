@@ -453,9 +453,7 @@ window.onload = function() {
                         </a>
 
                         <!-- Course Banner -->
-                        @if($course->course_banner)
-                        <div class="course-banner" style="background-image: url('{{ $course->course_banner }}');"></div>
-                        @endif
+
 
                         <!-- Course Header -->
                         <div class="course-header">

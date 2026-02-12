@@ -1268,18 +1268,33 @@ label:hover~input:checked~label
 
 
     @endif
+    @php
+    $user_id=session('userID');
+
+    @endphp
     <?php if ($classContent->class_format == 'mp4' && $classContent->class_status == 1) { ?>
 
-
+    @if($classContent->resource_path !='')
     <video class="coursetypes videos"
-        src="http://localhost:6061/uploads/class/$classContent->course_id/Introduction%20to%20DBMS.mp4"
+        src="http://localhost:6061/{{$classContent->resource_path}}/{{$classContent->resource_name}}"
         data-poster=" ../..{{$classContent->resource_path}}/{{$classContent->resource_name}}" frameborder="0"
         allowfullscreen controls width="100%">
 
     </video>
+    @else
+    @php
+    $ai_course_response_class = DB::table('ai_course_response_classes')
+    ->where('class_id', $classContent->class_id)
+    ->first();
+    @endphp
+    <video class="coursetypes videos" src="{{$ai_course_response_class->video_link}}"
+        data-poster=" ../..{{$classContent->resource_path}}/{{$classContent->resource_name}}" frameborder="0"
+        allowfullscreen controls width="100%">
+
+    </video>
+    @endif
+
     <br>
-
-
 
 
 

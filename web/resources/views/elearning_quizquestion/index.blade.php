@@ -737,12 +737,12 @@ form.longqustionsform {
 
 
                                                             <td style="">
-                                                                <a class="btn btn-link" title="Edit" id="gcb" href=""
+                                                                <!-- <a class="btn btn-link" title="Edit" id="gcb" href=""
                                                                     data-toggle="modal" data-target="#addModaleditquiz"
                                                                     onclick="fetch_update({{$data['quiz_id']}},'quizedit')"
                                                                     style="margin-top: 0px !important;"><i
                                                                         class="fas fa-pencil-alt"
-                                                                        style="color: blue !important"></i></a>
+                                                                        style="color: blue !important"></i></a> -->
 
                                                                 <a class="btn btn-link" title="Edit" id="gcb" href=""
                                                                     data-toggle="modal" data-target="#addModaleditquiz"
@@ -753,9 +753,13 @@ form.longqustionsform {
                                                                 </a>
 
                                                                 <a class="btn btn-link" title="show" data-toggle="modal"
-                                                                    data-target="#addModalshowquiz"
-                                                                    onclick="fetch_update({{$data['quiz_id']}},'quizshow')"><i
-                                                                        class="fas fa-eye" style="color:green"></i></a>
+                                                                    data-target="#addModaleditquiz" onclick="loadQuizWithVersions({{$data['quiz_id']}},
+                                                                    true)">
+                                                                    <!-- Added true -->
+                                                                    <i class="fas fa-eye" style="color:green"></i>
+                                                                </a>
+
+
 
                                                                 @csrf
 
@@ -2941,7 +2945,7 @@ function gencre(type) {
 
                     <!-- Version Control Section -->
 
-                    <div class="row mt-3">
+                    <div class="row mt-3" id="version_control">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
@@ -2987,7 +2991,7 @@ function gencre(type) {
                     </div>
 
                     <!-- Version History -->
-                    <div class="row mt-3">
+                    <div class="row mt-3" id="version_history">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
@@ -3001,6 +3005,7 @@ function gencre(type) {
                                                     <th>Version</th>
                                                     <th>Quiz Name</th>
                                                     <th>No of Questions</th>
+                                                    <th>Notes</th>
                                                     <!-- <th>Status</th> -->
                                                     <!-- <th>Created Date</th> -->
                                                     <th>Actions</th>
@@ -4377,8 +4382,9 @@ document.querySelector(".comma").addEventListener("keypress", function(evt) {
 });
 </script>
 <script>
-function loadQuizWithVersions(quizId) {
+function loadQuizWithVersions(quizId, disableFields = false) {
     // Show loading state
+
     $('#current_version_display').text('Loading...');
     $('#version_history_body').html('<tr><td colspan="6" class="text-center">Loading version history...</td></tr>');
 
@@ -4411,6 +4417,18 @@ function loadQuizWithVersions(quizId) {
             $('#current_major_version').val(major);
             $('#current_minor_version').val(minor);
 
+            if (disableFields) {
+
+                $('#q_nameedit, #quiz_questionedit, #evaluation_edit').prop('disabled', true);
+                $('#q_nameedit, #evaluation_edit, .select2-selection').css('background-color', '#e9ecef');
+                $('#version_control, #savebutton').hide();
+            } else {
+
+                $('#q_nameedit, #quiz_questionedit, #evaluation_edit').prop('disabled', false);
+                $('#q_nameedit, #evaluation_edit, .select2-selection').css('background-color', '');
+                $('#version_control, #savebutton').show();
+            }
+
             // Reinitialize Select2
             reinitializeSelect2(".js-select1");
 
@@ -4431,14 +4449,15 @@ function loadVersionHistory(quizId) {
         url: "{{ url('/elearning/quiz/versions') }}/" + quizId,
         type: 'GET',
         success: function(response) {
-            console.log('Version history response:', response); // Debug log
+            console.log('Version history response:', response);
 
-            // Check if the response has the expected structure
             if (response.Code === 200 && response.Data && response.Data.versions) {
                 let html = '';
                 let versions = response.Data.versions;
 
-                // Sort versions by version number (newest first)
+                // Get current mode - ADD THIS LINE
+                let isViewMode = $('#version_control').is(':visible') === false;
+
                 versions.sort((a, b) => {
                     if (b.version_major !== a.version_major) {
                         return b.version_major - a.version_major;
@@ -4447,77 +4466,53 @@ function loadVersionHistory(quizId) {
                 });
 
                 versions.forEach(function(version) {
-                    console.log('Processing version:', version); // Debug log
-
-
-
                     let questionCount = 0;
                     if (version.quiz_questions && version.quiz_questions.trim() !== '') {
                         questionCount = version.quiz_questions.split(',').length;
                     }
 
-                    let createdDate = 'N/A';
-                    if (version.created_at) {
-                        createdDate = new Date(version.created_at).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                        });
-                    }
-
-                    // Use version_id if available, otherwise fallback to original_quiz_id
                     let versionId = version.version_id || version.original_quiz_id;
 
+                    // Conditionally show/hide restore button - MODIFIED THIS LINE
+                    let actionButton = '';
+                    if (version.is_active === 1 || version.is_current === true) {
+                        actionButton = '<span class="text-muted">Current</span>';
+                    } else {
+                        if (!isViewMode) { // Only show restore button in edit mode
+                            actionButton = `<button class="btn btn-sm btn-warning restore-version" 
+                                                data-id="${version.original_quiz_id}" 
+                                                data-version-id="${versionId}">
+                                                Restore
+                                            </button>`;
+                        } else {
+                            actionButton =
+                                '<span class="text-muted">Archived</span>'; // Show text instead
+                        }
+                    }
+
                     html += `<tr>
-                        <td><strong>${version.version_major || 1}.${version.version_minor || 0}</strong></td>
+                        <td><strong>${version.version_major || 1}.${version.version_minor || 0}</strong>
+                            ${version.is_active === 1 || version.is_current === true ? '' : ''}
+                        </td>
                         <td>${version.quiz_name || 'N/A'}</td>
                         <td>${questionCount} question${questionCount !== 1 ? 's' : ''}</td>
-                        
-                        
-                        <td>
-                            ${version.is_active === 0 || version.is_active === false ? 
-                                `<button class="btn btn-sm btn-warning restore-version" 
-                                    data-id="${version.original_quiz_id}" 
-                                    data-version-id="${versionId}">
-                                    Restore
-                                </button>` : 
-                                `<span class="text-muted">Current</span>`
-                            }
-                        </td>
+                         <td>${version.change_notes}</td>
+                        <td>${actionButton}</td>
                     </tr>`;
                 });
 
                 if (html === '') {
                     html = `<tr>
-                        <td colspan="6" class="text-center">No version history found</td>
+                        <td colspan="4" class="text-center">No version history found</td>
                     </tr>`;
                 }
 
                 $('#version_history_body').html(html);
-            } else {
-                $('#version_history_body').html(`
-                    <tr>
-                        <td colspan="6" class="text-center text-danger">
-                            Failed to load version history: ${response.Message || 'Unknown error'}
-                        </td>
-                    </tr>
-                `);
             }
-        },
-        error: function(xhr, status, error) {
-            console.error('Error loading version history:', error);
-            $('#version_history_body').html(`
-                <tr>
-                    <td colspan="6" class="text-center text-danger">
-                        Error loading version history. Please try again.
-                    </td>
-                </tr>
-            `);
         }
     });
 }
+
 
 // Handle restore version button click
 $(document).on('click', '.restore-version', function(e) {
@@ -4532,25 +4527,40 @@ $(document).on('click', '.restore-version', function(e) {
         button.prop('disabled', true).text('Restoring...');
 
         $.ajax({
-            url: '/elearning/quiz/restore-version',
+            url: "{{ url('/elearning/quiz/restore-version') }}",
             type: 'POST',
             data: {
-                _token: $('meta[name="csrf-token"]').attr('content'),
+                _token: '{{ csrf_token() }}',
                 quiz_id: quizId,
                 version_id: versionId
             },
             success: function(response) {
-                if (response.success) {
-                    alert(response.message || 'Version restored successfully!');
-                    // Reload the version history
-                    loadVersionHistory(quizId);
+                if (response.Code === 200 || response.success) {
+                    Swal.fire({
+                        title: "Success!",
+                        text: response.Message || response.message ||
+                            'Version restored successfully!',
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        // CLOSE THE MODAL
+                        $('#addModalquiz').modal('hide');
+
+                        // OR if you're using the edit modal
+                        // $('#addModaleditquiz').modal('hide');
+
+                        // Reload the page or refresh the data
+                        location.reload(); // Simple solution
+                    });
                 } else {
-                    alert(response.message || 'Failed to restore version');
+                    Swal.fire("Error!", response.Message || response.message ||
+                        'Failed to restore version', "error");
                     button.prop('disabled', false).text('Restore');
                 }
             },
             error: function() {
-                alert('Error restoring version');
+                Swal.fire("Error!", "Error restoring version", "error");
                 button.prop('disabled', false).text('Restore');
             }
         });

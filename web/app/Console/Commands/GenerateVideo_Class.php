@@ -45,12 +45,12 @@ class GenerateVideo_Class extends Command
     Log::info('Every 5 minutes cron started');
 
     $aiResponseClasses = DB::table('ai_course_response_classes')
-        ->where('video_status','=','')
+        ->whereNull('video_status')
         ->get();
-     Log::info('Batch status response', [
-                'aiResponseClasses'      => $aiResponseClasses,
+    //  Log::info('Batch status response', [
+    //             'aiResponseClasses'      => $aiResponseClasses,
                 
-            ]);
+    //         ]);
     if ($aiResponseClasses->isEmpty()) {
         Log::info('No pending AI response classes found');
         return Command::SUCCESS;
@@ -70,7 +70,7 @@ class GenerateVideo_Class extends Command
                     'Accept' => 'application/json',
                 ])
                 ->post($url, $payload);
-
+        Log:info ($response);
             if (!$response->successful()) {
                 Log::error('Batch status API failed', [
                     'task_id' => $class->task_id,
