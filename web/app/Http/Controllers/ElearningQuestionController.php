@@ -1166,4 +1166,89 @@ public function getQuizData($id)
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
     }
+
+    // Add to your ElearningQuestionController (Web side)
+public function getClassData($id)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => getClassData';
+        
+        $data = array();
+        $data['class_id'] = $id;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        $gatewayURL = config('setting.api_gateway_url') . '/class/get-class-data';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+        
+        $response1 = json_decode($response);
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            $decryptedData = $this->decryptData($response1->Data);
+            return response()->json(['success' => true, 'data' => json_decode($decryptedData, true)]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to load class data']);
+        }
+    } catch (\Exception $exc) {
+        return response()->json(['success' => false, 'message' => $exc->getMessage()]);
+    }
+}
+
+public function getClassVersions($id)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => getClassVersions';
+        
+        $data = array();
+        $data['class_id'] = $id;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        $gatewayURL = config('setting.api_gateway_url') . '/class/get-class-versions';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+        
+        $response1 = json_decode($response);
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            $decryptedData = $this->decryptData($response1->Data);
+            return response()->json(['success' => true, 'versions' => json_decode($decryptedData, true)]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to load versions']);
+        }
+    } catch (\Exception $exc) {
+        return response()->json(['success' => false, 'message' => $exc->getMessage()]);
+    }
+}
+
+public function restoreClassVersion(Request $request)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => restoreClassVersion';
+        
+        $data = array();
+        $data['class_id'] = $request->class_id;
+        $data['version_id'] = $request->version_id;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        $gatewayURL = config('setting.api_gateway_url') . '/class/restore-class-version';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+        
+        $response1 = json_decode($response);
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            return response()->json(['success' => true, 'message' => 'Version restored successfully']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to restore version']);
+        }
+    } catch (\Exception $exc) {
+        return response()->json(['success' => false, 'message' => $exc->getMessage()]);
+    }
+}
 }

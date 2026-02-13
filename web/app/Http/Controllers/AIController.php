@@ -1376,6 +1376,58 @@ public function delete_audio(Request $request, $id)
     }
 }
 
+public function globalChat(Request $request)
+{
+    $method = 'Method=> AIController => globalChat';
+    
+    try {
+        $user_id = $request->session()->get("userID");
+        if ($user_id == null) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        
+        // Validate request
+        $request->validate([
+            'message' => 'required|string|max:2000'
+        ]);
+        
+        // Prepare request body for API
+        $data = (object) [
+            'message' => $request->message
+        ];
+
+        $gatewayURL = 'http://20.164.0.23:3300/api/global-chat';
+
+        // Make the API call
+        $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
+        
+        // Decode the response
+        $response = is_string($response)
+            ? json_decode($response, true)
+            : $response;
+            
+        // Check if response is valid
+        if (!$response || isset($response['error'])) {
+            return response()->json([
+                'error' => 'Failed to get response: ' . ($response['error'] ?? 'Unknown error')
+            ], 500);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'response' => $response['response'] ?? '',
+            'status' => $response['status'] ?? 'success'
+        ]);
+        
+    } catch (\Exception $exc) {
+        $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        
+        return response()->json([
+            'error' => 'An error occurred: ' . $exc->getMessage()
+        ], 500);
+    }
+}
+
 
 
 }

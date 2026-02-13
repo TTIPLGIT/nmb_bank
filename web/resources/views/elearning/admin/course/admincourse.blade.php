@@ -479,6 +479,14 @@ form.longqustionsform {
                                                                 onclick="fetch_update({{$data->class_id}},'edit')">
                                                                 <i class="fas fa-pencil-alt"
                                                                     style="color: blue !important"></i></a>
+                                                            <!-- Replace your existing edit button with this -->
+                                                            <a class="btn btn-link" title="Edit"
+                                                                href="javascript:void(0);"
+                                                                onclick="openClassEditModal({{$data->class_id}})"
+                                                                style="margin-top: 0px !important;">
+                                                                <i class="fas fa-pencil-alt"
+                                                                    style="color: blue !important"></i>
+                                                            </a>
                                                             <a class="btn btn-link"
                                                                 onclick="fetch_update({{$data->class_id}},'class_show')"
                                                                 title="Show" id="gcb" href="" data-toggle="modal"
@@ -681,7 +689,7 @@ form.longqustionsform {
     </div>
 
 </div>
-</div>
+
 <div class="modal fade" id="addModalquiz1">
     <div class="modal-dialog modal-lg">
 
@@ -2938,7 +2946,7 @@ $(document).ready(function() {
 </div>
 
 <!-- edit quiz -->
-<div class="modal fade" id="addModal4">
+<!-- <div class="modal fade" id="addModal4">
     <div class="modal-dialog modal-lg">
 
         <div class="modal-content">
@@ -3043,7 +3051,7 @@ $(document).ready(function() {
 
                     </div>
 
-                    <!-- <h style="color:black"><b>Address:</b></h> -->
+                  
 
 
                     <div class="row">
@@ -3059,6 +3067,193 @@ $(document).ready(function() {
         </div>
 
 
+    </div>
+</div> -->
+<div class="modal fade" id="addModal4">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="POST" action="{{route('elearning.class_update', 1)}}" id="edit_form"
+                enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="eid" class="eid" id="eid">
+                <input type="hidden" name="current_major_version" id="current_major_version" value="1">
+                <input type="hidden" name="current_minor_version" id="current_minor_version" value="0">
+                <input type="hidden" name="highest_major_version" id="highest_major_version" value="1">
+                <input type="hidden" name="existing_versions" id="existing_versions" value="">
+
+                <div class="modal-header mh">
+                    <h4 class="modal-title">Edit Class</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+
+                <div class="container edit longquestion">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Class Name:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default" id="class_nameedit"
+                                    name="class_nameedit" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="">Class Description<span class="error-star"
+                                        style="color:red;">*</span></label>
+                                <textarea class="form-control" id="class_descriptionedit" name="class_descriptionedit"
+                                    rows="5" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label>Class Resource:<span class="error-star" style="color:red;">*</span></label>
+                                <div class="col-md-10"
+                                    style="display: flex;justify-content: space-between;margin-bottom: 15px;">
+                                    <a class="btn btn-link btn-warning" onclick="changeimage(event);"
+                                        id="change_banner">Change Banner</a>
+                                    <a class="btn btn-link btn-warning" onclick="changeimage(event);" id="change_cancel"
+                                        style="display:none;">Cancel</a>
+                                </div>
+                                <input type="file" class="form-control default" id="resourse_nameedit"
+                                    name="resource_nameedit" style="display:none;" autocomplete="off"
+                                    accept=".pdf, .mp3,.mp4">
+                                <iframe class="img-fluid" alt="Banner Image" title=""></iframe>
+                            </div>
+                            <span style="color:red !important"><strong>Following files could be uploaded as
+                                    pdf,mp3,mp4</strong></span>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Class Duration:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default" id="class_durationedit"
+                                    name="class_durationedit" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Class Quiz:<span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="class_quizedit" id="class_quizedit"
+                                    onchange="data(event);">
+                                    <option value="">---Select Quiz Type---</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="yesedit" style="display:none;">
+                            <div class="form-group">
+                                <label>Quiz Name:<span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="quiz_idedit" id="quiz_idedit">
+                                    <option value="">---Select Quiz---</option>
+                                    @foreach($rows1['quiz_dropdown'] as $key => $row)
+                                    <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Version Control Section -->
+                    <div class="row mt-3" id="version_control">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Version Control</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Current Version: <span id="current_version_display">1.0</span></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Version Update Type:<span class="error-star"
+                                                style="color:red;">*</span></label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="version_type"
+                                                id="version_none" value="none" checked>
+                                            <label class="form-check-label" for="version_none">
+                                                No Version Update - Save changes without creating new version
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="version_type"
+                                                id="version_minor" value="minor">
+                                            <label class="form-check-label" for="version_minor">
+                                                Minor Update (e.g., 1.0 → 1.1) - Small changes, bug fixes
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="version_type"
+                                                id="version_major" value="major">
+                                            <label class="form-check-label" for="version_major">
+                                                Major Update (e.g., 1.0 → 2.0) - Significant changes
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="change_notes_group" style="display: none;">
+                                        <label>Change Notes:</label>
+                                        <textarea class="form-control" id="change_notes" name="change_notes" rows="3"
+                                            placeholder="Describe what changed in this version"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Version History -->
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header bg-secondary text-white">
+                                    <h5 class="card-title mb-0">Version History</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped"
+                                            id="class_version_history_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Version</th>
+                                                    <th>Class Name</th>
+                                                    <th>Duration</th>
+
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="class_version_history_body">
+                                                <tr>
+                                                    <td colspan="7" class="text-center">No version history available
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-lg-12 text-center">
+                            <button class="btn btn-success btn-space savebutton" type="button"
+                                onclick="submitClassVersion()" id="savebutton">
+                                <i class="fas fa-save"></i> Update with Version Control
+                            </button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <!-- end -->
@@ -3930,7 +4125,9 @@ $(document).ready(function() {
     </div>
 </div>
 
-
+<link rel="stylesheet" href="https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <script>
 function handleExpiredCourse(course_id) {
@@ -4105,8 +4302,7 @@ function gencre() {
 
 }
 </script>
-<link rel="stylesheet" href="https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+
 
 <script>
 function resetSelect2() {
@@ -4117,7 +4313,7 @@ function resetSelect2() {
 $('.close').on('click', function() {
     resetSelect2();
 });
-}
+
 $('.close').on('click', function() {
     resetSelect2();
 });
@@ -4512,9 +4708,7 @@ function gencre1(id) {
 
 
 
-<!-- end create -->
-<!-- edit function -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
 <script>
 var $j = jQuery.noConflict();
@@ -4761,6 +4955,490 @@ function toggleButton() {
     } else {
         button.style.display = "none";
     }
+}
+</script>
+
+<script>
+jQuery(document).ready(function($) {
+    $(document).on('change', 'input[name="version_type"]', function() {
+        let versionType = $(this).val();
+        let currentMajor = parseInt($('#current_major_version').val()) || 1;
+        let currentMinor = parseInt($('#current_minor_version').val()) || 0;
+        let highestMajor = parseInt($('#highest_major_version').val()) || currentMajor;
+        let existingVersionsStr = $('#existing_versions').val() || '[]';
+
+        if (versionType === 'none') {
+            $('#change_notes_group').hide();
+            $('#change_notes').removeAttr('required');
+            $('#version_preview').hide();
+        } else {
+            $('#change_notes_group').show();
+            $('#change_notes').attr('required', true);
+
+            // Show version preview
+            let newVersion = calculateNextVersion(currentMajor, currentMinor, highestMajor,
+                existingVersionsStr, versionType);
+            let previewHtml = `<div class="alert alert-info mt-2" id="version_preview">
+            <strong>Version Preview:</strong> ${currentMajor}.${currentMinor} → ${newVersion.major}.${newVersion.minor}
+        </div>`;
+
+            if ($('#version_preview').length) {
+                $('#version_preview').html(
+                    `<strong>Version Preview:</strong> ${currentMajor}.${currentMinor} → ${newVersion.major}.${newVersion.minor}`
+                );
+            } else {
+                $('#change_notes_group').after(previewHtml);
+            }
+        }
+    });
+});
+// Function to open edit modal with class data
+function openClassEditModal(classId) {
+    console.log('Opening edit modal for class:', classId);
+
+    // Reset form
+    $('#edit_form')[0].reset();
+    $('#change_notes_group').hide();
+    $('input[name="version_type"][value="none"]').prop('checked', true);
+
+    // Clear previous data
+    $('#class_version_history_body').html(
+        '<tr><td colspan="7" class="text-center">Loading version history...</td></tr>');
+    $('#current_version_display').text('Loading...');
+
+    // Show loading state
+    $('#savebutton').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Loading...');
+
+    // Load class data
+    $.ajax({
+        url: '/elearning/class/get-class-data/' + classId,
+        type: 'GET',
+        success: function(response) {
+            console.log('Class data response:', response);
+
+            if (response.success) {
+                // Check if data is nested or direct
+                let classData = response.data.Data || response;
+
+                // Populate form fields
+                $('#eid').val(classId);
+                $('#class_nameedit').val(classData.class_name || '');
+                $('#class_descriptionedit').val(classData.class_description || '');
+                $('#class_durationedit').val(classData.class_duration || '');
+
+                // Set quiz selection
+                if (classData.class_quiz) {
+                    $('#class_quizedit').val(classData.class_quiz).trigger('change');
+                    if (classData.class_quiz === 'yes' && classData.quiz_id) {
+                        setTimeout(() => {
+                            $('#quiz_idedit').val(classData.quiz_id);
+                        }, 100);
+                    }
+                }
+
+                // Set current version
+                let major = classData.version_major || 1;
+                let minor = classData.version_minor || 0;
+                $('#current_version_display').text(`${major}.${minor}`);
+                $('#current_major_version').val(major);
+                $('#current_minor_version').val(minor);
+
+                // Display current resource if exists
+                if (classData.resource_name && classData.resource_name !== '0') {
+                    let resourcePath = classData.resource_path ?
+                        classData.resource_path + '/' + classData.resource_name :
+                        '/uploads/class/' + classData.resource_name;
+                    $('.img-fluid').attr('src', resourcePath);
+                }
+
+                // Load version history
+                loadClassVersionHistory(classId);
+
+                // Open modal
+                $('#addModal4').modal('show');
+            } else {
+                alert('Failed to load class data: ' + (response.message || 'Unknown error'));
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error loading class:', error);
+            alert('Error loading class data. Please try again.');
+        },
+        complete: function() {
+            $('#savebutton').prop('disabled', false).html(
+                '<i class="fas fa-save"></i> Update with Version Control');
+        }
+    });
+}
+
+
+// Function to load class version history
+function loadClassVersionHistory(classId) {
+    console.log('Loading version history for class:', classId);
+
+    $('#class_version_history_body').html(
+        '<tr><td colspan="7" class="text-center">Loading version history...</td></tr>');
+
+    $.ajax({
+        url: '/elearning/class/versions/' + classId,
+        type: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            console.log('Version history raw response:', response);
+
+            if (response.success) {
+                let versionsData = [];
+                let existingVersions = [];
+
+                if (response.versions && response.versions.Data) {
+                    versionsData = response.versions.Data;
+                } else if (Array.isArray(response.versions)) {
+                    versionsData = response.versions;
+                } else if (response.versions && Array.isArray(response.versions)) {
+                    versionsData = response.versions;
+                }
+
+                if (versionsData && versionsData.length > 0) {
+                    let html = '';
+                    let highestMajor = 1;
+
+                    // Store all versions for version checking
+                    existingVersions = versionsData.map(v => ({
+                        major: parseInt(v.version_major || 1),
+                        minor: parseInt(v.version_minor || 0)
+                    }));
+
+                    // Find highest major version
+                    highestMajor = Math.max(...existingVersions.map(v => v.major));
+
+                    // Store in hidden fields
+                    $('#highest_major_version').val(highestMajor);
+                    $('#existing_versions').val(JSON.stringify(existingVersions));
+
+                    // Sort versions by version number (newest first)
+                    versionsData.sort((a, b) => {
+                        if (b.version_major !== a.version_major) {
+                            return b.version_major - a.version_major;
+                        }
+                        return b.version_minor - a.version_minor;
+                    });
+
+                    versionsData.forEach(function(version) {
+                        let statusBadge = version.is_active == 1 ?
+                            '<span class="badge badge-success">Active (Current)</span>' :
+                            '<span class="badge badge-secondary">Archived</span>';
+
+                        // Format date
+                        let createdDate = 'N/A';
+                        if (version.created_at) {
+                            createdDate = new Date(version.created_at).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+                        }
+
+                        // Version display with change notes
+                        let versionDisplay =
+                            `${version.version_major || 1}.${version.version_minor || 0}`;
+                        if (version.change_notes) {
+                            versionDisplay +=
+                                `<br><small class="text-muted" title="${version.change_notes}">${version.change_notes.substring(0, 30)}${version.change_notes.length > 30 ? '...' : ''}</small>`;
+                        }
+
+                        html += `<tr>
+                            <td><strong>${versionDisplay}</strong></td>
+                            <td>${version.class_name || 'N/A'}</td>
+                            <td>${version.class_duration || 'N/A'} Mins</td>
+                           
+                            <td>
+                                ${version.is_active != 1 ? 
+                                    `<button class="btn btn-sm btn-warning restore-class-version" 
+                                        data-id="${classId}" 
+                                        data-version-id="${version.version_id || version.original_class_id}">
+                                        <i class="fas fa-history"></i> Restore
+                                    </button>` : 
+                                    '<span class="text-muted"><i class="fas fa-check-circle"></i> Current</span>'
+                                }
+                            </td>
+                        </tr>`;
+                    });
+
+                    $('#class_version_history_body').html(html);
+                } else {
+                    $('#class_version_history_body').html(`
+                        <tr>
+                            <td colspan="7" class="text-center text-info">
+                                <i class="fas fa-info-circle"></i> No version history available.
+                            </td>
+                        </tr>
+                    `);
+                    $('#highest_major_version').val($('#current_major_version').val());
+                    $('#existing_versions').val('[]');
+                }
+            } else {
+                $('#class_version_history_body').html(`
+                    <tr>
+                        <td colspan="7" class="text-center text-danger">
+                            Failed to load version history: ${response.message || 'Unknown error'}
+                        </td>
+                    </tr>
+                `);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error loading version history:', error);
+            $('#class_version_history_body').html(`
+                <tr>
+                    <td colspan="7" class="text-center text-danger">
+                        <i class="fas fa-exclamation-triangle"></i> Error loading version history.
+                    </td>
+                </tr>
+            `);
+        }
+    });
+}
+
+// Updated submit function with correct version preview
+// Function to check if a version already exists
+function checkIfVersionExists(major, minor, existingVersionsStr) {
+    try {
+        let existingVersions = JSON.parse(existingVersionsStr || '[]');
+        return existingVersions.some(v => v.major === major && v.minor === minor);
+    } catch (e) {
+        console.error('Error parsing existing versions:', e);
+        return false;
+    }
+}
+
+// Function to calculate next version
+function calculateNextVersion(currentMajor, currentMinor, highestMajor, existingVersionsStr, updateType) {
+    let existingVersions = [];
+    try {
+        existingVersions = JSON.parse(existingVersionsStr || '[]');
+    } catch (e) {
+        console.error('Error parsing existing versions:', e);
+    }
+
+    if (updateType === 'major') {
+        // Find the highest major version and add 1
+        let nextMajor = highestMajor + 1;
+
+        // Check if this version already exists (shouldn't, but just in case)
+        while (checkIfVersionExists(nextMajor, 0, JSON.stringify(existingVersions))) {
+            nextMajor++;
+        }
+
+        return {
+            major: nextMajor,
+            minor: 0
+        };
+    } else if (updateType === 'minor') {
+        let nextMinor = currentMinor + 1;
+
+        // Check if this minor version already exists
+        while (checkIfVersionExists(currentMajor, nextMinor, JSON.stringify(existingVersions))) {
+            nextMinor++;
+        }
+
+        return {
+            major: currentMajor,
+            minor: nextMinor
+        };
+    } else {
+        // No version change
+        return {
+            major: currentMajor,
+            minor: currentMinor
+        };
+    }
+}
+
+// Updated submit function
+function submitClassVersion() {
+    // Validate required fields
+    if (!$('#class_nameedit').val().trim()) {
+        Swal.fire('Validation Error', 'Class Name is required', 'error');
+        return;
+    }
+
+    if (!$('#class_descriptionedit').val().trim()) {
+        Swal.fire('Validation Error', 'Class Description is required', 'error');
+        return;
+    }
+
+    if (!$('#class_durationedit').val().trim()) {
+        Swal.fire('Validation Error', 'Class Duration is required', 'error');
+        return;
+    }
+
+    if (!$('#class_quizedit').val()) {
+        Swal.fire('Validation Error', 'Please select if quiz is required or not', 'error');
+        return;
+    }
+
+    if ($('#class_quizedit').val() === 'yes' && !$('#quiz_idedit').val()) {
+        Swal.fire('Validation Error', 'Please select a quiz', 'error');
+        return;
+    }
+
+    let versionType = $('input[name="version_type"]:checked').val();
+    let currentMajor = parseInt($('#current_major_version').val()) || 1;
+    let currentMinor = parseInt($('#current_minor_version').val()) || 0;
+    let highestMajor = parseInt($('#highest_major_version').val()) || currentMajor;
+    let existingVersionsStr = $('#existing_versions').val() || '[]';
+
+    let newVersion;
+    let versionMessage = '';
+
+    if (versionType !== 'none') {
+        let changeNotes = $('#change_notes').val().trim();
+        if (!changeNotes) {
+            Swal.fire('Validation Error', 'Please provide change notes for ' + versionType + ' update', 'error');
+            return;
+        }
+
+        // Calculate new version
+        newVersion = calculateNextVersion(currentMajor, currentMinor, highestMajor, existingVersionsStr, versionType);
+
+        let currentVersion = `${currentMajor}.${currentMinor}`;
+        let newVersionStr = `${newVersion.major}.${newVersion.minor}`;
+
+        if (versionType === 'major') {
+            versionMessage =
+                `Current version: ${currentVersion}\nHighest major version: ${highestMajor}\nNew version will be: ${newVersionStr}`;
+        } else {
+            versionMessage = `Current version: ${currentVersion}\nNew version will be: ${newVersionStr}`;
+        }
+
+        // Confirm version update
+        Swal.fire({
+            title: 'Confirm Version Update',
+            text: versionMessage,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Proceed',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                proceedWithUpdate(versionType, newVersion);
+            }
+        });
+    } else {
+        // Confirm direct update without version change
+        Swal.fire({
+            title: 'Confirm Update',
+            text: 'You are about to update the class without creating a new version. The current version will be overwritten. Continue?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, update',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                proceedWithUpdate(versionType, {
+                    major: currentMajor,
+                    minor: currentMinor
+                });
+            }
+        });
+    }
+}
+
+function proceedWithUpdate(versionType, newVersion) {
+    // Add version data to form
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'version_type',
+        value: versionType
+    }).appendTo('#edit_form');
+
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'change_notes',
+        value: $('#change_notes').val()
+    }).appendTo('#edit_form');
+
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'new_major_version',
+        value: newVersion.major
+    }).appendTo('#edit_form');
+
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'new_minor_version',
+        value: newVersion.minor
+    }).appendTo('#edit_form');
+
+    // Submit form
+    $('#edit_form').submit();
+}
+
+
+// Restore version handler
+jQuery(document).ready(function($) {
+    $(document).on('click', '.restore-class-version', function(e) {
+
+        e.preventDefault();
+        let classId = $(this).data('id');
+        let versionId = $(this).data('version-id');
+        let button = $(this);
+
+        if (confirm(
+                'Are you sure you want to restore this version? The current version will be archived.'
+            )) {
+            button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Restoring...');
+
+            $.ajax({
+                url: '/elearning/class/restore-version',
+                type: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    class_id: classId,
+                    version_id: versionId
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message || 'Version restored successfully!');
+                        // Reload class data and version history
+                        openClassEditModal(classId);
+                    } else {
+                        alert(response.message || 'Failed to restore version');
+                        button.prop('disabled', false).html(
+                            '<i class="fas fa-history"></i> Restore');
+                    }
+                },
+                error: function() {
+                    alert('Error restoring version');
+                    button.prop('disabled', false).html(
+                        '<i class="fas fa-history"></i> Restore');
+                }
+            });
+        }
+    });
+});
+
+// Toggle quiz dropdown based on selection
+function data(event) {
+    let value = $(event.target).val();
+    if (value === 'yes') {
+        $('#yesedit').show();
+        $('#quiz_idedit').prop('required', true);
+    } else {
+        $('#yesedit').hide();
+        $('#quiz_idedit').prop('required', false);
+        $('#quiz_idedit').val('');
+    }
+}
+
+// File upload handler
+function changeimage(event) {
+    event.preventDefault();
+    $('#resourse_nameedit').click();
 }
 </script>
 
