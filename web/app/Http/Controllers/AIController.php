@@ -411,10 +411,11 @@ public function ai_course_store(Request $request)
 
                 /* ---------- LONG QUESTIONS ---------- */
                 foreach ($quizData['long'] ?? [] as $qIndex => $q) {
+                    $keywords = implode(',', $q['keywords']);
                     $qid = DB::table('elearning_questions_long_answer')->insertGetId([
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
-                        'keywords'      => $q['answer'],
+                        'keywords'      => $keywords,
                         'points'        => $q['points'],
                         'question_type' => 'long',
                         'drop_question' => 0,
@@ -451,10 +452,11 @@ public function ai_course_store(Request $request)
 
                 /* ---------- SHORT QUESTIONS ---------- */
                 foreach ($quizData['short'] ?? [] as $qIndex => $q) {
+                    $keywords = implode(',', $q['keywords']);
                     $qid = DB::table('elearning_questions_short_answer')->insertGetId([
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
-                        'keywords'      => $q['answer'],
+                        'keywords'      => $keywords,
                         'points'        => $q['points'],
                         'question_type' => 'short',
                         'drop_question' => 0,
@@ -532,10 +534,11 @@ public function ai_course_store(Request $request)
                 
                 /* ---------- LONG QUESTIONS ---------- */
                 foreach ($finalExamData['long'] ?? [] as $qIndex => $q) {
+                    $keywords = implode(',', $q['keywords']);
                     $qid = DB::table('elearning_questions_long_answer')->insertGetId([
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
-                        'keywords'      => $q['answer'],
+                        'keywords'      => $keywords,
                         'points'        => $q['points'],
                         'question_type' => 'long',
                         'drop_question' => 0,
@@ -571,10 +574,11 @@ public function ai_course_store(Request $request)
 
                 /* ---------- SHORT QUESTIONS ---------- */
                 foreach ($finalExamData['short'] ?? [] as $qIndex => $q) {
+                    $keywords = implode(',', $q['keywords']);
                     $qid = DB::table('elearning_questions_short_answer')->insertGetId([
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
-                        'keywords'      => $q['answer'],
+                        'keywords'      => $keywords,
                         'points'        => $q['points'],
                         'question_type' => 'short',
                         'drop_question' => 0,

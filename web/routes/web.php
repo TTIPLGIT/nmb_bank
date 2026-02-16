@@ -861,9 +861,9 @@ Route::get('/elearning/quiz/versions/{id}', [App\Http\Controllers\ElearningQuest
 Route::post('/elearning/quiz/restore-version', [App\Http\Controllers\ElearningQuestionController::class, 'restoreVersion']);
 Route::get('/elearning/quiz/get-quiz-data/{id}', [App\Http\Controllers\ElearningQuestionController::class, 'getQuizData']);
 
-Route::get('/elearning/class/get-class-data/{id}', [App\Http\Controllers\ElearningQuestionController::class, 'getClassData']);
-Route::get('/elearning/class/versions/{id}', [App\Http\Controllers\ElearningQuestionController::class, 'getClassVersions']);
-Route::post('/elearning/class/restore-version', [App\Http\Controllers\ElearningQuestionController::class, 'restoreClassVersion']);
+Route::get('/elearning/class/get-class-data/{id}', [App\Http\Controllers\tryController::class, 'getClassData']);
+Route::get('/elearning/class/versions/{id}', [App\Http\Controllers\tryController::class, 'getClassVersions']);
+Route::post('/elearning/class/restore-version', [App\Http\Controllers\tryController::class, 'restoreClassVersion']);
 
 Route::post('/class/update/{class_id}', [App\Http\Controllers\tryController::class, 'class_update'])->name('elearning.class_update');
 

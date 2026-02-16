@@ -913,7 +913,7 @@ Route::post('/elearning/question_quiz/get-versions', [App\Http\Controllers\Elear
 Route::post('/elearning/question_quiz/restore-version', [App\Http\Controllers\ElearningQuestionController::class, 'restore_quiz_version']);
 Route::post('/elearning/question_quiz/get-quiz-data', [App\Http\Controllers\ElearningQuestionController::class, 'get_quiz_data']);
 
-Route::post('/class/get-class-data', [App\Http\Controllers\ElearningQuestionController::class, 'get_class_data']);
-Route::post('/class/class_update_with_version', [App\Http\Controllers\ElearningQuestionController::class, 'class_update_with_version']);
-Route::post('/class/get-class-versions', [App\Http\Controllers\ElearningQuestionController::class, 'get_class_versions']);
-Route::post('/class/restore-class-version', [App\Http\Controllers\ElearningQuestionController::class, 'restore_class_version']);
+Route::post('/class/get-class-data', [App\Http\Controllers\tryController::class, 'get_class_data']);
+Route::post('/class/class_update_with_version', [App\Http\Controllers\tryController::class, 'class_update_with_version']);
+Route::post('/class/get-class-versions', [App\Http\Controllers\tryController::class, 'get_class_versions']);
+Route::post('/class/restore-class-version', [App\Http\Controllers\tryController::class, 'restore_class_version']);

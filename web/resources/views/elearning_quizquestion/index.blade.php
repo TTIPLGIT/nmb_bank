@@ -2462,8 +2462,274 @@ $(document).ready(function() {
 
 })
 
-function gencre(type) {
-    if (type === 'quizedit') {
+function gencre(id) {
+
+    // event.preventDefault(); // Prevent default form action
+    if (id == "1") {
+        var long_qname = $("#long_qname").val();
+        if (long_qname == '') {
+            swal.fire("Please Enter the Question Name", "", "error");
+            return false;
+        }
+        var long_quistion = $("#long_quistion").val();
+        if (long_quistion == '') {
+            swal.fire("Please Enter the Question Description", "", "error");
+            return false;
+        }
+        var keyword_long = $("#keyword_long").val();
+        if (keyword_long == '') {
+            swal.fire("Please Enter the Question Keywords", "", "error");
+            return false;
+        }
+        var long_points = $("#long_points").val();
+        if (long_points == '') {
+            swal.fire("Please Enter the Question Points", "", "error");
+            return false;
+        } else {
+            //$('#savebutton').css('pointer-events', 'none');
+            $('#savebutton').prop('disabled', true);
+            document.getElementById('longcreateform').submit();
+            document.getElementById('truelist').scrollIntoView({
+                behavior: 'smooth'
+            }); // Scroll to the question-row
+
+        }
+
+
+    }
+    if (id == "longedit") {
+
+
+        var long_qnameedit = $("#long_qnameedit").val();
+        if (long_qnameedit == '') {
+            swal.fire("Please Enter the Question Name", "", "error");
+            return false;
+        }
+        var long_quistionedit = $("#long_quistionedit").val();
+        if (long_quistionedit == '') {
+            swal.fire("Please Enter the Question Description", "", "error");
+            return false;
+        }
+        var keyword_longedit = document.querySelectorAll('#keyword_longedit');
+        var keyword_key = 0;
+        for (const long_edit of keyword_longedit) {
+            if (keyword_key != 0 && long_edit.value == '') {
+                swal.fire("Please Enter the Question Keywords", "", "error");
+                return false;
+            }
+            keyword_key++;
+
+        }
+        var keyword_long_show = document.querySelectorAll('#keyword_long_show');
+        var keyword_key = 0;
+        for (const long_edit of keyword_long_show) {
+            if (keyword_key != 0 && long_edit.value == '') {
+                swal.fire("Please Enter the Question Keywords", "", "error");
+                return false;
+            }
+            keyword_key++;
+
+        }
+        // if (keyword_longedit == '') {
+        //     swal.fire("Please Enter the Question Keywords", "", "error");
+        //     return false;
+        // }
+        var long_pointsedit = $("#long_pointsedit").val();
+        if (long_pointsedit == '') {
+            swal.fire("Please Enter the Question Points", "", "error");
+            return false;
+        } else {
+            document.getElementById('longedit_form').submit();
+        }
+    }
+    if (id == "2") {
+        var short_qname = $("#short_qname").val();
+        if (short_qname == '') {
+            swal.fire("Please Enter the Question Name", "", "error");
+            return false;
+        }
+        var short_quistion = $("#short_quistion").val();
+        if (short_quistion == '') {
+            swal.fire("Please Enter the Question Description", "", "error");
+            return false;
+        }
+        var keyword_short = $("#keyword_short").val();
+        if (keyword_short == '') {
+            swal.fire("Please Enter the Question Keywords", "", "error");
+            return false;
+        }
+        var short_points = $("#short_points").val();
+        if (short_points == '') {
+            swal.fire("Please Enter the Question Points", "", "error");
+            return false;
+        } else {
+            // $('#savebutton').css('pointer-events', 'none');
+            $('#savebutton').prop('disabled', true);
+
+            document.getElementById('shortcreateform').submit();
+        }
+    }
+    if (id == "shortedit") {
+        var short_qnameedit = $("#short_qnameedit").val();
+        if (short_qnameedit == '') {
+            swal.fire("Please Enter the Question Name", "", "error");
+            return false;
+        }
+        var short_quistionedit = $("#short_quistionedit").val();
+        if (short_quistionedit == '') {
+            swal.fire("Please Enter the Question Description", "", "error");
+            return false;
+        }
+        var keyword_shortedit = document.querySelectorAll('#keyword_shortedit');
+        var keyword_key = 0;
+        for (const short_edit of keyword_shortedit) {
+            if (keyword_key != 0 && short_edit.value == '') {
+                swal.fire("Please Enter the Question Keywords", "", "error");
+                return false;
+            }
+            keyword_key++;
+
+        }
+        // if (keyword_longedit == '') {
+        //     swal.fire("Please Enter the Question Keywords", "", "error");
+        //     return false;
+        // }
+        var short_pointsedit = $("#short_pointsedit").val();
+        if (short_pointsedit == '') {
+            swal.fire("Please Enter the Question Points", "", "error");
+            return false;
+        } else {
+            document.getElementById('shortedit_form').submit();
+        }
+
+    }
+    if (id == "3") {
+        var mcq_qname = $("#mcq_qname").val();
+        if (mcq_qname == '') {
+            swal.fire("Please Enter the Question Name", "", "error");
+            return false;
+        }
+        var mcq_quistion = $("#mcq_quistion").val();
+        if (mcq_quistion == '') {
+            swal.fire("Please Enter the Question Description", "", "error");
+            return false;
+        }
+        var keyword_mcq = $("#keyword_mcq").val();
+        if (keyword_mcq == '') {
+            swal.fire("Please Enter the Choices", "", "error");
+            return false;
+        }
+        var mcq_correct_choices = $("#mcq_correct_choices").val();
+        if (mcq_correct_choices == '') {
+            swal.fire("Please Select the Choices", "", "error");
+            return false;
+        }
+
+        var mcq_points = $("#mcq_points").val();
+        if (mcq_points == '') {
+            swal.fire("Please Enter the Question Points", "", "error");
+            return false;
+        } else {
+            //$('#savebutton').css('pointer-events', 'none');
+            $('#savebutton').prop('disabled', true);
+
+            document.getElementById('mcqcreateform').submit();
+        }
+    }
+    if (id == "mcqedit") {
+        var keyword_mcqedit = $("#keyword_mcqedit").val();
+        if (keyword_mcqedit == '') {
+            swal.fire("Please Enter the Choices", "", "error");
+            return false;
+        }
+        document.getElementById('mcqedit_form').submit();
+    }
+
+    if (id == "4") {
+        var true_qname = $("#true_qname").val();
+        if (true_qname == '') {
+            swal.fire("Please Enter the Question Name", "", "error");
+            return false;
+        }
+        var true_quistion = $("#true_quistion").val();
+        if (true_quistion == '') {
+            swal.fire("Please Enter the Question Description", "", "error");
+            return false;
+        }
+        const input_array = document.querySelectorAll('#answer');
+        let AnswerSelected = false;
+        for (let row of input_array) {
+            if (row.checked === true) {
+                AnswerSelected = true;
+            }
+        }
+        if (AnswerSelected === false) {
+
+            swal.fire("Please Select the Answer", "", "error");
+            return false;
+        }
+        var true_points = $("#true_points").val();
+        if (true_points == '') {
+            swal.fire("Please Enter the Question Points", "", "error");
+            return false;
+        } else {
+            // $('#savebutton').css('pointer-events', 'none');
+            $('#savebutton').prop('disabled', true);
+
+            document.getElementById('truecreateform').submit();
+        }
+    }
+    if (id == "truedit") {
+        var true_qnameedit = $("#true_qnameedit").val();
+        if (true_qnameedit == '') {
+            swal.fire("Please Enter the Question Name", "", "error");
+            return false;
+        }
+        var true_quistionedit = $("#true_quistionedit").val();
+        if (true_quistionedit == '') {
+            swal.fire("Please Enter the Question Description", "", "error");
+            return false;
+        }
+        const input_array = document.querySelectorAll('#answer_edit');
+        let AnswerSelected = false;
+        for (let row of input_array) {
+            if (row.checked === true) {
+                AnswerSelected = true;
+            }
+        }
+        if (AnswerSelected === false) {
+
+            swal.fire("Please Select the Answer", "", "error");
+            return false;
+        }
+        var true_pointsedit = $("#true_pointsedit").val();
+        if (true_pointsedit == '') {
+            swal.fire("Please Enter the Question Name", "", "error");
+            return false;
+        } else {
+            document.getElementById('trueedit_form').submit();
+        }
+    }
+    if (id == "5") {
+
+        var quiz_name = $("#q_name").val();
+        if (quiz_name == '') {
+            swal.fire("Please Enter the Quiz Name", "", "error");
+            return false;
+        }
+        var quiz_question = $("#quiz_question").val();
+        if (quiz_question == '') {
+            swal.fire("Please Select the  Quiz Question", "", "error");
+            return false;
+        } else {
+            //$('#savebutton').css('pointer-events', 'none');
+            $('#savebutton').prop('disabled', true);
+
+            document.getElementById('quizcreate_form').submit();
+        }
+
+    }
+    if (id === 'quizedit') {
         // Validate required fields
         let quizName = $('#q_nameedit').val().trim();
         let quizQuestions = $('#quiz_questionedit').val();
@@ -2510,14 +2776,48 @@ function gencre(type) {
         } else {
             // Version update
             let currentVersion = $('#current_version_display').text();
-            let newMajor = parseInt($('#current_major_version').val());
-            let newMinor = parseInt($('#current_minor_version').val());
+            let currentMajor = parseInt($('#current_major_version').val());
+            let currentMinor = parseInt($('#current_minor_version').val());
+
+            // FIXED: Calculate new version based on version history
+            let newMajor, newMinor;
 
             if (versionType === 'major') {
-                newMajor += 1;
+                // Collect all used major versions from the history table
+                let usedMajors = [currentMajor]; // Start with current major
+
+                // Loop through version history table rows
+                $('#version_history_body tr').each(function() {
+                    let versionText = $(this).find('td:first-child').text().trim();
+                    if (versionText) {
+                        // Extract major version (e.g., from "2.0" get "2")
+                        let match = versionText.match(/(\d+)\./);
+                        if (match && match[1]) {
+                            let major = parseInt(match[1]);
+                            if (!isNaN(major)) {
+                                usedMajors.push(major);
+                            }
+                        }
+                    }
+                });
+
+                // Remove duplicates
+                usedMajors = [...new Set(usedMajors)];
+
+                // Sort ascending
+                usedMajors.sort((a, b) => a - b);
+
+                // Find the next available major version
+                let nextMajor = 1;
+                while (usedMajors.includes(nextMajor)) {
+                    nextMajor++;
+                }
+
+                newMajor = nextMajor;
                 newMinor = 0;
-            } else {
-                newMinor += 1;
+            } else { // minor update
+                newMajor = currentMajor;
+                newMinor = currentMinor + 1;
             }
 
             let changeNotes = $('#change_notes').val();
@@ -2530,13 +2830,14 @@ function gencre(type) {
             Swal.fire({
                 title: 'Create New Version?',
                 html: `Current version: ${currentVersion}<br>
-                       New version will be: ${newMajor}.${newMinor}`,
+                       New version will be: <strong>${newMajor}.${newMinor}</strong>`,
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Create Version',
                 cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Add the calculated version values to the form
                     $('<input>').attr({
                         type: 'hidden',
                         name: 'version_type',
@@ -2549,11 +2850,26 @@ function gencre(type) {
                         value: changeNotes
                     }).appendTo('#quizedit_form');
 
+                    // Also pass the calculated version to ensure backend uses these values
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'new_major_version',
+                        value: newMajor
+                    }).appendTo('#quizedit_form');
+
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'new_minor_version',
+                        value: newMinor
+                    }).appendTo('#quizedit_form');
+
                     $('#quizedit_form').submit();
                 }
             });
         }
     }
+
+
 }
 </script>
 <!-- end create -->

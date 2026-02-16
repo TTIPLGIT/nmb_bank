@@ -434,7 +434,7 @@ form.longqustionsform {
 
                             <div class="card mt-0">
                                 <div class="card-body">
-                                    <h3 style="margin-top:10px;text-align:center;">Class List View</h3>
+                                    <h3 style="margin-top:10px;text-align:center;">Course Template List View</h3>
                                     <div class="table-wrapper">
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="align3">
@@ -474,12 +474,12 @@ form.longqustionsform {
                                                                 width="50px" height="50px" alt="Image" /></td>
                                                         <?php    } ?>
                                                         <td>
-                                                            <a class="btn btn-link" title="Edit" id="gcb"
+                                                            <!-- <a class="btn btn-link" title="Edit" id="gcb"
                                                                 data-toggle="modal" data-target="#addModal4"
                                                                 onclick="fetch_update({{$data->class_id}},'edit')">
                                                                 <i class="fas fa-pencil-alt"
-                                                                    style="color: blue !important"></i></a>
-                                                            <!-- Replace your existing edit button with this -->
+                                                                    style="color: blue !important"></i></a> -->
+
                                                             <a class="btn btn-link" title="Edit"
                                                                 href="javascript:void(0);"
                                                                 onclick="openClassEditModal({{$data->class_id}})"
@@ -487,11 +487,15 @@ form.longqustionsform {
                                                                 <i class="fas fa-pencil-alt"
                                                                     style="color: blue !important"></i>
                                                             </a>
-                                                            <a class="btn btn-link"
-                                                                onclick="fetch_update({{$data->class_id}},'class_show')"
-                                                                title="Show" id="gcb" href="" data-toggle="modal"
-                                                                data-target="#addModalquiz1"><i class="fas fa-eye"
-                                                                    style="color:green"></i></a>
+                                                            <a class="btn btn-link" title="show" data-toggle="modal"
+                                                                onclick="openClassEditModal({{$data->class_id}},
+                                                                    true)"> <i class="fas fa-eye"
+                                                                    style="color: blue !important"></i></a>
+                                                            <!-- <a class="btn btn-link"
+                                                                    onclick="fetch_update({{$data->class_id}},'class_show')"
+                                                                    title="Show" id="gcb" href="" data-toggle="modal"
+                                                                    data-target="#addModalquiz1"><i class="fas fa-eye"
+                                                                        style="color:green"></i></a> -->
 
 
                                                             <a type="button" title="Delete"
@@ -4993,7 +4997,7 @@ jQuery(document).ready(function($) {
     });
 });
 // Function to open edit modal with class data
-function openClassEditModal(classId) {
+function openClassEditModal(classId, disableFields = false) {
     console.log('Opening edit modal for class:', classId);
 
     // Reset form
@@ -5051,6 +5055,36 @@ function openClassEditModal(classId) {
                     $('.img-fluid').attr('src', resourcePath);
                 }
 
+                if (disableFields) {
+                    // Disable all input fields
+                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit')
+                        .prop('disabled', true);
+
+                    // Change background color to indicate readonly
+                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit, .select2-selection')
+                        .css('background-color', '#e9ecef');
+
+                    // Hide change banner button
+                    $('#change_banner').hide();
+
+                    // Hide version control and save button
+                    $('#version_control, #savebutton').hide();
+                } else {
+                    // Enable all input fields
+                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit')
+                        .prop('disabled', false);
+
+                    // Reset background color
+                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit, .select2-selection')
+                        .css('background-color', '');
+
+                    // Show change banner button
+                    $('#change_banner').show();
+
+                    // Show version control and save button
+                    $('#version_control, #savebutton').show();
+                }
+
                 // Load version history
                 loadClassVersionHistory(classId);
 
@@ -5092,12 +5126,13 @@ function loadClassVersionHistory(classId) {
                 let versionsData = [];
                 let existingVersions = [];
 
+                // Extract versions data correctly
                 if (response.versions && response.versions.Data) {
                     versionsData = response.versions.Data;
                 } else if (Array.isArray(response.versions)) {
                     versionsData = response.versions;
-                } else if (response.versions && Array.isArray(response.versions)) {
-                    versionsData = response.versions;
+                } else if (response.versions && Array.isArray(response.versions.versions)) {
+                    versionsData = response.versions.versions;
                 }
 
                 if (versionsData && versionsData.length > 0) {
@@ -5125,23 +5160,11 @@ function loadClassVersionHistory(classId) {
                         return b.version_minor - a.version_minor;
                     });
 
+                    // Determine if we're in view mode
+                    let isViewMode = $('#version_control').is(':visible') === false;
+                    console.log('Is View Mode:', isViewMode);
+
                     versionsData.forEach(function(version) {
-                        let statusBadge = version.is_active == 1 ?
-                            '<span class="badge badge-success">Active (Current)</span>' :
-                            '<span class="badge badge-secondary">Archived</span>';
-
-                        // Format date
-                        let createdDate = 'N/A';
-                        if (version.created_at) {
-                            createdDate = new Date(version.created_at).toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit'
-                            });
-                        }
-
                         // Version display with change notes
                         let versionDisplay =
                             `${version.version_major || 1}.${version.version_minor || 0}`;
@@ -5150,21 +5173,34 @@ function loadClassVersionHistory(classId) {
                                 `<br><small class="text-muted" title="${version.change_notes}">${version.change_notes.substring(0, 30)}${version.change_notes.length > 30 ? '...' : ''}</small>`;
                         }
 
+                        // Determine action button based on mode and version status
+                        let actionButton = '';
+
+                        if (version.is_active == 1) {
+                            // Current version
+                            actionButton =
+                                '<span class="text-muted">Current</span>';
+                        } else {
+                            // Archived version
+                            if (isViewMode) {
+                                // In view mode - show Archived text
+                                actionButton = '<span class="text-muted">Archived</span>';
+                            } else {
+                                // In edit mode - show Restore button
+                                actionButton = `<button class="btn btn-sm btn-warning restore-class-version" 
+                                                    data-id="${classId}" 
+                                                    data-version-id="${version.version_id || version.original_class_id}">
+                                                    <i class="fas fa-history"></i> Restore
+                                                </button>`;
+                            }
+                        }
+
                         html += `<tr>
                             <td><strong>${versionDisplay}</strong></td>
                             <td>${version.class_name || 'N/A'}</td>
                             <td>${version.class_duration || 'N/A'} Mins</td>
                            
-                            <td>
-                                ${version.is_active != 1 ? 
-                                    `<button class="btn btn-sm btn-warning restore-class-version" 
-                                        data-id="${classId}" 
-                                        data-version-id="${version.version_id || version.original_class_id}">
-                                        <i class="fas fa-history"></i> Restore
-                                    </button>` : 
-                                    '<span class="text-muted"><i class="fas fa-check-circle"></i> Current</span>'
-                                }
-                            </td>
+                            <td>${actionButton}</td>
                         </tr>`;
                     });
 
