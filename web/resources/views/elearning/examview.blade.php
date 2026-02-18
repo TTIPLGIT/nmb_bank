@@ -524,6 +524,7 @@ let quizSubmit = document.querySelector('#quizSubmit');
 let quizForm = document.querySelector('#quizForm');
 let quizId = document.querySelector('#quizId').value;
 let questionIds = document.querySelector('#questionIds');
+let courseId = document.querySelector('#course_id').value;
 const questionsString = questionIds.value.split(",");
 let index = 0;
 const questionsArray = [];
@@ -636,6 +637,7 @@ function answerArray(e) {
         data: {
             'id': quizId,
             'answers': answersArray,
+            'courseId': courseId,
             _token: '{{csrf_token()}}'
         },
 

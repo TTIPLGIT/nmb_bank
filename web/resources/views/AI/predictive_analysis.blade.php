@@ -152,7 +152,8 @@ body {
                         </p>
                     </div>
                     <div class="text-right">
-                        <div class="h5 mb-0 text-primary">{{ $processedData['processed_users'] }} User Analyzed</div>
+                        <div class="h5 mb-0 text-primary">{{ $processedData['processed_users'] ?? 0 }} Users Analyzed
+                        </div>
                         <small class="text-muted">Real-time risk assessment</small>
                     </div>
                 </div>
@@ -169,7 +170,7 @@ body {
                         </div>
                         <div>
                             <div class="text-white-80 mb-1">Total Users</div>
-                            <div class="h2 text-white mb-0">{{ $processedData['total_users'] }}</div>
+                            <div class="h2 text-white mb-0">{{ $processedData['total_users'] ?? 0 }}</div>
                         </div>
                     </div>
                 </div>
@@ -184,7 +185,7 @@ body {
                         <div>
                             <div class="text-danger mb-1">At-Risk Courses</div>
                             <div class="h2 text-dark mb-0">
-                                {{ $processedData['risk_summary']['high'] + $processedData['risk_summary']['medium'] }}
+                                {{ ($processedData['risk_summary']['high'] ?? 0) + ($processedData['risk_summary']['medium'] ?? 0) }}
                             </div>
                         </div>
                     </div>
@@ -199,7 +200,7 @@ body {
                         </div>
                         <div>
                             <div class="text-success mb-1">Safe Courses</div>
-                            <div class="h2 text-dark mb-0">{{ $processedData['risk_summary']['low'] }}</div>
+                            <div class="h2 text-dark mb-0">{{ $processedData['risk_summary']['low'] ?? 0 }}</div>
                         </div>
                     </div>
                 </div>
@@ -213,7 +214,7 @@ body {
                         </div>
                         <div>
                             <div class="text-warning mb-1">Total Courses</div>
-                            <div class="h2 text-dark mb-0">{{ $processedData['total_courses'] }}</div>
+                            <div class="h2 text-dark mb-0">{{ $processedData['total_courses'] ?? 0 }}</div>
                         </div>
                     </div>
                 </div>
@@ -234,9 +235,9 @@ body {
                         <div class="progress-ring d-inline-block mb-4">
                             @php
                             $circleLength = 2 * pi() * 45;
-                            $highPercent = $processedData['risk_percentages']['high'];
-                            $mediumPercent = $processedData['risk_percentages']['medium'];
-                            $lowPercent = $processedData['risk_percentages']['low'];
+                            $highPercent = $processedData['risk_percentages']['high'] ?? 0;
+                            $mediumPercent = $processedData['risk_percentages']['medium'] ?? 0;
+                            $lowPercent = $processedData['risk_percentages']['low'] ?? 0;
                             @endphp
 
                             <svg width="120" height="120" viewBox="0 0 120 120">
@@ -260,18 +261,19 @@ body {
                         <div class="row">
                             <div class="col-4">
                                 <div class="risk-badge high mb-2">High</div>
-                                <div class="h4">{{ $processedData['risk_summary']['high'] }}</div>
-                                <small class="text-muted">{{ $processedData['risk_percentages']['high'] }}%</small>
+                                <div class="h4">{{ $processedData['risk_summary']['high'] ?? 0 }}</div>
+                                <small class="text-muted">{{ $processedData['risk_percentages']['high'] ?? 0 }}%</small>
                             </div>
                             <div class="col-4">
                                 <div class="risk-badge medium mb-2">Medium</div>
-                                <div class="h4">{{ $processedData['risk_summary']['medium'] }}</div>
-                                <small class="text-muted">{{ $processedData['risk_percentages']['medium'] }}%</small>
+                                <div class="h4">{{ $processedData['risk_summary']['medium'] ?? 0 }}</div>
+                                <small
+                                    class="text-muted">{{ $processedData['risk_percentages']['medium'] ?? 0 }}%</small>
                             </div>
                             <div class="col-4">
                                 <div class="risk-badge low mb-2">Low</div>
-                                <div class="h4">{{ $processedData['risk_summary']['low'] }}</div>
-                                <small class="text-muted">{{ $processedData['risk_percentages']['low'] }}%</small>
+                                <div class="h4">{{ $processedData['risk_summary']['low'] ?? 0 }}</div>
+                                <small class="text-muted">{{ $processedData['risk_percentages']['low'] ?? 0 }}%</small>
                             </div>
                         </div>
                     </div>
@@ -284,18 +286,24 @@ body {
                         <span class="text-uppercase letter-spacing-2 small font-weight-700 text-muted">
                             <i class="fa fa-list mr-2"></i>COURSE RISK ANALYSIS
                         </span>
-                        <span class="badge badge-primary">User ID:
-                            {{ $processedData['data'][0]['user_id'] ?? 'N/A' }}</span>
+                        <!-- <span class="badge badge-primary">User ID:
+                            {{ $processedData['data'][0]['user_id'] ?? 'N/A' }}</span> -->
                     </div>
 
-                    @if(count($processedData['data']) > 0 && count($processedData['data'][0]['courses']) > 0)
+                    @if(isset($processedData['data'][0]['courses']) && count($processedData['data'][0]['courses']) > 0)
                     <div class="row">
-                        @foreach($processedData['data'][0]['courses'] as $course)
+                        @foreach($processedData['data'][0]['courses'] as $index => $course)
                         <div class="col-md-6 mb-3">
                             <div class="course-card {{ strtolower($course['risk_level']) }} p-3 rounded">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <div>
-                                        <h6 class="mb-1">Course ID: {{ $course['course_id'] }}</h6>
+                                        @php
+                                        $course_name = DB::table('elearning_courses')
+                                        ->where('course_id', $course['course_id'])
+                                        ->first();
+                                        @endphp
+                                        <h6 class="mb-1">Course Name:
+                                            {{ $course_name->course_name ?? 'N/A' }}</h6>
                                         <div class="d-flex align-items-center">
                                             <span class="risk-badge {{ strtolower($course['risk_level']) }} mr-2">
                                                 {{ $course['risk_level'] }} RISK
@@ -331,7 +339,7 @@ body {
         </div>
 
         <!-- Detailed Analysis -->
-        @if(count($processedData['data']) > 0 && count($processedData['data'][0]['courses']) > 0)
+        @if(isset($processedData['data'][0]['courses']) && count($processedData['data'][0]['courses']) > 0)
         <div class="row">
             <div class="col-12">
                 <div class="dashboard-card">
@@ -384,95 +392,6 @@ body {
                                         </button>
                                     </td>
                                 </tr>
-
-                                <!-- Modal for detailed view -->
-                                <div class="modal fade" id="courseModal{{ $course['course_id'] }}" tabindex="-1"
-                                    role="dialog">
-                                    <div class="modal-dialog modal-lg" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Course #{{ $course['course_id'] }} - Risk
-                                                    Analysis</h5>
-                                                <button type="button" class="close" data-dismiss="modal">
-                                                    <span>&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row mb-3">
-                                                    <div class="col-md-6">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <h6>Risk Assessment</h6>
-                                                                <div
-                                                                    class="risk-badge {{ strtolower($course['risk_level']) }} mb-2">
-                                                                    {{ $course['risk_level'] }} RISK
-                                                                </div>
-                                                                <p>Probability:
-                                                                    <strong>{{ round($course['probability'] * 100) }}%</strong>
-                                                                </p>
-                                                                <p>Type:
-                                                                    <strong>{{ $course['prediction_type'] }}</strong>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <h6>Recommended Actions</h6>
-                                                                <ul class="list-unstyled">
-                                                                    @if(strtolower($course['risk_level']) == 'high')
-                                                                    <li><i
-                                                                            class="fa fa-exclamation-circle text-danger mr-2"></i>Immediate
-                                                                        intervention required</li>
-                                                                    <li><i
-                                                                            class="fa fa-user-check text-danger mr-2"></i>Schedule
-                                                                        counseling session</li>
-                                                                    <li><i
-                                                                            class="fa fa-bell text-danger mr-2"></i>Notify
-                                                                        instructor</li>
-                                                                    @elseif(strtolower($course['risk_level']) ==
-                                                                    'medium')
-                                                                    <li><i
-                                                                            class="fa fa-comment-medical text-warning mr-2"></i>Send
-                                                                        progress check email</li>
-                                                                    <li><i
-                                                                            class="fa fa-tasks text-warning mr-2"></i>Assign
-                                                                        additional practice</li>
-                                                                    <li><i
-                                                                            class="fa fa-calendar-check text-warning mr-2"></i>Schedule
-                                                                        follow-up</li>
-                                                                    @else
-                                                                    <li><i
-                                                                            class="fa fa-thumbs-up text-success mr-2"></i>Continue
-                                                                        current path</li>
-                                                                    <li><i
-                                                                            class="fa fa-star text-success mr-2"></i>Positive
-                                                                        reinforcement</li>
-                                                                    <li><i
-                                                                            class="fa fa-chart-line text-success mr-2"></i>Monitor
-                                                                        progress</li>
-                                                                    @endif
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <h6>AI Analysis Details</h6>
-                                                        <p class="mb-0">{{ $course['reason'] }}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Take Action</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 @endforeach
                             </tbody>
                         </table>
@@ -485,6 +404,83 @@ body {
     </div>
 </div>
 
+<!-- Modals - Moved outside of the main content but inside the section -->
+@if(isset($processedData['data'][0]['courses']) && count($processedData['data'][0]['courses']) > 0)
+@foreach($processedData['data'][0]['courses'] as $course)
+<!-- Modal for course #{{ $course['course_id'] }} -->
+<div class="modal fade" id="courseModal{{ $course['course_id'] }}" tabindex="-1" role="dialog"
+    aria-labelledby="courseModalLabel{{ $course['course_id'] }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="courseModalLabel{{ $course['course_id'] }}">
+                    Course #{{ $course['course_id'] }} - Risk Analysis
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>Risk Assessment</h6>
+                                <div class="risk-badge {{ strtolower($course['risk_level']) }} mb-2">
+                                    {{ $course['risk_level'] }} RISK
+                                </div>
+                                <p>Probability:
+                                    <strong>{{ round($course['probability'] * 100) }}%</strong>
+                                </p>
+                                <p>Type:
+                                    <strong>{{ $course['prediction_type'] }}</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>Recommended Actions</h6>
+                                <ul class="list-unstyled">
+                                    @if(strtolower($course['risk_level']) == 'high')
+                                    <li><i class="fa fa-exclamation-circle text-danger mr-2"></i>Immediate intervention
+                                        required</li>
+                                    <li><i class="fa fa-user-check text-danger mr-2"></i>Schedule counseling session
+                                    </li>
+                                    <li><i class="fa fa-bell text-danger mr-2"></i>Notify instructor</li>
+                                    @elseif(strtolower($course['risk_level']) == 'medium')
+                                    <li><i class="fa fa-comment-medical text-warning mr-2"></i>Send progress check email
+                                    </li>
+                                    <li><i class="fa fa-tasks text-warning mr-2"></i>Assign additional practice</li>
+                                    <li><i class="fa fa-calendar-check text-warning mr-2"></i>Schedule follow-up</li>
+                                    @else
+                                    <li><i class="fa fa-thumbs-up text-success mr-2"></i>Continue current path</li>
+                                    <li><i class="fa fa-star text-success mr-2"></i>Positive reinforcement</li>
+                                    <li><i class="fa fa-chart-line text-success mr-2"></i>Monitor progress</li>
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h6>AI Analysis Details</h6>
+                        <p class="mb-0">{{ $course['reason'] }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+@endif
+
 <!-- JavaScript for interactivity -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -493,7 +489,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Animate progress bars
     $('.progress-bar').each(function() {
-        var width = $(this).attr('style');
+        var width = $(this).css('width');
         $(this).css('width', '0');
         setTimeout(() => {
             $(this).css('width', width);
