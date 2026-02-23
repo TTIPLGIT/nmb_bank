@@ -80,6 +80,10 @@ use App\Http\Controllers\GamificationLevelController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Elearning_chartsController;
 
+use App\Http\Controllers\ScormController;
+use App\Http\Controllers\ScormPlayerController;
+use App\Http\Controllers\ScormTrackingController;
+
 Route::get('/check-openssl', function () {
     if (extension_loaded('openssl')) {
         return 'OpenSSL is loaded.';
@@ -868,3 +872,14 @@ Route::post('/elearning/class/restore-version', [App\Http\Controllers\tryControl
 Route::post('/class/update/{class_id}', [App\Http\Controllers\tryController::class, 'class_update'])->name('elearning.class_update');
 
 Route::post('/global-chat', [App\Http\Controllers\AIController::class, 'globalChat'])->name('global.chat');
+
+
+    Route::get('/scorm_list', [App\Http\Controllers\ScormController::class, 'index'])->name('scorm.index');
+    Route::post('/scorm/upload', [App\Http\Controllers\ScormController::class, 'upload'])->name('scorm.upload');
+    Route::delete('/scorm/{id}', [App\Http\Controllers\ScormController::class, 'destroy'])->name('scorm.destroy');
+
+Route::get('/scorm/{id}/launch', [App\Http\Controllers\ScormController::class, 'launch'])
+    ->name('scorm.launch');
+
+    Route::post('/scorm/commit', [App\Http\Controllers\ScormController::class, 'commit'])
+    ->name('scorm.commit');
