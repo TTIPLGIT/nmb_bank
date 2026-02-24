@@ -12,6 +12,9 @@
 
 <div class="main-content">
     <section class="section">
+        <a href="{{ route('scorm.index') }}" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back to Courses
+        </a>
         <div class="col-lg-12 text-center">
             <h4 style="color:darkblue;">{{ $scorm->title }}</h4>
         </div>

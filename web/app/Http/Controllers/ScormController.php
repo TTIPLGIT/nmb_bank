@@ -9,6 +9,7 @@ use Peopleaps\Scorm\Model\ScormModel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class ScormController extends BaseController
 {
@@ -29,8 +30,26 @@ class ScormController extends BaseController
         }
          $screens = $menus['screens'];
         $modules = $menus['modules'];
+
+         $roles = DB::table('uam_roles')
+            ->select('*')
+            ->where('active_flag', 0)
+            ->get();
+         $designations = DB::table('designation')
+            ->select('*')
+            ->orderBy('designation_id', 'desc')
+            ->get();
+
+        // Get users for dropdown
+        $users = DB::table('users')
+            ->select('*')
+            ->orderBy('id', 'desc')
+            ->get();
+          $certificate_templates = DB::table('certificate_templates')
+            ->where('active_flag', '0')
+            ->get();
         
-        return view('scorm.index', compact('scormPackages','screens','modules'));
+        return view('scorm.index', compact('scormPackages','screens','modules','roles','designations','users','certificate_templates'));
     }
 
 
@@ -38,16 +57,16 @@ class ScormController extends BaseController
 
 public function upload(Request $request)
 {
-    $request->validate([
-        'file' => 'required|mimes:zip|max:512000'
-    ]);
+   $request->validate([
+    'file' => 'required|mimes:zip|max:512000'
+]);
 
     $uploadedFile = $request->file('file');
 
     // 1️⃣ Generate UUID
     $uuid = Str::uuid()->toString();
 
-    // 2️⃣ Create extract folder inside public/scorm
+    // 2️⃣ Create extract folder
     $extractPath = public_path("scorm/$uuid");
 
     if (!file_exists($extractPath)) {
@@ -70,7 +89,7 @@ public function upload(Request $request)
         return response()->json(['message' => 'Unable to extract zip'], 500);
     }
 
-    // 5️⃣ Find imsmanifest.xml
+    // 5️⃣ Find imsmanifest.xml (recursive)
     $manifestPath = null;
 
     $files = new \RecursiveIteratorIterator(
@@ -84,50 +103,68 @@ public function upload(Request $request)
         }
     }
 
-    if (!$manifestPath) {
+    if (!$manifestPath || !file_exists($manifestPath)) {
         return response()->json(['message' => 'imsmanifest.xml not found'], 400);
     }
 
-    // 6️⃣ Parse Manifest Properly (Namespace Safe)
-    libxml_use_internal_errors(true);
+ 
+libxml_use_internal_errors(true);
 
-    $dom = new \DOMDocument();
-    $dom->load($manifestPath);
+$dom = new \DOMDocument();
 
-    $xpath = new \DOMXPath($dom);
+// Read file content manually
+$xmlContent = file_get_contents($manifestPath);
 
-    // Register namespaces
-    $xpath->registerNamespace('imscp', 'http://www.imsproject.org/xsd/imscp_rootv1p1p2');
-    $xpath->registerNamespace('adlcp12', 'http://www.adlnet.org/xsd/adlcp_rootv1p2');
-    $xpath->registerNamespace('adlcp2004', 'http://www.adlnet.org/xsd/adlcp_v1p3');
+if ($xmlContent === false) {
+    return response()->json(['message' => 'Cannot read imsmanifest.xml'], 400);
+}
 
-    // 🔹 Course Title
-    $titleNode = $xpath->query('//imscp:organization/imscp:title')->item(0);
-    $title = $titleNode ? $titleNode->nodeValue : 'Untitled Course';
+// Remove BOM if exists
+$xmlContent = preg_replace('/^\xEF\xBB\xBF/', '', $xmlContent);
+
+// Load XML string instead of file
+if (!$dom->loadXML($xmlContent)) {
+
+    $errors = libxml_get_errors();
+    libxml_clear_errors();
+
+    return response()->json([
+        'message' => 'Invalid imsmanifest.xml',
+        'errors' => $errors
+    ], 400);
+}
+
+    // 🔹 Course Title (Namespace Safe)
+    $title = 'Untitled Course';
+    $organizations = $dom->getElementsByTagName('organization');
+
+    if ($organizations->length > 0) {
+        $titles = $organizations->item(0)->getElementsByTagName('title');
+        if ($titles->length > 0) {
+            $title = $titles->item(0)->nodeValue;
+        }
+    }
 
     // 🔹 Manifest Identifier
-    $identifier = $dom->documentElement->getAttribute('identifier');
+    $identifier = $dom->documentElement->getAttribute('identifier') ?: Str::uuid();
 
-    // 🔹 Find Launchable SCO (Robust Way)
-    $resources = $xpath->query('//imscp:resource');
-
+    // 7️⃣ Find Launchable Resource (SUPER SAFE - No Namespace Issues)
     $resourceNode = null;
+    $resources = $dom->getElementsByTagName('resource');
+
+    if ($resources->length === 0) {
+        return response()->json(['message' => 'No resources found in manifest'], 400);
+    }
 
     foreach ($resources as $res) {
 
-        // SCORM 1.2
-        $scormType12 = $res->getAttributeNS(
-            'http://www.adlnet.org/xsd/adlcp_rootv1p2',
-            'scormtype'
-        );
+        if (!$res instanceof \DOMElement) {
+            continue;
+        }
 
-        // SCORM 2004
-        $scormType2004 = $res->getAttributeNS(
-            'http://www.adlnet.org/xsd/adlcp_v1p3',
-            'scormType'
-        );
+        $href = $res->getAttribute('href');
 
-        if (strtolower($scormType12) === 'sco' || strtolower($scormType2004) === 'sco') {
+        if (!empty($href)) {
             $resourceNode = $res;
             break;
         }
@@ -139,11 +176,11 @@ public function upload(Request $request)
 
     $launchFile = $resourceNode->getAttribute('href');
 
-    if (!$launchFile) {
+    if (empty($launchFile)) {
         return response()->json(['message' => 'Launch file not defined'], 400);
     }
 
-    // 7️⃣ Build Entry URL
+    // 8️⃣ Build Entry URL
     $manifestDir = dirname($manifestPath);
 
     $relativePath = str_replace(public_path() . DIRECTORY_SEPARATOR, '', $manifestDir);
@@ -151,7 +188,7 @@ public function upload(Request $request)
 
     $entryUrl = $relativePath . '/' . $launchFile;
 
-    // 8️⃣ Store in DB
+    // 9️⃣ Store in DB
     DB::table('scorm')->insert([
         'uuid' => $uuid,
         'title' => $title,
@@ -161,10 +198,8 @@ public function upload(Request $request)
         'updated_at' => now()
     ]);
 
-    return response()->json([
-        'message' => 'SCORM uploaded successfully',
-        'entry_url' => $entryUrl
-    ]);
+    return redirect()->route('scorm.index')
+        ->with('success', 'SCORM package uploaded successfully');
 }
 
 
@@ -206,6 +241,34 @@ public function launch($id)
     
     return view('scorm.player', compact('scorm','screens','modules'));
 }
+public function destroy($id)
+{
+    $package = DB::table('scorm')->where('id', $id)->first();
 
+    if (!$package) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Package not found.'
+        ]);
+    }
 
+    if (!empty($package->folder_path)) {
+        $folderPath = public_path($package->folder_path);
+
+        if (File::exists($folderPath)) {
+            File::deleteDirectory($folderPath);
+        }
+    }
+
+    DB::table('scorm')->where('id', $id)->delete();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'SCORM package deleted successfully.'
+    ]);
+}
+public function scorm_course_publish($id, Request $request)
+{
+   dd($request->all());
+}
 }
