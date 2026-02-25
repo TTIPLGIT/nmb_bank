@@ -516,6 +516,7 @@ let quizHeader = document.querySelector('#quizHeader');
 let quizSubmit = document.querySelector('#quizSubmit');
 let quizForm = document.querySelector('#quizForm');
 let quizId = document.querySelector('#quizId').value;
+let courseId = document.querySelector('#course_id').value;
 let questionIds = document.querySelector('#questionIds');
 const questionsString = questionIds.value.split(",");
 let index = 0;
@@ -529,7 +530,7 @@ for (let questionString of questionsString) {
 function answerArray(e) {
     let answerIndex = 0;
     const answersArray = [];
-    console.log(questionsArray);
+
     for (let questionArray of questionsArray) {
         if (questionArray[1] == "boolean") {
             let trueSelector = document.querySelector(`#customRadio_${questionArray[0]}_true`).checked;
@@ -624,13 +625,14 @@ function answerArray(e) {
             }
         }
     }
-    console.log(answersArray);
+
     $.ajax({
         url: "{{ url('/elearningQuizResults') }}",
         type: 'GET',
         data: {
             'id': quizId,
             'answers': answersArray,
+            'courseId': courseId,
             _token: '{{csrf_token()}}'
         },
 

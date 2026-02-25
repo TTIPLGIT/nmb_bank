@@ -8,6 +8,9 @@ use DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
+use Peopleaps\Scorm\Manager\ScormManager;
+use Peopleaps\Scorm\Exception\InvalidScormArchiveException;
+use Peopleaps\Scorm\Model\ScormModel;
 
 class AIController extends BaseController
 {
@@ -99,7 +102,7 @@ class AIController extends BaseController
 
 
 
-            $gatewayURL = 'http://20.164.0.23:3300/create-course/';
+            $gatewayURL = config('setting.AI_service_url') . '/create-course/';
 
             $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
             $response = is_string($response)
@@ -138,7 +141,7 @@ class AIController extends BaseController
     
    
 
-            $gatewayURL = 'http://20.164.0.23:3300/generate-course-video/';
+            $gatewayURL = config('setting.AI_service_url') . '/generate-course-video/';
 
             // Method for the API request
             $method = 'POST';
@@ -411,10 +414,11 @@ public function ai_course_store(Request $request)
 
                 /* ---------- LONG QUESTIONS ---------- */
                 foreach ($quizData['long'] ?? [] as $qIndex => $q) {
+                    $keywords = implode(',', $q['keywords']);
                     $qid = DB::table('elearning_questions_long_answer')->insertGetId([
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
-                        'keywords'      => $q['answer'],
+                        'keywords'      => $keywords,
                         'points'        => $q['points'],
                         'question_type' => 'long',
                         'drop_question' => 0,
@@ -451,10 +455,11 @@ public function ai_course_store(Request $request)
 
                 /* ---------- SHORT QUESTIONS ---------- */
                 foreach ($quizData['short'] ?? [] as $qIndex => $q) {
+                    $keywords = implode(',', $q['keywords']);
                     $qid = DB::table('elearning_questions_short_answer')->insertGetId([
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
-                        'keywords'      => $q['answer'],
+                        'keywords'      => $keywords,
                         'points'        => $q['points'],
                         'question_type' => 'short',
                         'drop_question' => 0,
@@ -532,10 +537,11 @@ public function ai_course_store(Request $request)
                 
                 /* ---------- LONG QUESTIONS ---------- */
                 foreach ($finalExamData['long'] ?? [] as $qIndex => $q) {
+                    $keywords = implode(',', $q['keywords']);
                     $qid = DB::table('elearning_questions_long_answer')->insertGetId([
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
-                        'keywords'      => $q['answer'],
+                        'keywords'      => $keywords,
                         'points'        => $q['points'],
                         'question_type' => 'long',
                         'drop_question' => 0,
@@ -571,10 +577,11 @@ public function ai_course_store(Request $request)
 
                 /* ---------- SHORT QUESTIONS ---------- */
                 foreach ($finalExamData['short'] ?? [] as $qIndex => $q) {
+                    $keywords = implode(',', $q['keywords']);
                     $qid = DB::table('elearning_questions_short_answer')->insertGetId([
                         'question_name' => substr($q['question_text'], 0, 100),
                         'question'      => $q['question_text'],
-                        'keywords'      => $q['answer'],
+                        'keywords'      => $keywords,
                         'points'        => $q['points'],
                         'question_type' => 'short',
                         'drop_question' => 0,
@@ -723,7 +730,7 @@ public function ai_course_store(Request $request)
             $request = array();
 
             $request['requestData'] = $encryptArray;
-            $gatewayURL = 'http://20.164.0.23:3300/adaptive/decide-from-db/' . $data['user_id'] . '/' . $data['course_id'];
+            $gatewayURL = config('setting.AI_service_url') . '/adaptive/decide-from-db/' . $data['user_id'] . '/' . $data['course_id'];
 
             $response = $this->AIserviceRequest($gatewayURL, 'GET', '', $method);
             $response1 = json_decode($response, true);
@@ -762,7 +769,7 @@ public function predictive_analysis(Request $request)
             'user_id' => (int)$user_id
         ];
 
-        $gatewayURL = 'http://20.164.0.23:3300/ai/predictive-analysis/run';
+        $gatewayURL = config('setting.AI_service_url') . 'ai/predictive-analysis/run';
 
         // Make the API call
         $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
@@ -1290,7 +1297,7 @@ public function text_to_audio(Request $request)
                 'speaker' => $request->speaker
             ];
 
-            $gatewayURL = 'http://20.164.0.23:3300/tools/text-to-audio/generate';
+            $gatewayURL = config('setting.AI_service_url') . '/tools/text-to-audio/generate';
 
             // Make the API call
             $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
@@ -1396,7 +1403,7 @@ public function globalChat(Request $request)
             'message' => $request->message
         ];
 
-        $gatewayURL = 'http://20.164.0.23:3300/api/global-chat';
+        $gatewayURL = config('setting.AI_service_url') . 'api/global-chat';
 
         // Make the API call
         $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
@@ -1427,6 +1434,11 @@ public function globalChat(Request $request)
         ], 500);
     }
 }
+
+
+ 
+
+  
 
 
 

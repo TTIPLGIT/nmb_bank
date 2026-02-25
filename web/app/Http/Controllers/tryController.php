@@ -1882,4 +1882,149 @@ class tryController extends BaseController
 
         return response()->json(['status' => false]);
     }
+
+    public function getClassData($id)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => getClassData';
+        
+        $data = array();
+        $data['class_id'] = $id;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        $gatewayURL = config('setting.api_gateway_url') . '/class/get-class-data';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+        
+        $response1 = json_decode($response);
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            $decryptedData = $this->decryptData($response1->Data);
+            return response()->json(['success' => true, 'data' => json_decode($decryptedData, true)]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to load class data']);
+        }
+    } catch (\Exception $exc) {
+        return response()->json(['success' => false, 'message' => $exc->getMessage()]);
+    }
+}
+
+public function getClassVersions($id)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => getClassVersions';
+        
+        $data = array();
+        $data['class_id'] = $id;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        $gatewayURL = config('setting.api_gateway_url') . '/class/get-class-versions';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+        
+        // Check if response is empty
+        if (!$response) {
+            return response()->json([
+                'success' => false, 
+                'message' => 'Empty response from API'
+            ]);
+        }
+        
+        $response1 = json_decode($response);
+        
+        // Check if response1 is null or missing expected properties
+        if (!$response1) {
+            return response()->json([
+                'success' => false, 
+                'message' => 'Invalid response format from API'
+            ]);
+        }
+        
+        // Check if Status and Success properties exist
+        if (!isset($response1->Status) || !isset($response1->Success)) {
+            return response()->json([
+                'success' => false, 
+                'message' => 'Missing Status or Success in API response'
+            ]);
+        }
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            // Check if Data exists
+            if (!isset($response1->Data)) {
+                return response()->json([
+                    'success' => false, 
+                    'message' => 'No data in API response'
+                ]);
+            }
+            
+            $decryptedData = $this->decryptData($response1->Data);
+            
+            // Check if decryption was successful
+            if (!$decryptedData) {
+                return response()->json([
+                    'success' => false, 
+                    'message' => 'Failed to decrypt data'
+                ]);
+            }
+            
+            $versions = json_decode($decryptedData, true);
+            
+            // Ensure versions is an array
+            if (!is_array($versions)) {
+                $versions = [];
+            }
+            
+            return response()->json([
+                'success' => true, 
+                'versions' => $versions
+            ]);
+        } else {
+            $errorMsg = 'Failed to load versions';
+            if (isset($response1->Message)) {
+                $errorMsg = $response1->Message;
+            }
+            
+            return response()->json([
+                'success' => false, 
+                'message' => $errorMsg
+            ]);
+        }
+    } catch (\Exception $exc) {
+        return response()->json([
+            'success' => false, 
+            'message' => $exc->getMessage()
+        ]);
+    }
+}
+public function restoreClassVersion(Request $request)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => restoreClassVersion';
+        
+        $data = array();
+        $data['class_id'] = $request->class_id;
+        $data['version_id'] = $request->version_id;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        $gatewayURL = config('setting.api_gateway_url') . '/class/restore-class-version';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+        
+        $response1 = json_decode($response);
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            return response()->json(['success' => true, 'message' => 'Version restored successfully']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to restore version']);
+        }
+    } catch (\Exception $exc) {
+        return response()->json(['success' => false, 'message' => $exc->getMessage()]);
+    }
+}
 }

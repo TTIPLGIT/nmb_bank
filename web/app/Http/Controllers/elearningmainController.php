@@ -1203,11 +1203,219 @@ class elearningmainController extends BaseController
         // dd($questionDetails);
         return view('elearning.assessment', compact('assessmentId', 'assessmentName', 'questionDetails'));
     }
+// Manual Evaluation - Hidding as we are having the AI Evaluation Function below
+//    public function quizresult(Request $request)
+// {
+//     $this->WriteFileLog($request);
+//                         // dd($request);
+//     $quizAttendDate = now();
 
-   public function quizresult(Request $request)
+//     // Authentication
+//     $userId = $request->session()->get("userID");
+//     if (!$userId) {
+//         return view('auth.login');
+//     }
+
+//     $quizId = Crypt::decrypt($request->id);
+
+//     $quizDetails = DB::table('elearning_practice_quiz')
+//         ->where('quiz_id', $quizId)
+//         ->first();
+
+//     if (!$quizDetails) {
+//         return response()->json(['error' => 'Quiz not found'], 404);
+//     }
+
+//     $quizName = $quizDetails->quiz_name;
+//     $qIds = $quizDetails->quiz_questions;
+//     $questions = explode(",", $qIds);
+
+//     /* -----------------------------
+//        FETCH QUESTION DETAILS
+//     ------------------------------*/
+//     $questionDetails = [];
+//     foreach ($questions as $index => $question) {
+//         [$questionId, $questionType] = explode("-", $question);
+
+//         switch ($questionType) {
+//             case "boolean":
+//                 $questionDetails[$index] = DB::table('elearning_questions_true_false')
+//                     ->where('question_id', $questionId)->first();
+//                 break;
+
+//             case "mcq":
+//                 $q = DB::table('elearning_questions_mcq')
+//                     ->where('question_id', $questionId)->first();
+//                 $q->choices = explode(",", $q->choices);
+//                 $questionDetails[$index] = $q;
+//                 break;
+
+//             case "short":
+//                 $questionDetails[$index] = DB::table('elearning_questions_short_answer')
+//                     ->where('question_id', $questionId)->first();
+//                 break;
+
+//             case "long":
+//                 $questionDetails[$index] = DB::table('elearning_questions_long_answer')
+//                     ->where('question_id', $questionId)->first();
+//                 break;
+//         }
+//     }
+
+//     /* -----------------------------
+//        EVALUATE ANSWERS
+//     ------------------------------*/
+//     $answersArray = $request->answers ?? [];
+//     $answerDetails = [];
+//     $questionScoresArray = [];
+
+//     $totalAvailablePoints = 0;
+//     $totalPointsEarned = 0;
+
+//     foreach ($answersArray as $index => $answerArray) {
+
+//         $questionId = $answerArray['questionId'];
+//         $questionType = $answerArray['questionType'];
+//         $answer = strtolower(trim($answerArray['answer']));
+//         $pointsEarned = 0;
+//         $answerStatus = 'None';
+
+//         /* ---------- BOOLEAN ---------- */
+//         if ($questionType === "boolean") {
+
+//             $q = DB::table('elearning_questions_true_false')
+//                 ->where('question_id', $questionId)->first();
+
+//             $correctAnswer = strtolower(trim($q->answer));
+//             $totalAvailablePoints += $q->points;
+
+//             if ($answer === $correctAnswer) {
+//                 $pointsEarned = $q->points;
+//                 $answerStatus = 'Correct';
+//             }
+
+//             $correctAnswerValue = $correctAnswer;
+//         }
+
+//         /* ---------- MCQ ---------- */
+//         elseif ($questionType === "mcq") {
+
+//             $q = DB::table('elearning_questions_mcq')
+//                 ->where('question_id', $questionId)->first();
+
+//             // $correctChoices = array_map('trim', explode(",", $q->correct_choices));
+//             // $answerGiven = array_map('trim', explode(",", $answer));
+
+//             $correctChoices = array_map(
+//         fn($c) => strtoupper(trim($c)),
+//         explode(",", $q->correct_choices)
+//     );
+
+//     $answerGiven = array_map(
+//         fn($a) => strtoupper(trim($a)),
+//         explode(",", $answer)
+//     );
+
+//             $totalAvailablePoints += $q->points;
+//             $pointPerChoice = $q->points / count($correctChoices);
+
+//             foreach ($answerGiven as $choice) {
+//                 if (in_array($choice, $correctChoices)) {
+//                     $pointsEarned += $pointPerChoice;
+//                 }
+//             }
+
+//             $answerStatus = $pointsEarned > 0 ? 'Partial/Correct' : 'Wrong';
+//             $correctAnswerValue = $correctChoices;
+//         }
+
+//         /* ---------- SHORT & LONG ---------- */
+//         else {
+
+//             $table = $questionType === "short"
+//                 ? 'elearning_questions_short_answer'
+//                 : 'elearning_questions_long_answer';
+
+//             $q = DB::table($table)
+//                 ->where('question_id', $questionId)->first();
+
+//             $keywords = array_map(
+//                 fn($k) => strtolower(trim($k)),
+//                 explode(",", $q->keywords)
+//             );
+
+//             $totalAvailablePoints += $q->points;
+
+//             $matched = 0;
+//             foreach ($keywords as $keyword) {
+//                 if (str_contains($answer, $keyword)) {
+//                     $matched++;
+//                 }
+//             }
+
+//             if ($matched === count($keywords)) {
+//                 $pointsEarned = $q->points;
+//                 $answerStatus = 'Full';
+//             } elseif ($matched > 0) {
+//                 $pointsEarned = ($q->points / count($keywords)) * $matched;
+//                 $answerStatus = 'Partial';
+//             }
+
+//             $correctAnswerValue = $keywords;
+//         }
+
+//         $totalPointsEarned += $pointsEarned;
+//         $questionScoresArray[] = $pointsEarned;
+
+//         $answerDetails[] = [
+//             'questionId'    => $questionId,
+//             'questionType'  => $questionType,
+//             'answerGiven'   => $answer,
+//             'answerStatus'  => $answerStatus,
+//             'correctAnswer' => $correctAnswerValue,
+//             'pointEarned'   => $pointsEarned
+//         ];
+
+//         DB::table('elearning_question_results')->insert([
+//             'user_id'        => $userId,
+//             'question_id'    => $questionId,
+//             'question_type'  => $questionType,
+//             'answer_given'   => is_array($answer) ? implode(",", $answer) : $answer,
+//             'answer_status'  => is_array($answerStatus) ? implode(",", $answerStatus) : $answerStatus,
+//             'correct_answer' => is_array($correctAnswerValue) ? implode(",", $correctAnswerValue) : $correctAnswerValue,
+//             'scores_earned'  => $pointsEarned,
+//             'quiz_date'      => $quizAttendDate,
+//         ]);
+//     }
+
+//     /* -----------------------------
+//        SAVE QUIZ RESULT
+//     ------------------------------*/
+//     DB::table('elearning_quiz_results')->insert([
+//         'user_id'           => $userId,
+//         'quiz_id'           => $quizId,
+//         'quiz_name'         => $quizName,
+//         'questions_ids'     => $qIds,
+//         'questions_scores'  => implode(",", $questionScoresArray),
+//         'total_scores'      => $totalAvailablePoints,
+//         'scores_earned'     => $totalPointsEarned,
+//         'quiz_date'         => $quizAttendDate,
+//     ]);
+
+//     return [
+//         'quizId' => $quizId,
+//         'quizName' => $quizName,
+//         'questionDetails' => $questionDetails,
+//         'answerDetails' => $answerDetails,
+//         'totalAvailablePoints' => $totalAvailablePoints,
+//         'totalPointsEarned' => $totalPointsEarned,
+//     ];
+// }
+
+public function quizresult(Request $request)
 {
-    $this->WriteFileLog($request);
-                        // dd($request);
+    // $this->WriteFileLog($request);
+    
     $quizAttendDate = now();
 
     // Authentication
@@ -1228,6 +1436,7 @@ class elearningmainController extends BaseController
 
     $quizName = $quizDetails->quiz_name;
     $qIds = $quizDetails->quiz_questions;
+    $courseId = $request->courseId;
     $questions = explode(",", $qIds);
 
     /* -----------------------------
@@ -1263,7 +1472,7 @@ class elearningmainController extends BaseController
     }
 
     /* -----------------------------
-       EVALUATE ANSWERS
+       INITIAL EVALUATION (BASIC)
     ------------------------------*/
     $answersArray = $request->answers ?? [];
     $answerDetails = [];
@@ -1303,18 +1512,15 @@ class elearningmainController extends BaseController
             $q = DB::table('elearning_questions_mcq')
                 ->where('question_id', $questionId)->first();
 
-            // $correctChoices = array_map('trim', explode(",", $q->correct_choices));
-            // $answerGiven = array_map('trim', explode(",", $answer));
-
             $correctChoices = array_map(
-        fn($c) => strtoupper(trim($c)),
-        explode(",", $q->correct_choices)
-    );
+                fn($c) => strtoupper(trim($c)),
+                explode(",", $q->correct_choices)
+            );
 
-    $answerGiven = array_map(
-        fn($a) => strtoupper(trim($a)),
-        explode(",", $answer)
-    );
+            $answerGiven = array_map(
+                fn($a) => strtoupper(trim($a)),
+                explode(",", $answer)
+            );
 
             $totalAvailablePoints += $q->points;
             $pointPerChoice = $q->points / count($correctChoices);
@@ -1375,23 +1581,12 @@ class elearningmainController extends BaseController
             'correctAnswer' => $correctAnswerValue,
             'pointEarned'   => $pointsEarned
         ];
-
-        DB::table('elearning_question_results')->insert([
-            'user_id'        => $userId,
-            'question_id'    => $questionId,
-            'question_type'  => $questionType,
-            'answer_given'   => is_array($answer) ? implode(",", $answer) : $answer,
-            'answer_status'  => is_array($answerStatus) ? implode(",", $answerStatus) : $answerStatus,
-            'correct_answer' => is_array($correctAnswerValue) ? implode(",", $correctAnswerValue) : $correctAnswerValue,
-            'scores_earned'  => $pointsEarned,
-            'quiz_date'      => $quizAttendDate,
-        ]);
     }
 
     /* -----------------------------
-       SAVE QUIZ RESULT
+       SAVE INITIAL QUIZ RESULT
     ------------------------------*/
-    DB::table('elearning_quiz_results')->insert([
+    $quizResultId = DB::table('elearning_quiz_results')->insertGetId([
         'user_id'           => $userId,
         'quiz_id'           => $quizId,
         'quiz_name'         => $quizName,
@@ -1401,6 +1596,143 @@ class elearningmainController extends BaseController
         'scores_earned'     => $totalPointsEarned,
         'quiz_date'         => $quizAttendDate,
     ]);
+    // Delete any existing question results for this quiz attempt to avoid duplicates (if re-attempting)
+    DB::table('elearning_question_results')
+    ->where('course_id', $courseId)
+     ->where('quiz_id', $quizId)
+    ->delete();
+    /* -----------------------------
+       SAVE INITIAL QUESTION RESULTS
+    ------------------------------*/
+    foreach ($answerDetails as $detail) {
+        DB::table('elearning_question_results')->insert([
+            'user_id'        => $userId,
+            'quiz_result_id' => $quizResultId, // Add this column to link to quiz result
+            'question_id'    => $detail['questionId'],
+            'question_type'  => $detail['questionType'],
+            'answer_given'   => is_array($detail['answerGiven']) ? implode(",", $detail['answerGiven']) : $detail['answerGiven'],
+            'answer_status'  => $detail['answerStatus'],
+            'correct_answer' => is_array($detail['correctAnswer']) ? implode(",", $detail['correctAnswer']) : $detail['correctAnswer'],
+            'scores_earned'  => $detail['pointEarned'],
+            'quiz_date'      => $quizAttendDate,
+            'course_id'      => $courseId, 
+            'quiz_id'      => $quizId, 
+           
+        ]);
+    }
+
+    /* -----------------------------
+       CALL AI EVALUATION API
+    ------------------------------*/
+    try {
+        $elearning_coursequiz = DB::table('elearning_coursequiz')
+            
+            ->where('quiz_id', $quizId)
+            ->count();
+            $attempt_count = $elearning_coursequiz + 1;
+        $method = 'Method => quiz_store';
+    
+        
+                $aiData = (object) [
+                'user_id'   => $userId,
+                'course_id' => $courseId ?? 1,
+                'quiz_id'   => $quizId,
+                'attempt'   => $attempt_count,
+            ];
+
+            $gatewayURL = config('setting.AI_service_url') . '/ai/predictive-analysis/run/evaluate-v2/';
+
+            $aiResults = $this->AIserviceRequest($gatewayURL, 'POST', $aiData, $method);
+                        $aiResults = is_string($aiResults)
+                            ? json_decode($aiResults, true)
+                            : $aiResults;
+       
+        if (isset($aiResults['results']) && is_array($aiResults['results'])) {
+            
+            $updatedQuestionScores = [];
+            $updatedTotalEarned = 0;
+            $updatedTotalAvailable = $aiResults['max_total_score'] ?? $totalAvailablePoints;
+
+            // Update question results with AI evaluation
+            foreach ($aiResults['results'] as $aiQuestion) {
+                
+                // Map AI status to your status format
+                $aiStatus = $aiQuestion['status'] ?? '';
+                $mappedStatus = match(strtolower($aiStatus)) {
+                    'correct' => 'Correct',
+                    'incorrect' => 'Wrong',
+                    'partial' => 'Partial',
+                    default => $aiQuestion['status'] ?? 'Unknown'
+                };
+
+                // Prepare feedback (you can format it as needed)
+                $feedback = $aiQuestion['feedback'] ?? '';
+                if (!empty($aiQuestion['missing_concepts'])) {
+                    $feedback .= " Missing concepts: " . implode(", ", $aiQuestion['missing_concepts']);
+                }
+
+                // Update the question result
+                DB::table('elearning_question_results')
+                    ->where('user_id', $userId)
+                    ->where('question_id', $aiQuestion['question_id'])
+                    ->where('question_type', $aiQuestion['question_type'])
+                    ->where('quiz_result_id', $quizResultId) // Ensure we update the correct attempt
+                    ->update([
+                        'answer_status' => $mappedStatus,
+                        'scores_earned' => $aiQuestion['score'],
+                        'feedback' => $feedback,
+                        'rubric_used' => $aiQuestion['rubric_used'] ?? null,
+                       
+                    ]);
+
+                // Collect updated scores for quiz summary
+                $updatedQuestionScores[] = $aiQuestion['score'];
+                $updatedTotalEarned += $aiQuestion['score'];
+            }
+ 
+            // Update quiz result with AI evaluation
+            DB::table('elearning_quiz_results')
+                ->where('id', $quizResultId)
+                ->update([
+                    'questions_scores' => implode(",", $updatedQuestionScores),
+                    'total_scores' => $updatedTotalAvailable,
+                    'scores_earned' => $updatedTotalEarned,
+                    'overall_feedback' => $aiResults['overall_feedback'] ?? null,
+                    'overall_holistic_grade' => $aiResults['overall_holistic_grade'] ?? null,
+                   
+                    
+                ]);
+
+            // Update return data with AI results
+            $totalAvailablePoints = $updatedTotalAvailable;
+            $totalPointsEarned = $updatedTotalEarned;
+            
+            // Update answerDetails with AI results for return
+            foreach ($answerDetails as &$detail) {
+                foreach ($aiResults['results'] as $aiQuestion) {
+                    if ($detail['questionId'] == $aiQuestion['question_id']) {
+                        $detail['pointEarned'] = $aiQuestion['score'];
+                        $detail['answerStatus'] = match(strtolower($aiQuestion['status'] ?? '')) {
+                            'correct' => 'Correct',
+                            'incorrect' => 'Wrong',
+                            'partial' => 'Partial',
+                            default => $aiQuestion['status'] ?? $detail['answerStatus']
+                        };
+                        $detail['feedback'] = $aiQuestion['feedback'] ?? '';
+                        $detail['rubric_used'] = $aiQuestion['rubric_used'] ?? '';
+                        break;
+                    }
+                }
+            }
+           
+        }
+        
+    } catch (\Exception $e) {
+        // Log the error but don't fail the request
+        \Log::error('AI Evaluation failed: ' . $e->getMessage());
+        
+        
+    }
 
     return [
         'quizId' => $quizId,
@@ -1409,8 +1741,11 @@ class elearningmainController extends BaseController
         'answerDetails' => $answerDetails,
         'totalAvailablePoints' => $totalAvailablePoints,
         'totalPointsEarned' => $totalPointsEarned,
+        'aiEvaluated' => isset($aiResults) ? true : false
     ];
 }
+
+
 
     public function assessmentSubmit(Request $request)
     {
