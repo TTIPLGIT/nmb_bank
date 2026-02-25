@@ -83,7 +83,9 @@
     }
 </style>
 
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <div class="main-content">
     <h5 class="text-center" style="color:darkblue">Users Create</h5>
     {{ Breadcrumbs::render('user.create') }}
@@ -168,6 +170,31 @@
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Custom Field</label>
+                                            <select class="form-control" name="custom_field_id" id="custom_field">
+                                                <option value="">---Select---</option>
+                                                @foreach($custom_field as $field)
+                                                <option
+                                                    value="{{ $field['id'] }}"
+                                                    data-type="{{ $field['field_type'] }}"
+                                                    data-label="{{ $field['field_label'] }}"
+                                                    data-name="{{ $field['field_name'] }}">
+                                                    {{ $field['field_label'] }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+
+                                            @error('roles_id')
+                                            <div class="error">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6" id="dynamic_field_container"></div>
+
                                     <div class="col-md-6" id="professionalFields_1">
                                         <div class="form-group">
                                             <div class="col d-flex justify-content-start flex-column">
@@ -322,6 +349,7 @@
             <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
             <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
             <script>
                 const input = document.querySelector("#phone");
                 const iti = window.intlTelInput(input, {
@@ -329,6 +357,60 @@
                     utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js?1706723638591"
                 });
             </script>
+<!-- custom Field -->
+            <script>
+                document.getElementById('custom_field').addEventListener('change', function() {
+
+                    let selectedOption = this.options[this.selectedIndex];
+                    let fieldType = selectedOption.getAttribute('data-type');
+                    let fieldLabel = selectedOption.getAttribute('data-label');
+
+                    let container = document.getElementById('dynamic_field_container');
+                    container.innerHTML = "";
+
+                    if (!fieldType) return;
+
+                    let inputField = '';
+
+                    switch (fieldType) {
+
+                        case 'text':
+                            inputField = `
+                <div class="form-group">
+                    <label>${fieldLabel}</label>
+                    <input type="text" name="custom_field_value" class="form-control">
+                </div>`;
+                            break;
+
+                        case 'email':
+                            inputField = `
+                <div class="form-group">
+                    <label>${fieldLabel}</label>
+                    <input type="email" name="custom_field_value" class="form-control">
+                </div>`;
+                            break;
+
+                        case 'number':
+                            inputField = `
+                <div class="form-group">
+                    <label>${fieldLabel}</label>
+                    <input type="number" name="custom_field_value" class="form-control">
+                </div>`;
+                            break;
+
+                        case 'date':
+                            inputField = `
+                <div class="form-group">
+                    <label>${fieldLabel}</label>
+                    <input type="date" name="custom_field_value" class="form-control">
+                </div>`;
+                            break;
+                    }
+
+                    container.innerHTML = inputField;
+                });
+            </script>
+
             <script type="text/javascript">
                 $(".js-select2").select2({
                     closeOnSelect: false,
@@ -702,6 +784,7 @@
 
                 function user() {
                     var uname = $("#name").val();
+
                     if (uname == '') {
                         swal("Please Enter the User Name", "", "error");
                         event.preventDefault();
@@ -728,6 +811,12 @@
                     var scrrole = $("select[name='roles_id']").val();
                     if (scrrole == '') {
                         swal("Please Select the Screen Roles", "", "error");
+                        event.preventDefault();
+                        return false;
+                    }
+                    var designation_id = $("select[name='designation_id']").val();
+                    if (designation_id == '') {
+                        swal("Please Select the Designation", "", "error");
                         event.preventDefault();
                         return false;
                     } else {

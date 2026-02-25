@@ -8840,6 +8840,42 @@
       ],
       "UpstreamPathTemplate": "/api/gateway/ai/predictive-analysis/run",
       "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/custom_filed/get_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/custom_filed/get_data",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/custom_filed_create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/custom_filed_create",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/custom_filed_store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/custom_filed_store",
+      "UpstreamHttpMethod": ["POST"]
     }
   ],
   "GlobalConfiguration": {

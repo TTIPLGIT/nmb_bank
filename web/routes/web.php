@@ -868,3 +868,6 @@ Route::post('/elearning/class/restore-version', [App\Http\Controllers\ElearningQ
 Route::post('/class/update/{class_id}', [App\Http\Controllers\tryController::class, 'class_update'])->name('elearning.class_update');
 
 Route::post('/global-chat', [App\Http\Controllers\AIController::class, 'globalChat'])->name('global.chat');
+Route::get('/custom_filed', [App\Http\Controllers\DesignationController::class, 'custom_filed'])->name('custom_filed');
+Route::get('/custom_filed_create', [App\Http\Controllers\DesignationController::class, 'custom_filed_create'])->name('custom_filed_create');
+Route::post('/custom_filed_store', [App\Http\Controllers\DesignationController::class, 'custom_filed_store'])->name('custom_filed_store');

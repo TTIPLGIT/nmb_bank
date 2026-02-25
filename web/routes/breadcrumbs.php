@@ -588,3 +588,8 @@ Breadcrumbs::for('catagory_create', function (BreadcrumbTrail $trail) {
     $trail->parent('catagory_list'); 
     $trail->push('Category Create', route('catagory_create'));
 });
+
+Breadcrumbs::for('custom_field.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Custom Field List', route('custom_filed'));
+});

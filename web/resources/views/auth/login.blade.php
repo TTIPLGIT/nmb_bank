@@ -24,7 +24,7 @@
     .man-overlay {
         position: absolute;
         top: 0;
-        margin-top:165px;
+        margin-top: 165px;
         right: -70px;
 
         z-index: 2;
@@ -157,18 +157,10 @@
 
                                 <div class="form-group col-12">
                                     <input id="password" type="password" class="form-control login_pass @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="off" style="border-radius:15px;background-color:white">
-                                    <!-- <div class="input-group-append">
-                                        <span class="input-group-text rounded-halfpillrightside" id="basic-addon1" style="background: transparent;">
-                                            <i class="fa fa-lock login_pass_icon" id="toggle" onclick="passlock_show();"></i>
 
-                                        </span>
-                                    </div> -->
                                     <sapn class="caplock-indicator invalid-warning" style="display: none;">WARNING! Caps Lock is ON</sapn>
                                     <br>
-                                    <input type="checkbox" id="toggle" onclick="passlock_show();" style="margin-left:10 px"> Show Password
-
-
-
+                                    <input type="checkbox" id="showPassword" style="margin-left:10px"> Show Password
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -328,22 +320,22 @@
 
 
     <script>
-        function passlock_show() {
-            const pass = document.getElementById('password');
-            const toggle = document.getElementById('toggle');
-            if (pass.getAttribute('type') == "password") {
-                pass.setAttribute('type', 'text');
-                toggle.classList.remove('fa-lock');
-                toggle.classList.add('fa-unlock');
+        document.addEventListener("DOMContentLoaded", function() {
 
-            } else {
-                pass.setAttribute('type', 'password');
-                toggle.classList.remove('fa-unlock');
-                toggle.classList.add('fa-lock');
+            const checkbox = document.getElementById("showPassword");
+            const passwordField = document.getElementById("password");
 
+            checkbox.addEventListener("change", function() {
+                console.log(passwordField); // now this will work
 
-            }
-        }
+                if (this.checked) {
+                    passwordField.type = "text";
+                } else {
+                    passwordField.type = "password";
+                }
+            });
+
+        });
     </script>
 
     <script>
@@ -383,10 +375,6 @@
             console.log(paramValue); // Example: Print the parameter value to the console
         });
     </script>
-    <script>
-
-    </script>
-
 
 
     @endsection

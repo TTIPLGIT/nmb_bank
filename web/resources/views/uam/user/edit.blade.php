@@ -42,7 +42,7 @@
                       <div class="error">{{ $message }}</div>
                       @enderror
                     </div>
-  
+
                     <div class="form-group">
                       <label class="control-label">Roles <span style="color: red;font-size: 16px;">*</span></label>
                       <select class="form-control" name="roles_id" id="roles_id" onchange="filterDesignations()">
@@ -60,19 +60,80 @@
                       @enderror
                     </div>
 
-                   
+
+                    <div class="form-group">
+                      <label class="control-label">Designation<span style="color: red;font-size: 16px;">*</span></label>
+                      <select class="form-control" name="designation_id" id="designation_id">
+                        <option value="">Please Select Designation</option>
+                        {{-- Designation options will be populated by JS --}}
+                      </select>
+
+                      @error('designation_id')
+                      <div class="error">{{ $message }}</div>
+                      @enderror
+                    </div>
+                    <div class="col-md-12">
+                      <h5>Custom Fields</h5>
+                    </div>
+
+
+                    @foreach($user_custom_values as $field)
+
+                    @php
+                    $value = $user_custom_values[$field['id']]['field_value'] ?? '';
+                    @endphp
+
+                    <div class="col-md-6">
                       <div class="form-group">
-                        <label class="control-label">Designation<span style="color: red;font-size: 16px;">*</span></label>
-                        <select class="form-control" name="designation_id" id="designation_id">
-                          <option value="">Please Select Designation</option>
-                          {{-- Designation options will be populated by JS --}}
+                        <label>{{ $field['field_label'] }}</label>
+
+                        @if($field['field_type'] == 'text')
+                        <input type="text"
+                          name="custom_fields[{{ $field['id'] }}]"
+                          class="form-control"
+                          value="{{ $value }}">
+
+                        @elseif($field['field_type'] == 'email')
+                        <input type="email"
+                          name="custom_fields[{{ $field['id'] }}]"
+                          class="form-control"
+                          value="{{ $value }}">
+
+                        @elseif($field['field_type'] == 'number')
+                        <input type="number"
+                          name="custom_fields[{{ $field['id'] }}]"
+                          class="form-control"
+                          value="{{ $value }}">
+
+                        @elseif($field['field_type'] == 'date')
+                        <input type="date"
+                          name="custom_fields[{{ $field['id'] }}]"
+                          class="form-control"
+                          value="{{ $value }}">
+
+                        @elseif($field['field_type'] == 'dropdown')
+
+                        @php
+                        $options = json_decode($field['field_options']);
+                        @endphp
+
+                        <select name="custom_fields[{{ $field['id'] }}]" class="form-control">
+                          <option value="">Select</option>
+                          @foreach($options as $option)
+                          <option value="{{ $option }}"
+                            {{ $option == $value ? 'selected' : '' }}>
+                            {{ $option }}
+                          </option>
+                          @endforeach
                         </select>
 
-                        @error('designation_id')
-                        <div class="error">{{ $message }}</div>
-                        @enderror
+                        @endif
+
                       </div>
-                    
+                    </div>
+
+                    @endforeach
+
 
 
 
@@ -760,13 +821,21 @@
 </script>
 
 <script>
-    const allDesignations = @json($designation); // Make sure this is full list
-    const selectedRoleId = {{ $one_row[0]['array_roles'] ?? 'null' }};
-    const selectedDesignationId = {{ $one_row[0]['designation_id'] ?? 'null' }};
+  const allDesignations = @json($designation); // Make sure this is full list
+  const selectedRoleId = {
+    {
+      $one_row[0]['array_roles'] ?? 'null'
+    }
+  };
+  const selectedDesignationId = {
+    {
+      $one_row[0]['designation_id'] ?? 'null'
+    }
+  };
 </script>
 
 <script>
-function filterDesignations() {
+  function filterDesignations() {
     const roleId = document.getElementById('roles_id').value;
     const designationSelect = document.getElementById('designation_id');
 
@@ -775,22 +844,22 @@ function filterDesignations() {
     const filtered = allDesignations.filter(d => d.role_id == roleId);
 
     filtered.forEach(d => {
-        const opt = document.createElement('option');
-        opt.value = d.designation_id;
-        opt.textContent = d.designation_name;
+      const opt = document.createElement('option');
+      opt.value = d.designation_id;
+      opt.textContent = d.designation_name;
 
-        if (d.designation_id == selectedDesignationId) {
-            opt.selected = true;
-        }
+      if (d.designation_id == selectedDesignationId) {
+        opt.selected = true;
+      }
 
-        designationSelect.appendChild(opt);
+      designationSelect.appendChild(opt);
     });
-}
+  }
 
-// Load designations for selected role on page load
-window.addEventListener('DOMContentLoaded', function () {
+  // Load designations for selected role on page load
+  window.addEventListener('DOMContentLoaded', function() {
     filterDesignations();
-});
+  });
 </script>
 
 

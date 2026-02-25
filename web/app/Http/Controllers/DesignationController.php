@@ -269,15 +269,14 @@ class DesignationController extends BaseController
                 $request['requestData'] = $encryptArray;
 
                 $gatewayURL = config('setting.api_gateway_url') . '/designation/updatedata';
-                
+
                 $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
 
                 $response1 = json_decode($response);
             }
-            
+
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
-               
             }
 
             if ($objData->Code == 200) {
@@ -554,35 +553,163 @@ class DesignationController extends BaseController
 
 
 
-            if ($request->checking == 6) {
-                $data = array();
-                $data['email'] = $request->email;
-                $data['checking'] = $request->checking;
+            // if ($request->checking == 6) {
+            //     $data = array();
+            //     $data['email'] = $request->email;
+            //     $data['checking'] = $request->checking;
 
-                $encryptArray = $this->encryptData($data);
-                $request = array();
-                $request['requestData'] = $encryptArray;
-                $gatewayURL = config('setting.api_gateway_url') . '/document_category/checking_data';
-                $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-                $response1 = json_decode($response);
-                if ($response1->Status == 200 && $response1->Success) {
-                    $objData = json_decode($this->decryptData($response1->Data));
-                    if ($objData->Code == 200) {
-                        $users =  "Success";
-
-
-                        echo json_encode($users);
-                        exit;
-                    }
-
-                    if ($objData->Code == 400) {
-                        $users =  "Failure";
+            //     $encryptArray = $this->encryptData($data);
+            //     $request = array();
+            //     $request['requestData'] = $encryptArray;
+            //     $gatewayURL = config('setting.api_gateway_url') . '/document_category/checking_data';
+            //     $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+            //     $response1 = json_decode($response);
+            //     if ($response1->Status == 200 && $response1->Success) {
+            //         $objData = json_decode($this->decryptData($response1->Data));
+            //         if ($objData->Code == 200) {
+            //             $users =  "Success";
 
 
-                        echo json_encode($users);
-                        exit;
-                    }
+            //             echo json_encode($users);
+            //             exit;
+            //         }
+
+            //         if ($objData->Code == 400) {
+            //             $users =  "Failure";
+
+
+            //             echo json_encode($users);
+            //             exit;
+            //         }
+            //     }
+            // }
+        } catch (\Exception $exc) {
+            echo $exc;
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        }
+    }
+
+    public function custom_filed(Request $request)
+    {
+        $permission_data = $this->FillScreensByUser();
+        $screen_permission = $permission_data[0];
+
+        try {
+            $method = 'Method => DesignationController => index';
+            $serviceResponse = array();
+
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $gatewayURL = config('setting.api_gateway_url') . '/custom_filed/get_data';
+
+            $response = $this->serviceRequest($gatewayURL, 'GET', $serviceResponse, $method);
+
+            $response = json_decode($response);
+
+            if ($response->Status == 200 && $response->Success) {
+                $objData = json_decode($this->decryptData($response->Data));
+                if ($objData->Code == 200) {
+                    $parant_data = json_decode(json_encode($objData->Data), true);
+                    $rows =  $parant_data['rows'];
+                    $menus = $this->FillMenu();
+                    $screens = $menus['screens'];
+                    $modules = $menus['modules'];
+                    $permission = $this->FillScreensByUser();
+                    $screen_permission = $permission[0];
+                    return view('custom_field.index', compact('rows', 'screens', 'modules', 'screen_permission'));
                 }
+            } else {
+                $objData = json_decode($this->decryptData($response->Data));
+                echo json_encode($objData->Code);
+                exit;
+            }
+        } catch (\Exception $exc) {
+            echo $exc;
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        }
+        // }
+        // else{
+        //    return redirect()->route('not_allow');
+        // }
+    }
+
+    public function custom_filed_create()
+    {
+        $permission_data = $this->FillScreensByUser();
+        $screen_permission = $permission_data[0];
+        // if (strpos($screen_permission['permissions'], 'Create') !== false) {
+        try {
+            $method = 'Method => DesignationController => create';
+            $gatewayURL = config('setting.api_gateway_url') . '/custom_filed_create';
+
+            $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+            $response = json_decode($response);
+
+            if ($response->Status == 200 && $response->Success) {
+
+                $objData = json_decode($this->decryptData($response->Data));
+
+                if ($objData->Code == 200) {
+                    $parant_data = json_decode(json_encode($objData->Data), true);
+                    $roles =  $parant_data['roles'];
+                    $menus = $this->FillMenu();
+                    $screens = $menus['screens'];
+                    $modules = $menus['modules'];
+                    return view('custom_field.create', compact('roles', 'modules', 'screens'));
+                }
+            } else {
+                $objData = json_decode($this->decryptData($response->Data));
+                echo json_encode($objData->Code);
+                exit;
+            }
+        } catch (\Exception $exc) {
+            echo $exc;
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        }
+        // }
+        //  else {
+        //     return redirect()->route('not_allow');
+        // }
+    }
+
+    public function custom_filed_store(Request $request)
+    {
+
+        try {
+            $method = 'Method => DesignationController => custom_filed_store';
+            $data = array();
+            $data['field_label'] = $request->field_label;
+            $data['field_name'] = $request->field_name;
+            $data['field_type'] = $request->field_type;
+            $data['field_options'] = $request->field_options;
+            $data['is_required'] = $request->is_required;
+
+
+            $encryptArray = $this->encryptData($data);
+            $request = array();
+
+            $request['requestData'] = $encryptArray;
+
+            $gatewayURL = config('setting.api_gateway_url') . '/custom_filed_store';
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+            $response1 = json_decode($response);
+            // dd($response);
+
+            if ($response1->Status == 200 && $response1->Success) {
+                $objData = json_decode($this->decryptData($response1->Data));
+
+                if ($objData->Code == 200) {
+                    return redirect(route('custom_filed'))->with('success', 'Custom field Created Successfully');
+                }
+
+
+                if ($objData->Code == 400) {
+                    return Redirect::back()->with('fail', 'Custom field Already Exists');
+                    //return redirect(route('designation.create'))->with('fail', 'Designation Already Exists');
+                }
+            } else {
+                $objData = json_decode($this->decryptData($response->Data));
+                echo json_encode($objData->Code);
+                exit;
             }
         } catch (\Exception $exc) {
             echo $exc;

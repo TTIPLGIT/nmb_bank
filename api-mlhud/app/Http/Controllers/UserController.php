@@ -32,7 +32,7 @@ class UserController extends BaseController
 				$role_id = $inputArray['screen_role_id'];
 
 				$role_check =  DB::select("select * from uam_roles where role_id = $role_id and active_flag = 0");
-
+				$this->WriteFileLog($role_check, 'screenrole');
 				if ($role_check != []) {
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
@@ -61,7 +61,7 @@ class UserController extends BaseController
 				$project_role_id = $inputArray['project_role_id'];
 
 				$role_check =  DB::select("select * from project_roles where project_role_id = $project_role_id and active_flag = 1");
-
+$this->WriteFileLog($role_check, 'projectrole');
 				if ($role_check != []) {
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
@@ -91,7 +91,7 @@ class UserController extends BaseController
 				$designation_id = $inputArray['designation_id'];
 
 				$role_check =  DB::select("select * from designation where designation_id = $designation_id and active_flag = 0");
-
+$this->WriteFileLog($role_check, 'designaton');
 				if ($role_check != []) {
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
@@ -119,7 +119,7 @@ class UserController extends BaseController
 
 				$role_check =  DB::select("SELECT * FROM document_folder_structures WHERE parent_document_folder_structure_id Not IN  ($parent_department) AND active_flag = 1
 				 AND  document_folder_structure_id =  $department_id");
-
+$this->WriteFileLog($role_check, 'department');
 
 
 
@@ -148,7 +148,7 @@ class UserController extends BaseController
 				$email = $inputArray['email'];
 
 				$role_check =  DB::select("SELECT * FROM users WHERE email = '$email' ");
-
+$this->WriteFileLog($role_check, 'email');
 				if ($role_check == []) {
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
@@ -174,6 +174,7 @@ class UserController extends BaseController
 				$email = $inputArray['email'];
 
 				$role_check =  DB::select("SELECT * FROM users_dummy WHERE email = '$email' ");
+				$this->WriteFileLog($role_check, 'email');
 				$checkcounting = count($role_check);
 				if ($checkcounting > 1) {
 
@@ -235,7 +236,6 @@ class UserController extends BaseController
 		$logMethod = 'Method => UserController => User';
 		try {
 			$userID = auth()->user()->id;
-			$this->WriteFileLog($userID);
 
 			$role_data = DB::table('uam_user_roles')->select('uam_user_roles.role_id', 'uam_user_roles.active_flag', 'uam_roles.alter_name')
 				->join('uam_roles', 'uam_roles.role_id', '=', 'uam_user_roles.role_id')
@@ -416,6 +416,11 @@ class UserController extends BaseController
 				->where('active_flag', 1)
 				->get();
 
+			$custom_field =  DB::table('custom_fields')
+            ->select('id','field_label','field_name','field_type')
+            ->where('status', 1)
+            ->get();
+
 
 
 			// $document = DB::select("select  * from document_folder_structures where parent_document_folder_structure_id = 1");   
@@ -463,6 +468,7 @@ class UserController extends BaseController
 				// 'sub_department' => $sub_department,
 				// 'document_category' => $document_category,
 				'project_roles' => $project_roles,
+				'custom_field' => $custom_field
 			];
 
 			$serviceResponse = array();
@@ -530,18 +536,15 @@ class UserController extends BaseController
 	public function user_register(Request $request)
 	{
 		$logMethod = 'Method => UserController => user_register';
-		// $this->WriteFileLog(decrypt($request));
 
 		try {
 			$isMobile = isset($request['isMobile']);
 
 			$input = $isMobile ? $request : $this->decryptData($request->requestData);
-			$this->WriteFileLog($input);
 			$name  = $input['name'];
 			$email =  $input['email'];
 
 
-			// $this->WriteFileLog($input);
 			$rowsemail =  DB::select("select * from users where email ='$email'");
 
 			if (json_encode($rowsemail) != '[]') {
@@ -558,7 +561,6 @@ class UserController extends BaseController
 
 				$input = $isMobile ? $request : $this->decryptData($request->requestData);
 				$user_inser_id = DB::transaction(function () use ($input) {
-					// $this->WriteFileLog($input);
 
 					$user_password = $input['password'];
 					// $dashboard_list_id = $input['dashboard_list_id'];
@@ -570,7 +572,6 @@ class UserController extends BaseController
 					// 	->where('client_designation_id', $input['client_designation_id'])
 					// 	->value('designation_id');
 
-					$this->WriteFileLog($roles_data_id);
 					$user_id = DB::table('users')
 						->insertGetId([
 							'name' => $input['name'],
@@ -583,10 +584,18 @@ class UserController extends BaseController
 							'designation_id' =>  $input['designation'],
 							'client_user_id' => $input['client_user_id']
 						]);
+					if (!empty($input['custom_field_id']) && !empty($input['custom_field_value'])) {
+
+						DB::table('user_custom_field_values')->insert([
+							'user_id' => $user_id,
+							'custom_field_id' => $input['custom_field_id'],
+							'field_value' => $input['custom_field_value'],
+							'created_at' => now(),
+							'updated_at' => now(),
+						]);
+					}
 
 
-
-					// $this->WriteFileLog($user_id);
 
 					$user_id  =  $user_id;
 					$input['user_id'] = $user_id;
@@ -783,12 +792,9 @@ class UserController extends BaseController
 				// update in the users table()
 				$role_id = $input['roles_id'];
 				if ($role_id == '34') {
-					$this->WriteFileLog("IN THE IF");
-					$this->WriteFileLog($input);
 					DB::transaction(function () use ($input) {
 						$email = $input['email'];
 						$userID = DB::select("SELECT id from users where email = '$email'");
-						$this->WriteFileLog($userID);
 						DB::table('users')
 							->where('id', $userID[0]->id)
 							->update([
@@ -915,6 +921,20 @@ class UserController extends BaseController
 				->select('*')
 				->where('active_flag', 1)
 				->get();
+			
+			$user_custom_values = DB::table('custom_fields as cf')
+				->leftJoin('user_custom_field_values as ucfv', function ($join) use ($id) {
+					$join->on('cf.id', '=', 'ucfv.custom_field_id')
+						->where('ucfv.user_id', '=', $id);
+				})
+				->select(
+					'cf.id',
+					'cf.field_label',
+					'cf.field_type',
+					'cf.field_options',
+					'ucfv.field_value'
+				)
+				->get();
 
 			$response = [
 				'one_row' => $one_row,
@@ -927,7 +947,8 @@ class UserController extends BaseController
 				// 'document_folder_structure_id' => $document_folder_structure_id,
 				'dashboard' => $dashboard,
 				// 'document_category' => $document_category,
-				'project_roles' => $project_roles
+				'project_roles' => $project_roles,
+				'user_custom_values' =>$user_custom_values
 			];
 			$serviceResponse = array();
 			$serviceResponse['Code'] = config('setting.status_code.success');
@@ -1376,14 +1397,12 @@ class UserController extends BaseController
 					'token' => $token,
 				];
 
-				$this->WriteFileLog($data);
 				Mail::to($rows[0]->email)->send(new SendResetMail($data));
 				$response_status = 200;
 				$email_encrypt = $this->encryptData($email);
 				$response = [
 					'response_status' => $response_status
 				];
-				$this->WriteFileLog($response);
 
 				//KD
 				$remember_ps_audit = DB::table('remember_ps_audit')
@@ -2684,7 +2703,7 @@ class UserController extends BaseController
 				$parent_department = config('setting.parent_department');
 
 				$role_check =  DB::select("SELECT * FROM document_folder_structures WHERE parent_document_folder_structure_id Not IN  ($parent_department) AND active_flag = 1
- AND  document_folder_structure_id =  $department_id");
+						AND  document_folder_structure_id =  $department_id");
 
 
 
@@ -2712,7 +2731,7 @@ class UserController extends BaseController
 			if ($inputArray['checking'] == 5) {
 
 				$email = $inputArray['email'];
-
+				
 				$role_check =  DB::select("SELECT * FROM users WHERE email = '$email' ");
 
 				if ($role_check == []) {
@@ -2735,31 +2754,31 @@ class UserController extends BaseController
 			}
 
 
-			if ($inputArray['checking'] == 6) {
+			// if ($inputArray['checking'] == 6) {
 
-				$email = $inputArray['email'];
+			// 	$email = $inputArray['email'];
 
-				$role_check =  DB::select("SELECT * FROM users_dummy WHERE email = '$email' ");
-				$checkcounting = count($role_check);
-				if ($checkcounting > 1) {
+			// 	$role_check =  DB::select("SELECT * FROM users WHERE email = '$email' ");
+			// 	$checkcounting = count($role_check);
+			// 	if ($checkcounting > 1) {
 
-					$serviceResponse = array();
-					$serviceResponse['Code'] = 400;
-					$serviceResponse['Message'] = config('setting.status_message.success');
-					$serviceResponse['Data'] = 1;
-					$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-					$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-					return $sendServiceResponse;
-				} else {
-					$serviceResponse = array();
-					$serviceResponse['Code'] = config('setting.status_code.success');
-					$serviceResponse['Message'] = config('setting.status_message.success');
-					$serviceResponse['Data'] = 1;
-					$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-					$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-					return $sendServiceResponse;
-				}
-			}
+			// 		$serviceResponse = array();
+			// 		$serviceResponse['Code'] = 400;
+			// 		$serviceResponse['Message'] = config('setting.status_message.success');
+			// 		$serviceResponse['Data'] = 1;
+			// 		$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+			// 		$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+			// 		return $sendServiceResponse;
+			// 	} else {
+			// 		$serviceResponse = array();
+			// 		$serviceResponse['Code'] = config('setting.status_code.success');
+			// 		$serviceResponse['Message'] = config('setting.status_message.success');
+			// 		$serviceResponse['Data'] = 1;
+			// 		$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+			// 		$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+			// 		return $sendServiceResponse;
+			// 	}
+			// }
 		} catch (\Exception $exc) {
 			$exceptionResponse = array();
 			$exceptionResponse['ServiceMethod'] = $method;
@@ -2792,7 +2811,6 @@ class UserController extends BaseController
 
 
 			if ($isMobile) {
-				// $this->WriteFileLog('jii1');
 
 
 				$user_id = DB::table('users')

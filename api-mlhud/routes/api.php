@@ -917,3 +917,8 @@ Route::post('/class/get-class-data', [App\Http\Controllers\ElearningQuestionCont
 Route::post('/class/class_update_with_version', [App\Http\Controllers\ElearningQuestionController::class, 'class_update_with_version']);
 Route::post('/class/get-class-versions', [App\Http\Controllers\ElearningQuestionController::class, 'get_class_versions']);
 Route::post('/class/restore-class-version', [App\Http\Controllers\ElearningQuestionController::class, 'restore_class_version']);
+
+// custom field
+Route::get('/custom_filed/get_data', [App\Http\Controllers\DesignationController::class, 'custom_filed']);
+Route::get('/custom_filed_create', [App\Http\Controllers\DesignationController::class, 'custom_filed_create']);
+Route::post('/custom_filed_store', [App\Http\Controllers\DesignationController::class, 'custom_filed_store']);

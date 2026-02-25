@@ -1258,6 +1258,7 @@ label:hover~input:checked~label
     </div>
     @endif
 
+
     @foreach($selected_class as $classContent)
 
     @if($classContent->class_status == 1)
@@ -1275,23 +1276,23 @@ label:hover~input:checked~label
     <?php if ($classContent->class_format == 'mp4' && $classContent->class_status == 1) { ?>
 
     @if($classContent->resource_path !='')
-    <video class="coursetypes videos"
-        src="http://localhost:6061/{{$classContent->resource_path}}/{{$classContent->resource_name}}"
-        data-poster=" ../..{{$classContent->resource_path}}/{{$classContent->resource_name}}" frameborder="0"
-        allowfullscreen controls width="100%">
+        <video class="coursetypes videos"
+            src="http://localhost:6061/{{$classContent->resource_path}}/{{$classContent->resource_name}}"
+            data-poster=" ../..{{$classContent->resource_path}}/{{$classContent->resource_name}}" frameborder="0"
+            allowfullscreen controls width="100%">
 
-    </video>
+        </video>
     @else
-    @php
-    $ai_course_response_class = DB::table('ai_course_response_classes')
-    ->where('class_id', $classContent->class_id)
-    ->first();
-    @endphp
-    <video class="coursetypes videos" src="{{$ai_course_response_class->video_link}}"
-        data-poster=" ../..{{$classContent->resource_path}}/{{$classContent->resource_name}}" frameborder="0"
-        allowfullscreen controls width="100%">
+        @php
+        $ai_course_response_class = DB::table('ai_course_response_classes')
+        ->where('class_id', $classContent->class_id)
+        ->first();
+        @endphp
+        <video class="coursetypes videos" src="{{$ai_course_response_class->video_link}}"
+            data-poster=" ../..{{$classContent->resource_path}}/{{$classContent->resource_name}}" frameborder="0"
+            allowfullscreen controls width="100%">
 
-    </video>
+        </video>
     @endif
 
     <br>
@@ -1305,7 +1306,7 @@ label:hover~input:checked~label
             <img class="mlhud_img" src="{{asset('assets/images/main.png')}}" alt="">
         </div>
         <audio class="coursetypes" controls='controls'>
-            <source src="../../uploads/class/$classContent->course_id/{{$classContent->resource_name}}"
+            <source src="../../uploads/class/{{$classContent->course_id}}/{{$classContent->resource_name}}"
                 type='audio/mp3'>
         </audio>
     </div>
@@ -1336,7 +1337,7 @@ label:hover~input:checked~label
                         </div>
                         <div class="card-body p-2 text-center" style="background-color: #f8f9fc;">
                             <object class="coursetypes"
-                                data="../../uploads/class/$classContent->course_id/{{$classContent->resource_name}}#toolbar=0"
+                                data="../../uploads/class/126/{{$classContent->course_id}}/{{$classContent->resource_name}}#toolbar=0"
                                 width="100%" height="400" style="border-radius: 8px; border: 1px solid #ddd;">
                             </object>
                         </div>
@@ -1639,6 +1640,7 @@ label:hover~input:checked~label
         </div>
 
         <!-- Certificate -->
+         
         <div class="col-12 col-sm-6 col-lg-3 mb-3">
             @foreach($courseDetails as $courseDetail)
             @if($courseDetail->course_certificate == '1')
