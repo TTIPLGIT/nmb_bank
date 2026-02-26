@@ -35,7 +35,6 @@
     margin: 0;
 }
 
-/* Add to your CSS file */
 .modal-header .close {
     z-index: 9999 !important;
     position: relative;
@@ -87,13 +86,14 @@
 
                         {{-- Upload Button --}}
                         <div class="row" style="justify-content:end">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <form id="upload-form" action="{{ route('scorm.upload') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <div class="input-group mb-3">
-                                        <input type="file" name="file" class="form-control" accept=".zip" required>
-                                        <button type="submit" class="btn btn-success">
+                                    <div class="input-group mb-6">
+                                        <input type="file" name="scorm_file" class="form-control" accept=".zip"
+                                            required>
+                                        <button type="submit" class="btn btn-success btn-sm">
                                             <i class="fa fa-upload"></i> Upload
                                         </button>
                                     </div>
@@ -120,28 +120,27 @@
                                             <td>{{ $package->title }}</td>
                                             <td>{{ $package->identifier }}</td>
                                             <td>
+                                                @if(!$package->is_published)
                                                 <button class="btn btn-sm btn-danger delete-package"
                                                     data-id="{{ $package->id }}">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </button>
-                                                <a href="{{ url('/scorm/'.$package->id.'/launch') }}"
+                                                @endif
+                                                <a href="{{ url('/scorm/'.encrypt($package->id).'/view') }}"
                                                     class="btn btn-sm btn-primary">
-                                                    <i class="fa fa-play"></i> Publish
+                                                    <i class="fa fa-eye"></i> View
                                                 </a>
-                                                <button type="button" class="btn btn-success ms-0 ms-md-2"
-                                                    data-toggle="modal" data-course-id="{{ $package->id }}"
-                                                    data-target="#publishModal">
+                                                @if(!$package->is_published)
+                                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                                                    data-course-id="{{ $package->id }}" data-target="#publishModal">
                                                     <i class="fas fa-play mr-2"></i> Publish Course
                                                 </button>
+                                                @endif
                                             </td>
-
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-
-
-
                             </div>
                         </div>
 
@@ -149,11 +148,10 @@
                 </div>
             </div>
         </div>
-        <!-- Publish Course Modal -->
-
 
     </section>
 </div>
+
 <!-- Publish Course Modal -->
 <div class="modal fade" id="publishModal" tabindex="-1" role="dialog" aria-labelledby="publishModalLabel"
     aria-hidden="true">
@@ -165,9 +163,8 @@
             </div>
 
             <div class="card longquestion">
-                <h4 class="modal-title long">Publish SCORM Package to Users:</h4>
 
-                <!-- SINGLE FORM - removed the outer form and kept only this one -->
+
                 <form method="POST" name="publish_scorm" action="" enctype="multipart/form-data"
                     id="publish_scorm_form">
                     @csrf
@@ -221,8 +218,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Name:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="text" class="form-control default" id="course_name" name="course_name"
-                                    required>
+                                <input type="text" class="form-control" id="course_name" name="course_name" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -367,258 +363,189 @@
     </div>
 </div>
 
-
-<script>
-$(document).on('click', '.delete-package', function() {
-
-    if (!confirm('Are you sure you want to delete this package?')) return;
-
-    var id = $(this).data('id');
-
-    $.ajax({
-        url: '{{ url("scorm") }}/' + id,
-        type: 'DELETE',
-        data: {
-            _token: '{{ csrf_token() }}'
-        },
-        success: function(response) {
-
-            if (response.status) {
-                swal("Deleted", response.message, "success")
-                    .then(() => location.reload());
-            } else {
-                swal("Error", response.message, "error");
-            }
-        },
-        error: function(xhr) {
-            console.log(xhr.responseText);
-        }
-    });
-});
-</script>
-
-<script>
-$('#publishModal').on('show.bs.modal', function(event) {
-    var button = $(event.relatedTarget); // Button that triggered the modal
-    var packageId = button.data('course-id'); // Extract package ID
-
-    var form = $(this).find('form');
-    var action = "{{ route('scorm_course_publish', ':id') }}";
-    action = action.replace(':id', packageId);
-    form.attr('action', action);
-});
-</script>
-
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<!-- JavaScript for modal functionality -->
-<!-- Replace the entire JavaScript section at the end with this: -->
-<script type="text/javascript">
+
+
+<script>
+// Add this after your other scripts
 $(document).ready(function() {
-    // Prevent horizontal scroll
-    $('body').css('overflow-x', 'hidden');
+    // Override the validateFileSize function for this page
+    window.validateFileSize = function(inputFile) {
+        var file = inputFile[0].files[0];
+        if (!file) return true;
 
-    // Initialize Bootstrap 5 tabs
-    var tabTriggerList = [].slice.call(document.querySelectorAll('#courseTabs button'));
-    tabTriggerList.forEach(function(tabTriggerEl) {
-        tabTriggerEl.addEventListener('click', function(event) {
-            event.preventDefault();
-            var tabTrigger = new bootstrap.Tab(tabTriggerEl);
-            tabTrigger.show();
+        var inputName = inputFile.attr('name');
+
+        if (inputName === 'scorm_file') {
+            // SCORM package - 500MB
+            var maxSize = 500 * 1024 * 1024;
+            if (file.size > maxSize) {
+                alert('SCORM package must be 500MB or smaller');
+                inputFile.val('');
+                return false;
+            }
+        } else if (inputName === 'course_banner') {
+            // Course banner - 5MB
+            var maxSize = 5 * 1024 * 1024;
+            if (file.size > maxSize) {
+                alert('Course banner must be 5MB or smaller');
+                inputFile.val('');
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    // Re-attach the change event to use the overridden function
+    $('input[type="file"]').off('change').on('change', function(event) {
+        validateFileSize($(this));
+    });
+});
+$(document).ready(function() {
+
+
+    $('#role_id').change(function() {
+
+        let role_id = $(this).val();
+        let designationSelect = $('#designation_id');
+
+        designationSelect.html('<option value="">Loading...</option>');
+
+        if (role_id === '') {
+            designationSelect.html('<option value="">Please Select Designation</option>');
+            return;
+        }
+
+        $.ajax({
+            url: "{{ route('get.designation.by.role') }}",
+            type: "POST",
+            data: {
+                role_id: role_id,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(response) {
+
+                designationSelect.html(
+                    '<option value="">Please Select Designation</option>');
+
+                if (response.length > 0) {
+                    $.each(response, function(key, value) {
+                        designationSelect.append(
+                            '<option value="' + value.designation_id + '">' +
+                            value.designation_name +
+                            '</option>'
+                        );
+                    });
+                }
+            }
         });
     });
-
-    // Check if select2 is available
-    if (typeof $.fn.select2 === 'undefined') {
-        console.error('Select2 is not loaded. Please include Select2 library.');
-        // Load Select2 dynamically if not available
-        $.getScript('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', function() {
-            initializeSelect2();
-        });
-    } else {
-        initializeSelect2();
-    }
-
-    function initializeSelect2() {
-        // Initialize Select2
-        $('.js-select2').select2({
-            width: '100%',
-            placeholder: "Select options",
-            allowClear: true
-        });
-
-        // Initialize other select2 fields
-        $('#course_classes').select2({
-            width: '100%',
-            placeholder: "Select classes",
-            allowClear: true
-        });
-    }
-
-    // Initialize fields based on current values
-    function initializeFields() {
-        // Show/Hide certificate fields
-        if ($('input[name="course_certificate"]:checked').val() == '1') {
-            $('#certificateFields').show();
-        } else {
-            $('#certificateFields').hide();
-        }
-
-        // Show/Hide exam fields
-        if ($('input[name="course_exam"]:checked').val() == '1') {
-            $('.examname').show();
-        } else {
-            $('.examname').hide();
-        }
-
-        // Show/Hide course period fields
-        if ($('input[name="course_noperiod"]:checked').val() == '1') {
-            $('#coursePeriodFields').show();
-        } else {
-            $('#coursePeriodFields').hide();
-        }
-
-        // Show/Hide PIN field
-        if ($('input[name="restricted_access"]:checked').val() == '1') {
-            $('#pinField').show();
-        } else {
-            $('#pinField').hide();
-        }
-
-        // Show/Hide expiry date field
-        if ($('input[name="certificate_expiry"]:checked').val() == '1') {
-            $('#expiryDateField').show();
-        } else {
-            $('#expiryDateField').hide();
-        }
-    }
-
-    // Initialize fields on page load
-    initializeFields();
-
-    // Event handlers for field changes
-    $('input[name="course_certificate"]').change(function() {
-        if ($(this).val() == '1') {
-            $('#certificateFields').show();
-        } else {
-            $('#certificateFields').hide();
-            $('#expiryDateField').hide();
-        }
-    });
-
-    $('input[name="course_exam"]').change(function() {
-        if ($(this).val() == '1') {
-            $('.examname').show();
-        } else {
-            $('.examname').hide();
-        }
-    });
-
-    $('#course_pay').change(function() {
-        if ($(this).val() == 'paid') {
-            $('#paid').show();
-            $('#free').hide();
-        } else if ($(this).val() == 'free') {
-            $('#free').show();
-            $('#paid').hide();
-        }
-    });
-
-    $('input[name="course_noperiod"]').change(function() {
-        if ($(this).val() == '1') {
-            $('#coursePeriodFields').show();
-        } else {
-            $('#coursePeriodFields').hide();
-        }
-    });
-
-    $('input[name="restricted_access"]').change(function() {
-        if ($(this).val() == '1') {
-            $('#pinField').show();
-        } else {
-            $('#pinField').hide();
-        }
-    });
-
-    $('input[name="certificate_expiry"]').change(function() {
-        if ($(this).val() == '1') {
-            $('#expiryDateField').show();
-        } else {
-            $('#expiryDateField').hide();
-        }
-    });
-
-    // Initialize Bootstrap 5 modal for publishModal
     var publishModal = new bootstrap.Modal(document.getElementById('publishModal'));
 
-    // Add click handler for the publish button
-    $('button[data-target="#publishModal"]').click(function(e) {
+    // Override the click handler for the publish button to use Bootstrap 5
+    $('button[data-target="#publishModal"]').on('click', function(e) {
         e.preventDefault();
         publishModal.show();
     });
 
-    // Initialize fields on modal show
-    $('#publishModal').on('shown.bs.modal', function() {
-        initializeFields();
+    // Modal close button fix for Bootstrap 5
+    $('#publishModal .close, #publishModal .btn-danger[data-dismiss="modal"]').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        publishModal.hide();
+
+        // Remove modal backdrop manually if needed
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
     });
 
-    // Form submission with SweetAlert confirmation
-    // $('#publish_course_form').submit(function(e) {
-    //     e.preventDefault();
+    // Also handle modal hide via the modal events
+    $('#publishModal').on('hidden.bs.modal', function() {
+        // Clean up any remaining backdrops
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
 
-    //     // Show confirmation dialog
-    //     Swal.fire({
-    //         title: "Confirm Publication",
-    //         text: "Are you sure you want to publish this course? Once published, it will be available to enrolled users.",
-    //         icon: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#28a745",
-    //         confirmButtonText: "Yes, publish it!",
-    //         cancelButtonText: "Cancel",
-    //         customClass: {
-    //             confirmButton: 'btn btn-success',
-    //             cancelButton: 'btn btn-secondary'
-    //         },
-    //         buttonsStyling: false
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             // Remove the event handler to allow default form submission
-    //             $('#publish_course_form').off('submit').submit();
-    //         }
-    //     });
-    // });
-});
-</script>
+        // Reset form when modal is hidden
+        $('#publish_scorm_form')[0].reset();
+        $('#user_id').val(null).trigger('change');
+        $('#certificateFields').hide();
+        $('#coursePeriodFields').hide();
+        $('#pinField').hide();
+        $('#expiryDateField').hide();
 
-<!-- Bootstrap JS for Tabs -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-    // Prevent horizontal scroll
-    $('body').css('overflow-x', 'hidden');
-
-    // Initialize Select2 with better "All" handling
-    $('.js-select2').select2({
-        width: '100%',
-        placeholder: "Select options",
-        allowClear: true,
-        closeOnSelect: false
+        // Remove any error messages
+        $('.is-invalid').removeClass('is-invalid');
+        $('.invalid-feedback').remove();
     });
 
+    if (typeof $.fn.select2 === 'undefined') {
+        // console.error('Select2 not loaded! Trying to load dynamically...');
+
+        // Dynamically load Select2 if not available
+        var script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js';
+        script.onload = function() {
+            // console.log('Select2 loaded dynamically');
+            initializeSelect2();
+        };
+        document.head.appendChild(script);
+
+        // Also load CSS
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css';
+        document.head.appendChild(link);
+    } else {
+        // console.log('Select2 already loaded');
+        initializeSelect2();
+    }
+
+    function initializeSelect2() {
+        // console.log('Initializing Select2...');
+
+        // Destroy any existing Select2 instance
+        if ($('#user_id').hasClass('select2-hidden-accessible')) {
+            $('#user_id').select2('destroy');
+        }
+
+        // Initialize Select2
+        $('#user_id').select2({
+            width: '100%',
+            placeholder: "Select users",
+            allowClear: true,
+            closeOnSelect: false,
+            dropdownParent: $('#publishModal'),
+            language: {
+                noResults: function() {
+                    return "No users found";
+                }
+            }
+        });
+
+        // console.log('Select2 initialized successfully');
+    }
     // Handle "All" selection logic
     $('#user_id').on('select2:select', function(e) {
         var data = e.params.data;
+        // console.log('Selected:', data);
 
-        if (data.id === 'all') {
-            // If "All" is selected, deselect all other options
-            $('#user_id').val(['all']).trigger('change');
+        if (data.id === 'All') {
+            // If "All" is selected, clear all other selections and select only "All"
+            $('#user_id').val('All').trigger('change');
         } else {
-            // If any other option is selected, remove "all" if it exists
+            // If any other option is selected, remove "All" if it exists
             var currentValues = $('#user_id').val();
-            if (currentValues && currentValues.includes('all')) {
+            if (currentValues && currentValues.includes('All')) {
+                // Remove 'All' from the array
                 currentValues = currentValues.filter(function(value) {
-                    return value !== 'all';
+                    return value !== 'All';
                 });
                 $('#user_id').val(currentValues).trigger('change');
             }
@@ -627,185 +554,146 @@ $(document).ready(function() {
 
     $('#user_id').on('select2:unselect', function(e) {
         var data = e.params.data;
+        // console.log('Unselected:', data);
 
-        if (data.id === 'all') {
-            // If "All" is deselected, ensure no other options remain
+        if (data.id === 'All') {
+            // If "All" is unselected, clear everything
             $('#user_id').val(null).trigger('change');
         }
     });
-    // Initialize fields based on current values
-    function initializeFields() {
-        // Show/Hide certificate fields
-        if ($('input[name="course_certificate"]:checked').val() == '1') {
-            $('#certificateFields').show();
-        } else {
-            $('#certificateFields').hide();
-        }
 
-        // Show/Hide exam fields
-        if ($('input[name="course_exam"]:checked').val() == '1') {
-            $('.examname').show();
-        } else {
-            $('.examname').hide();
-        }
+    // Set form action when modal opens
+    $('#publishModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var packageId = button.data('course-id');
+        var form = $(this).find('form');
 
-        // Show/Hide course period fields
-        if ($('input[name="course_noperiod"]:checked').val() == '1') {
-            $('#coursePeriodFields').show();
-        } else {
-            $('#coursePeriodFields').hide();
-        }
+        // console.log('Modal opening for package:', packageId);
 
-        // Show/Hide PIN field
-        if ($('input[name="restricted_access"]:checked').val() == '1') {
-            $('#pinField').show();
-        } else {
-            $('#pinField').hide();
-        }
-
-        // Show/Hide expiry date field
-        if ($('input[name="certificate_expiry"]:checked').val() == '1') {
-            $('#expiryDateField').show();
-        } else {
-            $('#expiryDateField').hide();
-        }
-    }
-
-    // Initialize fields on page load
-    initializeFields();
-
-    // Event handlers for field changes
-    $('input[name="course_certificate"]').change(function() {
-        if ($(this).val() == '1') {
-            $('#certificateFields').show();
-        } else {
-            $('#certificateFields').hide();
-            $('#expiryDateField').hide();
-        }
+        // Set the action URL
+        var action = '{{ route("scorm_course_publish", "") }}/' + packageId;
+        form.attr('action', action);
+        // console.log('Form action set to:', action);
     });
 
-    $('input[name="course_exam"]').change(function() {
-        if ($(this).val() == '1') {
-            $('.examname').show();
-        } else {
-            $('.examname').hide();
+    // Validation function for required fields based on checkboxes
+    function validateForm() {
+        let isValid = true;
+        let errorMessage = '';
+
+        // Clear previous errors
+        $('.is-invalid').removeClass('is-invalid');
+        $('.invalid-feedback').remove();
+
+        // Check required fields
+        if ($('#course_name').val().trim() === '') {
+            markInvalid('#course_name', 'Course name is required');
+            isValid = false;
         }
-    });
 
-    $('#course_pay').change(function() {
-        if ($(this).val() == 'paid') {
-            $('#paid').show();
-        } else {
-            $('#paid').hide();
+        if ($('#role_id').val() === '') {
+            markInvalid('#role_id', 'Please select a role');
+            isValid = false;
         }
-    });
 
-    $('input[name="course_noperiod"]').change(function() {
-        if ($(this).val() == '1') {
-            $('#coursePeriodFields').show();
-        } else {
-            $('#coursePeriodFields').hide();
+        if ($('#designation_id').val() === '') {
+            markInvalid('#designation_id', 'Please select a designation');
+            isValid = false;
         }
-    });
 
-    $('input[name="restricted_access"]').change(function() {
-        if ($(this).val() == '1') {
-            $('#pinField').show();
-        } else {
-            $('#pinField').hide();
+        // Check if any user is selected
+        var selectedUsers = $('#user_id').val();
+        if (!selectedUsers || selectedUsers.length === 0) {
+            markInvalid('#user_id', 'Please select at least one user');
+            isValid = false;
         }
-    });
 
-    $('input[name="certificate_expiry"]').change(function() {
-        if ($(this).val() == '1') {
-            $('#expiryDateField').show();
-        } else {
-            $('#expiryDateField').hide();
+        // Check course banner
+        if ($('#course_banner').get(0).files.length === 0) {
+            markInvalid('#course_banner', 'Please select a course banner');
+            isValid = false;
         }
-    });
 
-    // Initialize Bootstrap modal
-    var publishModal = new bootstrap.Modal(document.getElementById('publishModal'));
-
-    // Add click handler for the publish button
-    $('button[data-target="#publishModal"]').click(function(e) {
-        e.preventDefault();
-        // Make sure the exam ID is properly populated
-        var examId = $('#original_exam_id').val();
-        if (examId) {
-            // Set the exam name dropdown
-            $('#exam_name').val(examId).trigger('change');
+        // Check certificate selection
+        if (!$('input[name="course_certificate"]:checked').val()) {
+            markInvalid('input[name="course_certificate"]', 'Please select Yes or No for certificate');
+            isValid = false;
         }
-        publishModal.show();
-    });
 
-    // Initialize fields on modal show
-    $('#publishModal').on('shown.bs.modal', function() {
-        initializeFields();
+        // If certificate is Yes, check template
+        if ($('#course_certificate_yes').is(':checked')) {
+            if ($('#certificate_template').val() === '') {
+                markInvalid('#certificate_template', 'Please select a certificate template');
+                isValid = false;
+            }
 
-        // Disable non-editable fields
-        $('#role_id, #designation_id, #course_name, #course_description').prop('disabled', true);
-
-        // Add readonly styling
-        $('#course_name, #course_description').css({
-            'background-color': '#f8f9fa',
-            'cursor': 'not-allowed'
-        });
-    });
-
-    $('#publish_course_form').submit(function(e) {
-        e.preventDefault();
-
-        // Process user_ids - if "all" is selected, convert to comma-separated all user IDs
-        var selectedUserIds = $('#user_id').val();
-        var allUserIds = [];
-
-        if (selectedUserIds && selectedUserIds.includes('all')) {
-            // Get all user IDs except "all"
-            $('#user_id option').each(function() {
-                var value = $(this).val();
-                if (value !== 'all' && value !== '') {
-                    allUserIds.push(value);
+            // If certificate expiry is Yes, check expiry date
+            if ($('#expiry_yes').is(':checked')) {
+                if ($('input[name="expiry_date"]').val() === '') {
+                    markInvalid('input[name="expiry_date"]', 'Please select an expiry date');
+                    isValid = false;
                 }
-            });
-
-            // Create hidden input with all user IDs
-            $('<input>').attr({
-                type: 'hidden',
-                name: 'user_ids[]',
-                value: 'all' // Send 'all' as a special value
-            }).appendTo('#publish_course_form');
-
-            // Also store the actual IDs in another field
-            $('<input>').attr({
-                type: 'hidden',
-                name: 'all_user_ids_string',
-                value: allUserIds.join(',')
-            }).appendTo('#publish_course_form');
-
-            console.log('All User IDs selected, sending "all" as value');
-
-            // Clear the original user_ids field to prevent conflict
-            $('#user_id').val('');
-        } else {
-            // If specific users are selected, ensure it's not empty
-            if (!selectedUserIds || selectedUserIds.length === 0) {
-                Swal.fire({
-                    title: "Error",
-                    text: "Please select at least one user or select 'All'",
-                    icon: "error",
-                    confirmButtonColor: "#dc3545",
-                    confirmButtonText: "OK",
-                    customClass: {
-                        confirmButton: 'btn btn-danger'
-                    },
-                    buttonsStyling: false
-                });
-                return false;
             }
         }
 
-        // Show confirmation dialog
+        // If course has period, check start and end dates
+        if ($('#course_noperiodyes').is(':checked')) {
+            if ($('#course_start_period').val() === '') {
+                markInvalid('#course_start_period', 'Please select start date');
+                isValid = false;
+            }
+            if ($('#course_end_period').val() === '') {
+                markInvalid('#course_end_period', 'Please select end date');
+                isValid = false;
+            }
+
+            // Check if end date is after start date
+            if ($('#course_start_period').val() && $('#course_end_period').val()) {
+                if ($('#course_end_period').val() <= $('#course_start_period').val()) {
+                    markInvalid('#course_end_period', 'End date must be after start date');
+                    isValid = false;
+                }
+            }
+        }
+
+        // If restricted access is Yes, check PIN
+        if ($('#restricted_yes').is(':checked')) {
+            var pin = $('input[name="access_pin"]').val();
+            if (!pin || pin.length < 4 || pin.length > 6) {
+                markInvalid('input[name="access_pin"]', 'PIN must be 4-6 digits');
+                isValid = false;
+            } else if (!/^\d+$/.test(pin)) {
+                markInvalid('input[name="access_pin"]', 'PIN must contain only numbers');
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    }
+
+    function markInvalid(selector, message) {
+        $(selector).addClass('is-invalid');
+
+        // For select2 elements
+        if ($(selector).hasClass('js-select2') || selector === '#user_id') {
+            $(selector).next('.select2-container').find('.select2-selection').addClass('is-invalid');
+        }
+
+        // Add error message
+        if ($(selector).next('.invalid-feedback').length === 0) {
+            $('<div class="invalid-feedback">' + message + '</div>').insertAfter($(selector));
+        } else {
+            $(selector).next('.invalid-feedback').text(message);
+        }
+    }
+
+    // Form submission with validation
+    $('#publish_scorm_form').on('submit', function(e) {
+        e.preventDefault();
+
+        var form = this; // Store reference to form
+
+        // Show SweetAlert2 confirmation
         Swal.fire({
             title: "Confirm Publication",
             text: "Are you sure you want to publish this course? Once published, it will be available to enrolled users.",
@@ -818,329 +706,126 @@ $(document).ready(function() {
                 confirmButton: 'btn btn-success',
                 cancelButton: 'btn btn-secondary'
             },
-            buttonsStyling: false
+            buttonsStyling: false,
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
+                // Show loading state
+                $('#publishbutton').prop('disabled', true);
+                $('#publishText').text('Publishing...');
+                $('#publishSpinner').removeClass('d-none');
+
                 // Submit the form
-                $(this).off('submit').submit();
+                form.submit();
             }
         });
     });
 
-    // Re-enable fields when modal is hidden
-    $('#publishModal').on('hidden.bs.modal', function() {
-        $('#role_id, #designation_id, #course_name, #course_description').prop('disabled', false);
-        $('#course_name, #course_description').css({
-            'background-color': '',
-            'cursor': ''
+    // Initialize field toggles
+    function initializeFieldToggles() {
+        // Certificate fields toggle
+        $('input[name="course_certificate"]').change(function() {
+            if ($(this).val() == '1') { // Yes
+                $('#certificateFields').show();
+                // Make certificate template required when visible
+                $('#certificate_template').prop('required', true);
+                $('input[name="certificate_expiry"]').prop('required', true);
+            } else { // No
+                $('#certificateFields').hide();
+                $('#expiryDateField').hide();
+                // Remove required when hidden
+                $('#certificate_template').prop('required', false);
+                $('input[name="certificate_expiry"]').prop('required', false);
+                $('input[name="expiry_date"]').prop('required', false);
+            }
         });
-        // Remove any hidden inputs added
-        $('input[name="all_user_ids"]').remove();
-    });
-});
 
-function resetSelect2() {
-    $('.js-select2').val(null).trigger('change');
-}
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Get form and button elements
-    const form = document.getElementById('publish_course_form');
-    const publishButton = document.getElementById('publishbutton');
-    const publishText = document.getElementById('publishText');
-    const publishSpinner = document.getElementById('publishSpinner');
-
-    // Flag to track if we're submitting
-    let isSubmitting = false;
-
-    // Form submit handler
-    form.addEventListener('submit', function(e) {
-        e.preventDefault(); // Always prevent default first
-        e.stopPropagation(); // Stop event bubbling
-
-        console.log('Form submit event triggered'); // Debug
-
-        // Prevent multiple submissions
-        if (isSubmitting) {
-            console.log('Already submitting, ignoring');
-            return false;
-        }
-
-        // Validate form before submission
-        const isValid = validateForm();
-        console.log('Validation result:', isValid); // Debug
-
-        if (!isValid) {
-            console.log('Validation failed - stopping submission');
-
-            // Show error message
-            Swal.fire({
-                title: "Validation Error",
-                text: "Please correct the errors in the form before submitting.",
-                icon: "error",
-                confirmButtonColor: "#dc3545",
-            });
-
-            return false; // Stop execution
-        }
-
-
-
-        // Set submitting flag
-        isSubmitting = true;
-
-        // Show loader and disable button
-        publishButton.disabled = true;
-        publishText.textContent = 'Publishing...';
-        publishSpinner.classList.remove('d-none');
-
-        // Create a new form element and submit it to avoid event listeners
-        setTimeout(() => {
-            console.log('Executing form submission');
-
-            // Method 1: Clone the form and submit the clone
-            const formClone = form.cloneNode(true);
-            formClone.style.display = 'none';
-            document.body.appendChild(formClone);
-
-            // Remove event listeners from clone
-            const newForm = formClone.cloneNode(true);
-            formClone.parentNode.replaceChild(newForm, formClone);
-
-            // Submit the clean form
-            newForm.submit();
-
-            // Method 2: Use AJAX instead (better approach)
-            // submitFormViaAjax();
-
-        }, 500);
-
-        return false;
-    });
-
-    // Form validation function
-    function validateForm() {
-        let isValid = true;
-
-        console.log('Starting validation...'); // Debug
-
-        // Clear previous error messages
-        clearErrors();
-
-        // Validate Course Type
-        const courseType = document.getElementById('course_pay');
-        if (!courseType.value) {
-            showError(courseType, 'Course Type is required');
-            isValid = false;
-            console.log('Course Type validation failed');
-        }
-
-        // If paid course, validate price
-        if (courseType.value === 'paid') {
-            const coursePrice = document.getElementById('course_price');
-            if (!coursePrice.value || parseFloat(coursePrice.value) <= 0) {
-                showError(coursePrice, 'Valid course price is required for paid courses');
-                isValid = false;
-                console.log('Course Price validation failed');
+        // Course period toggle
+        $('input[name="course_noperiod"]').change(function() {
+            if ($(this).val() == '1') { // Yes
+                $('#coursePeriodFields').show();
+                // Make date fields required
+                $('#course_start_period').prop('required', true);
+                $('#course_end_period').prop('required', true);
+            } else { // No
+                $('#coursePeriodFields').hide();
+                // Remove required
+                $('#course_start_period').prop('required', false);
+                $('#course_end_period').prop('required', false);
             }
-        }
+        });
 
-        // Validate Certificate Template if certificate is yes
-        const certificateYes = document.getElementById('course_certificate_yes');
-        if (certificateYes.checked) {
-            const certificateTemplate = document.getElementById('cetificate_template');
-            if (!certificateTemplate.value) {
-                showError(certificateTemplate, 'Certificate Template is required when certificate is enabled');
-                isValid = false;
-                console.log('Certificate Template validation failed');
+        // Restricted access toggle
+        $('input[name="restricted_access"]').change(function() {
+            if ($(this).val() == '1') { // Yes
+                $('#pinField').show();
+                // Make PIN required
+                $('input[name="access_pin"]').prop('required', true);
+            } else { // No
+                $('#pinField').hide();
+                // Remove required
+                $('input[name="access_pin"]').prop('required', false);
             }
+        });
 
-            // Validate expiry date if certificate expiry is yes
-            const expiryYes = document.getElementById('certificate_expiryyes');
-            if (expiryYes.checked) {
-                const expiryDate = document.getElementById('course_expiry_period');
-                if (!expiryDate.value) {
-                    showError(expiryDate, 'Expiry Date is required when certificate expiry is enabled');
-                    isValid = false;
-                    console.log('Expiry Date validation failed');
+        // Certificate expiry toggle
+        $('input[name="certificate_expiry"]').change(function() {
+            if ($(this).val() == '1') { // Yes
+                $('#expiryDateField').show();
+                // Make expiry date required
+                $('input[name="expiry_date"]').prop('required', true);
+            } else { // No
+                $('#expiryDateField').hide();
+                // Remove required
+                $('input[name="expiry_date"]').prop('required', false);
+            }
+        });
+    }
+
+    initializeFieldToggles();
+
+    // Delete package functionality
+    $(document).on('click', '.delete-package', function() {
+        if (!confirm('Are you sure you want to delete this package?')) return;
+
+        var id = $(this).data('id');
+        var button = $(this);
+
+        button.prop('disabled', true);
+        button.html('<i class="fa fa-spinner fa-spin"></i> Deleting...');
+
+        $.ajax({
+            url: '{{ url("scorm") }}/' + id,
+            type: 'DELETE',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.status) {
+                    swal({
+                        title: "Deleted!",
+                        text: response.message,
+                        icon: "success",
+                        timer: 2000,
+                        buttons: false
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    swal("Error", response.message, "error");
+                    button.prop('disabled', false);
+                    button.html('<i class="fa fa-trash"></i> Delete');
                 }
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+                swal("Error", "Something went wrong!", "error");
+                button.prop('disabled', false);
+                button.html('<i class="fa fa-trash"></i> Delete');
             }
-        }
-
-        // Validate Course Period dates if enabled
-        const periodYes = document.getElementById('course_noperiodyes');
-        if (periodYes.checked) {
-            const startDate = document.getElementById('course_start_period');
-            const endDate = document.getElementById('course_end_period');
-
-            if (!startDate.value) {
-                showError(startDate, 'Start Date is required');
-                isValid = false;
-                console.log('Start Date validation failed');
-            }
-            if (!endDate.value) {
-                showError(endDate, 'End Date is required');
-                isValid = false;
-                console.log('End Date validation failed');
-            }
-
-            // Validate date range
-            if (startDate.value && endDate.value) {
-                const start = new Date(startDate.value);
-                const end = new Date(endDate.value);
-                if (start >= end) {
-                    showError(endDate, 'End Date must be after Start Date');
-                    isValid = false;
-                    console.log('Date Range validation failed');
-                }
-            }
-        }
-
-        // Validate Exam fields if exam is enabled
-        const examYes = document.getElementById('course_examyes');
-        if (examYes.checked) {
-            const examDate = document.getElementById('exam_date');
-            const passPercentage = document.getElementById('pass_percentage');
-
-            if (!examDate.value) {
-                showError(examDate, 'Exam Date is required');
-                isValid = false;
-                console.log('Exam Date validation failed');
-            }
-
-            if (!passPercentage.value || passPercentage.value < 1 || passPercentage.value > 100) {
-                showError(passPercentage, 'Pass Percentage must be between 1 and 100');
-                isValid = false;
-                console.log('Pass Percentage validation failed');
-            }
-        }
-
-        // Validate CPD Points
-        const cpdPoints = document.getElementById('course_cpt_points');
-        if (!cpdPoints.value || parseFloat(cpdPoints.value) < 0) {
-            showError(cpdPoints, 'Valid CPD Points are required');
-            isValid = false;
-            console.log('CPD Points validation failed');
-        }
-
-        // Validate Instructor
-        const instructor = document.getElementById('course_instructor');
-        if (!instructor.value.trim()) {
-            showError(instructor, 'Course Instructor is required');
-            isValid = false;
-            console.log('Instructor validation failed');
-        }
-
-        // Validate PIN if restricted access is yes
-        const restrictedYes = document.getElementById('restricted_yes');
-        if (restrictedYes.checked) {
-            const pin = document.getElementById('course_pin');
-            if (!pin.value || !/^\d{4,6}$/.test(pin.value)) {
-                showError(pin, 'PIN must be 4-6 digits');
-                isValid = false;
-                console.log('PIN validation failed');
-            }
-        }
-
-        // Validate User selection
-        const userId = document.getElementById('user_id');
-        // For Select2, get the value differently
-        const selectedUsers = $(userId).val(); // Using jQuery for Select2
-        if (!selectedUsers || selectedUsers.length === 0) {
-            showError(userId, 'At least one user must be selected');
-            isValid = false;
-            console.log('User selection validation failed');
-        }
-
-        console.log('Validation complete. Is valid?', isValid);
-        return isValid;
-    }
-
-    function showError(element, message) {
-        // Add error class to element
-        element.classList.add('is-invalid');
-
-        // Create error message element
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'invalid-feedback d-block';
-        errorDiv.textContent = message;
-
-        // Insert after element
-        element.parentNode.appendChild(errorDiv);
-
-        // Scroll to first error
-        if (!window.scrolledToError) {
-            element.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-            window.scrolledToError = true;
-        }
-    }
-
-    function clearErrors() {
-        // Remove error classes
-        document.querySelectorAll('.is-invalid').forEach(el => {
-            el.classList.remove('is-invalid');
         });
-
-        // Remove error messages
-        document.querySelectorAll('.invalid-feedback').forEach(el => {
-            el.remove();
-        });
-
-        window.scrolledToError = false;
-    }
-
-
-    // Better: Only handle display, NOT required attributes
-    document.getElementById('course_pay').addEventListener('change', function() {
-        const priceField = document.getElementById('paid');
-        if (this.value === 'paid') {
-            priceField.style.display = 'block';
-        } else {
-            priceField.style.display = 'none';
-        }
-    });
-});
-$(document).ready(function() {
-    function closeModalForce() {
-        console.log('Force closing modal');
-
-        // Method 1: Standard Bootstrap
-        $('#publishModal').modal('hide');
-
-        // Method 2: Trigger dismiss event
-        $('#publishModal').trigger('click.dismiss.bs.modal');
-
-        // Method 3: Manually hide
-        $('#publishModal').removeClass('show');
-        $('#publishModal').css('display', 'none');
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
-
-        // Method 4: Use data attributes
-        $('#publishModal').data('bs.modal', null);
-    }
-
-    // Bind events
-    $('#publishModal .close').on('click', function(e) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        closeModalForce();
-        return false;
-    });
-
-    $('#publishModal .btn-danger[data-dismiss="modal"]').on('click', function(e) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        closeModalForce();
-        return false;
     });
 });
 </script>
-
-
 
 @endsection

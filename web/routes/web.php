@@ -881,5 +881,13 @@ Route::post('/global-chat', [App\Http\Controllers\AIController::class, 'globalCh
 Route::get('/scorm/{id}/launch', [App\Http\Controllers\ScormController::class, 'launch'])
     ->name('scorm.launch');
 
+    Route::get('/scorm/{id}/view', [App\Http\Controllers\ScormController::class, 'view'])
+    ->name('scorm.view');
+
     Route::post('/scorm/commit', [App\Http\Controllers\ScormController::class, 'commit'])
     ->name('scorm.commit');
+
+    Route::post('/scorm_course/publish/{id}', [App\Http\Controllers\ScormController::class, 'scorm_course_publish'])->name('scorm_course_publish');
+
+    Route::get('/certificate/view/{course_id}', [App\Http\Controllers\ScormController::class, 'certificate_view']);
+    Route::post('/scorm/validate-pin', [App\Http\Controllers\ScormController::class, 'validatePin']);

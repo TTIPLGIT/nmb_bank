@@ -3,7 +3,87 @@
 @section('content')
 <style>
 /* main-container */
+.scorm-course-card {
+    border: 2px solid #dcdcdc;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    padding: 15px;
+    text-align: center;
+    width: 270px;
+    margin: 15px auto;
+    overflow: hidden;
+    position: relative;
+    min-height: 380px;
+    transition: all 0.3s ease-in-out;
+}
 
+.scorm-course-card:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    border-color: #6c63ff;
+    transform: translateY(-5px);
+}
+
+.scorm-course-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.scorm-course-title {
+    color: #1e2a78;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 20px;
+    min-height: 40px;
+}
+
+.scorm-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.scorm-badge-scorm {
+    background: #ff9800;
+}
+
+.scorm-badge-pin {
+    background: #dc3545;
+}
+
+.scorm-progress {
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #eaeaea;
+    margin-top: 10px;
+}
+
+.scorm-progress-bar {
+    background: linear-gradient(90deg, #5cb85c, #9be15d);
+    height: 100%;
+    transition: width 0.4s ease;
+}
+
+.scorm-progress-text {
+    font-size: 12px;
+    color: #444;
+    font-weight: 500;
+}
+
+.scorm-disabled-link {
+    cursor: not-allowed;
+    opacity: 0.7;
+    pointer-events: none;
+}
 
 .all_courses_main_header {
     width: fit-content;
@@ -463,6 +543,8 @@ use Carbon\Carbon; ?>
 
                 <div class="row">
 
+
+
                     @foreach($availableCourses as $key => $value)
                     @php
                     $Courseslocked = DB::table('course_catagory as uc')
@@ -791,6 +873,81 @@ use Carbon\Carbon; ?>
                     </div>
                     @endforeach
 
+
+
+                    {{-- SCORM Courses Section --}}
+                    @if($scormCourses->count() > 0)
+
+                    <div class="col-12">
+                        <h4 style="margin:30px 0 10px 10px;">External Courses</h4>
+                    </div>
+
+                    @foreach($scormCourses as $scorm)
+
+                    @php
+                    $id = Crypt::encrypt($scorm->scorm_course_id);
+                    $imageUrl = config('setting.base_url') . 'uploads/course/' . $scorm->created_by . '/' .
+                    $scorm->course_banner;
+                    $isCompleted = in_array($scorm->lesson_status, ['completed','passed','failed']);
+                    @endphp
+
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="scorm-course-card {{ $scorm->restricted_access == 1 ? 'scorm-restricted' : '' }}">
+
+                            {{-- Badge --}}
+                            @if($scorm->restricted_access == 1)
+                            <span class="scorm-badge scorm-badge-pin">🔒 PIN Required</span>
+                            @else
+                            <span class="scorm-badge scorm-badge-scorm">SCORM</span>
+                            @endif
+
+                            {{-- Image --}}
+                            @if($scorm->restricted_access == 1)
+
+                            <a href="javascript:void(0)"
+                                onclick="scormopenPinModal('{{ $id }}','{{ $isCompleted }}','{{ $scorm->course_certificate }}')">
+                                <img src="{{ $imageUrl }}" class="scorm-course-img">
+                            </a>
+
+                            @else
+
+                            @if(!$isCompleted)
+                            <a href="{{ route('scorm.launch', $id) }}">
+                                <img src="{{ $imageUrl }}" class="scorm-course-img">
+                            </a>
+
+                            @elseif($isCompleted && $scorm->course_certificate == '1')
+                            <a href="{{ url('/certificate/view/'.encrypt($scorm->scorm_id)) }}">
+                                <img src="{{ $imageUrl }}" class="scorm-course-img">
+                            </a>
+
+                            @else
+                            <a href="javascript:void(0);" class="scorm-disabled-link">
+                                <img src="{{ $imageUrl }}" class="scorm-course-img">
+                            </a>
+                            @endif
+
+                            @endif
+
+                            {{-- Body --}}
+                            <div class="scorm-card-body">
+                                <h5 class="scorm-course-title">{{ $scorm->course_name }}</h5>
+
+                                <div class="scorm-progress">
+                                    <div class="scorm-progress-bar" style="width: {{ $scorm->progress }}%;"></div>
+                                </div>
+
+                                <span class="scorm-progress-text">
+                                    {{ $scorm->progress }}% COMPLETED
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @endforeach
+                    @endif
+
                     <div class="modal fade open_modal" id="pinModal" tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content open_modal_contents">
@@ -849,6 +1006,93 @@ use Carbon\Carbon; ?>
                                 }
                             }
                         });
+                    }
+                    </script>
+
+                    <!-- PIN Modal -->
+                    <div class="modal fade" id="scormpinModal" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Enter Access PIN</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <input type="password" id="coursePin" class="form-control" placeholder="Enter PIN">
+                                    <div id="scormpinError"
+                                        style="color:red;font-size:13px;margin-top:8px;display:none;">
+                                        Invalid PIN
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" onclick="validatePin()">Submit</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                    let selectedCourseId = null;
+                    let selectedCompleted = false;
+                    let selectedCertificate = 0;
+
+                    function scormopenPinModal(courseId, isCompleted, certificate) {
+
+                        selectedCourseId = courseId;
+                        selectedCompleted = (isCompleted === '1');
+                        selectedCertificate = certificate;
+
+                        document.getElementById('coursePin').value = '';
+                        document.getElementById('scormpinError').style.display = 'none';
+
+                        var modal = new bootstrap.Modal(document.getElementById('scormpinModal'));
+                        modal.show();
+                    }
+
+                    function validatePin() {
+
+                        let pin = document.getElementById('coursePin').value;
+
+                        fetch('/scorm/validate-pin', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    course_id: selectedCourseId,
+                                    pin: pin
+                                })
+                            })
+                            .then(res => res.json())
+                            .then(response => {
+
+                                if (response.valid) {
+
+                                    // ✅ If completed
+                                    if (selectedCompleted) {
+
+                                        if (selectedCertificate == '1') {
+                                            window.location.href = '/certificate/view/' + selectedCourseId;
+                                        } else {
+                                            window.location.href =
+                                                `/elearning/allCourses?sorted=Recently+Added&tag=false&progress=false&q=false&course_id=1`;
+                                        }
+
+                                    } else {
+                                        // Not completed → launch
+                                        window.location.href = '/scorm/launch/' + selectedCourseId;
+                                    }
+
+                                } else {
+                                    document.getElementById('scormpinError').style.display = 'block';
+                                }
+
+                            });
                     }
                     </script>
 

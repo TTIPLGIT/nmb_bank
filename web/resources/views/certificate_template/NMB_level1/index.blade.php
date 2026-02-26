@@ -332,7 +332,7 @@
                 @endif
                 <div class="signature-line"></div>
                 {{ $signatory->name }}<br>
-                <small>{{ $signatory->title }},{{ config('setting.image_path') . $signatory->signature_path }}</small>
+                <small>{{ $signatory->title }}</small>
             </div>
             @endforeach
         </div>
