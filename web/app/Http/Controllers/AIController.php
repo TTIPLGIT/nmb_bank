@@ -1403,8 +1403,8 @@ public function globalChat(Request $request)
             'message' => $request->message
         ];
 
-        $gatewayURL = config('setting.AI_service_url') . 'api/global-chat';
-
+        $gatewayURL = config('setting.AI_service_url') . '/api/global-chat';
+      
         // Make the API call
         $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
         
