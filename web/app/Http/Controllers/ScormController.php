@@ -237,30 +237,21 @@ public function commit(Request $request)
 
     $certificateGenerated = false;
 
-    if ($course && $course->course_certificate == '1') {
+if ($course && $course->course_certificate == '1') {
 
-        if ($lessonStatus === 'completed' ) {
-
-            // If score exists → validate
-            if ($score !== null) {
-
-                if ($score >= 50) {
-                    $this->generateCertificate($userId, $scormId);
-                    $certificateGenerated = true;
-                }
-
-            } else {
-                // No score courses
-                $this->generateCertificate($userId, $scormId);
-                $certificateGenerated = true;
-            }
-        }
+    if ($lessonStatus === 'completed' || $lessonStatus === 'passed') {
+       
+        // Score no longer required
+        $this->generateCertificate($userId, $scormId);
+        $certificateGenerated = true;
     }
+}
 
     return response()->json([
         'status' => 'success',
         'certificate' => $certificateGenerated,
-        'lessonStatus'=> $lessonStatus
+        'lessonStatus'=> $lessonStatus,
+        'encrypted_id' => encrypt($scormId)
     ]);
 }
 

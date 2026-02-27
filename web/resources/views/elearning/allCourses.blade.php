@@ -886,9 +886,11 @@ use Carbon\Carbon; ?>
 
                     @php
                     $id = Crypt::encrypt($scorm->scorm_course_id);
+                    $scormid = Crypt::encrypt($scorm->scorm_id);
                     $imageUrl = config('setting.base_url') . 'uploads/course/' . $scorm->created_by . '/' .
                     $scorm->course_banner;
                     $isCompleted = in_array($scorm->lesson_status, ['completed','passed','failed']);
+                    $status = $scorm->lesson_status; // completed, passed, failed, incomplete
                     @endphp
 
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
@@ -902,29 +904,44 @@ use Carbon\Carbon; ?>
                             @endif
 
                             {{-- Image --}}
-                            @if($scorm->restricted_access == 1)
+
+                            @if($scorm->restricted_access == 1 && !$isCompleted)
 
                             <a href="javascript:void(0)"
-                                onclick="scormopenPinModal('{{ $id }}','{{ $isCompleted }}','{{ $scorm->course_certificate }}')">
+                                onclick="scormopenPinModal('{{ $id }}','{{ $scormid }}','{{ $status }}','{{ $scorm->course_certificate }}')">
                                 <img src="{{ $imageUrl }}" class="scorm-course-img">
                             </a>
 
                             @else
 
-                            @if(!$isCompleted)
-                            <a href="{{ route('scorm.launch', $id) }}">
+                            {{-- If incomplete OR failed → allow relaunch --}}
+                            @if($status == 'incomplete')
+
+                            <a href="{{ route('scorm.launch', $scormid) }}">
+                                <img src="{{ $imageUrl }}" class="scorm-course-img">
+                            </a>
+                            @elseif($status == 'failed')
+
+                            <a href="javascript:void(0);" class="scorm-disabled-link">
                                 <img src="{{ $imageUrl }}" class="scorm-course-img">
                             </a>
 
-                            @elseif($isCompleted && $scorm->course_certificate == '1')
+
+
+                            @elseif(($status == 'completed' || $status == 'passed') && $scorm->course_certificate ==
+                            '1')
+
                             <a href="{{ url('/certificate/view/'.encrypt($scorm->scorm_id)) }}">
                                 <img src="{{ $imageUrl }}" class="scorm-course-img">
                             </a>
 
+
                             @else
+
                             <a href="javascript:void(0);" class="scorm-disabled-link">
                                 <img src="{{ $imageUrl }}" class="scorm-course-img">
                             </a>
+
                             @endif
 
                             @endif
@@ -1040,9 +1057,10 @@ use Carbon\Carbon; ?>
                     let selectedCompleted = false;
                     let selectedCertificate = 0;
 
-                    function scormopenPinModal(courseId, isCompleted, certificate) {
+                    function scormopenPinModal(courseId, scormId, isCompleted, certificate) {
 
                         selectedCourseId = courseId;
+                        selectedScormId = scormId;
                         selectedCompleted = (isCompleted === '1');
                         selectedCertificate = certificate;
 
@@ -1073,19 +1091,17 @@ use Carbon\Carbon; ?>
 
                                 if (response.valid) {
 
-                                    // ✅ If completed
                                     if (selectedCompleted) {
 
                                         if (selectedCertificate == '1') {
-                                            window.location.href = '/certificate/view/' + selectedCourseId;
+                                            window.location.href = '/certificate/view/' + selectedScormId;
                                         } else {
                                             window.location.href =
                                                 `/elearning/allCourses?sorted=Recently+Added&tag=false&progress=false&q=false&course_id=1`;
                                         }
 
                                     } else {
-                                        // Not completed → launch
-                                        window.location.href = '/scorm/launch/' + selectedCourseId;
+                                        window.location.href = '/scorm/' + selectedScormId + '/launch';
                                     }
 
                                 } else {

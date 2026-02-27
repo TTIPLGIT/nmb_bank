@@ -78,6 +78,7 @@ window.API = {
 
                 const status = response.lessonStatus;
 
+
                 // 🟡 If still incomplete → stay in SCORM
                 if (status === 'incomplete' || !status) {
                     return;
