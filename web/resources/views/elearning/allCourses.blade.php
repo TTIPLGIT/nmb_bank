@@ -456,6 +456,39 @@
     pointer-events: auto !important;
     background: #fff !important;
 }
+
+.scorm-result {
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.scorm-score {
+    color: #333;
+}
+
+.scorm-status-pass {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.scorm-status-fail {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.scorm-status-incomplete {
+    color: #ff9800;
+    font-weight: 600;
+}
+
+.scorm-cert-available {
+    color: #007bff;
+    font-weight: 600;
+}
+
+.scorm-cert-na {
+    color: #999;
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 <?php
@@ -911,7 +944,10 @@ use Carbon\Carbon; ?>
                                 onclick="scormopenPinModal('{{ $id }}','{{ $scormid }}','{{ $status }}','{{ $scorm->course_certificate }}')">
                                 <img src="{{ $imageUrl }}" class="scorm-course-img">
                             </a>
-
+                            @elseif($scorm->restricted_access == 0 && !$isCompleted)
+                            <a href="{{ route('scorm.launch', $scormid) }}">
+                                <img src="{{ $imageUrl }}" class="scorm-course-img">
+                            </a>
                             @else
 
                             {{-- If incomplete OR failed → allow relaunch --}}
@@ -957,6 +993,44 @@ use Carbon\Carbon; ?>
                                 <span class="scorm-progress-text">
                                     {{ $scorm->progress }}% COMPLETED
                                 </span>
+                                {{-- Result Status --}}
+                                <div class="scorm-result mt-2">
+
+                                    {{-- Show Score if available --}}
+                                    @if(!empty($scorm->score))
+                                    <div class="scorm-score">
+                                        <strong>Score:</strong> {{ $scorm->score }}%
+                                    </div>
+                                    @endif
+
+                                    {{-- Show Pass / Fail --}}
+                                    @if($status == 'passed' || $status == 'completed')
+                                    <div class="scorm-status scorm-status-pass">
+                                        ✅ Passed
+                                    </div>
+                                    @elseif($status == 'failed')
+                                    <div class="scorm-status scorm-status-fail">
+                                        ❌ Failed
+                                    </div>
+                                    @elseif($status == 'incomplete')
+                                    <div class="scorm-status scorm-status-incomplete">
+                                        ⏳ Incomplete
+                                    </div>
+                                    @endif
+
+                                    {{-- Certificate Availability --}}
+                                    @if(($status == 'passed' || $status == 'completed') && $scorm->course_certificate ==
+                                    '1')
+                                    <div class="scorm-certificate scorm-cert-available">
+                                        🎓 Certificate Available
+                                    </div>
+                                    @elseif($scorm->course_certificate == '2')
+                                    <div class="scorm-certificate scorm-cert-na">
+                                        🚫 No Certificate
+                                    </div>
+                                    @endif
+
+                                </div>
                             </div>
 
                         </div>

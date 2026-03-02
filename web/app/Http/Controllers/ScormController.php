@@ -25,7 +25,7 @@ class ScormController extends BaseController
      */
     public function index()
     {
-        $scormPackages = DB::table('scorm')->paginate(10);
+        $scormPackages = DB::table('scorm')->get();
         $menus = $this->FillMenu();
         
         if ($menus == "401") {

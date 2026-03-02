@@ -114,6 +114,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+
                                         @foreach($scormPackages as $index => $package)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
@@ -238,7 +239,7 @@
                                 <label>Course Certificate:<span class="error-star"
                                         style="color:red;">*</span></label><br>
                                 <input type="radio" class="btn-check" name="course_certificate" value="1"
-                                    id="course_certificate_yes" autocomplete="off" required>
+                                    id="course_certificate_yes" autocomplete="off" checked required>
                                 <label class="btn btn-outline-primary" for="course_certificate_yes">Yes</label>
 
                                 <input type="radio" class="btn-check" name="course_certificate" value="2"
@@ -251,7 +252,7 @@
                     <div class="row" id="certificateFields">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Certificate Template:</label>
+                                <label>Certificate Template:<span class="error-star" style="color:red;">*</span></label>
                                 <select class="form-control" name="certificate_template" id="certificate_template">
                                     <option value="">Select Template</option>
                                     @foreach($certificate_templates as $template)
@@ -290,8 +291,8 @@
                                     style="color:red;">*</span></label>
                             <div class="form-group">
                                 <input type="radio" class="btn-check answer_show_on course_noperiod"
-                                    name="course_noperiod" value="1" id="course_noperiodyes" autocomplete="off"
-                                    required>
+                                    name="course_noperiod" value="1" id="course_noperiodyes" autocomplete="off" required
+                                    checked>
                                 <label class="btn btn-outline-primary answer_show_on1"
                                     for="course_noperiodyes">Yes</label>
 
@@ -304,19 +305,19 @@
                     </div>
 
                     <div class="row" id="coursePeriodFields">
-                        <div class="col-md-3"><label class="course_period">Course Period:<span class="error-star"
-                                    style="color:red;">*</span></label></div>
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-3"><label class="course_period">Course Period:<span class="error-star"
+                                    style="color:red;">*</span></label></div> -->
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label>Start Date:<span class="error-star" style="color:red;">*</span></label>
+                                <label>Course Start Date:<span class="error-star" style="color:red;">*</span></label>
                                 <input type='date' class="form-control default" id='course_start_period'
                                     name="course_start_period" title="Course Start Date" value="" autocomplete="off"
                                     min="{{ date('Y-m-d') }}">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label>End Date:<span class="error-star" style="color:red;">*</span></label>
+                                <label>Course End Date:<span class="error-star" style="color:red;">*</span></label>
                                 <input type='date' class="form-control default" id='course_end_period'
                                     name="course_end_period" title="Course End Date" value="" autocomplete="off"
                                     min="{{ date('Y-m-d') }}">
