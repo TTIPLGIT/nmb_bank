@@ -80,6 +80,10 @@ use App\Http\Controllers\GamificationLevelController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Elearning_chartsController;
 
+use App\Http\Controllers\ScormController;
+use App\Http\Controllers\ScormPlayerController;
+use App\Http\Controllers\ScormTrackingController;
+
 Route::get('/check-openssl', function () {
     if (extension_loaded('openssl')) {
         return 'OpenSSL is loaded.';
@@ -844,6 +848,50 @@ Route::get('/virtual_meeting', [App\Http\Controllers\MeetingController::class, '
 Route::post('/meeting_store',[App\Http\Controllers\MeetingController::class,'meeting_store'])->name('meeting_store');
 Route::get('lang/{lang}', [App\Http\Controllers\LanguageController::class, 'change'])->name('lang.change');
 Route::get('adaptive/learning/list', [App\Http\Controllers\AIController::class, 'adaptive_learning_list'])->name('adaptive_learning_list');
-Route::get('adaptive/learning', [App\Http\Controllers\AIController::class, 'adaptive_learning'])->name('adaptive_learning');
+Route::POST('adaptive/learning', [App\Http\Controllers\AIController::class, 'adaptive_learning'])->name('adaptive_learning');
 Route::get('predictive/analysis', [App\Http\Controllers\AIController::class, 'predictive_analysis'])->name('predictive_analysis');
+Route::get('/ai-courses/{encryptedId}', [App\Http\Controllers\AIController::class, 'ai_course_show'])->name('ai_course.show');
+Route::post('/course/publish/{id}', [App\Http\Controllers\AIController::class, 'course_publish'])->name('course_publish');
+Route::post('/get-designation-by-role', [App\Http\Controllers\AIController::class, 'getDesignationByRole'])
+    ->name('get.designation.by.role');
 
+Route::get('/text-to-audio', [App\Http\Controllers\AIController::class, 'text_to_audio'])->name('text_to_audio');
+Route::post('/text-to-audio', [App\Http\Controllers\AIController::class, 'text_to_audio']);
+Route::delete('/delete-audio/{id}', [App\Http\Controllers\AIController::class, 'delete_audio'])->name('delete_audio');
+
+// Add these routes
+Route::post('/elearning/quiz_update/{id}', [App\Http\Controllers\ElearningQuestionController::class, 'quiz_update'])->name('elearning.quiz_update');
+Route::get('/elearning/quiz/versions/{id}', [App\Http\Controllers\ElearningQuestionController::class, 'getQuizVersions']);
+Route::post('/elearning/quiz/restore-version', [App\Http\Controllers\ElearningQuestionController::class, 'restoreVersion']);
+Route::get('/elearning/quiz/get-quiz-data/{id}', [App\Http\Controllers\ElearningQuestionController::class, 'getQuizData']);
+
+Route::get('/elearning/class/get-class-data/{id}', [App\Http\Controllers\tryController::class, 'getClassData']);
+Route::get('/elearning/class/versions/{id}', [App\Http\Controllers\tryController::class, 'getClassVersions']);
+Route::post('/elearning/class/restore-version', [App\Http\Controllers\tryController::class, 'restoreClassVersion']);
+
+Route::post('/class/update/{class_id}', [App\Http\Controllers\tryController::class, 'class_update'])->name('elearning.class_update');
+
+Route::post('/global-chat', [App\Http\Controllers\AIController::class, 'globalChat'])->name('global.chat');
+
+
+    Route::get('/scorm_list', [App\Http\Controllers\ScormController::class, 'index'])->name('scorm.index');
+    Route::post('/scorm/upload', [App\Http\Controllers\ScormController::class, 'upload'])->name('scorm.upload');
+    Route::delete('/scorm/{id}', [App\Http\Controllers\ScormController::class, 'destroy'])->name('scorm.destroy');
+
+Route::get('/scorm/{id}/launch', [App\Http\Controllers\ScormController::class, 'launch'])
+    ->name('scorm.launch');
+
+    Route::get('/scorm/{id}/view', [App\Http\Controllers\ScormController::class, 'view'])
+    ->name('scorm.view');
+
+    Route::post('/scorm/commit', [App\Http\Controllers\ScormController::class, 'commit'])
+    ->name('scorm.commit');
+
+    Route::post('/scorm_course/publish/{id}', [App\Http\Controllers\ScormController::class, 'scorm_course_publish'])->name('scorm_course_publish');
+
+    Route::get('/certificate/view/{course_id}', [App\Http\Controllers\ScormController::class, 'certificate_view']);
+    Route::post('/scorm/validate-pin', [App\Http\Controllers\ScormController::class, 'validatePin']);
+
+    Route::get('/custom_filed', [App\Http\Controllers\DesignationController::class, 'custom_filed'])->name('custom_filed');
+Route::get('/custom_filed_create', [App\Http\Controllers\DesignationController::class, 'custom_filed_create'])->name('custom_filed_create');
+Route::post('/custom_filed_store', [App\Http\Controllers\DesignationController::class, 'custom_filed_store'])->name('custom_filed_store');

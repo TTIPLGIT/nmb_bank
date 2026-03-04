@@ -1470,7 +1470,7 @@
                                 ->value('result'); // Assuming 'status' column holds the pass/fail status
 
                                 @endphp
-                                
+
                                 @php $id=Crypt::encrypt($course_certificate[0]->course_id); @endphp
                                 @if($quizz_hide == "classshow")
                                 <a style="display:flex;justify-content: center;align-items: center;"

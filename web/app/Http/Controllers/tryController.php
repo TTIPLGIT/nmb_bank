@@ -213,7 +213,7 @@ class tryController extends BaseController
 
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
-    }
+    }   
 
 
     // ****** Class Start // 
@@ -504,76 +504,81 @@ class tryController extends BaseController
             return redirect()->route('not_allow');
         }
     }
-    public function class_update(Request $request, $class_id)
-    {
-
-        try {
-
-            $user_id = $request->session()->get("userID");
-            if ($user_id == null) {
-                return view('auth.login');
-            }
-            $method = 'Method => tryController => update';
-            $validator = Validator::make($request->all(), [
-                'resource_nameedit' => 'required|file|mimetypes:application/pdf,audio/mpeg,video/mp4',
-            ]);
-
-
-
-            $data = array();
-
-            $data['class_name'] = $request->class_nameedit;
-            $data['class_description'] = $request->class_descriptionedit;
-            $data['resource_name'] = $request->resource_nameedit;
-            $data['class_duration'] = $request->class_durationedit;
-            $data['class_quiz'] = $request->class_quizedit;
-            $data['quiz_id'] = $request->quiz_idedit;
-
-            if (isset($request['resource_nameedit'])) {
-                if ($validator->fails()) {
-                    // Validation failed
-                    return redirect()->back()->with('error', 'Files not applicable');
-                }
-                $storagepath_ursb_old = public_path() . '/uploads/class/' . $user_id; //system_store_pdf
-                $storagepath_ursb = '/uploads/class/' . $user_id; //database_location
-                if (!File::exists($storagepath_ursb_old)) {
-                    File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
-                }
-                $data['resourse_path'] = $storagepath_ursb;
-                $documentsb =  $request['resource_nameedit'];
-                $files = $documentsb->getClientOriginalName();
-                $findspace = array(' ', '&', "'", '"');
-                $replacewith = array('-', '-');
-                $proposal_files = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
-                $documentsb->move($storagepath_ursb_old, $proposal_files); //storing the file in the system
-                $data['resource_name'] = $proposal_files;
-            } else {
-                $data['resource_name'] = 0;
-                $data['resourse_path'] = 0;
-            }
-            $data['eid'] = $request->eid;
-            $encryptArray = $data;
-
-            $encryptArray = $this->encryptData($data);
-            $request = array();
-            $request['requestData'] = $encryptArray;
-            $gatewayURL = config('setting.api_gateway_url') . '/class/class_update';
-
-            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-            //dd($response);
-
-            $response1 = json_decode($response);
-            if ($response1->Status == 200 && $response1->Success) {
-                return redirect(route('admincourse'))->with('success', 'Class Updated Successfully');
-            } else {
-                $objData = json_decode($this->decryptData($response1->Data));
-                return view('errors.errors');
-                exit;
-            }
-        } catch (\Exception $exc) {
-            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+   public function class_update(Request $request, $class_id)
+{
+    try {
+        $user_id = $request->session()->get("userID");
+        if ($user_id == null) {
+            return view('auth.login');
         }
+        $method = 'Method => tryController => update';
+        
+        $validator = Validator::make($request->all(), [
+            'resource_nameedit' => 'nullable|file|mimetypes:application/pdf,audio/mpeg,video/mp4',
+        ]);
+
+        $data = array();
+        $data['class_name'] = $request->class_nameedit;
+        $data['class_description'] = $request->class_descriptionedit;
+        $data['resource_name'] = $request->resource_nameedit;
+        $data['class_duration'] = $request->class_durationedit;
+        $data['class_quiz'] = $request->class_quizedit;
+        $data['quiz_id'] = $request->quiz_idedit;
+        
+        // Add version control data
+        $data['version_type'] = $request->version_type;
+        $data['change_notes'] = $request->change_notes;
+        $data['current_major_version'] = $request->current_major_version;
+        $data['current_minor_version'] = $request->current_minor_version;
+
+        // Handle file upload
+        if ($request->hasFile('resource_nameedit')) {
+            if ($validator->fails()) {
+                return redirect()->back()->with('error', 'Files not applicable');
+            }
+            
+            $storagepath_ursb_old = public_path() . '/uploads/class/' . $user_id;
+            $storagepath_ursb = '/uploads/class/' . $user_id;
+            
+            if (!File::exists($storagepath_ursb_old)) {
+                File::makeDirectory($storagepath_ursb_old);
+            }
+            
+            $data['resourse_path'] = $storagepath_ursb;
+            $documentsb = $request['resource_nameedit'];
+            $files = $documentsb->getClientOriginalName();
+            $findspace = array(' ', '&', "'", '"');
+            $replacewith = array('-', '-');
+            $proposal_files = str_replace($findspace, $replacewith, $files);
+            $documentsb->move($storagepath_ursb_old, $proposal_files);
+            $data['resource_name'] = $proposal_files;
+        } else {
+            $data['resource_name'] = 0;
+            $data['resourse_path'] = 0;
+        }
+        
+        $data['eid'] = $request->eid;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        // Call the new version control API endpoint
+        $gatewayURL = config('setting.api_gateway_url') . '/class/class_update_with_version';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+
+        $response1 = json_decode($response);
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            return redirect(route('admincourse'))->with('success', 'Class Updated Successfully with Version Control');
+        } else {
+            $objData = json_decode($this->decryptData($response1->Data));
+            return redirect()->back()->with('error', 'Update failed: ' . ($objData->message ?? 'Unknown error'));
+        }
+    } catch (\Exception $exc) {
+        return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
     }
+}
 
     // Events Start//
 
@@ -1856,11 +1861,12 @@ class tryController extends BaseController
     }
     public function verifyPin(Request $request)
     {
+     
         $courseId = Crypt::decrypt($request->course_id);
 
         $course = Course::where('course_id', $courseId)->first();
-
-        if ($course && $course->course_pin == $request->pin) {
+      
+        if ($course->course_pin == $request->pin) {
             return response()->json([
                 'status' => true,
                 'redirect' => route('elearningCourse', $request->course_id)
@@ -1869,4 +1875,149 @@ class tryController extends BaseController
 
         return response()->json(['status' => false]);
     }
+
+    public function getClassData($id)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => getClassData';
+        
+        $data = array();
+        $data['class_id'] = $id;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        $gatewayURL = config('setting.api_gateway_url') . '/class/get-class-data';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+        
+        $response1 = json_decode($response);
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            $decryptedData = $this->decryptData($response1->Data);
+            return response()->json(['success' => true, 'data' => json_decode($decryptedData, true)]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to load class data']);
+        }
+    } catch (\Exception $exc) {
+        return response()->json(['success' => false, 'message' => $exc->getMessage()]);
+    }
+}
+
+public function getClassVersions($id)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => getClassVersions';
+        
+        $data = array();
+        $data['class_id'] = $id;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        $gatewayURL = config('setting.api_gateway_url') . '/class/get-class-versions';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+        
+        // Check if response is empty
+        if (!$response) {
+            return response()->json([
+                'success' => false, 
+                'message' => 'Empty response from API'
+            ]);
+        }
+        
+        $response1 = json_decode($response);
+        
+        // Check if response1 is null or missing expected properties
+        if (!$response1) {
+            return response()->json([
+                'success' => false, 
+                'message' => 'Invalid response format from API'
+            ]);
+        }
+        
+        // Check if Status and Success properties exist
+        if (!isset($response1->Status) || !isset($response1->Success)) {
+            return response()->json([
+                'success' => false, 
+                'message' => 'Missing Status or Success in API response'
+            ]);
+        }
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            // Check if Data exists
+            if (!isset($response1->Data)) {
+                return response()->json([
+                    'success' => false, 
+                    'message' => 'No data in API response'
+                ]);
+            }
+            
+            $decryptedData = $this->decryptData($response1->Data);
+            
+            // Check if decryption was successful
+            if (!$decryptedData) {
+                return response()->json([
+                    'success' => false, 
+                    'message' => 'Failed to decrypt data'
+                ]);
+            }
+            
+            $versions = json_decode($decryptedData, true);
+            
+            // Ensure versions is an array
+            if (!is_array($versions)) {
+                $versions = [];
+            }
+            
+            return response()->json([
+                'success' => true, 
+                'versions' => $versions
+            ]);
+        } else {
+            $errorMsg = 'Failed to load versions';
+            if (isset($response1->Message)) {
+                $errorMsg = $response1->Message;
+            }
+            
+            return response()->json([
+                'success' => false, 
+                'message' => $errorMsg
+            ]);
+        }
+    } catch (\Exception $exc) {
+        return response()->json([
+            'success' => false, 
+            'message' => $exc->getMessage()
+        ]);
+    }
+}
+public function restoreClassVersion(Request $request)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => restoreClassVersion';
+        
+        $data = array();
+        $data['class_id'] = $request->class_id;
+        $data['version_id'] = $request->version_id;
+        
+        $encryptArray = $this->encryptData($data);
+        $requestData = array();
+        $requestData['requestData'] = $encryptArray;
+        
+        $gatewayURL = config('setting.api_gateway_url') . '/class/restore-class-version';
+        $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+        
+        $response1 = json_decode($response);
+        
+        if ($response1->Status == 200 && $response1->Success) {
+            return response()->json(['success' => true, 'message' => 'Version restored successfully']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to restore version']);
+        }
+    } catch (\Exception $exc) {
+        return response()->json(['success' => false, 'message' => $exc->getMessage()]);
+    }
+}
 }

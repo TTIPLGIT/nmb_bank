@@ -430,7 +430,10 @@ class UamScreensController extends BaseController
                 ->select('a.*')
                 ->where('a.screen_id', $id)
                 ->get();
-
+            $uam_screen_permissions = DB::table('uam_screen_permissions as a')
+                ->select('a.permission')
+                ->where('a.screen_id', $id)
+                ->get();
 
             //    $work_flow_row = DB::table('work_flow')
             //  ->select('work_flow.*')
@@ -451,6 +454,7 @@ class UamScreensController extends BaseController
 
             $response = [
                 'rows' => $rows,
+                'uam_screen_permissions' => $uam_screen_permissions,
             ];
 
             $serviceResponse = array();

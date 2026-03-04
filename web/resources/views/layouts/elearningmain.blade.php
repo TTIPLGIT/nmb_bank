@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Talentra</title>
     <link rel="icon" href="{{asset('css/talentra-image.jpg')}}">
 
@@ -548,7 +549,7 @@
         }
 
         .main-sidebar {
-            width: 200px !important;
+            width: 225px !important;
         }
 
         .sidebar-mini .navbar {
@@ -1217,7 +1218,7 @@
             font-size: 20px;
             font-weight: bold;
             background: #eaf6ff;
-            margin-right: -150px;
+            /* margin-right: -150px; */
             /* soft blue background */
             color: #1c3f5e;
             /* dark blue text */
@@ -1306,6 +1307,601 @@
         }
     </style>
 </head>
+<div class="floating-chat-container">
+    <button class="floating-chat-toggle" id="floatingChatToggle">
+        <i class="fa fa-comments"></i>
+        <span class="floating-chat-badge" id="floatingChatBadge" style="display: none;">1</span>
+    </button>
+
+    <div class="floating-chat-widget" id="floatingChatWidget">
+        <div class="floating-chat-header">
+            <h5><i class="fas fa-robot"></i> Talentra Assistant</h5>
+            <div class="floating-chat-header-actions">
+                <button class="floating-chat-minimize" id="floatingChatMinimize">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button class="floating-chat-close" id="floatingChatClose">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="floating-chat-body" id="floatingChatBody">
+            <div class="floating-chat-messages" id="floatingChatMessages">
+                <div class="message bot">
+                    <div class="message-content">
+                        Hello! How can I help you today?
+                    </div>
+                    <div class="message-time">{{ now()->format('h:i A') }}</div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <div class="floating-chat-footer">
+            <textarea class="floating-chat-input" id="chatMessageInput" placeholder="Type your message..."
+                rows="1"></textarea>
+            <button class="floating-chat-send" id="sendMessageBtn">
+                <i class="fa fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    class FloatingChat {
+        constructor() {
+            this.isOpen = false;
+            this.isMinimized = false;
+            this.init();
+        }
+
+        init() {
+            this.setupEventListeners();
+            this.loadFromStorage();
+        }
+
+        setupEventListeners() {
+            // Toggle chat
+            document.getElementById('floatingChatToggle').addEventListener('click', () => this.toggleChat());
+
+            // Close chat
+            document.getElementById('floatingChatClose').addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.closeChat();
+            });
+
+            // Minimize chat
+            document.getElementById('floatingChatMinimize').addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleMinimize();
+            });
+
+            // Send message
+            document.getElementById('sendMessageBtn').addEventListener('click', () => this.sendMessage());
+            document.getElementById('chatMessageInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    this.sendMessage();
+                }
+            });
+
+            // Auto-resize textarea
+            document.getElementById('chatMessageInput').addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+        }
+
+        toggleChat() {
+            const widget = document.getElementById('floatingChatWidget');
+            const toggle = document.getElementById('floatingChatToggle');
+
+            if (this.isOpen) {
+                widget.style.display = 'none';
+                toggle.style.display = 'flex';
+                this.isOpen = false;
+                this.hideNotification();
+            } else {
+                widget.style.display = 'flex';
+                toggle.style.display = 'none';
+                this.isOpen = true;
+                this.isMinimized = false;
+                document.getElementById('floatingChatBody').style.display = 'flex';
+                document.querySelector('.floating-chat-footer').style.display = 'flex';
+                document.querySelector('.floating-chat-minimize i').className = 'fa fa-minus';
+            }
+            this.saveToStorage();
+        }
+
+        toggleMinimize() {
+            const body = document.getElementById('floatingChatBody');
+            const footer = document.querySelector('.floating-chat-footer');
+            const minimizeIcon = document.querySelector('.floating-chat-minimize i');
+
+            if (this.isMinimized) {
+                body.style.display = 'flex';
+                footer.style.display = 'flex';
+                minimizeIcon.className = 'fa fa-minus';
+                this.isMinimized = false;
+            } else {
+                body.style.display = 'none';
+                footer.style.display = 'none';
+                minimizeIcon.className = 'fa fa-plus';
+                this.isMinimized = true;
+            }
+            this.saveToStorage();
+        }
+
+        closeChat() {
+            const widget = document.getElementById('floatingChatWidget');
+            const toggle = document.getElementById('floatingChatToggle');
+
+            widget.style.display = 'none';
+            toggle.style.display = 'flex';
+            this.isOpen = false;
+            this.saveToStorage();
+        }
+
+        async sendMessage() {
+            const input = document.getElementById('chatMessageInput');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            // Clear input and reset height
+            input.value = '';
+            input.style.height = 'auto';
+
+            // Add user message to chat
+            this.addMessage(message, 'user');
+
+            // Show typing indicator
+            this.showTypingIndicator();
+
+            try {
+                const response = await this.callAPI(message);
+                console.log(response);
+                // Hide typing indicator
+                this.hideTypingIndicator();
+
+                if (response.success) {
+                    this.addMessage(response.response, 'bot');
+                } else {
+                    this.addMessage('Sorry, I encountered an error. Please try again.', 'bot');
+                }
+            } catch (error) {
+                this.hideTypingIndicator();
+                this.addMessage('Network error. Please check your connection.', 'bot');
+                console.error('Error:', error);
+            }
+        }
+
+        async callAPI(message) {
+            const response = await fetch('/global-chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    message: message
+                })
+            });
+
+            return await response.json();
+        }
+
+        addMessage(text, sender) {
+            const messagesContainer = document.getElementById('floatingChatMessages');
+            const time = new Date().toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const messageHTML = `
+            <div class="message ${sender}">
+                <div class="message-content">${this.escapeHtml(text)}</div>
+                <div class="message-time">${time}</div>
+            </div>
+        `;
+
+            messagesContainer.insertAdjacentHTML('beforeend', messageHTML);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        showTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'flex';
+            const messagesContainer = document.getElementById('floatingChatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        showNotification() {
+            const badge = document.getElementById('floatingChatBadge');
+            badge.style.display = 'block';
+        }
+
+        hideNotification() {
+            const badge = document.getElementById('floatingChatBadge');
+            badge.style.display = 'none';
+        }
+
+        escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        saveToStorage() {
+            localStorage.setItem('chatState', JSON.stringify({
+                isOpen: this.isOpen,
+                isMinimized: this.isMinimized
+            }));
+        }
+
+        loadFromStorage() {
+            const saved = localStorage.getItem('chatState');
+            if (saved) {
+                const state = JSON.parse(saved);
+                this.isOpen = state.isOpen;
+                this.isMinimized = state.isMinimized;
+
+                const widget = document.getElementById('floatingChatWidget');
+                const toggle = document.getElementById('floatingChatToggle');
+
+                if (this.isOpen) {
+                    widget.style.display = 'flex';
+                    toggle.style.display = 'none';
+
+                    if (this.isMinimized) {
+                        document.getElementById('floatingChatBody').style.display = 'none';
+                        document.querySelector('.floating-chat-footer').style.display = 'none';
+                        document.querySelector('.floating-chat-minimize i').className = 'fa fa-plus';
+                    }
+                }
+            }
+        }
+    }
+
+    // Initialize chat when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        window.floatingChat = new FloatingChat();
+    });
+</script>
+
+<style>
+    /* Floating Chat Widget Styles */
+    .floating-chat-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 10000;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .floating-chat-toggle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #680EDA 0%, #4A0B8C 100%);
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(104, 14, 218, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: relative;
+    }
+
+    .floating-chat-toggle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(104, 14, 218, 0.6);
+    }
+
+    .floating-chat-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ff4757;
+        color: white;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 10px;
+        min-width: 20px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .floating-chat-widget {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 350px;
+        height: 500px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 40px rgba(0, 0, 0, 0.2);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .floating-chat-header {
+        background: linear-gradient(135deg, #680EDA 0%, #4A0B8C 100%);
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: move;
+    }
+
+    .floating-chat-header h5 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .floating-chat-header h5 i {
+        font-size: 18px;
+    }
+
+    .floating-chat-header-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .floating-chat-header-actions button {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 0;
+        font-size: 16px;
+        opacity: 0.8;
+        transition: opacity 0.3s;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .floating-chat-header-actions button:hover {
+        opacity: 1;
+    }
+
+    .floating-chat-body {
+        flex: 1;
+        overflow-y: auto;
+        background: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .floating-chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .floating-chat-messages .message {
+        display: flex;
+        flex-direction: column;
+        max-width: 85%;
+    }
+
+    .floating-chat-messages .message.user {
+        align-self: flex-end;
+    }
+
+    .floating-chat-messages .message.bot {
+        align-self: flex-start;
+    }
+
+    .floating-chat-messages .message-content {
+        padding: 10px 15px;
+        border-radius: 18px;
+        font-size: 13px;
+        line-height: 1.4;
+        word-wrap: break-word;
+    }
+
+    .floating-chat-messages .message.user .message-content {
+        background: #680EDA;
+        color: white;
+        border-bottom-right-radius: 4px;
+    }
+
+    .floating-chat-messages .message.bot .message-content {
+        background: white;
+        color: #333;
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .floating-chat-messages .message-time {
+        font-size: 10px;
+        color: #999;
+        margin-top: 5px;
+        padding: 0 5px;
+    }
+
+    .floating-chat-messages .message.user .message-time {
+        text-align: right;
+    }
+
+    .typing-indicator {
+        display: flex;
+        gap: 5px;
+        padding: 15px 20px;
+        background: white;
+        border-radius: 18px;
+        align-self: flex-start;
+        margin: 0 20px 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .typing-indicator span {
+        width: 8px;
+        height: 8px;
+        background: #999;
+        border-radius: 50%;
+        animation: typing 1s infinite ease-in-out;
+    }
+
+    .typing-indicator span:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+
+        0%,
+        60%,
+        100% {
+            transform: translateY(0);
+            opacity: 0.6;
+        }
+
+        30% {
+            transform: translateY(-10px);
+            opacity: 1;
+        }
+    }
+
+    .floating-chat-footer {
+        padding: 15px;
+        background: white;
+        border-top: 1px solid #eee;
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+    }
+
+    .floating-chat-input {
+        flex: 1;
+        border: 1px solid #e0e0e0;
+        border-radius: 20px;
+        padding: 10px 15px;
+        font-size: 13px;
+        resize: none;
+        max-height: 100px;
+        outline: none;
+        font-family: inherit;
+    }
+
+    .floating-chat-input:focus {
+        border-color: #680EDA;
+    }
+
+    .floating-chat-send {
+        background: #680EDA;
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s, background 0.3s;
+        flex-shrink: 0;
+    }
+
+    .floating-chat-send:hover {
+        transform: scale(1.1);
+        background: #4A0B8C;
+    }
+
+    .floating-chat-send:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 480px) {
+        .floating-chat-widget {
+            width: 300px;
+            height: 450px;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        .floating-chat-toggle {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+    }
+
+    /* Dark mode support if needed */
+    @media (prefers-color-scheme: dark) {
+        .floating-chat-widget {
+            background: #2d2d2d;
+        }
+
+        .floating-chat-messages {
+            background: #1e1e1e;
+        }
+
+        .floating-chat-messages .message.bot .message-content {
+            background: #2d2d2d;
+            color: #fff;
+        }
+
+        .floating-chat-footer {
+            background: #2d2d2d;
+            border-top-color: #404040;
+        }
+
+        .floating-chat-input {
+            background: #404040;
+            border-color: #505050;
+            color: #fff;
+        }
+
+        .typing-indicator {
+            background: #2d2d2d;
+        }
+    }
+</style>
 
 <body class="light dark-sidebar theme-white">
     <div class="loader-container" id="loaderContainer">
@@ -1408,157 +2004,139 @@
                         </a>
                     </div>
                     <ul class="sidebar-menu">
-                        <li>
-                            <a href="{{ route('elearningDashboard') }}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons fa fa-home" aria-hidden="true"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-                        @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member"
-                        || $menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" ||
-                        $menus['alter_name'] == "student")
-                        <li>
-                            <a href="{{ route('elearning.allCourses') }}?sorted=Recently Added&tag=false&progress=false&q=false"
-                                class="nav-link sidebar_links">
-                                <i class="sidebar-icons fa fa-graduation-cap" aria-hidden="true"></i>
-                                <span>All Courses</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('elearning.cpt_index') }}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons bi bi-patch-question-fill" aria-hidden="true"></i>
-                                <span>CPD Points</span>
-                            </a>
-                        </li>
-                        <!-- <li>
-                                                                                                                                            <a href="" class="nav-link">
-                                                                                                                                                <i class="sidebar-icons fa fa-spinner" aria-hidden="true"></i>
-                                                                                                                                                <span>Progress</span>
-                                                                                                                                            </a>
-                                                                                                                                        </li> -->
-                        <li>
-                            <a href="{{ route('elearning.wishlist') }}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons bi bi-heart-fill" aria-hidden="true"></i>
-                                <span>Wish List</span>
-                            </a>
-                        </li>
+                        @if(session()->get("gd_status") != '2')
+                        <li class="dropdown "><a href="{{route('elearningDashboard')}}" class="nav-link"><i
+                                    class="fas fa-home"></i><span>{{ __('dashboard.dashboard') }}</span></a>
 
-                        <li>
-
-                            @php $id = Crypt::encrypt("all"); @endphp
-                            <a href="{{ route('elearningCart', $id)}}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons bi bi-cart4" aria-hidden="true"></i>
-                                <span>Cart</span>
-                            </a>
                         </li>
                         @endif
-                        @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member"
-                        || $menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" ||
-                        $menus['alter_name'] == "student")
+                        <!-- <ul class="sidebar-menu">
+                            <li>
+                                <a href="{{ route('elearningDashboard') }}" class="nav-link sidebar_links">
+                                    <i class="sidebar-icons fa fa-home" aria-hidden="true"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member"
+                            || $menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" ||
+                            $menus['alter_name'] == "student")
+                            <li>
+                                <a href="{{ route('elearning.allCourses') }}?sorted=Recently Added&tag=false&progress=false&q=false"
+                                    class="nav-link sidebar_links">
+                                    <i class="sidebar-icons fa fa-graduation-cap" aria-hidden="true"></i>
+                                    <span>All Courses</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('elearning.cpt_index') }}" class="nav-link sidebar_links">
+                                    <i class="sidebar-icons bi bi-patch-question-fill" aria-hidden="true"></i>
+                                    <span>CPD Points</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href="{{ route('elearning.wishlist') }}" class="nav-link sidebar_links">
+                                    <i class="sidebar-icons bi bi-heart-fill" aria-hidden="true"></i>
+                                    <span>Wish List</span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a href="{{ route('elearning.userquiz') }}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons bi bi-patch-question-fill" aria-hidden="true"></i>
-                                <span>Quiz</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('your_achievements') }}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons bi bi-trophy-fill" aria-hidden="true"></i>
-                                <span>Achievements</span>
-                            </a>
-                        </li>
-                        @endif
-                        <li>
-                            <a href="/leaderboard" class="nav-link">
-                                <i class="sidebar-icons fa fa-star" aria-hidden="true"></i>
-                                <span>Leaderboard</span>
-                            </a>
-                        </li>
+                            <li>
 
+                                @php $id = Crypt::encrypt("all"); @endphp
+                                <a href="{{ route('elearningCart', $id)}}" class="nav-link sidebar_links">
+                                    <i class="sidebar-icons bi bi-cart4" aria-hidden="true"></i>
+                                    <span>Cart</span>
+                                </a>
+                            </li>
+                            @endif
+                            @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member"
+                            || $menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" ||
+                            $menus['alter_name'] == "student")
 
-
-
-
-                        <li>
-                            <a href="/elearningDashboard" class="nav-link">
-                                <i class="sidebar-icons fa fa-arrow-left" aria-hidden="true"></i>
-                                <span>Home</span>
-                            </a>
-                        </li>
-                        <!-- <li>
-                            <a href="{{ route('elearningAssessment') }}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons fa fa-trophy" aria-hidden="true"></i>
-                                <span>Assessment</span>
-                            </a>
-                        </li> -->
-
-                        <!-- @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member" || $menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" || $menus['alter_name'] == "student") -->
-
-                        <!-- <li>
-                            <a href="{{ route('ethictest.list') }}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons fa fa-pencil-square-o" aria-hidden="true"></i>
-                                <span>Ethic Test</span>
-                            </a>
-                        </li> -->
-                        <!-- @endif
-                        @if($menus['alter_name'] == "professional Member(NRU)" || $menus['alter_name'] == "sadmin" || $menus['alter_name'] == "student")
-                        <li>
-                            <a href="{{ route('localadaptation.list') }}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons fa fa-globe" aria-hidden="true"></i>
-                                <span>Local Adaptation Test</span>
-                            </a>
-                        </li>
-                        @endif -->
-                        <!-- @if($menus['alter_name'] == "graduate trainee" || $menus['alter_name'] == "professional_member")
-
-                        <li>
-                            <a href="{{ route('exam.list') }}" class="nav-link sidebar_links">
-                                <i class="sidebar-icons fa fa-pencil-square-o" aria-hidden="true"></i>
-                                <span>Exam</span>
-                            </a>
-                        </li>
-                        @endif -->
-
-                    </ul>
-                    </break>
-                    <ul class="second_Menu sidebar-menu sidebar-secondary-menu">
+                            <li>
+                                <a href="{{ route('elearning.userquiz') }}" class="nav-link sidebar_links">
+                                    <i class="sidebar-icons bi bi-patch-question-fill" aria-hidden="true"></i>
+                                    <span>Quiz</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('your_achievements') }}" class="nav-link sidebar_links">
+                                    <i class="sidebar-icons bi bi-trophy-fill" aria-hidden="true"></i>
+                                    <span>Achievements</span>
+                                </a>
+                            </li>
+                            @endif
+                            <li>
+                                <a href="/leaderboard" class="nav-link">
+                                    <i class="sidebar-icons fa fa-star" aria-hidden="true"></i>
+                                    <span>Leaderboard</span>
+                                </a>
+                            </li>
 
 
 
-                        <li>
-                            <a href="http://20.255.58.187:8001/#/" class="nav-link sidebar_links">
-                                <i class="sidebar-icons fa fa-sign-out" aria-hidden="true"></i>
-                                <span>Logout</span>
-                            </a>
-                        </li>
-                        <!-- <li>
-                            <a href="" class="nav-link sidebar_links"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="sidebar-icons fa fa-sign-out" aria-hidden="true"></i>
-                                <span>Logout</span>
-                            </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+
+                            <li>
+                                <a href="/elearningDashboard" class="nav-link">
+                                    <i class="sidebar-icons fa fa-arrow-left" aria-hidden="true"></i>
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            
+
+                        </ul>
+                        </break>
+                        <ul class="second_Menu sidebar-menu sidebar-secondary-menu">
+
+
+
+                            <li>
+                                <a href="http://20.255.58.187:8001/#/" class="nav-link sidebar_links">
+                                    <i class="sidebar-icons fa fa-sign-out" aria-hidden="true"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+                            
+                        </ul> -->
+
+                     @if($modules['data'] != "")
+                            @foreach ($modules['data'] as $key => $module)
+                                <li class="dropdown">
+                                    <a class="nav-link has-dropdown">
+                                        <i class="{{$module['class_name']}}" aria-hidden="true"></i>
+                                        <span>
+                                            {{ $module['module_name'] }}
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu active" style="display: none;">
+                                        @if($screens != "")
+                                        @foreach ($screens as $key => $screen)
+                                            @if($module['module_id'] == $screen['module_id'])
+                                            <li><a class="nav-link "
+                                                    href="{{ config('setting.base_url')}}{{ $screen['route_url'] }}">{{$screen['screen_name']}}</a>
+                                            </li>
+                                            @endif
+                                        @endforeach
+                                        @endif
+                                    </ul>
+                                </li>
+
+                            @endforeach
+                            <li>
+                                <a onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="nav-link sidebar_links">
+                                    <i class="sidebar-icons fa fa-sign-out" aria-hidden="true"></i>
+                                    <span>Logout</span>
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf
-                            </form>
 
                             </form>
-                        </li> -->
+                            </li>
+                        @endif
+                        </ul>
 
-                        <!-- <li>
-                            <a href="" class="nav-link">
-                                <i class="sidebar-icons fa fa-info" aria-hidden="true"></i>
-                                <span>About Us</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="nav-link">
-                                <i class="sidebar-icons fa fa-map-marker" aria-hidden="true"></i>
-                                <span>Contact Us</span>
-                            </a>
-                        </li> -->
-                    </ul>
                 </aside>
 
                 <input type="hidden" name="testing_id" id="testing_id" value="{{URL::to('/')}}">
@@ -1664,9 +2242,9 @@
 
                 // Build new HTML with the returned data
                 var html = `
-    <i id="level" class="${data.level_icon}"></i>
-    <span class="level-text"style="font-size:15px">${data.level_name.toUpperCase()}</span>
-`;
+                <i id="level" class="${data.level_icon}"></i>
+                <span class="level-text"style="font-size:15px">${data.level_name.toUpperCase()}</span>
+            `;
 
 
                 // Append it to the container

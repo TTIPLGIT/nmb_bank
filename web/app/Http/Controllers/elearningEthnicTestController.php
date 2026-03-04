@@ -514,7 +514,7 @@ class elearningEthnicTestController extends BaseController
 
             $availableCourseIds = [];
             $time = time();
-            $currentTime = date("Y-m-d H:i:s", $time);
+            $currentTime = date("Y-m-d");
             // dd($currentTime);
             foreach ($Courses as $course) {
                 if ($course->course_start_period == "" || $course->course_end_period == "") {
@@ -747,9 +747,57 @@ class elearningEthnicTestController extends BaseController
                     'end_time'   => now(),
                     'updated_at' => now(),
                 ]);
+          $today = now()->toDateString();
+
+$scormCourses = DB::table('scorm_courses as sc')
+    ->join('scorm as s', 's.id', '=', 'sc.scorm_id')
+
+    ->leftJoin('scorm_tracking as st', function ($join) use ($user_id) {
+        $join->on('st.scorm_id', '=', 'sc.scorm_id')
+             ->where('st.user_id', '=', $user_id);
+    })
+
+    ->whereRaw("FIND_IN_SET(?, sc.user_ids)", [$user_id])
+    ->where('s.is_published', 1)
+   
+
+    // ✅ Period Logic
+    ->where(function ($query) use ($today) {
+        $query->where('sc.course_noperiod', '2') 
+              ->orWhere(function ($q) use ($today) {
+                  $q->where('sc.course_noperiod', '1')
+                    ->whereDate('sc.course_start_period', '<=', $today)
+                    ->whereDate('sc.course_end_period', '>=', $today);
+              });
+    })
+
+    ->select(
+        'sc.scorm_course_id',
+        'sc.scorm_id',
+        'sc.course_name',
+        'sc.course_banner',
+        'sc.course_certificate',
+        'st.lesson_status',
+        'sc.created_by',
+        'sc.restricted_access'
+    )
+    ->get()
+    ->map(function ($course) {
+
+        $progress = 0;
+
+        if (in_array($course->lesson_status, ['completed','passed','failed'])) {
+            $progress = 100;
+        } elseif ($course->lesson_status == 'incomplete') {
+            $progress = 50;
+        }
+
+        $course->progress = $progress;
+        return $course;
+    });
+          
             // dd($Courses);
-            // dd($Courses);
-            return view('elearning.allCourses', compact('Courses', 'availableCourses', 'availableTags', 'search', 'sort', 'tagFilter', 'progressFilter', 'modules', 'screens', 'menus', 'courseProgress', 'wishlistedCourseIds', 'user_id'));
+            return view('elearning.allCourses', compact('scormCourses', 'Courses', 'availableCourses', 'availableTags', 'search', 'sort', 'tagFilter', 'progressFilter', 'modules', 'screens', 'menus', 'courseProgress', 'wishlistedCourseIds', 'user_id'));
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
@@ -1313,21 +1361,35 @@ class elearningEthnicTestController extends BaseController
 
             // dd("wel"); 
 
-            $quiz_results[] = $classContents[0];
-            // dd($class_array);
+            $quiz_results['class'] = $classContents[0];
+             
 
 
             foreach ($class_array as $key => $value) {
-                $classContents = DB::select("SELECT c.*,uc.course_id,uc.quiz_status,uc.user_id,uc.status as class_status,uc.bookmark
-                 FROM elearning_classes as c inner join user_class_relation as uc  where c.class_id= $value 
-                 and uc.course_id=$id ");
-                // dd($classContents);
+               $classContents = DB::select("
+                    SELECT 
+                        c.*,
+                        uc.course_id,
+                        uc.quiz_status,
+                        uc.user_id,
+                        uc.status AS class_status,
+                        uc.id AS user_class_relation_id,
+                        uc.bookmark
+                    FROM elearning_classes AS c
+                    INNER JOIN user_class_relation AS uc
+                        ON uc.class_id = c.class_id
+                    WHERE 
+                        c.class_id = ?
+                        AND uc.user_id = ?
+                        AND uc.course_id = ?
+                ", [$value, $user_id, $id]);
+
                 $selected_class[$key] = $classContents[0];
 
 
                 # code...
             }
-            // dd($id);
+            
 
             $quizes = DB::select("SELECT * FROM elearning_practice_quiz where drop_quiz=0");
             // dd($quizes);
@@ -1668,8 +1730,7 @@ class elearningEthnicTestController extends BaseController
             $courseContents = DB::select("SELECT * FROM elearning_classes WHERE drop_class=0  ORDER BY FIELD(class_id,$classOrder)");
             //dd($courseContents);
             $classContents = DB::select("SELECT * FROM elearning_courses where course_id= $id and drop_course=0 ");
-            // dd($classContents);
-
+            
             $class_array = explode(',', $classContents[0]->course_classes);
             $selected_class = [];
             foreach ($class_array as $key => $value) {
@@ -2028,7 +2089,7 @@ class elearningEthnicTestController extends BaseController
 
     public function bookmark(Request $request)
     {
-        $this->WriteFileLog("snkas");
+        
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return redirect(url('/'));
@@ -2061,7 +2122,7 @@ class elearningEthnicTestController extends BaseController
         $method = 'Method => elearningEthnicTestController => status_update';
         $course_id = $request->course_id;
         $class_id = $request->class_id;
-        $this->WriteFileLog($class_id);
+       
         try {
 
             DB::table('user_class_relation')
@@ -2321,13 +2382,13 @@ class elearningEthnicTestController extends BaseController
 
             // dd($data['logo_url']);
 
-            // dd($get_template->template_name);
+            // dd($get_template, config('setting.image_path'),$data);
             $pdf = PDF::loadView("certificate_template.{$get_template->template_name}.index", [
                 'data' => $data
             ]);
             
 
-            // dd($data);
+            
 
 
 
@@ -2347,7 +2408,7 @@ class elearningEthnicTestController extends BaseController
 
             $pdf->save($output);
 
-
+// dd($output);
 
             $data = [
                 'date' => $date,
@@ -2358,7 +2419,7 @@ class elearningEthnicTestController extends BaseController
 
 
             ];
-            // dd($data['logo_url']);  
+             
 
             $encryptArray = $this->encryptData($data);
             $request = array();
@@ -2371,7 +2432,7 @@ class elearningEthnicTestController extends BaseController
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
 
             $response1 = json_decode($response);
-
+ 
             if ($pdf->download('certificate.pdf')) {
                 return redirect()->back()->with('success', 'Your Certificate has been Issued Successfully');
             } else {
@@ -2429,8 +2490,7 @@ class elearningEthnicTestController extends BaseController
             $gatewayURL = config('setting.api_gateway_url') . '/class/quiz';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
-            // dd($response);
-
+             
 
             $objData = json_decode($this->decryptData($response->Data));
 
@@ -2481,7 +2541,6 @@ class elearningEthnicTestController extends BaseController
         $method = 'Method => elearningEthnicTestController => quiz_store';
         try {
             $data = array();
-
             $data['quizId'] = $request->quizId;
             $data['attempt'] = $request->attempt;
             $data['score'] = $request->score;
@@ -2491,14 +2550,12 @@ class elearningEthnicTestController extends BaseController
             $data['course_id'] = $request->course_id;
             $data['class_id'] = $request->class_id;
             $course_id = $request->course_id;
-
             $encryptArray = $this->encryptData($data);
             $request = array();
 
             $request['requestData'] = $encryptArray;
 
             $gatewayURL = config('setting.api_gateway_url') . '/class/quiz/store';
-
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
 
             $response1 = json_decode($response);

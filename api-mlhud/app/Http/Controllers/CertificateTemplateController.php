@@ -60,10 +60,9 @@ class CertificateTemplateController extends BaseController
         try {
             $inputArray = $this->decryptData($request->requestData);
             $entries = $inputArray['details'] ?? [];
-            
 
             // $template_id = $inputArray['details'][0]['certificate_templates_id'];
-            // $this->WriteFileLog($template_id);
+
             if (empty($entries)) {
                 return $this->SendServiceResponse(
                     json_encode(['Code' => 422, 'Message' => 'No data provided', 'Data' => null], JSON_FORCE_OBJECT),
@@ -72,7 +71,6 @@ class CertificateTemplateController extends BaseController
                 );
             }
             DB::transaction(function () use ($entries, $userID) {
-
                 $certificateTemplateId = $entries[0]['certificate_templates_id'] ?? null;
 
                 if (empty($certificateTemplateId)) {
@@ -84,6 +82,51 @@ class CertificateTemplateController extends BaseController
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
+                } else {
+
+                    if (!empty($entries[0]['logo_file_content'])) {
+                        // $this->WriteFileLog('A');
+                        $fileContent = base64_decode($entries[0]['logo_file_content']);
+                        $uniqueFileName = uniqid() . '_' . $entries[0]['logo_file_name'];
+
+                        file_put_contents(public_path('images/logo/' . $uniqueFileName), $fileContent);
+                        $logoPath = 'images/logo/' . $uniqueFileName;
+                    } elseif (!empty($entries[0]['logo_path'])) {
+
+                        $this->WriteFileLog('3');
+                        if (str_starts_with($entries[0]['logo_path'], 'images/logo/')) {
+
+                            $logoPath = $entries[0]['logo_path'];
+                        }
+                        // If base64 new upload
+                        else {
+
+                            if (!empty($entries[0]['logo_file_name'])) {
+                                $this->WriteFileLog('4');
+                                $fileContent = base64_decode($entries[0]['logo_path']);
+                                $uniqueFileName = uniqid() . '_' . $entries[0]['logo_file_name'];
+                                $this->WriteFileLog('5');
+                                file_put_contents(public_path('images/logo/' . $uniqueFileName), $fileContent);
+
+                                $logoPath = 'images/logo/' . $uniqueFileName;
+                            }
+                        }
+
+                        DB::table('certificate_templates')
+                            ->where('certificate_templates_id', $certificateTemplateId)
+                            ->update([
+
+                                'logo' => $logoPath,
+
+                            ]);
+                    }
+                    DB::table('certificate_templates')
+                        ->where('certificate_templates_id', $certificateTemplateId)
+                        ->update([
+
+                            'logo' => $logoPath,
+
+                        ]);
                 }
 
                 $submittedIds = [];
@@ -95,11 +138,35 @@ class CertificateTemplateController extends BaseController
 
                     // ---- SIGNATURE FILE ----
                     $relativePath = null;
+                   
                     if (!empty($entry['signature_file_content'])) {
+                       
                         $fileContent = base64_decode($entry['signature_file_content']);
                         $uniqueFileName = uniqid() . '_' . $entry['signature_file_name'];
+                         
                         file_put_contents(public_path('images/signatures/' . $uniqueFileName), $fileContent);
+                        
                         $relativePath = 'images/signatures/' . $uniqueFileName;
+                    } 
+                    elseif (!empty($entry['signature_path'])) {
+                        $this->WriteFileLog('1');
+                        if (str_starts_with($entry['signature_path'], 'images/signatures/')) {
+                            $this->WriteFileLog('1.1');
+                            $relativePath = $entry['signature_path'];
+                        }
+                        // If new base64 upload
+                        else {
+                            $this->WriteFileLog('2');
+                            if (!empty($entry['signature_file_name'])) {
+                                $this->WriteFileLog('2.1');
+                                $fileContent = base64_decode($entry['signature_path']);
+                                $uniqueFileName = uniqid() . '_' . $entry['signature_file_name'];
+                                $this->WriteFileLog('2.2');
+                                file_put_contents(public_path('images/signatures/' . $uniqueFileName), $fileContent);
+
+                                $relativePath = 'images/signatures/' . $uniqueFileName;
+                            }
+                        }
                     }
 
                     if ($signatoryId) {
@@ -134,7 +201,6 @@ class CertificateTemplateController extends BaseController
                     ->whereNotIn('certificate_template_signatories_id', $submittedIds)
                     ->delete();
             });
-
 
 
 

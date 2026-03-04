@@ -32,8 +32,10 @@ class UserController extends BaseController
         if (strpos($screen_permission['permissions'], 'View') !== false) {
             try {
                 $method = 'Method => UserController => index';
+                
                 $gatewayURL = config('setting.api_gateway_url') . '/user/get_user_list';
                 $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+                
                 $response = json_decode($response);
                 if ($response->Status == 200 && $response->Success) {
                     $objData = json_decode($this->decryptData($response->Data));
@@ -51,6 +53,7 @@ class UserController extends BaseController
                         //      return $rows;
                         //    }
                         //    else{
+                       
                         return view('uam.user.index', compact('rows', 'screens', 'modules', 'screen_permission'));
                         //  }
                     }
@@ -349,10 +352,11 @@ class UserController extends BaseController
                         //    $sub_department = $parant_data['sub_department'];
                         //    $document_category = $parant_data['document_category'];
                         $project_roles =  $parant_data['project_roles'];
+                        $custom_field = $parant_data['custom_field'];
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
                         $modules = $menus['modules'];
-                        return view('uam.user.create', compact('rows', 'designation', 'dashboard', 'project_roles', 'screens', 'modules'));
+                        return view('uam.user.create', compact('rows', 'designation', 'dashboard', 'project_roles', 'screens', 'modules','custom_field'));
                     }
                 } else {
                     $objData = json_decode($this->decryptData($response->Data));
@@ -416,7 +420,6 @@ class UserController extends BaseController
                 // $displayItems2 = $request->displayItems2;
 
                 // $displayItems2_department =  explode(":", $displayItems2); 
-
                 $userRow = array();
                 $userRow['name'] = $request->name;
                 $userRow['email'] = $request->email;
@@ -441,6 +444,8 @@ class UserController extends BaseController
                 // $userRow['directorate_department'] = $directorate_department;
                 $userRow['dashboard_list_id'] = $request->dashboard_list_id ?? null;
                 $userRow['designation'] = $request->designation_id ?? null;
+                $userRow['custom_field_id'] = $request->custom_field_id ?? null;
+                $userRow['custom_field_value'] = $request->custom_field_value ?? null;
                 // $userRow['parent_node_id'] = $request->parent_node_id;
                 // $userRow['directorate'] = $directorate;
                 // $userRow['array_department'] = $displayItems2_department;
@@ -453,7 +458,6 @@ class UserController extends BaseController
                 $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request1), $method);
                 $response1 = json_decode($response);
                 /// echo json_encode($response1);exit;
-
                 if ($response1->Status == 200 && $response1->Success) {
                     $objData = json_decode($this->decryptData($response1->Data));
                     if ($objData->Code == 200) {
@@ -560,7 +564,6 @@ class UserController extends BaseController
                         $one_row =  $parant_data['one_row'];
 
 
-
                         $rows_data =  $parant_data['rows_data'];
                         //    $directorate =  $parant_data['directorate'];
                         //    $parent_folder =  $parant_data['parent_folder'];
@@ -571,13 +574,13 @@ class UserController extends BaseController
                         $designation =  $parant_data['designation'];
                         //    $document_category = $parant_data['document_category'];
                         $project_roles =  $parant_data['project_roles'];
+                        $user_custom_values =  $parant_data['user_custom_values'];
                         //    $document_folder_structure_id =  $parant_data['document_folder_structure_id'];
-
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
                         $modules = $menus['modules'];
 
-                        return view('uam.user.edit', compact('designation', 'dashboard', 'one_row', 'rows_data', 'project_roles', 'screens', 'modules'));
+                        return view('uam.user.edit', compact('designation','user_custom_values', 'dashboard', 'one_row', 'rows_data', 'project_roles', 'screens', 'modules'));
                     }
                 } else {
                     $objData = json_decode($this->decryptData($response->Data));

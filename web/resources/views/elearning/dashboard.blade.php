@@ -152,7 +152,10 @@
 
     .schedule {
         width: 100% !important;
-        height: 300px !important;
+        height: auto !important;
+        /* Changed from 300px to auto */
+        min-height: 500px !important;
+        /* Added min-height */
         border: 0px !important;
         margin-top: 0.5rem !important;
         margin-bottom: 0.5rem !important;
@@ -529,7 +532,7 @@
     @media (min-width:319.96px) {
         .schedule {
             width: 100% !important;
-            height: 738px !important;
+            height: auto !important;
         }
     }
 
@@ -549,7 +552,7 @@
 
         .schedule {
             width: 100% !important;
-            height: 639px !important;
+            height: auto !important;
         }
 
         .noevents {
@@ -567,7 +570,7 @@
     @media (min-width:575.96px) {
         .schedule {
             width: 100% !important;
-            height: 394px !important;
+            height: auto !important;
         }
 
         .schedule_heading {
@@ -831,63 +834,6 @@
         color: #680EDA;
     }
 
-    /* events */
-    .events_today_wrapper {
-        width: 50% !important;
-        height: 344px !important;
-        text-align: center !important;
-        overflow: auto !important;
-        /* opacity: 0; */
-        transition-property: opacity, left;
-        transition-duration: 3s, 5s;
-    }
-
-    .events_today_wrapper::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    .events_today_wrapper::-webkit-scrollbar-track {
-        background-color: #eee;
-    }
-
-    .events_today_wrapper::-webkit-scrollbar-thumb {
-        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    .event_type {
-        margin: 10px !important;
-        padding: 10px 5px !important;
-        color: black !important;
-    }
-
-    .event_type_1 {
-        background-color: #fef4ec !important;
-        border-left: 5px solid #f0a880 !important;
-    }
-
-    .event_type_2 {
-        background-color: #fef6d2 !important;
-        border-left: 5px solid #e8cf57 !important;
-    }
-
-    .event_type_3 {
-        background-color: #e4efff !important;
-        border-left: 5px solid #4688e4 !important;
-    }
-
-    .event_type_4 {
-        background-color: #e9f8ff !important;
-        border-left: 5px solid #67c8e2 !important;
-    }
-
-    /* testing */
-    .schedule {
-        width: 58%;
-    }
-
-    .noevents {
-        color: #FF8B4F;
-    }
 
     @media (min-width:320px) and (max-width:575px) {
         .calendar-container {
@@ -898,15 +844,7 @@
             min-height: 326px;
         }
 
-        .events_today_wrapper {
-            width: 100% !important;
-            height: 344px !important;
-            text-align: center !important;
-            overflow: auto !important;
-            /* opacity: 0; */
-            transition-property: opacity, left;
-            transition-duration: 3s, 5s;
-        }
+
 
         .dycalendar-month-container .dycalendar-body table tr td {
             padding: 1px 3px;
@@ -946,24 +884,6 @@
         }
 
 
-    }
-
-    .noevents {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 22px;
-        font-weight: 600;
-        height: 300px !important;
-
-    }
-
-
-    .events_today_wrapper a {
-        display: flex !important;
-        justify-content: space-evenly !important;
-        align-items: center !important;
-        gap: 30px !important;
     }
 </style>
 <style>
@@ -1153,6 +1073,386 @@
     }
 </style>
 
+<style>
+    /* ============== FIXED EVENTS CAROUSEL STYLES ============== */
+
+    /* Override the conflicting schedule style */
+    .schedule {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 500px !important;
+        border: 0px !important;
+        margin: 0 !important;
+        border-radius: 5px !important;
+        overflow: hidden !important;
+    }
+
+    /* Main container layout */
+    .course_and_schedule_body {
+        display: flex !important;
+        flex-direction: row !important;
+        width: 100% !important;
+        gap: 20px !important;
+    }
+
+    .schedule .card-body {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 20px !important;
+        padding: 20px !important;
+        background: white !important;
+        border-radius: 15px !important;
+        min-height: 500px !important;
+        width: 100% !important;
+    }
+
+    /* Calendar container - LEFT SIDE */
+    .calendar-container {
+        flex: 0 0 48% !important;
+        max-width: 48% !important;
+        min-width: 300px !important;
+        min-height: 450px !important;
+        background: #ffffff !important;
+        border-radius: 10px !important;
+        padding: 10px !important;
+    }
+
+    /* Events container - RIGHT SIDE */
+    .events_today_wrapper {
+        flex: 1 1 48% !important;
+        min-width: 300px !important;
+        height: 450px !important;
+        max-height: 450px !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        background: #f8f9fc !important;
+        border-radius: 12px !important;
+        padding: 0 !important;
+        margin-top: 0 !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+
+    /* Events carousel container */
+    .events-carousel-container {
+        background: #f8f9fc;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        height: 100% !important;
+        display: flex;
+        flex-direction: column;
+    }
+
+
+
+
+
+    /* Event Type Colors */
+    .event_type_1 {
+        background-color: #fef4ec !important;
+        border-left: 5px solid #f0a880 !important;
+    }
+
+    .event_type_2 {
+        background-color: #fef6d2 !important;
+        border-left: 5px solid #e8cf57 !important;
+    }
+
+    .event_type_3 {
+        background-color: #e4efff !important;
+        border-left: 5px solid #4688e4 !important;
+    }
+
+    .event_type_4 {
+        background-color: #e9f8ff !important;
+        border-left: 5px solid #67c8e2 !important;
+    }
+
+    /* Carousel Indicators */
+    .carousel-indicators {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+        min-height: 15px;
+        flex-shrink: 0;
+    }
+
+    .carousel-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #dee2e6;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: inline-block;
+    }
+
+    .carousel-indicator:hover {
+        background: #adb5bd;
+    }
+
+    .carousel-indicator.active {
+        width: 20px !important;
+        border-radius: 4px !important;
+        background: #680EDA !important;
+    }
+
+    /* No Events Message */
+    .noevents {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+        font-weight: 600;
+        height: 100% !important;
+        color: #FF8B4F;
+        background: #f8f9fc;
+        border-radius: 12px;
+        min-height: 300px;
+    }
+
+    /* Calendar Highlighted Dates */
+    .highlighted-date {
+        background-color: #680EDA !important;
+        color: white !important;
+        border-radius: 5px !important;
+        font-weight: bold !important;
+    }
+
+    /* Marquee Styles */
+    .events-marquee-container {
+        background: #f8f9fc;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .marquee-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        flex-shrink: 0;
+    }
+
+    .marquee-header h4 {
+        margin: 0;
+        color: #680EDA !important;
+        font-weight: 600;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .marquee-header h4 i {
+        margin-right: 8px;
+        color: #680EDA;
+    }
+
+    .marquee-header h4 span {
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-left: 8px;
+        font-weight: normal;
+    }
+
+    .marquee-wrapper {
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+        height: 100%;
+        mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+    }
+
+    .marquee-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        will-change: transform;
+    }
+
+    /* Marquee Animation */
+    @keyframes marquee-scroll {
+        0% {
+            transform: translateY(0);
+        }
+
+        100% {
+            /* Move up by total height minus one item height to show all items once */
+            transform: translateY(calc(-100% + 70px));
+        }
+    }
+
+    .clone-item {
+        opacity: 0.95;
+        /* Slightly different to show it's a clone */
+    }
+
+    .marquee-wrapper::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 30px;
+        background: linear-gradient(to bottom, transparent, #f8f9fc);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* Pause animation on hover */
+    .marquee-wrapper:hover .marquee-list {
+        animation-play-state: paused !important;
+    }
+
+    .marquee-item {
+        flex-shrink: 0;
+        width: 100%;
+    }
+
+    .marquee-item .card {
+        margin: 0 !important;
+        cursor: pointer;
+        width: 100%;
+        border-radius: 8px !important;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .marquee-item .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .marquee-item .card a {
+        display: flex !important;
+        justify-content: space-evenly !important;
+        align-items: center !important;
+        gap: 10px !important;
+        text-decoration: none;
+        color: inherit;
+        padding: 10px !important;
+    }
+
+    .marquee-item .card img {
+        height: 60px !important;
+        width: 100px !important;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .marquee-item .card .event-name {
+        margin: 0;
+        font-weight: 600;
+        color: #333;
+        max-width: 150px;
+        font-size: 0.95rem;
+    }
+
+    .marquee-item .card small {
+        color: #6c757d;
+        font-size: 0.75rem;
+        display: block;
+    }
+
+
+    /* Responsive */
+    @media (min-width: 1200px) {
+        .carousel-slide {
+            flex: 0 0 280px;
+            width: 280px;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 1199px) {
+        .carousel-slide {
+            flex: 0 0 240px;
+            width: 240px;
+        }
+
+        .calendar-container,
+        .events_today_wrapper {
+            flex: 0 0 48% !important;
+        }
+
+        .events_today_wrapper {
+            height: 400px !important;
+            max-height: 400px !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .course_and_schedule_body {
+            flex-direction: column !important;
+        }
+
+        .schedule .card-body {
+            flex-direction: column !important;
+        }
+
+        .calendar-container,
+        .events_today_wrapper {
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+
+        .events_today_wrapper {
+            margin-top: 20px !important;
+            height: 350px !important;
+            max-height: 350px !important;
+        }
+
+        .carousel-slide {
+            flex: 0 0 240px;
+            width: 240px;
+        }
+    }
+
+    /* Caption hidden by default */
+    .caption {
+        display: none;
+    }
+
+    /* Ellipsis for long text */
+    .ellipsis {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .expanded {
+        white-space: normal;
+        max-width: none;
+    }
+
+    /* Dycalendar styles */
+    .dycalendar-today-date {
+        background-color: white !important;
+        color: #680EDA !important;
+        font-weight: 700 !important;
+    }
+
+    .dycalendar-month-container .dycalendar-body table tr td {
+        padding: 2px 6px;
+        color: #777;
+        border: 1px solid #edf1f4;
+        border-radius: 5px !important;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+</style>
+
 <link href="{{asset('assets/css/jquery.fancybox.min.css')}}" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="{{ asset('assets/css/jquery.fancybox.min.js') }}"></script>
 
@@ -1162,31 +1462,31 @@
 <div class="main-content contentpadding" style="min-height: 498px;">
     @if (session('success'))
 
-        <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-        <script type="text/javascript">
-            window.onload = function () {
-                var message = $('#session_data').val();
-                swal({
-                    title: "Success",
-                    text: message,
-                    type: "success",
-                });
-            }
-        </script>
+    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+    <script type="text/javascript">
+        window.onload = function() {
+            var message = $('#session_data').val();
+            swal({
+                title: "Success",
+                text: message,
+                type: "success",
+            });
+        }
+    </script>
     @elseif(session('error'))
 
-        <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-        <script type="text/javascript">
-            window.onload = function () {
-                var message = $('#session_data1').val();
-                swal({
-                    title: "Info",
-                    text: message,
-                    type: "info",
-                });
+    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
+    <script type="text/javascript">
+        window.onload = function() {
+            var message = $('#session_data1').val();
+            swal({
+                title: "Info",
+                text: message,
+                type: "info",
+            });
 
-            }
-        </script>
+        }
+    </script>
     @endif
 
 
@@ -1220,7 +1520,7 @@
                                 src="{{asset('asset/image/progresscourse.png')}}" alt="Course in Progress" width="40%">
                         </div>
                         <div class="justify-content-between align-items-center">
-                         
+
                             <span class="overview_count">{{$count['course_progress'][0]['course_progress']}}</span><br>
                             <span class="card-span">Course in Progress</span>
                         </div>
@@ -1297,60 +1597,58 @@
                             </div>
                             <div class="events_today_wrapper no_event">
 
-
-
-
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-            <div class="container-fluid noticess course_and_schedule_container">
+
+            <div class="container-fluid noticess course_and_schedule_container"style="margin-top:2%">
                 <div class="d-flex flex-row course_and_schedule_body w-100">
                     <div class="card noShadow notice_board_list" style="width:100% !important">
 
                         @php $class_list = count($rows) == 0 ? "d-flex justify-content-center align-items-center" : '' @endphp
                         <div class="card-body {{$class_list}}">
                             @if(count($rows) == 0)
-                                <div class="nonotice" style="color:#680EDA">No Notice Found</div>
+                            <div class="nonotice" style="color:#680EDA">No Notice Found</div>
                             @endif
                             @foreach($rows as $key => $row)
-                                <div class="d-flex flex-row justify-content-around notice_board">
-                                    @php    $path = $row['notice_path'] . '/' . $row['notice_banner'];@endphp
-                                    @if(file_exists(substr($path, 1)))
-                                        <img class="notice_board_poster noticeHasFancy"
-                                            src="{{$row['notice_path']}}/{{$row['notice_banner']}}" alt="Notice Board"
-                                            onclick="makeFancy(event, 'noticeHasFancy')">
-                                        <span class="caption">{!!html_entity_decode($row['notice_description'])!!}</span>
+                            <div class="d-flex flex-row justify-content-around notice_board">
+                                @php $path = $row['notice_path'] . '/' . $row['notice_banner'];@endphp
+                                @if(file_exists(substr($path, 1)))
+                                <img class="notice_board_poster noticeHasFancy"
+                                    src="{{$row['notice_path']}}/{{$row['notice_banner']}}" alt="Notice Board"
+                                    onclick="makeFancy(event, 'noticeHasFancy')">
+                                <span class="caption">{!!html_entity_decode($row['notice_description'])!!}</span>
 
 
-                                    @else
-                                        <img class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/empty.jpg"
-                                            alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')">
-                                        <span class="caption">{!!html_entity_decode($row['notice_description'])!!}</span>
+                                @else
+                                <img class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/empty.jpg"
+                                    alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')">
+                                <span class="caption">{!!html_entity_decode($row['notice_description'])!!}</span>
 
 
-                                    @endif
+                                @endif
 
-                                    <!-- <img style="height:200px !important;width:300" class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/{{$row['notice_banner']}}" data-caption="{{$row['notice_description']}}" alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')"> -->
-                                    <!-- <div class="hover_plus_wrapper">
+                                <!-- <img style="height:200px !important;width:300" class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/{{$row['notice_banner']}}" data-caption="{{$row['notice_description']}}" alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')"> -->
+                                <!-- <div class="hover_plus_wrapper">
                                                                                                 <div class="hover_plus">
                                                                                                     <i class="bi bi-plus" aria-hidden="true"></i>
                                                                                                 </div>
                                                                                             </div> -->
 
-                                    <div class="d-flex flex-column justify-content-around notice_board_heading">
-                                        <h6 class="notice_board_event_name event-name ellipsis">
-                                            {{$row['notice_name']}}
-                                        </h6>
-                                        <span class="notice_board_event_organiser">
-                                            {{$row['notice_date']}}
-                                        </span>
-                                    </div>
-                                    <br>
-
+                                <div class="d-flex flex-column justify-content-around notice_board_heading">
+                                    <h6 class="notice_board_event_name event-name ellipsis">
+                                        {{$row['notice_name']}}
+                                    </h6>
+                                    <span class="notice_board_event_organiser">
+                                        {{$row['notice_date']}}
+                                    </span>
                                 </div>
+                                <br>
+
+                            </div>
                             @endforeach
 
                         </div>
@@ -1360,43 +1658,43 @@
 
 
             <div class="course_and_schedule_container" style="margin-top:2%;">
-            <div class="col-12 d-flex">
-                <div class="col-12 pr-0">
-                    <div class="card noShadow recommended_courses_list">
-                        <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                            Recommended Courses
-                        </div>
+                <div class="col-12 d-flex">
+                    <div class="col-12 pr-0">
+                        <div class="card noShadow recommended_courses_list">
+                            <div class="card-header d-flex flex-row justify-content-between align-items-center">
+                                Recommended Courses
+                            </div>
 
-                        <div class="card-body">
+                            <div class="card-body">
 
-                            {{-- No Recommendations --}}
-                            @if(empty($recommended) || count($recommended) == 0)
+                                {{-- No Recommendations --}}
+                                @if(empty($recommended) || count($recommended) == 0)
                                 <div class="d-flex flex-row justify-content-around recommended_courses">
                                     <span style="margin-top:48px;font-weight:600;font-size:22px;">
                                         No Recommended Courses
                                     </span>
                                 </div>
-                            @endif
+                                @endif
 
-                            {{-- Recommended Courses --}}
-                            @foreach($recommended as $key => $row)
+                                {{-- Recommended Courses --}}
+                                @foreach($recommended as $key => $row)
                                 <div class="d-flex flex-row justify-content-around recommended_courses">
 
                                     {{-- Course Image --}}
                                     @php
-                                        $bannerPath = 'uploads/class/126/' . ($row['course_banner'] ?? '');
+                                    $bannerPath = 'uploads/class/126/' . ($row['course_banner'] ?? '');
                                     @endphp
 
                                     @if(!empty($row['course_banner']) && file_exists(public_path($bannerPath)))
-                                        <img class="recommended_courses_poster recommendedfancy"
-                                            src="{{ asset($bannerPath) }}"
-                                            alt="Recommended Course"
-                                            onclick="makeFancy(event, 'recommendedfancy')">
+                                    <img class="recommended_courses_poster recommendedfancy"
+                                        src="{{ asset($bannerPath) }}"
+                                        alt="Recommended Course"
+                                        onclick="makeFancy(event, 'recommendedfancy')">
                                     @else
-                                        <img class="recommended_courses_poster recommendedfancy"
-                                            src="{{ asset('uploads/class/126/empty.jpg') }}"
-                                            alt="Recommended Course"
-                                            onclick="makeFancy(event, 'recommendedfancy')">
+                                    <img class="recommended_courses_poster recommendedfancy"
+                                        src="{{ asset('uploads/class/126/empty.jpg') }}"
+                                        alt="Recommended Course"
+                                        onclick="makeFancy(event, 'recommendedfancy')">
                                     @endif
 
                                     {{-- Caption --}}
@@ -1419,20 +1717,20 @@
 
                                             {{-- AI Recommendation Type --}}
                                             @if(!empty($row['recommendation_type']))
-                                                <div class="mt-1">
-                                                    <span class="badge badge-info">
-                                                        {{ ucfirst(str_replace('_', ' ', $row['recommendation_type'])) }}
-                                                    </span>
-                                                </div>
+                                            <div class="mt-1">
+                                                <span class="badge badge-info">
+                                                    {{ ucfirst(str_replace('_', ' ', $row['recommendation_type'])) }}
+                                                </span>
+                                            </div>
                                             @endif
 
                                             {{-- AI Reason --}}
                                             @if(!empty($row['reason']))
-                                                <small class="text-muted d-block mt-1"
-                                                    title="{{ $row['reason'] }}">
-                                                    <i class="fa fa-info-circle"></i>
-                                                    {{ \Illuminate\Support\Str::limit($row['reason'], 70) }}
-                                                </small>
+                                            <small class="text-muted d-block mt-1"
+                                                title="{{ $row['reason'] }}">
+                                                <i class="fa fa-info-circle"></i>
+                                                {{ \Illuminate\Support\Str::limit($row['reason'], 70) }}
+                                            </small>
                                             @endif
                                         </div>
 
@@ -1446,35 +1744,35 @@
 
                                             <span class="recommended_course_learners">
                                                 @php
-                                                    $exist = ($row['total_student'] ?? 0) == 0
-                                                        ? 'No Students Enrolled'
-                                                        : 'Students';
+                                                $exist = ($row['total_student'] ?? 0) == 0
+                                                ? 'No Students Enrolled'
+                                                : 'Students';
                                                 @endphp
 
                                                 @if(($row['total_student'] ?? 0) != 0)
-                                                    {{ $row['total_student'] }}
+                                                {{ $row['total_student'] }}
                                                 @endif
                                                 {{ $exist }}
                                             </span>
 
                                             {{-- AI Confidence --}}
                                             @if(isset($row['confidence_score']))
-                                                <span class="recommended_course_divider">|</span>
-                                                <span class="text-primary font-weight-bold">
-                                                    AI {{ round($row['confidence_score'] * 100) }}%
-                                                </span>
+                                            <span class="recommended_course_divider">|</span>
+                                            <span class="text-primary font-weight-bold">
+                                                AI {{ round($row['confidence_score'] * 100) }}%
+                                            </span>
                                             @endif
                                         </div>
 
                                     </div>
                                 </div>
-                            @endforeach
+                                @endforeach
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
         </div>
 
@@ -1635,227 +1933,421 @@
     }
 </script>
 
-<script>
-    function makeFancy(e, selector) {
-        const eventsgallery = document.querySelectorAll(`.${selector}`);
-        // let fancyCarousel = document.createElement('div');
-        // fancyCarousel.setAttribute('id', 'fancyControls');
-        // fancyCarousel.classList.add('carousel');
-        // fancyCarousel.classList.add('slide');
-        // fancyCarousel.setAttribute('data-bs-ride', 'carousel');
-        let modalBody = document.createElement('div');
-        modalBody.setAttribute('id', 'fancyContainerInner');
-        modalBody.classList.add('carousel-inner');
-        for (let eventGallery of eventsgallery) {
-            let carouselItem = document.createElement('div');
-            if (e.target === eventGallery) {
-                carouselItem.classList.add('carousel-item');
-                carouselItem.classList.add('active');
-            } else {
-                carouselItem.classList.add('carousel-item');
-            }
-            let imgTag = document.createElement('img');
-            imgTag.src = eventGallery.src;
-            let caption = eventGallery.parentElement.querySelector('.caption').innerHTML;
 
-            // let caption = eventGallery.getAttribute('data-caption');
-            let captionContainer = document.createElement('div');
-            captionContainer.innerHTML = caption ? caption : "";
-            carouselItem.appendChild(imgTag);
-            carouselItem.appendChild(captionContainer);
-            modalBody.appendChild(carouselItem);
-            console.log(carouselItem, 'in');
-        }
-        // let controls = `<button class="carousel-control-prev" type="button" data-bs-target="#fancyControls" data-bs-slide="prev">
-        //                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        //                  <span class="visually-hidden">Previous</span>
-        //              </button>
-        //              <button class="carousel-control-next" type="button" data-bs-target="#fancyControls" data-bs-slide="next">
-        //                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        //                  <span class="visually-hidden">Next</span>
-        //              </button>`;
-        // modalBody.append(controls);
-        // fancyCarousel.append(modalBody);
-        $('#fancyContainer').modal('show');
-        document.querySelector('#fancyControls').prepend(modalBody);
-        // $('#fancyContainerInner').append(controls);
-        $("#fancyControls").carousel("cycle");
-    }
-</script>
 
+<!-- events script -->
 <script type="text/javascript" src="{{ asset('asset/js/calender.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- events script -->
+
+
 <script>
+    // ============== HELPER FUNCTIONS ==============
     function toggleExpansion(e) {
         e.target.classList.toggle("ellipsis");
     }
 
     function removefancy() {
         $('#fancyContainer').modal('hide');
-        // document.querySelector('#fancyWrapper').innerHTML = "";
         let fancycontrols = document.querySelector('#fancyControls');
-        fancycontrols.removeChild(fancycontrols.firstChild);
-
-
+        if (fancycontrols && fancycontrols.firstChild) {
+            fancycontrols.removeChild(fancycontrols.firstChild);
+        }
     }
 
+    function makeFancy(e, selector) {
+        const eventsgallery = document.querySelectorAll(`.${selector}`);
+        if (!eventsgallery.length) return;
+
+        let modalBody = document.createElement('div');
+        modalBody.setAttribute('id', 'fancyContainerInner');
+        modalBody.classList.add('carousel-inner');
+
+        for (let eventGallery of eventsgallery) {
+            let carouselItem = document.createElement('div');
+            if (e.target === eventGallery) {
+                carouselItem.classList.add('carousel-item', 'active');
+            } else {
+                carouselItem.classList.add('carousel-item');
+            }
+            let imgTag = document.createElement('img');
+            imgTag.src = eventGallery.src;
+            imgTag.style.width = '100%';
+            imgTag.style.height = 'auto';
+
+            let caption = eventGallery.parentElement?.querySelector('.caption')?.innerHTML || '';
+            let captionContainer = document.createElement('div');
+            captionContainer.innerHTML = caption;
+            captionContainer.style.padding = '20px';
+            captionContainer.style.textAlign = 'center';
+
+            carouselItem.appendChild(imgTag);
+            carouselItem.appendChild(captionContainer);
+            modalBody.appendChild(carouselItem);
+        }
+
+        let fancyControls = document.querySelector('#fancyControls');
+        if (fancyControls) {
+            const existingInner = document.querySelector('#fancyContainerInner');
+            if (existingInner) existingInner.remove();
+            fancyControls.prepend(modalBody);
+        }
+
+        $('#fancyContainer').modal('show');
+        setTimeout(() => {
+            $('#fancyControls').carousel('cycle');
+        }, 100);
+    }
+
+    // ============== CALENDAR INITIALIZATION ==============
+    $(document).ready(function() {
+        console.log('Document ready - initializing calendar and events');
+
+        // Initialize calendar
+        if (typeof dycalendar !== 'undefined') {
+            dycalendar.draw({
+                target: "#dycalendar",
+                type: "month",
+                highlighttoday: true,
+                prevnextbutton: "show"
+            });
+        }
+
+        // Load all events
+        setTimeout(loadAllEvents, 500);
+
+        // Calendar click handler
+        function handleCalendarClick(e) {
+            const td = e.target.closest('td');
+            if (!td) return;
+
+            const clickedDate = td.innerText.trim().padStart(2, '0');
+            const monthYearElement = document.querySelector('.dycalendar-span-month-year');
+
+            if (monthYearElement && clickedDate && !isNaN(parseInt(clickedDate))) {
+                const monthYearText = monthYearElement.innerText;
+                const dateObj = new Date(`${monthYearText} ${clickedDate}`);
+
+                if (!isNaN(dateObj.getTime())) {
+                    const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                    const year = dateObj.getFullYear().toString();
+                    const eventsdate = clickedDate + '-' + month + '-' + year;
+                    console.log('Date clicked:', eventsdate);
+                    get_event(eventsdate);
+                }
+            }
+        }
+
+        // Attach click handler
+        function attachCalendarClick() {
+            document.querySelectorAll('.dycalendar-body table td').forEach(td => {
+                td.removeEventListener('click', handleCalendarClick);
+                td.addEventListener('click', handleCalendarClick);
+            });
+        }
+
+        setTimeout(attachCalendarClick, 1000);
+
+        // Observer for calendar changes
+        const calendarObserver = new MutationObserver(attachCalendarClick);
+        const calendarElement = document.getElementById('dycalendar');
+        if (calendarElement) {
+            calendarObserver.observe(calendarElement, {
+                childList: true,
+                subtree: true
+            });
+        }
+    });
+
+    // ============== EVENTS CAROUSEL FUNCTIONS ==============
+
+    function formatDisplayDate(dateStr) {
+        if (!dateStr || dateStr === 'Invalid Date') return 'Invalid Date';
+        const parts = dateStr.split('-');
+        if (parts.length === 3) {
+            const day = parts[0];
+            const month = parts[1];
+            const year = parts[2];
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const monthIndex = parseInt(month) - 1;
+            return `${monthNames[monthIndex]} ${day}, ${year}`;
+        }
+        return dateStr;
+    }
+
+    function getSlidesPerView() {
+        if (window.innerWidth >= 1200) return 3;
+        if (window.innerWidth >= 768) return 2;
+        return 1;
+    }
+
+    function highlightDates(eventDates) {
+        setTimeout(() => {
+            document.querySelectorAll('.dycalendar-body table td').forEach(td => {
+                td.classList.remove('highlighted-date');
+                td.style.backgroundColor = '';
+                td.style.color = '';
+                td.style.fontWeight = '';
+            });
+
+            eventDates.forEach(date => {
+                if (!date) return;
+                const day = date.split('-')[0];
+                document.querySelectorAll('.dycalendar-body table td').forEach(td => {
+                    if (td.innerText.trim() === day) {
+                        td.classList.add('highlighted-date');
+                        td.style.backgroundColor = '#680EDA';
+                        td.style.color = 'white';
+                        td.style.fontWeight = 'bold';
+                    }
+                });
+            });
+        }, 200);
+    }
+
+    function displayEventsInCarousel(events, title) {
+        console.log('displayEventsInCarousel called with:', events.length, 'events', title);
+
+        // Clear existing content
+        $('.events_today_wrapper').empty();
+
+        if (!events || events.length == 0) {
+            console.log('No events to display');
+            $('.events_today_wrapper').html(`
+            <div class="noevents">No Events Found</div>
+        `);
+            return;
+        }
+
+        console.log('Building marquee HTML with', events.length, 'events');
+
+        let marqueeHtml = `
+        <div class="events-marquee-container">
+            <div class="marquee-header">
+                <h4>
+                    <i class="fas fa-calendar-alt"></i> ${title}
+                    <span>(${events.length} events)</span>
+                </h4>
+            </div>
+            <div class="marquee-wrapper">
+                <div class="marquee-list">
+        `;
+
+        let count = 1;
+        // Show each event exactly once
+        events.forEach((row) => {
+            if (count >= 5) count = 1;
+
+            let imagePath = '/asset/image/empty.jpg';
+            if (row.event_image && row.event_image !== '/empty.jpg') {
+                imagePath = row.event_image.startsWith('/') ? row.event_image : `/uploads/notice/126/${row.event_image}`;
+            }
+
+            marqueeHtml += `
+            <div class="marquee-item">
+                <div class="card event_type event_type_${count}">
+                    <a class="alignments">
+                        <img class="events_image eventsHasFancy" 
+                             src="${imagePath}" 
+                             alt="${row.event_name}"
+                             onclick="makeFancy(event, 'eventsHasFancy')"
+                             onerror="this.src='/asset/image/empty.jpg'">
+                        <span class="caption" style="display:none;">${row.event_description || ''}</span>
+                        <div>
+                            <p class="event-name ellipsis" title="${row.event_name}">${row.event_name}</p>
+                            <small>${row.event_time || 'All Day'}</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        `;
+            count++;
+        });
+
+        // ONLY add clone if there are MORE THAN 1 event
+        if (events.length > 1) {
+            // Add a clone of the first event at the end for seamless transition
+            let firstEvent = events[0];
+            let firstCount = 1;
+
+            let firstImagePath = '/asset/image/empty.jpg';
+            if (firstEvent.event_image && firstEvent.event_image !== '/empty.jpg') {
+                firstImagePath = firstEvent.event_image.startsWith('/') ? firstEvent.event_image : `/uploads/notice/126/${firstEvent.event_image}`;
+            }
+
+            marqueeHtml += `
+            <div class="marquee-item clone-item">
+                <div class="card event_type event_type_${firstCount}">
+                    <a class="alignments">
+                        <img class="events_image eventsHasFancy" 
+                             src="${firstImagePath}" 
+                             alt="${firstEvent.event_name}"
+                             onclick="makeFancy(event, 'eventsHasFancy')"
+                             onerror="this.src='/asset/image/empty.jpg'">
+                        <span class="caption" style="display:none;">${firstEvent.event_description || ''}</span>
+                        <div>
+                            <p class="event-name ellipsis" title="${firstEvent.event_name}">${firstEvent.event_name}</p>
+                            <small>${firstEvent.event_time || 'All Day'}</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        `;
+        }
+
+        marqueeHtml += `
+                </div>
+            </div>
+        </div>
+        `;
+
+        $('.events_today_wrapper').html(marqueeHtml);
+        console.log('Marquee HTML appended to wrapper');
+
+        // Initialize marquee animation
+        setTimeout(() => {
+            initializeMarquee(events.length);
+        }, 100);
+
+        setTimeout(() => {
+            document.querySelectorAll(".event-name").forEach(el => {
+                el.addEventListener("click", toggleExpansion);
+            });
+        }, 200);
+    }
+
+    // Update initializeMarquee function
+    function initializeMarquee(eventCount) {
+        const wrapper = document.querySelector('.marquee-wrapper');
+        const list = document.querySelector('.marquee-list');
+
+        if (!wrapper || !list) return;
+
+        const items = list.children;
+        if (items.length === 0) return;
+
+        // Remove any existing animation
+        list.style.animation = 'none';
+
+        // If only one event, no need to animate
+        if (eventCount <= 1) {
+            console.log('Single event - no animation needed');
+            return;
+        }
+
+        // Force reflow
+        void list.offsetHeight;
+
+        // Calculate total height
+        const itemHeight = items[0].offsetHeight + 10; // height + gap
+        const totalHeight = itemHeight * (items.length - 1); // Exclude clone from height calculation
+
+        // Set animation duration based on number of items
+        const duration = Math.max(15, items.length * 1.5);
+
+        // Apply animation
+        list.style.animation = `marquee-scroll ${duration}s linear infinite`;
+
+        // Pause on hover
+        wrapper.addEventListener('mouseenter', () => {
+            list.style.animationPlayState = 'paused';
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+            if (eventCount > 1) {
+                list.style.animationPlayState = 'running';
+            }
+        });
+    }
+
+    // ============== API CALLS - FIXED FOR YOUR RESPONSE STRUCTURE ==============
+
+    function loadAllEvents() {
+        console.log('Loading all events...');
+        $.ajax({
+            url: "{{ url('/dashboardevents/fetch') }}",
+            type: 'GET',
+            data: {
+                _token: '{{csrf_token()}}'
+            },
+            success: function(response) {
+                console.log('All events response:', response);
+
+                // FIX: Check if response has rows directly
+                if (response && response.rows) {
+                    displayEventsInCarousel(response.rows, 'All Events');
+                    const eventDates = new Set(response.rows.map(row => row.event_date));
+                    highlightDates(eventDates);
+                }
+                // FIX: Check if response has Data with rows
+                else if (response && response.Data) {
+                    let data = typeof response.Data === 'string' ? JSON.parse(response.Data) : response.Data;
+                    if (data.rows) {
+                        displayEventsInCarousel(data.rows, 'All Events');
+                        const eventDates = new Set(data.rows.map(row => row.event_date));
+                        highlightDates(eventDates);
+                    } else {
+                        displayEventsInCarousel([], 'All Events');
+                    }
+                } else {
+                    console.log('No events data found in response');
+                    displayEventsInCarousel([], 'All Events');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log('Error loading events:', error);
+                displayEventsInCarousel([], 'All Events');
+            }
+        });
+    }
 
     function get_event(eventsdate) {
-
+        console.log('Loading events for date:', eventsdate);
         $.ajax({
             url: "{{ url('/dashboardevents/fetch') }}",
             type: 'GET',
             data: {
                 'event_date': eventsdate,
                 _token: '{{csrf_token()}}'
-
             },
+            success: function(response) {
+                console.log('Date events response:', response);
 
-            success: function (data) {
-                console.log(data);
-                console.log(data.rows.length);
-                var count = 1;
-                $('.events_today_wrapper').children().remove();
-                if (data.rows.length == 0) {
-                    const nodata = '<div class="noevents">No Events Found</div>'
-                    $('.no_event').append(nodata);
-
-                }
-                const eventDates = new Set();
-                for (const row of data.rows) {
-                    if (count == 5) {
-                        count = 1;
-                    } else {
-                        count++;
-                    }
-                    const new_event = `<div class="card event_type event_type_${count}">
-                        <a class="alignments d-flex align-items-center justify-content-space-evenly gap-3">
-                                    <img style="height:60px !important;width:100px;object-fit:cover" class="events_image eventsHasFancy" src="/uploads/notice/126/${row.event_image}" alt="Events" onclick="makeFancy(event, 'eventsHasFancy')">
-                                    <span class="caption">${row.event_description}</span>
-                                    <p class="event-name ellipsis">${row.event_name}</p>
-                                    
-                                    </a>
-                                </div>`
-
-
-                    $('.events_today_wrapper').append(new_event);
+                // FIX: Check if response has rows directly
+                if (response && response.rows) {
+                    displayEventsInCarousel(response.rows, `Events for ${formatDisplayDate(eventsdate)}`);
+                    const eventDates = new Set(response.rows.map(row => row.event_date));
                     highlightDates(eventDates);
-
                 }
-                var eventNames = document.querySelectorAll(".event-name");
-                for (const eventName of eventNames) {
-                    eventName.addEventListener("click", toggleExpansion);
-
+                // FIX: Check if response has Data with rows
+                else if (response && response.Data) {
+                    let data = typeof response.Data === 'string' ? JSON.parse(response.Data) : response.Data;
+                    if (data.rows) {
+                        displayEventsInCarousel(data.rows, `Events for ${formatDisplayDate(eventsdate)}`);
+                        const eventDates = new Set(data.rows.map(row => row.event_date));
+                        highlightDates(eventDates);
+                    } else {
+                        displayEventsInCarousel([], `Events for ${formatDisplayDate(eventsdate)}`);
+                    }
+                } else {
+                    console.log('No events data found in response');
+                    displayEventsInCarousel([], `Events for ${formatDisplayDate(eventsdate)}`);
                 }
-
-                function highlightDates(dates) {
-                    //alert("DSc");
-                    // Remove any existing highlight classes
-                    document.querySelectorAll('.dycalendar-body table td').forEach(td => {
-                        td.classList.remove('highlighted-date');
-                    });
-
-                    // Apply the highlight class to dates with events
-                    dates.forEach(date => {
-                        const td = document.querySelector(`.dycalendar-body table td[data-date="${date}"]`);
-                        if (td) {
-                            td.classList.add('highlighted-date');
-                        }
-                    });
-                }
-
-
-
-
-
-
-
+            },
+            error: function(xhr, status, error) {
+                console.log('Error loading date events:', error);
+                displayEventsInCarousel([], `Events for ${formatDisplayDate(eventsdate)}`);
             }
         });
-
     }
 
-
-    //today calendar - with skin and shadow
-    dycalendar.draw({
-        target: "#dycalendar",
-        type: "month",
-        dayformat: "fulldate",
-        highlighttoday: true,
-        prevnextbutton: "show",
-        monthformat: "full",
-        dayformat: "ddd",
-    });
-
-    var myElement = document.getElementById('dycalendar');
-    myElement.addEventListener('DOMSubtreeModified', attachEventListenersToCalendarDays, false);
-
-    function attachEventListenersToCalendarDays() {
-        const tdElements = document.querySelectorAll('.dycalendar-body table td');
-        for (const tdElement of tdElements) {
-            tdElement.addEventListener('click', (e) => {
-                const clickedDate = e.target.innerText.padStart(2, '0');
-                const monthYearElement = document.querySelector('.dycalendar-span-month-year');
-                const monthYearText = monthYearElement.innerText;
-                const dateObj = new Date(`${monthYearText} ${clickedDate}`);
-                const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-                const year = dateObj.getFullYear().toString();
-                const eventsdate = clickedDate + '-' + month + '-' + year;
-
-                get_event(eventsdate);
-            });
-        }
-    }
-
-    // Initial attachment of event listeners
-    attachEventListenersToCalendarDays();
-
-    const tdElements = document.querySelectorAll('.dycalendar-body table td');
-    // alert(tdElements);
-    for (const tdElement of tdElements) {
-        tdElement.addEventListener('click', (e) => {
-            console.log(e);
-            const clickedDate = e.target.innerText.padStart(2, '0');;
-
-            const monthYearElement = document.querySelector('.dycalendar-span-month-year');
-
-            const monthYearText = monthYearElement.innerText;
-            // const [month, year] = monthYearText.split(' ');
-            // console.log(clickedDate, month, year);
-            const dateObj = new Date(`${monthYearText} ${clickedDate}`);
-            const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-            const year = dateObj.getFullYear().toString();
-            const eventsdate = clickedDate + '-' + month + '-' + year;
-            console.log(eventsdate);
-            get_event(eventsdate);
-
-
-
-        });
-        // alert(eventsdate);
-
-    }
-    $(document).ready(function () {
-        const currentDate = new Date();
-        const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-        const currentYear = currentDate.getFullYear().toString();
-        const formattedCurrentDate = currentDate.getDate().toString().padStart(2, '0') + '-' + currentMonth + '-' + currentYear;
-
-        get_event(formattedCurrentDate);
-
-        // Other code within the ready function
-        // ...
-        // Trigger previous slide
-        $('.carousel-control-prev').click(function () {
-            $('#fancyControls').carousel('prev');
-        });
-
-        // Trigger next slide
-        $('.carousel-control-next').click(function () {
-            $('#fancyControls').carousel('next');
-        });
+    // Remove any duplicate event listeners that might be causing the error
+    document.addEventListener('DOMContentLoaded', function() {
+        // This ensures no duplicate listeners
     });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script> -->
 
 <!-- <script>

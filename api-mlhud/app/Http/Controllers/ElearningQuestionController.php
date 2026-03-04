@@ -1194,66 +1194,518 @@ class ElearningQuestionController extends BaseController
             return $sendServiceResponse;
         }
     }
-    public function quiz_update(Request $request)
-    {
-        //
+    // public function quiz_update(Request $request)
+    // {
+    //     //
 
-        try {
-            $method = 'Method => ElearningQuestionController => quiz_update';
-            $inputArray = $this->decryptData($request->requestData);
-            $settings_id =  $inputArray['quiz_questions'];
-            //array_splice($settings_id. "-" .$question_type);
+    //     try {
+    //         $method = 'Method => ElearningQuestionController => quiz_update';
+    //         $inputArray = $this->decryptData($request->requestData);
+    //         $settings_id =  $inputArray['quiz_questions'];
+    //         //array_splice($settings_id. "-" .$question_type);
 
-            $stringsettings_id = implode(",", $settings_id);
+    //         $stringsettings_id = implode(",", $settings_id);
 
-            $input = [
+    //         $input = [
+    //             'quiz_name' => $inputArray['quiz_name'],
+    //             'quiz_questions' =>  $stringsettings_id,
+    //             'points' => $inputArray['points'],
+    //             'quiz_edit' => $inputArray['quiz_edit'],
+    //             'evaluation' => $inputArray['evaluation'],
+
+    //         ];
+
+    //         $update_id = DB::table('elearning_practice_quiz')
+    //             ->where('quiz_id', $input['quiz_edit'])
+    //             ->update([
+    //                 'quiz_name' => $input['quiz_name'],
+    //                 'quiz_questions' => $input['quiz_questions'],
+    //                 'evaluation' => $input['evaluation'],
+    //                 'points' => $input['points'],
+    //                 'drop_quiz' => '0',
+    //                 'updated_by' => auth()->user()->id,
+    //                 'updated_at' => NOW()
+
+    //             ]);
+
+    //         $this->notifications_insert(null, auth()->user()->id, "Quiz Updated Successfully", "/elearningquestion");
+    //         $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
+    //         $role_name_fetch = $role_name[0]->role_name;
+    //         $this->auditLog('elearning_practice_quiz', $update_id, 'Update', 'Quiz Updation', auth()->user()->id, NOW(), $role_name_fetch);
+
+    //         $serviceResponse = array();
+    //         $serviceResponse['Code'] = config('setting.status_code.success');
+    //         $serviceResponse['Message'] = config('setting.status_message.success');
+    //         $serviceResponse['Data'] = 1;
+    //         $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+    //         $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+    //         return $sendServiceResponse;
+    //     } catch (\Exception $exc) {
+    //         $exceptionResponse = array();
+    //         $exceptionResponse['ServiceMethod'] = $method;
+    //         $exceptionResponse['Exception'] = $exc->getMessage();
+    //         $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+    //         $this->WriteFileLog($exceptionResponse);
+    //         $serviceResponse = array();
+    //         $serviceResponse['Code'] = config('setting.status_code.exception');
+    //         $serviceResponse['Message'] = $exc->getMessage();
+    //         $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+    //         $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+    //         return $sendServiceResponse;
+    //     }
+    // }
+    // Add this to your API ElearningQuestionController
+public function get_quiz_data(Request $request)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => get_quiz_data';
+        $inputArray = $this->decryptData($request->requestData);
+        $quizId = $inputArray['quiz_id'];
+
+        // Get quiz data with version info
+        $quizData = DB::table('elearning_practice_quiz')
+            ->where('quiz_id', $quizId)
+            ->select(
+                'quiz_id',
+                'quiz_name',
+                'quiz_questions',
+                'points',
+                'evaluation',
+                'version_major',
+                'version_minor',
+                'is_active',
+                'created_at',
+                'updated_at'
+            )
+            ->first();
+
+        if (!$quizData) {
+            throw new \Exception('Quiz not found');
+        }
+
+        $serviceResponse = array();
+        $serviceResponse['Code'] = config('setting.status_code.success');
+        $serviceResponse['Message'] = config('setting.status_message.success');
+        $serviceResponse['Data'] = json_encode($quizData);
+        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+        return $sendServiceResponse;
+    } catch (\Exception $exc) {
+        $exceptionResponse = array();
+        $exceptionResponse['ServiceMethod'] = $method;
+        $exceptionResponse['Exception'] = $exc->getMessage();
+        $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+        $this->WriteFileLog($exceptionResponse);
+        $serviceResponse = array();
+        $serviceResponse['Code'] = config('setting.status_code.exception');
+        $serviceResponse['Message'] = $exc->getMessage();
+        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+        return $sendServiceResponse;
+    }
+}
+public function quiz_update_with_version(Request $request)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => quiz_update_with_version';
+        $inputArray = $this->decryptData($request->requestData);
+        $settings_id = $inputArray['quiz_questions'];
+        $stringsettings_id = implode(",", $settings_id);
+        $quizId = $inputArray['quiz_edit'];
+        $versionType = $inputArray['version_type'] ?? 'none'; // Default to 'none'
+        $changeNotes = $inputArray['change_notes'] ?? '';
+        $currentMajor = $inputArray['current_major_version'] ?? 1;
+        $currentMinor = $inputArray['current_minor_version'] ?? 0;
+
+        // Begin transaction
+        DB::beginTransaction();
+
+        // ============ NEW: Handle "No Version Update" ============
+        if ($versionType === 'none') {
+            // Direct update without versioning
+            $updateData = [
                 'quiz_name' => $inputArray['quiz_name'],
-                'quiz_questions' =>  $stringsettings_id,
+                'quiz_questions' => $stringsettings_id,
                 'points' => $inputArray['points'],
-                'quiz_edit' => $inputArray['quiz_edit'],
                 'evaluation' => $inputArray['evaluation'],
-
+                'updated_by' => auth()->user()->id,
+                'updated_at' => NOW()
+                // Note: version_major and version_minor NOT updated
             ];
 
             $update_id = DB::table('elearning_practice_quiz')
-                ->where('quiz_id', $input['quiz_edit'])
-                ->update([
-                    'quiz_name' => $input['quiz_name'],
-                    'quiz_questions' => $input['quiz_questions'],
-                    'evaluation' => $input['evaluation'],
-                    'points' => $input['points'],
-                    'drop_quiz' => '0',
-                    'updated_by' => auth()->user()->id,
-                    'updated_at' => NOW()
+                ->where('quiz_id', $quizId)
+                ->update($updateData);
 
-                ]);
+            if (!$update_id) {
+                DB::rollBack();
+                throw new \Exception('Failed to update quiz');
+            }
 
-            $this->notifications_insert(null, auth()->user()->id, "Quiz Updated Successfully", "/elearningquestion");
+            // Commit transaction
+            DB::commit();
+
+            // Get current version for display
+            $currentQuiz = DB::table('elearning_practice_quiz')
+                ->where('quiz_id', $quizId)
+                ->first();
+
+            $this->notifications_insert(null, auth()->user()->id, "Quiz Updated Successfully (No Version Change)", "/elearningquestion");
+            
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
-            $this->auditLog('elearning_practice_quiz', $update_id, 'Update', 'Quiz Updation', auth()->user()->id, NOW(), $role_name_fetch);
+            $this->auditLog('elearning_practice_quiz', $update_id, 'Update', "Quiz Updated (No Version Change)", auth()->user()->id, NOW(), $role_name_fetch);
 
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
-            $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] = 1;
+            $serviceResponse['Message'] = "Quiz updated successfully without version change.";
+            $serviceResponse['Data'] = ['version_type' => 'none'];
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $sendServiceResponse;
-        } catch (\Exception $exc) {
-            $exceptionResponse = array();
-            $exceptionResponse['ServiceMethod'] = $method;
-            $exceptionResponse['Exception'] = $exc->getMessage();
-            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
-            $this->WriteFileLog($exceptionResponse);
-            $serviceResponse = array();
-            $serviceResponse['Code'] = config('setting.status_code.exception');
-            $serviceResponse['Message'] = $exc->getMessage();
-            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
-            return $sendServiceResponse;
         }
+        // ============ END: No Version Update ============
+
+        // ============ EXISTING: Version Update Logic ============
+        // Get current quiz data before update
+        $currentQuiz = DB::table('elearning_practice_quiz')
+            ->where('quiz_id', $quizId)
+            ->first();
+
+        if (!$currentQuiz) {
+            throw new \Exception('Quiz not found');
+        }
+
+        // Archive current version before updating
+        DB::table('elearning_practice_quiz_versions')->insert([
+            'original_quiz_id' => $quizId,
+            'quiz_name' => $currentQuiz->quiz_name,
+            'quiz_questions' => $currentQuiz->quiz_questions,
+            'points' => $currentQuiz->points,
+            'evaluation' => $currentQuiz->evaluation,
+            'version_major' => $currentQuiz->version_major,
+            'version_minor' => $currentQuiz->version_minor,
+            'is_active' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => NOW(),
+            'updated_at' => NOW()
+        ]);
+
+        // ============ FIXED: Calculate new version with archive checking ============
+        $newMajor = $currentQuiz->version_major;
+        $newMinor = $currentQuiz->version_minor;
+
+        if ($versionType == 'major') {
+            // Get the highest major version ever used (including archived versions)
+            $highestArchivedMajor = DB::table('elearning_practice_quiz_versions')
+                ->where('original_quiz_id', $quizId)
+                ->max('version_major');
+            
+            // Get current major version
+            $currentMajor = $currentQuiz->version_major;
+            
+            // Get all major versions that have been used (including current and archived)
+            $usedMajorVersions = DB::table('elearning_practice_quiz_versions')
+                ->where('original_quiz_id', $quizId)
+                ->pluck('version_major')
+                ->toArray();
+            
+            // Add current major version to the list
+            $usedMajorVersions[] = $currentMajor;
+            
+            // Remove duplicates
+            $usedMajorVersions = array_unique($usedMajorVersions);
+            
+            // Sort in ascending order
+            sort($usedMajorVersions);
+            
+            // Find the next available major version
+            // Start from 1 and find the first number not in used versions
+            $nextMajor = 1;
+            while (in_array($nextMajor, $usedMajorVersions)) {
+                $nextMajor++;
+            }
+            
+            // Alternative simpler approach: max + 1
+            // $nextMajor = max($highestArchivedMajor ?? 0, $currentMajor) + 1;
+            
+            $newMajor = $nextMajor;
+            $newMinor = 0;
+            
+        } else { // minor update
+            $newMinor = $currentQuiz->version_minor + 1;
+            $newMajor = $currentQuiz->version_major;
+        }
+        // ============ END FIXED ============
+
+        // Update quiz with new version
+        $updateData = [
+            'quiz_name' => $inputArray['quiz_name'],
+            'quiz_questions' => $stringsettings_id,
+            'points' => $inputArray['points'],
+            'evaluation' => $inputArray['evaluation'],
+            'version_major' => $newMajor,
+            'version_minor' => $newMinor,
+            'is_active' => 1,
+            'updated_by' => auth()->user()->id,
+            'updated_at' => NOW()
+        ];
+
+        $update_id = DB::table('elearning_practice_quiz')
+            ->where('quiz_id', $quizId)
+            ->update($updateData);
+
+        if (!$update_id) {
+            DB::rollBack();
+            throw new \Exception('Failed to update quiz');
+        }
+
+        // Log change notes if provided
+        if (!empty($changeNotes)) {
+            DB::table('version_change_logs')->insert([
+                'quiz_id' => $quizId,
+                'version_major' => $newMajor,
+                'version_minor' => $newMinor,
+                'change_notes' => $changeNotes,
+                'changed_by' => auth()->user()->id,
+                'created_at' => NOW()
+            ]);
+        }
+
+        // Commit transaction
+        DB::commit();
+
+        $this->notifications_insert(null, auth()->user()->id, "Quiz Updated Successfully (v{$newMajor}.{$newMinor})", "/elearningquestion");
+        
+        $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
+        $role_name_fetch = $role_name[0]->role_name;
+        $this->auditLog('elearning_practice_quiz', $update_id, 'Update', "Quiz Updation v{$newMajor}.{$newMinor}", auth()->user()->id, NOW(), $role_name_fetch);
+
+        $serviceResponse = array();
+        $serviceResponse['Code'] = config('setting.status_code.success');
+        $serviceResponse['Message'] = "Quiz Updated Successfully to version {$newMajor}.{$newMinor}";
+        $serviceResponse['Data'] = ['new_version' => "{$newMajor}.{$newMinor}", 'version_type' => $versionType];
+        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+        return $sendServiceResponse;
+        
+    } catch (\Exception $exc) {
+        DB::rollBack();
+        $exceptionResponse = array();
+        $exceptionResponse['ServiceMethod'] = $method;
+        $exceptionResponse['Exception'] = $exc->getMessage();
+        $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+        $this->WriteFileLog($exceptionResponse);
+        $serviceResponse = array();
+        $serviceResponse['Code'] = config('setting.status_code.exception');
+        $serviceResponse['Message'] = $exc->getMessage();
+        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+        return $sendServiceResponse;
     }
+}
+
+
+public function get_quiz_versions(Request $request)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => get_quiz_versions';
+        $inputArray = $this->decryptData($request->requestData);
+        $quizId = $inputArray['quiz_id'];
+
+        // Get current active version from main table
+       $currentVersion = DB::table('elearning_practice_quiz')
+    ->where('quiz_id', $quizId)
+    ->select(
+        DB::raw('quiz_id as original_quiz_id'),
+        'quiz_name',
+        'quiz_questions',
+        'points',
+        'evaluation',
+        'version_major',
+        'version_minor',
+        'is_active',
+        DB::raw('updated_at as created_at'),
+        DB::raw('null as version_id')
+    )
+    ->first();
+
+
+// Get all archived versions, but ensure no duplicates
+$oldVersions = DB::table('elearning_practice_quiz_versions')
+    ->where('original_quiz_id', $quizId)
+    ->where('is_active', 0)
+    ->select(
+        'original_quiz_id',
+        'quiz_name',
+        'quiz_questions',
+        'points',
+        'evaluation',
+        'version_major',
+        'version_minor',
+        'is_active',
+        'created_at',
+        'version_id'
+    )
+    ->orderBy('version_major', 'desc')
+    ->orderBy('version_minor', 'desc')
+    ->get()
+    ->unique(function($item) {
+        return $item->version_major . '.' . $item->version_minor;
+    })
+    ->values();
+
+        // Combine versions - current first, then archived
+        $allVersions = [];
+        
+        if ($currentVersion) {
+            // Convert to array and add type
+            $currentArray = (array) $currentVersion;
+            $currentArray['is_current'] = true;
+            $allVersions[] = $currentArray;
+        }
+        
+        foreach ($oldVersions as $version) {
+            $versionArray = (array) $version;
+            $versionArray['is_current'] = false;
+            $allVersions[] = $versionArray;
+        }
+
+        // Get change notes for each version
+        foreach ($allVersions as &$version) {
+            $changeLog = DB::table('version_change_logs')
+                ->where('quiz_id', $quizId)
+                ->where('version_major', $version['version_major'])
+                ->where('version_minor', $version['version_minor'])
+                ->first();
+                
+            $version['change_notes'] = $changeLog->change_notes ?? '';
+            $version['changed_by'] = $changeLog->changed_by ?? null;
+        }
+
+        $serviceResponse = array();
+        $serviceResponse['Code'] = config('setting.status_code.success');
+        $serviceResponse['Message'] = config('setting.status_message.success');
+        $serviceResponse['Data'] = ['versions' => $allVersions];
+        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+        return $sendServiceResponse;
+    } catch (\Exception $exc) {
+        $exceptionResponse = array();
+        $exceptionResponse['ServiceMethod'] = $method;
+        $exceptionResponse['Exception'] = $exc->getMessage();
+        $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+        $this->WriteFileLog($exceptionResponse);
+        $serviceResponse = array();
+        $serviceResponse['Code'] = config('setting.status_code.exception');
+        $serviceResponse['Message'] = $exc->getMessage();
+        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+        return $sendServiceResponse;
+    }
+}
+
+public function restore_quiz_version(Request $request)
+{
+    try {
+        $method = 'Method => ElearningQuestionController => restore_quiz_version';
+        $inputArray = $this->decryptData($request->requestData);
+        
+        $quizId = $inputArray['quiz_id'];
+        $versionId = $inputArray['version_id'];
+        
+        // Begin transaction
+        DB::beginTransaction();
+
+        // Get the version to restore
+        $versionToRestore = DB::table('elearning_practice_quiz_versions')
+            ->where('version_id', $versionId)
+            ->first();
+            
+        if (!$versionToRestore) {
+            throw new \Exception('Version not found');
+        }
+        
+        // Get current quiz data
+        $currentQuiz = DB::table('elearning_practice_quiz')
+            ->where('quiz_id', $quizId)
+            ->first();
+            
+        // Archive current version
+        if ($currentQuiz) {
+            DB::table('elearning_practice_quiz_versions')->insert([
+                'original_quiz_id' => $quizId,
+                'quiz_name' => $currentQuiz->quiz_name,
+                'quiz_questions' => $currentQuiz->quiz_questions,
+                'points' => $currentQuiz->points,
+                'evaluation' => $currentQuiz->evaluation,
+                'version_major' => $currentQuiz->version_major,
+                'version_minor' => $currentQuiz->version_minor,
+                'is_active' => 0,
+                'created_by' => auth()->user()->id,
+                'created_at' => NOW(),
+                'updated_at' => NOW()
+            ]);
+        }
+        
+        // Restore the selected version
+        $updateResult = DB::table('elearning_practice_quiz')
+            ->where('quiz_id', $quizId)
+            ->update([
+                'quiz_name' => $versionToRestore->quiz_name,
+                'quiz_questions' => $versionToRestore->quiz_questions,
+                'points' => $versionToRestore->points,
+                'evaluation' => $versionToRestore->evaluation,
+                'version_major' => $versionToRestore->version_major,
+                'version_minor' => $versionToRestore->version_minor,
+                'is_active' => 1,
+                'updated_by' => auth()->user()->id,
+                'updated_at' => NOW()
+            ]);
+            
+        if (!$updateResult) {
+            DB::rollBack();
+            throw new \Exception('Failed to restore version');
+        }
+        
+        // Mark all versions as inactive
+        DB::table('elearning_practice_quiz_versions')
+            ->where('original_quiz_id', $quizId)
+            ->update(['is_active' => 0]);
+            
+        // Mark the restored version as active
+        DB::table('elearning_practice_quiz_versions')
+            ->where('version_id', $versionId)
+            ->update(['is_active' => 1]);
+            
+        // Commit transaction
+        DB::commit();
+        
+        $this->notifications_insert(null, auth()->user()->id, "Quiz Version Restored to v{$versionToRestore->version_major}.{$versionToRestore->version_minor}", "/elearningquestion");
+        $this->auditLog('elearning_practice_quiz', $quizId, 'Restore', "Version restored to v{$versionToRestore->version_major}.{$versionToRestore->version_minor}", auth()->user()->id, NOW(), 'System');
+        
+        $serviceResponse = array();
+        $serviceResponse['Code'] = config('setting.status_code.success');
+        $serviceResponse['Message'] = "Version restored successfully to v{$versionToRestore->version_major}.{$versionToRestore->version_minor}";
+        $serviceResponse['Data'] = 1;
+        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+        return $sendServiceResponse;
+    } catch (\Exception $exc) {
+        DB::rollBack();
+        $exceptionResponse = array();
+        $exceptionResponse['ServiceMethod'] = $method;
+        $exceptionResponse['Exception'] = $exc->getMessage();
+        $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+        $this->WriteFileLog($exceptionResponse);
+        $serviceResponse = array();
+        $serviceResponse['Code'] = config('setting.status_code.exception');
+        $serviceResponse['Message'] = $exc->getMessage();
+        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+        return $sendServiceResponse;
+    }
+}
     public function quiz()
     {
         try {
@@ -1665,4 +2117,7 @@ class ElearningQuestionController extends BaseController
         $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
         return $sendServiceResponse;
     }
+
+  
+
 }

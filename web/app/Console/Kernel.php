@@ -17,6 +17,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('course:send-expiry-reminder')->everyMinute();
+        $schedule->command('task:generate_video_class')->everyMinute();
+        $schedule->command('course:regenerate-pin')->everyMinute();
     }
 
     /**
