@@ -747,9 +747,57 @@ class elearningEthnicTestController extends BaseController
                     'end_time'   => now(),
                     'updated_at' => now(),
                 ]);
+          $today = now()->toDateString();
+
+$scormCourses = DB::table('scorm_courses as sc')
+    ->join('scorm as s', 's.id', '=', 'sc.scorm_id')
+
+    ->leftJoin('scorm_tracking as st', function ($join) use ($user_id) {
+        $join->on('st.scorm_id', '=', 'sc.scorm_id')
+             ->where('st.user_id', '=', $user_id);
+    })
+
+    ->whereRaw("FIND_IN_SET(?, sc.user_ids)", [$user_id])
+    ->where('s.is_published', 1)
+   
+
+    // ✅ Period Logic
+    ->where(function ($query) use ($today) {
+        $query->where('sc.course_noperiod', '2') 
+              ->orWhere(function ($q) use ($today) {
+                  $q->where('sc.course_noperiod', '1')
+                    ->whereDate('sc.course_start_period', '<=', $today)
+                    ->whereDate('sc.course_end_period', '>=', $today);
+              });
+    })
+
+    ->select(
+        'sc.scorm_course_id',
+        'sc.scorm_id',
+        'sc.course_name',
+        'sc.course_banner',
+        'sc.course_certificate',
+        'st.lesson_status',
+        'sc.created_by',
+        'sc.restricted_access'
+    )
+    ->get()
+    ->map(function ($course) {
+
+        $progress = 0;
+
+        if (in_array($course->lesson_status, ['completed','passed','failed'])) {
+            $progress = 100;
+        } elseif ($course->lesson_status == 'incomplete') {
+            $progress = 50;
+        }
+
+        $course->progress = $progress;
+        return $course;
+    });
+          
             // dd($Courses);
-            // dd($Courses);
-            return view('elearning.allCourses', compact('Courses', 'availableCourses', 'availableTags', 'search', 'sort', 'tagFilter', 'progressFilter', 'modules', 'screens', 'menus', 'courseProgress', 'wishlistedCourseIds', 'user_id'));
+            return view('elearning.allCourses', compact('scormCourses', 'Courses', 'availableCourses', 'availableTags', 'search', 'sort', 'tagFilter', 'progressFilter', 'modules', 'screens', 'menus', 'courseProgress', 'wishlistedCourseIds', 'user_id'));
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
