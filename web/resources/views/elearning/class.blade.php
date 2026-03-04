@@ -1249,6 +1249,7 @@ label:hover~input:checked~label
         <h4>Course Contents</h4>
     </div>
     <br>
+ 
     @if(isset($course_certificate[0]->get_certified) && $course_certificate[0]->get_certified == 1)
 
 
@@ -1355,7 +1356,7 @@ label:hover~input:checked~label
                                 height="400" style="border-radius: 8px; border: 1px solid #ddd;">
                             </object>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

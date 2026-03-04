@@ -232,7 +232,7 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <h6>Total CPD Points:{{$rows['rows']['total_cptpoints'][0]['total_cptpoints'] }}</h6>
+                            <h6>Total CPD Points:{{$rows['rows']['total_cpd_points']['total_points'] }}</h6>
                             <div class="card mt-0">
                                 <div class="card-body">
                                     <div class="col-lg-12 text-center">
@@ -252,13 +252,13 @@
                                                 </thead>
                                                 <tbody style="background-color: #cfe0e8;">
 
-                                                    @foreach($rows['rows']['quiz_list'] as $data)
+                                                    @foreach($rows['rows']['points'] as $data)
 
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$data['course_name']}}</td>
-                                                        <td class="ellipsis">{{$data['cpt_points']}}</td>
-                                                        <td class="ellipsis">{{date('d-m-Y', strtotime($data['created_at']))}}</td>
+                                                        <td class="ellipsis">{{$data['course_cpt_points']}}</td>
+                                                        <td class="ellipsis">{{date('d-m-Y', strtotime($data['course_enroll_date']))}}</td>
                                                     </tr>
 
                                                     @endforeach

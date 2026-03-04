@@ -611,7 +611,7 @@ class elearningEthnicTestController extends BaseController
     }
     public function class_quiz(Request $request)
     {
-       
+
         $method = 'Method => elearningEthnicTestController =>class_quiz';
         try {
 
@@ -909,6 +909,7 @@ class elearningEthnicTestController extends BaseController
         try {
 
             $userID = auth()->user()->id;
+            // $inputArray =$request;
             $inputArray = $this->decryptData($request->requestData);
 
             $input = [
@@ -916,6 +917,7 @@ class elearningEthnicTestController extends BaseController
                 'class_id' => $inputArray['class_id'],
 
             ];
+
             $class_id = $input['class_id'];
             $course_id = $input['course_id'];
 
@@ -984,6 +986,7 @@ class elearningEthnicTestController extends BaseController
     {
 
         try {
+
             $method = 'Method => elearningEthnicTestController => exam_store';
             $user_id = auth()->user()->id;
             //$inputArray = $this->decryptData($request->requestData);
@@ -1143,7 +1146,6 @@ class elearningEthnicTestController extends BaseController
                     //         'updated_at'      => now(),
                     //     ]);
                 }
-                Mail::to($data['email'])->send(new exammail($data));
             } else {
                 DB::table('user_course_relation')
                     ->where('course_id', $course_id)
@@ -1175,7 +1177,7 @@ class elearningEthnicTestController extends BaseController
                 //         'updated_at'      => now(),
                 //     ]);
 
-                Mail::to($data['email'])->send(new exammail2($data));
+
             }
 
             $response = [
@@ -1231,6 +1233,21 @@ class elearningEthnicTestController extends BaseController
 
 
             $rows['quiz_list'] = DB::select("SELECT uc.*,c.course_name from user_cpt_points as uc inner join elearning_courses as c on c.course_id=uc.course_id where c.drop_course=0 and uc.status=0 and uc.user_id=$user_id");
+            $rows['points'] = DB::select("SELECT ucr.*, ec.course_name, ec.course_cpt_points FROM user_course_relation AS ucr INNER JOIN elearning_courses AS ec ON ec.course_id = ucr.course_id WHERE ucr.user_id = ?
+               AND ucr.course_status = 'completed' AND FIND_IN_SET(?, ec.user_ids) ORDER BY ucr.course_id DESC", [$user_id, $user_id]);
+            $rows['total_cpd_points'] = DB::selectOne(
+                "
+    SELECT 
+        SUM(ec.course_cpt_points) AS total_points
+    FROM user_course_relation AS ucr
+    INNER JOIN elearning_courses AS ec
+        ON ec.course_id = ucr.course_id
+    WHERE ucr.user_id = ?
+      AND ucr.course_status = 'completed'
+      AND FIND_IN_SET(?, ec.user_ids)
+    ",
+                [$user_id, $user_id]
+            );
 
             $response = [
                 'rows' => $rows
