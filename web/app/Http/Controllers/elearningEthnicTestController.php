@@ -514,7 +514,7 @@ class elearningEthnicTestController extends BaseController
 
             $availableCourseIds = [];
             $time = time();
-            $currentTime = date("Y-m-d H:i:s", $time);
+            $currentTime = date("Y-m-d");
             // dd($currentTime);
             foreach ($Courses as $course) {
                 if ($course->course_start_period == "" || $course->course_end_period == "") {
@@ -2331,7 +2331,7 @@ class elearningEthnicTestController extends BaseController
 
             // dd($data['logo_url']);
 
-            // dd($get_template->template_name);
+            // dd($get_template, config('setting.image_path'),$data);
             $pdf = PDF::loadView("certificate_template.{$get_template->template_name}.index", [
                 'data' => $data
             ]);
@@ -2357,7 +2357,7 @@ class elearningEthnicTestController extends BaseController
 
             $pdf->save($output);
 
-
+// dd($output);
 
             $data = [
                 'date' => $date,
@@ -2490,7 +2490,6 @@ class elearningEthnicTestController extends BaseController
         $method = 'Method => elearningEthnicTestController => quiz_store';
         try {
             $data = array();
-
             $data['quizId'] = $request->quizId;
             $data['attempt'] = $request->attempt;
             $data['score'] = $request->score;
@@ -2500,14 +2499,12 @@ class elearningEthnicTestController extends BaseController
             $data['course_id'] = $request->course_id;
             $data['class_id'] = $request->class_id;
             $course_id = $request->course_id;
-            
             $encryptArray = $this->encryptData($data);
             $request = array();
 
             $request['requestData'] = $encryptArray;
 
             $gatewayURL = config('setting.api_gateway_url') . '/class/quiz/store';
-
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
 
             $response1 = json_decode($response);

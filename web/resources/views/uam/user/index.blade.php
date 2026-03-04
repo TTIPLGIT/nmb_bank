@@ -31,6 +31,9 @@ thead th {
     display: inline-block !important;
     padding-right: 21px;
 }
+table td {
+    text-transform:none !important;
+}
 </style>
 <div class="main-content">
 

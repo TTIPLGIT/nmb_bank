@@ -1337,7 +1337,7 @@ label:hover~input:checked~label
                         </div>
                         <div class="card-body p-2 text-center" style="background-color: #f8f9fc;">
                             <object class="coursetypes"
-                                data="../../uploads/class/126/{{$classContent->course_id}}/{{$classContent->resource_name}}#toolbar=0"
+                                data="../../uploads/class/126/{{$classContent->resource_name}}#toolbar=0"
                                 width="100%" height="400" style="border-radius: 8px; border: 1px solid #ddd;">
                             </object>
                         </div>
@@ -2363,7 +2363,6 @@ for (let courseDuration of courseDurations) {
     second = second + time;
 }
 let totalDuration = secondsToHms(second);
-console.log(totalDuration);
 document.querySelector('#totalHours').innerHTML = totalDuration;
 // appending Skills Required
 let courseSkillsRequired = document.querySelector('#courseSkillsRequired');
@@ -2410,7 +2409,6 @@ function subMenuNavigation(e) {
                 _token: '{{csrf_token()}}'
             },
             success: function(data) {
-                console.log(data.notes);
 
                 if (data.notes.length < 1) {
                     //  alert("0");
@@ -2438,7 +2436,6 @@ function subMenuNavigation(e) {
                 }
             },
             error: function(error) {
-                console.log('error; ' + eval(error));
                 let errorMessage = document.createElement('div');
                 errorMessage.classList.add('notesError');
                 errorMessage.innerText = "Some error occured";
@@ -2563,7 +2560,6 @@ function saveNotes(e) {
                 }
             },
             error: function(error) {
-                console.log('error; ' + eval(error));
                 document.querySelector('.addNoteCallerTip').style.display = "none";
                 addNoteCaller.classList.add('error');
                 setTimeout(function() {
@@ -2664,7 +2660,6 @@ function editNoteparser(e) {
                         _token: '{{csrf_token()}}'
                     },
                     success: function(data) {
-                        console.log(data);
                         if (data != 0) {
                             Swal.fire("Success!", "Note Deleted Successfully!", "success").then((
                                 result) => {
@@ -2736,7 +2731,6 @@ function addreply(question_id, user_id) {
             _token: '{{csrf_token()}}'
         },
         success: function(data) {
-            console.log(data);
             // alert(data.replylist.length);
 
 
@@ -2784,11 +2778,8 @@ function addreply(question_id, user_id) {
 
 
                 $('.replies').append(single_reply);
-                console.log('data.replylist_admin');
 
-                console.log(data.replylist_admin);
                 for (const row2 of data.replylist_admin) {
-                    console.log(row2);
                     if (row2.course_reply_id == row.id) {
                         $(`.reply_data${reply_count}`).append(
                             `<div><img src="{{asset('assets/images/main.png')}}" style="width:35px !important;height:35px !important;"></img><label style="font-weight:700 !important;">admin reply:</label>${row2.reply_details}</div>`
@@ -2825,7 +2816,6 @@ function replysubmit(question_id, course_id) {
             _token: '{{csrf_token()}}'
         },
         success: function(data) {
-            console.log(data);
             if (data != 0) {
                 Swal.fire({
                     title: 'Success!',
@@ -2867,7 +2857,6 @@ function addfollowup(question_id, course_id) {
             _token: '{{csrf_token()}}'
         },
         success: function(data) {
-            console.log(data);
             var existing_count = $(`.for_${question_id}`).children().text();
             //alert(existing_count);
 
@@ -2945,7 +2934,6 @@ function applyfilter() {
             _token: '{{csrf_token()}}'
         },
         success: function(data) {
-            console.log(data);
             $('#custom_container_append').children().remove();
             var question_container = document.querySelector('.question_container');
             question_container.style.display = "none";
@@ -2964,7 +2952,6 @@ function applyfilter() {
 
 
             for (const row of data) {
-                console.log(row.question_id);
                 const singledata = `<div class="card noShadow mx-4 border-0 postedQuestionWrapper" id="question_${row.question_id}">
             <div class="row no-gutters" id="${ row.class_id }">
                 <div class="col-md-1 d-flex flex-row justify-content-center pt-3">
@@ -3017,7 +3004,6 @@ coursetypes.addEventListener('play', function() {
     videoInterval = setInterval(() => {
         currentTime = Math.floor(coursetypes.currentTime);
 
-        console.log('Current Time (in seconds):', currentTime);
         $.ajax({
             url: "{{ url('/Course/bookmark') }}",
             type: 'GET',
@@ -3072,7 +3058,6 @@ coursetypesend.addEventListener('ended', function() {
             _token: '{{csrf_token()}}'
         },
         success: function(data) {
-            console.log(data);
             Swal.fire("Success!", "Class Completed Successfully!", "success").then((result) => {
 
                 location.reload();
@@ -3242,8 +3227,8 @@ document.getElementById("addModal2").addEventListener("hidden.bs.modal", functio
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
-
 @if(isset($course_certificate[0]))
+
 <script>
 <?php
     // Assuming $course_certificate[0] is an object with properties
@@ -3255,7 +3240,6 @@ document.getElementById("addModal2").addEventListener("hidden.bs.modal", functio
     ?>
 // PDF.js configuration
 const pdfUrl = '<?php echo $pdfUrl; ?>';
-console.log(pdfUrl);
 // Fetch the PDF document
 pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc => {
     // Fetch the first page
@@ -3283,7 +3267,6 @@ pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc => {
 
 <script>
 const dataAttribute = '<?php echo "../../uploads/class/594/" . $classContent->resource_name; ?>';
-console.log(dataAttribute);
 
 const pdfUrl1 = dataAttribute;
 
@@ -3377,7 +3360,6 @@ function course_submit() {
 <script>
 const courseData = @json($courseDetail ?? []);
 const courseDatas = @json($courseDetailsLists ?? []);
-console.log("values", courseDatas);
 </script>
 <script>
 $(document).ready(function() {
@@ -3406,7 +3388,6 @@ $(document).ready(function() {
 `);
 
         var courseId = "{{ $courseDetails[0]->course_id }}";
-        console.log(courseId);
         $.ajax({
             url: 'http://20.164.0.23:8000/ask/',
             method: 'POST',
@@ -3420,7 +3401,6 @@ $(document).ready(function() {
             }),
             success: function(response) {
 
-                console.log("hi", response)
                 // For bot message (left side)
                 $('#chatLog').append(`
   <div class="d-flex justify-content-start mb-2">

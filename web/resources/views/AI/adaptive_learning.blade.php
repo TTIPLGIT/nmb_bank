@@ -101,7 +101,7 @@
                             }
                             </script>
                             @endif
-                            <h4><span>Filter By</span></h4>
+                            <!-- <h4><span>Filter By</span></h4> -->
                             <form action="{{route('adaptive_learning')}}" method="POST">
                                 @csrf
                                 <div class="row">

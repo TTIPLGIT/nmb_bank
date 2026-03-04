@@ -593,7 +593,7 @@ if ($daysLeft <= 30 && $daysLeft>= 0) {
                             @php
                             $file = $courseDetail->course_introduction;
                             $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                            $fileUrl = url('uploads/course/{{$courseDetail->course_id}}/' . $file);
+                            $fileUrl = url('uploads/course/126/' . $file);
                             @endphp
 
                             @if($extension === 'mp4')

@@ -19,8 +19,7 @@
 
 
                     <div class="d-flex justify-content-start  ml-3 mb-3">
-                        <a href="{{ route('catagory_create') }}" class="btn btn-success " style="margin-right:100px">Create <i class="fa fa-plus"
-                                aria-hidden="true"></i></a>
+                        <a href="{{ route('catagory_create') }}" class="btn btn-success " style="margin-right:100px">Create </a>
                     </div>
 
                     <div class="row">
@@ -379,7 +378,7 @@
                 $('#streak_name').prop('disabled', false).val(row.streak_name);
                 $('#streak_count').prop('disabled', false).val(row.number_course_for_streak);
                 $('#streak_points').prop('disabled', false).val(row.bonus_point);
-                $('#achieve_value').prop('disabled', false).val(row.complete_within_type);
+                $('#achieve_value').prop('disabled', false).val(row.complete_within);
                 $('#achieve_icon').prop('disabled', false).val(row.streak_icon);
                 $('#points_to_unlock').prop('disabled', false).val(row.points_to_unlock);
                 $('#catagory_id').val(catagory_id);
@@ -406,14 +405,10 @@
                     $('#course_locked_no').prop('checked', true);
                 }
 
-                if (row.complete_within === "time") {
-                    $('#achieve_time').prop('checked', true);
-                    $('#label_achieve_time').addClass('active');
-                    $('#label_achieve_day').removeClass('active');
-                } else if (row.complete_within === "day") {
-                    $('#achieve_date').prop('checked', true);
-                    $('#label_achieve_day').addClass('active');
-                    $('#label_achieve_time').removeClass('active');
+                if (row.complete_within_type  === "time") {
+                     $('#achieve_time').prop('checked', true);;
+                } else if (row.complete_within_type === "day") {
+                    $('#achieve_day').prop('checked', true);
                 }
 
 

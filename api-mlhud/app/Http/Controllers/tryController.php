@@ -12,6 +12,7 @@ use DateInterval;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\coursecreationmail;
+use App\Mail\regenerateMail;
 
 class tryController extends BaseController
 {
@@ -829,6 +830,7 @@ class tryController extends BaseController
         try {
             $method = 'Method => add course => course_store';
             $inputArray = $request->requestData;
+            $this->WritefileLog('23');
             $user_id = (auth()->check()) ? auth()->user()->id : $inputArray['user_id'];
 
             $course_tags =  $inputArray['course_tags'];
@@ -846,7 +848,7 @@ class tryController extends BaseController
             $introduction_extension = $introduction_extension[1];
             $userIdsString = implode(",",  $inputArray['user_ids']);
 
-
+ $this->WritefileLog('jiiii');
 
 
             $input = [
@@ -897,7 +899,7 @@ class tryController extends BaseController
                 'course_pin' => $inputArray['course_pin'],
 
             ];
-            // $this->WriteLog($input);
+            $this->WritefileLog($input);
 
             // dd("welcome");
 

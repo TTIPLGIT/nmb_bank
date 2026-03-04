@@ -67,7 +67,7 @@
     }
 
     .overview_body .card-header {
-        color: #40c2b2 !important;
+        color: #680EDA !important;
         background-color: white !important;
         font-weight: 600 !important;
         padding-left: 1rem !important;
@@ -778,7 +778,7 @@
 
     #dycalendar table tr:first-child td {
         color: #fff;
-        background-color: #0ef3d8;
+        background-color: #680EDA;
         font-weight: 700;
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px #fff;
     }
@@ -795,7 +795,7 @@
     .dycalendar-today-date,
     .dycalendar-today-date:hover {
         /* background-color: white !important; */
-        color: #0ef3d8 !important;
+        color: #680EDA !important;
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
             -5px -5px 10px rgba(255, 255, 255, 1) !important;
         border: none !important;
@@ -834,19 +834,19 @@
     }
 
     .dycalendar-prev-next-btn.prev-btn:active {
-        color: #0ef3d8;
+        color: #680EDA;
         text-shadow: -3px 0px 5px #0ef3d880;
     }
 
     .dycalendar-prev-next-btn.next-btn:active {
-        color: #0ef3d8;
+        color: #680EDA;
         text-shadow: 3px 0px 5px #0ef3d880;
     }
 
     .dycalendar-span-month-year {
         font-size: 1.3rem;
         font-weight: 600;
-        color: #0ef3d8;
+        color: #680EDA;
     }
 
     /* events */
@@ -1188,10 +1188,10 @@
                 <div class="overview_header d-flex flex-row justify-content-between align-items-center">
 
                     <h2 class="overview_heading">
-                        Admin Overview
-                        <div class="path">
-                            <span>E-Learning</span>
-                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                        <!-- Admin Overview -->
+                        <div class="path" style="color:#680EDA">
+                            <!-- <span>E-Learning</span> -->
+                            <!-- <i class="fa fa-angle-double-right" aria-hidden="true"></i> -->
                             <span>Admin Dashboard</span>
                         </div>
                     </h2>
@@ -1263,7 +1263,7 @@
                 <div class="d-flex flex-row course_and_schedule_body w-100">
                     <div class="card noShadow schedule" style="width: 100% !important;">
                         <div class="card-header d-flex flex-row justify-content-center align-items-center">
-                            <h2 class="schedule_heading">
+                            <h2 class="schedule_heading" style="color:#680EDA">
                                 Upcoming Events
                             </h2>
                         </div>
@@ -1286,11 +1286,11 @@
 
                 </div>
             </div>
-            <div class="row noticess">
-                <div class="col-md-10 noticesss">
+            <div class="row noticess" style="padding-right:15px">
+                <div class="col-md-12 noticesss">
 
-                    <div class="card noShadow notice_board_list" style="">
-                        <div class="card-header">
+                    <div class="card noShadow notice_board_list">
+                        <div class="card-header" style="color:#680EDA">
                             Notice Board
                         </div>
                         @php $class_list = count($rows) == 0 ? "d-flex justify-content-center align-items-center" : '' @endphp

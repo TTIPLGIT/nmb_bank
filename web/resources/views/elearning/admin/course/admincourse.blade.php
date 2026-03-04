@@ -457,16 +457,16 @@
                                                         <td>{{$data->class_duration}} Mins</td>
 
                                                         <?php if ($data->class_format == 'mp4') { ?>
-                                                            <td> <img src="uploads/class/126/mp4.png" width="50px"
+                                                            <td> <img src="{{ asset('uploads/class/126/mp4.png') }}" width="50px"
                                                                     height="50px" alt="..."></td>
                                                         <?php    } elseif ($data->class_format == 'mp3') { ?>
-                                                            <td> <img src="uploads/class/126/mp3.png" width="50px"
+                                                            <td> <img src="config('setting.image_path')uploads/class/126/mp3.png" width="50px"
                                                                     height="50px" alt="Image" /></td>
                                                         <?php    } elseif ($data->class_format == 'pdf') { ?>
-                                                            <td> <img src="uploads/class/126/pdf.png" width="50px"
+                                                            <td> <img src="{{ asset('uploads/class/126/pdf.png') }}" width="50px"
                                                                     height="50px" alt="Image" /></td>
                                                         <?php    } elseif ($data->class_format == 'jpg' or 'png') { ?>
-                                                            <td> <img src="uploads/class/126/empty.jpg" width="50px"
+                                                            <td> <img src="{{ asset('uploads/class/126/empty.jpg') }}" width="50px"
                                                                     height="50px" alt="Image" /></td>
 
                                                         <?php    } else { ?>
@@ -2270,7 +2270,6 @@
 
 <script>
     function data(e) {
-        // alert(e);
         if (e.target.id == "class_quizedit") {
             if (e.target.value == "yes") {
 
@@ -2284,19 +2283,20 @@
 
 
 
-        } else if (e.target.id == "class_quiz") {
-            if (e.target.value == "yes") {
-
-                $('#yes').css('display', 'block');
-                $('#no').css('display', 'none');
-            } else {
-                $('#yes').css('display', 'none');
-                $('#no').css('display', 'block');
-
-            }
-        }
+        } 
 
     }
+
+    $(document).on('change', '#class_quiz', function() {
+
+        if ($(this).val() === 'yes') {
+            $('#quiz_show').show();
+        } else {
+            $('#quiz_show').hide();
+            $('#quiz_id').val('');
+        }
+
+    });
 </script>
 <script>
     function create_tr(table_id) {
@@ -2635,7 +2635,7 @@
             success: function(data) {
 
                 const row = data.rows[0];
-                    console.log(row);
+                console.log(row);
                 /* ===================== EDIT MODE ===================== */
                 if (type === "edit") {
 
@@ -2710,7 +2710,7 @@
                         .trigger('change');
 
                     // Certificate
-                   $('input[name="course_certificate"]').prop('disabled', true);
+                    $('input[name="course_certificate"]').prop('disabled', true);
 
                     // Check the correct value
                     $('input[name="course_certificate"][value="' + row.course_certificate + '"]')
@@ -2919,7 +2919,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6" id="yes" style="display:none;">
+                        <div class="col-md-6" id="quiz_show" style="display:none;">
                             <div class="form-group">
                                 <label>Quiz Name:<span class="error-star" style="color:red;">*</span></label>
 
@@ -3709,7 +3709,7 @@
                     <input type="hidden" name="course_editshow" class="course_edit" id="course_editshow">
 
                     <div class="row">
-                       
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Catagory<span class="error-star" style="color:red;">*</span></label>
@@ -4965,19 +4965,19 @@
             <strong>Version Preview:</strong> ${currentMajor}.${currentMinor} → ${newVersion.major}.${newVersion.minor}
         </div>`;
 
-            if ($('#version_preview').length) {
-                $('#version_preview').html(
-                    `<strong>Version Preview:</strong> ${currentMajor}.${currentMinor} → ${newVersion.major}.${newVersion.minor}`
-                );
-            } else {
-                $('#change_notes_group').after(previewHtml);
+                if ($('#version_preview').length) {
+                    $('#version_preview').html(
+                        `<strong>Version Preview:</strong> ${currentMajor}.${currentMinor} → ${newVersion.major}.${newVersion.minor}`
+                    );
+                } else {
+                    $('#change_notes_group').after(previewHtml);
+                }
             }
-        }
+        });
     });
-});
-// Function to open edit modal with class data
-function openClassEditModal(classId, disableFields = false) {
-    console.log('Opening edit modal for class:', classId);
+    // Function to open edit modal with class data
+    function openClassEditModal(classId, disableFields = false) {
+        console.log('Opening edit modal for class:', classId);
 
         // Reset form
         $('#edit_form')[0].reset();
@@ -5026,43 +5026,43 @@ function openClassEditModal(classId, disableFields = false) {
                     $('#current_major_version').val(major);
                     $('#current_minor_version').val(minor);
 
-                // Display current resource if exists
-                if (classData.resource_name && classData.resource_name !== '0') {
-                    let resourcePath = classData.resource_path ?
-                        classData.resource_path + '/' + classData.resource_name :
-                        '/uploads/class/' + classData.resource_name;
-                    $('.img-fluid').attr('src', resourcePath);
-                }
+                    // Display current resource if exists
+                    if (classData.resource_name && classData.resource_name !== '0') {
+                        let resourcePath = classData.resource_path ?
+                            classData.resource_path + '/' + classData.resource_name :
+                            '/uploads/class/' + classData.resource_name;
+                        $('.img-fluid').attr('src', resourcePath);
+                    }
 
-                if (disableFields) {
-                    // Disable all input fields
-                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit')
-                        .prop('disabled', true);
+                    if (disableFields) {
+                        // Disable all input fields
+                        $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit')
+                            .prop('disabled', true);
 
-                    // Change background color to indicate readonly
-                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit, .select2-selection')
-                        .css('background-color', '#e9ecef');
+                        // Change background color to indicate readonly
+                        $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit, .select2-selection')
+                            .css('background-color', '#e9ecef');
 
-                    // Hide change banner button
-                    $('#change_banner').hide();
+                        // Hide change banner button
+                        $('#change_banner').hide();
 
-                    // Hide version control and save button
-                    $('#version_control, #savebutton').hide();
-                } else {
-                    // Enable all input fields
-                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit')
-                        .prop('disabled', false);
+                        // Hide version control and save button
+                        $('#version_control, #savebutton').hide();
+                    } else {
+                        // Enable all input fields
+                        $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit')
+                            .prop('disabled', false);
 
-                    // Reset background color
-                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit, .select2-selection')
-                        .css('background-color', '');
+                        // Reset background color
+                        $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit, .select2-selection')
+                            .css('background-color', '');
 
-                    // Show change banner button
-                    $('#change_banner').show();
+                        // Show change banner button
+                        $('#change_banner').show();
 
-                    // Show version control and save button
-                    $('#version_control, #savebutton').show();
-                }
+                        // Show version control and save button
+                        $('#version_control, #savebutton').show();
+                    }
 
                     // Load version history
                     loadClassVersionHistory(classId);
@@ -5105,14 +5105,14 @@ function openClassEditModal(classId, disableFields = false) {
                     let versionsData = [];
                     let existingVersions = [];
 
-                // Extract versions data correctly
-                if (response.versions && response.versions.Data) {
-                    versionsData = response.versions.Data;
-                } else if (Array.isArray(response.versions)) {
-                    versionsData = response.versions;
-                } else if (response.versions && Array.isArray(response.versions.versions)) {
-                    versionsData = response.versions.versions;
-                }
+                    // Extract versions data correctly
+                    if (response.versions && response.versions.Data) {
+                        versionsData = response.versions.Data;
+                    } else if (Array.isArray(response.versions)) {
+                        versionsData = response.versions;
+                    } else if (response.versions && Array.isArray(response.versions.versions)) {
+                        versionsData = response.versions.versions;
+                    }
 
                     if (versionsData && versionsData.length > 0) {
                         let html = '';
@@ -5139,42 +5139,42 @@ function openClassEditModal(classId, disableFields = false) {
                             return b.version_minor - a.version_minor;
                         });
 
-                    // Determine if we're in view mode
-                    let isViewMode = $('#version_control').is(':visible') === false;
-                    console.log('Is View Mode:', isViewMode);
+                        // Determine if we're in view mode
+                        let isViewMode = $('#version_control').is(':visible') === false;
+                        console.log('Is View Mode:', isViewMode);
 
-                    versionsData.forEach(function(version) {
-                        // Version display with change notes
-                        let versionDisplay =
-                            `${version.version_major || 1}.${version.version_minor || 0}`;
-                        if (version.change_notes) {
-                            versionDisplay +=
-                                `<br><small class="text-muted" title="${version.change_notes}">${version.change_notes.substring(0, 30)}${version.change_notes.length > 30 ? '...' : ''}</small>`;
-                        }
+                        versionsData.forEach(function(version) {
+                            // Version display with change notes
+                            let versionDisplay =
+                                `${version.version_major || 1}.${version.version_minor || 0}`;
+                            if (version.change_notes) {
+                                versionDisplay +=
+                                    `<br><small class="text-muted" title="${version.change_notes}">${version.change_notes.substring(0, 30)}${version.change_notes.length > 30 ? '...' : ''}</small>`;
+                            }
 
-                        // Determine action button based on mode and version status
-                        let actionButton = '';
+                            // Determine action button based on mode and version status
+                            let actionButton = '';
 
-                        if (version.is_active == 1) {
-                            // Current version
-                            actionButton =
-                                '<span class="text-muted">Current</span>';
-                        } else {
-                            // Archived version
-                            if (isViewMode) {
-                                // In view mode - show Archived text
-                                actionButton = '<span class="text-muted">Archived</span>';
+                            if (version.is_active == 1) {
+                                // Current version
+                                actionButton =
+                                    '<span class="text-muted">Current</span>';
                             } else {
-                                // In edit mode - show Restore button
-                                actionButton = `<button class="btn btn-sm btn-warning restore-class-version" 
+                                // Archived version
+                                if (isViewMode) {
+                                    // In view mode - show Archived text
+                                    actionButton = '<span class="text-muted">Archived</span>';
+                                } else {
+                                    // In edit mode - show Restore button
+                                    actionButton = `<button class="btn btn-sm btn-warning restore-class-version" 
                                                     data-id="${classId}" 
                                                     data-version-id="${version.version_id || version.original_class_id}">
                                                     <i class="fas fa-history"></i> Restore
                                                 </button>`;
+                                }
                             }
-                        }
 
-                        html += `<tr>
+                            html += `<tr>
                             <td><strong>${versionDisplay}</strong></td>
                             <td>${version.class_name || 'N/A'}</td>
                             <td>${version.class_duration || 'N/A'} Mins</td>

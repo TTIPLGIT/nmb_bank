@@ -708,7 +708,7 @@ form.longqustionsform {
                                                         <tr>
                                                             <th>S.No</th>
                                                             <th>quiz Name</th>
-                                                            <th class="ellipsis">quiz Questions</th>
+                                                            <!-- <th class="ellipsis">quiz Questions</th> -->
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -717,7 +717,7 @@ form.longqustionsform {
                                                         <tr>
                                                             <td>{{$loop->iteration}}</td>
                                                             <td>{{$data['quiz_name']}}</td>
-                                                            <td>
+                                                            <!-- <td>
                                                                 @foreach($rows['rows']['quiz_question'] as $row)
                                                                 @foreach($data['quiz_questions'] as $key => $new_row)
                                                                 @if($new_row == $row['question_id'])
@@ -732,7 +732,7 @@ form.longqustionsform {
                                                                 @endif
                                                                 @endforeach
                                                                 @endforeach
-                                                            </td>
+                                                            </td> -->
 
 
 

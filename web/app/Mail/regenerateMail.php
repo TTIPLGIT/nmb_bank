@@ -8,8 +8,9 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use DateTime;
+use Illuminate\Support\Facades\Mail;
 
-class coursecreationmail extends Mailable
+class regenerateMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $data;
@@ -23,21 +24,7 @@ class coursecreationmail extends Mailable
         $this->data = $data;
     }
 
-    public function date_difference($dateFromDB)
-    {
-        $today = new DateTime();
-
-
-        $datetime2 = new DateTime($dateFromDB); // Date from the database
-        $interval = $datetime2->diff($today);
-
-
-        $days = $interval->format('%d');
-
-
-        return $days;
-    }
-
+    
 
 
     /**
@@ -47,11 +34,13 @@ class coursecreationmail extends Mailable
      */
     public function build()
     {
-       
-
         return $this->from(config('setting.email_id'))
             ->subject('Course Regenerate PIN')
             ->view('email.coursecreationmail')
-            ->with($this->data);
+            ->with([
+                'name' => $this->data['name'],
+                'course_name' => $this->data['course_name'],
+                'course_pin' => $this->data['course_pin']
+            ]);
     }
 }

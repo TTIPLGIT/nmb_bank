@@ -89,6 +89,7 @@ class AIController extends BaseController
             if ($user_id == null) {
                 return view('auth.login');
             }
+
             $data = (object) [
                 'category'           => $request->course_category_id,
                 'role'               => $request->role,
@@ -1403,7 +1404,7 @@ public function globalChat(Request $request)
             'message' => $request->message
         ];
 
-        $gatewayURL = config('setting.AI_service_url') . 'api/global-chat';
+        $gatewayURL = 'http://20.164.0.23:3300/api/global-chat';
 
         // Make the API call
         $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);

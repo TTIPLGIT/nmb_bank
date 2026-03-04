@@ -81,6 +81,10 @@
         transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
         transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
     }
+
+    .select2-container .select2-selection--single {
+        height: 39px !important;
+    }
 </style>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -174,7 +178,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Custom Field</label>
-                                            <select class="form-control" name="custom_field_id" id="custom_field">
+                                            <select class="form-control select2" name="custom_field_id[]" id="custom_field" Multiple>
                                                 <option value="">---Select---</option>
                                                 @foreach($custom_field as $field)
                                                 <option
@@ -357,404 +361,76 @@
                     utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js?1706723638591"
                 });
             </script>
-<!-- custom Field -->
+            <!-- custom Field -->
             <script>
-                document.getElementById('custom_field').addEventListener('change', function() {
-
-                    let selectedOption = this.options[this.selectedIndex];
-                    let fieldType = selectedOption.getAttribute('data-type');
-                    let fieldLabel = selectedOption.getAttribute('data-label');
-
-                    let container = document.getElementById('dynamic_field_container');
-                    container.innerHTML = "";
-
-                    if (!fieldType) return;
-
-                    let inputField = '';
-
-                    switch (fieldType) {
-
-                        case 'text':
-                            inputField = `
-                <div class="form-group">
-                    <label>${fieldLabel}</label>
-                    <input type="text" name="custom_field_value" class="form-control">
-                </div>`;
-                            break;
-
-                        case 'email':
-                            inputField = `
-                <div class="form-group">
-                    <label>${fieldLabel}</label>
-                    <input type="email" name="custom_field_value" class="form-control">
-                </div>`;
-                            break;
-
-                        case 'number':
-                            inputField = `
-                <div class="form-group">
-                    <label>${fieldLabel}</label>
-                    <input type="number" name="custom_field_value" class="form-control">
-                </div>`;
-                            break;
-
-                        case 'date':
-                            inputField = `
-                <div class="form-group">
-                    <label>${fieldLabel}</label>
-                    <input type="date" name="custom_field_value" class="form-control">
-                </div>`;
-                            break;
-                    }
-
-                    container.innerHTML = inputField;
-                });
-            </script>
-
-            <script type="text/javascript">
-                $(".js-select2").select2({
-                    closeOnSelect: false,
-                    placeholder: " Please Select Roles ",
-                    allowHtml: true,
-                    allowClear: true,
-                    tags: true // создает новые опции на лету
-                });
-                $(".js-select5").select2({
-                    closeOnSelect: false,
-                    placeholder: " Please Select Dashboard List ",
-                    allowHtml: true,
-                    allowClear: true,
-                    tags: true // создает новые опции на лету
-                });
-            </script>
-
-            <script type="text/javascript">
                 $(document).ready(function() {
-                    $("#treeview_example_code_button").on("click", function() {
-                        var that_code = $("#treeview_example_code");
-                        that_code.toggle();
-                        //console.log($("#treeview_example_code").css("display"))
-                        var that_code_display = that_code.css("display");
-                        if (that_code_display == "none") {
-                            $(this).text("Show HTML");
-                        } else {
-                            $(this).text("Hide HTML");
-                        }
+
+                    $('#custom_field').select2({
+                        placeholder: "Select Custom Fields"
                     });
 
+                });
 
-                    $("#treeview_example_search_html").on("click", function() {
-                        var that_code = $("#treeview_example_search_html_display");
-                        that_code.toggle();
-                        //console.log($("#treeview_example_code").css("display"))
-                        var treeview_example_search_html_mode = that_code.css("display");
-                        if (treeview_example_search_html_mode == "none") {
-                            $(this).text("Show HTML");
-                        } else {
-                            $(this).text("Hide HTML");
-                        }
-                    });
+                $(document).on('change', '#custom_field', function() {
 
-                    $("#treeview_example_search_css").on("click", function() {
-                        var that_code = $("#treeview_example_search_css_display");
-                        that_code.toggle();
-                        //console.log($("#treeview_example_code").css("display"))
-                        var treeview_example_search_css_mode = that_code.css("display");
-                        if (treeview_example_search_css_mode == "none") {
-                            $(this).text("Show CSS");
-                        } else {
-                            $(this).text("Hide CSS");
-                        }
-                    });
+                    let selectedOptions = $('#custom_field option:selected');
+                    let container = $('#dynamic_field_container');
+                    container.html("");
 
+                    selectedOptions.each(function() {
 
-                    //---------------------measure time-------------------------------//
-                    var responseTime = [];
-                    var actualTime = [];
-                    var responseTimeSend = false;
-                    var responseTimeCounter = 0;
+                        let fieldType = $(this).data('type');
+                        let fieldLabel = $(this).data('label');
+                        let fieldId = $(this).val();
 
+                        if (!fieldType || !fieldId) return;
 
+                        let inputField = '';
 
-                    var startTime, endTime;
-
-                    function measure_start() {
-                        startTime = new Date();
-                    };
-
-                    function measure_end() {
-                        endTime = new Date();
-                        var timeDiff = endTime - startTime; //in ms
-                        // strip the ms
-                        timeDiff /= 1000;
-
-                        // get seconds
-                        //var seconds = Math.round(timeDiff % 60);
-                        var seconds = timeDiff;
-                        //console.log(seconds + " sec");
-                        $("#time_measure").val(seconds + " sec");
-                        //return seconds;
-                    }
-
-                    $.fn.hummingbird.defaults.collapseAll = true;
-                    $.fn.hummingbird.defaults.checkboxes = "enabled";
-                    $.fn.hummingbird.defaults.checkDoubles = false;
-                    //override defaults
-                    if ($("#checkbox_doubles").prop("checked") == true) {
-                        $.fn.hummingbird.defaults.checkDoubles = true; //false //default="false"
-                    } else {
-                        $.fn.hummingbird.defaults.checkDoubles = false; //false //default="false"
-                    }
-                    //initializing
-                    $("#treeview").hummingbird();
-                    $("#treeview2").hummingbird();
-                    $("#treeview2").hummingbird("expandNode", {
-                        attr: "id",
-                        name: "xnode-0-1",
-                        expandParents: true
-                    });
-                    $('#treeview2').css({
-                        "pointer-events": "none"
-                    });
-                    $("#treeview").hummingbird("expandNode", {
-                        attr: "id",
-                        name: "node-0",
-                        expandParents: true
-                    });
-                    $("#CheckAll").on("click", function() {
-                        measure_start();
-                        $("#treeview").hummingbird("checkAll");
-                        measure_end();
-                    });
-                    $("#UnCheckAll").on("click", function() {
-                        measure_start();
-                        $("#treeview").hummingbird("uncheckAll");
-                        measure_end();
-                    });
-                    $("#CollapseAll").on("click", function() {
-                        measure_start();
-                        $("#treeview").hummingbird("collapseAll");
-                        measure_end();
-                    });
-                    $("#ExpandAll").on("click", function() {
-                        measure_start();
-                        $("#treeview").hummingbird("expandAll");
-                        measure_end();
-                    });
-                    $("#checkNode").on("click", function() {
-                        measure_start();
-                        $("#treeview").hummingbird("checkNode", {
-                            attr: "id",
-                            name: $("#checkNodeOnID").val(),
-                            expandParents: false
-                        });
-                        measure_end();
-                    });
-                    $("#uncheckNode").on("click", function() {
-                        measure_start();
-                        $("#treeview").hummingbird("uncheckNode", {
-                            attr: "id",
-                            name: $("#uncheckNodeOnID").val(),
-                            collapseChildren: false
-                        });
-                        measure_end();
-                    });
-                    $("#expandNode").on("click", function() {
-                        measure_start();
-                        $("#treeview").hummingbird("expandNode", {
-                            attr: "id",
-                            name: $("#expandNodeOnID").val(),
-                            expandParents: true
-                        });
-                        measure_end();
-                    });
-
-                    $("#collapseNode").on("click", function() {
-                        measure_start();
-                        $("#treeview").hummingbird("collapseNode", {
-                            attr: "id",
-                            name: $("#collapseNodeOnID").val(),
-                            collapseChildren: true
-                        });
-                        measure_end();
-                    });
-                    $("#enableNode").on("click", function() {
-                        measure_start();
-                        var state = $("#enable_state_true").prop("checked");
-                        var enableChildren = $("#enable_state_true_children").prop("checked");
-                        console.log("enableChildren= " + enableChildren)
-                        $("#treeview").hummingbird("enableNode", {
-                            attr: "id",
-                            name: $("#enableNodeOnID").val(),
-                            state: state,
-                            enableChildren: enableChildren
-                        });
-                        measure_end();
-                    });
-                    $("#getItems").on("click", function() {
-                        measure_start();
-                        var List = {
-                            "id": [],
-                            "dataid": [],
-                            "text": [],
-                            "module": []
-                        };
-                        $("#treeview").hummingbird("getChecked", {
-                            list: List,
-                            onlyParents: true
-                        });
-                        $("#displayItems").val(List.dataid.join(","));
-                        //$("#displayItems1").html(List.text.join("<br>"));
-                        var L = List.id.length;
-                        if (L == 1) {
-                            $("#num").val(L + " item checked");
-                        } else {
-                            $("#num").val(L + " items checked");
-                        }
-                    });
-
-                    $("#getItems").on("click", function() {
-                        measure_start();
-                        var List1 = {
-                            "id": [],
-                            "dataid": [],
-                            "text": [],
-                            "module": []
-                        };
-                        $("#treeview").hummingbird("getChecked", {
-                            list: List1,
-                            onlyEndNodes: true
-                        });
-                        console.log(List1);
-                        $("#displayItems1").val(List1.dataid.join(":"));
-                        $("#displayItems2").val(List1.id.join("-"));
-                        //$("#displayItems1").html(List.text.join("<br>"));
-                        var L = List1.id.length;
-                        if (L == 1) {
-                            $("#num").val(L + " item checked");
-                        } else {
-                            $("#num").val(L + " items checked");
-                        }
-                    });
-
-
-
-
-
-
-
-                    if ($("#checkbox_get_items").prop("checked") == true) {
-
-                        //do it once on initialisation
-                        var List = {
-                            "id": [],
-                            "dataid": [],
-                            "text": [],
-                            "module": []
-                        };
-                        $("#treeview").hummingbird("getChecked", {
-                            list: List,
-                            onlyParents: true
-                        });
-                        $("#displayItems").val(List.dataid.join(","));
-                        var L = List.id.length;
-                        if (L == 1) {
-                            $("#num").val(L + " item checked");
-                        } else {
-                            $("#num").val(L + " items checked");
+                        if (fieldType === 'text') {
+                            inputField = `<div class="form-group">
+                            <label>${fieldLabel}</label>
+                            <input type="text" 
+                                name="custom_field_value[${fieldId}]" 
+                                class="form-control">
+                          </div>`;
                         }
 
-
-                        var List1 = {
-                            "id": [],
-                            "dataid": [],
-                            "text": [],
-                            "module": []
-                        };
-                        $("#treeview").hummingbird("getChecked", {
-                            list: List1,
-                            onlyEndNodes: true
-                        });
-                        console.log(List1);
-                        $("#displayItems1").val(List1.dataid.join(":"));
-                        $("#displayItems2").val(List1.id.join("-"));
-                        var L = List1.id.length;
-                        if (L == 1) {
-                            $("#num").val(L + " item checked");
-                        } else {
-                            $("#num").val(L + " items checked");
+                        if (fieldType === 'email') {
+                            inputField = `<div class="form-group">
+                            <label>${fieldLabel}</label>
+                            <input type="email" 
+                                name="custom_field_value[${fieldId}]" 
+                                class="form-control">
+                          </div>`;
                         }
 
+                        if (fieldType === 'number') {
+                            inputField = `<div class="form-group">
+                            <label>${fieldLabel}</label>
+                            <input type="number" 
+                                name="custom_field_value[${fieldId}]" 
+                                class="form-control">
+                          </div>`;
+                        }
 
-                        $("#treeview").on("CheckUncheckDone", function() {
-                            var List = {
-                                "id": [],
-                                "dataid": [],
-                                "text": [],
-                                "module": []
-                            };
-                            $("#treeview").hummingbird("getChecked", {
-                                list: List,
-                                onlyParents: true
-                            });
-                            $("#displayItems").val(List.dataid.join(","));
-                            var L = List.id.length;
-                            if (L == 1) {
-                                $("#num").val(L + " item checked");
-                            } else {
-                                $("#num").val(L + " items checked");
-                            }
-                        });
+                        if (fieldType === 'date') {
+                            inputField = `<div class="form-group">
+                            <label>${fieldLabel}</label>
+                            <input type="date" 
+                                name="custom_field_value[${fieldId}]" 
+                                class="form-control">
+                          </div>`;
+                        }
 
-
-                        $("#treeview").on("CheckUncheckDone", function() {
-                            var List1 = {
-                                "id": [],
-                                "dataid": [],
-                                "text": [],
-                                "dataid1": []
-                            };
-                            console.log($("#treeview").hummingbird("getChecked", {
-                                list: List1,
-                                onlyEndNodes: true
-                            }));
-                            console.log(List1);
-
-                            $("#displayItems1").val(List1.id.join(":"));
-                            $("#displayItems2").val(List1.dataid.join("-"));
-                            var L = List1.id.length;
-                            if (L == 1) {
-                                $("#num").val(L + " item checked");
-                            } else {
-                                $("#num").val(L + " items checked");
-                            }
-                        });
-
-                    }
-
-
-
-
-                    $("#treeview").hummingbird("checkNode", {
-                        attr: "id",
-                        name: ["node-2-29"],
-                        expandParents: false
-                    });
-
-
-                    /* $("#treeview").hummingbird("search",{treeview_container:"body",search_input:"search_input",search_output:"search_output",search_button:"search_button",scrollOffset:0,onlyEndNodes:false});*/
-
-                    $("#treeview").hummingbird("search", {
-                        treeview_container: "treeview_container",
-                        search_input: "search_input",
-                        search_output: "search_output",
-                        search_button: "search_button",
-                        scrollOffset: -515,
-                        onlyEndNodes: false
+                        container.append(inputField);
                     });
 
                 });
             </script>
+
+
+
 
             <script>
                 function contactphonenumber(event) {
@@ -890,6 +566,17 @@
                         designationSelect.appendChild(opt);
                     });
                 }
+            </script>
+
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+            <script>
+                var $j = jQuery.noConflict();
+
+                $j(document).ready(function() {
+                    $j('#custom_field').select2();
+                });
             </script>
 
 

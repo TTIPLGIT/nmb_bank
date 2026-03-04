@@ -683,10 +683,17 @@ use Carbon\Carbon; ?>
                                     $value->course_banner;
                                     @endphp
                                     @if($value->restricted_access == 1)
-                                    <a href="javascript:void(0)" onclick="openPinModal('{{ $id }}')">
+                                    
+                                        
+                                        @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
+                                        <a href="javascript:void(0)" onclick="openPinModal('{{ $id }}')">
+                                        <img src="{{ $imageUrl }}" alt="Course Image" class="course_image"
+                                            style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;"></a>
+                                        @else
                                         <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image"
                                             class="course_image"
-                                            style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;"></a>
+                                            style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;">
+                                        @endif
                                     @else
                                     <a href="{{ route('elearningCourse', $id) }}">
                                         @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))

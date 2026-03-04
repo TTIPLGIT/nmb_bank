@@ -586,13 +586,19 @@ $this->WriteFileLog($role_check, 'email');
 						]);
 					if (!empty($input['custom_field_id']) && !empty($input['custom_field_value'])) {
 
-						DB::table('user_custom_field_values')->insert([
-							'user_id' => $user_id,
-							'custom_field_id' => $input['custom_field_id'],
-							'field_value' => $input['custom_field_value'],
-							'created_at' => now(),
-							'updated_at' => now(),
-						]);
+						foreach ($input['custom_field_id'] as $fieldId) {
+
+							if (isset($input['custom_field_value'][$fieldId])) {
+
+								DB::table('user_custom_field_values')->insert([
+									'user_id'         => $user_id,
+									'custom_field_id' => $fieldId,
+									'field_value'     => $input['custom_field_value'][$fieldId],
+									'created_at'      => now(),
+									'updated_at'      => now(),
+								]);
+							}
+						}
 					}
 
 
@@ -923,7 +929,7 @@ $this->WriteFileLog($role_check, 'email');
 				->get();
 			
 			$user_custom_values = DB::table('custom_fields as cf')
-				->leftJoin('user_custom_field_values as ucfv', function ($join) use ($id) {
+				->InnerJoin('user_custom_field_values as ucfv', function ($join) use ($id) {
 					$join->on('cf.id', '=', 'ucfv.custom_field_id')
 						->where('ucfv.user_id', '=', $id);
 				})

@@ -22,11 +22,11 @@ class elearningController extends BaseController
             $userID = auth()->user()->id;
 
 
-          
+
             $rows = DB::select("SELECT role_id from uam_user_roles  where user_id=$userID");
 
             $role_id = $rows[0]->role_id;
-                       
+
 
             $availablenotices = DB::select("SELECT * from elearning_noticeboard where (user_category =$role_id or user_category =0)and notice_status=0 ");
 
@@ -135,7 +135,7 @@ class elearningController extends BaseController
                 'rows' => $filterd_noticearry,
                 'dasboardCount' => $row2,
                 'recomment_courses' => $courses_classes_all,
-                'role_id'=>$role_id
+                'role_id' => $role_id
             ];
 
             $serviceResponse = array();
@@ -253,8 +253,19 @@ class elearningController extends BaseController
             $rows = DB::select("SELECT role_id from uam_user_roles  where user_id=$userID");
             $role_id = $rows[0]->role_id;
 
-            $rows = DB::select("SELECT  * from elearning_events  where (user_category =$role_id or user_category = 0) and event_date ='$event_date' and event_status=0");
-
+            if (!empty($event_date) && $event_date != 'undefined' && $event_date != 'null') {
+                // Return events for specific date
+                $rows = DB::select("SELECT * from elearning_events  
+            WHERE (user_category = $role_id or user_category = 0) 
+            AND event_status = 0 
+            AND event_date = '$event_date'");
+            } else {
+                // Return ALL events (for initial load)
+                $rows = DB::select("SELECT * from elearning_events  
+            WHERE (user_category = $role_id or user_category = 0) 
+            AND event_status = 0 
+            ORDER BY event_date DESC");
+            }
             // $events = Event::select('event_date')->where('event_date', '>=', now()->startOfMonth())->get();
             // $eventDates = $events->pluck('event_date')->map(function ($date) {
             //     return \Carbon\Carbon::parse($date)->format('d-m-Y'); // Format as needed

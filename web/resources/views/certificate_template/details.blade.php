@@ -22,24 +22,7 @@
                         @if(isset($certificate_template_details))
                         @method('POST')
                         @endif
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label>Status</label>
-                                <select name="status" class="form-control">
-                                    <option value="Draft" {{ ($certificate_templates['status'] ?? '')=='Draft'?'selected':'' }}>Draft</option>
-                                    <option value="Approved" {{ ($certificate_templates['status'] ?? '')=='Approved'?'selected':'' }}>Approved</option>
-                                    <option value="Active" {{ ($certificate_templates['status'] ?? '')=='Active'?'selected':'' }}>Active</option>
-                                    <option value="Inactive" {{ ($certificate_templates['status'] ?? '')=='Inactive'?'selected':'' }}>Inactive</option>
-                                    <option value="Archived" {{ ($certificate_templates['status'] ?? '')=='Archived'?'selected':'' }}>Archived</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label>Version</label>
-                                <input type="text" class="form-control"
-                                    value="{{ $certificate_templates['version'] ?? 1 }}" readonly>
-                            </div>
-                        </div>
+                        
 
                         <div id="entryWrapper">
                             @php
@@ -52,7 +35,6 @@
 
                             <input type="hidden" name="certificate_templates_id"
                                 value="{{ $certificate_templates['certificate_templates_id'] ?? '' }}">
-
                             @foreach($entries as $entry)
                             <div class="row entry-block mb-3">
                                 <input type="hidden" name="certificate_template_signatories_id[]"
@@ -91,7 +73,7 @@
                                     <label>Logo</label>
 
                                     <input type="file" name="logo[]" class="form-control"
-                                        {{ !empty($entry['logo']) ? '' : 'required' }}>
+                                        {{ !empty($certificate_templates['logo']) ? '' : 'required' }}>
 
                                     @if(!empty($certificate_templates['logo']))
                                     {{-- Display current image --}}

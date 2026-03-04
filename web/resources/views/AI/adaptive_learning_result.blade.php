@@ -231,7 +231,7 @@ body {
                         </p>
                     </div>
                     <div class="text-right">
-                        <div class="h5 mb-0 text-primary">CPT Points:
+                        <div class="h5 mb-0 text-danger">CPT Points:
                             {{ number_format($data['fetched_data']['user']['total_cptpoints']) }}</div>
                         <small class="text-muted">Total Earned</small>
                     </div>
@@ -510,10 +510,10 @@ body {
                         <div class="small text-muted mb-2">DATA SOURCES</div>
                         <div class="d-flex flex-wrap gap-2">
                             @foreach($data['fetched_data']['skill_gap_confidence']['data_sources'] as $source)
-                            <span class="badge badge-light border text-dark">
+                            <!-- <span class="badge badge-light border text-dark">
                                 <i class="fa fa-database mr-1"></i>
                                 {{ ucfirst(str_replace('_', ' ', $source)) }}
-                            </span>
+                            </span> -->
                             @endforeach
                         </div>
                     </div>
@@ -544,9 +544,9 @@ body {
                                     {{ $data['learning_path_update']['target_module']['entity_id'] }}
                                 </div>
                             </div>
-                            @if($data['learning_path_update']['is_mandatory'])
+                            <!-- @if($data['learning_path_update']['is_mandatory'])
                             <span class="badge badge-danger">MANDATORY</span>
-                            @endif
+                            @endif -->
                         </div>
                     </div>
 
@@ -586,11 +586,11 @@ body {
                         <div class="small text-muted mb-2">SUGGESTED CONTENT TYPES</div>
                         <div class="d-flex flex-wrap gap-2">
                             @foreach($data['recommendations']['content_type_suggestion'] as $content)
-                            <span class="badge badge-primary p-2">
+                            <!-- <span class="badge badge-primary p-2">
                                 <i
                                     class="fa fa-{{ $content == 'video' ? 'play-circle' : ($content == 'quiz' ? 'question-circle' : 'book') }} mr-1"></i>
                                 {{ ucfirst($content) }}
-                            </span>
+                            </span> -->
                             @endforeach
                         </div>
                     </div>
@@ -654,9 +654,9 @@ body {
                     <div class="mb-4">
                         <div class="small text-muted mb-2">FOCUS AREAS</div>
                         <div class="d-flex flex-wrap gap-2">
-                            @foreach($data['ai_reasoning']['focus_areas'] as $area)
+                            <!-- @foreach($data['ai_reasoning']['focus_areas'] as $area)
                             <span class="badge badge-info">{{ $area }}</span>
-                            @endforeach
+                            @endforeach -->
                         </div>
                     </div>
 
