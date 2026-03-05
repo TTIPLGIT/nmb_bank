@@ -158,7 +158,9 @@ class elearningController extends BaseController
                 'rows' => $filterd_noticearry,
                 'dasboardCount' => $row2,
                 'recomment_courses' => $courses_classes_all,
-                'role_id' => $role_id
+                'role_id' => $role_id,
+                'total_cpd_points' =>$total_cpd_points,
+                'completed_courses' =>$completed_courses,
             ];
 
             $serviceResponse = array();
