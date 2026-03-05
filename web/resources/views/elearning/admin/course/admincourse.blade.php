@@ -631,7 +631,7 @@
 
 
 
-                                                            <!-- <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal3" onclick="fetch_courseupdate_new({{$data->course_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a> -->
+                                                            <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal3" onclick="fetch_courseupdate_new({{$data->course_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
                                                             <a class="btn btn-link" title="show" data-toggle="modal"
                                                                 data-target="#addModal5"
                                                                 onclick="fetch_courseupdate_new({{$data->course_id}},'show')"><i
@@ -1277,8 +1277,8 @@
 
                                 <select class="form-control " name="course_pay" id="course_pay">
                                     <option value="">---Select Course Type---</option>
-                                    <option value="paid">Paid Course</option>
-                                    <option value="free">Free Course</option>
+                                    <!-- <option value="paid">Paid Course</option> -->
+                                    <option value="free" selected>Free Course</option>
                                 </select>
 
                             </div>
@@ -2283,7 +2283,7 @@
 
 
 
-        } 
+        }
 
     }
 
@@ -2639,25 +2639,29 @@
                 /* ===================== EDIT MODE ===================== */
                 if (type === "edit") {
 
-                    // Basic fields
+                    let url = "{{ url('/elearning/course/update') }}/" + course_id;
+                    $('#course_form_edit').attr('action', url);
+
+                    // Hidden ID
                     $('#course_edit').val(row.course_id);
-                    $('#course_category_id_edit').val(row.course_category_id).prop('disabled', false);
-                    $('#role_id_edit').val(row.role_id).prop('disabled', false);
-                    $('#designation_id_edit').val(row.designation_id).prop('disabled', false);
+
+                    // Basic fields
+                    $('#course_category_id_edit').val(row.course_category);
+                    $('#role_id_edit').val(row.role_id);
+                    $('#designation_id_edit').val(row.designation_id);
+
                     $('#course_nameedit').val(row.course_name);
                     $('#course_descriptionedit').val(row.course_description);
                     $('#course_instructoredit').val(row.course_instructor);
                     $('#course_cpt_pointsedit').val(row.course_cpt_points);
 
-                    // Course certificate
-                    // if (row.course_certificate == "1") {
-                    //     $('.answer_edit_on').prop('checked', true);
-                    // } else {
-                    //     $('.answer_edit_off').prop('checked', true);
-                    // }
+                    // Course Certificate
+                    $('input[name="course_certificate"][value="' + row.course_certificate + '"]')
+                        .prop('checked', true);
 
-                    // Course pay
+                    // Course Pay
                     $('#course_payedit').val(row.course_pay);
+
                     if (row.course_pay === "paid") {
                         $('#paid1').show();
                         $('#free1').hide();
@@ -2665,7 +2669,6 @@
                     } else {
                         $('#paid1').hide();
                         $('#free1').show();
-                        $('#course_price').val(0);
                     }
 
                     // Dates
@@ -2673,27 +2676,85 @@
                     $('#course_end_periodedit').val(row.course_end_period);
 
                     // Images
-                    $('.img-fluid1').attr('src', row.introduction_path1)
-                        .attr('title', row.course_introduction);
-                    $('.img-fluid2').attr('src', row.banner_path1)
-                        .attr('title', row.course_banner);
+                    $('#course_introductionedit').attr('src', row.introduction_path1);
+                    $('.img-fluid2').attr('src', row.banner_path1);
 
-                    // ===== USER IDS (IMPORTANT FIX) =====
+                    // ===== USER IDS =====
                     let userIdsArray = row.user_ids ? row.user_ids.split(',') : [];
-                    $('#user_ids_edit').val(userIdsArray).prop('disabled', false).trigger('change');
+                    $('#user_ids_edit').val(userIdsArray).trigger('change');
 
-                    // ===== COURSE CLASSES =====
-                    $('.course_classesedit')
-                        .val(row.course_classes.split(', '))
-                        .trigger('change');
+                    // ===== CLASSES =====
+                    let classArray = row.course_classes ? row.course_classes.split(',') : [];
+                    $('#course_classesedit').val(classArray).trigger('change');
 
-                    // Reinitialize select2
-                    reinitializeSelect2('.js-select5'); // users
-                    reinitializeSelect2('.js-select6'); // classes
+                    // ===== TAGS =====
+                    $('#table_bodyedit').html('');
+                    if (row.course_tags) {
+                        let tags = row.course_tags.split(',');
+                        tags.forEach(function(tag) {
+                            $('#table_bodyedit').append(`
+                <tr>
+                    <td>
+                        <input type="text" class="form-control default" name="course_tags[]" value="${tag}">
+                    </td>
+                    <td>
+                        <button class="danger" onclick="remove_tr(this)">
+                            <i class="fa fa-close"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
+                        });
+                    }
+
+                    // ===== SKILLS REQUIRED =====
+                    $('#table_body1edit').html('');
+                    if (row.course_skills_required) {
+                        let skills = row.course_skills_required.split(',');
+                        skills.forEach(function(skill) {
+                            $('#table_body1edit').append(`
+                <tr>
+                    <td>
+                        <input type="text" class="form-control default" name="course_skills_required[]" value="${skill}">
+                    </td>
+                    <td>
+                        <button class="danger" onclick="remove_tr(this)">
+                            <i class="fa fa-close"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
+                        });
+                    }
+
+                    // ===== GAIN SKILLS =====
+                    $('#table_body2edit').html('');
+                    if (row.course_gain_skills) {
+                        let gains = row.course_gain_skills.split(',');
+                        gains.forEach(function(gain) {
+                            $('#table_body2edit').append(`
+                <tr>
+                    <td>
+                        <input type="text" class="form-control default" name="course_gain_skills[]" value="${gain}">
+                    </td>
+                    <td>
+                        <button class="danger" onclick="remove_tr(this)">
+                            <i class="fa fa-close"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
+                        });
+                    }
+
+                    // Select2
+                    reinitializeSelect2('.js-select5');
+                    reinitializeSelect2('.js-select6');
                 }
 
                 /* ===================== SHOW MODE ===================== */
                 if (type === "show") {
+                    let url = "{{ url('/elearning/course/show') }}/" + course_id;
                     $('#course_category_id_show').val(String(row.course_category)).prop('disabled', true);
                     $('#role_id_show').val(row.role_id).prop('disabled', true);
                     $('#designation_id_show').val(row.designation_id).prop('disabled', true);
@@ -2701,13 +2762,20 @@
                     $('#course_nameshow').val(row.course_name).prop('disabled', true);
                     $('#course_descriptionshow').val(row.course_description).prop('disabled', true);
                     $('#course_instructorshow').val(row.course_instructor).prop('disabled', true);
-
+                    $('#course_payshow').val(row.course_pay).prop('disabled', true);
+                    $('#course_start_periodshow').val(row.course_start_period).prop('disabled', true);
+                    $('#course_end_periodshow').val(row.course_end_period).prop('disabled', true);
+                    $('#exam_nameshow').val(row.exam_name).prop('disabled', true);
+                    $('#exam_dateshow').val(row.exam_date).prop('disabled', true);
+                    $('#pass_percentageshow').val(row.pass_percentage).prop('disabled', true);
+                    $('#course_tagsshow').val(row.course_tags).prop('disabled', true);
+                    $('#course_skills_requiredshow').val(row.course_skills_required).prop('disabled', true);
+                    $('#course_gain_skillsshow').val(row.course_gain_skills).prop('disabled', true);
+                    $('#course_cpt_pointsshow').val(row.course_cpt_points).prop('disabled', true);
+                    $('#course_priceshow').val(row.course_price).prop('disabled', true);
                     // User IDs (SHOW)
                     let userIdsArray = row.user_ids ? row.user_ids.split(',') : [];
-                    $('#user_ids_show')
-                        .val(userIdsArray)
-                        .prop('disabled', true)
-                        .trigger('change');
+                    $('#user_ids_show').val(userIdsArray).prop('disabled', true).trigger('change');
 
                     // Certificate
                     $('input[name="course_certificate"]').prop('disabled', true);
@@ -2715,7 +2783,10 @@
                     // Check the correct value
                     $('input[name="course_certificate"][value="' + row.course_certificate + '"]')
                         .prop('checked', true);
+                    $('input[name="course_noperiod"]').prop('disabled', true);
 
+                    $('input[name="course_noperiod"][value="' + row.course_noperiod + '"]')
+                        .prop('checked', true);
                     // corse exam
 
                     $('input[name="course_exam"]').prop('disabled', true);
@@ -3280,7 +3351,7 @@
 
             <div class="card longquestion" id="">
                 <h4 class="modal-title long">Edit Course:</h4>
-                <form method="POST" id="course_form_edit" action="{{url('/elearning/course/update/1')}}"
+                <form method="POST" id="course_form_edit" action=""
                     enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden" name="course_edit" class="course_edit" id="course_edit">
@@ -3688,19 +3759,10 @@
 
         <div class="modal-content">
 
-
-
             <div class="modal-header mh">
                 <h4 class="modal-title">Show Course</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
             </div>
-
-
-
-
-            <!-- Long question -->
-
             <div class="card longquestion" id="">
                 <h4 class="modal-title long">Show Course:</h4>
                 <form method="POST" id="course_form_show" action="{{url('/elearning/course/show/1')}}"
@@ -3979,11 +4041,10 @@
 
 
                         <div class="col-md-12 examnameshow">
-                            <div class="">
-                                <div class="col-md-3"><label class="course_period">Exam Details:<span class="error-star"
-                                            style="color:red;">*</span></label></div>
+                            <div class="row">
 
-                                <div class="col-md-5">
+
+                                <div class="col-md-6">
 
                                     <div class="form-group">
                                         <label class="control-label required">Exam Name:<span class="error-star"
@@ -4102,8 +4163,6 @@
                         </div>
                 </form>
             </div>
-
-            <!-- end long-->
         </div>
     </div>
 </div>

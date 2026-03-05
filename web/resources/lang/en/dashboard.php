@@ -24,5 +24,6 @@ return [
     'Cart' =>   'Cart',
     'Achievments' => 'Achievments',
     'Leaderboard' => 'Leaderboard',
-    'Learning Management' => 'Learning Management'
+    'Learning Management' => 'Learning Management',
+    'SCORM' => 'SCORM',
 ];
