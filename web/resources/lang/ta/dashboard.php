@@ -24,5 +24,6 @@ return [
     'Cart' =>   'கூடை',
     'Achievments' => 'சாதனைகள்',
     'Leaderboard' => 'லீடர்போர்டு',
-    'Elearning Courses' => 'கற்றல் படிப்பு'
+    'Elearning Courses' => 'கற்றல் படிப்பு',
+    'SCORM' =>'வசை'
 ];
