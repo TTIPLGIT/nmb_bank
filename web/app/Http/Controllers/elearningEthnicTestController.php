@@ -2375,6 +2375,7 @@ $scormCourses = DB::table('scorm_courses as sc')
                 'course_id' => $course_id,
                 'logo_url' =>  $certificate_template_rows[0]->logo_url,
                 // 'validation_date' => $final_validation_date,
+                'validation_date' => isset($final_validation_date) ? $final_validation_date : null,
 
             ];
            
