@@ -47,7 +47,7 @@ class tryController extends BaseController
                 'class_quiz' => $inputArray['class_quiz'],
 
             ];
-           
+            
             $update_id = DB::transaction(function () use ($input) {
                 $role_id = DB::table('elearning_classes')
                     ->insertGetId([
@@ -62,11 +62,11 @@ class tryController extends BaseController
 
                     ]);
             });
-
+   
             $this->notifications_insert(null, auth()->user()->id, $input['class_name'] . " Class Name has been Created Successfully", "/admincourse");
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
-            // $this->auditLog('elearning_classes', $update_id, 'Create', 'Class Creation', auth()->user()->id, NOW(), $role_name_fetch);
+            $this->auditLog('elearning_classes', $update_id, 'Create', 'Class Creation', auth()->user()->id, NOW(), $role_name_fetch);
 
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');

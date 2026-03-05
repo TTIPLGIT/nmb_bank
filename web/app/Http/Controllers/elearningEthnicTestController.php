@@ -1566,7 +1566,7 @@ $scormCourses = DB::table('scorm_courses as sc')
                     'cc.*'
                 )
                 ->get();
-// dd($courseDetailsLists);
+            // dd($courseDetailsLists);
             if ($results && $courseDetailslist) {
                 $old_cptPoints = $results->total_cptpoints;
                 $new_cptPoints = $courseDetailslist->course_cpt_points;
@@ -1666,8 +1666,8 @@ $scormCourses = DB::table('scorm_courses as sc')
 
 
 
-            
-        
+
+
             return view('elearning.class', compact('expiryMessage', 'courseDetails', 'classContents', 'selected_class', 'courseContents', 'classOrder', 'isForum', 'questionAdded', 'askedQuestions', 'noQuestionsYet', 'modules', 'screens', 'menus', 'user_id', 'courseresorces', 'counts', 'audio_exist', 'video_exist', 'pdf_exist', 'course_certificate', 'quizzesWithKey', 'quiz_results', 'ratings', 'average_ratting'));
         } catch (\Exception $exc) {
             // dd("welcome da");
@@ -2295,7 +2295,7 @@ $scormCourses = DB::table('scorm_courses as sc')
 
     public function generatePDF(Request $request, $id)
     {
-        // dd($id);
+
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return redirect(url('/'));
@@ -2313,7 +2313,7 @@ $scormCourses = DB::table('scorm_courses as sc')
 
             $name = $this->getusername($user_id);
 
-
+            //  dd($id);
             DB::table('user_course_relation')
                 ->where('course_id', $id)
                 ->where('user_id', $user_id)
@@ -2321,6 +2321,7 @@ $scormCourses = DB::table('scorm_courses as sc')
                     'get_certified' => "1",
 
                 ]);
+
             $certificate_template_id = $course_details[0]->cetificate_template;
 
             $signatories  = DB::table('certificate_template_signatories')
@@ -2344,7 +2345,7 @@ $scormCourses = DB::table('scorm_courses as sc')
                 ->get();
 
             $calculate_date = $courseDetails[0]->certificate_expiry;
-
+           
             if ($courseDetails[0]->expiry_type == 'month' && !empty($courseDetails[0]->expiry_input)) {
 
                 $today = \Carbon\Carbon::today();
@@ -2365,6 +2366,7 @@ $scormCourses = DB::table('scorm_courses as sc')
                 // dd($final_validation_date);
             }
             // dd($final_validation_date);
+            
             $data = [
                 'date' => Carbon::today()->format('d-m-Y'),
                 'course_name' => $course_name,
@@ -2375,6 +2377,7 @@ $scormCourses = DB::table('scorm_courses as sc')
                 // 'validation_date' => $final_validation_date,
 
             ];
+           
             // dd($get_template->template_name);
 
             // dd($data['logo_url']);
@@ -2383,7 +2386,7 @@ $scormCourses = DB::table('scorm_courses as sc')
             $pdf = PDF::loadView("certificate_template.{$get_template->template_name}.index", [
                 'data' => $data
             ]);
-            // dd($pdf);
+            
 
             
 
@@ -2581,7 +2584,7 @@ $scormCourses = DB::table('scorm_courses as sc')
     }
     public function course_exam(Request $request, $course_id, $class_id)
     {
-        //dd($course_id);
+
         $method = 'Method => elearningEthnicTestController => course_exam';
 
         try {
@@ -2589,7 +2592,9 @@ $scormCourses = DB::table('scorm_courses as sc')
             if ($user_id == null) {
                 return view('auth.login');
             }
+
             $request = array();
+
             $request['course_id'] = $course_id;
             $request['class_id'] = $class_id;
             $request['mlhud_id'] = $user_id;
@@ -2644,7 +2649,7 @@ $scormCourses = DB::table('scorm_courses as sc')
     }
     public function exam_store(Request $request)
     {
-
+        // dd($request);
         $user_id = $request->session()->get("userID");
         if ($user_id == null) {
             return view('auth.login');
@@ -2661,13 +2666,14 @@ $scormCourses = DB::table('scorm_courses as sc')
             $data['total_scores'] = $request->total_scores;
             $data['course_id'] = $request->course_id;
             $data['class_id'] = $request->class_id;
+            // dd($data);
             $course_id = $request->course_id;
 
             $encryptArray = $this->encryptData($data);
             $request = array();
 
             $request['requestData'] = $encryptArray;
-
+            // dd($request);
             $gatewayURL = config('setting.api_gateway_url') . '/course/exam/store';
 
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
@@ -2709,7 +2715,7 @@ $scormCourses = DB::table('scorm_courses as sc')
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/cpd';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
-            //dd($response);
+            // dd($response);
 
             $objData = json_decode($this->decryptData($response->Data));
             //dd($objData);
