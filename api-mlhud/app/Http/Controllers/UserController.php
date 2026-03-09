@@ -2344,6 +2344,9 @@ $this->WriteFileLog($role_check, 'email');
 
 			$method = 'Method => FAQquestionsController => update_toggle';
 			$inputArray = $this->decryptData($request->requestData);
+			// $isMobile = isset($request['isMobile']);
+            // $inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
+			
 			$input = [
 				'is_active' => $inputArray['is_active'],
 				'f_id' => $inputArray['f_id'],
