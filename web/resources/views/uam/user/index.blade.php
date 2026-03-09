@@ -2,38 +2,39 @@
 
 @section('content')
 <style>
-a:hover,
-a:focus {
-    text-decoration: none;
-    outline: none;
-}
+    a:hover,
+    a:focus {
+        text-decoration: none;
+        outline: none;
+    }
 
-.danger {
-    background-color: #ffdddd;
-    border-left: 6px solid #f44336;
-}
+    .danger {
+        background-color: #ffdddd;
+        border-left: 6px solid #f44336;
+    }
 
-#align {
-    border-collapse: collapse !important;
-}
+    #align {
+        border-collapse: collapse !important;
+    }
 
-table.dataTable.no-footer {
-    border-bottom: .5px solid #002266 !important;
-}
+    table.dataTable.no-footer {
+        border-bottom: .5px solid #002266 !important;
+    }
 
-thead th {
-    height: 5px;
-    border-bottom: solid 1px #ddd;
-    font-weight: bold;
-}
+    thead th {
+        height: 5px;
+        border-bottom: solid 1px #ddd;
+        font-weight: bold;
+    }
 
-.userrolecontainer {
-    display: inline-block !important;
-    padding-right: 21px;
-}
-table td {
-    text-transform:none !important;
-}
+    .userrolecontainer {
+        display: inline-block !important;
+        padding-right: 21px;
+    }
+
+    table td {
+        text-transform: none !important;
+    }
 </style>
 <div class="main-content">
 
@@ -64,9 +65,9 @@ table td {
 
             </div>
             <style>
-            .section {
-                margin-top: 20px;
-            }
+                .section {
+                    margin-top: 20px;
+                }
             </style>
 
 
@@ -89,32 +90,32 @@ table td {
                             <input type="hidden" name="session_data" id="session_data" class="session_data"
                                 value="{{ session('success') }}">
                             <script type="text/javascript">
-                            window.onload = function() {
-                                var message = $('#session_data').val();
-                                swal({
-                                    title: "Success",
-                                    text: message,
-                                    icon: "success",
-                                });
+                                window.onload = function() {
+                                    var message = $('#session_data').val();
+                                    swal({
+                                        title: "Success",
+                                        text: message,
+                                        icon: "success",
+                                    });
 
 
-                            }
+                                }
                             </script>
                             @elseif(session('error'))
 
                             <input type="hidden" name="session_data" id="session_data1" class="session_data"
                                 value="{{ session('error') }}">
                             <script type="text/javascript">
-                            window.onload = function() {
-                                var message = $('#session_data1').val();
-                                swal({
-                                    title: "Success",
-                                    text: message,
-                                    icon: "success",
-                                });
+                                window.onload = function() {
+                                    var message = $('#session_data1').val();
+                                    swal({
+                                        title: "Success",
+                                        text: message,
+                                        icon: "success",
+                                    });
 
 
-                            }
+                                }
                             </script>
                             @endif
 
@@ -141,37 +142,41 @@ table td {
                                                 <td>{{ $row['email'] }}</td>
                                                 <!-- <td>{{ $row['role_designation'] }}</td> -->
                                                 <td class="text-center">
+                                                    <form id="delete-form-{{ $row['id'] }}" action="{{ route('user.delete', \Crypt::encrypt($row['id'])) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @if(strpos($screen_permission['permissions'], 'Edit') !== false)
+                                                        <a class="btn btn-link"
+                                                            href="{{ route('user.edit_permission', \Crypt::encrypt($row['id'])) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Edit Permission"><i class="fa fa-lock"
+                                                                aria-hidden="true"></i><span></span></a>
+                                                        @endif
 
-                                                    @if(strpos($screen_permission['permissions'], 'Edit') !== false)
-                                                    <a class="btn btn-link"
-                                                        href="{{ route('user.edit_permission', \Crypt::encrypt($row['id'])) }}"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Edit Permission"><i class="fa fa-lock"
-                                                            aria-hidden="true"></i><span></span></a>
-                                                    @endif
-
-                                                    @if(strpos($screen_permission['permissions'], 'Edit') !== false)
-                                                    <a class="btn btn-link"
-                                                        href="{{ route('user.edit', \Crypt::encrypt($row['id'])) }}"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i
-                                                            class="fa fa-edit" aria-hidden="true"></i><span></span></a>
+                                                        @if(strpos($screen_permission['permissions'], 'Edit') !== false)
+                                                        <a class="btn btn-link"
+                                                            href="{{ route('user.edit', \Crypt::encrypt($row['id'])) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i
+                                                                class="fa fa-edit" aria-hidden="true"></i><span></span></a>
 
 
-                                                    @endif
+                                                        @endif
 
-                                                    @if(strpos($screen_permission['permissions'], 'Show') !== false)
+                                                        @if(strpos($screen_permission['permissions'], 'Show') !== false)
 
-                                                    @endif
-                                                    @if(strpos($screen_permission['permissions'], 'Edit') !== false)
-                                                    <input type="hidden" name="delete_id"
-                                                        id="<?php    echo $row['id']; ?>"
-                                                        value="{{ route('user.delete', \Crypt::encrypt($row['id'])) }}">
-                                                    <a class="btn btn-link" data-bs-toggle="tooltip"
-                                                        data-bs-placement="top" title="Delete" style="cursor: pointer;"
-                                                        onclick="return myFunction(<?php    echo $row['id']; ?>);"><i
-                                                            class="fa fa-trash" aria-hidden="true"></i><span></span></a>
-                                                    @endif
+                                                        @endif
+                                                        @if(strpos($screen_permission['permissions'], 'Edit') !== false)
+                                                        <input type="hidden" name="delete_id"
+                                                            id="<?php echo $row['id']; ?>"
+                                                            value="{{ route('user.delete', \Crypt::encrypt($row['id'])) }}">
 
+                                                        @endif
+                                                        @if(strpos($screen_permission['permissions'], 'Delete') !== false)
+                                                        <a class="btn btn-link" title="Delete"
+                                                            onclick="confirmDelete({{ $row['id'] }})"><i
+                                                                class="far fa-trash-alt" style="color:red"></i></a>
+                                                        @endif
+                                                    </form>
 
                                                 </td>
                                                 <td style="text-align: center;">
@@ -206,84 +211,83 @@ table td {
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-function myFunction(id) {
+    function confirmDelete(id) {
 
-    swal({
-        title: "Confirmation For Delete ?",
-        text: "Are You Sure to delete this data",
-        icon: "warning",
-        buttons: [
-            'No, cancel it!',
-            'Yes, I am sure!'
-        ],
-        dangerMode: true,
-    }).then(function(isConfirm) {
-        if (isConfirm) {
-            var url = $('#' + id).val();
-            // alert(url);
-            window.location.href = url;
-        }
-    });
+        swal({
+                title: "Confirmation For Delete?",
+                text: "Are you sure you want to delete this data?",
+                icon: "warning",
+                buttons: ["No", "Yes"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
 
-}
+                if (willDelete) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+
+            });
+
+
+    }
 </script>
 <script type="text/javascript">
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-function functiontoggle(id) {
-    // alert(id);
-    if ($('#is_active' + id).prop('checked')) {
-        var is_active = '0';
-    } else {
-        var is_active = '1';
-    }
-
-
-    var f_id = id;
-
-
-
-
-
-    $.ajax({
-        url: "{{ route('user.update_toggle') }}",
-        type: 'POST',
-        data: {
-            is_active: is_active,
-            f_id: f_id,
-            _token: '{{csrf_token()}}'
-        },
-        error: function() {
-            alert('Something is wrong');
-        },
-        success: function(data) {
-
-            var data_convert = $.parseJSON(data);
-
-            console.log(data_convert.Data);
-            if (data_convert.Data == 1) {
-                swal({
-                    title: "Success",
-                    text: "User Deactivated",
-                    type: "success"
-                }, );
-            } else {
-                swal({
-                    title: "Success",
-                    text: "User Activated",
-                    type: "success"
-                }, );
-            }
-
+    function functiontoggle(id) {
+        // alert(id);
+        if ($('#is_active' + id).prop('checked')) {
+            var is_active = '0';
+        } else {
+            var is_active = '1';
         }
 
 
-    });
-}
+        var f_id = id;
+
+
+
+
+
+        $.ajax({
+            url: "{{ route('user.update_toggle') }}",
+            type: 'POST',
+            data: {
+                is_active: is_active,
+                f_id: f_id,
+                _token: '{{csrf_token()}}'
+            },
+            error: function() {
+                alert('Something is wrong');
+            },
+            success: function(data) {
+
+                var data_convert = $.parseJSON(data);
+
+                console.log(data_convert.Data);
+                if (data_convert.Data == 1) {
+                    swal({
+                        title: "Success",
+                        text: "User Deactivated",
+                        type: "success"
+                    }, );
+                } else {
+                    swal({
+                        title: "Success",
+                        text: "User Activated",
+                        type: "success"
+                    }, );
+                }
+
+            }
+
+
+        });
+    }
 </script>
 
 @endsection

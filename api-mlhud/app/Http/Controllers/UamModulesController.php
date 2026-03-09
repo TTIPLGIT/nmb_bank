@@ -358,9 +358,9 @@ class UamModulesController extends BaseController
     public function data_delete($id)
     {
         try {
-
             $method = 'Method => UamModulesController => data_delete';
             $id = $this->decryptData($id);
+
             if ($id == 5) {
 
                 $serviceResponse = array();
@@ -372,10 +372,11 @@ class UamModulesController extends BaseController
                 return $sendServiceResponse;
             }
 
-            $check = DB::select("select * from uam_module_screens where module_id = '$id' and active_flag = '0' ");
-
+            $check = DB::select("select * from uam_module_screens where module_id = $id and active_flag = 0");
+$this->WriteFileLog($check);
+                
             if ($check != []) {
-
+$this->WriteFileLog('delete data');
                 DB::table('uam_modules')
                     ->where('module_id', $id)
                     ->update([

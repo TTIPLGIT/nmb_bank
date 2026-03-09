@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Credit Risk Assessment</title>
+
+<style>
+body{font-family:'Segoe UI',Arial;background:#f2f5f9;margin:0;}
+.header{background:linear-gradient(90deg,#0a2a43,#0d3b66);
+color:white;padding:25px;text-align:center;}
+.container{max-width:900px;margin:auto;padding:40px 20px;}
+.card{background:white;padding:20px;margin-bottom:20px;
+border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.08);}
+button{background:#0d3b66;color:white;border:none;
+padding:12px 30px;border-radius:6px;cursor:pointer;}
+.result{font-size:18px;font-weight:bold;margin-top:20px;}
+</style>
+
+<script>
+var API=null;
+
+function findAPI(win){
+   while(win){
+      try{ if(win.API) return win.API; }
+      catch(e){}
+      win=win.parent;
+   }
+   return null;
+}
+
+function initSCORM(){
+   API=findAPI(window);
+   if(API){ API.LMSInitialize(""); }
+}
+
+function finishSCORM(score){
+   if(API){
+      API.LMSSetValue("cmi.core.score.raw",score);
+      if(score>=70){
+         API.LMSSetValue("cmi.core.lesson_status","passed");
+      }else{
+         API.LMSSetValue("cmi.core.lesson_status","failed");
+      }
+      API.LMSCommit("");
+      API.LMSFinish("");
+   }
+}
+
+function calculateScore(){
+let score=0;
+let answers={
+q1:"b",q2:"true",q3:"true",q4:"true",q5:"true",
+q6:"true",q7:"true",q8:"true",q9:"true",q10:"true"
+};
+
+for(let key in answers){
+let el=document.querySelector('[name="'+key+'"]:checked');
+if(el && el.value===answers[key]) score++;
+}
+
+let percent = Math.round((score/10)*100);
+
+document.getElementById("result").innerHTML =
+"Your Score: " + percent + "%";
+
+finishSCORM(percent);
+}
+
+window.onload=initSCORM;
+</script>
+</head>
+
+<body>
+
+<div class="header">
+<h2>Credit Risk Management – Final Assessment</h2>
+</div>
+
+<div class="container">
+
+<form>
+
+<div class="card">
+1. Credit risk relates to:<br>
+<input type="radio" name="q1" value="a"> Market volatility
+<input type="radio" name="q1" value="b"> Borrower default
+</div>
+
+<div class="card">
+2. PD stands for Probability of Default.<br>
+<input type="radio" name="q2" value="true"> True
+<input type="radio" name="q2" value="false"> False
+</div>
+
+<div class="card">
+3. LGD measures potential loss percentage.<br>
+<input type="radio" name="q3" value="true"> True
+<input type="radio" name="q3" value="false"> False
+</div>
+
+<div class="card">
+4. EAD means Exposure at Default.<br>
+<input type="radio" name="q4" value="true"> True
+<input type="radio" name="q4" value="false"> False
+</div>
+
+<div class="card">
+5. NPAs indicate stressed assets.<br>
+<input type="radio" name="q5" value="true"> True
+<input type="radio" name="q5" value="false"> False
+</div>
+
+<div class="card">
+6. Collateral reduces lending risk.<br>
+<input type="radio" name="q6" value="true"> True
+<input type="radio" name="q6" value="false"> False
+</div>
+
+<div class="card">
+7. Basel III requires capital adequacy.<br>
+<input type="radio" name="q7" value="true"> True
+<input type="radio" name="q7" value="false"> False
+</div>
+
+<div class="card">
+8. Provisioning covers expected losses.<br>
+<input type="radio" name="q8" value="true"> True
+<input type="radio" name="q8" value="false"> False
+</div>
+
+<div class="card">
+9. Early warning systems detect stress.<br>
+<input type="radio" name="q9" value="true"> True
+<input type="radio" name="q9" value="false"> False
+</div>
+
+<div class="card">
+10. Credit monitoring improves portfolio quality.<br>
+<input type="radio" name="q10" value="true"> True
+<input type="radio" name="q10" value="false"> False
+</div>
+
+<center>
+<button type="button" onclick="calculateScore()">Submit</button>
+<div class="result" id="result"></div>
+</center>
+
+</form>
+</div>
+
+</body>
+</html>

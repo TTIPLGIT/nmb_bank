@@ -1,6 +1,10 @@
 @extends('layouts.adminnav')
 
 @section('content')
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 a:hover,
 a:focus {
@@ -118,8 +122,11 @@ thead th {
                                                 <td class="text-center">
 
                                                     <form
-                                                        action="{{ route('uam_screens.destroy', \Crypt::encrypt($row['screen_id'])) }}"
+                                                        id="delete-form-{{ $row['screen_id'] }}" action="{{ route('uam_screens.destroy', \Crypt::encrypt($row['screen_id'])) }}"
                                                         method="POST">
+
+                                                        @csrf
+                                                        @method('DELETE')
                                                         @if(strpos($screen_permission['permissions'], 'Show') !== false)
                                                         <a class="btn btn-link"
                                                             href="{{ route('uam_screens.show', \Crypt::encrypt($row['screen_id'])) }}"><i
@@ -136,12 +143,11 @@ thead th {
 
                                                         @endif
 
-                                                        @csrf
-                                                        @method('DELETE')
+                                                        
                                                         @if(strpos($screen_permission['permissions'], 'Delete') !==
                                                         false)
                                                         <a class="btn btn-link" type="submit" title="Delete"
-                                                            onclick="return confirm('Are you sure you want to delete this data ?');"><i
+                                                            onclick="confirmDelete({{ $row['screen_id'] }})"><i
                                                                 class="far fa-trash-alt" style="color:red"></i></a>
 
                                                         @endif
@@ -184,32 +190,25 @@ thead th {
 
 
 <script>
-function myFunction(id) {
+  function confirmDelete(id) {
 
     swal({
-        message: "Are You Sure to delete this data.",
-        title: "Confirmation For Delete ?",
-        centerVertical: true,
-        buttons: {
-            confirm: {
-                label: 'Yes',
-                className: 'btn-success'
-            },
-            cancel: {
-                label: 'No',
-                className: 'btn-danger'
-            }
-        },
-        callback: function(result) {
-            if (result == true) {
-                var url = $('#' + id).val();
-                window.location.href = url;
-            }
+        title: "Confirmation For Delete?",
+        text: "Are you sure you want to delete this data?",
+        icon: "warning",
+        buttons: ["No", "Yes"],
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+
+        if (willDelete) {
+          document.getElementById('delete-form-' + id).submit();
         }
-    });
+
+      });
 
 
-}
+  }
 </script>
 
 

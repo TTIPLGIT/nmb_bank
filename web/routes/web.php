@@ -263,7 +263,7 @@ Route::resource('user', UserController::class);
 
 Route::get('list_index', [UamUserController::class, 'list_index'])->name('list_index');
 
-Route::get('/user/delete/{id}', [\App\Http\Controllers\UserController::class, 'delete'])->name('user.delete');
+Route::post('/user/delete/{id}', [\App\Http\Controllers\UserController::class, 'delete'])->name('user.delete');
 
 Route::post('update_user_data', [App\Http\Controllers\UserController::class, 'update_user_data'])->name('update_user_data');
 

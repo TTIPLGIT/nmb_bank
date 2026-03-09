@@ -138,7 +138,6 @@ body {
     transform-origin: 50% 50%;
 }
 </style>
-
 <div class="main-content">
     <div class="container-fluid py-4">
         <!-- Header -->
@@ -152,7 +151,7 @@ body {
                         </p>
                     </div>
                     <div class="text-right">
-                        <div class="h5 mb-0 text-primary">{{ $processedData['processed_users'] ?? 0 }} Users Analyzed
+                        <div class="h5 mb-0 text-danger">{{ $processedData['processed_users'] ?? 0 }} Users Analyzed
                         </div>
                         <small class="text-muted">Real-time risk assessment</small>
                     </div>
