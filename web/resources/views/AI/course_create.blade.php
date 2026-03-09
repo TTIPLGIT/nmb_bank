@@ -2,12 +2,12 @@
 
 @section('content')
 <style type="text/css">
-.buttons-html5 {
-    background-color: #1bcd6b !important;
-    padding: 10px;
-    border: 1px;
-    color: white;
-}
+    .buttons-html5 {
+        background-color: #1bcd6b !important;
+        padding: 10px;
+        border: 1px;
+        color: white;
+    }
 </style>
 
 <div class="main-content">
@@ -15,29 +15,29 @@
 
     <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
     <script type="text/javascript">
-    window.onload = function() {
-        var message = $('#session_data').val();
-        swal({
-            title: "Success",
-            text: message,
-            type: "success",
-        });
+        window.onload = function() {
+            var message = $('#session_data').val();
+            swal({
+                title: "Success",
+                text: message,
+                type: "success",
+            });
 
-    }
+        }
     </script>
     @elseif(session('error'))
 
     <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
     <script type="text/javascript">
-    window.onload = function() {
-        var message = $('#session_data1').val();
-        swal({
-            title: "Info",
-            text: message,
-            type: "info",
-        });
+        window.onload = function() {
+            var message = $('#session_data1').val();
+            swal({
+                title: "Info",
+                text: message,
+                type: "info",
+            });
 
-    }
+        }
     </script>
     @endif
 
@@ -48,9 +48,9 @@
         </div>
         <div class="section-body mt-2">
             <style>
-            .section {
-                margin-top: 20px;
-            }
+                .section {
+                    margin-top: 20px;
+                }
             </style>
 
 
@@ -70,30 +70,30 @@
                             <input type="hidden" name="session_data" id="session_data" class="session_data"
                                 value="{{ session('success') }}">
                             <script type="text/javascript">
-                            window.onload = function() {
-                                var message = $('#session_data').val();
-                                swal({
-                                    title: "Success",
-                                    text: message,
-                                    type: "success",
-                                });
+                                window.onload = function() {
+                                    var message = $('#session_data').val();
+                                    swal({
+                                        title: "Success",
+                                        text: message,
+                                        type: "success",
+                                    });
 
-                            }
+                                }
                             </script>
                             @elseif(session('error'))
 
                             <input type="hidden" name="session_data" id="session_data1" class="session_data"
                                 value="{{ session('error') }}">
                             <script type="text/javascript">
-                            window.onload = function() {
-                                var message = $('#session_data1').val();
-                                swal({
-                                    title: "Info",
-                                    text: message,
-                                    type: "info",
-                                });
+                                window.onload = function() {
+                                    var message = $('#session_data1').val();
+                                    swal({
+                                        title: "Info",
+                                        text: message,
+                                        type: "info",
+                                    });
 
-                            }
+                                }
                             </script>
                             @endif
                             <div class="card">
@@ -109,7 +109,7 @@
                                                         <option value="">---Select Category---</option>
 
                                                         @foreach($rows['course_catagory_name'] as $data)
-                                                        <option value="{{$data['catagory_id']}}" data-badge="">
+                                                        <option value="{{$data['catagory_name']}}" data-badge="">
                                                             {{$data['catagory_name']}}
                                                         </option>
                                                         @endforeach
@@ -123,11 +123,12 @@
                                                         <option value="">Select Role</option>
 
                                                         @foreach($rows['rows'] as $role)
-                                                        <option value="{{ $role['role_id'] }}">
+                                                        <option value="{{ $role['role_id'] }}" data-name="{{ $role['role_name'] }}">
                                                             {{ $role['role_name'] }}
                                                         </option>
                                                         @endforeach
                                                     </select>
+                                                    <input type="hidden" name="role_name" id="role_name">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -137,7 +138,7 @@
                                                         id="designation_id_show" required>
                                                         <!-- <option value="">Please Select Designation</option> -->
                                                         @foreach( $rows['designation'] as $values)
-                                                        <option value="{{ $values['designation_id'] }}">
+                                                        <option value="{{ $values['designation_name'] }}">
                                                             {{ $values['designation_name'] }}
                                                         </option>
                                                         @endforeach
@@ -147,16 +148,15 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Course Name <span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" name="course_name"
-                                                        placeholder="Enter Course Name" required>
+                                                    <input class="form-control" type="text" id="course_name" name="course_name" placeholder="Enter Course Name">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Course Description <span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" name="course_description"
-                                                        placeholder="Enter Description" required>
+                                                    <textarea class="form-control" type="text" name="course_description"
+                                                        placeholder="Enter Description" required></textarea>
                                                 </div>
                                             </div>
 
@@ -215,15 +215,15 @@
 
 <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
 <script type="text/javascript">
-window.onload = function() {
-    var message = $('#session_data').val();
+    window.onload = function() {
+        var message = $('#session_data').val();
 
-    bootbox.alert({
-        title: "Success",
-        centerVertical: true,
-        message: message
-    });
-}
+        bootbox.alert({
+            title: "Success",
+            centerVertical: true,
+            message: message
+        });
+    }
 </script>
 @endif
 
@@ -231,13 +231,25 @@ window.onload = function() {
 @if (session('failed'))
 <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('failed') }}">
 <script type="text/javascript">
-window.onload = function() {
-    var message = $('#session_data').val();
+    window.onload = function() {
+        var message = $('#session_data').val();
 
-    bootbox.alert({
-        title: "Success",
-        centerVertical: true,
-        message: message
+        bootbox.alert({
+            title: "Success",
+            centerVertical: true,
+            message: message
+        });
+    }
+</script>
+@endif
+
+@if(session('error'))
+<script>
+window.onload = function() {
+    Swal.fire({
+        icon: 'error',
+        title: 'Blocked Content',
+        text: "{{ session('error') }}"
     });
 }
 </script>
@@ -247,60 +259,132 @@ window.onload = function() {
 <script src="{{ asset('js/table2excel.js') }}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
 
-    $('#role').change(function() {
+        $('#role').change(function() {
 
-        let role_id = $(this).val();
-        let designationSelect = $('#designation_id_show');
+            let role_id = $(this).val();
+            let designationSelect = $('#designation_id_show');
 
-        designationSelect.html('<option value="">Loading...</option>');
+            designationSelect.html('<option value="">Loading...</option>');
 
-        if (role_id === '') {
-            designationSelect.html('<option value="">Please Select Designation</option>');
+            if (role_id === '') {
+                designationSelect.html('<option value="">Please Select Designation</option>');
+                return;
+            }
+
+            $.ajax({
+                url: "{{ route('get.designation.by.role') }}",
+                type: "POST",
+                data: {
+                    role_id: role_id,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+
+                    designationSelect.html(
+                        '<option value="">Please Select Designation</option>');
+
+                    if (response.length > 0) {
+                        $.each(response, function(key, value) {
+                            designationSelect.append(
+                                '<option value="' + value.designation_id + '">' +
+                                value.designation_name +
+                                '</option>'
+                            );
+                        });
+                    }
+                }
+            });
+        });
+
+    });
+    // document.getElementById('createCourseForm').addEventListener('submit', function() {
+    //     // Hide the button
+    //     document.getElementById('submitBtn').style.display = 'none';
+
+    //     // Show the loader
+    //     document.getElementById('aiLoader').style.display = 'block';
+
+    //     // Form will submit normally and redirect
+    // });
+</script>
+
+<!-- create course -->
+
+<script>
+    $('#createCourseForm').on('submit', function(e) {
+
+        e.preventDefault(); // stop form initially
+
+        let courseName = $('#course_name').val().trim();
+
+        let validPattern = /^[A-Za-z][A-Za-z0-9 ]+$/;
+        let repeatedChar = /^(.)\1+$/;
+
+        // Minimum length
+        if (courseName.length < 3) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                text: 'Course name must be at least 3 characters.'
+            });
             return;
         }
 
-        $.ajax({
-            url: "{{ route('get.designation.by.role') }}",
-            type: "POST",
-            data: {
-                role_id: role_id,
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(response) {
+        // Maximum length
+        if (courseName.length > 50) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                text: 'Course name must not exceed 50 characters.'
+            });
+            return;
+        }
 
-                designationSelect.html(
-                    '<option value="">Please Select Designation</option>');
+        // Pattern validation
+        if (!validPattern.test(courseName)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                text: 'Course name must start with a letter and contain only letters, numbers and spaces.'
+            });
+            return;
+        }
 
-                if (response.length > 0) {
-                    $.each(response, function(key, value) {
-                        designationSelect.append(
-                            '<option value="' + value.designation_id + '">' +
-                            value.designation_name +
-                            '</option>'
-                        );
-                    });
-                }
-            }
-        });
+        // Repeated characters
+        if (repeatedChar.test(courseName)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                text: 'Course name cannot contain repeated characters.'
+            });
+            return;
+        }
+
+        // If validation passed
+        $('#submitBtn').hide();
+        $('#aiLoader').show();
+
+        this.submit(); // finally submit form
     });
-
-});
-document.getElementById('createCourseForm').addEventListener('submit', function() {
-    // Hide the button
-    document.getElementById('submitBtn').style.display = 'none';
-
-    // Show the loader
-    document.getElementById('aiLoader').style.display = 'block';
-
-    // Form will submit normally and redirect
-});
 </script>
 
 
 
+<script>
+    $(document).ready(function() {
 
+        $('#role').change(function() {
+
+            let roleName = $('#role option:selected').data('name');
+
+            $('#role_name').val(roleName);
+
+        });
+
+    });
+</script>
 
 
 

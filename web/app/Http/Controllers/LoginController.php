@@ -494,12 +494,17 @@ class LoginController extends BaseController
             session(['role_id' => $role_id]);
             // dd("sdaecsca");
             $user_id = $row[0]['id'];
+            $data = [
+                'user_id' => $user_id
+            ];
+
             $recommendations = 'http://20.164.0.23:3300/ai/recommendations/run';
             $predictive_analysis = 'http://20.164.0.23:3300/ai/predictive-analysis/run';
             
-              $response2 = $this->AIserviceRequest($recommendations, 'POST', '', $method);
+              $response2 = $this->AIserviceRequest($recommendations, 'POST', ['user_id' => $user_id], $method);
               $recommendation = json_decode($response2, true);
-              $response3 = $this->AIserviceRequest($predictive_analysis, 'POST', '', $method);
+
+              $response3 = $this->AIserviceRequest($predictive_analysis, 'POST', ['user_id' => $user_id], $method);
               $predective = json_decode($response3, true);
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
