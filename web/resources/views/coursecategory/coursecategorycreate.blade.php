@@ -112,7 +112,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Number of Course to achieve this Badge<span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="badge_count" id="badge_count">
+                                        <input type="number" class="form-control" min="1" name="badge_count" id="badge_count">
                                     </div>
                                     <!-- <div class="form-group col-md-4">
                                         <label>Badge Icon<span class="text-danger">*</span></label>
@@ -159,11 +159,11 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Number of Course to achieve this Streak<span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="number_course_for_streak" id="streak_count">
+                                        <input type="number" class="form-control" min="1" name="number_course_for_streak" id="streak_count">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Bonus Points<span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="bonus_point" id="streak_points">
+                                        <input type="number" class="form-control" min="1" name="bonus_point" id="streak_points">
                                     </div>
 
 
@@ -185,7 +185,7 @@
                                             </div>
 
                                             <div style="flex-grow: 1; padding-left:30px; min-width: 150px;">
-                                                <input type="number" class="form-control" name="complete_within_type" id="achieve_value" placeholder="Enter Time or Day">
+                                                <input type="number" class="form-control" min="1" name="complete_within_type" id="achieve_value" placeholder="Enter Time or Day">
                                             </div>
                                         </div>
                                     </div>
@@ -228,7 +228,7 @@
 
                                 <div class="form-group  col-6" id="unlockPointsDiv" style="display: none;">
                                     <label class="form-label">Points to Unlock<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="points_to_unlock" placeholder="Enter points" id="points_to_unlock">
+                                    <input type="number" class="form-control" name="points_to_unlock" min="1" placeholder="Enter points" id="points_to_unlock">
 
 
                                 </div>

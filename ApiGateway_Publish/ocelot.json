@@ -8876,7 +8876,44 @@
       ],
       "UpstreamPathTemplate": "/api/gateway/custom_filed_store",
       "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/custom_filed_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/custom_filed_delete/{id}",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/custom_filed_fetch/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/custom_filed_fetch/{id}",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/custom_filed_update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6062
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/custom_filed_update",
+      "UpstreamHttpMethod": ["POST"]
     }
+    
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:6063"

@@ -12,10 +12,11 @@
     <section class="section">
         <div class="card">
             <div class="card-body">
+                <h5 style="color:darkblue">{{$certificate_templates['template_name']}} Edit Certificate Template Detail</h5>
                 <div class="section-body mt-1">
-                    <h5 style="color:darkblue">
+                    <!-- <h5 style="color:darkblue">
                         {{!empty($certificate_template_details) && count($certificate_template_details) ? 'Edit Certificate Template Details' : 'Add Certificate Template Details' }}
-                    </h5>
+                    </h5> -->
 
                     <form method="POST" action="{{ route('certificate_template.store') }}" enctype="multipart/form-data">
                         @csrf
@@ -69,7 +70,18 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-3">
+                                
+
+
+
+                                <div class="col-md-1" style="margin-top:2rem">
+                                    <label>&nbsp;</label>
+                                    <button type="button" class="btn btn-danger btn-remove"
+                                        style="{{ count($entries) > 1 ? '' : 'display:none' }}">X</button>
+                                </div>
+                            </div>
+                            @endforeach
+                            <div class="col-md-3">
                                     <label>Logo</label>
 
                                     <input type="file" name="logo[]" class="form-control"
@@ -85,16 +97,6 @@
                                     <input type="hidden" name="existing_logo[]" value="{{ $certificate_templates['logo'] }}">
                                     @endif
                                 </div>
-
-
-
-                                <div class="col-md-1">
-                                    <label>&nbsp;</label>
-                                    <button type="button" class="btn btn-danger btn-remove"
-                                        style="{{ count($entries) > 1 ? '' : 'display:none' }}">X</button>
-                                </div>
-                            </div>
-                            @endforeach
                         </div>
 
 

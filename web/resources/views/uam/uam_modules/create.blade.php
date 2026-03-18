@@ -10,13 +10,15 @@
 </style> -->
 
 
-  
 
 
 
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 <div class="main-content module_space">
@@ -42,7 +44,7 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label class="control-label">Parent Module Name</label>
+                      <label class="control-label">Parent Module Name <span style="color: red;font-size: 16px;">*</span></label>
                       <select class="form-control" name="parent_module_id">
                         <option value="">Select Parent Module Name</option>
                         @foreach($rows as $key=>$row)
@@ -59,7 +61,7 @@
                       <select class="form-control" name="module_type">
                         <option value="">Select Category</option>
                         <option value="01">Module</option>
-                        <option value="02">Sub Module</option>
+                        <!-- <option value="02">Sub Module</option> -->
                       </select>
                     </div>
                   </div>
@@ -77,7 +79,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label class="control-label">Display Order </label>
+                      <label class="control-label">Display Order <span style="color: red;font-size: 16px;">*</span> </label>
                       <input class="form-control" type="text" id="display_order" name="display_order" placeholder="Enter Display Order" autocomplete="off">
                     </div>
                   </div>
@@ -87,9 +89,9 @@
 
                 <div class="row text-center">
                   <div class="col-md-12 btn_space">
-                    <button type="button" class="btn btn-success btn-space" onclick="save()" id="savebutton">Save</button>
-                    <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button>
-                    <a class="btn btn-danger footer_btn_cancel" button href="{{ route('uam_modules.index') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>
+                    <button type="button" class="btn btn-success btn-space" onclick="save()" id="savebutton">Submit</button>
+                    <!-- <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button> -->
+                    <a class="btn btn-danger footer_btn_cancel" button href="{{ route('uam_modules.index') }}"> Back </a>
 
 
                   </div>
@@ -126,7 +128,12 @@
   }
 
   setInputFilter(document.getElementById("display_order"), function(value) {
-    return /^\d*\.?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
+    if (/^\d*$/.test(value)) { // Allow only digits
+      if (value === "") return true; // Allow empty while typing
+      let num = parseInt(value);
+      return num >= 1 && num <= 20; // Restrict range
+    }
+    return false;
   });
 
   $("#module_name").keypress(function(event) {
@@ -193,6 +200,13 @@
 
     if (class_name == '') {
       swal("Please Enter class Name ", "", "error");
+      return false;
+    }
+
+    var display_order = $('#display_order').val();
+
+    if (display_order == '') {
+      swal("Please Enter Display Order ", "", "error");
       return false;
     }
 

@@ -68,6 +68,10 @@
     .custom-dropdown .dropdown-list li:hover {
         background: #f0f0f0;
     }
+
+    .input-error {
+        border: 2px solid red !important;
+    }
 </style>
 
 <!-- XLSX library -->
@@ -104,11 +108,14 @@
                                         <div class="row">
                                             <div class="col-6">
                                                 <label>Level Number<span class="error-star" style="color:red;">*</span></label>
-                                                <input type="number" class="form-control default" id="level_number" name="level_number" required>
+                                                <input type="number" min="1" class="form-control default" id="level_number" name="level_number" required>
+                                                <small id="level_number_error" class="text-danger" style="display:none"></small>
+
                                             </div>
                                             <div class="col-6">
                                                 <label>Level Name<span class="error-star" style="color:red;">*</span></label>
-                                                <input type="text" class="form-control default" id="level_name" name="level_name" min="0" step="1">
+                                                <input type="text" class="form-control default" class="form-control default" id="level_name" name="level_name" min="0" step="1">
+                                                <small id="level_name_error" class="text-danger" style="display:none"></small>
                                             </div>
 
                                         </div>
@@ -160,7 +167,7 @@
                                                 <div class="d-flex justify-content-center gap-2">
 
                                                     <a class="btn btn-success btn-space classsavebutton" type="submit" onclick="gencre(event)"
-                                                        id="submitBtn">Submit</a>
+                                                        id="submitBtn" style="color:white">Submit</a>
                                                     <a class="btn btn-danger btn-lg" style="color:white;" href="{{ route('level_master_page') }}">Back</a>
                                                 </div>
                                             </div>
@@ -189,6 +196,8 @@
 <script>
     function gencre(event) {
         event.preventDefault();
+        $(".text-danger").hide();
+        $(".form-control").removeClass("input-error");
 
         let existingLevels = @json($allRecords['levels']);
 
@@ -238,6 +247,39 @@
             Swal.fire("The minimum or maximum value already exists.");
             return false;
         }
+        let levelExists = existingLevels.some(level => {
+            return level.level_number == level_number;
+        });
+
+        if (levelExists) {
+
+            $("#level_number").addClass("input-error");
+            $("#level_number_error")
+                .text("Level Number already exists please try another number")
+                .show();
+
+            $("#level_number").focus();
+            return false;
+        }
+
+        $("#level_name_error").hide();
+        $("#level_name").removeClass("input-error");
+
+        // check duplicate level name
+        let levelNameExists = existingLevels.some(level => {
+            return level.level_name.toLowerCase() === level_name.toLowerCase();
+        });
+
+        if (levelNameExists) {
+
+            $("#level_name").addClass("input-error");
+            $("#level_name_error")
+                .text("Level Name already exists please try another name")
+                .show();
+
+            $("#level_name").focus();
+            return false;
+        }
 
 
         $('#classsavebutton').css('pointer-events', 'none');
@@ -246,11 +288,7 @@
 </script>
 
 
-@if(session('fail'))
-<script>
-    Swal.fire("{{ session('fail') }}", "", "error");
-</script>
-@endif
+
 
 @if(session('success'))
 <script>

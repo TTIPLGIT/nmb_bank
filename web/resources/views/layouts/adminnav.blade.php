@@ -16,6 +16,8 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css"
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!--dropzone css -->
     <!-- jQuery -->
@@ -76,7 +78,6 @@
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
 
     <!-- <script src="{{asset('asset/js/owl.carousel.min.js')}}"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
     <style>
     .stamp {
@@ -1024,7 +1025,6 @@
 
 })(jQuery);
 </script>
-
 <div class="floating-chat-container">
     <button class="floating-chat-toggle" id="floatingChatToggle">
         <i class="fa fa-comments"></i>
@@ -1832,37 +1832,37 @@ document.addEventListener('DOMContentLoaded', () => {
                         @if($modules['data'] != "")
                         <!-- @if($modules['user_role'] == "professional member")
 
-        <li class="dropdown ">
-          <a class="nav-link has-dropdown">
-          <i class="fas fa-user-cog" aria-hidden="true"></i>
-          <span>
-            Firm Administration
-          </span>
-          </a>
-          <ul class="dropdown-menu active" style="display: none;">
+                                <li class="dropdown ">
+                                <a class="nav-link has-dropdown">
+                                <i class="fas fa-user-cog" aria-hidden="true"></i>
+                                <span>
+                                    Firm Administration
+                                </span>
+                                </a>
+                                <ul class="dropdown-menu active" style="display: none;">
 
-          <li class=""><a class="nav-link " href="{{route('firm_admin_index')}}">Firm Administration</a></li>
-          </ul>
+                                <li class=""><a class="nav-link " href="{{route('firm_admin_index')}}">Firm Administration</a></li>
+                                </ul>
 
 
-        </li>
-        @endif -->
-                        <!-- <li>
-          <a href="{{ route('ethictest.index') }}" class="nav-link sidebar_links">
-          <i class="sidebar-icons fa fa-pencil-square-o" aria-hidden="true"></i>
-          <span>Ethics Test</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{ route('localadaptationtest.index') }}" class="nav-link sidebar_links">
-          <i class="sidebar-icons fa fa-globe" aria-hidden="true"></i>
-          <span>Local Adaptation Test</span>
-          </a>
-        </li> -->
+                                </li>
+                                @endif -->
+                                                <!-- <li>
+                                <a href="{{ route('ethictest.index') }}" class="nav-link sidebar_links">
+                                <i class="sidebar-icons fa fa-pencil-square-o" aria-hidden="true"></i>
+                                <span>Ethics Test</span>
+                                </a>
+                                </li>
+                                <li>
+                                <a href="{{ route('localadaptationtest.index') }}" class="nav-link sidebar_links">
+                                <i class="sidebar-icons fa fa-globe" aria-hidden="true"></i>
+                                <span>Local Adaptation Test</span>
+                                </a>
+                                </li> -->
                         @endif
 
                         @if($modules['data'] != "")
-                        @foreach ($modules['data'] as $key => $module)
+                        @foreach (collect($modules['data'])->sortBy('display_order') as $key => $module)
                         <li class="dropdown">
 
                             <a class="nav-link has-dropdown">

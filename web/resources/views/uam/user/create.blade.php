@@ -85,11 +85,25 @@
     .select2-container .select2-selection--single {
         height: 39px !important;
     }
+
+    .select2-selection__choice {
+        background-color: #680EDA !important;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: red !important;
+    }
 </style>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <div class="main-content">
     <h5 class="text-center" style="color:darkblue">Users Create</h5>
     {{ Breadcrumbs::render('user.create') }}
@@ -126,7 +140,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Password <span style="color: red;font-size: 16px;">*</span></label>
-                                            <input class="form-control" type="text" id="password" name="password" placeholder="Enter Password">
+                                            <input class="form-control" type="text" id="password" name="password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+" title="Password must contain uppercase, lowercase, number and special character" placeholder="Enter Password">
                                             <!-- <label style="color:#f30202!important">Notes</label>
                                             <p> Validation Format - at least 1 uppercase character (A-Z),
                                                 at least 1 lowercase character (a-z),
@@ -174,7 +188,6 @@
                                             @enderror
                                         </div>
                                     </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Custom Field</label>
@@ -185,7 +198,8 @@
                                                     value="{{ $field['id'] }}"
                                                     data-type="{{ $field['field_type'] }}"
                                                     data-label="{{ $field['field_label'] }}"
-                                                    data-name="{{ $field['field_name'] }}">
+                                                    data-name="{{ $field['field_name'] }}"
+                                                    data-options="{{ $field['field_options'] }}">
                                                     {{ $field['field_label'] }}
                                                 </option>
                                                 @endforeach
@@ -199,112 +213,7 @@
 
                                     <div class="col-md-6" id="dynamic_field_container"></div>
 
-                                    <div class="col-md-6" id="professionalFields_1">
-                                        <div class="form-group">
-                                            <div class="col d-flex justify-content-start flex-column">
-                                                <label class="control-label custom_label" for="newreval">Gender<span style="color: red;font-size: 16px;">*</span></label>
-                                                <div class="col-12 d-flex align-items-baseline ml-4" style="gap:10px">
-                                                    <input type="radio" id="gender" name="gender" value="" class="gender">
-                                                    <label class="fw-light" for="male">Male</label>
-                                                    <input type="radio" id="gender" name="gender" value="" class="gender">
-                                                    <label for="female">Female</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="professionalFields" style="width:100%">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="custom_label" for="">Country<span style="color: red;font-size: 16px;">*</span></label>
-                                                    <select class="form-control" id="country" name="country" value="">
-                                                        <option value="uganda" selected>Uganda</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group" style="display:flex;flex-direction:column">
-                                                    <label class="custom_label" for="Mobile Number">Mobile Number<span style="color: red;font-size: 16px;">*</span></label>
-                                                    <input type="tel" id="phone" name="Mobile_no" value="" placeholder="" class="mobile_input" oninput="contactphonenumber(event)">
-                                                    <span class="span_message" id="mobileerror"></span>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <h4>Does this Professional Member have Registered License</h4>
-                                        <div class="form-group">
-                                            <div class="col d-flex justify-content-between">
-                                                <div class="col-12 d-flex align-items-baseline ml-4" style="gap:10px">
-                                                    <input type="radio" id="yes" name="license" onchange="toggleLicenseDetails(this)" value="yes" class="yes">
-                                                    <label class="fw-light" for="yes">Yes</label>
-                                                    <input type="radio" id="no" name="license" onchange="toggleLicenseDetails(this)" value="no" class="no">
-                                                    <label for="no">No</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="licenseDetails" style="display: none;">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="custom_label" for="license_number">Valuer Type</label>
-                                                        <select name="valuertype" id="valuertype" class="form-control">
-                                                            <option value="">Select Counsellor</option>
-                                                            <option value="Government Valuer">Government Valuer</option>
-                                                            <option value="Private Valuer">Private Valuer</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="custom_label" for="license_number">License Number</label>
-                                                        <input type="text" id="license" name="license" value="" placeholder="Enter License Number" class="form-control default">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="custom_label" for="payment">Payment Method</label>
-                                                        <input type="text" id="payment_method" name="payment" value="" placeholder="Enter Payment Method" class="form-control default">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="custom_label" for="bank_name">Bank Name</label>
-                                                        <input type="text" id="bank_name" name="bank_name" value="" placeholder="Enter Bank Name" class="form-control default">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="custom_label" for="bank_name">Bank Transaction Id</label>
-                                                        <input type="number" id="bank_transaction_id" name="bank_transaction_id" value="" placeholder="Enter Bank Transaction Id" class="form-control default">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="custom_label" for="amount">Amount</label>
-                                                        <input type="number" id="amount" name="amount" value="" placeholder="Enter Amount" class="form-control default">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="custom_label" for="amount">Amount Paid On</label>
-                                                        <input type="date" id="amount_paid_on" name="amount_paid_on" value="" placeholder="Enter Amount Paid On" class="form-control default">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="custom_label" for="renewal">Renewal Date</label>
-                                                        <input type="date" id="renewal_date" name="renewal_date" value="" class="form-control default">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="custom_label" for="designation_notes">Notes<span style="color: red;font-size: 16px;">*</span></label>
-                                                        <span style="color:Red">If you want to change the designation to professional member, kindly change the role in designation menu </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <input id="displayItems" name="displayItems" class="form-control" type="hidden">
@@ -326,33 +235,7 @@
             </div>
 
 
-            <div class="container-fluid" style="display: none">
-                <div class="row">
-                    <div class="col-sm-1">
-                    </div>
-                    <div class="col-sm-5 text-center">
-                        <div class="text-left">Override some defaults:</div>
-                        <form id="override_options_form" method="POST" action="" style="display: none">
-                            <div class="form-group">
-                                <div class="checkbox text-left">
-                                    <label><input id="checkbox_doubles" name="checkbox_doubles" value="1" type="checkbox" checked>Enable checking for n-tupel (doubles, triplets, ...) nodes</label>
-                                </div>
-                                <div class="checkbox text-left">
-                                    <label><input id="checkbox_get_items" name="checkbox_get_items" type="checkbox" value="1" checked>Getting number of checked nodes on the fly</label>
-                                </div>
-                                <input type="hidden" name="select_tree" value="<br />
-                    <b>Notice</b>: Undefined index: select_tree in <b>/storage/ssd4/607/2172607/public_html/hummingbird_v1.php</b> on line <b>317</b><br />">
-                                <input type="hidden" name="override_options_form" value="1">
-                                <button class="btn btn-responsive btn-block btn-primary" type="submit" id="submit_options">Submit</button>
-                            </div>
-                        </form>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-            <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
 
             <script>
                 const input = document.querySelector("#phone");
@@ -382,6 +265,7 @@
                         let fieldType = $(this).data('type');
                         let fieldLabel = $(this).data('label');
                         let fieldId = $(this).val();
+                        let fieldOptions = $(this).data('options');
 
                         if (!fieldType || !fieldId) return;
 
@@ -389,39 +273,59 @@
 
                         if (fieldType === 'text') {
                             inputField = `<div class="form-group">
-                            <label>${fieldLabel}</label>
-                            <input type="text" 
-                                name="custom_field_value[${fieldId}]" 
-                                class="form-control">
-                          </div>`;
+                    <label>${fieldLabel}</label>
+                    <input type="text" 
+                        name="custom_field_value[${fieldId}]" 
+                        class="form-control">
+                    </div>`;
                         }
 
                         if (fieldType === 'email') {
                             inputField = `<div class="form-group">
-                            <label>${fieldLabel}</label>
-                            <input type="email" 
-                                name="custom_field_value[${fieldId}]" 
-                                class="form-control">
-                          </div>`;
+                    <label>${fieldLabel}</label>
+                    <input type="email" 
+                        name="custom_field_value[${fieldId}]" 
+                        class="form-control">
+                    </div>`;
                         }
 
                         if (fieldType === 'number') {
                             inputField = `<div class="form-group">
-                            <label>${fieldLabel}</label>
-                            <input type="number" 
-                                name="custom_field_value[${fieldId}]" 
-                                class="form-control">
-                          </div>`;
+                    <label>${fieldLabel}</label>
+                    <input type="number" 
+                        name="custom_field_value[${fieldId}]" 
+                        class="form-control">
+                    </div>`;
                         }
 
                         if (fieldType === 'date') {
                             inputField = `<div class="form-group">
-                            <label>${fieldLabel}</label>
-                            <input type="date" 
-                                name="custom_field_value[${fieldId}]" 
-                                class="form-control">
-                          </div>`;
+                    <label>${fieldLabel}</label>
+                    <input type="date" 
+                        name="custom_field_value[${fieldId}]" 
+                        class="form-control">
+                    </div>`;
                         }
+                        if (fieldType === 'dropdown') {
+
+                            let options = '';
+                            if (fieldOptions) {
+                                let optionArray = fieldOptions.split(',');
+
+                                optionArray.forEach(function(opt) {
+                                    options += `<option value="${opt.trim()}">${opt.trim()}</option>`;
+                                });
+                            }
+
+                            inputField = `<div class="form-group">
+                        <label>${fieldLabel}</label>
+                        <select name="custom_field_value[${fieldId}]" class="form-control">
+                            <option value="">Select</option>
+                            ${options}
+                        </select>
+                    </div>`;
+                        }
+
 
                         container.append(inputField);
                     });
@@ -433,31 +337,6 @@
 
 
             <script>
-                function contactphonenumber(event) {
-                    let value = event.target.value || '';
-                    // value = removeURLs(value);
-                    // if (urlPattern.test(value)) {
-                    //     event.target.value = "";
-                    //     return false;
-                    // }
-                    value = value.replace(/[^0-9+ ]/, '', );
-                    event.target.value = value;
-                    var get_phone = $('#phone').val();
-                    var p1 = window.intlTelInputGlobals.getInstance(input).isValidNumber();
-                    if (p1 == true) {
-                        document.getElementById('mobileerror').style.color = 'green';
-                        document.getElementById('mobileerror').innerHTML = 'Valid Number';
-                    } else {
-                        document.getElementById('mobileerror').style.color = 'red';
-                        document.getElementById('mobileerror').innerHTML = 'Invalid Number';
-                    }
-
-                    document.getElementById("phone").innerHTML = get_phone;
-                    document.getElementById('phone').value = get_phone;
-                    // completeCheck(1);
-                }
-
-
                 function user() {
                     var uname = $("#name").val();
 
@@ -472,15 +351,31 @@
                         event.preventDefault();
                         return false;
                     }
-                    var passw = $("#password").val();
-                    if (passw == '') {
+                    var password = $("#password").val();
+                    var confpass = $("#confirm_password").val();
+
+                    var passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+                    if (password == '') {
                         swal("Please Enter the Password", "", "error");
                         event.preventDefault();
                         return false;
                     }
-                    var confpass = $("#confirm_password").val();
+
+                    if (!passwordPattern.test(password)) {
+                        swal("Password must contain minimum 8 characters, including 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.", "", "error");
+                        event.preventDefault();
+                        return false;
+                    }
+
                     if (confpass == '') {
                         swal("Please Enter the Confirm Password", "", "error");
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (password != confpass) {
+                        swal("Password and Confirm Password do not match", "", "error");
                         event.preventDefault();
                         return false;
                     }
@@ -501,49 +396,6 @@
                 }
             </script>
 
-            <script>
-                function toggleProfessionalFields() {
-                    var professionRole = document.getElementById('profession_role').value;
-                    var professionalFields = document.getElementById('professionalFields');
-
-                    if (professionRole === '34') {
-                        professionalFields.style.display = 'block';
-                        professionalFields_1.style.display = 'block';
-                    } else {
-                        professionalFields.style.display = 'none';
-                        professionalFields_1.style.display = 'none';
-                    }
-                }
-            </script>
-
-            <script>
-                function toggleLicenseDetails(radio) {
-                    const licenseDetails = document.getElementById("licenseDetails");
-
-                    if (radio.value === "yes") {
-                        licenseDetails.style.display = radio.checked ? "block" : "none";
-                    } else if (radio.value === "no") {
-                        licenseDetails.style.display = "none";
-                    }
-                }
-            </script>
-
-            <!-- renewal date -->
-
-            <script>
-                $(document).ready(function() {
-                    $('#amount_paid_on').change(function() {
-                        var paidDate = new Date($('#amount_paid_on').val());
-                        var newRenewalDate = new Date(paidDate.getFullYear() + 1, paidDate.getMonth(), paidDate.getDate());
-
-                        // Format the date to match the input's date format
-                        var formattedRenewalDate = newRenewalDate.toISOString().slice(0, 10);
-
-                        // Set the renewal date input value
-                        $('#renewal_date').val(formattedRenewalDate);
-                    });
-                });
-            </script>
             <script>
                 const allDesignations = @json($designation);
             </script>
@@ -568,8 +420,7 @@
                 }
             </script>
 
-            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
             <script>
                 var $j = jQuery.noConflict();

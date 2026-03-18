@@ -47,7 +47,7 @@ class tryController extends BaseController
                 'class_quiz' => $inputArray['class_quiz'],
 
             ];
-            
+
             $update_id = DB::transaction(function () use ($input) {
                 $role_id = DB::table('elearning_classes')
                     ->insertGetId([
@@ -62,7 +62,7 @@ class tryController extends BaseController
 
                     ]);
             });
-   
+
             $this->notifications_insert(null, auth()->user()->id, $input['class_name'] . " Class Name has been Created Successfully", "/admincourse");
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
@@ -848,7 +848,7 @@ class tryController extends BaseController
             $introduction_extension = $introduction_extension[1];
             $userIdsString = implode(",",  $inputArray['user_ids']);
 
- $this->WritefileLog('jiiii');
+            $this->WritefileLog('jiiii');
 
 
             $input = [
@@ -948,7 +948,7 @@ class tryController extends BaseController
                         'expiry_input' => $input['expiry_input'],
                         'restricted_access' => $input['restricted_access'],
                         'course_pin' => $input['course_pin'],
-                        'course_pin_created_at' =>now(),
+                        'course_pin_created_at' => now(),
 
 
 
@@ -962,7 +962,7 @@ class tryController extends BaseController
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
             $this->auditLog('elearning_courses', $update_id, 'Create', 'Course Creation', auth()->user()->id, NOW(), $role_name_fetch);
-            
+
             $userIds = explode(',', $input['user_ids']);
 
             $users = DB::table('users')
@@ -978,11 +978,11 @@ class tryController extends BaseController
                     new coursecreationmail([
                         'name'       => $user->name,
                         'course_pin' => $input['course_pin'],
-                        'course_name'=> $input['course_name'],
+                        'course_name' => $input['course_name'],
                     ])
                 );
             }
-            
+
 
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
@@ -1344,65 +1344,127 @@ class tryController extends BaseController
 
             $method = 'Method => tryController => course_update';
             $inputArray = $this->decryptData($request->requestData);
-            $course_tags_id =  $inputArray['course_tags'];
-            $stringcourse_tags_id = implode(",", $course_tags_id);
 
-            $course_skills_required_id =  $inputArray['course_skills_required'];
-            $stringcourse_skills_required_id = implode(",", $course_skills_required_id);
-
-            $course_gain_skills_id =  $inputArray['course_gain_skills'];
-            $stringcourse_gain_skills_id = implode(",", $course_gain_skills_id);
-
-            $course_classes_id =  $inputArray['course_classes'];
-            $stringcourse_classes_id = implode(",", $course_classes_id);
-
-
-
+            
             $input = [
-                'course_category' => $inputArray['course_category'],
-                'course_name' => $inputArray['course_name'],
-                'course_tags' => $stringcourse_tags_id,
-                'course_skills_required' => $stringcourse_skills_required_id,
-                'course_gain_skills' => $stringcourse_gain_skills_id,
-                'course_classes' => $stringcourse_classes_id,
-                'course_certificate' => $inputArray['course_certificate'],
-                'course_start_period' => $inputArray['course_start_period'],
-                'course_end_period' => $inputArray['course_end_period'],
-                'course_pay' => $inputArray['course_pay'],
-                'course_price' => $inputArray['course_price'],
-                'course_description' => $inputArray['course_description'],
-                'course_instructor' => $inputArray['course_instructor'],
-                'course_cpt_points' => $inputArray['course_cpt_points'],
-                'course_banner' => $inputArray['course_banner'],
-                'course_introduction' => $inputArray['course_introduction'],
 
                 'course_edit' => $inputArray['course_edit'],
 
+                'course_category' => $inputArray['course_category'],
+                'course_name' => $inputArray['course_name'],
+                'course_instructor' => $inputArray['course_instructor'],
+
+                'course_start_period' => $inputArray['course_start_period'],
+                'course_end_period' => $inputArray['course_end_period'],
+
+                'course_pay' => $inputArray['course_pay'],
+                'course_price' => $inputArray['course_price'],
+
+                'course_description' => $inputArray['course_description'],
+                'course_certificate' => $inputArray['course_certificate'],
+                'course_exam' => $inputArray['course_exam'],
+                'course_noperiod' => $inputArray['course_noperiod'],
+
+                // ✅ ARRAY → STRING
+                'course_tags' => implode(',', (array) ($inputArray['course_tags'] ?? [])),
+                'course_skills_required' => implode(',', (array) ($inputArray['course_skills_required'] ?? [])),
+                'course_gain_skills' => implode(',', (array) ($inputArray['course_gain_skills'] ?? [])),
+                'course_classes' => implode(',', (array) ($inputArray['course_classes'] ?? [])),
+
+                'course_cpt_points' => $inputArray['course_cpt_points'],
+
+                // ✅ EXAM
+                'examname' => $inputArray['examname'],
+                'exam_date' => $inputArray['exam_date'],
+                'pass_percentage' => $inputArray['pass_percentage'],
+
+                // ✅ CERTIFICATE
+                'cetificate_template' => $inputArray['cetificate_template'],
+                'certificate_expiry' => $inputArray['certificate_expiry'],
+                'course_expiry_period' => $inputArray['course_expiry_period'],
+                // 'expired_course_id' => $inputArray['expired_course_id'],
+
+                // ✅ FILES
+                'course_banner' => $inputArray['course_banner'],
+                'course_introduction' => $inputArray['course_introduction'],
+                'course_summary' => $inputArray['course_summary'],
+                'banner_path' => $inputArray['banner_path'],
+                'introduction_path' => $inputArray['introduction_path'],
+                'summary_path' => $inputArray['summary_path'],
+
+                // ✅ ACCESS CONTROL
+                'role_id' => implode(',', (array) ($inputArray['role_id'] ?? [])),
+                'designation_id' => implode(',', (array) ($inputArray['designation_id'] ?? [])),
+                'user_ids' => implode(',', (array) ($inputArray['user_ids'] ?? [])),
+
+                // ✅ EXPIRY
+                'expiry_type' => $inputArray['expiry_type'],
+                'expiry_input' => $inputArray['expiry_input'],
+                'restricted_access' => $inputArray['restricted_access'],
+
+                // ✅ PIN
+                'course_pin' => $inputArray['course_pin'],
+                'course_pin_created_at' => $inputArray['course_pin_created_at'],
             ];
 
             DB::table('elearning_courses')
                 ->where('course_id', $input['course_edit'])
                 ->update([
-                    'course_category' => $input['course_category'],
+
+                    'course_banner' => $input['course_banner'],
+                    'course_summary' => $input['course_summary'],
                     'course_name' => $input['course_name'],
-                    'course_tags' => $input['course_tags'],
-                    'course_skills_required' => $input['course_skills_required'],
-                    'course_gain_skills' => $input['course_gain_skills'],
-                    'course_classes' => $input['course_classes'],
-                    'course_certificate' => $input['course_certificate'],
+                    'course_instructor' => $input['course_instructor'],
+
+                    'exam_id' => $input['examname'],
+                    'exam_date' => $input['exam_date'],
+
+                    'course_noperiod' => $input['course_noperiod'],
+                    'pass_percentage' => $input['pass_percentage'],
+
                     'course_start_period' => $input['course_start_period'],
                     'course_end_period' => $input['course_end_period'],
+
                     'course_pay' => $input['course_pay'],
                     'course_price' => $input['course_price'],
+
                     'course_description' => $input['course_description'],
-                    'course_instructor' => $input['course_instructor'],
-                    'course_cpt_points' => $input['course_cpt_points'],
-                    'course_banner' => $input['course_banner'],
+                    'course_certificate' => $input['course_certificate'],
+                    'course_exam' => $input['course_exam'],
+
                     'course_introduction' => $input['course_introduction'],
 
+                    'summary_path' => $input['summary_path'],
+                    'introduction_path' => $input['introduction_path'],
+                    'banner_path' => $input['banner_path'],
+
+                    // 🔥 ARRAY FIELDS (IMPORTANT)
+                    'course_tags' => implode(',', (array) $input['course_tags']),
+                    'course_skills_required' => implode(',', (array) $input['course_skills_required']),
+                    'course_gain_skills' => implode(',', (array) $input['course_gain_skills']),
+                    'course_classes' => implode(',', (array) $input['course_classes']),
+
+                    'course_cpt_points' => $input['course_cpt_points'],
+                    'course_category' => $input['course_category'],
+                    'course_format' => $input['course_format'] ?? null,
+
+                    'cetificate_template' => $input['cetificate_template'],
+                    'certificate_expiry' => $input['certificate_expiry'],
+                    'course_expiry_period' => $input['course_expiry_period'],
+                    // 🔥 ACCESS CONTROL
+                    'role_id' => implode(',', (array) $input['role_id']),
+                    'designation_id' => implode(',', (array) $input['designation_id']),
+                    'user_ids' => implode(',', (array) $input['user_ids']),
+
+                    'expiry_type' => $input['expiry_type'],
+                    'expiry_input' => $input['expiry_input'],
+                    'restricted_access' => $input['restricted_access'],
+
+                    // optional (only if needed)
+                    'course_pin' => $input['course_pin'] ?? null,
+                    'course_pin_created_at' => $input['course_pin_created_at'],
+
                     'drop_course' => '0',
-
-
                 ]);
 
             $serviceResponse = array();
@@ -1614,397 +1676,395 @@ class tryController extends BaseController
         );
     }
     public function get_class_data(Request $request)
-{
-    try {
-        $method = 'Method => ElearningQuestionController => get_class_data';
-        $inputArray = $this->decryptData($request->requestData);
-        $classId = $inputArray['class_id'];
+    {
+        try {
+            $method = 'Method => ElearningQuestionController => get_class_data';
+            $inputArray = $this->decryptData($request->requestData);
+            $classId = $inputArray['class_id'];
 
-        $classData = DB::table('elearning_classes')
-            ->where('class_id', $classId)
-            ->select(
-                'class_id',
-                'class_name',
-                'class_description',
-                'resource_name',
-                'resource_path',
-                'class_duration',
-                'class_quiz',
-                'quiz_id',
-                'version_major',
-                'version_minor',
-                'is_active'
-            )
-            ->first();
+            $classData = DB::table('elearning_classes')
+                ->where('class_id', $classId)
+                ->select(
+                    'class_id',
+                    'class_name',
+                    'class_description',
+                    'resource_name',
+                    'resource_path',
+                    'class_duration',
+                    'class_quiz',
+                    'quiz_id',
+                    'version_major',
+                    'version_minor',
+                    'is_active'
+                )
+                ->first();
 
-        if (!$classData) {
-            throw new \Exception('Class not found');
-        }
-
-        $serviceResponse = array();
-        $serviceResponse['Code'] = config('setting.status_code.success');
-        $serviceResponse['Message'] = config('setting.status_message.success');
-        $serviceResponse['Data'] = $classData;
-        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-        return $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-    } catch (\Exception $exc) {
-        $serviceResponse = array();
-        $serviceResponse['Code'] = config('setting.status_code.exception');
-        $serviceResponse['Message'] = $exc->getMessage();
-        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-        return $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
-    }
-}
-
-public function class_update_with_version(Request $request)
-{
-    try {
-        $method = 'Method => tryController => class_update_with_version';
-        $inputArray = $this->decryptData($request->requestData);
-        
-        // Handle quiz selection
-        if ($inputArray['class_quiz'] == 'no') {
-            $inputArray['quiz_id'] = 0;
-        }
-        
-        $classId = $inputArray['eid'];
-        $versionType = $inputArray['version_type'] ?? 'none';
-        $changeNotes = $inputArray['change_notes'] ?? '';
-
-        // Begin transaction
-        DB::beginTransaction();
-
-        // Get current class data from database (ALWAYS use this as source of truth)
-        $currentClass = DB::table('elearning_classes')
-            ->where('class_id', $classId)
-            ->first();
-
-        if (!$currentClass) {
-            throw new \Exception('Class not found');
-        }
-
-        // Get current version from database
-        $currentMajor = $currentClass->version_major ?? 1;
-        $currentMinor = $currentClass->version_minor ?? 0;
-        
-        // Calculate new version based on current database version
-        $newMajor = $currentMajor;
-        $newMinor = $currentMinor;
-
-        if ($versionType == 'major') {
-            // Major: increment major, reset minor to 0
-            $newMajor = $currentMajor + 1;
-            $newMinor = 0;
-        } elseif ($versionType == 'minor') {
-            // Minor: increment minor only
-            $newMinor = $currentMinor + 1;
-        }
-        // For 'none' type, keep same version numbers
-
-        // Only archive version if it's a version update (major/minor) AND it's different from current
-        if ($versionType != 'none') {
-            // Archive current version to versions table
-            DB::table('elearning_classes_versions')->insert([
-                'original_class_id' => $classId,
-                'class_name' => $currentClass->class_name,
-                'class_description' => $currentClass->class_description,
-                'resource_name' => $currentClass->resource_name,
-                'resource_path' => $currentClass->resource_path,
-                'class_duration' => $currentClass->class_duration,
-                'class_quiz' => $currentClass->class_quiz,
-                'quiz_id' => $currentClass->quiz_id,
-                'version_major' => $currentMajor,
-                'version_minor' => $currentMinor,
-                'is_active' => 0,
-                'created_by' => auth()->user()->id,
-                'created_at' => NOW(),
-                'updated_at' => NOW()
-            ]);
-        }
-
-        // Prepare update data
-        $updateData = [
-            'class_name' => $inputArray['class_name'],
-            'class_description' => $inputArray['class_description'],
-            'class_duration' => $inputArray['class_duration'],
-            'class_quiz' => $inputArray['class_quiz'],
-            'quiz_id' => $inputArray['quiz_id'],
-            'version_major' => $newMajor,
-            'version_minor' => $newMinor,
-            'is_active' => 1,
-            'updated_by' => auth()->user()->id,
-            'updated_at' => NOW()
-        ];
-
-        // Handle resource file
-        if (isset($inputArray['resource_name']) && $inputArray['resource_name'] != '0') {
-            $updateData['resource_name'] = $inputArray['resource_name'];
-            $updateData['resource_path'] = $inputArray['resourse_path'] ?? $currentClass->resource_path;
-        }
-
-        // Update the class
-        $update_id = DB::table('elearning_classes')
-            ->where('class_id', $classId)
-            ->update($updateData);
-
-        if (!$update_id) {
-            DB::rollBack();
-            throw new \Exception('Failed to update class');
-        }
-
-       
-
-        // Commit transaction
-        DB::commit();
-
-        // Prepare success message based on update type
-        if ($versionType != 'none') {
-            $message = "Class Updated Successfully from v{$currentMajor}.{$currentMinor} to v{$newMajor}.{$newMinor}";
-            $notificationMessage = "Class Updated Successfully to v{$newMajor}.{$newMinor}";
-            $auditDescription = "Class Updation from v{$currentMajor}.{$currentMinor} to v{$newMajor}.{$newMinor}";
-        } else {
-            $message = "Class Updated Successfully (No Version Change) - v{$currentMajor}.{$currentMinor}";
-            $notificationMessage = "Class Updated Successfully (No Version Change)";
-            $auditDescription = "Class Updation (No Version Change) - v{$currentMajor}.{$currentMinor}";
-        }
-
-        // Notifications and audit log
-        $this->notifications_insert(null, auth()->user()->id, $notificationMessage, "/class/index");
-        
-        $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
-        $role_name_fetch = $role_name[0]->role_name ?? 'Unknown';
-        
-        $this->auditLog('elearning_classes', $classId, 'Update', $auditDescription, auth()->user()->id, NOW(), $role_name_fetch);
-
-        $serviceResponse = array();
-        $serviceResponse['Code'] = config('setting.status_code.success');
-        $serviceResponse['Message'] = $message;
-        $serviceResponse['Data'] = [
-            'old_version' => "{$currentMajor}.{$currentMinor}",
-            'new_version' => "{$newMajor}.{$newMinor}",
-            'version_type' => $versionType
-        ];
-        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-        
-        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-        return $sendServiceResponse;
-        
-    } catch (\Exception $exc) {
-        DB::rollBack();
-        
-        $exceptionResponse = array();
-        $exceptionResponse['ServiceMethod'] = $method;
-        $exceptionResponse['Exception'] = $exc->getMessage();
-        $exceptionResponse['ExceptionLine'] = $exc->getLine();
-        $exceptionResponse['ExceptionFile'] = $exc->getFile();
-        $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
-        $this->WriteFileLog($exceptionResponse);
-        
-        $serviceResponse = array();
-        $serviceResponse['Code'] = config('setting.status_code.exception');
-        $serviceResponse['Message'] = $exc->getMessage();
-        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-        
-        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
-        return $sendServiceResponse;
-    }
-}
-
-public function get_class_versions(Request $request)
-{
-    try {
-        $method = 'Method => tryController => get_class_versions';
-        $inputArray = $this->decryptData($request->requestData);
-        $classId = $inputArray['class_id'];
-
-        // Get current active version from main table
-        $currentVersion = DB::table('elearning_classes')
-            ->where('class_id', $classId)
-            ->select(
-                'class_id as original_class_id',
-                'class_name',
-                'class_description',
-                'resource_name',
-                'resource_path',
-                'class_duration',
-                'class_quiz',
-                'quiz_id',
-                'version_major',
-                'version_minor',
-                'is_active',
-                'updated_at as created_at',
-                DB::raw('NULL as version_id'),
-                DB::raw("'' as change_notes")
-            )
-            ->first();
-
-        // Get archived versions from history table
-        $oldVersions = DB::table('elearning_classes_versions')
-            ->where('original_class_id', $classId)
-            ->where('is_active', 0)
-            ->select(
-                'original_class_id',
-                'class_name',
-                'class_description',
-                'resource_name',
-                'resource_path',
-                'class_duration',
-                'class_quiz',
-                'quiz_id',
-                'version_major',
-                'version_minor',
-                'is_active',
-                'created_at',
-                'version_id',
-                DB::raw("'' as change_notes")
-            )
-            ->orderBy('version_major', 'desc')
-            ->orderBy('version_minor', 'desc')
-            ->get();
-
-        // Combine versions and remove duplicates
-        $allVersions = [];
-        $versionKeys = [];
-        
-        // Add current version
-        if ($currentVersion) {
-            $key = $currentVersion->version_major . '.' . $currentVersion->version_minor;
-            $versionKeys[$key] = true;
-            $allVersions[] = $currentVersion;
-        }
-        
-        // Add archived versions (skip if same version as current)
-        foreach ($oldVersions as $version) {
-            $key = $version->version_major . '.' . $version->version_minor;
-            if (!isset($versionKeys[$key])) {
-                $versionKeys[$key] = true;
-                $allVersions[] = $version;
+            if (!$classData) {
+                throw new \Exception('Class not found');
             }
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.success');
+            $serviceResponse['Message'] = config('setting.status_message.success');
+            $serviceResponse['Data'] = $classData;
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            return $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+        } catch (\Exception $exc) {
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            return $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
         }
-
-        
-
-        // Sort versions again after adding change notes
-        usort($allVersions, function($a, $b) {
-            if ($b->version_major != $a->version_major) {
-                return $b->version_major - $a->version_major;
-            }
-            return $b->version_minor - $a->version_minor;
-        });
-
-        $serviceResponse = array();
-        $serviceResponse['Code'] = config('setting.status_code.success');
-        $serviceResponse['Message'] = config('setting.status_message.success');
-        $serviceResponse['Data'] = $allVersions;
-        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-        
-        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-        return $sendServiceResponse;
-        
-    } catch (\Exception $exc) {
-        $exceptionResponse = array();
-        $exceptionResponse['ServiceMethod'] = $method;
-        $exceptionResponse['Exception'] = $exc->getMessage();
-        $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
-        $this->WriteFileLog($exceptionResponse);
-        
-        $serviceResponse = array();
-        $serviceResponse['Code'] = config('setting.status_code.exception');
-        $serviceResponse['Message'] = $exc->getMessage();
-        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-        
-        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
-        return $sendServiceResponse;
     }
-}
 
-public function restore_class_version(Request $request)
-{
-    try {
-        $method = 'Method => ElearningQuestionController => restore_class_version';
-        $inputArray = $this->decryptData($request->requestData);
-        
-        $classId = $inputArray['class_id'];
-        $versionId = $inputArray['version_id'];
+    public function class_update_with_version(Request $request)
+    {
+        try {
+            $method = 'Method => tryController => class_update_with_version';
+            $inputArray = $this->decryptData($request->requestData);
 
-        DB::beginTransaction();
+            // Handle quiz selection
+            if ($inputArray['class_quiz'] == 'no') {
+                $inputArray['quiz_id'] = 0;
+            }
 
-        // Get version to restore
-        $versionToRestore = DB::table('elearning_classes_versions')
-            ->where('version_id', $versionId)
-            ->first();
+            $classId = $inputArray['eid'];
+            $versionType = $inputArray['version_type'] ?? 'none';
+            $changeNotes = $inputArray['change_notes'] ?? '';
 
-        if (!$versionToRestore) {
-            throw new \Exception('Version not found');
-        }
+            // Begin transaction
+            DB::beginTransaction();
 
-        // Get current class data
-        $currentClass = DB::table('elearning_classes')
-            ->where('class_id', $classId)
-            ->first();
+            // Get current class data from database (ALWAYS use this as source of truth)
+            $currentClass = DB::table('elearning_classes')
+                ->where('class_id', $classId)
+                ->first();
 
-        // Archive current version
-        if ($currentClass) {
-            DB::table('elearning_classes_versions')->insert([
-                'original_class_id' => $classId,
-                'class_name' => $currentClass->class_name,
-                'class_description' => $currentClass->class_description,
-                'resource_name' => $currentClass->resource_name,
-                'resource_path' => $currentClass->resource_path,
-                'class_duration' => $currentClass->class_duration,
-                'class_quiz' => $currentClass->class_quiz,
-                'quiz_id' => $currentClass->quiz_id,
-                'version_major' => $currentClass->version_major,
-                'version_minor' => $currentClass->version_minor,
-                'is_active' => 0,
-                'created_by' => auth()->user()->id,
-                'created_at' => NOW()
-            ]);
-        }
+            if (!$currentClass) {
+                throw new \Exception('Class not found');
+            }
 
-        // Restore selected version
-        DB::table('elearning_classes')
-            ->where('class_id', $classId)
-            ->update([
-                'class_name' => $versionToRestore->class_name,
-                'class_description' => $versionToRestore->class_description,
-                'resource_name' => $versionToRestore->resource_name,
-                'resource_path' => $versionToRestore->resource_path,
-                'class_duration' => $versionToRestore->class_duration,
-                'class_quiz' => $versionToRestore->class_quiz,
-                'quiz_id' => $versionToRestore->quiz_id,
-                'version_major' => $versionToRestore->version_major,
-                'version_minor' => $versionToRestore->version_minor,
+            // Get current version from database
+            $currentMajor = $currentClass->version_major ?? 1;
+            $currentMinor = $currentClass->version_minor ?? 0;
+
+            // Calculate new version based on current database version
+            $newMajor = $currentMajor;
+            $newMinor = $currentMinor;
+
+            if ($versionType == 'major') {
+                // Major: increment major, reset minor to 0
+                $newMajor = $currentMajor + 1;
+                $newMinor = 0;
+            } elseif ($versionType == 'minor') {
+                // Minor: increment minor only
+                $newMinor = $currentMinor + 1;
+            }
+            // For 'none' type, keep same version numbers
+
+            // Only archive version if it's a version update (major/minor) AND it's different from current
+            if ($versionType != 'none') {
+                // Archive current version to versions table
+                DB::table('elearning_classes_versions')->insert([
+                    'original_class_id' => $classId,
+                    'class_name' => $currentClass->class_name,
+                    'class_description' => $currentClass->class_description,
+                    'resource_name' => $currentClass->resource_name,
+                    'resource_path' => $currentClass->resource_path,
+                    'class_duration' => $currentClass->class_duration,
+                    'class_quiz' => $currentClass->class_quiz,
+                    'quiz_id' => $currentClass->quiz_id,
+                    'version_major' => $currentMajor,
+                    'version_minor' => $currentMinor,
+                    'is_active' => 0,
+                    'created_by' => auth()->user()->id,
+                    'created_at' => NOW(),
+                    'updated_at' => NOW()
+                ]);
+            }
+
+            // Prepare update data
+            $updateData = [
+                'class_name' => $inputArray['class_name'],
+                'class_description' => $inputArray['class_description'],
+                'class_duration' => $inputArray['class_duration'],
+                'class_quiz' => $inputArray['class_quiz'],
+                'quiz_id' => $inputArray['quiz_id'],
+                'version_major' => $newMajor,
+                'version_minor' => $newMinor,
                 'is_active' => 1,
                 'updated_by' => auth()->user()->id,
                 'updated_at' => NOW()
-            ]);
+            ];
 
-        // Mark all other versions as inactive
-        DB::table('elearning_classes_versions')
-            ->where('original_class_id', $classId)
-            ->update(['is_active' => 0]);
+            // Handle resource file
+            if (isset($inputArray['resource_name']) && $inputArray['resource_name'] != '0') {
+                $updateData['resource_name'] = $inputArray['resource_name'];
+                $updateData['resource_path'] = $inputArray['resourse_path'] ?? $currentClass->resource_path;
+            }
 
-        // Mark restored version as active
-        DB::table('elearning_classes_versions')
-            ->where('version_id', $versionId)
-            ->update(['is_active' => 1]);
+            // Update the class
+            $update_id = DB::table('elearning_classes')
+                ->where('class_id', $classId)
+                ->update($updateData);
 
-        DB::commit();
+            if (!$update_id) {
+                DB::rollBack();
+                throw new \Exception('Failed to update class');
+            }
 
-        $serviceResponse = array();
-        $serviceResponse['Code'] = config('setting.status_code.success');
-        $serviceResponse['Message'] = "Class restored to version {$versionToRestore->version_major}.{$versionToRestore->version_minor}";
-        $serviceResponse['Data'] = 1;
-        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-        return $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-    } catch (\Exception $exc) {
-        DB::rollBack();
-        $serviceResponse = array();
-        $serviceResponse['Code'] = config('setting.status_code.exception');
-        $serviceResponse['Message'] = $exc->getMessage();
-        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-        return $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+
+
+            // Commit transaction
+            DB::commit();
+
+            // Prepare success message based on update type
+            if ($versionType != 'none') {
+                $message = "Class Updated Successfully from v{$currentMajor}.{$currentMinor} to v{$newMajor}.{$newMinor}";
+                $notificationMessage = "Class Updated Successfully to v{$newMajor}.{$newMinor}";
+                $auditDescription = "Class Updation from v{$currentMajor}.{$currentMinor} to v{$newMajor}.{$newMinor}";
+            } else {
+                $message = "Class Updated Successfully (No Version Change) - v{$currentMajor}.{$currentMinor}";
+                $notificationMessage = "Class Updated Successfully (No Version Change)";
+                $auditDescription = "Class Updation (No Version Change) - v{$currentMajor}.{$currentMinor}";
+            }
+
+            // Notifications and audit log
+            $this->notifications_insert(null, auth()->user()->id, $notificationMessage, "/class/index");
+
+            $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
+            $role_name_fetch = $role_name[0]->role_name ?? 'Unknown';
+
+            $this->auditLog('elearning_classes', $classId, 'Update', $auditDescription, auth()->user()->id, NOW(), $role_name_fetch);
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.success');
+            $serviceResponse['Message'] = $message;
+            $serviceResponse['Data'] = [
+                'old_version' => "{$currentMajor}.{$currentMinor}",
+                'new_version' => "{$newMajor}.{$newMinor}",
+                'version_type' => $versionType
+            ];
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+            return $sendServiceResponse;
+        } catch (\Exception $exc) {
+            DB::rollBack();
+
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = $method;
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse['ExceptionLine'] = $exc->getLine();
+            $exceptionResponse['ExceptionFile'] = $exc->getFile();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            return $sendServiceResponse;
+        }
     }
-}
+
+    public function get_class_versions(Request $request)
+    {
+        try {
+            $method = 'Method => tryController => get_class_versions';
+            $inputArray = $this->decryptData($request->requestData);
+            $classId = $inputArray['class_id'];
+
+            // Get current active version from main table
+            $currentVersion = DB::table('elearning_classes')
+                ->where('class_id', $classId)
+                ->select(
+                    'class_id as original_class_id',
+                    'class_name',
+                    'class_description',
+                    'resource_name',
+                    'resource_path',
+                    'class_duration',
+                    'class_quiz',
+                    'quiz_id',
+                    'version_major',
+                    'version_minor',
+                    'is_active',
+                    'updated_at as created_at',
+                    DB::raw('NULL as version_id'),
+                    DB::raw("'' as change_notes")
+                )
+                ->first();
+
+            // Get archived versions from history table
+            $oldVersions = DB::table('elearning_classes_versions')
+                ->where('original_class_id', $classId)
+                ->where('is_active', 0)
+                ->select(
+                    'original_class_id',
+                    'class_name',
+                    'class_description',
+                    'resource_name',
+                    'resource_path',
+                    'class_duration',
+                    'class_quiz',
+                    'quiz_id',
+                    'version_major',
+                    'version_minor',
+                    'is_active',
+                    'created_at',
+                    'version_id',
+                    DB::raw("'' as change_notes")
+                )
+                ->orderBy('version_major', 'desc')
+                ->orderBy('version_minor', 'desc')
+                ->get();
+
+            // Combine versions and remove duplicates
+            $allVersions = [];
+            $versionKeys = [];
+
+            // Add current version
+            if ($currentVersion) {
+                $key = $currentVersion->version_major . '.' . $currentVersion->version_minor;
+                $versionKeys[$key] = true;
+                $allVersions[] = $currentVersion;
+            }
+
+            // Add archived versions (skip if same version as current)
+            foreach ($oldVersions as $version) {
+                $key = $version->version_major . '.' . $version->version_minor;
+                if (!isset($versionKeys[$key])) {
+                    $versionKeys[$key] = true;
+                    $allVersions[] = $version;
+                }
+            }
+
+
+
+            // Sort versions again after adding change notes
+            usort($allVersions, function ($a, $b) {
+                if ($b->version_major != $a->version_major) {
+                    return $b->version_major - $a->version_major;
+                }
+                return $b->version_minor - $a->version_minor;
+            });
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.success');
+            $serviceResponse['Message'] = config('setting.status_message.success');
+            $serviceResponse['Data'] = $allVersions;
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+            return $sendServiceResponse;
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = $method;
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            return $sendServiceResponse;
+        }
+    }
+
+    public function restore_class_version(Request $request)
+    {
+        try {
+            $method = 'Method => ElearningQuestionController => restore_class_version';
+            $inputArray = $this->decryptData($request->requestData);
+
+            $classId = $inputArray['class_id'];
+            $versionId = $inputArray['version_id'];
+
+            DB::beginTransaction();
+
+            // Get version to restore
+            $versionToRestore = DB::table('elearning_classes_versions')
+                ->where('version_id', $versionId)
+                ->first();
+
+            if (!$versionToRestore) {
+                throw new \Exception('Version not found');
+            }
+
+            // Get current class data
+            $currentClass = DB::table('elearning_classes')
+                ->where('class_id', $classId)
+                ->first();
+
+            // Archive current version
+            if ($currentClass) {
+                DB::table('elearning_classes_versions')->insert([
+                    'original_class_id' => $classId,
+                    'class_name' => $currentClass->class_name,
+                    'class_description' => $currentClass->class_description,
+                    'resource_name' => $currentClass->resource_name,
+                    'resource_path' => $currentClass->resource_path,
+                    'class_duration' => $currentClass->class_duration,
+                    'class_quiz' => $currentClass->class_quiz,
+                    'quiz_id' => $currentClass->quiz_id,
+                    'version_major' => $currentClass->version_major,
+                    'version_minor' => $currentClass->version_minor,
+                    'is_active' => 0,
+                    'created_by' => auth()->user()->id,
+                    'created_at' => NOW()
+                ]);
+            }
+
+            // Restore selected version
+            DB::table('elearning_classes')
+                ->where('class_id', $classId)
+                ->update([
+                    'class_name' => $versionToRestore->class_name,
+                    'class_description' => $versionToRestore->class_description,
+                    'resource_name' => $versionToRestore->resource_name,
+                    'resource_path' => $versionToRestore->resource_path,
+                    'class_duration' => $versionToRestore->class_duration,
+                    'class_quiz' => $versionToRestore->class_quiz,
+                    'quiz_id' => $versionToRestore->quiz_id,
+                    'version_major' => $versionToRestore->version_major,
+                    'version_minor' => $versionToRestore->version_minor,
+                    'is_active' => 1,
+                    'updated_by' => auth()->user()->id,
+                    'updated_at' => NOW()
+                ]);
+
+            // Mark all other versions as inactive
+            DB::table('elearning_classes_versions')
+                ->where('original_class_id', $classId)
+                ->update(['is_active' => 0]);
+
+            // Mark restored version as active
+            DB::table('elearning_classes_versions')
+                ->where('version_id', $versionId)
+                ->update(['is_active' => 1]);
+
+            DB::commit();
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.success');
+            $serviceResponse['Message'] = "Class restored to version {$versionToRestore->version_major}.{$versionToRestore->version_minor}";
+            $serviceResponse['Data'] = 1;
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            return $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+        } catch (\Exception $exc) {
+            DB::rollBack();
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            return $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+        }
+    }
 }

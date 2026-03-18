@@ -1,7 +1,7 @@
 <style type="text/css">
-label {
-    pointer-events: none;
-}
+    label {
+        pointer-events: none;
+    }
 </style>
 <?php
 
@@ -228,335 +228,295 @@ use App\Http\Controllers\UamRolesController;
 
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
         <script type="text/javascript">
-        $(document).ready(function() {
+            $(document).ready(function() {
 
-            $("#role_name").keypress(function(event) {
-                var inputValue = event.charCode;
-                if (!(inputValue >= 65 && inputValue <= 120) && (inputValue != 32 && inputValue != 0)) {
-                    event.preventDefault();
+                $("#role_name").keypress(function(event) {
+                    var inputValue = event.charCode;
+                    if (!(inputValue >= 65 && inputValue <= 120) && (inputValue != 32 && inputValue != 0)) {
+                        event.preventDefault();
+                    }
+                });
+
+
+
+
+                $("#treeview_example_code_button").on("click", function() {
+                    var that_code = $("#treeview_example_code");
+                    that_code.toggle();
+                    //console.log($("#treeview_example_code").css("display"))
+                    var that_code_display = that_code.css("display");
+                    if (that_code_display == "none") {
+                        $(this).text("Show HTML");
+                    } else {
+                        $(this).text("Hide HTML");
+                    }
+                });
+
+
+                $("#treeview_example_search_html").on("click", function() {
+                    var that_code = $("#treeview_example_search_html_display");
+                    that_code.toggle();
+                    //console.log($("#treeview_example_code").css("display"))
+                    var treeview_example_search_html_mode = that_code.css("display");
+                    if (treeview_example_search_html_mode == "none") {
+                        $(this).text("Show HTML");
+                    } else {
+                        $(this).text("Hide HTML");
+                    }
+                });
+
+                $("#treeview_example_search_css").on("click", function() {
+                    var that_code = $("#treeview_example_search_css_display");
+                    that_code.toggle();
+                    //console.log($("#treeview_example_code").css("display"))
+                    var treeview_example_search_css_mode = that_code.css("display");
+                    if (treeview_example_search_css_mode == "none") {
+                        $(this).text("Show CSS");
+                    } else {
+                        $(this).text("Hide CSS");
+                    }
+                });
+
+
+                //---------------------measure time-------------------------------//
+                var responseTime = [];
+                var actualTime = [];
+                var responseTimeSend = false;
+                var responseTimeCounter = 0;
+
+
+
+                var startTime, endTime;
+
+                function measure_start() {
+                    startTime = new Date();
+                };
+
+                function measure_end() {
+                    endTime = new Date();
+                    var timeDiff = endTime - startTime; //in ms
+                    // strip the ms
+                    timeDiff /= 1000;
+
+                    // get seconds
+                    //var seconds = Math.round(timeDiff % 60);
+                    var seconds = timeDiff;
+                    //console.log(seconds + " sec");
+                    $("#time_measure").val(seconds + " sec");
+                    //return seconds;
                 }
-            });
+                //------------------------------------------------------------------//
+
+                /* 
+                 *        $("#treeview_container").on("mouseover", function() {
+                 *      console.log($(this)[0].scrollTop)
+                 *        });
+                 * */
 
 
 
 
-            $("#treeview_example_code_button").on("click", function() {
-                var that_code = $("#treeview_example_code");
-                that_code.toggle();
-                //console.log($("#treeview_example_code").css("display"))
-                var that_code_display = that_code.css("display");
-                if (that_code_display == "none") {
-                    $(this).text("Show HTML");
-                } else {
-                    $(this).text("Hide HTML");
-                }
-            });
-
-
-            $("#treeview_example_search_html").on("click", function() {
-                var that_code = $("#treeview_example_search_html_display");
-                that_code.toggle();
-                //console.log($("#treeview_example_code").css("display"))
-                var treeview_example_search_html_mode = that_code.css("display");
-                if (treeview_example_search_html_mode == "none") {
-                    $(this).text("Show HTML");
-                } else {
-                    $(this).text("Hide HTML");
-                }
-            });
-
-            $("#treeview_example_search_css").on("click", function() {
-                var that_code = $("#treeview_example_search_css_display");
-                that_code.toggle();
-                //console.log($("#treeview_example_code").css("display"))
-                var treeview_example_search_css_mode = that_code.css("display");
-                if (treeview_example_search_css_mode == "none") {
-                    $(this).text("Show CSS");
-                } else {
-                    $(this).text("Hide CSS");
-                }
-            });
-
-
-            //---------------------measure time-------------------------------//
-            var responseTime = [];
-            var actualTime = [];
-            var responseTimeSend = false;
-            var responseTimeCounter = 0;
-
-
-
-            var startTime, endTime;
-
-            function measure_start() {
-                startTime = new Date();
-            };
-
-            function measure_end() {
-                endTime = new Date();
-                var timeDiff = endTime - startTime; //in ms
-                // strip the ms
-                timeDiff /= 1000;
-
-                // get seconds
-                //var seconds = Math.round(timeDiff % 60);
-                var seconds = timeDiff;
-                //console.log(seconds + " sec");
-                $("#time_measure").val(seconds + " sec");
-                //return seconds;
-            }
-            //------------------------------------------------------------------//
-
-            /* 
-             *        $("#treeview_container").on("mouseover", function() {
-             *      console.log($(this)[0].scrollTop)
-             *        });
-             * */
-
-
-
-
-            //set defaults
-            //$.fn.hummingbird.defaults.collapsedSymbol= "fa-arrow-circle-o-right"; //default="fa-plus"
-            //$.fn.hummingbird.defaults.expandedSymbol= "fa-arrow-circle-o-down"; //default="fa-minus"
-            $.fn.hummingbird.defaults.collapseAll = true; //false //default="true"
-            $.fn.hummingbird.defaults.checkboxes = "enabled"; //disabled //default="enabled"
-            //$.fn.hummingbird.defaults.checkboxesGroups= "disabled_grayed"; //disabled or disabled_grayed or enabled (default)
-            $.fn.hummingbird.defaults.checkDoubles = false; //false //default="false"
-            //depreciated
-            //$.fn.hummingbird.defaults.checkDisabled= true; //false //default="false"
-
-
-
-            //override defaults
-            if ($("#checkbox_doubles").prop("checked") == true) {
-                $.fn.hummingbird.defaults.checkDoubles = true; //false //default="false"
-            } else {
+                //set defaults
+                //$.fn.hummingbird.defaults.collapsedSymbol= "fa-arrow-circle-o-right"; //default="fa-plus"
+                //$.fn.hummingbird.defaults.expandedSymbol= "fa-arrow-circle-o-down"; //default="fa-minus"
+                $.fn.hummingbird.defaults.collapseAll = true; //false //default="true"
+                $.fn.hummingbird.defaults.checkboxes = "enabled"; //disabled //default="enabled"
+                //$.fn.hummingbird.defaults.checkboxesGroups= "disabled_grayed"; //disabled or disabled_grayed or enabled (default)
                 $.fn.hummingbird.defaults.checkDoubles = false; //false //default="false"
-            }
-
-            /* if ($("#checkbox_disabled").prop("checked") == true) {
-    $.fn.hummingbird.defaults.checkDisabled= true; //false //default="false"
-    } else {
-    console.log("checkDisabled=false")
-    $.fn.hummingbird.defaults.checkDisabled= false; //false //default="false"
-    }
-
-    */
-
-            //initializing
-            $("#treeview").hummingbird();
+                //depreciated
+                //$.fn.hummingbird.defaults.checkDisabled= true; //false //default="false"
 
 
-            //
-            $("#treeview2").hummingbird();
-            $("#treeview2").hummingbird("expandNode", {
-                attr: "id",
-                name: "xnode-0-1",
-                expandParents: true
-            });
-            $('#treeview2').css({
-                "pointer-events": "none"
-            });
+
+                //override defaults
+                if ($("#checkbox_doubles").prop("checked") == true) {
+                    $.fn.hummingbird.defaults.checkDoubles = true; //false //default="false"
+                } else {
+                    $.fn.hummingbird.defaults.checkDoubles = false; //false //default="false"
+                }
+
+                /* if ($("#checkbox_disabled").prop("checked") == true) {
+                    $.fn.hummingbird.defaults.checkDisabled= true; //false //default="false"
+                    } else {
+                    console.log("checkDisabled=false")
+                    $.fn.hummingbird.defaults.checkDisabled= false; //false //default="false"
+                    }
+
+                    */
+
+                //initializing
+                $("#treeview").hummingbird();
 
 
-            $("#treeview").hummingbird("expandNode", {
-                attr: "id",
-                name: "node-0",
-                expandParents: true
-            });
-
-            // $("#treeview").hummingbird("disableNode",{attr:"id",name: "node-0-1-2-1",state:true});
-
-
-            $("#CheckAll").on("click", function() {
-                measure_start();
-                $("#treeview").hummingbird("checkAll");
-                measure_end();
-            });
-
-
-            $("#UnCheckAll").on("click", function() {
-                measure_start();
-                $("#treeview").hummingbird("uncheckAll");
-                measure_end();
-            });
-
-
-            $("#CollapseAll").on("click", function() {
-                measure_start();
-                $("#treeview").hummingbird("collapseAll");
-                measure_end();
-            });
-
-
-            $("#ExpandAll").on("click", function() {
-                measure_start();
-                $("#treeview").hummingbird("expandAll");
-                measure_end();
-            });
-
-            $("#checkNode").on("click", function() {
-                measure_start();
-                $("#treeview").hummingbird("checkNode", {
+                //
+                $("#treeview2").hummingbird();
+                $("#treeview2").hummingbird("expandNode", {
                     attr: "id",
-                    name: $("#checkNodeOnID").val(),
-                    expandParents: false
-                });
-                measure_end();
-            });
-
-            $("#uncheckNode").on("click", function() {
-                measure_start();
-                $("#treeview").hummingbird("uncheckNode", {
-                    attr: "id",
-                    name: $("#uncheckNodeOnID").val(),
-                    collapseChildren: false
-                });
-                measure_end();
-            });
-
-            $("#expandNode").on("click", function() {
-                measure_start();
-                $("#treeview").hummingbird("expandNode", {
-                    attr: "id",
-                    name: $("#expandNodeOnID").val(),
+                    name: "xnode-0-1",
                     expandParents: true
                 });
-                measure_end();
-            });
+                $('#treeview2').css({
+                    "pointer-events": "none"
+                });
 
-            $("#collapseNode").on("click", function() {
-                measure_start();
-                $("#treeview").hummingbird("collapseNode", {
+
+                $("#treeview").hummingbird("expandNode", {
                     attr: "id",
-                    name: $("#collapseNodeOnID").val(),
-                    collapseChildren: true
+                    name: "node-0",
+                    expandParents: true
                 });
-                measure_end();
-            });
 
-            // $("#disableNode").on("click", function(){
-            //   measure_start();
-            //   var state = $("#disable_state_true").prop("checked");
-            //   var disableChildren = $("#disable_state_true_children").prop("checked");
-            //   console.log("disableChildren= " + disableChildren)
-            //   $("#treeview").hummingbird("disableNode",{attr:"id",name: $("#disableNodeOnID").val(),state:state,disableChildren:disableChildren});
-            //   measure_end();
-            // });
+                // $("#treeview").hummingbird("disableNode",{attr:"id",name: "node-0-1-2-1",state:true});
 
-            $("#enableNode").on("click", function() {
-                measure_start();
-                var state = $("#enable_state_true").prop("checked");
-                var enableChildren = $("#enable_state_true_children").prop("checked");
-                console.log("enableChildren= " + enableChildren)
-                $("#treeview").hummingbird("enableNode", {
-                    attr: "id",
-                    name: $("#enableNodeOnID").val(),
-                    state: state,
-                    enableChildren: enableChildren
+
+                $("#CheckAll").on("click", function() {
+                    measure_start();
+                    $("#treeview").hummingbird("checkAll");
+                    measure_end();
                 });
-                measure_end();
-            });
 
 
-
-
-
-            $("#getItems").on("click", function() {
-                measure_start();
-                var List = {
-                    "id": [],
-                    "dataid": [],
-                    "text": [],
-                    "module": []
-                };
-                $("#treeview").hummingbird("getChecked", {
-                    list: List,
-                    onlyParents: true
+                $("#UnCheckAll").on("click", function() {
+                    measure_start();
+                    $("#treeview").hummingbird("uncheckAll");
+                    measure_end();
                 });
-                $("#displayItems").val(List.dataid.join(","));
-                //$("#displayItems1").html(List.text.join("<br>"));
-                var L = List.id.length;
-                if (L == 1) {
-                    $("#num").val(L + " item checked");
-                } else {
-                    $("#num").val(L + " items checked");
-                }
-            });
 
-            $("#getItems").on("click", function() {
-                measure_start();
-                var List1 = {
-                    "id": [],
-                    "dataid": [],
-                    "text": [],
-                    "module": []
-                };
-                $("#treeview").hummingbird("getChecked", {
-                    list: List1,
-                    onlyEndNodes: true
+
+                $("#CollapseAll").on("click", function() {
+                    measure_start();
+                    $("#treeview").hummingbird("collapseAll");
+                    measure_end();
                 });
-                $("#displayItems1").val(List1.dataid.join("-"));
-                $("#displayItems2").val(List1.id.join(":"));
-                //$("#displayItems1").html(List.text.join("<br>"));
-                var L = List1.id.length;
-                if (L == 1) {
-                    $("#num").val(L + " item checked");
-                } else {
-                    $("#num").val(L + " items checked");
-                }
-            });
 
 
-
-
-
-
-
-            if ($("#checkbox_get_items").prop("checked") == true) {
-
-                //do it once on initialisation
-                var List = {
-                    "id": [],
-                    "dataid": [],
-                    "text": [],
-                    "module": []
-                };
-                $("#treeview").hummingbird("getChecked", {
-                    list: List,
-                    onlyParents: true
+                $("#ExpandAll").on("click", function() {
+                    measure_start();
+                    $("#treeview").hummingbird("expandAll");
+                    measure_end();
                 });
-                $("#displayItems").val(List.dataid.join(","));
-                var L = List.id.length;
-                if (L == 1) {
-                    $("#num").val(L + " item checked");
-                } else {
-                    $("#num").val(L + " items checked");
-                }
 
-
-                var List1 = {
-                    "id": [],
-                    "dataid": [],
-                    "text": [],
-                    "module": []
-                };
-                $("#treeview").hummingbird("getChecked", {
-                    list: List1,
-                    onlyEndNodes: true
+                $("#checkNode").on("click", function() {
+                    measure_start();
+                    $("#treeview").hummingbird("checkNode", {
+                        attr: "id",
+                        name: $("#checkNodeOnID").val(),
+                        expandParents: false
+                    });
+                    measure_end();
                 });
-                $("#displayItems1").val(List1.dataid.join("-"));
-                $("#displayItems2").val(List1.id.join(":"));
-                var L = List1.id.length;
-                if (L == 1) {
-                    $("#num").val(L + " item checked");
-                } else {
-                    $("#num").val(L + " items checked");
-                }
+
+                $("#uncheckNode").on("click", function() {
+                    measure_start();
+                    $("#treeview").hummingbird("uncheckNode", {
+                        attr: "id",
+                        name: $("#uncheckNodeOnID").val(),
+                        collapseChildren: false
+                    });
+                    measure_end();
+                });
+
+                $("#expandNode").on("click", function() {
+                    measure_start();
+                    $("#treeview").hummingbird("expandNode", {
+                        attr: "id",
+                        name: $("#expandNodeOnID").val(),
+                        expandParents: true
+                    });
+                    measure_end();
+                });
+
+                $("#collapseNode").on("click", function() {
+                    measure_start();
+                    $("#treeview").hummingbird("collapseNode", {
+                        attr: "id",
+                        name: $("#collapseNodeOnID").val(),
+                        collapseChildren: true
+                    });
+                    measure_end();
+                });
+
+                // $("#disableNode").on("click", function(){
+                //   measure_start();
+                //   var state = $("#disable_state_true").prop("checked");
+                //   var disableChildren = $("#disable_state_true_children").prop("checked");
+                //   console.log("disableChildren= " + disableChildren)
+                //   $("#treeview").hummingbird("disableNode",{attr:"id",name: $("#disableNodeOnID").val(),state:state,disableChildren:disableChildren});
+                //   measure_end();
+                // });
+
+                $("#enableNode").on("click", function() {
+                    measure_start();
+                    var state = $("#enable_state_true").prop("checked");
+                    var enableChildren = $("#enable_state_true_children").prop("checked");
+                    console.log("enableChildren= " + enableChildren)
+                    $("#treeview").hummingbird("enableNode", {
+                        attr: "id",
+                        name: $("#enableNodeOnID").val(),
+                        state: state,
+                        enableChildren: enableChildren
+                    });
+                    measure_end();
+                });
 
 
-                $("#treeview").on("CheckUncheckDone", function() {
+
+
+
+                $("#getItems").on("click", function() {
+                    measure_start();
+                    var List = {
+                        "id": [],
+                        "dataid": [],
+                        "text": [],
+                        "module": []
+                    };
+                    $("#treeview").hummingbird("getChecked", {
+                        list: List,
+                        onlyParents: true
+                    });
+                    $("#displayItems").val(List.dataid.join(","));
+                    //$("#displayItems1").html(List.text.join("<br>"));
+                    var L = List.id.length;
+                    if (L == 1) {
+                        $("#num").val(L + " item checked");
+                    } else {
+                        $("#num").val(L + " items checked");
+                    }
+                });
+
+                $("#getItems").on("click", function() {
+                    measure_start();
+                    var List1 = {
+                        "id": [],
+                        "dataid": [],
+                        "text": [],
+                        "module": []
+                    };
+                    $("#treeview").hummingbird("getChecked", {
+                        list: List1,
+                        onlyEndNodes: true
+                    });
+                    $("#displayItems1").val(List1.dataid.join("-"));
+                    $("#displayItems2").val(List1.id.join(":"));
+                    //$("#displayItems1").html(List.text.join("<br>"));
+                    var L = List1.id.length;
+                    if (L == 1) {
+                        $("#num").val(L + " item checked");
+                    } else {
+                        $("#num").val(L + " items checked");
+                    }
+                });
+
+
+
+
+
+
+
+                if ($("#checkbox_get_items").prop("checked") == true) {
+
+                    //do it once on initialisation
                     var List = {
                         "id": [],
                         "dataid": [],
@@ -574,10 +534,8 @@ use App\Http\Controllers\UamRolesController;
                     } else {
                         $("#num").val(L + " items checked");
                     }
-                });
 
 
-                $("#treeview").on("CheckUncheckDone", function() {
                     var List1 = {
                         "id": [],
                         "dataid": [],
@@ -596,32 +554,74 @@ use App\Http\Controllers\UamRolesController;
                     } else {
                         $("#num").val(L + " items checked");
                     }
+
+
+                    $("#treeview").on("CheckUncheckDone", function() {
+                        var List = {
+                            "id": [],
+                            "dataid": [],
+                            "text": [],
+                            "module": []
+                        };
+                        $("#treeview").hummingbird("getChecked", {
+                            list: List,
+                            onlyParents: true
+                        });
+                        $("#displayItems").val(List.dataid.join(","));
+                        var L = List.id.length;
+                        if (L == 1) {
+                            $("#num").val(L + " item checked");
+                        } else {
+                            $("#num").val(L + " items checked");
+                        }
+                    });
+
+
+                    $("#treeview").on("CheckUncheckDone", function() {
+                        var List1 = {
+                            "id": [],
+                            "dataid": [],
+                            "text": [],
+                            "module": []
+                        };
+                        $("#treeview").hummingbird("getChecked", {
+                            list: List1,
+                            onlyEndNodes: true
+                        });
+                        $("#displayItems1").val(List1.dataid.join("-"));
+                        $("#displayItems2").val(List1.id.join(":"));
+                        var L = List1.id.length;
+                        if (L == 1) {
+                            $("#num").val(L + " item checked");
+                        } else {
+                            $("#num").val(L + " items checked");
+                        }
+                    });
+
+                }
+
+
+
+
+
+
+
+                /* $("#treeview").hummingbird("search",{treeview_container:"body",search_input:"search_input",search_output:"search_output",search_button:"search_button",scrollOffset:0,onlyEndNodes:false});*/
+
+                $("#treeview").hummingbird("search", {
+                    treeview_container: "treeview_container",
+                    search_input: "search_input",
+                    search_output: "search_output",
+                    search_button: "search_button",
+                    scrollOffset: -515,
+                    onlyEndNodes: false
                 });
 
-            }
 
 
 
 
-
-
-
-            /* $("#treeview").hummingbird("search",{treeview_container:"body",search_input:"search_input",search_output:"search_output",search_button:"search_button",scrollOffset:0,onlyEndNodes:false});*/
-
-            $("#treeview").hummingbird("search", {
-                treeview_container: "treeview_container",
-                search_input: "search_input",
-                search_output: "search_output",
-                search_button: "search_button",
-                scrollOffset: -515,
-                onlyEndNodes: false
             });
-
-
-
-
-
-        });
         </script>
         @endsection
 

@@ -21,7 +21,7 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card" style="margin-left:1rem">
                         <div class="card-body">
 
                             <h5>Filter the Details <i class="fas fa-filter"></i></h5>
@@ -179,6 +179,57 @@
         $('#to_date').val('');
     });
 
+    function formatHours(decimalHours) {
+        if (decimalHours === null || decimalHours === undefined) return '';
+
+        decimalHours = Math.abs(decimalHours); // remove negative sign
+
+        const hours = Math.floor(decimalHours);
+        const minutes = Math.round((decimalHours - hours) * 60);
+
+        return hours + 'h ' + minutes + 'm';
+    }
+
+    function formatDateTime(dateStr) {
+
+        if (!dateStr) return '';
+        const date = new Date(dateStr + ' UTC');
+
+        const istDate = new Date(
+            date.toLocaleString("en-US", {
+                timeZone: "Asia/Kolkata"
+            })
+        );
+
+        const year = istDate.getFullYear();
+        const month = String(istDate.getMonth() + 1).padStart(2, '0');
+        const day = String(istDate.getDate()).padStart(2, '0');
+
+        const hours = String(istDate.getHours()).padStart(2, '0');
+        const minutes = String(istDate.getMinutes()).padStart(2, '0');
+        const seconds = String(istDate.getSeconds()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    function calculateHours(start, end) {
+
+        if (!start || !end) return '-';
+
+        const startDate = new Date(start + ' UTC');
+        const endDate = new Date(end + ' UTC');
+
+        const diffMs = endDate - startDate;
+
+        if (diffMs <= 0) return '-';
+
+        const totalMinutes = Math.floor(diffMs / (1000 * 60));
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+
+        return `${hours}h ${minutes}m`;
+    }
+
     $('#searchForm').on('submit', function(e) {
         e.preventDefault();
 
@@ -196,7 +247,7 @@
                 confirmButtonColor: '#7367f0',
                 confirmButtonText: 'OK'
             });
-            return; 
+            return;
         }
 
         let html = '';
@@ -244,10 +295,10 @@
                         html += `<td rowspan="${courseRecords.length}">${record.course_name}</td>`;
                         firstCourse = false;
                     }
-                    html += `<td>${new Date(record.start_time).toLocaleDateString()}</td>`;
-                    html += `<td>${new Date(record.end_time).toLocaleDateString()}</td>`;
-                    html += `<td>${record.percentage}</td>`;
-                    html += `<td>${record.hours}</td>`;
+                    html += `<td>${formatDateTime(record.start_time)}</td>`;
+                    html += `<td>${formatDateTime(record.end_time)}</td>`;
+                    html += `<td>${(!record.percentage || record.percentage == 0) ? '-' : record.percentage}</td>`;
+                    html += `<td>${calculateHours(record.start_time,record.end_time)}</td>`;
                     html += '</tr>';
                 });
             }

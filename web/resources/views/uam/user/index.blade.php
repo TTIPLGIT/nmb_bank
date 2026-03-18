@@ -35,7 +35,9 @@
     table td {
         text-transform: none !important;
     }
+    
 </style>
+
 <div class="main-content">
 
 

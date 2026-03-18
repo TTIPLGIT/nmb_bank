@@ -4,6 +4,22 @@
 <div class="row">
     <div class="main-content module_space">
 
+    @if(session('fail'))
+
+              <input type="hidden" name="session_data" id="session_data1" class="session_data"
+                value="{{ session('error') }}">
+              <script type="text/javascript">
+                window.onload = function() {
+                  var message = $('#session_data1').val();
+                  swal({
+                    title: "Info",
+                    text: "{{ session('fail') }}",
+                    type: "info",
+                  });
+
+                }
+              </script>
+              @endif
         <!-- Main Content -->
         <section class="section">
 
@@ -93,7 +109,7 @@
                                             <button type="button" class="btn btn-success btn-space"
                                                 onclick="edit_screens()">Update</button>
                                             <a class="btn btn-danger" href="{{ route('uam_screens.index') }}"><i
-                                                    class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
+                                                    class="fa fa-times" aria-hidden="true"></i> Back </a>&nbsp;
 
                                         </div>
                                     </div>
@@ -221,6 +237,12 @@ function edit_screens() {
     if (class_name == '') {
         swal("Please Enter class Name ", "", "error");
         return false;
+    }
+    var display_order = $('#display_order').val();
+
+    if (display_order == '') {
+      swal("Please Enter the Display Order ", "", "error");
+      return false;
     }
     var checkedCount = $("input[type=checkbox][name^=screen_permission]:checked").length;
 

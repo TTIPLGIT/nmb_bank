@@ -70,7 +70,7 @@
 
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label class="control-label">Display Order </label>
+                      <label class="control-label">Display Order <span style="color: red;font-size: 16px;">*</span></label>
                       <input class="form-control" type="text" id="display_order" name="display_order" placeholder="Enter Display Order" autocomplete="off">
                     </div>
                   </div>
@@ -100,9 +100,9 @@
                 </div>
                 <div class="row text-center">
                   <div class="col-md-12">
-                    <button type="button" class="btn btn-success btn-space" onclick="save_screen()" id="savebutton">Save</button>
-                    <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button>&nbsp;
-                    <a class="btn btn-danger footer_btn_cancel" href="{{ route('uam_screens.index') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>
+                    <button type="button" class="btn btn-success btn-space" onclick="save_screen()" id="savebutton">Submit</button>
+                    <!-- <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button>&nbsp; -->
+                    <a class="btn btn-danger footer_btn_cancel" href="{{ route('uam_screens.index') }}"> Back </a>
 
 
                   </div>
@@ -187,7 +187,12 @@
       swal("Please Enter Route URL ", "", "error");
       return false;
     }
+    var display_order = $('#display_order').val();
 
+    if (display_order == '') {
+      swal("Please Enter the Display Order ", "", "error");
+      return false;
+    }
     var class_name = $('#class_name').val();
 
     // if (class_name == '') {

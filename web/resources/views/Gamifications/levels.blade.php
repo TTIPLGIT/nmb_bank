@@ -173,7 +173,7 @@
                         <div class="d-flex justify-content-center gap-2" style="margin-bottom:20px">
                             <button type="submit" id="updateButton" class="btn btn-success"
                                 onclick="gencre(event)">Submit</button>
-                            <a class="btn btn-danger btn-lg" href="{{ route('level_master_page') }}">Back</a>
+                            <a class="btn btn-danger btn-lg" style="color:white" data-dismiss="modal">Back</a>
                         </div>
                     </div>
                 </div>

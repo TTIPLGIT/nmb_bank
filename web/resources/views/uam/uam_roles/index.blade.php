@@ -27,6 +27,10 @@ thead th {
     font-weight: bold;
 }
 </style>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <div class="main-content module_space">
 
 
@@ -114,7 +118,7 @@ thead th {
                                                 <td class="text-center">
 
                                                     <form
-                                                        action="{{ route('uam_roles.destroy', \Crypt::encrypt($row['role_id'])) }}"
+                                                        id="delete-form-{{ $row['role_id'] }}" action="{{ route('uam_roles.destroy', \Crypt::encrypt($row['role_id'])) }}"
                                                         method="POST">
                                                         @if(strpos($screen_permission['permissions'], 'Show') !== false)
                                                         <a class="btn btn-link" title="Show"
@@ -133,9 +137,9 @@ thead th {
 
                                                         @if(strpos($screen_permission['permissions'], 'Delete') !==
                                                         false)
-                                                        <!-- <a class="btn btn-link" type="submit" title="Delete"
-            onclick="return confirm('Are you sure you want to delete this data ?');"><i
-            class="far fa-trash-alt" style="color:red"></i></a> -->
+                                                        <a class="btn btn-link" type="submit" title="Delete"
+            onclick="confirmDelete({{ $row['role_id'] }})"><i
+            class="far fa-trash-alt" style="color:red"></i></a>
 
                                                         @endif
                                                     </form>
@@ -177,32 +181,25 @@ thead th {
 
 
 <script>
-function myFunction(id) {
+function confirmDelete(id) {
 
-    swal({
-        message: "Are You Sure to delete this data.",
-        title: "Confirmation For Delete ?",
-        centerVertical: true,
-        buttons: {
-            confirm: {
-                label: 'Yes',
-                className: 'btn-success'
-            },
-            cancel: {
-                label: 'No',
-                className: 'btn-danger'
-            }
-        },
-        callback: function(result) {
-            if (result == true) {
-                var url = $('#' + id).val();
-                window.location.href = url;
-            }
-        }
-    });
+        swal({
+                title: "Confirmation For Delete?",
+                text: "Are you sure you want to delete this data?",
+                icon: "warning",
+                buttons: ["No", "Yes"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+
+                if (willDelete) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+
+            });
 
 
-}
+    }
 </script>
 
 

@@ -21,21 +21,17 @@ class elearningExamController extends BaseController
             //$this->WriteFileLog("API HITTED");
             $method = 'Method =>  elearningExamController => index';
             $rows['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz  AS e left join elearning_localadaptation AS l ON e.quiz_id=l.quiz_id left join elearning_ethnictest AS et ON e.quiz_id=et.quiz_id left join elearning_classes AS ec ON e.quiz_id=ec.quiz_id WHERE l.quiz_id IS NULL AND et.quiz_id IS NULL and ec.quiz_id IS NULL AND e.drop_quiz=0');
-            $rows['user_category'] = array(
-                'Employee' => config('setting.roles.Student'),
-                'Manager' => config('setting.roles.Teacher'),
-            );
-            $this->WriteFileLog($rows);
+            $rows['user_category'] = DB::select("SELECT * FROM uam_roles WHERE active_flag = 0");
 
 
             $rows['quiz_list'] = DB::select('
-    SELECT et.id, et.user_category, ur.role_name, et.exam_name, et.quiz_id, eq.quiz_name
-    FROM elearning_exam AS et
-    INNER JOIN elearning_practice_quiz AS eq ON eq.quiz_id = et.quiz_id
-    INNER JOIN uam_roles AS ur ON ur.role_id = et.user_category
-    WHERE et.active_flag = 0
-    ORDER BY et.id DESC
-');
+                SELECT et.id, et.user_category, ur.role_name, et.exam_name, et.quiz_id, eq.quiz_name
+                FROM elearning_exam AS et
+                INNER JOIN elearning_practice_quiz AS eq ON eq.quiz_id = et.quiz_id
+                INNER JOIN uam_roles AS ur ON ur.role_id = et.user_category
+                WHERE et.active_flag = 0
+                ORDER BY et.id DESC
+            ');
             $rows['quiz_dropdown'] = DB::table('elearning_practice_quiz as eq')
                 ->where('eq.drop_quiz', 0)
                 ->select('eq.quiz_id', 'eq.quiz_name')
@@ -350,15 +346,34 @@ class elearningExamController extends BaseController
             $input = [
                 'id' => $inputArray['id'],
             ];
+            $examId = $inputArray['id'];
+            $courseMapped = DB::table('elearning_courses')
+                ->where('exam_id', $examId)
+                ->exists();
 
-            $rows = DB::table('elearning_exam')
-                ->where('id', $input['id'])
-                ->update([
+            $rows = 0; // initialize variable
 
-                    'active_flag' => '1',
+            // Delete only if exam is NOT mapped
+            if (!$courseMapped) {
+
+                $rows = DB::table('elearning_exam')
+                    ->where('id', $examId)
+                    ->update([
+                        'active_flag' => 1
+                    ]);
+            } else {
+
+                $serviceResponse = array();
+                $serviceResponse['Code'] = 400;
+                $serviceResponse['Message'] = "This exam is already mapped to a course. Cannot delete.";
+                $serviceResponse['Data'] = 0;
+
+                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+
+                return $this->SendServiceResponse($serviceResponse, 200, true);
+            }
 
 
-                ]);
 
             $this->notifications_insert(null, auth()->user()->id, "Exam Updated Successfully", "/examtest");
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);

@@ -33,9 +33,10 @@ class coursecategoryController extends BaseController
             $objData = json_decode($this->decryptData($response->Data));
             $parant_data = json_decode(json_encode($objData->Data), true);
             $categories = $parant_data['categories'];
+            $icons = $parant_data['icons'];
         }
 
-        return view("coursecategory.coursecategory", compact('screens', 'modules', 'categories'));
+        return view("coursecategory.coursecategory", compact('screens', 'modules', 'categories','icons'));
     }
 
     public function createpage(Request $request)
@@ -146,6 +147,7 @@ class coursecategoryController extends BaseController
                 'course_locked' => $request->course_locked,
                 'points_to_unlock' => $request->points_to_unlock,
             ];
+
 
 
 

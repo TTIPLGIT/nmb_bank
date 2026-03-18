@@ -10,7 +10,10 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
 // Home
 Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
-    $trail->push('Home', route('home'));
+    $user = session('userID');
+    $route = $user && $user == '126' ? 'admindashboard' : 'elearningdashboard';
+    
+    $trail->push('Home', route($route));
 });
 
 Breadcrumbs::for('Assessment.index', function (BreadcrumbTrail $trail) {
@@ -248,6 +251,10 @@ Breadcrumbs::for('certificate_template.show', function ($trail, $id) {
     $trail->push('Preview', route('certificate_template.show', $id));
 });
 
+Breadcrumbs::for('meeting_list', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Virtual Meeting', route('meeting_list'));
+});
 
 Breadcrumbs::for('user.index', function ($trail) {
     $trail->parent('home');
@@ -521,7 +528,7 @@ Breadcrumbs::for('educreate', function (BreadcrumbTrail $trail) {
 });
 
 Breadcrumbs::for('elearningDashboard', function (BreadcrumbTrail $trail) {
-    $trail->push('EDash', route('elearningDashboard'));
+    $trail->push('Home', route('elearningDashboard'));
 });
 
 Breadcrumbs::for('elearning.cpt_index', function (BreadcrumbTrail $trail) {
@@ -580,12 +587,12 @@ Breadcrumbs::for('level_add_page', function (BreadcrumbTrail $trail) {
 
 /// course Category
 Breadcrumbs::for('catagory_list', function (BreadcrumbTrail $trail) {
-    $trail->parent('home'); 
+    $trail->parent('home');
     $trail->push('Category List', route('catagory_list'));
 });
 
 Breadcrumbs::for('catagory_create', function (BreadcrumbTrail $trail) {
-    $trail->parent('catagory_list'); 
+    $trail->parent('catagory_list');
     $trail->push('Category Create', route('catagory_create'));
 });
 
