@@ -32,7 +32,6 @@ class UserController extends BaseController
 				$role_id = $inputArray['screen_role_id'];
 
 				$role_check =  DB::select("select * from uam_roles where role_id = $role_id and active_flag = 0");
-				$this->WriteFileLog($role_check, 'screenrole');
 				if ($role_check != []) {
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
@@ -61,7 +60,6 @@ class UserController extends BaseController
 				$project_role_id = $inputArray['project_role_id'];
 
 				$role_check =  DB::select("select * from project_roles where project_role_id = $project_role_id and active_flag = 1");
-				$this->WriteFileLog($role_check, 'projectrole');
 				if ($role_check != []) {
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
@@ -91,7 +89,6 @@ class UserController extends BaseController
 				$designation_id = $inputArray['designation_id'];
 
 				$role_check =  DB::select("select * from designation where designation_id = $designation_id and active_flag = 0");
-				$this->WriteFileLog($role_check, 'designaton');
 				if ($role_check != []) {
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
@@ -119,7 +116,6 @@ class UserController extends BaseController
 
 				$role_check =  DB::select("SELECT * FROM document_folder_structures WHERE parent_document_folder_structure_id Not IN  ($parent_department) AND active_flag = 1
 				 AND  document_folder_structure_id =  $department_id");
-				$this->WriteFileLog($role_check, 'department');
 
 
 
@@ -148,7 +144,6 @@ class UserController extends BaseController
 				$email = $inputArray['email'];
 
 				$role_check =  DB::select("SELECT * FROM users WHERE email = '$email' ");
-				$this->WriteFileLog($role_check, 'email');
 				if ($role_check == []) {
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
@@ -174,7 +169,6 @@ class UserController extends BaseController
 				$email = $inputArray['email'];
 
 				$role_check =  DB::select("SELECT * FROM users_dummy WHERE email = '$email' ");
-				$this->WriteFileLog($role_check, 'email');
 				$checkcounting = count($role_check);
 				if ($checkcounting > 1) {
 
@@ -947,7 +941,6 @@ class UserController extends BaseController
 		$method = 'Method => UserController => updatedata';
 		try {
 			$isMobile = isset($request['isMobile']);
-			$this->WriteFileLog($isMobile);
 
 			$input = $isMobile ? $request : $this->decryptData($request->requestData);
 			// $input = $this->decryptData($request->requestData);
@@ -955,7 +948,6 @@ class UserController extends BaseController
 			$email =  $input['email'];
 
 			$rowsemail =  DB::select("select * from users where not id  = '$id' and email ='$email'");
-			$this->WriteFileLog($rowsemail);
 			if (json_encode($rowsemail) != '[]') {
 				$serviceResponse = array();
 				$serviceResponse['Code'] = 400;
@@ -1014,9 +1006,7 @@ class UserController extends BaseController
 							'project_role_id' => 1,
 
 						]);
-					$this->WriteFileLog($input['custom_field_value']);
 					if (!empty($input['custom_field_value'])) {
-						$this->WriteFileLog('custom_field');
 
 						$data = [];
 						foreach ($input['custom_field_value'] as $fieldId => $value) {
@@ -1971,6 +1961,7 @@ class UserController extends BaseController
 			$inputArray = $this->decryptData($request->requestData);
 
 			$id = Auth::id();
+			$user_id = auth()->user()->id;
 			$role = DB::select("SELECT role_id FROM uam_user_roles where user_id=$id;");
 			$role = $role[0]->role_id;
 
@@ -2017,11 +2008,13 @@ class UserController extends BaseController
 			$Elearning_expiry_data = DB::select("select * from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id order by notification_id DESC;");
 			$Elearning_expiry_data_count = DB::select("select count(notification_url) as countflow from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id;");
 			$row2['cpt_points'] = DB::select("SELECT total_cptpoints AS cpt_points  FROM users WHERE id=$id and active_flag=0");
-			$userPoints = DB::table('users')
-				->where('id', $id)
-				->where('active_flag', 0)
-				->value('total_cptpoints');
-			if ($row2['cpt_points'] !== null) {
+			$userPoints = DB::table('user_course_relation as ucr')
+							->join('elearning_courses as ec', 'ec.course_id', '=', 'ucr.course_id')
+							->where('ucr.user_id', $user_id)
+							->where('ucr.course_status', 'completed')
+							->whereRaw('FIND_IN_SET(?, ec.user_ids)', [$user_id])
+							->sum('ec.course_cpt_points');
+			if ($userPoints !== null) {
 
 				$level = DB::table('gamification_levels')
 					->where('active_flag', 1)
