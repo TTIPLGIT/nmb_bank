@@ -23,7 +23,7 @@ class UamScreensController extends BaseController
             $rows = DB::table('uam_screens as a')
                 ->select('a.*')
                 ->where('a.active_flag', 0)
-                ->orderBy('a.display_order', 'ASC')
+                ->orderBy('a.screen_id', 'ASC')
                 ->get();
 
             $response = [
@@ -491,7 +491,7 @@ class UamScreensController extends BaseController
 
             $screen_check = DB::select("select * from uam_module_screens where screen_id = '$id'");
 
-            if ($screen_check  != []) {
+            if ($screen_check  == []) {
 
                 DB::table('uam_screens')
                     ->where('screen_id', $id)

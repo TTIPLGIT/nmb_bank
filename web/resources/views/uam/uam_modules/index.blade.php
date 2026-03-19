@@ -40,7 +40,7 @@
     <div class="section-body mt-2">
 
       @if(strpos($screen_permission['permissions'], 'Create') !== false)
-      <a type="button" style="font-size:15px;" class="btn btn-success btn-lg"
+      <a type="button" style="font-size:15px;margin-bottom:15px" class="btn btn-success btn-lg"
         href="{{ route('uam_modules.create') }}">Add Modules</a>
       @endif
       <div class="row">
@@ -71,7 +71,8 @@
 
                 }
               </script>
-              @elseif(session('error'))
+              @endif
+              @if(session('fail'))
 
               <input type="hidden" name="session_data" id="session_data1" class="session_data"
                 value="{{ session('error') }}">
@@ -80,7 +81,7 @@
                   var message = $('#session_data1').val();
                   swal({
                     title: "Info",
-                    text: message,
+                    text: "{{ session('fail') }}",
                     type: "info",
                   });
 

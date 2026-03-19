@@ -1236,16 +1236,14 @@ class elearningEthnicTestController extends BaseController
             $rows['points'] = DB::select("SELECT ucr.*, ec.course_name, ec.course_cpt_points FROM user_course_relation AS ucr INNER JOIN elearning_courses AS ec ON ec.course_id = ucr.course_id WHERE ucr.user_id = ?
                AND ucr.course_status = 'completed' AND FIND_IN_SET(?, ec.user_ids) ORDER BY ucr.course_id DESC", [$user_id, $user_id]);
             $rows['total_cpd_points'] = DB::selectOne(
-                "
-    SELECT 
-        SUM(ec.course_cpt_points) AS total_points
-    FROM user_course_relation AS ucr
-    INNER JOIN elearning_courses AS ec
-        ON ec.course_id = ucr.course_id
-    WHERE ucr.user_id = ?
-      AND ucr.course_status = 'completed'
-      AND FIND_IN_SET(?, ec.user_ids)
-    ",
+                "SELECT 
+                        SUM(ec.course_cpt_points) AS total_points
+                    FROM user_course_relation AS ucr
+                    INNER JOIN elearning_courses AS ec
+                        ON ec.course_id = ucr.course_id
+                    WHERE ucr.user_id = ?
+                    AND ucr.course_status = 'completed'
+                    AND FIND_IN_SET(?, ec.user_ids)",
                 [$user_id, $user_id]
             );
 

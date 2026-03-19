@@ -460,7 +460,7 @@
                                                             <td> <img src="{{ asset('uploads/class/126/mp4.png') }}" width="50px"
                                                                     height="50px" alt="..."></td>
                                                         <?php    } elseif ($data->class_format == 'mp3') { ?>
-                                                            <td> <img src="config('setting.image_path')uploads/class/126/mp3.png" width="50px"
+                                                            <td> <img src="{{ asset('uploads/class/126/mp3.png')}}" width="50px"
                                                                     height="50px" alt="Image" /></td>
                                                         <?php    } elseif ($data->class_format == 'pdf') { ?>
                                                             <td> <img src="{{ asset('uploads/class/126/pdf.png') }}" width="50px"
@@ -480,13 +480,13 @@
                                                                 <i class="fas fa-pencil-alt"
                                                                     style="color: blue !important"></i></a>
                                                             <!-- Replace your existing edit button with this -->
-                                                            <!-- <a class="btn btn-link" title="Edit"
+                                                            <a class="btn btn-link" title="Edit"
                                                                 href="javascript:void(0);"
                                                                 onclick="openClassEditModal({{$data->class_id}})"
                                                                 style="margin-top: 0px !important;">
                                                                 <i class="fas fa-pencil-alt"
                                                                     style="color: blue !important"></i>
-                                                            </a> -->
+                                                            </a>
                                                             <a class="btn btn-link" title="show" data-toggle="modal"
                                                                 onclick="openClassEditModal({{$data->class_id}},
                                                                     true)"> <i class="fas fa-eye"
@@ -545,8 +545,8 @@
                                                         <th>S.No</th>
                                                         <th>Course Name</th>
                                                         <!-- <th>Course Banner</th> -->
-                                                        <th>Start Date</th>
-                                                        <th>End Date</th>
+                                                        <!-- <th>Start Date</th> -->
+                                                        <!-- <th>End Date</th> -->
                                                         <!-- <th>Price</th> -->
                                                         <th>Action</th>
                                                     </tr>
@@ -584,8 +584,8 @@
                                                             <td> <img src="uploads/class/126/empty.jpg" width="50px"
                                                                     height="50px" alt="..."></td>
                                                         <?php    } ?> -->
-                                                        <td>{{$data->course_start_period}}</td>
-                                                        <td>{{$data->course_end_period}}</td>
+                                                        <!-- <td>{{$data->course_start_period}}</td> -->
+                                                        <!-- <td>{{$data->course_end_period}}</td> -->
                                                         <!-- @if(!empty($data->course_price))
 
                                                         <td>Rs. {{$data->course_price}}</td>
@@ -631,11 +631,11 @@
 
 
 
-                                                            <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal3" onclick="fetch_courseupdate_new({{$data->course_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link" title="show" data-toggle="modal"
-                                                                data-target="#addModal5"
-                                                                onclick="fetch_courseupdate_new({{$data->course_id}},'show')"><i
-                                                                    class="fas fa-eye" style="color:green"></i></a>
+                                                            <!-- <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal3" onclick="fetch_courseupdate_new({{$data->course_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a> -->
+                                                            <a class="btn btn-link" title="Edit" href="{{ route('admin_course_edit', \Crypt::encrypt($data->course_id)) }}">
+                                                                <i class="fas fa-pencil-alt" style="color:blue"></i></a>
+                                                            <a class="btn btn-link" title="show" href="{{ route('admin_course_show', \Crypt::encrypt($data->course_id)) }}">
+                                                                <i class="fas fa-eye" style="color:green"></i></a>
 
                                                             <a type="button" title="Delete"
                                                                 onclick="course_delete(<?php echo $data->course_id ?>)"
@@ -1196,7 +1196,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Course Certificate:</label><br>
+                                <label>Course Certificate: <span class="error-star" style="color:red;">*</span></label><br>
 
                                 <input type="radio" class="btn-check" name="course_certificate" value="1"
                                     id="course_certificate_yes" autocomplete="off">
@@ -1235,7 +1235,7 @@
                             <div class="form-group">
                                 <label>Course Introduction:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="file" class="form-control default" id="course_introduction"
-                                    name="course_introduction" required>
+                                    name="course_introduction" accept=".mp4,.mp3,.png,.jpg,.jpeg" required>
                                 <span style="color:red !important"><strong>Following files could be uploaded as
                                         mp4,mp3,png,jpg</strong></span>
 
@@ -1259,7 +1259,7 @@
                                 <label>Course Summary for chatbot:<span class="error-star"
                                         style="color:red;">*</span></label>
                                 <input type="file" class="form-control default" id="course_summary"
-                                    name="course_summary" required>
+                                    name="course_summary" accept=".mp3,.pdf,.txt" required>
                                 <span style="color:red !important"><strong>Following files could be uploaded as
                                         mp3,pdf,txt</strong></span>
 
@@ -1646,7 +1646,7 @@
                         <div class="col-lg-12 text-center">
 
                             <a class="btn btn-success btn-space savebutton" type="submit" onclick="gencre1(1)"
-                                id="savebutton">Submit </a>
+                                id="savebutton" style="color:white">Submit </a>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="resetSelect2()"
                                 value="Cancel">
                         </div>
@@ -2770,6 +2770,7 @@
                     $('#course_gain_skillsshow').val(row.course_gain_skills).prop('disabled', true);
                     $('#course_cpt_pointsshow').val(row.course_cpt_points).prop('disabled', true);
                     $('#course_priceshow').val(row.course_price).prop('disabled', true);
+                    $('#course_classesshow').val(row.course_classes).prop('disabled', true);
                     // User IDs (SHOW)
                     let userIdsArray = row.user_ids ? row.user_ids.split(',') : [];
                     $('#user_ids_show').val(userIdsArray).prop('disabled', true).trigger('change');
@@ -3006,7 +3007,7 @@
                         <div class="col-lg-12 text-center">
 
                             <a class="btn btn-success btn-space classsavebutton" type="submit" onclick="gencre()"
-                                id="classsavebutton">Submit</a>
+                                id="classsavebutton" style="color:white">Submit</a>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -3207,7 +3208,7 @@
                             <div class="form-group">
                                 <label>Class Duration:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="text" class="form-control default" id="class_durationedit"
-                                    name="class_durationedit" autocomplete="off">
+                                    name="class_durationedit" autocomplete="off" disabled>
                             </div>
                         </div>
                     </div>
@@ -3762,7 +3763,7 @@
             </div>
             <div class="card longquestion" id="">
                 <h4 class="modal-title long">Show Course:</h4>
-                <form method="POST" id="course_form_show" action="{{url('/elearning/course/show/1')}}"
+                <form method="POST" id="course_form_show"
                     enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden" name="course_editshow" class="course_edit" id="course_editshow">
@@ -3933,7 +3934,7 @@
                             </div>
                         </div>
 
-                        <div class=" col md-6" id="certificateFields_edit" style="display: none;">
+                        <div class=" col md-6" id="certificateFields_show" style="display: none;">
                             <!-- <div class="col-md"> -->
                             <div class="form-group">
                                 <label> Certificate Template:<span class="error-star"
@@ -4142,7 +4143,7 @@
 
                                 <br>
                                 <select class="js-select5  course_classesshow" name="course_classes[]"
-                                    id="course_classesshow" multiple="multiple" style="width:208px !important;">
+                                    id="course_classesshow" multiple="multiple">
 
                                     @foreach($rows['elearning_classes'] as $key => $data)
                                     <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
@@ -4420,13 +4421,27 @@
 
 
         if (id == "1") {
-            var course_category = $("#course_category").val();
+            var course_category = $("#course_category_id").val();
 
             if (course_category == '') {
                 swal.fire("Please Select the Course Category", "", "error");
                 return false;
             }
-
+            var role_id = $("#role_id").val();
+            if (role_id == '') {
+                swal.fire("Please Select the Role", "", "error");
+                return false;
+            }
+            var designation_id = $("#designation_id").val();
+            if (designation_id == '') {
+                swal.fire("Please Select the Designation", "", "error");
+                return false;
+            }
+             var user_id = $("#user_id").val();
+            if (user_id == '') {
+                swal.fire("Please Select the Users", "", "error");
+                return false;
+            }
             var course_name = $("#course_name").val();
             if (course_name == '') {
                 swal.fire("Please Enter the Course Name", "", "error");
@@ -5086,7 +5101,7 @@
                     if (classData.resource_name && classData.resource_name !== '0') {
                         let resourcePath = classData.resource_path ?
                             classData.resource_path + '/' + classData.resource_name :
-                            '/uploads/class/' + classData.resource_name;
+                            '/uploads/class/126/' + classData.resource_name;
                         $('.img-fluid').attr('src', resourcePath);
                     }
 

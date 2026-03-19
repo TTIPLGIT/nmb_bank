@@ -470,7 +470,7 @@ class elearningEthnicTestController extends BaseController
         DB::table('cpt_points_hours_calculate')->insert([
             'user_id' => $userId,
             'course_id' => $courseId,
-            'start_time' => now(),
+            'start_time' => Carbon::now('UTC'),
             'end_time' => null,
             'created_at' => now(),
             'updated_at' => now()
@@ -1064,7 +1064,7 @@ $scormCourses = DB::table('scorm_courses as sc')
             DB::table('cpt_points_hours_calculate')->insert([
                 'user_id'         => $user_id,
                 'course_id'       => $id,
-                'start_time'      => now(),
+                'start_time'      => Carbon::now('UTC'),
                 'percentage'      => $courseProgress,
                 'created_at'      => now(),
                 'updated_at'      => now(),
@@ -1188,7 +1188,6 @@ $scormCourses = DB::table('scorm_courses as sc')
             // dd($id);
             $courseDetails = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
 
-            //   dd($courseDetails);  
             foreach ($courseDetails as $courseDetail) {
                 $classOrder = $courseDetail->course_classes;
             }

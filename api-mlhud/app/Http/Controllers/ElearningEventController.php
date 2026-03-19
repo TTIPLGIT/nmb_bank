@@ -34,7 +34,7 @@ class ElearningEventController extends BaseController
 
             ];
 
-            $update_id=  DB::transaction(function () use ($input) {
+            $update_id =  DB::transaction(function () use ($input) {
                 $role_id = DB::table('elearning_events')
                     ->insertGetId([
                         'user_category' => $input['user_category'],
@@ -87,16 +87,22 @@ class ElearningEventController extends BaseController
             $rows = DB::select("SELECT role_id from uam_user_roles  where user_id=$userID");
             $role_id = $rows[0]->role_id;
 
-            $rows['user_category'] = array(
-                'Employee' => config('setting.roles.Student'),
-                'Manager' => config('setting.roles.Teacher'),
-                'All' => 0
-            );
-            
+            $rows['user_category'] = DB::select("SELECT * FROM uam_roles WHERE active_flag = 0");
+
             // INNER JOIN uam_roles AS ur ON ur.role_id = et.user_category
 
-            $rows['quiz_list'] =  DB::select("SELECT event_id,event_name,event_image,event_date,user_category from elearning_events as en  where event_status=0 ORDER BY created_at DESC");
-
+            $rows['quiz_list'] =   DB::select("SELECT 
+                                            en.event_id,
+                                            en.event_name,
+                                            en.event_image,
+                                            en.event_date,
+                                            en.user_category,
+                                            ur.role_name
+                                        FROM elearning_events AS en
+                                        INNER JOIN uam_roles AS ur 
+                                            ON en.user_category = ur.role_id
+                                        WHERE en.event_status = 0
+                                        ORDER BY en.created_at DESC");
 
             $response = [
                 'rows' => $rows,
@@ -284,7 +290,7 @@ class ElearningEventController extends BaseController
             ];
             $this->WriteFileLog($input);
 
-            $update_id=DB::table('elearning_events')
+            $update_id = DB::table('elearning_events')
                 ->where('event_id', $input['eid'])
                 ->update([
                     'user_category' => $input['user_category'],

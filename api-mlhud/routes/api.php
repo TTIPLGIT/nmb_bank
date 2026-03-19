@@ -923,3 +923,7 @@ Route::post('/class/restore-class-version', [App\Http\Controllers\tryController:
 Route::get('/custom_filed/get_data', [App\Http\Controllers\DesignationController::class, 'custom_filed']);
 Route::get('/custom_filed_create', [App\Http\Controllers\DesignationController::class, 'custom_filed_create']);
 Route::post('/custom_filed_store', [App\Http\Controllers\DesignationController::class, 'custom_filed_store']);
+Route::get('/custom_filed_fetch/{id}', [App\Http\Controllers\DesignationController::class, 'custom_filed_fetch']);
+Route::post('/custom_filed_update', [App\Http\Controllers\DesignationController::class, 'custom_filed_update']);
+Route::post('/custom_filed_delete/{id}', [App\Http\Controllers\DesignationController::class, 'custom_filed_delete']);
+

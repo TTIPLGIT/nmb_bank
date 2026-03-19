@@ -22,8 +22,7 @@ class AttendanceController extends BaseController
                 ->join('elearning_courses as e', 'c.course_id', '=', 'e.course_id')
                 ->join('uam_roles as r', 'u.role_id', '=', 'r.role_id')
                 ->leftJoin('designation as d', 'u.designation_id', '=', 'd.designation_id')
-                ->whereNotIn('u.role_id', [1, 41])
-                ->orderBy('u.id', 'DESC')
+                ->orderBy('c.id', 'ASC')
                 ->select(
                     'u.id as user_id',
                     'u.name as user_name',
