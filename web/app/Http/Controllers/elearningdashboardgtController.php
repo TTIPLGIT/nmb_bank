@@ -31,6 +31,10 @@ class elearningdashboardgtController extends BaseController
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
 
+            $recommendations = 'http://20.164.0.23:3300/ai/recommendations/run';
+            $response2 = $this->AIserviceRequest($recommendations, 'POST', ['user_id' => $request['mlhud_id']], $method);
+              $recommendation = json_decode($response2, true);
+
             $objData = json_decode($this->decryptData($response->Data));
             $code = $objData->Code;
             if ($code == "401") {
@@ -39,7 +43,6 @@ class elearningdashboardgtController extends BaseController
             }
 
             $rows = json_decode(json_encode($objData->Data), true);
-
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
             $modules = $menus['modules'];
@@ -50,13 +53,14 @@ class elearningdashboardgtController extends BaseController
                 if ($objData->Code == 200) {
                     $parant_data = json_decode(json_encode($objData->Data), true);
                     $rows = $parant_data['rows'];
+
                     $count = $parant_data['dasboardCount'];
 
                     $recommended = $parant_data['recomment_courses'];
                     $total_cpd_points = $parant_data['total_cpd_points'];
                     $completed_courses = $parant_data['completed_courses'];
                   
-                    return view('elearning.dashboard', compact('rows', 'menus', 'screens', 'modules', 'user_id', 'recommended', 'count', 'total_cpd_points'));
+                    return view('elearning.dashboard', compact('rows', 'menus', 'screens', 'modules', 'user_id', 'recommended','recommendation', 'count', 'total_cpd_points'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));

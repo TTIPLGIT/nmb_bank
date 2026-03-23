@@ -1777,7 +1777,7 @@
                         </div>
                         <div class="row">
 
-                            @foreach($recommended as $row)
+                            @foreach($recommendation as $row)
                             <div class="col-md-6 col-lg-3 mb-4">
 
                                 <div class="udemy-card">
