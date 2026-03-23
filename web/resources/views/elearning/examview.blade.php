@@ -296,17 +296,16 @@ body {
     @endif
 
 
-
     <section class="section">
         <div class="section-body mt-1">
             <div class="row">
-                <!-- {{ Breadcrumbs::render('exam.quiz') }} -->
                 <h2 id="quizHeader" class="col-12 mb-4 text-center">
                     {{$quizName}}
                 </h2>
                 @php
                 $id = $quizId;
                 @endphp
+                
                 <form id="quizForm" class="row" action="{{ route('course.examstore', $quizId) }}" method="post">
 
                     @csrf

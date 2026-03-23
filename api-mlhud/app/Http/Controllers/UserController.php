@@ -32,7 +32,6 @@ class UserController extends BaseController
 				$role_id = $inputArray['screen_role_id'];
 
 				$role_check =  DB::select("select * from uam_roles where role_id = $role_id and active_flag = 0");
-				$this->WriteFileLog($role_check, 'screenrole');
 				if ($role_check != []) {
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
@@ -61,7 +60,6 @@ class UserController extends BaseController
 				$project_role_id = $inputArray['project_role_id'];
 
 				$role_check =  DB::select("select * from project_roles where project_role_id = $project_role_id and active_flag = 1");
-$this->WriteFileLog($role_check, 'projectrole');
 				if ($role_check != []) {
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
@@ -91,7 +89,6 @@ $this->WriteFileLog($role_check, 'projectrole');
 				$designation_id = $inputArray['designation_id'];
 
 				$role_check =  DB::select("select * from designation where designation_id = $designation_id and active_flag = 0");
-$this->WriteFileLog($role_check, 'designaton');
 				if ($role_check != []) {
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
@@ -119,7 +116,6 @@ $this->WriteFileLog($role_check, 'designaton');
 
 				$role_check =  DB::select("SELECT * FROM document_folder_structures WHERE parent_document_folder_structure_id Not IN  ($parent_department) AND active_flag = 1
 				 AND  document_folder_structure_id =  $department_id");
-$this->WriteFileLog($role_check, 'department');
 
 
 
@@ -148,7 +144,6 @@ $this->WriteFileLog($role_check, 'department');
 				$email = $inputArray['email'];
 
 				$role_check =  DB::select("SELECT * FROM users WHERE email = '$email' ");
-$this->WriteFileLog($role_check, 'email');
 				if ($role_check == []) {
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
@@ -174,7 +169,6 @@ $this->WriteFileLog($role_check, 'email');
 				$email = $inputArray['email'];
 
 				$role_check =  DB::select("SELECT * FROM users_dummy WHERE email = '$email' ");
-				$this->WriteFileLog($role_check, 'email');
 				$checkcounting = count($role_check);
 				if ($checkcounting > 1) {
 
@@ -417,9 +411,9 @@ $this->WriteFileLog($role_check, 'email');
 				->get();
 
 			$custom_field =  DB::table('custom_fields')
-            ->select('id','field_label','field_name','field_type')
-            ->where('status', 1)
-            ->get();
+				->select('id', 'field_label', 'field_name', 'field_type', 'field_options')
+				->where('status', 1)
+				->get();
 
 
 
@@ -683,7 +677,7 @@ $this->WriteFileLog($role_check, 'email');
 						'email' => $input['email'],
 						'password' => $user_password,
 					];
-					// Mail::to($input['email'])->send(new SendUserCreateMail($data));
+					Mail::to($input['email'])->send(new SendUserCreateMail($data));
 
 					$notifications = DB::table('notifications')->insertGetId([
 						'user_id' => auth()->user()->id,
@@ -812,26 +806,7 @@ $this->WriteFileLog($role_check, 'email');
 							]);
 					});
 
-					if ($input['license_number'] != null) {
-						DB::transaction(function () use ($input) {
-							$email = $input['email'];
-							$userID = DB::select("SELECT id from users where email = '$email'");
-							$user_id = DB::table('professional_member_licence')
-								->insertGetId([
-									'license_number' => $input['license_number'],
-									'user_id' => $userID[0]->id,
-									'method' => $input['method'],
-									'bank_name' => $input['bank_name'],
-									'bank_transaction_id' => $input['bank_transaction_id'],
-									'amount' => $input['amount'],
-									'amount_paid_on' => $input['amount_paid_on'],
-									'renewal_date' => $input['renewal_date'],
-									'status' => '0',
-									'created_at' => NOW(),
-									'valuer_type' => $input['valuertype']
-								]);
-						});
-					}
+
 
 					$userID = DB::select("SELECT id from users where email = '$email'");
 					$createdUserId = $userID[0]->id;
@@ -890,27 +865,6 @@ $this->WriteFileLog($role_check, 'email');
 				->select('*')
 				->where('active_flag', 0)
 				->get();
-			// $document = DB::select("select  * from document_folder_structures where parent_document_folder_structure_id = 1");   
-			// $document_folder_structure_id = $document[0]->document_folder_structure_id;
-
-			// $parent_folder = DB::select("select a.document_folder_structure_id,a.document_folder_id,a.folder_name,a.folder_title,a.folder_description,a.parent_document_folder_structure_id
-			// 	from document_folder_structures as a where a.parent_document_folder_structure_id = 0");
-
-			// $directorate = DB::table('document_folder_structures')
-			// ->select('*')
-			// ->where('document_folder_structure_id',2)
-			// ->get();
-
-			// $department = DB::table('document_folder_structures')
-			// ->select('*')
-			// ->where('active_flag',1)
-			// ->get();
-
-			// $sub_department = DB::table('document_folder_structures')
-			// ->select('*')
-			// ->where('active_flag',1)
-			// ->get();
-
 
 			$designation = DB::table('designation')
 				->select('*')
@@ -927,9 +881,14 @@ $this->WriteFileLog($role_check, 'email');
 				->select('*')
 				->where('active_flag', 1)
 				->get();
-			
+
+			$custom_field =  DB::table('custom_fields')
+				->select('id', 'field_label', 'field_name', 'field_type', 'field_options')
+				->where('status', 1)
+				->get();
+
 			$user_custom_values = DB::table('custom_fields as cf')
-				->InnerJoin('user_custom_field_values as ucfv', function ($join) use ($id) {
+				->Join('user_custom_field_values as ucfv', function ($join) use ($id) {
 					$join->on('cf.id', '=', 'ucfv.custom_field_id')
 						->where('ucfv.user_id', '=', $id);
 				})
@@ -938,23 +897,19 @@ $this->WriteFileLog($role_check, 'email');
 					'cf.field_label',
 					'cf.field_type',
 					'cf.field_options',
-					'ucfv.field_value'
+					'ucfv.field_value',
+					'cf.field_options'
 				)
 				->get();
 
 			$response = [
 				'one_row' => $one_row,
 				'rows_data' => $rows_data,
-				// 'parent_folder' => $parent_folder,
-				// 'directorate' => $directorate,
-				// 'department' => $department, 
-				// 'sub_department' => $sub_department,
 				'designation' => $designation,
-				// 'document_folder_structure_id' => $document_folder_structure_id,
 				'dashboard' => $dashboard,
-				// 'document_category' => $document_category,
 				'project_roles' => $project_roles,
-				'user_custom_values' =>$user_custom_values
+				'user_custom_values' => $user_custom_values,
+				'custom_field' => $custom_field
 			];
 			$serviceResponse = array();
 			$serviceResponse['Code'] = config('setting.status_code.success');
@@ -986,7 +941,6 @@ $this->WriteFileLog($role_check, 'email');
 		$method = 'Method => UserController => updatedata';
 		try {
 			$isMobile = isset($request['isMobile']);
-
 
 			$input = $isMobile ? $request : $this->decryptData($request->requestData);
 			// $input = $this->decryptData($request->requestData);
@@ -1024,6 +978,7 @@ $this->WriteFileLog($role_check, 'email');
 
 
 
+
 					$serviceResponse = array();
 					$serviceResponse['Code'] = config('setting.status_code.success');
 					$serviceResponse['Message'] = config('setting.status_message.success');
@@ -1051,6 +1006,40 @@ $this->WriteFileLog($role_check, 'email');
 							'project_role_id' => 1,
 
 						]);
+					if (!empty($input['custom_field_value'])) {
+
+						$data = [];
+						foreach ($input['custom_field_value'] as $fieldId => $value) {
+
+							DB::table('user_custom_field_values')->updateOrInsert(
+								[
+									'user_id' => $user_id,
+									'custom_field_id' => $fieldId
+								],
+								[
+									'field_value' => $value,
+									'updated_at' => now(),
+									'created_at' => now()
+								]
+							);
+						}
+
+						// ✅ UPSERT (Insert or Update)
+						DB::table('user_custom_field_values')->upsert(
+							$data,
+							['user_id', 'custom_field_id'], // unique keys
+							['field_value', 'updated_at']
+						);
+					}
+
+					// ✅ OPTIONAL: delete unselected fields
+					if (!empty($input['custom_field_id'])) {
+						DB::table('user_custom_field_values')
+							->where('user_id', $user_id)
+							->whereNotIn('custom_field_id', $input['custom_field_id'])
+							->delete();
+					}
+
 
 
 
@@ -1803,9 +1792,13 @@ $this->WriteFileLog($role_check, 'email');
 
 
 
-			$module_data =  DB::select("select distinct a.module_id,c.module_name from uam_role_screens as a 
-			inner join uam_modules as c on c.module_id = a.module_id
-			where a.role_id = '$role_id'");
+			$module_data = DB::select("
+    SELECT DISTINCT a.module_id, c.module_name, c.display_order
+    FROM uam_role_screens AS a
+    INNER JOIN uam_modules AS c ON c.module_id = a.module_id
+    WHERE a.role_id = ?
+    ORDER BY c.display_order ASC
+", [$role_id]);
 
 
 			$screen_data = DB::select("select a.module_id,a.screen_id,b.screen_name,a.role_screen_id from uam_role_screens as a inner join uam_screens as b on b.screen_id = a.screen_id
@@ -1968,6 +1961,7 @@ $this->WriteFileLog($role_check, 'email');
 			$inputArray = $this->decryptData($request->requestData);
 
 			$id = Auth::id();
+			$user_id = auth()->user()->id;
 			$role = DB::select("SELECT role_id FROM uam_user_roles where user_id=$id;");
 			$role = $role[0]->role_id;
 
@@ -2014,11 +2008,13 @@ $this->WriteFileLog($role_check, 'email');
 			$Elearning_expiry_data = DB::select("select * from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id order by notification_id DESC;");
 			$Elearning_expiry_data_count = DB::select("select count(notification_url) as countflow from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id;");
 			$row2['cpt_points'] = DB::select("SELECT total_cptpoints AS cpt_points  FROM users WHERE id=$id and active_flag=0");
-			$userPoints = DB::table('users')
-				->where('id', $id)
-				->where('active_flag', 0)
-				->value('total_cptpoints');
-			if ($row2['cpt_points'] !== null) {
+			$userPoints = DB::table('user_course_relation as ucr')
+							->join('elearning_courses as ec', 'ec.course_id', '=', 'ucr.course_id')
+							->where('ucr.user_id', $user_id)
+							->where('ucr.course_status', 'completed')
+							->whereRaw('FIND_IN_SET(?, ec.user_ids)', [$user_id])
+							->sum('ec.course_cpt_points');
+			if ($userPoints !== null) {
 
 				$level = DB::table('gamification_levels')
 					->where('active_flag', 1)
@@ -2345,8 +2341,8 @@ $this->WriteFileLog($role_check, 'email');
 			$method = 'Method => FAQquestionsController => update_toggle';
 			$inputArray = $this->decryptData($request->requestData);
 			// $isMobile = isset($request['isMobile']);
-            // $inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
-			
+			// $inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
+
 			$input = [
 				'is_active' => $inputArray['is_active'],
 				'f_id' => $inputArray['f_id'],
@@ -2740,7 +2736,7 @@ $this->WriteFileLog($role_check, 'email');
 			if ($inputArray['checking'] == 5) {
 
 				$email = $inputArray['email'];
-				
+
 				$role_check =  DB::select("SELECT * FROM users WHERE email = '$email' ");
 
 				if ($role_check == []) {

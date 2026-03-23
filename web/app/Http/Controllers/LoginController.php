@@ -284,8 +284,6 @@ class LoginController extends BaseController
 
     $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
     $response1 = json_decode($response);
-    $this->WriteFileLog($response);
-    $this->WriteFileLog($response1);
     if ($response1->Status == 200 && $response1->Success) {
       $objData = json_decode($this->decryptData($response1->Data));
       if ($objData->Code == 200) {

@@ -405,21 +405,12 @@ class UserController extends BaseController
 
             ];
 
-            // $validator = Validator::make($request->all(), $rules, $messages);
-
+           
 
             {
 
                 $gatewayURL = config('setting.api_gateway_url') . '/user/user_register';
 
-                // $this->WriteFileLog($gatewayURL);
-                // $directorate = $request->directorate_department;
-
-                // $directorate_department =  explode("-", $directorate); 
-
-                // $displayItems2 = $request->displayItems2;
-
-                // $displayItems2_department =  explode(":", $displayItems2); 
                 $userRow = array();
                 $userRow['name'] = $request->name;
                 $userRow['email'] = $request->email;
@@ -454,35 +445,19 @@ class UserController extends BaseController
                 $request1 = array();
                 $request1['requestData'] = $encryptArray;
 
-                // echo json_encode($userRow);exit;
                 $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request1), $method);
                 $response1 = json_decode($response);
-                /// echo json_encode($response1);exit;
                 if ($response1->Status == 200 && $response1->Success) {
                     $objData = json_decode($this->decryptData($response1->Data));
                     if ($objData->Code == 200) {
 
                         $parant_data = json_decode(json_encode($objData->Data), true);
-                        // $user_id =  $parant_data['user_id'];
-                        //echo json_encode($user_id);exit;
-
-
                         $userRow = array();
                         $userRow['userID'] = $parant_data;
                         $userRow['firstName'] = $request->name;
                         $userRow['lastName'] = "A";
                         $userRow['emailID'] = $request->email;
-
-                        //    $encryptArray = $this->encryptData($userRow);
-                        //    $request = array();
-                        //    $request['requestData'] = $encryptArray;
-                        //    $gatewayURL = config('setting.api_gateway_url').'/document/site/user/create';
-
-                        //    $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-                        //    $response1 = json_decode($response);
-
-                        return redirect(route('user.index'))->with('success', 'User created successfully and mail sent
-                ');
+                        return redirect(route('user.index'))->with('success', 'User created successfully and mail sent');
                     }
 
                     if ($objData->Code == 400) {
@@ -553,8 +528,11 @@ class UserController extends BaseController
                 $method = 'Method => UserController => edit';
 
                 $id = $this->decryptData($id);
+
                 $gatewayURL = config('setting.api_gateway_url') . '/user/data_edit/' . $this->encryptData($id);
+
                 $response1 = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+
                 $response = json_decode($response1);
                 if ($response->Status == 200 && $response->Success) {
                     $objData = json_decode($this->decryptData($response->Data));
@@ -575,12 +553,13 @@ class UserController extends BaseController
                         //    $document_category = $parant_data['document_category'];
                         $project_roles =  $parant_data['project_roles'];
                         $user_custom_values =  $parant_data['user_custom_values'];
+                        $custom_field = $parant_data['custom_field'];
                         //    $document_folder_structure_id =  $parant_data['document_folder_structure_id'];
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
                         $modules = $menus['modules'];
 
-                        return view('uam.user.edit', compact('designation','user_custom_values', 'dashboard', 'one_row', 'rows_data', 'project_roles', 'screens', 'modules'));
+                        return view('uam.user.edit', compact('custom_field','designation','user_custom_values', 'dashboard', 'one_row', 'rows_data', 'project_roles', 'screens', 'modules'));
                     }
                 } else {
                     $objData = json_decode($this->decryptData($response->Data));
@@ -646,7 +625,6 @@ class UserController extends BaseController
     {
         try {
             $method = 'Method => UserController => update_data';
-
             $rules = [
                 'name' => 'required',
                 'email' => 'required',
@@ -691,9 +669,8 @@ class UserController extends BaseController
                 $data['dashboard_list_id'] = $request->dashboard_list_id;
                 $data['designation_id'] = $request->designation_id;
                 $data['parent_node_id'] = $request->parent_node_id;
-                // $data['directorate'] = $directorate;
-                // $data['array_department'] = $displayItems2_department;
-
+                $data['custom_field_id'] = $request->custom_field_id;
+                $data['custom_field_value'] = $request->custom_field_value;
 
                 $encryptArray = $this->encryptData($data);
                 $request = array();
@@ -785,6 +762,7 @@ class UserController extends BaseController
                 $id = $this->decryptData($id);
                 $gatewayURL = config('setting.api_gateway_url') . '/user/delete/' . $this->encryptData($id);
                 $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+
                 $response1 = json_decode($response);
                 if ($response1->Status == 200 && $response1->Success) {
                     $objData = json_decode($this->decryptData($response1->Data));

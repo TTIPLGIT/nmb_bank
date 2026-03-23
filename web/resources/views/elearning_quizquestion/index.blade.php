@@ -686,7 +686,7 @@ form.longqustionsform {
 
                                 <div class="card mt-0">
                                     <div class="card-body">
-                                        <h3 style="text-align:center;">Quiz View</h3>
+                                        <h3 style="text-align:center;">Quiz List View</h3>
 
                                         <!-- @if ($message = Session::get('success'))
                                         <div class="alert alert-success alert-block">
@@ -1223,7 +1223,7 @@ form.longqustionsform {
                                     autocomplete="off">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label>Evaluation:<span class="error-star" style="color:red;">*</span></label>
                                 <select class="form-control" name="evaluation" id="evaluation">
@@ -1232,7 +1232,7 @@ form.longqustionsform {
                                     <option value="2">Manual Evaluation</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                     <div class="row">
@@ -2733,7 +2733,7 @@ function gencre(id) {
         // Validate required fields
         let quizName = $('#q_nameedit').val().trim();
         let quizQuestions = $('#quiz_questionedit').val();
-        let evaluation = $('#evaluation_edit').val();
+        // let evaluation = $('#evaluation_edit').val();
 
         if (!quizName) {
             Swal.fire("Error!", "Quiz Name is required", "error");
@@ -2745,10 +2745,7 @@ function gencre(id) {
             return;
         }
 
-        if (!evaluation) {
-            Swal.fire("Error!", "Please select evaluation type", "error");
-            return;
-        }
+       
 
         let versionType = $('input[name="version_type"]:checked').val();
 
@@ -3247,7 +3244,7 @@ function gencre(id) {
                                     autocomplete="off">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label>Evaluation:<span class="error-star" style="color:red;">*</span></label>
                                 <select class="form-control" name="evaluation_edit" id="evaluation_edit">
@@ -3256,7 +3253,7 @@ function gencre(id) {
                                     <option value="2">Manual Evaluation</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Version Control Section -->
@@ -3404,7 +3401,7 @@ function gencre(id) {
                                     autocomplete="off" style="background-color: #e9ecef !important;">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label>Evaluation:<span class="error-star" style="color:red;">*</span></label>
                                 <select class="form-control" name="evaluation_show" id="evaluation_show">
@@ -3413,7 +3410,7 @@ function gencre(id) {
                                     <option value="2">Manual Evaluation</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                     <div class="row">
@@ -4721,10 +4718,7 @@ function loadQuizWithVersions(quizId, disableFields = false) {
             $('#quiz_edit').val(data.rows[0]['quiz_id']);
             $('#q_pointsedit').prop('readonly', true);
 
-            // Set evaluation if available
-            if (data.rows[0]['evaluation']) {
-                $('#evaluation_edit').val(data.rows[0]['evaluation']);
-            }
+            
 
             // Set current version from the quiz data
             let major = data.rows[0]['version_major'] || 1;
@@ -4735,13 +4729,13 @@ function loadQuizWithVersions(quizId, disableFields = false) {
 
             if (disableFields) {
 
-                $('#q_nameedit, #quiz_questionedit, #evaluation_edit').prop('disabled', true);
-                $('#q_nameedit, #evaluation_edit, .select2-selection').css('background-color', '#e9ecef');
+                $('#q_nameedit, #quiz_questionedit').prop('disabled', true);
+                $('#q_nameedit,.select2-selection').css('background-color', '#e9ecef');
                 $('#version_control, #savebutton').hide();
             } else {
 
-                $('#q_nameedit, #quiz_questionedit, #evaluation_edit').prop('disabled', false);
-                $('#q_nameedit, #evaluation_edit, .select2-selection').css('background-color', '');
+                $('#q_nameedit, #quiz_questionedit').prop('disabled', false);
+                $('#q_nameedit,.select2-selection').css('background-color', '');
                 $('#version_control, #savebutton').show();
             }
 

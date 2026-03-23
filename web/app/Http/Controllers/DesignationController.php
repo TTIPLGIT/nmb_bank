@@ -707,7 +707,7 @@ class DesignationController extends BaseController
                     //return redirect(route('designation.create'))->with('fail', 'Designation Already Exists');
                 }
             } else {
-                $objData = json_decode($this->decryptData($response->Data));
+                $objData = json_decode($this->decryptData($response1->Data));
                 echo json_encode($objData->Code);
                 exit;
             }
@@ -715,5 +715,104 @@ class DesignationController extends BaseController
             echo $exc;
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
+    }
+
+    public function custom_filed_fetch($id)
+    {
+
+        try {
+            $method = 'Method => coursecategoryController => custom_filed_fetch';
+
+            $id = $this->decryptData($id);
+            $gatewayURL = config('setting.api_gateway_url') . '/custom_filed_fetch/' . $this->encryptData($id);
+
+            $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+            $response1 = json_decode($response);
+            $objData = json_decode($this->decryptData($response1->Data));
+            $rows = json_decode(json_encode($objData->Data), true);
+            return $rows;
+        } catch (\Exception $exc) {
+            //echo $exc;
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        }
+    }
+    public function custom_field_update(Request $request)
+    {
+
+        try {
+            $method = 'Method => DesignationController => custom_filed_store';
+            $data = array();
+            
+            $data['field_label'] = $request->field_label;
+            $data['field_name'] = $request->field_name;
+            $data['field_type'] = $request->field_type;
+            $data['field_options'] = $request->field_options;
+            $data['is_required'] = $request->is_required;
+            $data['id'] = $request->custom_id; 
+
+            $encryptArray = $this->encryptData($data);
+            $request = array();
+
+            $request['requestData'] = $encryptArray;
+
+            $gatewayURL = config('setting.api_gateway_url') . '/custom_filed_update';
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+            $response1 = json_decode($response);
+
+            if ($response1->Status == 200 && $response1->Success) {
+                $objData = json_decode($this->decryptData($response1->Data));
+
+                if ($objData->Code == 200) {
+                    return redirect(route('custom_filed'))->with('success', 'Custom field Updated Successfully');
+                }
+
+
+                if ($objData->Code == 400) {
+                    return Redirect::back()->with('fail', 'Custom field Already Exists');
+                    //return redirect(route('designation.create'))->with('fail', 'Designation Already Exists');
+                }
+            } else {
+                $objData = json_decode($this->decryptData($response1->Data));
+                echo json_encode($objData->Code);
+                exit;
+            }
+        } catch (\Exception $exc) {
+            echo $exc;
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        }
+    }
+
+    public function custom_filed_delete($id)
+    {
+    
+        
+            try {
+                $method = 'Method => DesignationController => delete';
+                $id = $this->decryptData($id);
+                $gatewayURL = config('setting.api_gateway_url') . '/custom_filed_delete/' . $this->encryptData($id);
+                $response = $this->serviceRequest($gatewayURL, 'POST', '', $method);
+               
+
+
+
+                $response1 = json_decode($response);
+                if ($response1->Status == 200 && $response1->Success) {
+                    $objData = json_decode($this->decryptData($response1->Data));
+                    if ($objData->Code == 200) {
+                        return redirect(route('custom_filed'))->with('success', 'Custom Field Deleted Successfully.');
+                    }
+                    if ($objData->Code == 400) {
+                        return redirect(route('custom_filed'))->with('fail', 'Custom FieldAllocated One User Field');
+                    }
+                } else {
+                    $objData = json_decode($this->decryptData($response1->Data));
+                    echo json_encode($objData->Code);
+                    exit;
+                }
+            } catch (\Exception $exc) {
+                echo $exc;
+                return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+            }
+        
     }
 }

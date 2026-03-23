@@ -31,7 +31,7 @@
 
 
 
-    {{ Breadcrumbs::render('certificate_template.index') }}
+    {{ Breadcrumbs::render('meeting_list') }}
 
     <section class="section">
 
@@ -93,7 +93,6 @@
                             </script>
                             @endif
 
-
                             <div class="table-wrapper">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="align">
@@ -102,6 +101,8 @@
                                                 <th>S.No</th>
                                                 <th>Meeting Name</th>
                                                 <th>Meeting Date</th>
+                                                <th>join_url</th>
+                                                <th>status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -110,6 +111,8 @@
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$meeting['topic']}}</td>
                                                 <td>{{$meeting['meeting_date']}}</td>
+                                                <td>{{$meeting['join_url']}}</td>
+                                                <td>{{$meeting['status']}}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>

@@ -123,7 +123,7 @@ else{
              }
     
               if ($objData->Code == 400) {
-               return Redirect::back()->with('fail', 'Uam Screen Name Already Exists');
+               return redirect(route('uam_screens.index'))->with('fail', 'Uam Screen Name Already Exists');
               }
     
          }
@@ -310,6 +310,7 @@ else{
         $id = $this->decryptData($id);
         $gatewayURL = config('setting.api_gateway_url').'/uam_screens/data_delete/'.$this->encryptData($id);
         $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+
         $response1 = json_decode($response);
         if($response1->Status == 200 && $response1->Success){
             $objData = json_decode($this->decryptData($response1->Data));

@@ -358,6 +358,8 @@ Route::get('/dashboardevents/fetch', [App\Http\Controllers\elearningdashboardgtC
 // Route::get('/view_list', [App\Http\Controllers\firmadministrationController::class, 'firm_admin_index'])->name('firm_admin_index');
 
 Route::get('/admincourse', [App\Http\Controllers\tryController::class, 'admincourse'])->name('admincourse');
+Route::get('/admin_course_show/{id}', [App\Http\Controllers\tryController::class, 'admin_course_show'])->name('admin_course_show');
+Route::get('/admin_course_edit/{id}', [App\Http\Controllers\tryController::class, 'admin_course_edit'])->name('admin_course_edit');
 //  Route::get('/adminquiz', [App\Http\Controllers\tryController::class, 'adminquiz'])->name('adminquiz');
 
 Route::post('/class_store', [App\Http\Controllers\tryController::class, 'class_store'])->name('class_store');
@@ -895,3 +897,6 @@ Route::get('/scorm/{id}/launch', [App\Http\Controllers\ScormController::class, '
     Route::get('/custom_filed', [App\Http\Controllers\DesignationController::class, 'custom_filed'])->name('custom_filed');
 Route::get('/custom_filed_create', [App\Http\Controllers\DesignationController::class, 'custom_filed_create'])->name('custom_filed_create');
 Route::post('/custom_filed_store', [App\Http\Controllers\DesignationController::class, 'custom_filed_store'])->name('custom_filed_store');
+Route::get('/custom_filed_fetch/{id}', [App\Http\Controllers\DesignationController::class, 'custom_filed_fetch'])->name('custom_filed_fetch');
+Route::post('/custom_field_update', [App\Http\Controllers\DesignationController::class, 'custom_field_update'])->name('custom_field_update');
+Route::post('/custom_filed_delete/{id}', [App\Http\Controllers\DesignationController::class, 'custom_filed_delete'])->name('custom_filed_delete');

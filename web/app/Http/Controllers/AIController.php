@@ -783,10 +783,9 @@ class AIController extends BaseController
                 $screens = $menus['screens'];
                 $modules = $menus['modules'];
 
-                return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData','response'))
+                return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData', 'response'))
                     ->with('error', 'Invalid response from API');
             }
-
             // Process the response data
             $processedData = $this->processRiskAnalysisData($response);
 
@@ -821,44 +820,43 @@ class AIController extends BaseController
         ];
 
         $processedData = [];
+        if (isset($data['data']) && is_array($data['data'])) {
 
-        // Check if data is in the expected format (single user with courses)
-        if (isset($data['mode']) && isset($data['user_id']) && isset($data['courses'])) {
-            $userData = $data;
+            $totalUsers = count($data['data']);
 
-            // Count total users (1 in this case)
-            $totalUsers = 1;
-            $processedUsers = 1;
+            foreach ($data['data'] as $userData) {
 
-            // Process courses for this user
-            $userCourses = [];
-            foreach ($userData['courses'] as $course) {
-                // Convert risk level to lowercase for consistency
-                $riskLevel = strtolower($course['risk_level']);
+                $processedUsers++;
 
-                // Update risk summary
-                if (isset($riskSummary[$riskLevel])) {
-                    $riskSummary[$riskLevel]++;
+                $userCourses = [];
+
+                foreach ($userData['courses'] as $course) {
+
+                    $riskLevel = strtolower($course['risk_level']);
+
+                    if (isset($riskSummary[$riskLevel])) {
+                        $riskSummary[$riskLevel]++;
+                    }
+
+                    $userCourses[] = [
+                        'course_id' => $course['course_id'],
+                        'risk_level' => strtoupper($course['risk_level']),
+                        'probability' => $course['probability'],
+                        'reason' => $course['reason'],
+                        'prediction_type' => $course['prediction_type']
+                    ];
                 }
 
-                $userCourses[] = [
-                    'course_id' => $course['course_id'],
-                    'risk_level' => strtoupper($course['risk_level']), // Keep uppercase for display
-                    'probability' => $course['probability'],
-                    'reason' => $course['reason'],
-                    'prediction_type' => $course['prediction_type']
+                $processedData[] = [
+                    'user_id' => $userData['user_id'],
+                    'courses' => $userCourses,
+                    'total_courses' => count($userCourses)
                 ];
             }
-
-            $processedData[] = [
-                'user_id' => $userData['user_id'],
-                'courses' => $userCourses,
-                'total_courses' => count($userCourses)
-            ];
         }
 
-        // Calculate percentages for risk distribution
         $totalCourses = array_sum($riskSummary);
+
         $riskPercentages = [
             'high' => $totalCourses > 0 ? round(($riskSummary['high'] / $totalCourses) * 100) : 0,
             'medium' => $totalCourses > 0 ? round(($riskSummary['medium'] / $totalCourses) * 100) : 0,

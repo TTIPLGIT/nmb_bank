@@ -213,12 +213,12 @@
     <section class="section">
         <div class="section-body mt-1">
 
-            <h5 style="color:darkblue">{{$template['template_name']}} Certificate Preview</h5>
+            
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-
+                            <h5 style="color:darkblue">{{$template['template_name']}} Certificate Preview</h5>
                             <head>
                                 <meta charset="UTF-8">
                                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -307,7 +307,21 @@
                                             
 
                                             @if(!empty($template1))
-                                            <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 40px;">
+                                            <div style="width: 50%; display: flex; justify-content: flex-end; margin-top: 40px;">
+                                                <div style="text-align: center;">
+                                                    <div style="margin-bottom: 5px;">
+                                                        <img src="{{ config('setting.api_url') . $template1[0]['signature_path'] }}"
+                                                            alt="Signature"
+                                                            style="width: 120px; height: auto;">
+                                                    </div>
+                                                    <div style="width: 150px; border-top: 1px solid #000; margin: 8px auto;"></div>
+                                                    <div style="font-size: 14px;">
+                                                        {{ $template1[0]['name'] }}<br>
+                                                        <small>{{ $template1[0]['title'] }}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 40px;margin-left:40%">
                                                 <div style="text-align: center;">
                                                     <div style="margin-bottom: 5px;">
                                                         <img src="{{ config('setting.api_url') . $template1[0]['signature_path'] }}"

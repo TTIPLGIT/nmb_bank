@@ -439,7 +439,7 @@ class DesignationController extends BaseController
 
 
             $rows = DB::select("
-                SELECT field_label,field_name,field_type
+                SELECT id,field_label,field_name,field_type
                 FROM custom_fields AS a
                 WHERE a.status = 1");
 
@@ -477,7 +477,7 @@ class DesignationController extends BaseController
             $method = 'Method => DesignationController => custom_filed_create';
 
             $roles = DB::table('uam_roles')
-                ->select('role_id','role_name')
+                ->select('role_id', 'role_name')
                 ->where('active_flag', 0)
                 ->get();
 
@@ -507,7 +507,7 @@ class DesignationController extends BaseController
         }
     }
 
-     public function custom_filed_store(Request $request)
+    public function custom_filed_store(Request $request)
     {
         try {
             $this->WriteFileLog($request);
@@ -566,4 +566,157 @@ class DesignationController extends BaseController
         }
     }
 
+    public function custom_filed_fetch($id)
+    {
+
+        $method = 'Method => coursecategoryController =>custom_filed_fetch';
+        try {
+            $id = $this->decryptData($id);
+
+            $rows = DB::select("SELECT * FROM custom_fields WHERE id = ?", [$id]);
+
+            $response = [
+                'rows' => $rows,
+
+            ];
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.success');
+            $serviceResponse['Message'] = config('setting.status_message.success');
+            $serviceResponse['Data'] =  $response;
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+            return $sendServiceResponse;
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = $method;
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            return $sendServiceResponse;
+        }
+    }
+
+    public function custom_filed_update(Request $request)
+    {
+        try {
+            $this->WriteFileLog($request);
+
+            $method = 'Method => coursecategoryController => store';
+            $inputArray = $request->requestData;
+
+            $inputArray = $this->decryptData($inputArray);
+            $input = [
+
+                'field_label' => $inputArray['field_label'],
+                'field_name' => $inputArray['field_name'],
+                'field_type' => $inputArray['field_type'],
+                'field_options' => $inputArray['field_options'],
+                'is_required' => $inputArray['is_required'],
+                'id' => $inputArray = $this->decryptData($inputArray['id'])
+
+            ];
+
+            $rows = DB::table('custom_fields')
+                ->where('id', $input['id'])
+                ->update([
+                    'field_label' => $input['field_label'],
+                    'field_name' => $input['field_name'],
+                    'field_type' => $input['field_type'],
+                    'field_options' => $input['field_options'],
+                    'is_required' => $input['is_required'],
+                    // 'updated_by' => auth()->user()->id,
+                    'updated_at' => now()
+                ]);
+            $this->notifications_insert(null, auth()->user()->id, "Custom Field updated Successfully", "/custom_filed");
+            $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
+            $role_name_fetch = $role_name[0]->role_name;
+            $this->auditLog($input['field_name'], $rows, 'Updat', 'Custom Field Successfully', auth()->user()->id, NOW(), $role_name_fetch);
+
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.success');
+            $serviceResponse['Message'] = config('setting.status_message.success');
+            $serviceResponse['Data'] = $rows;
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+            return $sendServiceResponse;
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = $method;
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            return $sendServiceResponse;
+        }
+    }
+
+    public function custom_filed_delete($id)
+    {
+
+        try {
+            $method = 'Method => DesignationController => deletedata';
+            $id = $this->decryptData($id);
+
+
+            $check = DB::select("select * from custom_fields where id = $id and status = 1");
+
+
+            if ($check != []) {
+
+                DB::table('custom_fields')
+                    ->where('id', $id)
+                    ->update([
+
+                        'status'        => 0,
+                        'updated_at' => NOW()
+
+                    ]);
+                $input = DB::select("select field_name from custom_fields where id =$id;");
+                $field_name = $input[0]->field_name;
+                $notifications = DB::table('notifications')->insertGetId([
+                    'user_id' => auth()->user()->id,
+                    'notification_status' => 'Module Deleted',
+                    'notification_url' => 'uam_modules',
+                    'megcontent' => "Module " . $field_name . " Deleted Successfully .",
+                    'alert_meg' => "Module " . $field_name . " Deleted Successfully .",
+                    'created_by' => auth()->user()->id,
+                    'created_at' => NOW()
+                ]);
+
+                $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
+                $role_name_fetch = $role_name[0]->role_name;
+                $this->auditLog('uam_modules', $id, 'Delete', 'Deleted the Custom Field', auth()->user()->id, NOW(), $role_name_fetch);
+            }
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.success');
+            $serviceResponse['Message'] = config('setting.status_message.success');
+            $serviceResponse['Data'] = 1;
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+            return $sendServiceResponse;
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = $method;
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            return $sendServiceResponse;
+        }
+    }
 }

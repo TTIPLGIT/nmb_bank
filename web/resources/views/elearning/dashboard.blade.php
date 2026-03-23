@@ -1453,6 +1453,113 @@
     }
 </style>
 
+<!-- recommended course -->
+<style>
+    .udemy-card {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: 0.3s;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+    }
+
+    .udemy-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* IMAGE */
+    .udemy-img {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .udemy-img img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        transition: 0.4s;
+    }
+
+    .udemy-card:hover .udemy-img img {
+        transform: scale(1.08);
+    }
+
+    /* BADGE */
+    .udemy-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #5624d0;
+        color: #fff;
+        padding: 3px 8px;
+        font-size: 11px;
+        border-radius: 4px;
+    }
+
+    /* CONTENT */
+    .udemy-content {
+        padding: 12px;
+    }
+
+    /* TITLE */
+    .udemy-title {
+        font-size: 14px;
+        font-weight: 600;
+        height: 40px;
+        overflow: hidden;
+    }
+
+    /* INSTRUCTOR */
+    .udemy-instructor {
+        font-size: 12px;
+        color: #777;
+        margin-bottom: 5px;
+    }
+
+    /* RATING */
+    .udemy-rating {
+        font-size: 13px;
+        font-weight: 600;
+        color: #b4690e;
+    }
+
+    .udemy-rating span {
+        color: #777;
+        font-weight: normal;
+    }
+
+    /* META */
+    .udemy-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        margin-top: 5px;
+        color: #666;
+    }
+
+    /* AI SCORE */
+    .udemy-ai {
+        margin-top: 8px;
+        font-size: 12px;
+        color: #5624d0;
+        font-weight: 600;
+    }
+
+    .section-title {
+        font-weight: 700;
+        font-size: 20px;
+        margin-bottom: 2px;
+    }
+
+    .section-subtitle {
+        font-size: 13px;
+        color: #777;
+        margin-bottom: 0;
+    }
+</style>
+
 <link href="{{asset('assets/css/jquery.fancybox.min.css')}}" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="{{ asset('assets/css/jquery.fancybox.min.js') }}"></script>
 
@@ -1604,7 +1711,7 @@
                 </div>
             </div>
 
-            <div class="container-fluid noticess course_and_schedule_container"style="margin-top:2%">
+            <div class="container-fluid noticess course_and_schedule_container" style="margin-top:2%">
                 <div class="d-flex flex-row course_and_schedule_body w-100">
                     <div class="card noShadow notice_board_list" style="width:100% !important">
 
@@ -1656,119 +1763,81 @@
                 </div>
             </div>
 
-
-            <div class="course_and_schedule_container" style="margin-top:2%;">
-                <div class="col-12 d-flex">
-                    <div class="col-12 pr-0">
-                        <div class="card noShadow recommended_courses_list">
-                            <div class="card-header d-flex flex-row justify-content-between align-items-center">
-                                Recommended Courses
+            <div class="container-fluid course_and_schedule_container" style="margin-top:2%;margin-bottom:2%">
+                <div class="card course_and_schedule_container" style="background-color:white;border-radius:15px !important">
+                    <div class="noShadow recommended_courses_list ">
+                        <div class="d-flex mb-3">
+                            <div style="width:100%;text-align:center">
+                                <h5 class="section-title" style="color:#680EDA">Recommended for You</h5>
+                                <p class="section-subtitle" style="color:red">
+                                    Courses picked based on your activity and interests
+                                </p>
                             </div>
 
-                            <div class="card-body">
+                        </div>
+                        <div class="row">
 
-                                {{-- No Recommendations --}}
-                                @if(empty($recommended) || count($recommended) == 0)
-                                <div class="d-flex flex-row justify-content-around recommended_courses">
-                                    <span style="margin-top:48px;font-weight:600;font-size:22px;">
-                                        No Recommended Courses
-                                    </span>
-                                </div>
-                                @endif
+                            @foreach($recommended as $row)
+                            <div class="col-md-6 col-lg-3 mb-4">
 
-                                {{-- Recommended Courses --}}
-                                @foreach($recommended as $key => $row)
-                                <div class="d-flex flex-row justify-content-around recommended_courses">
+                                <div class="udemy-card">
 
-                                    {{-- Course Image --}}
-                                    @php
-                                    $bannerPath = 'uploads/class/126/' . ($row['course_banner'] ?? '');
-                                    @endphp
+                                    <!-- Image -->
+                                    <div class="udemy-img">
+                                        @php
+                                        $bannerPath = 'uploads/class/126/' . ($row['course_banner'] ?? '');
+                                        @endphp
 
-                                    @if(!empty($row['course_banner']) && file_exists(public_path($bannerPath)))
-                                    <img class="recommended_courses_poster recommendedfancy"
-                                        src="{{ asset($bannerPath) }}"
-                                        alt="Recommended Course"
-                                        onclick="makeFancy(event, 'recommendedfancy')">
-                                    @else
-                                    <img class="recommended_courses_poster recommendedfancy"
-                                        src="{{ asset('uploads/class/126/empty.jpg') }}"
-                                        alt="Recommended Course"
-                                        onclick="makeFancy(event, 'recommendedfancy')">
-                                    @endif
+                                        <img src="{{ (!empty($row['course_banner']) && file_exists(public_path($bannerPath))) 
+                                    ? asset($bannerPath) 
+                                    : asset('uploads/class/126/empty.jpg') }}"
+                                            alt="Course">
 
-                                    {{-- Caption --}}
-                                    <span class="caption">
-                                        {!! html_entity_decode($row['course_description'] ?? '') !!}
-                                    </span>
+                                        <!-- AI Badge -->
+                                        @if(!empty($row['recommendation_type']))
+                                        <span class="udemy-badge">
+                                            {{ ucfirst(str_replace('_', ' ', $row['recommendation_type'])) }}
+                                        </span>
+                                        @endif
+                                    </div>
 
-                                    {{-- Course Details --}}
-                                    <div class="d-flex flex-column justify-content-between recommended_course_details">
+                                    <!-- Content -->
+                                    <div class="udemy-content">
 
-                                        {{-- Header --}}
-                                        <div class="recommended_course_header">
-                                            <h6 class="recommended_course_name">
-                                                {{ $row['course_name'] ?? 'Untitled Course' }}
-                                            </h6>
+                                        <!-- Title -->
+                                        <h6 class="udemy-title">
+                                            {{ $row['course_name'] ?? 'Untitled Course' }}
+                                        </h6>
 
-                                            <span class="recommended_course_instructor">
-                                                {{ $row['course_instructor'] ?? 'N/A' }}
-                                            </span>
+                                        <!-- Instructor -->
+                                        <p class="udemy-instructor">
+                                            {{ $row['course_instructor'] ?? 'N/A' }}
+                                        </p>
 
-                                            {{-- AI Recommendation Type --}}
-                                            @if(!empty($row['recommendation_type']))
-                                            <div class="mt-1">
-                                                <span class="badge badge-info">
-                                                    {{ ucfirst(str_replace('_', ' ', $row['recommendation_type'])) }}
-                                                </span>
-                                            </div>
-                                            @endif
-
-                                            {{-- AI Reason --}}
-                                            @if(!empty($row['reason']))
-                                            <small class="text-muted d-block mt-1"
-                                                title="{{ $row['reason'] }}">
-                                                <i class="fa fa-info-circle"></i>
-                                                {{ \Illuminate\Support\Str::limit($row['reason'], 70) }}
-                                            </small>
-                                            @endif
+                                        <!-- Rating -->
+                                        <div class="udemy-rating">
+                                            ⭐ 4.5
+                                            <span>(120)</span>
                                         </div>
 
-                                        {{-- Footer --}}
-                                        <div class="recommended_course_footer">
-                                            <span class="recommended_course_time">
-                                                {{ $row['duration'] ?? '-' }}
-                                            </span>
-
-                                            <span class="recommended_course_divider">-</span>
-
-                                            <span class="recommended_course_learners">
-                                                @php
-                                                $exist = ($row['total_student'] ?? 0) == 0
-                                                ? 'No Students Enrolled'
-                                                : 'Students';
-                                                @endphp
-
-                                                @if(($row['total_student'] ?? 0) != 0)
-                                                {{ $row['total_student'] }}
-                                                @endif
-                                                {{ $exist }}
-                                            </span>
-
-                                            {{-- AI Confidence --}}
-                                            @if(isset($row['confidence_score']))
-                                            <span class="recommended_course_divider">|</span>
-                                            <span class="text-primary font-weight-bold">
-                                                AI {{ round($row['confidence_score'] * 100) }}%
-                                            </span>
-                                            @endif
+                                        <!-- Meta -->
+                                        <div class="udemy-meta">
+                                            <span>⏱ {{ $row['duration'] ?? '-' }}</span>
+                                            <span>👥 {{ ($row['total_student'] ?? 0) ?: '0' }}</span>
                                         </div>
+
+                                        <!-- AI Confidence -->
+                                        @if(isset($row['confidence_score']))
+                                        <div class="udemy-ai">
+                                            AI {{ round($row['confidence_score'] * 100) }}% Match
+                                        </div>
+                                        @endif
 
                                     </div>
                                 </div>
-                                @endforeach
 
                             </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
