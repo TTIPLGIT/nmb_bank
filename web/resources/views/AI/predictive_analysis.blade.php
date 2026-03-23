@@ -18,10 +18,10 @@
     --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
-body {
+/* body {
     background-color: var(--bg-light);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+} */
 
 .dashboard-card {
     background: white;
@@ -147,20 +147,24 @@ body {
                     <div>
                         <h1 class="display-6 font-weight-800 text-dark mb-1">Predictive Analysis Dashboard</h1>
                         <p class="text-muted mb-0">
-                            <i class="fa fa-robot mr-2"></i>AI-Powered Dropout Risk Prediction System
+                            <i class="fas fa-robot mr-2"></i>AI-Powered Dropout Risk Prediction System
                         </p>
                     </div>
+                    @if(ucfirst($modules['user_role']) == 'Admin')
                     <div class="text-right">
                         <div class="h5 mb-0 text-danger">{{ $processedData['processed_users'] ?? 0 }} Users Analyzed
                         </div>
                         <small class="text-muted">Real-time risk assessment</small>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
 
         <!-- Summary Cards -->
+
         <div class="row mb-4">
+            @if(ucfirst($modules['user_role']) == 'Admin')
             <div class="col-md-3">
                 <div class="dashboard-card stat-card">
                     <div class="d-flex align-items-center">
@@ -174,7 +178,33 @@ body {
                     </div>
                 </div>
             </div>
-
+            @endif
+            <div class="col-md-3">
+                <div class="dashboard-card" style="background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);">
+                    <div class="d-flex align-items-center">
+                        <div class="mr-3">
+                            <i class="fa fa-chart-pie fa-2x text-warning"></i>
+                        </div>
+                        <div>
+                            <div class="text-warning mb-1">Total Courses</div>
+                            <div class="h2 text-dark mb-0">{{ $processedData['total_courses'] ?? 0 }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="dashboard-card" style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);">
+                    <div class="d-flex align-items-center">
+                        <div class="mr-3">
+                            <i class="fa fa-check-circle fa-2x text-success"></i>
+                        </div>
+                        <div>
+                            <div class="text-success mb-1">On Time</div>
+                            <div class="h2 text-dark mb-0">{{ $processedData['risk_summary']['low'] ?? 0 }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-3">
                 <div class="dashboard-card" style="background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);">
                     <div class="d-flex align-items-center">
@@ -191,33 +221,9 @@ body {
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="dashboard-card" style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);">
-                    <div class="d-flex align-items-center">
-                        <div class="mr-3">
-                            <i class="fa fa-check-circle fa-2x text-success"></i>
-                        </div>
-                        <div>
-                            <div class="text-success mb-1">Safe Courses</div>
-                            <div class="h2 text-dark mb-0">{{ $processedData['risk_summary']['low'] ?? 0 }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-md-3">
-                <div class="dashboard-card" style="background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);">
-                    <div class="d-flex align-items-center">
-                        <div class="mr-3">
-                            <i class="fa fa-chart-pie fa-2x text-warning"></i>
-                        </div>
-                        <div>
-                            <div class="text-warning mb-1">Total Courses</div>
-                            <div class="h2 text-dark mb-0">{{ $processedData['total_courses'] ?? 0 }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+
         </div>
 
         <!-- Risk Distribution -->
@@ -316,12 +322,12 @@ body {
                                 <div class="reason-text mt-2">
                                     {{ Str::limit($course['reason'], 120) }}
                                 </div>
-                                <div class="mt-2">
+                                <!-- <div class="mt-2">
                                     <small class="text-muted">
                                         <i class="fa fa-info-circle mr-1"></i>
                                         {{ $course['prediction_type'] }}
                                     </small>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         @endforeach
@@ -350,19 +356,24 @@ body {
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Course ID</th>
+                                    <th>Course Name</th>
                                     <th>Risk Level</th>
                                     <th>Probability</th>
-                                    <th>Prediction Type</th>
-                                    <th>Reason</th>
+                                    <!-- <th>Prediction Type</th> -->
+                                    <!-- <th>Reason</th> -->
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($processedData['data'][0]['courses'] as $course)
                                 <tr>
+                                    @php
+                                    $course_name = DB::table('elearning_courses')
+                                    ->where('course_id', $course['course_id'])
+                                    ->first();
+                                    @endphp
                                     <td>
-                                        <strong>#{{ $course['course_id'] }}</strong>
+                                        <strong>#{{ $course_name->course_name }}</strong>
                                     </td>
                                     <td>
                                         <span class="risk-badge {{ strtolower($course['risk_level']) }}">
@@ -378,12 +389,12 @@ body {
                                             <span>{{ round($course['probability'] * 100) }}%</span>
                                         </div>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <span class="badge badge-info">{{ $course['prediction_type'] }}</span>
-                                    </td>
-                                    <td class="reason-text">
+                                    </td> -->
+                                    <!-- <td class="reason-text">
                                         {{ $course['reason'] }}
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <button class="btn btn-sm btn-outline-primary" data-toggle="modal"
                                             data-target="#courseModal{{ $course['course_id'] }}">
@@ -431,9 +442,9 @@ body {
                                 <p>Probability:
                                     <strong>{{ round($course['probability'] * 100) }}%</strong>
                                 </p>
-                                <p>Type:
+                                <!-- <p>Type:
                                     <strong>{{ $course['prediction_type'] }}</strong>
-                                </p>
+                                </p> -->
                             </div>
                         </div>
                     </div>
@@ -445,7 +456,7 @@ body {
                                     @if(strtolower($course['risk_level']) == 'high')
                                     <li><i class="fa fa-exclamation-circle text-danger mr-2"></i>Immediate intervention
                                         required</li>
-                                    <li><i class="fa fa-user-check text-danger mr-2"></i>Schedule counseling session
+                                    <li><i class="fas fa-user-check text-danger mr-2"></i>Schedule counseling session
                                     </li>
                                     <li><i class="fa fa-bell text-danger mr-2"></i>Notify instructor</li>
                                     @elseif(strtolower($course['risk_level']) == 'medium')

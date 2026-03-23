@@ -46,10 +46,11 @@
     @endif
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    {{ Breadcrumbs::render('adaptive_learning_list') }}
     <section class="section">
 
         <div class="col-lg-12 text-center">
-            <h4 style="color:darkblue;">Adaptive Learing</h4>
+            <h4 style="color:darkblue;">AI Learners Reports</h4>
         </div>
         <div class="section-body mt-2">
             <style>
@@ -131,7 +132,7 @@
                                     </div>
                                 </div>
                                 <div class="text_cente" style="text-align:center">
-                                    <button class="btn btn-success">Submit</button>
+                                    <button class="btn btn-success"> <i class="fas fa-cogs"></i> Generate</button>
                                 </div>
                             </form>
 

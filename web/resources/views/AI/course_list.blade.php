@@ -40,11 +40,11 @@
     }
     </script>
     @endif
-
+    {{ Breadcrumbs::render('ai_course_list') }}
     <section class="section">
 
         <div class="col-lg-12 text-center">
-            <h4 style="color:darkblue;">Course List</h4>
+            <h4 style="color:darkblue;">Smart Course List</h4>
         </div>
         <div class="section-body mt-2">
             <style>

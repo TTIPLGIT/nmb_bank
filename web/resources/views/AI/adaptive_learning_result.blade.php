@@ -20,7 +20,7 @@
 
 body {
     background-color: var(--bg-light);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
 }
 
 /* Cards */
@@ -223,9 +223,13 @@ body {
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
+                        @php
+                        $username = DB::table('users')->where('id',
+                        $data['fetched_data']['user']['user_id'])->value('name');
+                        @endphp
                         <h1 class="display-6 font-weight-800 text-dark mb-1">Learning Pathway Analysis</h1>
                         <p class="text-muted mb-0">
-                            <i class="fa fa-user mr-2"></i>User: {{ $data['fetched_data']['user']['designation_name'] }}
+                            <i class="fa fa-user mr-2"></i>User: {{ $username }}
                             <span class="mx-3">|</span>
                             <i class="fa fa-book mr-2"></i>Course: {{ $data['fetched_data']['course']['course_name'] }}
                         </p>
@@ -246,7 +250,7 @@ body {
                     <div class="row align-items-center">
                         <div class="col-md-8">
                             <span class="text-uppercase letter-spacing-2 small font-weight-700 text-muted mb-3 d-block">
-                                <i class="fa fa-robot mr-2"></i>AI-POWERED DECISION
+                                <i class="fas fa-robot mr-2"></i>AI-POWERED DECISION
                             </span>
                             <h2 class="text-dark mb-3">{{ ucfirst($data['adaptive_decision']['decision']) }} Path</h2>
                             <p class="lead mb-4">{{ $data['adaptive_decision']['primary_reason'] }}</p>
@@ -288,6 +292,17 @@ body {
                                     </li>
                                     @endforeach
                                 </ul>
+                            </div>
+                            <div class="p-3 bg-success-light rounded">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="small text-muted mb-1">ESTIMATED TIME TO NEXT LEVEL</div>
+                                        <div class="h4 mb-0">
+                                            {{ $data['recommendations']['estimated_time_to_next_level'] }}
+                                        </div>
+                                    </div>
+                                    <i class="fa fa-clock fa-2x text-success"></i>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-4 text-center">
@@ -462,7 +477,7 @@ body {
                 <div class="dashboard-card">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <span class="text-uppercase letter-spacing-2 small font-weight-700 text-muted">
-                            <i class="fa fa-brain mr-2"></i>SKILL ANALYSIS
+                            <i class="fas fa-brain mr-2"></i>SKILL ANALYSIS
                         </span>
                         <span class="status-badge {{ $data['skill_analysis']['gap_severity'] }}">
                             <i
@@ -476,7 +491,7 @@ body {
                         <div class="d-flex justify-content-between mb-2">
                             <span class="font-weight-600">Overall Skill Mastery</span>
                             <span
-                                class="font-weight-700 text-primary">{{ $data['skill_analysis']['skill_mastery_percentage'] }}%</span>
+                                class="font-weight-700 ">{{ $data['skill_analysis']['skill_mastery_percentage'] }}%</span>
                         </div>
                         <div class="progress" style="height: 10px; border-radius: 5px;">
                             <div class="progress-bar bg-primary"
@@ -506,17 +521,18 @@ body {
                     </div>
 
                     <!-- Data Sources -->
-                    <div>
+                    <!-- <div>
                         <div class="small text-muted mb-2">DATA SOURCES</div>
                         <div class="d-flex flex-wrap gap-2">
+
                             @foreach($data['fetched_data']['skill_gap_confidence']['data_sources'] as $source)
-                            <!-- <span class="badge badge-light border text-dark">
-                                <i class="fa fa-database mr-1"></i>
-                                {{ ucfirst(str_replace('_', ' ', $source)) }}
-                            </span> -->
+                            <div class="mb-2 p-2 bg-light rounded">
+                                <i class="fa fa-check-circle text-success mr-2"></i>
+                                {{ ucfirst($source) }}
+                            </div>
                             @endforeach
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -525,7 +541,7 @@ body {
                 <div class="dashboard-card">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <span class="text-uppercase letter-spacing-2 small font-weight-700 text-muted">
-                            <i class="fa fa-map-signs mr-2"></i>LEARNING PATH UPDATE
+                            <i class="fas fa-map-signs mr-2"></i>LEARNING PATH UPDATE
                         </span>
                         <span class="status-badge high">
                             <i class="fa fa-bolt"></i>
@@ -539,10 +555,7 @@ body {
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <h5 class="mb-1">{{ $data['learning_path_update']['target_module']['name'] }}</h5>
-                                <div class="text-muted small">
-                                    {{ ucfirst($data['learning_path_update']['target_module']['entity_type']) }} ID:
-                                    {{ $data['learning_path_update']['target_module']['entity_id'] }}
-                                </div>
+
                             </div>
                             <!-- @if($data['learning_path_update']['is_mandatory'])
                             <span class="badge badge-danger">MANDATORY</span>
@@ -554,7 +567,7 @@ body {
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="small text-muted mb-1">ESTIMATED DURATION</div>
-                            <div class="h4 text-primary">{{ $data['learning_path_update']['estimated_duration_hours'] }}
+                            <div class="h4 ">{{ $data['learning_path_update']['estimated_duration_hours'] }}
                                 hours</div>
                         </div>
                         <div class="col-6">
@@ -581,50 +594,48 @@ body {
                         <i class="fa fa-lightbulb mr-2"></i>AI RECOMMENDATIONS
                     </span>
 
-                    <!-- Content Types -->
-                    <div class="mb-4">
-                        <div class="small text-muted mb-2">SUGGESTED CONTENT TYPES</div>
-                        <div class="d-flex flex-wrap gap-2">
-                            @foreach($data['recommendations']['content_type_suggestion'] as $content)
-                            <!-- <span class="badge badge-primary p-2">
-                                <i
-                                    class="fa fa-{{ $content == 'video' ? 'play-circle' : ($content == 'quiz' ? 'question-circle' : 'book') }} mr-1"></i>
-                                {{ ucfirst($content) }}
-                            </span> -->
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <!-- Suggested Resources -->
-                    <div class="mb-4">
-                        <div class="small text-muted mb-2">SUGGESTED RESOURCES</div>
-                        <div class="list-group">
-                            @foreach($data['recommendations']['suggested_resources'] as $resource)
-                            <div class="list-group-item border-0 px-0">
-                                <div class="d-flex align-items-center">
-                                    <i class="fa fa-check-circle text-success mr-3"></i>
-                                    <div>{{ $resource }}</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Content Types -->
+                            <div class="mb-4">
+                                <div class="small text-muted mb-3">SUGGESTED CONTENT TYPES</div>
+                                @foreach($data['recommendations']['content_type_suggestion'] as $content)
+                                <div class="mb-2 p-2 bg-light rounded">
+                                    <i class="fa fa-check-circle text-success mr-2"></i>
+                                    {{ ucfirst($content) }}
                                 </div>
+                                @endforeach
                             </div>
-                            @endforeach
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Suggested Resources -->
+                            <div class="mb-4">
+                                <div class="small text-muted mb-3">SUGGESTED RESOURCES</div>
+                                @foreach($data['recommendations']['suggested_resources'] as $resource)
+                                <div class="mb-2 p-2 bg-light rounded">
+                                    <i class="fa fa-book mr-2"></i>
+                                    {{ $resource }}
+                                </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 
                     <!-- Time to Next Level -->
-                    <div class="p-3 bg-success-light rounded">
+                    <div class="p-3 bg-success-light rounded mt-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <div class="small text-muted mb-1">ESTIMATED TIME TO NEXT LEVEL</div>
                                 <div class="h4 mb-0">{{ $data['recommendations']['estimated_time_to_next_level'] }}
                                 </div>
                             </div>
-                            <i class="fa fa-clock fa-2x text-success"></i>
+                            <i class="fa fa-clock fa-3x text-success"></i>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- AI Reasoning & Tips -->
+            <!-- AI Guidance -->
             <div class="col-lg-4">
                 <div class="dashboard-card h-100">
                     <span class="text-uppercase letter-spacing-2 small font-weight-700 text-muted mb-4 d-block">
@@ -634,30 +645,29 @@ body {
                     <!-- Explanation -->
                     <div class="mb-4">
                         <div class="small text-muted mb-2">EXPLANATION</div>
-                        <p class="font-italic">{{ $data['ai_reasoning']['ai_explanation'] }}</p>
+                        <p class="font-italic bg-light p-3 rounded">{{ $data['ai_reasoning']['ai_explanation'] }}</p>
                     </div>
 
                     <!-- Learning Tips -->
                     <div class="mb-4">
                         <div class="small text-muted mb-2">LEARNING TIPS</div>
-                        <ul class="list-unstyled">
-                            @foreach($data['ai_reasoning']['learning_tips'] as $tip)
-                            <li class="mb-2">
-                                <i class="fa fa-angle-right text-primary mr-2"></i>
-                                {{ $tip }}
-                            </li>
-                            @endforeach
-                        </ul>
+                        @foreach($data['ai_reasoning']['learning_tips'] as $tip)
+                        <div class="mb-2">
+                            <i class="fa fa-lightbulb text-warning mr-2"></i>
+                            {{ $tip }}
+                        </div>
+                        @endforeach
                     </div>
 
                     <!-- Focus Areas -->
                     <div class="mb-4">
                         <div class="small text-muted mb-2">FOCUS AREAS</div>
-                        <div class="d-flex flex-wrap gap-2">
-                            <!-- @foreach($data['ai_reasoning']['focus_areas'] as $area)
-                            <span class="badge badge-info">{{ $area }}</span>
-                            @endforeach -->
+                        @foreach($data['ai_reasoning']['focus_areas'] as $area)
+                        <div class="mb-2">
+                            <i class="fa fa-crosshairs text-danger mr-2"></i>
+                            {{ ucfirst($area) }}
                         </div>
+                        @endforeach
                     </div>
 
                     <!-- Encouragement -->
@@ -737,7 +747,7 @@ body {
                                     </tr>
                                     <tr>
                                         <td class="text-muted">Post-Completion Confidence</td>
-                                        <td class="font-weight-600 text-primary">
+                                        <td class="font-weight-600 ">
                                             {{ $data['fetched_data']['impact_projection']['post_completion_confidence'] }}%
                                         </td>
                                     </tr>

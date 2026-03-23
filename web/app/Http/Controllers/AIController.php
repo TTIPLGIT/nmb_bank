@@ -87,9 +87,9 @@ class AIController extends BaseController
             if ($user_id == null) {
                 return view('auth.login');
             }
-
+            
             $data = (object) [
-                'category'           => $request->course_category_id,
+                'category'           => $request->course_category_name,
                 'role'               => $request->role_name,
                 'designation'        => $request->designation_id,
                 'course_name'        => $request->course_name,
@@ -108,8 +108,8 @@ class AIController extends BaseController
 
                 return redirect()->back()->with('error', $response['detail']['reason']);
             }
-            // dd($response);
-            // Start
+            
+            
             // $filePath = 'C:\Apache24\htdocs\nmb_bank\web\storage\app\static_course_data.json';
             //     $jsonContent = file_get_contents($filePath);
             //     $response = json_decode($jsonContent, true);
@@ -411,7 +411,7 @@ class AIController extends BaseController
                     $quizData = $class['quiz'] ?? [];
                     $quiz_questions = [];
                     $points = 0;
-
+                       
                     /* ---------- LONG QUESTIONS ---------- */
                     foreach ($quizData['long'] ?? [] as $qIndex => $q) {
                         $keywords = implode(',', $q['keywords']);
@@ -721,15 +721,14 @@ class AIController extends BaseController
             $data = array();
             $data['user_id'] = $request->user_name;
             $data['course_id'] = $request->course_name;
-
-
+    
 
             $encryptArray = $this->encryptData($data);
             $request = array();
 
             $request['requestData'] = $encryptArray;
             $gatewayURL = config('setting.AI_service_url') . '/adaptive/decide-from-db/' . $data['user_id'] . '/' . $data['course_id'];
-
+    
             $response = $this->AIserviceRequest($gatewayURL, 'GET', '', $method);
             $response1 = json_decode($response, true);
 
@@ -747,7 +746,8 @@ class AIController extends BaseController
                     compact('menus', 'screens', 'modules')
                 ));
             }
-        } catch (\Exception $exc) {
+        } 
+        catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
         }
     }
