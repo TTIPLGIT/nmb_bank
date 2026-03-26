@@ -830,7 +830,7 @@ class tryController extends BaseController
         try {
             $method = 'Method => add course => course_store';
             $inputArray = $request->requestData;
-            $this->WritefileLog('23');
+            $this->WritefileLog($method);
             $user_id = (auth()->check()) ? auth()->user()->id : $inputArray['user_id'];
 
             $course_tags =  $inputArray['course_tags'];
