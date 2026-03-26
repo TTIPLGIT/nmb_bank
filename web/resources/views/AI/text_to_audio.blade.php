@@ -51,7 +51,7 @@
         </button>
     </div>
     @endif
-
+    {{ Breadcrumbs::render('text_to_audio') }}
     <section class="section">
         <div class="col-lg-12 text-center">
             <h4 style="color:darkblue;">Text to Audio Converter</h4>
@@ -79,16 +79,28 @@
                                     <input type="hidden" name="language" value="en">
                                     <input type="hidden" name="speaker" value="female-en-5">
 
-                                    <!-- <div class="col-md-6 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <label for="language" class="form-label">Language</label>
                                         <select class="form-control" id="language" name="language" required>
                                             <option value="en" {{ old('language') == 'en' ? 'selected' : '' }}>English
-                                            </option>
-                                            <option value="es" {{ old('language') == 'es' ? 'selected' : '' }}>Spanish
+                                                (Default)</option>
+                                            <option value="hi" {{ old('language') == 'hi' ? 'selected' : '' }}>Hindi
                                             </option>
                                             <option value="fr" {{ old('language') == 'fr' ? 'selected' : '' }}>French
                                             </option>
                                             <option value="de" {{ old('language') == 'de' ? 'selected' : '' }}>German
+                                            </option>
+                                            <option value="es" {{ old('language') == 'es' ? 'selected' : '' }}>Spanish
+                                            </option>
+                                            <option value="it" {{ old('language') == 'it' ? 'selected' : '' }}>Italian
+                                            </option>
+                                            <option value="pt" {{ old('language') == 'pt' ? 'selected' : '' }}>
+                                                Portuguese</option>
+                                            <option value="ar" {{ old('language') == 'ar' ? 'selected' : '' }}>Arabic
+                                            </option>
+                                            <option value="zh-cn" {{ old('language') == 'zh-cn' ? 'selected' : '' }}>
+                                                Chinese</option>
+                                            <option value="ko" {{ old('language') == 'ko' ? 'selected' : '' }}>Korean
                                             </option>
                                         </select>
                                     </div>
@@ -96,20 +108,40 @@
                                     <div class="col-md-6 mb-3">
                                         <label for="speaker" class="form-label">Speaker Voice</label>
                                         <select class="form-control" id="speaker" name="speaker" required>
-                                            <option value="female-en-5"
-                                                {{ old('speaker') == 'female-en-5' ? 'selected' : '' }}>Female English 5
-                                            </option>
-                                            <option value="male-en-3"
-                                                {{ old('speaker') == 'male-en-3' ? 'selected' : '' }}>Male English 3
-                                            </option>
-                                            <option value="female-es-2"
-                                                {{ old('speaker') == 'female-es-2' ? 'selected' : '' }}>Female Spanish 2
-                                            </option>
-                                            <option value="male-fr-1"
-                                                {{ old('speaker') == 'male-fr-1' ? 'selected' : '' }}>Male French 1
-                                            </option>
+                                            <optgroup label="Female Voices">
+                                                <option value="female-en-5"
+                                                    {{ old('speaker') == 'female-en-5' ? 'selected' : '' }}>Female
+                                                    English 5 (Default)</option>
+                                                <option value="female-en-1"
+                                                    {{ old('speaker') == 'female-en-1' ? 'selected' : '' }}>Female
+                                                    English 1</option>
+                                                <option value="female-en-2"
+                                                    {{ old('speaker') == 'female-en-2' ? 'selected' : '' }}>Female
+                                                    English 2</option>
+                                                <option value="slt" {{ old('speaker') == 'slt' ? 'selected' : '' }}>
+                                                    Female SLT</option>
+                                                <option value="clb" {{ old('speaker') == 'clb' ? 'selected' : '' }}>
+                                                    Female CLB</option>
+                                            </optgroup>
+                                            <optgroup label="Male Voices">
+                                                <option value="male-en-1"
+                                                    {{ old('speaker') == 'male-en-1' ? 'selected' : '' }}>Male English 1
+                                                </option>
+                                                <option value="male-en-2"
+                                                    {{ old('speaker') == 'male-en-2' ? 'selected' : '' }}>Male English 2
+                                                </option>
+                                                <option value="male-en-3"
+                                                    {{ old('speaker') == 'male-en-3' ? 'selected' : '' }}>Male English 3
+                                                </option>
+                                                <option value="bdl" {{ old('speaker') == 'bdl' ? 'selected' : '' }}>Male
+                                                    BDL</option>
+                                                <option value="rms" {{ old('speaker') == 'rms' ? 'selected' : '' }}>Male
+                                                    RMS</option>
+                                            </optgroup>
                                         </select>
-                                    </div> -->
+                                        <!-- <small class="form-text text-muted">Note: When using Google TTS fallback, only
+                                            language is respected (speaker voice is ignored).</small> -->
+                                    </div>
                                 </div>
 
                                 <div class="text-right">
@@ -129,7 +161,7 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">Generated Audio Files</h5>
-                            <span class="badge badge-primary">{{ count($audioFiles) }} files</span>
+                            <!-- <span class="badge badge-primary">{{ count($audioFiles) }} files</span> -->
                         </div>
                         <div class="card-body">
                             @if(count($audioFiles) > 0)
@@ -139,14 +171,17 @@
                                         <tr>
                                             <th>Sl. No.</th>
                                             <th>Text Preview</th>
-                                            <!-- <th>Language</th>
-                                            <th>Speaker</th> -->
-                                            <th>Generated On</th>
-                                            <th>Actions</th>
+                                            <th>Language</th>
+                                            <th>Speaker</th>
+                                            <!-- <th>Generated On</th> -->
+                                            <th>Play/Download</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+
                                         @foreach($audioFiles as $index => $audio)
+
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>
@@ -154,41 +189,43 @@
                                                     {{ Str::limit($audio->text, 80) }}
                                                 </div>
                                             </td>
-                                            <!-- <td>
-                                                <span class="badge badge-info">{{ strtoupper($audio->language) }}</span>
+                                            <td>
+                                                {{ strtoupper($audio->language) }}
                                             </td>
                                             <td>
-                                                <span class="badge badge-secondary">{{ $audio->speaker }}</span>
+                                                {{ $audio->speaker }}
+                                            </td>
+                                            <!-- <td>{{ \Carbon\Carbon::parse($audio->created_at)->format('d M Y, h:i A') }}
                                             </td> -->
-                                            <td>{{ \Carbon\Carbon::parse($audio->created_at)->format('d M Y, h:i A') }}
-                                            </td>
                                             <td>
-                                                <div class="audio-actions d-flex" style="gap: 5px;">
+                                                <div>
                                                     <!-- Play Button - Direct Link -->
                                                     @if($audio->audio_url)
-                                                    <a href="http://20.164.0.23:3300{{ $audio->audio_url }}"
-                                                        target="_blank" class="btn btn-info btn-sm" title="Play Audio">
-                                                        <i class="fas fa-play"></i>
-                                                    </a>
 
-                                                    <!-- Download Button - Direct Link -->
-                                                    <a href="http://20.164.0.23:3300{{ $audio->audio_url }}" download
-                                                        class="btn btn-success btn-sm" title="Download Audio">
-                                                        <i class="fas fa-download"></i>
-                                                    </a>
+                                                    <!-- Audio Player -->
+                                                    <audio controls style="width: 250px;">
+                                                        <source src="http://20.164.0.23:3300{{ $audio->audio_url }}"
+                                                            type="audio/mpeg">
+                                                        Your browser does not support the audio element.
+                                                    </audio>
+
+
                                                     @endif
 
                                                     <!-- Delete Button -->
-                                                    <form action="{{ route('delete_audio', $audio->id) }}" method="POST"
-                                                        onsubmit="return confirm('Are you sure you want to delete this audio?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
+
                                                 </div>
+                                            </td>
+                                            <td>
+                                                <form method="POST" action="{{ route('delete_audio', $audio->id) }}"
+                                                    onsubmit="return confirm('Are you sure you want to delete this audio file?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        title="Delete Audio">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                         @endforeach

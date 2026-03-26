@@ -600,3 +600,23 @@ Breadcrumbs::for('custom_field.index', function ($trail) {
     $trail->parent('home');
     $trail->push('Custom Field List', route('custom_filed'));
 });
+
+Breadcrumbs::for('ai_course_list', function ($trail) {
+    $trail->parent('home');
+    $trail->push('AI Course List', route('ai_course_list'));
+});
+
+Breadcrumbs::for('ai_course_create', function ($trail) {
+    $trail->parent('ai_course_list');
+    $trail->push('AI Course Create', route('ai_course_create'));
+});
+
+Breadcrumbs::for('text_to_audio', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Text to Speech', route('text_to_audio'));
+});
+
+Breadcrumbs::for('adaptive_learning_list', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Adaptive Learning List', route('adaptive_learning_list'));
+});

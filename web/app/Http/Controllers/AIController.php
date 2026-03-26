@@ -752,133 +752,245 @@ class AIController extends BaseController
         }
     }
 
-    public function predictive_analysis(Request $request)
-    {
-        $method = 'Method=> AIController => predictive_analysis';
+public function predictive_analysis(Request $request)
+{
+    $method = 'Method=> AIController => predictive_analysis';
 
-        try {
-            $user_id = $request->session()->get("userID");
-            if ($user_id == null) {
-                return view('auth.login');
-            }
+    try {
+        $user_id = $request->session()->get("userID");
+        if ($user_id == null) {
+            return view('auth.login');
+        }
 
-            // Prepare request body exactly like in your example
-            $data = (object) [
-                'user_id' => (int)$user_id
-            ];
-
-            $gatewayURL = config('setting.AI_service_url') . '/ai/predictive-analysis/run';
-            // Make the API call
-            $response = $this->AIserviceRequest($gatewayURL, 'POST', ['user_id' => $user_id], $method);
-            // Decode the response
-            $response = is_string($response)
-                ? json_decode($response, true)
-                : $response;
-
-            // Check if response is valid
-            if (!$response || isset($response['error'])) {
-                // Return empty data structure if API fails
-                $processedData = $this->getEmptyDataStructure();
-                $menus = $this->FillMenu();
-                $screens = $menus['screens'];
-                $modules = $menus['modules'];
-
-                return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData', 'response'))
-                    ->with('error', 'Invalid response from API');
-            }
-            // Process the response data
-            $processedData = $this->processRiskAnalysisData($response);
-
+        // Get user role from session or database
+        $userRole = $request->session()->get("userRole", "User"); // Default to "User" if not set
+        
+        // Prepare request body
+        $gatewayURL = config('setting.AI_service_url') . '/ai/predictive-analysis/run';
+        
+        // Make the API call
+        $response = $this->AIserviceRequest($gatewayURL, 'POST', ['user_id' => $user_id], $method);
+        
+        // Decode the response
+        $response = is_string($response)
+            ? json_decode($response, true)
+            : $response;
+     
+        // Check if response is valid
+        if (!$response || isset($response['error'])) {
+            // Return empty data structure if API fails
+            $processedData = $this->getEmptyDataStructure($userRole);
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
             $modules = $menus['modules'];
 
-            return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData'));
-        } catch (\Exception $exc) {
-            // Log the error
-            $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+            return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData', 'response'))
+                ->with('error', 'Invalid response from API');
+        }
+        
+        // Process the response data based on user role
+        $processedData = $this->processRiskAnalysisData($response, $userRole);
+       
+        $menus = $this->FillMenu();
+        $screens = $menus['screens'];
+        $modules = $menus['modules'];
 
-            // Return empty data structure
-            $processedData = $this->getEmptyDataStructure();
-            $menus = $this->FillMenu();
-            $screens = $menus['screens'];
-            $modules = $menus['modules'];
+        return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData'));
+    } catch (\Exception $exc) {
+        // Log the error
+        $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
 
-            return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData'))
-                ->with('error', 'An error occurred: ' . $exc->getMessage());
+        // Return empty data structure
+        $userRole = $request->session()->get("userRole", "User");
+        $processedData = $this->getEmptyDataStructure($userRole);
+        $menus = $this->FillMenu();
+        $screens = $menus['screens'];
+        $modules = $menus['modules'];
+
+        return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData'))
+            ->with('error', 'An error occurred: ' . $exc->getMessage());
+    }
+}
+
+private function processRiskAnalysisData($data, $userRole = 'User')
+{
+    // Check if the response is in admin mode (has 'data' array with courses per user)
+    // or user mode (has direct 'courses' array)
+    
+    if (isset($data['mode']) && $data['mode'] == 'admin') {
+        // Admin mode processing
+        
+        return $this->processAdminModeData($data);
+        
+    } elseif (isset($data['mode']) && $data['mode'] == 'user') {
+        // User mode processing
+        return $this->processUserModeData($data);
+    } else {
+        // Fallback: Try to detect based on structure
+        if (isset($data['data']) && is_array($data['data']) && isset($data['data'][0]['users'])) {
+            // Admin-like structure with users array
+            return $this->processAdminModeData($data);
+        } elseif (isset($data['courses']) && is_array($data['courses'])) {
+            // User-like structure with courses array
+            return $this->processUserModeData($data);
+        } else {
+            // Return empty structure if format is unknown
+            return $this->getEmptyDataStructure($userRole);
         }
     }
-    private function processRiskAnalysisData($data)
-    {
-        // Initialize counters
-        $totalUsers = 0;
-        $processedUsers = 0;
-        $riskSummary = [
-            'high' => 0,
-            'medium' => 0,
-            'low' => 0
-        ];
+}
 
-        $processedData = [];
-        if (isset($data['data']) && is_array($data['data'])) {
+/**
+ * Process admin mode data (multiple users with their courses)
+ */
+/**
+ * Process admin mode data (multiple users with their courses)
+ */
+private function processAdminModeData($data)
+{
+    $riskSummary = [
+        'high' => 0,
+        'medium' => 0,
+        'low' => 0
+    ];
+   
+    $predictionTypeSummary = [];
+    $processedData = [];
+    $allUserCourses = []; // Store all user-course combinations
 
-            $totalUsers = count($data['data']);
+    if (isset($data['data']) && is_array($data['data'])) {
+        foreach ($data['data'] as $courseData) {
+            $courseId = $courseData['course_id'];
+            $users = $courseData['users'] ?? [];
 
-            foreach ($data['data'] as $userData) {
-
-                $processedUsers++;
-
-                $userCourses = [];
-
-                foreach ($userData['courses'] as $course) {
-
-                    $riskLevel = strtolower($course['risk_level']);
-
-                    if (isset($riskSummary[$riskLevel])) {
-                        $riskSummary[$riskLevel]++;
-                    }
-
-                    $userCourses[] = [
-                        'course_id' => $course['course_id'],
-                        'risk_level' => strtoupper($course['risk_level']),
-                        'probability' => $course['probability'],
-                        'reason' => $course['reason'],
-                        'prediction_type' => $course['prediction_type']
-                    ];
+            foreach ($users as $userData) {
+                $riskLevel = strtolower($userData['risk_level']);
+                
+                if (isset($riskSummary[$riskLevel])) {
+                    $riskSummary[$riskLevel]++;
                 }
+                
+                // Track prediction types
+                $predType = $userData['prediction_type'] ?? 'dropout_risk';
+                if (!isset($predictionTypeSummary[$predType])) {
+                    $predictionTypeSummary[$predType] = 0;
+                }
+                $predictionTypeSummary[$predType]++;
 
-                $processedData[] = [
+                // Store all user-course combinations for display
+                $allUserCourses[] = [
                     'user_id' => $userData['user_id'],
-                    'courses' => $userCourses,
-                    'total_courses' => count($userCourses)
+                    'course_id' => $courseId,
+                    'risk_level' => strtoupper($userData['risk_level']),
+                    'probability' => $userData['probability'],
+                    'reason' => $userData['reason'],
+                    'prediction_type' => $userData['prediction_type']
                 ];
             }
         }
-
-        $totalCourses = array_sum($riskSummary);
-
-        $riskPercentages = [
-            'high' => $totalCourses > 0 ? round(($riskSummary['high'] / $totalCourses) * 100) : 0,
-            'medium' => $totalCourses > 0 ? round(($riskSummary['medium'] / $totalCourses) * 100) : 0,
-            'low' => $totalCourses > 0 ? round(($riskSummary['low'] / $totalCourses) * 100) : 0
-        ];
-
-        return [
-            'total_users' => $totalUsers,
-            'processed_users' => $processedUsers,
-            'total_courses' => $totalCourses,
-            'risk_summary' => $riskSummary,
-            'risk_percentages' => $riskPercentages,
-            'data' => $processedData
-        ];
+        
+        // Group by user for better organization
+        $groupedByUser = [];
+        foreach ($allUserCourses as $userCourse) {
+            $userId = $userCourse['user_id'];
+            if (!isset($groupedByUser[$userId])) {
+                $groupedByUser[$userId] = [
+                    'user_id' => $userId,
+                    'courses' => []
+                ];
+            }
+            $groupedByUser[$userId]['courses'][] = [
+                'course_id' => $userCourse['course_id'],
+                'risk_level' => $userCourse['risk_level'],
+                'probability' => $userCourse['probability'],
+                'reason' => $userCourse['reason'],
+                'prediction_type' => $userCourse['prediction_type']
+            ];
+        }
+        
+        $processedData = array_values($groupedByUser);
     }
 
-    /**
-     * Return empty data structure for when API fails
-     */
-    private function getEmptyDataStructure()
-    {
+    $totalCourses = count($allUserCourses);
+    $totalUsers = count($processedData);
+    
+    $riskPercentages = [
+        'high' => $totalCourses > 0 ? round(($riskSummary['high'] / $totalCourses) * 100) : 0,
+        'medium' => $totalCourses > 0 ? round(($riskSummary['medium'] / $totalCourses) * 100) : 0,
+        'low' => $totalCourses > 0 ? round(($riskSummary['low'] / $totalCourses) * 100) : 0
+    ];
+    
+    return [
+        'mode' => 'admin',
+        'total_users' => $totalUsers,
+        'processed_users' => $totalUsers,
+        'total_courses' => $totalCourses,
+        'risk_summary' => $riskSummary,
+        'risk_percentages' => $riskPercentages,
+        'prediction_type_summary' => $predictionTypeSummary,
+        'data' => $processedData // Now contains grouped by user data
+    ];
+}
+
+/**
+ * Process user mode data (single user with their courses)
+ */
+private function processUserModeData($data)
+{
+    $riskSummary = [
+        'high' => 0,
+        'medium' => 0,
+        'low' => 0
+    ];
+    
+    $courses = [];
+    
+    if (isset($data['courses']) && is_array($data['courses'])) {
+        foreach ($data['courses'] as $course) {
+            $riskLevel = strtolower($course['risk_level']);
+            
+            if (isset($riskSummary[$riskLevel])) {
+                $riskSummary[$riskLevel]++;
+            }
+            
+            $courses[] = [
+                'course_id' => $course['course_id'],
+                'risk_level' => strtoupper($course['risk_level']),
+                'probability' => $course['probability'],
+                'reason' => $course['reason'],
+                'prediction_type' => $course['prediction_type']
+            ];
+        }
+    }
+    
+    $totalCourses = count($courses);
+    $riskPercentages = [
+        'high' => $totalCourses > 0 ? round(($riskSummary['high'] / $totalCourses) * 100) : 0,
+        'medium' => $totalCourses > 0 ? round(($riskSummary['medium'] / $totalCourses) * 100) : 0,
+        'low' => $totalCourses > 0 ? round(($riskSummary['low'] / $totalCourses) * 100) : 0
+    ];
+    
+    return [
+        'mode' => 'user',
+        'user_id' => $data['user_id'] ?? null,
+        'total_courses' => $totalCourses,
+        'risk_summary' => $riskSummary,
+        'risk_percentages' => $riskPercentages,
+        'courses' => $courses
+    ];
+}
+
+/**
+ * Return empty data structure for when API fails
+ */
+private function getEmptyDataStructure($userRole = 'User')
+{
+    // Check if user is admin based on role
+    $isAdmin = (strtolower($userRole) == 'admin');
+    
+    if ($isAdmin) {
         return [
+            'mode' => 'admin',
             'total_users' => 0,
             'processed_users' => 0,
             'total_courses' => 0,
@@ -892,9 +1004,28 @@ class AIController extends BaseController
                 'medium' => 0,
                 'low' => 0
             ],
+            'prediction_type_summary' => [],
             'data' => []
         ];
+    } else {
+        return [
+            'mode' => 'user',
+            'user_id' => null,
+            'total_courses' => 0,
+            'risk_summary' => [
+                'high' => 0,
+                'medium' => 0,
+                'low' => 0
+            ],
+            'risk_percentages' => [
+                'high' => 0,
+                'medium' => 0,
+                'low' => 0
+            ],
+            'courses' => []
+        ];
     }
+}
 
 
 
@@ -1298,8 +1429,9 @@ class AIController extends BaseController
                     'speaker' => $request->speaker
                 ];
 
-                $gatewayURL = config('setting.AI_service_url') . '/tools/text-to-audio/generate';
-
+                // $gatewayURL = config('setting.AI_service_url') . '/tools/text-to-audio/generate';
+                 $gatewayURL = config('setting.AI_service_url') . '/services/tts/synthesize';
+                
                 // Make the API call
                 $response = $this->AIserviceRequest($gatewayURL, 'POST', $data, $method);
 
@@ -1314,16 +1446,15 @@ class AIController extends BaseController
                         ->with('error', 'Failed to generate audio: ' . ($response['error'] ?? 'Unknown error'))
                         ->withInput();
                 }
-
                 // Save to database
                 DB::table('audio_conversions')->insert([
                     'user_id' => $user_id,
                     'text' => $request->text,
                     'language' => $request->language,
                     'speaker' => $request->speaker,
-                    'audio_url' => $response['audio_url'] ?? null,
-                    'file_name' => basename($response['audio_url'] ?? ''),
-                    'file_path' => $response['audio_url'] ?? null,
+                    'audio_url' => $response['audio_path'] ?? null,
+                    'file_name' => basename($response['audio_path'] ?? ''),
+                    'file_path' => $response['audio_path'] ?? null,
                     'status' => 'completed',
                     'message' => $response['message'] ?? 'Audio generated successfully',
                     'created_at' => now(),
