@@ -80,379 +80,379 @@
     <!-- <script src="{{asset('asset/js/owl.carousel.min.js')}}"></script> -->
 
     <style>
-        .stamp {
-            border: none !important;
-        }
+    .stamp {
+        border: none !important;
+    }
 
 
-        .li {
-            padding-top: 10px;
-        }
+    .li {
+        padding-top: 10px;
+    }
 
-        .nav11 {
-            /* background-color: #398eb1 !important; */
-            font-family: sans-serif;
-            /* box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important; */
-        }
+    .nav11 {
+        /* background-color: #398eb1 !important; */
+        font-family: sans-serif;
+        /* box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important; */
+    }
     </style>
     <style>
-        .fs-7 {
-            font-size: 0.8rem !important;
-        }
+    .fs-7 {
+        font-size: 0.8rem !important;
+    }
 
-        .fs-8 {
-            font-size: 0.6rem !important;
-        }
+    .fs-8 {
+        font-size: 0.6rem !important;
+    }
 
-        .p-01 {
-            padding: 0.1rem !important;
-        }
+    .p-01 {
+        padding: 0.1rem !important;
+    }
 
-        .border-0d6efd63 {
-            border-color: #0d6efd63 !important;
-        }
+    .border-0d6efd63 {
+        border-color: #0d6efd63 !important;
+    }
 
-        /* .border-00ffff{
+    /* .border-00ffff{
             border-color: #00ffff !important;
         } */
-        .card-height {
-            height: 20rem !important;
-        }
+    .card-height {
+        height: 20rem !important;
+    }
 
-        .card-body-height {
-            height: 10rem !important;
-        }
+    .card-body-height {
+        height: 10rem !important;
+    }
 
-        .card-header-height {
-            height: 13rem !important;
-        }
+    .card-header-height {
+        height: 13rem !important;
+    }
 
-        .bg-fff5cc {
-            background-color: #a190f0 !important;
-        }
+    .bg-fff5cc {
+        background-color: #a190f0 !important;
+    }
 
-        .bg-99ffbb {
-            background-color: #8974ec !important;
-        }
+    .bg-99ffbb {
+        background-color: #8974ec !important;
+    }
 
-        .bg-ccffff {
-            background-color: #eaf5f3 !important;
-        }
+    .bg-ccffff {
+        background-color: #eaf5f3 !important;
+    }
 
-        .text-d8c4c4 {
-            color: #d8c4c4 !important;
-        }
+    .text-d8c4c4 {
+        color: #d8c4c4 !important;
+    }
 
-        .text-f2bf26 {
-            color: black !important;
-        }
+    .text-f2bf26 {
+        color: black !important;
+    }
 
-        .text-b34700 {
-            color: #da6969 !important;
-        }
+    .text-b34700 {
+        color: #da6969 !important;
+    }
 
-        .text-fae333 {
-            color: #fae333 !important;
-            font-weight: 600 !important;
-        }
+    .text-fae333 {
+        color: #fae333 !important;
+        font-weight: 600 !important;
+    }
 
-        .bg-fae333 {
-            background-color: #fcee85 !important;
-        }
+    .bg-fae333 {
+        background-color: #fcee85 !important;
+    }
 
-        .bg-ffcccc {
-            background-color: #ffcccc !important;
-        }
+    .bg-ffcccc {
+        background-color: #ffcccc !important;
+    }
 
-        .bg-smokewhite {
-            background-color: white !important;
-        }
+    .bg-smokewhite {
+        background-color: white !important;
+    }
 
-        .scroll {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            height: 200px;
-            display: flex;
-            flex-direction: column;
-            overflow-y: scroll;
+    .scroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+
+    .flow-width {
+        width: 4.5rem !important;
+    }
+
+    .light.dark-sidebar.theme-white {
+        height: 10px !important;
+    }
+
+    @media (min-width:374.96px) {
+        .flow-width {
+            width: 2.5rem !important;
+        }
+    }
+
+    @media (min-width:424.96px) {
+        .flow-width {
+            width: 2.5rem !important;
+        }
+    }
+
+    @media (min-width:575.96px) {
+        .flow-width {
+            width: 2.5rem !important;
+        }
+    }
+
+    @media (min-width:767.96px) {
+        .flow-width {
+            width: 2.5rem !important;
+        }
+    }
+
+    @media (min-width:991.96px) {
+        .col-lg-2-5 {
+            flex: 0 0 auto;
+            width: 20.5%;
         }
 
         .flow-width {
-            width: 4.5rem !important;
+            width: 3.5rem !important;
         }
+    }
 
-        .light.dark-sidebar.theme-white {
-            height: 10px !important;
-        }
-
-        @media (min-width:374.96px) {
-            .flow-width {
-                width: 2.5rem !important;
-            }
-        }
-
-        @media (min-width:424.96px) {
-            .flow-width {
-                width: 2.5rem !important;
-            }
-        }
-
-        @media (min-width:575.96px) {
-            .flow-width {
-                width: 2.5rem !important;
-            }
-        }
-
-        @media (min-width:767.96px) {
-            .flow-width {
-                width: 2.5rem !important;
-            }
-        }
-
-        @media (min-width:991.96px) {
-            .col-lg-2-5 {
-                flex: 0 0 auto;
-                width: 20.5%;
-            }
-
-            .flow-width {
-                width: 3.5rem !important;
-            }
-        }
-
-        @media (min-width:1199.96px) {
-            .flow-width {
-                width: 4.5rem !important;
-            }
-        }
-    </style>
-    <style>
-        .fs-7 {
-            font-size: 0.8rem !important;
-        }
-
-        .fs-8 {
-            font-size: 0.6rem !important;
-        }
-
-        .p-01 {
-            padding: 0.1rem !important;
-        }
-
-        .border-0d6efd63 {
-            border-color: #0d6efd63 !important;
-        }
-
-        /* .border-00ffff{
-            border-color: #00ffff !important;
-        } */
-        .card-height {
-            height: 20rem !important;
-        }
-
-        .card-body-height {
-            height: 10rem !important;
-        }
-
-        .card-header-height {
-            height: 13rem !important;
-        }
-
-        .bg-fff5cc {
-            background-color: #a190f0 !important;
-        }
-
-        .bg-99ffbb {
-            background-color: #8974ec !important;
-        }
-
-        .bg-ccffff {
-            background-color: #eaf5f3 !important;
-        }
-
-        .text-d8c4c4 {
-            color: #d8c4c4 !important;
-        }
-
-        .text-f2bf26 {
-            color: black !important;
-        }
-
-        .text-b34700 {
-            color: #da6969 !important;
-        }
-
-        .text-fae333 {
-            color: #fae333 !important;
-            font-weight: 600 !important;
-        }
-
-        .bg-fae333 {
-            background-color: #fcee85 !important;
-        }
-
-        .bg-ffcccc {
-            background-color: #ffcccc !important;
-        }
-
-        .bg-smokewhite {
-            background-color: white !important;
-        }
-
-        .scroll {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            height: 200px;
-            display: flex;
-            flex-direction: column;
-            overflow-y: scroll;
-        }
-
+    @media (min-width:1199.96px) {
         .flow-width {
             width: 4.5rem !important;
         }
+    }
+    </style>
+    <style>
+    .fs-7 {
+        font-size: 0.8rem !important;
+    }
 
-        @media (min-width:374.96px) {
-            .flow-width {
-                width: 2.5rem !important;
-            }
+    .fs-8 {
+        font-size: 0.6rem !important;
+    }
+
+    .p-01 {
+        padding: 0.1rem !important;
+    }
+
+    .border-0d6efd63 {
+        border-color: #0d6efd63 !important;
+    }
+
+    /* .border-00ffff{
+            border-color: #00ffff !important;
+        } */
+    .card-height {
+        height: 20rem !important;
+    }
+
+    .card-body-height {
+        height: 10rem !important;
+    }
+
+    .card-header-height {
+        height: 13rem !important;
+    }
+
+    .bg-fff5cc {
+        background-color: #a190f0 !important;
+    }
+
+    .bg-99ffbb {
+        background-color: #8974ec !important;
+    }
+
+    .bg-ccffff {
+        background-color: #eaf5f3 !important;
+    }
+
+    .text-d8c4c4 {
+        color: #d8c4c4 !important;
+    }
+
+    .text-f2bf26 {
+        color: black !important;
+    }
+
+    .text-b34700 {
+        color: #da6969 !important;
+    }
+
+    .text-fae333 {
+        color: #fae333 !important;
+        font-weight: 600 !important;
+    }
+
+    .bg-fae333 {
+        background-color: #fcee85 !important;
+    }
+
+    .bg-ffcccc {
+        background-color: #ffcccc !important;
+    }
+
+    .bg-smokewhite {
+        background-color: white !important;
+    }
+
+    .scroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+
+    .flow-width {
+        width: 4.5rem !important;
+    }
+
+    @media (min-width:374.96px) {
+        .flow-width {
+            width: 2.5rem !important;
+        }
+    }
+
+    @media (min-width:424.96px) {
+        .flow-width {
+            width: 2.5rem !important;
+        }
+    }
+
+    @media (min-width:575.96px) {
+        .flow-width {
+            width: 2.5rem !important;
+        }
+    }
+
+    @media (min-width:767.96px) {
+        .flow-width {
+            width: 2.5rem !important;
+        }
+    }
+
+    @media (min-width:991.96px) {
+        .col-lg-2-5 {
+            flex: 0 0 auto;
+            width: 20.5%;
         }
 
-        @media (min-width:424.96px) {
-            .flow-width {
-                width: 2.5rem !important;
-            }
+        .flow-width {
+            width: 3.5rem !important;
         }
+    }
 
-        @media (min-width:575.96px) {
-            .flow-width {
-                width: 2.5rem !important;
-            }
+    @media (min-width:1199.96px) {
+        .flow-width {
+            width: 4.5rem !important;
         }
+    }
 
-        @media (min-width:767.96px) {
-            .flow-width {
-                width: 2.5rem !important;
-            }
-        }
-
-        @media (min-width:991.96px) {
-            .col-lg-2-5 {
-                flex: 0 0 auto;
-                width: 20.5%;
-            }
-
-            .flow-width {
-                width: 3.5rem !important;
-            }
-        }
-
-        @media (min-width:1199.96px) {
-            .flow-width {
-                width: 4.5rem !important;
-            }
-        }
-
-        .buttonedu {
-            display: flex !important;
-            justify-content: space-around !important;
-            padding: 10px;
-        }
+    .buttonedu {
+        display: flex !important;
+        justify-content: space-around !important;
+        padding: 10px;
+    }
 
 
 
-        /* / Css of notification /  */
-        .navigation {
-            /*position: fixed;*/
-            top: 0;
-            /*  width: 100%;
+    /* / Css of notification /  */
+    .navigation {
+        /*position: fixed;*/
+        top: 0;
+        /*  width: 100%;
       height: 60px;
       background: #3f9cb5;*/
-        }
+    }
 
-        .navigation .inner-navigation {
-            padding: 0;
-            margin: 0;
-        }
+    .navigation .inner-navigation {
+        padding: 0;
+        margin: 0;
+    }
 
-        .navigation .inner-navigation li {
-            list-style-type: none;
-        }
+    .navigation .inner-navigation li {
+        list-style-type: none;
+    }
 
-        .navigation .inner-navigation li .menu-link {
-            color: #085a7e;
-            line-height: 3.7em;
-            padding: 20px 18px;
-            text-decoration: none;
-            transition: background 0.5s, color 0.5s;
-        }
+    .navigation .inner-navigation li .menu-link {
+        color: #085a7e;
+        line-height: 3.7em;
+        padding: 20px 18px;
+        text-decoration: none;
+        transition: background 0.5s, color 0.5s;
+    }
 
-        .navigation .inner-navigation li .menu-link.menu-anchor {
-            padding: 20px;
-            margin: 0;
-            background: #bea20f;
-            color: #FFF;
-        }
+    .navigation .inner-navigation li .menu-link.menu-anchor {
+        padding: 20px;
+        margin: 0;
+        background: #bea20f;
+        color: #FFF;
+    }
 
-        .navigation .inner-navigation li .menu-link.has-notifications {
-            /* background: #085a7e; */
-            color: #000000;
-        }
+    .navigation .inner-navigation li .menu-link.has-notifications {
+        /* background: #085a7e; */
+        color: #000000;
+    }
 
-        .navigation .inner-navigation li .menu-link.circle {
-            line-height: 3.8em;
-            padding: 14px 18px;
-            border-radius: 50%;
-        }
+    .navigation .inner-navigation li .menu-link.circle {
+        line-height: 3.8em;
+        padding: 14px 18px;
+        border-radius: 50%;
+    }
 
-        .navigation .inner-navigation li .menu-link.circle:hover {
-            /* background: #085a7e; */
-            color: #FFF;
-        }
+    .navigation .inner-navigation li .menu-link.circle:hover {
+        /* background: #085a7e; */
+        color: #FFF;
+    }
 
-        .navigation .inner-navigation li .menu-link.square:hover {
-            /* background: #085a7e; */
-            color: #FFF;
-            transition: background 0.5s, color 0.5s;
-        }
+    .navigation .inner-navigation li .menu-link.square:hover {
+        /* background: #085a7e; */
+        color: #FFF;
+        transition: background 0.5s, color 0.5s;
+    }
 
-        .dropdown-container {
-            overflow-y: hidden;
-        }
+    .dropdown-container {
+        overflow-y: hidden;
+    }
 
-        .dropdown-container.expanded .dropdown {
-            -webkit-animation: fadein 0.5s;
-            -moz-animation: fadein 0.5s;
-            -ms-animation: fadein 0.5s;
-            -o-animation: fadein 0.5s;
-            animation: fadein 0.5s;
-            display: block;
-        }
+    .dropdown-container.expanded .dropdown {
+        -webkit-animation: fadein 0.5s;
+        -moz-animation: fadein 0.5s;
+        -ms-animation: fadein 0.5s;
+        -o-animation: fadein 0.5s;
+        animation: fadein 0.5s;
+        display: block;
+    }
 
-        .dropdown-container .dropdown {
-            -webkit-animation: fadeout 0.5s;
-            -moz-animation: fadeout 0.5s;
-            -ms-animation: fadeout 0.5s;
-            -o-animation: fadeout 0.5s;
-            animation: fadeout 0.5s;
-            display: none;
-            position: absolute;
-            width: 300px;
-            height: auto;
-            max-height: 600px;
-            overflow-y: hidden;
-            padding: 0;
-            margin: 0;
-            background: #eee;
-            margin-top: 3px;
-            margin-right: -15px;
-            /* border-top: 4px solid #085a7e; */
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            -webkit-box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.75);
-            -moz-box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.75);
-            box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.75);
-            /*
+    .dropdown-container .dropdown {
+        -webkit-animation: fadeout 0.5s;
+        -moz-animation: fadeout 0.5s;
+        -ms-animation: fadeout 0.5s;
+        -o-animation: fadeout 0.5s;
+        animation: fadeout 0.5s;
+        display: none;
+        position: absolute;
+        width: 300px;
+        height: auto;
+        max-height: 600px;
+        overflow-y: hidden;
+        padding: 0;
+        margin: 0;
+        background: #eee;
+        margin-top: 3px;
+        margin-right: -15px;
+        /* border-top: 4px solid #085a7e; */
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        -webkit-box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.75);
+        box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.75);
+        /*
       &:before{
         position: absolute;
         content: ' ';
@@ -465,544 +465,544 @@
         border-bottom: 10px solid $secondary-color; 
       }
       */
+    }
+
+    .dropdown-container .dropdown .notification-group {
+        border-bottom: 1px solid #e3e3e3;
+        overflow: hidden;
+        min-height: 65px;
+    }
+
+    .dropdown-container .dropdown .notification-group:last-child {
+        border-bottom: 0;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-tab {
+        padding: 0px 25px;
+        min-height: 65px;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-tab:hover {
+        cursor: pointer;
+        background: #6c757d;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-tab:hover .fa,
+    .dropdown-container .dropdown .notification-group .notification-tab:hover h4,
+    .dropdown-container .dropdown .notification-group .notification-tab:hover .label {
+        color: #FFF;
+        display: inline-block;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-tab:hover .label {
+        background: #085a7e;
+        border-color: #085a7e;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list {
+        padding: 0;
+        overflow-y: auto;
+        height: 0px;
+        max-height: 250px;
+        transition: height 0.5s;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item {
+        padding: 5px 25px;
+        border-bottom: 1px solid #e3e3e3;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .message {
+        margin: 5px 5px 10px;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .item-footer a {
+        color: #3f9cb5;
+        text-decoration: none;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .item-footer .date {
+        float: right;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:nth-of-type(odd) {
+        background: #e3e3e3;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:hover {
+        cursor: pointer;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:last-child {
+        border-bottom: 0;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .dropdown-container .dropdown .notification-group.expanded .notification-tab {
+        background: #6c757d;
+    }
+
+    .dropdown-container .dropdown .notification-group.expanded .notification-tab .fa,
+    .dropdown-container .dropdown .notification-group.expanded .notification-tab h4,
+    .dropdown-container .dropdown .notification-group.expanded .notification-tab .label {
+        color: #FFF;
+        display: inline-block;
+    }
+
+    .dropdown-container .dropdown .notification-group.expanded .notification-tab .label {
+        background: #085a7e;
+        border-color: #085a7e;
+    }
+
+    .dropdown-container .dropdown .notification-group.expanded .notification-list {
+        height: 250px;
+        max-height: 250px;
+        transition: height 0.5s;
+    }
+
+    .dropdown-container .dropdown .notification-group .fa,
+    .dropdown-container .dropdown .notification-group h4,
+    .dropdown-container .dropdown .notification-group .label {
+        color: #333;
+        display: inline-block;
+    }
+
+    .dropdown-container .dropdown .notification-group .fa {
+        margin-right: 5px;
+        margin-top: 25px;
+    }
+
+    .dropdown-container .dropdown .notification-group .label {
+        float: right;
+        margin-top: 20px;
+        color: #3f9cb5;
+        border: 1px solid #3f9cb5;
+        padding: 0px 7px;
+        border-radius: 15px;
+    }
+
+    .tile-body-height {
+        height: 60vh;
+        overflow-y: overlay;
+        padding-right: 25px;
+    }
+
+    .right {
+        float: right;
+    }
+
+    .left {
+        float: left;
+        list-style: none;
+    }
+
+    @media only screen and (max-width: 321px) {
+        .dropdown-container .dropdown .notification-group .notification-tab h4 {
+            display: none;
         }
 
-        .dropdown-container .dropdown .notification-group {
-            border-bottom: 1px solid #e3e3e3;
-            overflow: hidden;
-            min-height: 65px;
+        .dropdown-container .dropdown .notification-group .notification-tab:hover h4 {
+            display: none;
         }
 
-        .dropdown-container .dropdown .notification-group:last-child {
-            border-bottom: 0;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
+        .dropdown-container .dropdown .notification-group.expanded .notification-tab h4 {
+            display: none;
+        }
+    }
+
+    @media only screen and (max-width: 514px) {
+        .dropdown-container .dropdown {
+            width: 100%;
+            margin: 0px;
+            left: 0;
+        }
+    }
+
+    @keyframes fadein {
+        from {
+            opacity: 0;
         }
 
-        .dropdown-container .dropdown .notification-group .notification-tab {
-            padding: 0px 25px;
-            min-height: 65px;
+        to {
+            opacity: 1;
+        }
+    }
+
+    @-moz-keyframes fadein {
+        from {
+            opacity: 0;
         }
 
-        .dropdown-container .dropdown .notification-group .notification-tab:hover {
-            cursor: pointer;
-            background: #6c757d;
+        to {
+            opacity: 1;
+        }
+    }
+
+    @-webkit-keyframes fadein {
+        from {
+            opacity: 0;
         }
 
-        .dropdown-container .dropdown .notification-group .notification-tab:hover .fa,
-        .dropdown-container .dropdown .notification-group .notification-tab:hover h4,
-        .dropdown-container .dropdown .notification-group .notification-tab:hover .label {
-            color: #FFF;
-            display: inline-block;
+        to {
+            opacity: 1;
+        }
+    }
+
+    @-ms-keyframes fadein {
+        from {
+            opacity: 0;
         }
 
-        .dropdown-container .dropdown .notification-group .notification-tab:hover .label {
-            background: #085a7e;
-            border-color: #085a7e;
+        to {
+            opacity: 1;
+        }
+    }
+
+    @-o-keyframes fadein {
+        from {
+            opacity: 0;
         }
 
-        .dropdown-container .dropdown .notification-group .notification-list {
-            padding: 0;
-            overflow-y: auto;
-            height: 0px;
-            max-height: 250px;
-            transition: height 0.5s;
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeout {
+        from {
+            opacity: 1;
         }
 
-        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item {
-            padding: 5px 25px;
-            border-bottom: 1px solid #e3e3e3;
+        to {
+            opacity: 0;
+        }
+    }
+
+    @-moz-keyframes fadeout {
+        from {
+            opacity: 1;
         }
 
-        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .message {
-            margin: 5px 5px 10px;
+        to {
+            opacity: 0;
+        }
+    }
+
+    @-webkit-keyframes fadeout {
+        from {
+            opacity: 1;
         }
 
-        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .item-footer a {
-            color: #3f9cb5;
-            text-decoration: none;
+        to {
+            opacity: 0;
+        }
+    }
+
+    @-ms-keyframes fadeout {
+        from {
+            opacity: 1;
         }
 
-        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .item-footer .date {
-            float: right;
+        to {
+            opacity: 0;
+        }
+    }
+
+    @-o-keyframes fadeout {
+        from {
+            opacity: 1;
         }
 
-        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:nth-of-type(odd) {
-            background: #e3e3e3;
+        to {
+            opacity: 0;
+        }
+    }
+
+    .error {
+        color: red;
+    }
+
+    .dropdown {
+        list-style: none;
+
+    }
+
+    /* / End css of notification /  */
+    .pagination {
+        display: inline !important;
+        float: right !important;
+    }
+
+
+    .dataTables_paginate {
+        display: inline !important;
+    }
+
+    .dataTables_info {
+        display: inline !important;
+    }
+
+    .trc {
+        background: #d8e7eb;
+
+    }
+
+    .goldenrod {
+        color: goldenrod !important;
+    }
+
+    .darkcyan {
+        color: darkcyan !important;
+    }
+
+    .indianred {
+        color: indianred !important;
+
+    }
+
+    .indigo {
+        color: indigo !important;
+    }
+
+    .lg {
+        color: #70bd25 !important;
+    }
+
+    #ncount {
+        padding: 0.20em 0.40em;
+        border-radius: 50%;
+        transform: translate(160%, -83%) !important;
+        -ms-transform: translateX(50%);
+        transform: translateY(50%);
+        top: 50%;
+    }
+
+    .badges {
+        background: #f00;
+        width: 40px;
+        height: 40px !important;
+        border-radius: 50%;
+        /* background-color: rgb(0, 34, 102); */
+        color: white;
+    }
+
+    .text-black {
+        color: black !important;
+    }
+
+    .badge {
+        position: absolute !important;
+        top: 18px !important;
+        right: 66px !important;
+        border-radius: 50% !important;
+        background-color: red !important;
+        color: white !important;
+    }
+
+    .fade-in-text {
+        font-family: Arial;
+        font-size: 17px;
+        text-align: center;
+        padding-top: 35%;
+        animation: fadeIn 5s;
+        -webkit-animation: fadeIn 5s;
+        -moz-animation: fadeIn 5s;
+        -o-animation: fadeIn 5s;
+        -ms-animation: fadeIn 5s;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
         }
 
-        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:hover {
-            cursor: pointer;
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @-moz-keyframes fadeIn {
+        0% {
+            opacity: 0;
         }
 
-        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:last-child {
-            border-bottom: 0;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @-webkit-keyframes fadeIn {
+        0% {
+            opacity: 0;
         }
 
-        .dropdown-container .dropdown .notification-group.expanded .notification-tab {
-            background: #6c757d;
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @-o-keyframes fadeIn {
+        0% {
+            opacity: 0;
         }
 
-        .dropdown-container .dropdown .notification-group.expanded .notification-tab .fa,
-        .dropdown-container .dropdown .notification-group.expanded .notification-tab h4,
-        .dropdown-container .dropdown .notification-group.expanded .notification-tab .label {
-            color: #FFF;
-            display: inline-block;
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @-ms-keyframes fadeIn {
+        0% {
+            opacity: 0;
         }
 
-        .dropdown-container .dropdown .notification-group.expanded .notification-tab .label {
-            background: #085a7e;
-            border-color: #085a7e;
+        100% {
+            opacity: 1;
         }
-
-        .dropdown-container .dropdown .notification-group.expanded .notification-list {
-            height: 250px;
-            max-height: 250px;
-            transition: height 0.5s;
-        }
-
-        .dropdown-container .dropdown .notification-group .fa,
-        .dropdown-container .dropdown .notification-group h4,
-        .dropdown-container .dropdown .notification-group .label {
-            color: #333;
-            display: inline-block;
-        }
-
-        .dropdown-container .dropdown .notification-group .fa {
-            margin-right: 5px;
-            margin-top: 25px;
-        }
-
-        .dropdown-container .dropdown .notification-group .label {
-            float: right;
-            margin-top: 20px;
-            color: #3f9cb5;
-            border: 1px solid #3f9cb5;
-            padding: 0px 7px;
-            border-radius: 15px;
-        }
-
-        .tile-body-height {
-            height: 60vh;
-            overflow-y: overlay;
-            padding-right: 25px;
-        }
-
-        .right {
-            float: right;
-        }
-
-        .left {
-            float: left;
-            list-style: none;
-        }
-
-        @media only screen and (max-width: 321px) {
-            .dropdown-container .dropdown .notification-group .notification-tab h4 {
-                display: none;
-            }
-
-            .dropdown-container .dropdown .notification-group .notification-tab:hover h4 {
-                display: none;
-            }
-
-            .dropdown-container .dropdown .notification-group.expanded .notification-tab h4 {
-                display: none;
-            }
-        }
-
-        @media only screen and (max-width: 514px) {
-            .dropdown-container .dropdown {
-                width: 100%;
-                margin: 0px;
-                left: 0;
-            }
-        }
-
-        @keyframes fadein {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @-moz-keyframes fadein {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @-webkit-keyframes fadein {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @-ms-keyframes fadein {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @-o-keyframes fadein {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeout {
-            from {
-                opacity: 1;
-            }
-
-            to {
-                opacity: 0;
-            }
-        }
-
-        @-moz-keyframes fadeout {
-            from {
-                opacity: 1;
-            }
-
-            to {
-                opacity: 0;
-            }
-        }
-
-        @-webkit-keyframes fadeout {
-            from {
-                opacity: 1;
-            }
-
-            to {
-                opacity: 0;
-            }
-        }
-
-        @-ms-keyframes fadeout {
-            from {
-                opacity: 1;
-            }
-
-            to {
-                opacity: 0;
-            }
-        }
-
-        @-o-keyframes fadeout {
-            from {
-                opacity: 1;
-            }
-
-            to {
-                opacity: 0;
-            }
-        }
-
-        .error {
-            color: red;
-        }
-
-        .dropdown {
-            list-style: none;
-
-        }
-
-        /* / End css of notification /  */
-        .pagination {
-            display: inline !important;
-            float: right !important;
-        }
-
-
-        .dataTables_paginate {
-            display: inline !important;
-        }
-
-        .dataTables_info {
-            display: inline !important;
-        }
-
-        .trc {
-            background: #d8e7eb;
-
-        }
-
-        .goldenrod {
-            color: goldenrod !important;
-        }
-
-        .darkcyan {
-            color: darkcyan !important;
-        }
-
-        .indianred {
-            color: indianred !important;
-
-        }
-
-        .indigo {
-            color: indigo !important;
-        }
-
-        .lg {
-            color: #70bd25 !important;
-        }
-
-        #ncount {
-            padding: 0.20em 0.40em;
-            border-radius: 50%;
-            transform: translate(160%, -83%) !important;
-            -ms-transform: translateX(50%);
-            transform: translateY(50%);
-            top: 50%;
-        }
-
-        .badges {
-            background: #f00;
-            width: 40px;
-            height: 40px !important;
-            border-radius: 50%;
-            /* background-color: rgb(0, 34, 102); */
-            color: white;
-        }
-
-        .text-black {
-            color: black !important;
-        }
-
-        .badge {
-            position: absolute !important;
-            top: 18px !important;
-            right: 66px !important;
-            border-radius: 50% !important;
-            background-color: red !important;
-            color: white !important;
-        }
-
-        .fade-in-text {
-            font-family: Arial;
-            font-size: 17px;
-            text-align: center;
-            padding-top: 35%;
-            animation: fadeIn 5s;
-            -webkit-animation: fadeIn 5s;
-            -moz-animation: fadeIn 5s;
-            -o-animation: fadeIn 5s;
-            -ms-animation: fadeIn 5s;
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        @-moz-keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        @-webkit-keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        @-o-keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        @-ms-keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
+    }
     </style>
 
     <style>
-        .dropdown-container {
-            overflow-y: hidden;
-            width: 40px;
-            height: 40px;
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px !important;
-        }
+    .dropdown-container {
+        overflow-y: hidden;
+        width: 40px;
+        height: 40px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px !important;
+    }
 
-        .navigation .inner-navigation li .menu-link.circle {
-            line-height: 100%;
-            padding: 0px;
-            border-radius: 50%;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .navigation .inner-navigation li .menu-link.circle {
+        line-height: 100%;
+        padding: 0px;
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
 
-        .badge {
-            position: absolute;
-            top: 7px;
-            right: 140px !important;
-            border-radius: 50%;
-            background-color: red !important;
-            color: white !important;
-        }
+    .badge {
+        position: absolute;
+        top: 7px;
+        right: 140px !important;
+        border-radius: 50%;
+        background-color: red !important;
+        color: white !important;
+    }
 
-        a>i>.badge.badge-light.bell_notification {
-            top: -12px !important;
-            position: absolute !important;
-            /* left: 0px !important; */
-            right: -8px !important;
-        }
+    a>i>.badge.badge-light.bell_notification {
+        top: -12px !important;
+        position: absolute !important;
+        /* left: 0px !important; */
+        right: -8px !important;
+    }
 
-        a>.notify {
-            position: relative !important;
-        }
+    a>.notify {
+        position: relative !important;
+    }
 
-        .nav-link {
-            cursor: pointer;
-        }
+    .nav-link {
+        cursor: pointer;
+    }
 
-        .table:not(.table-sm) thead th {
-            color: #000000 !important;
-        }
+    .table:not(.table-sm) thead th {
+        color: #000000 !important;
+    }
 
-        .prof_admin {
-            height: 35px;
-            width: 35px !important;
-            position: relative;
-            margin-top: 8px;
-            border-radius: 30px;
+    .prof_admin {
+        height: 35px;
+        width: 35px !important;
+        position: relative;
+        margin-top: 8px;
+        border-radius: 30px;
 
-            /* margin-right: 19px;
+        /* margin-right: 19px;
       position: relative;
       width: 42px !important; */
+    }
+
+    .drop_bg {
+        text-transform: capitalize;
+        width: 200px;
+    }
+
+    .tox-statusbar {
+        display: none !important;
+    }
+
+    .back_button {
+        background: red !important;
+        border-color: red !important;
+        color: white !important;
+    }
+
+    .approve_button {
+        background: green !important;
+        border-color: green !important;
+        color: white !important;
+    }
+
+    .loader-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.7);
+        /* Faded background color */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        /* Ensure the loader appears on top of other content */
+        display: none;
+        /* Hide initially */
+    }
+
+    .loader_ajax {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
         }
 
-        .drop_bg {
-            text-transform: capitalize;
-            width: 200px;
+        100% {
+            transform: rotate(360deg);
         }
+    }
 
-        .tox-statusbar {
-            display: none !important;
-        }
+    .aligned-row {
+        display: flex;
+        text-wrap: nowrap;
+    }
 
-        .back_button {
-            background: red !important;
-            border-color: red !important;
-            color: white !important;
-        }
+    /* saranya */
+    .form-control {
+        text-transform: none !important;
+    }
 
-        .approve_button {
-            background: green !important;
-            border-color: green !important;
-            color: white !important;
-        }
+    .nav-link i {
+        color: #680EDA;
+    }
 
-        .loader-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.7);
-            /* Faded background color */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            /* Ensure the loader appears on top of other content */
-            display: none;
-            /* Hide initially */
-        }
-
-        .loader_ajax {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #3498db;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .aligned-row {
-            display: flex;
-            text-wrap: nowrap;
-        }
-
-        /* saranya */
-        .form-control {
-            text-transform: none !important;
-        }
-
-        .nav-link i {
-            color: #680EDA;
-        }
-
-        .circle i {
-            color: #680EDA;
-        }
+    .circle i {
+        color: #680EDA;
+    }
     </style>
 
 
@@ -1015,15 +1015,15 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script>
-    // saranya
-    (function($) {
-        // Define your function
-        window.selectReinitialize = function(element) {
-            $(`.${element}`).select2('destroy').select2();
-        };
+// saranya
+(function($) {
+    // Define your function
+    window.selectReinitialize = function(element) {
+        $(`.${element}`).select2('destroy').select2();
+    };
 
 
-    })(jQuery);
+})(jQuery);
 </script>
 <div class="floating-chat-container">
     <button class="floating-chat-toggle" id="floatingChatToggle">
@@ -1072,553 +1072,553 @@
 </div>
 
 <script>
-    class FloatingChat {
-        constructor() {
-            this.isOpen = false;
-            this.isMinimized = false;
-            this.init();
-        }
+class FloatingChat {
+    constructor() {
+        this.isOpen = false;
+        this.isMinimized = false;
+        this.init();
+    }
 
-        init() {
-            this.setupEventListeners();
-            this.loadFromStorage();
-        }
+    init() {
+        this.setupEventListeners();
+        this.loadFromStorage();
+    }
 
-        setupEventListeners() {
-            // Toggle chat
-            document.getElementById('floatingChatToggle').addEventListener('click', () => this.toggleChat());
+    setupEventListeners() {
+        // Toggle chat
+        document.getElementById('floatingChatToggle').addEventListener('click', () => this.toggleChat());
 
-            // Close chat
-            document.getElementById('floatingChatClose').addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.closeChat();
-            });
+        // Close chat
+        document.getElementById('floatingChatClose').addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.closeChat();
+        });
 
-            // Minimize chat
-            document.getElementById('floatingChatMinimize').addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.toggleMinimize();
-            });
+        // Minimize chat
+        document.getElementById('floatingChatMinimize').addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.toggleMinimize();
+        });
 
-            // Send message
-            document.getElementById('sendMessageBtn').addEventListener('click', () => this.sendMessage());
-            document.getElementById('chatMessageInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    this.sendMessage();
-                }
-            });
-
-            // Auto-resize textarea
-            document.getElementById('chatMessageInput').addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = (this.scrollHeight) + 'px';
-            });
-        }
-
-        toggleChat() {
-            const widget = document.getElementById('floatingChatWidget');
-            const toggle = document.getElementById('floatingChatToggle');
-
-            if (this.isOpen) {
-                widget.style.display = 'none';
-                toggle.style.display = 'flex';
-                this.isOpen = false;
-                this.hideNotification();
-            } else {
-                widget.style.display = 'flex';
-                toggle.style.display = 'none';
-                this.isOpen = true;
-                this.isMinimized = false;
-                document.getElementById('floatingChatBody').style.display = 'flex';
-                document.querySelector('.floating-chat-footer').style.display = 'flex';
-                document.querySelector('.floating-chat-minimize i').className = 'fa fa-minus';
+        // Send message
+        document.getElementById('sendMessageBtn').addEventListener('click', () => this.sendMessage());
+        document.getElementById('chatMessageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                this.sendMessage();
             }
-            this.saveToStorage();
-        }
+        });
 
-        toggleMinimize() {
-            const body = document.getElementById('floatingChatBody');
-            const footer = document.querySelector('.floating-chat-footer');
-            const minimizeIcon = document.querySelector('.floating-chat-minimize i');
+        // Auto-resize textarea
+        document.getElementById('chatMessageInput').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    }
 
-            if (this.isMinimized) {
-                body.style.display = 'flex';
-                footer.style.display = 'flex';
-                minimizeIcon.className = 'fa fa-minus';
-                this.isMinimized = false;
-            } else {
-                body.style.display = 'none';
-                footer.style.display = 'none';
-                minimizeIcon.className = 'fa fa-plus';
-                this.isMinimized = true;
-            }
-            this.saveToStorage();
-        }
+    toggleChat() {
+        const widget = document.getElementById('floatingChatWidget');
+        const toggle = document.getElementById('floatingChatToggle');
 
-        closeChat() {
-            const widget = document.getElementById('floatingChatWidget');
-            const toggle = document.getElementById('floatingChatToggle');
-
+        if (this.isOpen) {
             widget.style.display = 'none';
             toggle.style.display = 'flex';
             this.isOpen = false;
-            this.saveToStorage();
+            this.hideNotification();
+        } else {
+            widget.style.display = 'flex';
+            toggle.style.display = 'none';
+            this.isOpen = true;
+            this.isMinimized = false;
+            document.getElementById('floatingChatBody').style.display = 'flex';
+            document.querySelector('.floating-chat-footer').style.display = 'flex';
+            document.querySelector('.floating-chat-minimize i').className = 'fa fa-minus';
         }
+        this.saveToStorage();
+    }
 
-        async sendMessage() {
-            const input = document.getElementById('chatMessageInput');
-            const message = input.value.trim();
+    toggleMinimize() {
+        const body = document.getElementById('floatingChatBody');
+        const footer = document.querySelector('.floating-chat-footer');
+        const minimizeIcon = document.querySelector('.floating-chat-minimize i');
 
-            if (!message) return;
+        if (this.isMinimized) {
+            body.style.display = 'flex';
+            footer.style.display = 'flex';
+            minimizeIcon.className = 'fa fa-minus';
+            this.isMinimized = false;
+        } else {
+            body.style.display = 'none';
+            footer.style.display = 'none';
+            minimizeIcon.className = 'fa fa-plus';
+            this.isMinimized = true;
+        }
+        this.saveToStorage();
+    }
 
-            // Clear input and reset height
-            input.value = '';
-            input.style.height = 'auto';
+    closeChat() {
+        const widget = document.getElementById('floatingChatWidget');
+        const toggle = document.getElementById('floatingChatToggle');
 
-            // Add user message to chat
-            this.addMessage(message, 'user');
+        widget.style.display = 'none';
+        toggle.style.display = 'flex';
+        this.isOpen = false;
+        this.saveToStorage();
+    }
 
-            // Show typing indicator
-            this.showTypingIndicator();
+    async sendMessage() {
+        const input = document.getElementById('chatMessageInput');
+        const message = input.value.trim();
 
-            try {
-                const response = await this.callAPI(message);
+        if (!message) return;
 
-                // Hide typing indicator
-                this.hideTypingIndicator();
+        // Clear input and reset height
+        input.value = '';
+        input.style.height = 'auto';
 
-                if (response.success) {
-                    this.addMessage(response.response, 'bot');
-                } else {
-                    this.addMessage('Sorry, I encountered an error. Please try again.', 'bot');
-                }
-            } catch (error) {
-                this.hideTypingIndicator();
-                this.addMessage('Network error. Please check your connection.', 'bot');
-                console.error('Error:', error);
+        // Add user message to chat
+        this.addMessage(message, 'user');
+
+        // Show typing indicator
+        this.showTypingIndicator();
+
+        try {
+            const response = await this.callAPI(message);
+
+            // Hide typing indicator
+            this.hideTypingIndicator();
+
+            if (response.success) {
+                this.addMessage(response.response, 'bot');
+            } else {
+                this.addMessage('Sorry, I encountered an error. Please try again.', 'bot');
             }
+        } catch (error) {
+            this.hideTypingIndicator();
+            this.addMessage('Network error. Please check your connection.', 'bot');
+            console.error('Error:', error);
         }
+    }
 
-        async callAPI(message) {
-            const response = await fetch('/global-chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify({
-                    message: message
-                })
-            });
+    async callAPI(message) {
+        const response = await fetch('/global-chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                message: message
+            })
+        });
 
-            return await response.json();
-        }
+        return await response.json();
+    }
 
-        addMessage(text, sender) {
-            const messagesContainer = document.getElementById('floatingChatMessages');
-            const time = new Date().toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+    addMessage(text, sender) {
+        const messagesContainer = document.getElementById('floatingChatMessages');
+        const time = new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
 
-            const messageHTML = `
+        const messageHTML = `
             <div class="message ${sender}">
                 <div class="message-content">${this.escapeHtml(text)}</div>
                 <div class="message-time">${time}</div>
             </div>
         `;
 
-            messagesContainer.insertAdjacentHTML('beforeend', messageHTML);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
+        messagesContainer.insertAdjacentHTML('beforeend', messageHTML);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
 
-        showTypingIndicator() {
-            document.getElementById('typingIndicator').style.display = 'flex';
-            const messagesContainer = document.getElementById('floatingChatMessages');
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
+    showTypingIndicator() {
+        document.getElementById('typingIndicator').style.display = 'flex';
+        const messagesContainer = document.getElementById('floatingChatMessages');
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
 
-        hideTypingIndicator() {
-            document.getElementById('typingIndicator').style.display = 'none';
-        }
+    hideTypingIndicator() {
+        document.getElementById('typingIndicator').style.display = 'none';
+    }
 
-        showNotification() {
-            const badge = document.getElementById('floatingChatBadge');
-            badge.style.display = 'block';
-        }
+    showNotification() {
+        const badge = document.getElementById('floatingChatBadge');
+        badge.style.display = 'block';
+    }
 
-        hideNotification() {
-            const badge = document.getElementById('floatingChatBadge');
-            badge.style.display = 'none';
-        }
+    hideNotification() {
+        const badge = document.getElementById('floatingChatBadge');
+        badge.style.display = 'none';
+    }
 
-        escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
 
-        saveToStorage() {
-            localStorage.setItem('chatState', JSON.stringify({
-                isOpen: this.isOpen,
-                isMinimized: this.isMinimized
-            }));
-        }
+    saveToStorage() {
+        localStorage.setItem('chatState', JSON.stringify({
+            isOpen: this.isOpen,
+            isMinimized: this.isMinimized
+        }));
+    }
 
-        loadFromStorage() {
-            const saved = localStorage.getItem('chatState');
-            if (saved) {
-                const state = JSON.parse(saved);
-                this.isOpen = state.isOpen;
-                this.isMinimized = state.isMinimized;
+    loadFromStorage() {
+        const saved = localStorage.getItem('chatState');
+        if (saved) {
+            const state = JSON.parse(saved);
+            this.isOpen = state.isOpen;
+            this.isMinimized = state.isMinimized;
 
-                const widget = document.getElementById('floatingChatWidget');
-                const toggle = document.getElementById('floatingChatToggle');
+            const widget = document.getElementById('floatingChatWidget');
+            const toggle = document.getElementById('floatingChatToggle');
 
-                if (this.isOpen) {
-                    widget.style.display = 'flex';
-                    toggle.style.display = 'none';
+            if (this.isOpen) {
+                widget.style.display = 'flex';
+                toggle.style.display = 'none';
 
-                    if (this.isMinimized) {
-                        document.getElementById('floatingChatBody').style.display = 'none';
-                        document.querySelector('.floating-chat-footer').style.display = 'none';
-                        document.querySelector('.floating-chat-minimize i').className = 'fa fa-plus';
-                    }
+                if (this.isMinimized) {
+                    document.getElementById('floatingChatBody').style.display = 'none';
+                    document.querySelector('.floating-chat-footer').style.display = 'none';
+                    document.querySelector('.floating-chat-minimize i').className = 'fa fa-plus';
                 }
             }
         }
     }
+}
 
-    // Initialize chat when DOM is loaded
-    document.addEventListener('DOMContentLoaded', () => {
-        window.floatingChat = new FloatingChat();
-    });
+// Initialize chat when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.floatingChat = new FloatingChat();
+});
 </script>
 
 <style>
-    /* Floating Chat Widget Styles */
-    .floating-chat-container {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 10000;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+/* Floating Chat Widget Styles */
+.floating-chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.floating-chat-toggle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #680EDA 0%, #4A0B8C 100%);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(104, 14, 218, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+.floating-chat-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(104, 14, 218, 0.6);
+}
+
+.floating-chat-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4757;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.floating-chat-widget {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 350px;
+    height: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 40px rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.floating-chat-header {
+    background: linear-gradient(135deg, #680EDA 0%, #4A0B8C 100%);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+}
+
+.floating-chat-header h5 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.floating-chat-header h5 i {
+    font-size: 18px;
+}
+
+.floating-chat-header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.floating-chat-header-actions button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    font-size: 16px;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-chat-header-actions button:hover {
+    opacity: 1;
+}
+
+.floating-chat-body {
+    flex: 1;
+    overflow-y: auto;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+}
+
+.floating-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.floating-chat-messages .message {
+    display: flex;
+    flex-direction: column;
+    max-width: 85%;
+}
+
+.floating-chat-messages .message.user {
+    align-self: flex-end;
+}
+
+.floating-chat-messages .message.bot {
+    align-self: flex-start;
+}
+
+.floating-chat-messages .message-content {
+    padding: 10px 15px;
+    border-radius: 18px;
+    font-size: 13px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.floating-chat-messages .message.user .message-content {
+    background: #680EDA;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.floating-chat-messages .message.bot .message-content {
+    background: white;
+    color: #333;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.floating-chat-messages .message-time {
+    font-size: 10px;
+    color: #999;
+    margin-top: 5px;
+    padding: 0 5px;
+}
+
+.floating-chat-messages .message.user .message-time {
+    text-align: right;
+}
+
+.typing-indicator {
+    display: flex;
+    gap: 5px;
+    padding: 15px 20px;
+    background: white;
+    border-radius: 18px;
+    align-self: flex-start;
+    margin: 0 20px 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background: #999;
+    border-radius: 50%;
+    animation: typing 1s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.6;
+    }
+
+    30% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+}
+
+.floating-chat-footer {
+    padding: 15px;
+    background: white;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.floating-chat-input {
+    flex: 1;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 13px;
+    resize: none;
+    max-height: 100px;
+    outline: none;
+    font-family: inherit;
+}
+
+.floating-chat-input:focus {
+    border-color: #680EDA;
+}
+
+.floating-chat-send {
+    background: #680EDA;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s, background 0.3s;
+    flex-shrink: 0;
+}
+
+.floating-chat-send:hover {
+    transform: scale(1.1);
+    background: #4A0B8C;
+}
+
+.floating-chat-send:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .floating-chat-widget {
+        width: 300px;
+        height: 450px;
+        right: 10px;
+        bottom: 10px;
     }
 
     .floating-chat-toggle {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #680EDA 0%, #4A0B8C 100%);
-        border: none;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(104, 14, 218, 0.4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.3s, box-shadow 0.3s;
-        position: relative;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
     }
+}
 
-    .floating-chat-toggle:hover {
-        transform: scale(1.1);
-        box-shadow: 0 6px 20px rgba(104, 14, 218, 0.6);
-    }
-
-    .floating-chat-badge {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        background: #ff4757;
-        color: white;
-        font-size: 12px;
-        padding: 2px 6px;
-        border-radius: 10px;
-        min-width: 20px;
-        text-align: center;
-        font-weight: bold;
-    }
-
+/* Dark mode support if needed */
+@media (prefers-color-scheme: dark) {
     .floating-chat-widget {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 350px;
-        height: 500px;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 5px 40px rgba(0, 0, 0, 0.2);
-        display: none;
-        flex-direction: column;
-        overflow: hidden;
-        animation: slideIn 0.3s ease;
-    }
-
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .floating-chat-header {
-        background: linear-gradient(135deg, #680EDA 0%, #4A0B8C 100%);
-        color: white;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: move;
-    }
-
-    .floating-chat-header h5 {
-        margin: 0;
-        font-size: 16px;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .floating-chat-header h5 i {
-        font-size: 18px;
-    }
-
-    .floating-chat-header-actions {
-        display: flex;
-        gap: 10px;
-    }
-
-    .floating-chat-header-actions button {
-        background: none;
-        border: none;
-        color: white;
-        cursor: pointer;
-        padding: 0;
-        font-size: 16px;
-        opacity: 0.8;
-        transition: opacity 0.3s;
-        width: 24px;
-        height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .floating-chat-header-actions button:hover {
-        opacity: 1;
-    }
-
-    .floating-chat-body {
-        flex: 1;
-        overflow-y: auto;
-        background: #f8f9fa;
-        display: flex;
-        flex-direction: column;
+        background: #2d2d2d;
     }
 
     .floating-chat-messages {
-        flex: 1;
-        overflow-y: auto;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .floating-chat-messages .message {
-        display: flex;
-        flex-direction: column;
-        max-width: 85%;
-    }
-
-    .floating-chat-messages .message.user {
-        align-self: flex-end;
-    }
-
-    .floating-chat-messages .message.bot {
-        align-self: flex-start;
-    }
-
-    .floating-chat-messages .message-content {
-        padding: 10px 15px;
-        border-radius: 18px;
-        font-size: 13px;
-        line-height: 1.4;
-        word-wrap: break-word;
-    }
-
-    .floating-chat-messages .message.user .message-content {
-        background: #680EDA;
-        color: white;
-        border-bottom-right-radius: 4px;
+        background: #1e1e1e;
     }
 
     .floating-chat-messages .message.bot .message-content {
-        background: white;
-        color: #333;
-        border-bottom-left-radius: 4px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    }
-
-    .floating-chat-messages .message-time {
-        font-size: 10px;
-        color: #999;
-        margin-top: 5px;
-        padding: 0 5px;
-    }
-
-    .floating-chat-messages .message.user .message-time {
-        text-align: right;
-    }
-
-    .typing-indicator {
-        display: flex;
-        gap: 5px;
-        padding: 15px 20px;
-        background: white;
-        border-radius: 18px;
-        align-self: flex-start;
-        margin: 0 20px 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    }
-
-    .typing-indicator span {
-        width: 8px;
-        height: 8px;
-        background: #999;
-        border-radius: 50%;
-        animation: typing 1s infinite ease-in-out;
-    }
-
-    .typing-indicator span:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-
-    .typing-indicator span:nth-child(3) {
-        animation-delay: 0.4s;
-    }
-
-    @keyframes typing {
-
-        0%,
-        60%,
-        100% {
-            transform: translateY(0);
-            opacity: 0.6;
-        }
-
-        30% {
-            transform: translateY(-10px);
-            opacity: 1;
-        }
+        background: #2d2d2d;
+        color: #fff;
     }
 
     .floating-chat-footer {
-        padding: 15px;
-        background: white;
-        border-top: 1px solid #eee;
-        display: flex;
-        gap: 10px;
-        align-items: flex-end;
+        background: #2d2d2d;
+        border-top-color: #404040;
     }
 
     .floating-chat-input {
-        flex: 1;
-        border: 1px solid #e0e0e0;
-        border-radius: 20px;
-        padding: 10px 15px;
-        font-size: 13px;
-        resize: none;
-        max-height: 100px;
-        outline: none;
-        font-family: inherit;
+        background: #404040;
+        border-color: #505050;
+        color: #fff;
     }
 
-    .floating-chat-input:focus {
-        border-color: #680EDA;
+    .typing-indicator {
+        background: #2d2d2d;
     }
-
-    .floating-chat-send {
-        background: #680EDA;
-        color: white;
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.3s, background 0.3s;
-        flex-shrink: 0;
-    }
-
-    .floating-chat-send:hover {
-        transform: scale(1.1);
-        background: #4A0B8C;
-    }
-
-    .floating-chat-send:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-        transform: none;
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 480px) {
-        .floating-chat-widget {
-            width: 300px;
-            height: 450px;
-            right: 10px;
-            bottom: 10px;
-        }
-
-        .floating-chat-toggle {
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-        }
-    }
-
-    /* Dark mode support if needed */
-    @media (prefers-color-scheme: dark) {
-        .floating-chat-widget {
-            background: #2d2d2d;
-        }
-
-        .floating-chat-messages {
-            background: #1e1e1e;
-        }
-
-        .floating-chat-messages .message.bot .message-content {
-            background: #2d2d2d;
-            color: #fff;
-        }
-
-        .floating-chat-footer {
-            background: #2d2d2d;
-            border-top-color: #404040;
-        }
-
-        .floating-chat-input {
-            background: #404040;
-            border-color: #505050;
-            color: #fff;
-        }
-
-        .typing-indicator {
-            background: #2d2d2d;
-        }
-    }
+}
 </style>
 
 
@@ -1632,32 +1632,32 @@
 
     <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
     <script type="text/javascript">
-        window.onload = function() {
-            var message = $('#session_data').val();
-            swal.fire({
-                title: "Success",
-                text: message,
-                icon: "success",
-            });
+    window.onload = function() {
+        var message = $('#session_data').val();
+        swal.fire({
+            title: "Success",
+            text: message,
+            icon: "success",
+        });
 
 
-        }
+    }
     </script>
     @elseif(session('error'))
 
     <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
     <script type="text/javascript">
-        window.onload = function() {
+    window.onload = function() {
 
-            var message = $('#session_data1').val();
-            swal.fire({
-                title: "Success",
-                text: message,
-                icon: "success",
-            });
+        var message = $('#session_data1').val();
+        swal.fire({
+            title: "Success",
+            text: message,
+            icon: "success",
+        });
 
 
-        }
+    }
     </script>
     @endif
 
@@ -1741,10 +1741,10 @@
                                 <div style="float: left;">
                                     <span class="d-sm-none d-lg-inline-block">
                                         <?php if (!empty($modules['profile_image'])) { ?>
-                                            <img class="prof_admin" value="" src="{{ $modules['profile_image']}}">
+                                        <img class="prof_admin" value="" src="{{ $modules['profile_image']}}">
                                         <?php  } else {   ?>
-                                            <img class="prof_admin" value=""
-                                                src="{{config('profile_url')}}/images/user_profile.jpg">
+                                        <img class="prof_admin" value=""
+                                            src="{{config('profile_url')}}/images/user_profile.jpg">
 
                                         <?php  } ?>
                                     </span>
@@ -1774,9 +1774,9 @@
                             <a href="{{ url('profilepage') }}" class="dropdown-item has-icon">
                                 <i class="far fa-user" style="color:black !important;"></i><b
                                     style="color:black !important;">Profile</b></a>
-                            <a class="dropdown-item has-icon" href="{{ route('main_index') }}"><i
+                            <!-- <a class="dropdown-item has-icon" href="{{ route('main_index') }}"><i
                                     class="fa fa-question-circle" style="color:black !important;"></i><b
-                                    style="color:black !important;">FAQ</b></a>
+                                    style="color:black !important;">FAQ</b></a> -->
 
 
                             <a class="dropdown-item has-icon"
@@ -1938,313 +1938,314 @@
 </html>
 
 <script type="text/javascript">
-    // $('.form_submit_handle').on('click',function(e){
-    //   handleFormButtonClick(e);
-    // })
-    // const handleFormButtonClick = (e) => {
-    //   e.target.setAttribute('disabled',true);
-    //   e.target.innerText = "Submitting";
-    //   return;
-    // }
+// $('.form_submit_handle').on('click',function(e){
+//   handleFormButtonClick(e);
+// })
+// const handleFormButtonClick = (e) => {
+//   e.target.setAttribute('disabled',true);
+//   e.target.innerText = "Submitting";
+//   return;
+// }
 
-    const preventSubmitButton = (cl) => {
-        $(`.${cl}`).attr('disabled', true);
-        $(`.${cl}`).text('Submitting...');
+const preventSubmitButton = (cl) => {
+    $(`.${cl}`).attr('disabled', true);
+    $(`.${cl}`).text('Submitting...');
 
-    }
+}
 
-    // function notification_fetch() {
-    //     var id = "user_id";
+// function notification_fetch() {
+//     var id = "user_id";
 
-    //     $.ajaxSetup({
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         }
-    //     });
-
-
-    //     $.ajax({
-    //         url: "{{ url('/user/notifications')}}",
-    //         type: "POST",
-    //         dataType: "json",
-    //         async: false,
-    //         data: {
-    //             id: id,
-    //             _token: '{{csrf_token()}}'
-    //         },
-    //         success: function(data) {
-    //             //alert("das");
-    //             var data2 = data;
-    //             console.log(data2, 'A');
-    //             var count = data2['registration_count'][0].countflow;
-    //             var count2 = data2['General_notifications_count'][0].countflow;
-    //             var count3 = data2['approval_nrv_count'][0].countflow;
-    //             var count4 = data2['Elearning_notifications_count'][0].countflow;
-
-    //             // var count_data_1 = data2['count_data'][0].countflow;
-    //             // $('.badgeworkflow').text(count_data_1);
-
-    //             if (count == 0 && count3 == 0) {
-    //                 $('.registration_data_list').append(
-    //                     '<div class="fade-in-text no_notification "><p>No new notifications</p></div>');
-    //             } else {
-    //                 $('.user_name_alert').append('<span class="label user_name_alert2">' + count + '</span>');
-    //                 for (var count = 0; count < data2['registration_data'].length; count++) {
-    //                     var notification_id = data2['registration_data'][count].notification_id;
-    //                     var alert_meg = data2['registration_data'][count].alert_meg;
-    //                     $('.registration_data_list').append('<li onclick="notification(' + notification_id +
-    //                         ')" class="notification-list-item"><p class="message">' + alert_meg +
-    //                         '</p></li>');
-    //                 }
-    //                 // NRU //
-    //                 if ($('.user_name_alert span')) {
-    //                     var exist_count = $('.user_name_alert span').val();
-    //                 }
-    //                 for (var count = 0; count < data2['approval_nrv_data'].length; count++) {
-    //                     var notification_id = data2['approval_nrv_data'][count].notification_id;
-    //                     var alert_meg = data2['approval_nrv_data'][count].alert_meg;
-    //                     $('.registration_data_list').append('<li onclick="notification(' + notification_id +
-    //                         ')" class="notification-list-item"><p class="message">' + alert_meg +
-    //                         '</p></li>');
-
-    //                     $.ajax({
-    //                         url: "{{ url('/user/notifications')}}",
-    //                         type: "POST",
-    //                         dataType: "json",
-    //                         async: false,
-    //                         data: {
-    //                             id: id,
-    //                             _token: '{{csrf_token()}}'
-    //                         },
-    //                         success: function(data) {
-    //                             //alert("das");
-    //                             var data2 = data;
-    //                             console.log(data2, 'A');
-    //                             var count = data2['registration_count'][0].countflow;
-    //                             var count2 = data2['General_notifications_count'][0].countflow;
-    //                             var count3 = data2['approval_nrv_count'][0].countflow;
-    //                             var count4 = data2['Elearning_notifications_count'][0].countflow;
-
-    //                             // var count_data_1 = data2['count_data'][0].countflow;
-    //                             // $('.badgeworkflow').text(count_data_1);
-
-    //                             if (count == 0 && count3 == 0) {
-    //                                 $('.registration_data_list').append(
-    //                                     '<div class="fade-in-text no_notification "><p>No new notifications</p></div>'
-    //                                 );
-    //                             } else {
-    //                                 $('.user_name_alert').append(
-    //                                     '<span class="label user_name_alert2">' + count +
-    //                                     '</span>');
-    //                                 for (var count = 0; count < data2['registration_data']
-    //                                     .length; count++) {
-    //                                     var notification_id = data2['registration_data'][count]
-    //                                         .notification_id;
-    //                                     var alert_meg = data2['registration_data'][count].alert_meg;
-    //                                     $('.registration_data_list').append(
-    //                                         '<li onclick="notification(' + notification_id +
-    //                                         ')" class="notification-list-item"><p class="message">' +
-    //                                         alert_meg +
-    //                                         '</p></li>');
-    //                                 }
-    //                                 // NRU //
-    //                                 if ($('.user_name_alert span')) {
-    //                                     var exist_count = $('.user_name_alert span').val();
-    //                                 }
-    //                                 for (var count = 0; count < data2['approval_nrv_data']
-    //                                     .length; count++) {
-    //                                     var notification_id = data2['approval_nrv_data'][count]
-    //                                         .notification_id;
-    //                                     var alert_meg = data2['approval_nrv_data'][count].alert_meg;
-    //                                     $('.registration_data_list').append(
-    //                                         '<li onclick="notification(' + notification_id +
-    //                                         ')" class="notification-list-item"><p class="message">' +
-    //                                         alert_meg +
-    //                                         '</p></li>');
-    //                                 }
-
-    //                             }
+//     $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
 
 
+//     $.ajax({
+//         url: "{{ url('/user/notifications')}}",
+//         type: "POST",
+//         dataType: "json",
+//         async: false,
+//         data: {
+//             id: id,
+//             _token: '{{csrf_token()}}'
+//         },
+//         success: function(data) {
+//             //alert("das");
+//             var data2 = data;
+//             console.log(data2, 'A');
+//             var count = data2['registration_count'][0].countflow;
+//             var count2 = data2['General_notifications_count'][0].countflow;
+//             var count3 = data2['approval_nrv_count'][0].countflow;
+//             var count4 = data2['Elearning_notifications_count'][0].countflow;
 
-    //                             if (count2 == 0) {
-    //                                 $('.user_alert_list').append(
-    //                                     '<div class="fade-in-text"><p>No new notifications</p></div>'
-    //                                 );
-    //                             } else {
-    //                                 $('.user_name_alert1').append(
-    //                                     '<span class="label  user_name_alert1">' + count2 +
-    //                                     '</span>');
-    //                                 for (var count_1 = 0; count_1 < data2[
-    //                                         'General_notifications_data'].length; count_1++) {
-    //                                     var notification_id = data2['General_notifications_data'][
-    //                                         count_1
-    //                                     ].notification_id;
-    //                                     var alert_meg = data2['General_notifications_data'][count_1]
-    //                                         .alert_meg;
+//             // var count_data_1 = data2['count_data'][0].countflow;
+//             // $('.badgeworkflow').text(count_data_1);
 
-    //                                     $('.user_alert_list').append('<li onclick="notification(' +
-    //                                         notification_id +
-    //                                         ')" class="notification-list-item"><p class="message">' +
-    //                                         alert_meg +
-    //                                         '</p></li>');
-    //                                 }
-    //                             }
+//             if (count == 0 && count3 == 0) {
+//                 $('.registration_data_list').append(
+//                     '<div class="fade-in-text no_notification "><p>No new notifications</p></div>');
+//             } else {
+//                 $('.user_name_alert').append('<span class="label user_name_alert2">' + count + '</span>');
+//                 for (var count = 0; count < data2['registration_data'].length; count++) {
+//                     var notification_id = data2['registration_data'][count].notification_id;
+//                     var alert_meg = data2['registration_data'][count].alert_meg;
+//                     $('.registration_data_list').append('<li onclick="notification(' + notification_id +
+//                         ')" class="notification-list-item"><p class="message">' + alert_meg +
+//                         '</p></li>');
+//                 }
+//                 // NRU //
+//                 if ($('.user_name_alert span')) {
+//                     var exist_count = $('.user_name_alert span').val();
+//                 }
+//                 for (var count = 0; count < data2['approval_nrv_data'].length; count++) {
+//                     var notification_id = data2['approval_nrv_data'][count].notification_id;
+//                     var alert_meg = data2['approval_nrv_data'][count].alert_meg;
+//                     $('.registration_data_list').append('<li onclick="notification(' + notification_id +
+//                         ')" class="notification-list-item"><p class="message">' + alert_meg +
+//                         '</p></li>');
 
-    //                             function formatDateDifference(formatted_date) {
-    //                                 var created_date = new Date(formatted_date);
-    //                                 var current_date = new Date();
-    //                                 var time_difference = current_date - created_date;
-    //                                 var seconds = Math.floor(time_difference / 1000);
-    //                                 var minutes = Math.floor(seconds / 60);
-    //                                 var hours = Math.floor(minutes / 60);
-    //                                 var days = Math.floor(hours / 24);
-    //                                 var weeks = Math.floor(days / 7);
-    //                                 var months = current_date.getMonth() - created_date.getMonth() +
-    //                                     (12 * (current_date
-    //                                         .getFullYear() - created_date.getFullYear()));
-    //                                 var years = Math.floor(months / 12);
+//                     $.ajax({
+//                         url: "{{ url('/user/notifications')}}",
+//                         type: "POST",
+//                         dataType: "json",
+//                         async: false,
+//                         data: {
+//                             id: id,
+//                             _token: '{{csrf_token()}}'
+//                         },
+//                         success: function(data) {
+//                             //alert("das");
+//                             var data2 = data;
+//                             console.log(data2, 'A');
+//                             var count = data2['registration_count'][0].countflow;
+//                             var count2 = data2['General_notifications_count'][0].countflow;
+//                             var count3 = data2['approval_nrv_count'][0].countflow;
+//                             var count4 = data2['Elearning_notifications_count'][0].countflow;
 
-    //                                 if (years >= 1) {
-    //                                     return years + (years === 1 ? ' year ago' : ' years ago');
-    //                                 } else if (months >= 1) {
-    //                                     return months + (months === 1 ? ' month ago' :
-    //                                         ' months ago');
-    //                                 } else if (weeks >= 1) {
-    //                                     return weeks + (weeks === 1 ? ' week ago' : ' weeks ago');
-    //                                 } else if (days >= 1) {
-    //                                     return days + (days === 1 ? ' day ago' : ' days ago');
-    //                                 } else if (hours >= 1) {
-    //                                     return hours + (hours === 1 ? ' hour ago' : ' hours ago');
-    //                                 } else if (minutes >= 1) {
-    //                                     return minutes + (minutes === 1 ? ' minute ago' :
-    //                                         ' minutes ago');
-    //                                 } else {
-    //                                     return 'just now';
-    //                                 }
-    //                             }
+//                             // var count_data_1 = data2['count_data'][0].countflow;
+//                             // $('.badgeworkflow').text(count_data_1);
 
-    //                             if (count4 == 0) {
-    //                                 $('.user_alert_list_elearning').append(
-    //                                     '<div class="fade-in-text"><p>No new notifications</p></div>'
-    //                                 );
-    //                             } else {
-    //                                 $('.user_name_alertelearning').append(
-    //                                     '<span class="label  user_name_alertelearning">' +
-    //                                     count4 + '</span>');
-    //                                 for (var count_4 = 0; count_4 < data2[
-    //                                         'Elearning_notifications_data'].length; count_4++) {
-    //                                     var notification_id = data2['Elearning_notifications_data'][
-    //                                         count_4
-    //                                     ].notification_id;
-    //                                     var alert_meg = data2['Elearning_notifications_data'][
-    //                                         count_4
-    //                                     ].alert_meg;
-    //                                     var created_at = data2['Elearning_notifications_data'][
-    //                                         count_4
-    //                                     ].created_at;
-    //                                     var parts = created_at.split('-');
-    //                                     var year = parts[0];
-    //                                     var month = parts[1];
-    //                                     var day = parts[2];
+//                             if (count == 0 && count3 == 0) {
+//                                 $('.registration_data_list').append(
+//                                     '<div class="fade-in-text no_notification "><p>No new notifications</p></div>'
+//                                 );
+//                             } else {
+//                                 $('.user_name_alert').append(
+//                                     '<span class="label user_name_alert2">' + count +
+//                                     '</span>');
+//                                 for (var count = 0; count < data2['registration_data']
+//                                     .length; count++) {
+//                                     var notification_id = data2['registration_data'][count]
+//                                         .notification_id;
+//                                     var alert_meg = data2['registration_data'][count].alert_meg;
+//                                     $('.registration_data_list').append(
+//                                         '<li onclick="notification(' + notification_id +
+//                                         ')" class="notification-list-item"><p class="message">' +
+//                                         alert_meg +
+//                                         '</p></li>');
+//                                 }
+//                                 // NRU //
+//                                 if ($('.user_name_alert span')) {
+//                                     var exist_count = $('.user_name_alert span').val();
+//                                 }
+//                                 for (var count = 0; count < data2['approval_nrv_data']
+//                                     .length; count++) {
+//                                     var notification_id = data2['approval_nrv_data'][count]
+//                                         .notification_id;
+//                                     var alert_meg = data2['approval_nrv_data'][count].alert_meg;
+//                                     $('.registration_data_list').append(
+//                                         '<li onclick="notification(' + notification_id +
+//                                         ')" class="notification-list-item"><p class="message">' +
+//                                         alert_meg +
+//                                         '</p></li>');
+//                                 }
 
-    //                                     // Create the formatted date in "dd-mm-yy" format
-    //                                     var formatted_date = day + '-' + month + '-' + year;
-
-
-    //                                     var time_ago = formatDateDifference(formatted_date);
-
-    //                                     $('.user_alert_list_elearning').append(
-    //                                         '<li onclick="notification(' + notification_id +
-    //                                         ')" class="notification-list-item"><p class="message">' +
-    //                                         alert_meg +
-    //                                         '</p><p>' + formatted_date + '</span></li>');
-    //                                 }
-    //                             }
-
-
-    //                             // if (count3 == 0 && count == 0) {
-    //                             //   $('.no_notification').remove();
-    //                             //   $('.registration_data_list').append('<div class="fade-in-text no_notification"><p>No new notifications</p></div>');
-    //                             // } else {
-    //                             //   $('.no_notification').remove();
-    //                             //   $('.user_name_alert1').append('<span class="label user_name_alert1">' + count3 + '</span>');
-    //                             //   for (var count_2 = 0; count_2 < data2['approval_nrv_cdata'].length; count_2++) {
-    //                             //     var notification_id = data2['approval_nrv_cdata'][count_2].notification_id;
-    //                             //     var alert_meg = data2['approval_nrv_cdata'][count_2].alert_meg;
-    //                             //     $('.registration_data_list').append('<li onclick="notification(' + notification_id + ')" class="notification-list-item"><p class="message">' + alert_meg + '</p></li>');
-    //                             //   }
-    //                             // }
-    //                             var count = data2['registration_count'][0].countflow;
-    //                             var count2 = data2['General_notifications_count'][0].countflow;
-    //                             var count3 = data2['approval_nrv_count'][0].countflow;
-    //                             var count4 = data2['Elearning_notifications_count'][0].countflow;
+//                             }
 
 
 
-    //                             var usercount = count + count2 + count3 + count4;
-    //                             $('.notify').append(
-    //                                 '<span class="badge badge-light bell_notification">' +
-    //                                 usercount +
-    //                                 '</span>');
-    //                         },
-    //                     });
+//                             if (count2 == 0) {
+//                                 $('.user_alert_list').append(
+//                                     '<div class="fade-in-text"><p>No new notifications</p></div>'
+//                                 );
+//                             } else {
+//                                 $('.user_name_alert1').append(
+//                                     '<span class="label  user_name_alert1">' + count2 +
+//                                     '</span>');
+//                                 for (var count_1 = 0; count_1 < data2[
+//                                         'General_notifications_data'].length; count_1++) {
+//                                     var notification_id = data2['General_notifications_data'][
+//                                         count_1
+//                                     ].notification_id;
+//                                     var alert_meg = data2['General_notifications_data'][count_1]
+//                                         .alert_meg;
 
-    //                 }
-    //                 $(document).ready(function() {
-    //                     //alert('fefe');
+//                                     $('.user_alert_list').append('<li onclick="notification(' +
+//                                         notification_id +
+//                                         ')" class="notification-list-item"><p class="message">' +
+//                                         alert_meg +
+//                                         '</p></li>');
+//                                 }
+//                             }
 
-    //                     notification_fetch();
+//                             function formatDateDifference(formatted_date) {
+//                                 var created_date = new Date(formatted_date);
+//                                 var current_date = new Date();
+//                                 var time_difference = current_date - created_date;
+//                                 var seconds = Math.floor(time_difference / 1000);
+//                                 var minutes = Math.floor(seconds / 60);
+//                                 var hours = Math.floor(minutes / 60);
+//                                 var days = Math.floor(hours / 24);
+//                                 var weeks = Math.floor(days / 7);
+//                                 var months = current_date.getMonth() - created_date.getMonth() +
+//                                     (12 * (current_date
+//                                         .getFullYear() - created_date.getFullYear()));
+//                                 var years = Math.floor(months / 12);
+
+//                                 if (years >= 1) {
+//                                     return years + (years === 1 ? ' year ago' : ' years ago');
+//                                 } else if (months >= 1) {
+//                                     return months + (months === 1 ? ' month ago' :
+//                                         ' months ago');
+//                                 } else if (weeks >= 1) {
+//                                     return weeks + (weeks === 1 ? ' week ago' : ' weeks ago');
+//                                 } else if (days >= 1) {
+//                                     return days + (days === 1 ? ' day ago' : ' days ago');
+//                                 } else if (hours >= 1) {
+//                                     return hours + (hours === 1 ? ' hour ago' : ' hours ago');
+//                                 } else if (minutes >= 1) {
+//                                     return minutes + (minutes === 1 ? ' minute ago' :
+//                                         ' minutes ago');
+//                                 } else {
+//                                     return 'just now';
+//                                 }
+//                             }
+
+//                             if (count4 == 0) {
+//                                 $('.user_alert_list_elearning').append(
+//                                     '<div class="fade-in-text"><p>No new notifications</p></div>'
+//                                 );
+//                             } else {
+//                                 $('.user_name_alertelearning').append(
+//                                     '<span class="label  user_name_alertelearning">' +
+//                                     count4 + '</span>');
+//                                 for (var count_4 = 0; count_4 < data2[
+//                                         'Elearning_notifications_data'].length; count_4++) {
+//                                     var notification_id = data2['Elearning_notifications_data'][
+//                                         count_4
+//                                     ].notification_id;
+//                                     var alert_meg = data2['Elearning_notifications_data'][
+//                                         count_4
+//                                     ].alert_meg;
+//                                     var created_at = data2['Elearning_notifications_data'][
+//                                         count_4
+//                                     ].created_at;
+//                                     var parts = created_at.split('-');
+//                                     var year = parts[0];
+//                                     var month = parts[1];
+//                                     var day = parts[2];
+
+//                                     // Create the formatted date in "dd-mm-yy" format
+//                                     var formatted_date = day + '-' + month + '-' + year;
 
 
-    //                 });
+//                                     var time_ago = formatDateDifference(formatted_date);
 
-    //                 // $(document).click(function(){
-    //                 //   $('ul.dropdown').children().remove();
-    //                 //   notification_fetch();
-    //                 // })
-
-    //                 function notification(notificationid) {
-    //                     var id = notificationid;
-
-
-    //                     $.ajaxSetup({
-    //                         headers: {
-    //                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //                         }
-    //                     });
-
-    //                     $.ajax({
-    //                         url: "{{ url('/user/notified')}}",
-    //                         type: "POST",
-    //                         dataType: "json",
-    //                         async: false,
-    //                         data: {
-    //                             id: id,
-    //                             _token: '{{csrf_token()}}'
-    //                         },
-    //                         success: function(data) {
-
-    //                             var url = data['notify_link'][0].notification_url;
-    //                             window.location.href = url;
-
-    //                         },
-    //                     });
+//                                     $('.user_alert_list_elearning').append(
+//                                         '<li onclick="notification(' + notification_id +
+//                                         ')" class="notification-list-item"><p class="message">' +
+//                                         alert_meg +
+//                                         '</p><p>' + formatted_date + '</span></li>');
+//                                 }
+//                             }
 
 
-    //                 }
-    //             }
-    //         }
-    //     });
-    // }
+//                             // if (count3 == 0 && count == 0) {
+//                             //   $('.no_notification').remove();
+//                             //   $('.registration_data_list').append('<div class="fade-in-text no_notification"><p>No new notifications</p></div>');
+//                             // } else {
+//                             //   $('.no_notification').remove();
+//                             //   $('.user_name_alert1').append('<span class="label user_name_alert1">' + count3 + '</span>');
+//                             //   for (var count_2 = 0; count_2 < data2['approval_nrv_cdata'].length; count_2++) {
+//                             //     var notification_id = data2['approval_nrv_cdata'][count_2].notification_id;
+//                             //     var alert_meg = data2['approval_nrv_cdata'][count_2].alert_meg;
+//                             //     $('.registration_data_list').append('<li onclick="notification(' + notification_id + ')" class="notification-list-item"><p class="message">' + alert_meg + '</p></li>');
+//                             //   }
+//                             // }
+//                             var count = data2['registration_count'][0].countflow;
+//                             var count2 = data2['General_notifications_count'][0].countflow;
+//                             var count3 = data2['approval_nrv_count'][0].countflow;
+//                             var count4 = data2['Elearning_notifications_count'][0].countflow;
 
-    $(document).ready(function() {
-        notification_fetch();
 
-        // Auto refresh every 30 sec
-        setInterval(notification_fetch, 30000);
-    });
-    function timeAgo(date) {
+
+//                             var usercount = count + count2 + count3 + count4;
+//                             $('.notify').append(
+//                                 '<span class="badge badge-light bell_notification">' +
+//                                 usercount +
+//                                 '</span>');
+//                         },
+//                     });
+
+//                 }
+//                 $(document).ready(function() {
+//                     //alert('fefe');
+
+//                     notification_fetch();
+
+
+//                 });
+
+//                 // $(document).click(function(){
+//                 //   $('ul.dropdown').children().remove();
+//                 //   notification_fetch();
+//                 // })
+
+//                 function notification(notificationid) {
+//                     var id = notificationid;
+
+
+//                     $.ajaxSetup({
+//                         headers: {
+//                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                         }
+//                     });
+
+//                     $.ajax({
+//                         url: "{{ url('/user/notified')}}",
+//                         type: "POST",
+//                         dataType: "json",
+//                         async: false,
+//                         data: {
+//                             id: id,
+//                             _token: '{{csrf_token()}}'
+//                         },
+//                         success: function(data) {
+
+//                             var url = data['notify_link'][0].notification_url;
+//                             window.location.href = url;
+
+//                         },
+//                     });
+
+
+//                 }
+//             }
+//         }
+//     });
+// }
+
+$(document).ready(function() {
+    notification_fetch();
+
+    // Auto refresh every 30 sec
+    setInterval(notification_fetch, 30000);
+});
+
+function timeAgo(date) {
     let seconds = Math.floor((new Date() - date) / 1000);
 
     let intervals = {
@@ -2265,146 +2266,146 @@
     return "just now";
 }
 
-    function notification_fetch() {
-        var id = "user_id";
+function notification_fetch() {
+    var id = "user_id";
 
-        $.ajax({
-            url: "{{ url('/user/notifications')}}",
-            type: "POST",
-            dataType: "json",
-            data: {
-                id: id,
-                _token: '{{csrf_token()}}'
-            },
-            success: function(data) {
+    $.ajax({
+        url: "{{ url('/user/notifications')}}",
+        type: "POST",
+        dataType: "json",
+        data: {
+            id: id,
+            _token: '{{csrf_token()}}'
+        },
+        success: function(data) {
 
-               console.log(data);
+            console.log(data);
 
-                // Clear old data
-                $('.registration_data_list').html('');
-                $('.user_alert_list').html('');
-                $('.user_alert_list_elearning').html('');
-                $('.bell_notification').html('');
-                $('.user_name_alert').html('');
-                $('.user_name_alert1').html('');
-                $('.user_name_alertelearning').html('');
+            // Clear old data
+            $('.registration_data_list').html('');
+            $('.user_alert_list').html('');
+            $('.user_alert_list_elearning').html('');
+            $('.bell_notification').html('');
+            $('.user_name_alert').html('');
+            $('.user_name_alert1').html('');
+            $('.user_name_alertelearning').html('');
 
-                let count = data.registration_count[0].countflow;
-                let count2 = data.General_notifications_count[0].countflow;
-                let count3 = data.approval_nrv_count[0].countflow;
-                let count4 = data.Elearning_notifications_count[0].countflow;
+            let count = data.registration_count[0].countflow;
+            let count2 = data.General_notifications_count[0].countflow;
+            let count3 = data.approval_nrv_count[0].countflow;
+            let count4 = data.Elearning_notifications_count[0].countflow;
 
-                // ================= REGISTRATION =================
-                if (count == 0 && count3 == 0) {
+            // ================= REGISTRATION =================
+            if (count == 0 && count3 == 0) {
+                $('.registration_data_list').append(
+                    '<div class="no_notification"><p>No new notifications</p></div>'
+                );
+            } else {
+
+                $('.user_name_alert').html('<span class="label">' + count + '</span>');
+
+                data.registration_data.forEach(function(item) {
                     $('.registration_data_list').append(
-                        '<div class="no_notification"><p>No new notifications</p></div>'
+                        `<li onclick="notification(${item.notification_id})" class="notification-list-item">
+                            <p class="message">${item.alert_meg}</p>
+                        </li>`
                     );
-                } else {
+                });
 
-                    $('.user_name_alert').html('<span class="label">' + count + '</span>');
-
-                    data.registration_data.forEach(function(item) {
-                        $('.registration_data_list').append(
-                            `<li onclick="notification(${item.notification_id})" class="notification-list-item">
+                // Approval NRV
+                data.approval_nrv_data.forEach(function(item) {
+                    $('.registration_data_list').append(
+                        `<li onclick="notification(${item.notification_id})" class="notification-list-item">
                             <p class="message">${item.alert_meg}</p>
                         </li>`
-                        );
-                    });
+                    );
+                });
+            }
 
-                    // Approval NRV
-                    data.approval_nrv_data.forEach(function(item) {
-                        $('.registration_data_list').append(
-                            `<li onclick="notification(${item.notification_id})" class="notification-list-item">
+            // ================= GENERAL =================
+            if (count2 == 0) {
+                $('.user_alert_list').append('<p>No new notifications</p>');
+            } else {
+                $('.user_name_alert1').html('<span class="label">' + count2 + '</span>');
+
+                data.General_notifications_data.forEach(function(item) {
+                    $('.user_alert_list').append(
+                        `<li onclick="notification(${item.notification_id})" class="notification-list-item">
                             <p class="message">${item.alert_meg}</p>
                         </li>`
-                        );
-                    });
-                }
+                    );
+                });
+            }
 
-                // ================= GENERAL =================
-                if (count2 == 0) {
-                    $('.user_alert_list').append('<p>No new notifications</p>');
-                } else {
-                    $('.user_name_alert1').html('<span class="label">' + count2 + '</span>');
+            // ================= ELEARNING =================
+            if (count4 == 0) {
+                $('.user_alert_list_elearning').append('<p>No new notifications</p>');
+            } else {
+                $('.user_name_alertelearning').html('<span class="label">' + count4 + '</span>');
 
-                    data.General_notifications_data.forEach(function(item) {
-                        $('.user_alert_list').append(
-                            `<li onclick="notification(${item.notification_id})" class="notification-list-item">
-                            <p class="message">${item.alert_meg}</p>
-                        </li>`
-                        );
-                    });
-                }
+                data.Elearning_notifications_data.forEach(function(item) {
 
-                // ================= ELEARNING =================
-                if (count4 == 0) {
-                    $('.user_alert_list_elearning').append('<p>No new notifications</p>');
-                } else {
-                    $('.user_name_alertelearning').html('<span class="label">' + count4 + '</span>');
+                    let created_date = new Date(item.created_at);
+                    let time_ago = timeAgo(created_date);
 
-                    data.Elearning_notifications_data.forEach(function(item) {
-
-                        let created_date = new Date(item.created_at);
-                        let time_ago = timeAgo(created_date);
-
-                        $('.user_alert_list_elearning').append(
-                            `<li onclick="notification(${item.notification_id})" class="notification-list-item">
+                    $('.user_alert_list_elearning').append(
+                        `<li onclick="notification(${item.notification_id})" class="notification-list-item">
                             <p class="message">${item.alert_meg}</p>
                             <small>${time_ago}</small>
                         </li>`
-                        );
-                    });
-                }
-
-                // ================= TOTAL COUNT =================
-                let total = count + count2 + count3 + count4;
-
-                if (total > 0) {
-                    $('.notify').append(
-                        `<span class="badge badge-light bell_notification">${total}</span>`
                     );
-                }
+                });
             }
-        });
-    }
+
+            // ================= TOTAL COUNT =================
+            let total = count + count2 + count3 + count4;
+
+            if (total > 0) {
+                $('.notify').append(
+                    `<span class="badge badge-light bell_notification">${total}</span>`
+                );
+            }
+        }
+    });
+}
 </script>
 
 <script>
-    function toggle() {
-        var body_class = document.querySelector('body');
-        if (window.innerWidth < 1025) {
-            document.querySelector('.logo').src = "{{('assets/images/Talentra.jpg')}}";
+function toggle() {
+    var body_class = document.querySelector('body');
+    if (window.innerWidth < 1025) {
+        document.querySelector('.logo').src = "{{('assets/images/Talentra.jpg')}}";
 
-        }
-        // var mini =document.querySelector('sidebar-mini');
-        else if (body_class.classList.contains("sidebar-mini") == true) {
-
-
-            document.querySelector('.logo').src = "{{asset('assets/images/Talentra.jpg')}}";
-        } else {
-            document.querySelector('.logo').src = "{{asset('assets/images/Login-logo-dark.svg')}}"
-        }
     }
-    document.querySelector("#toggle").addEventListener('click', toggle);
+    // var mini =document.querySelector('sidebar-mini');
+    else if (body_class.classList.contains("sidebar-mini") == true) {
+
+
+        document.querySelector('.logo').src = "{{asset('assets/images/Talentra.jpg')}}";
+    } else {
+        document.querySelector('.logo').src = "{{asset('assets/images/Login-logo-dark.svg')}}"
+    }
+}
+document.querySelector("#toggle").addEventListener('click', toggle);
 </script>
 <script>
-    function activateNavLink(route) {
-        // Deactivate any currently active nav-links
-        $(".nav-link.has-dropdown.active").removeClass("active");
-        $(".dropdown-menu.active").hide();
-        // Activate the selected nav-link based on the provided route (class)
-        var $navLink = $("#nav-link-" + route);
-        $navLink.addClass("active");
-        $navLink.siblings(".dropdown-menu").show();
-    }
+function activateNavLink(route) {
+    // Deactivate any currently active nav-links
+    $(".nav-link.has-dropdown.active").removeClass("active");
+    $(".dropdown-menu.active").hide();
+    // Activate the selected nav-link based on the provided route (class)
+    var $navLink = $("#nav-link-" + route);
+    $navLink.addClass("active");
+    $navLink.siblings(".dropdown-menu").show();
+}
 
-    function showLoader() {
-        document.getElementById('loaderContainer').style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
-    }
+function showLoader() {
+    document.getElementById('loaderContainer').style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+}
 
-    function hideLoader() {
-        document.getElementById('loaderContainer').style.display = 'none';
-        document.body.style.overflow = 'visible'; // Restore scrolling
-    }
+function hideLoader() {
+    document.getElementById('loaderContainer').style.display = 'none';
+    document.body.style.overflow = 'visible'; // Restore scrolling
+}
 </script>

@@ -84,7 +84,7 @@
                                         <select class="form-control" id="language" name="language" required>
                                             <option value="en" {{ old('language') == 'en' ? 'selected' : '' }}>English
                                                 (Default)</option>
-                                            <option value="hi" {{ old('language') == 'hi' ? 'selected' : '' }}>Hindi
+                                            <!-- <option value="hi" {{ old('language') == 'hi' ? 'selected' : '' }}>Hindi
                                             </option>
                                             <option value="fr" {{ old('language') == 'fr' ? 'selected' : '' }}>French
                                             </option>
@@ -101,7 +101,7 @@
                                             <option value="zh-cn" {{ old('language') == 'zh-cn' ? 'selected' : '' }}>
                                                 Chinese</option>
                                             <option value="ko" {{ old('language') == 'ko' ? 'selected' : '' }}>Korean
-                                            </option>
+                                            </option> -->
                                         </select>
                                     </div>
 
@@ -111,8 +111,8 @@
                                             <optgroup label="Female Voices">
                                                 <option value="female-en-5"
                                                     {{ old('speaker') == 'female-en-5' ? 'selected' : '' }}>Female
-                                                    English 5 (Default)</option>
-                                                <option value="female-en-1"
+                                                </option>
+                                                <!-- <option value="female-en-1"
                                                     {{ old('speaker') == 'female-en-1' ? 'selected' : '' }}>Female
                                                     English 1</option>
                                                 <option value="female-en-2"
@@ -121,13 +121,13 @@
                                                 <option value="slt" {{ old('speaker') == 'slt' ? 'selected' : '' }}>
                                                     Female SLT</option>
                                                 <option value="clb" {{ old('speaker') == 'clb' ? 'selected' : '' }}>
-                                                    Female CLB</option>
+                                                    Female CLB</option> -->
                                             </optgroup>
                                             <optgroup label="Male Voices">
                                                 <option value="male-en-1"
-                                                    {{ old('speaker') == 'male-en-1' ? 'selected' : '' }}>Male English 1
+                                                    {{ old('speaker') == 'male-en-1' ? 'selected' : '' }}>Male
                                                 </option>
-                                                <option value="male-en-2"
+                                                <!-- <option value="male-en-2"
                                                     {{ old('speaker') == 'male-en-2' ? 'selected' : '' }}>Male English 2
                                                 </option>
                                                 <option value="male-en-3"
@@ -136,7 +136,7 @@
                                                 <option value="bdl" {{ old('speaker') == 'bdl' ? 'selected' : '' }}>Male
                                                     BDL</option>
                                                 <option value="rms" {{ old('speaker') == 'rms' ? 'selected' : '' }}>Male
-                                                    RMS</option>
+                                                    RMS</option> -->
                                             </optgroup>
                                         </select>
                                         <!-- <small class="form-text text-muted">Note: When using Google TTS fallback, only

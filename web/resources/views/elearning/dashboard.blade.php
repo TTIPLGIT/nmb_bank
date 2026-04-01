@@ -2,7 +2,22 @@
 
 @section('content')
 <style>
-/* remove card bocy shadow */
+/* ========== YOUR EXISTING STYLES (PRESERVED & ENHANCED) ========== */
+/* Add to your existing styles */
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+
+.modal {
+    z-index: 1050 !important;
+}
+
+#eventDetailModal .modal-content {
+    border-radius: 24px;
+    overflow: hidden;
+    border: none;
+}
+
 .noShadow .card-body {
     box-shadow: none !important;
 }
@@ -13,7 +28,6 @@
 
 .main-content {
     padding-top: 80px !important;
-    /* padding-left: 20px !important; */
 }
 
 .overview_header {
@@ -69,12 +83,9 @@
 
 .overview_body .card-body {
     padding: 10px 10px !important;
-    /* padding-top: 0px !important; */
     border-top: 0px solid white !important;
     background-color: white !important;
     border-radius: 10px;
-    /* border-bottom-left-radius: 5px !important; */
-    /* border-bottom-right-radius: 5px !important; */
 }
 
 .overview_count {
@@ -98,9 +109,7 @@
     height: 394px !important;
     border: 0px !important;
     padding: 0px !important;
-    /* margin: 0.5rem !important; */
     border-radius: 15px !important;
-    /* overflow-y: scroll; */
 }
 
 .course_heading {
@@ -128,7 +137,6 @@
 .course .card-header {
     width: 100% !important;
     height: 50px !important;
-    /* padding: 0px 0px 7px 0px !important; */
     background-color: white !important;
     border-top-left-radius: 15px !important;
     border-top-right-radius: 15px !important;
@@ -138,7 +146,6 @@
     width: 100% !important;
     height: 344px;
     border-radius: 15px !important;
-    /* padding: 0px !important; */
     background-color: white !important;
     border-top-left-radius: 0px !important;
     border-top-right-radius: 0px !important;
@@ -147,15 +154,12 @@
 .course_and_schedule_body {
     flex-wrap: wrap !important;
     width: 100% !important;
-    /* height: 420px; */
 }
 
 .schedule {
     width: 100% !important;
     height: auto !important;
-    /* Changed from 300px to auto */
     min-height: 500px !important;
-    /* Added min-height */
     border: 0px !important;
     margin-top: 0.5rem !important;
     margin-bottom: 0.5rem !important;
@@ -183,8 +187,6 @@
 
 .schedule .card-body {
     width: 100% !important;
-    /* height: 344px !important; */
-    /* padding: 0px 0px !important; */
     background-color: white !important;
     border-radius: 15px !important;
     overflow: hidden !important;
@@ -196,10 +198,8 @@
 .recommended_courses_list,
 .notice_board_list {
     width: 100% !important;
-    /* height: 345px !important; */
     border: 0px !important;
     padding: 0px !important;
-    /* margin: 0.5rem !important; */
     border-radius: 15px !important;
     overflow: hidden !important;
 }
@@ -212,7 +212,6 @@
     color: #680EDA;
     font-weight: 900;
     font-size: 1.5rem !important;
-    /* padding: 10px 0px 7px 0px !important; */
     background-color: white !important;
     border-bottom-left-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
@@ -226,506 +225,19 @@
     width: 100% !important;
     height: 324px !important;
     border: 0px !important;
-    /* padding: 0px !important; */
     background-color: white !important;
     border-radius: 5px !important;
 }
 
-/* .calendar{
-        width: 100% !important;
-        height: 100% !important;
-        padding: 10px 10px !important;
-    }
-    .calendar_header{
-        width: 100% !important;
-        height: 20% !important;
-    }
-    .calendar_body{
-        width: 100% !important;
-        height: 70% !important;+
-    } */
-/* .week_days{
-        background-color: #2196F3;
-        padding: 5px;
-    }
-    .week_days > div{
-        color: #000;
-        text-align: center;
-        font-size: 0.5rem;
-    }
-    .days{
-        border: 1px solid #7ac0f8 !important;
-        flex-wrap: wrap !important;
-        width: fit-content !important;
-        padding-top: 2px !important;
-    }
-    .days > div{
-        border-bottom: 1px solid #7ac0f8 !important;
-        padding: 5px !important;
-        font-size: 0.5rem !important;
-        color: #1a1a1a !important;
-        width: calc(100%/7);
-        text-align: center !important;
-    }
-    .days > div:nth-child(29),
-    .days > div:nth-child(30),
-    .days > div:nth-child(31){
-        border-bottom: none !important;
-    } */
-.event_indicator {
-    width: 10px !important;
-    height: 10px;
-    color: #f69135;
-    background-color: #f69135;
-    border-radius: 50%;
-}
-
-/* calendar changes*/
-.schedule_frame {
-    border: 0px !important;
-}
-
-.recommended_courses_list .card-body {
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.recommended_courses {
-    width: 97%;
-    height: 30%;
-    overflow: hidden;
-    margin: 0% 1.5% 5% 1.5%;
-}
-
-.recommended_courses:first-child {
-    margin: 3% 1.5% 5% 1.5% !important;
-}
-
-.recommended_courses_poster {
-    width: 20% !important;
-    height: 100%;
-}
-
-.recommended_course_details {
-    width: 65%;
-    height: 100%;
-}
-
-.recommended_course_name {
-    margin-bottom: 0px !important;
-    color: #38aa9c;
-}
-
-.recommended_course_instructor {
-    padding-left: 1%;
-    color: #48dbc9;
-}
-
-.recommended_course_footer {
-    padding-left: 1%;
-    color: #b1b1b1;
-}
-
-.notice_board_list .card-body {
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.notice_board {
-    width: 100%;
-    height: 41%;
-    overflow: hidden;
-    margin: 0% 1.5% 5% 1.5%;
-}
-
-.notice_board:first-child {
-    margin: 1.5% 1.5% 5% 1.5% !important;
-}
-
-.notice_board_poster {
-    width: 100px;
-    height: 100px;
-    object-fit: cover !important;
-}
-
-.notice_board_heading {
-    width: calc(100%-100px);
-    height: 100%;
-    padding: 0% 0% 0% 3%;
-}
-
-.notice_board_event_name {
-    margin-bottom: 0px !important;
-    color: #38aa9c;
-}
-
-.notice_board_event_organiser {
-    padding-left: 0%;
-    color: #48dbc9;
-}
-
-.notice_board_footer {
-    padding-left: 1%;
-    color: #b1b1b1;
-}
-
-.group_lessons .card-body {
-    overflow-y: auto !important;
-    padding: 0% 5% 0% 5% !important;
-}
-
-.lesson {
-    height: 250px;
-    border-bottom: 1px solid #141ad8;
-    margin: 20px 0px 5px 0px !important;
-}
-
-.group_lesson_author {
-    color: #38aa9c;
-}
-
-.group_lesson_course_name {
-    color: #48dbc9;
-}
-
-
-.group_lesson_footer {
-    margin-bottom: 10px !important;
-}
-
-.group_lesson_link {
-    padding: 2px 5px;
-    border: 1px solid #3bb0a0;
-    border-radius: 5px;
-}
-
-.group_lesson_link a {
-    color: #48dbc9 !important;
-    font-weight: 800;
-}
-
-.group_lesson_link i {
-    color: #48dbc9 !important;
-}
-
-.group_participants_container {
-    width: 100%;
-    height: 80px;
-    margin: 20px 0px;
-}
-
-.group_participants_heading {
-    width: 100%;
-    font-weight: bold;
-    height: 20px;
-}
-
-.group_participants_list {
-    position: relative !important;
-    width: 100% !important;
-    height: 60px !important;
-}
-
-.group_participant1 {
-    position: absolute;
-    top: 10%;
-    left: 5px;
-    width: 30px;
-    height: 30px;
-    clip-path: circle(30px);
-    overflow: hidden;
-}
-
-.group_participant1 img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-}
-
-.group_participant2 {
-    position: absolute;
-    top: 10%;
-    left: 25px;
-    width: 30px;
-    height: 30px;
-    clip-path: circle(30px);
-    overflow: hidden;
-}
-
-.group_participant2 img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-}
-
-.group_participant3 {
-    position: absolute;
-    top: 10%;
-    left: 45px;
-    width: 30px;
-    height: 30px;
-    clip-path: circle(30px);
-    overflow: hidden;
-}
-
-.group_participant3 img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-}
-
-.group_participant4 {
-    position: absolute;
-    top: 10%;
-    left: 65px;
-    width: 30px;
-    height: 30px;
-    clip-path: circle(30px);
-    overflow: hidden;
-}
-
-.group_participant4 img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-}
-
-.group_participant5 {
-    position: absolute;
-    top: 10%;
-    left: 85px;
-    width: 30px;
-    height: 30px;
-    clip-path: circle(30px);
-    overflow: hidden;
-}
-
-.group_participant5 img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-}
-
-.group_participant_indicator {
-    position: absolute;
-    top: 10%;
-    left: 105px;
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    background-color: lightcyan;
-    line-height: 30px;
-    border-radius: 50%;
-    clip-path: circle(30px);
-}
-
-.group_participant_indicator span {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    color: #000;
-    font-size: 0.75rem;
-    font-weight: 900;
-    text-align: center;
-}
-
-@media (min-width:319.96px) {
-    .schedule {
-        width: 100% !important;
-        height: auto !important;
-    }
-}
-
-@media (min-width:424.96px) {
-    /* .schedule {
-            width: 70% !important;
-            height: 500px !important;
-        } */
-
-    .course {
-        width: 70% !important;
-    }
-
-    .overview_body .card {
-        width: 80% !important;
-    }
-
-    .schedule {
-        width: 100% !important;
-        height: auto !important;
-    }
-
-    .noevents {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 22px;
-        font-weight: 600;
-        height: 103px !important;
-    }
-
-
-}
-
-@media (min-width:575.96px) {
-    .schedule {
-        width: 100% !important;
-        height: auto !important;
-    }
-
-    .schedule_heading {
-        font-size: 1.5rem !important;
-    }
-
-    .course_heading {
-        font-size: 1.5rem !important;
-    }
-
-    .course {
-        width: 50% !important;
-    }
-
-    .overview_filter {
-        padding-right: 4% !important;
-    }
-
-    .overview_body .card {
-        width: 46.5% !important;
-    }
-}
-
-@media (min-width:767.96px) {
-    .schedule {
-        width: 70% !important;
-    }
-
-    .course {
-        width: 70% !important;
-    }
-
-    .overview_body .card {
-        width: 31% !important;
-    }
-}
-
-@media (min-width:1024.96px) {
-    .main-content {
-        padding-top: 50px !important;
-        padding-left: 200px !important;
-    }
-
-    .sidebar-mini .main-content {
-        padding-left: 85px !important;
-    }
-
-    .sidebar-mini .main-content .overview_body .card {
-        width: 204px !important;
-    }
-
-    .course {
-        width: 100% !important;
-    }
-
-    .schedule {
-        width: 58% !important;
-    }
-
-    .overview_body .card {
-        width: 31% !important;
-    }
-
-    .overview_filter {
-        padding-right: 2% !important;
-    }
-
-    .main-sidebar.sidebar-style-2 {
-        z-index: 0 !important;
-        /* left: -250px !important; */
-    }
-}
-
-@media (max-width:1424.96px) {
-    .main-sidebar.sidebar-style-2 {
-        z-index: 0 !important;
-        /* left: -250px; */
-    }
-}
-
-@media (min-width:1335.96px) {
-    .main-content {
-        padding-top: 80px !important;
-        padding-left: 230px !important;
-    }
-
-    .main-sidebar.sidebar-style-2 {
-        z-index: 0 !important;
-        /* left: -250px; */
-    }
-}
-
-@media (min-width:1440.96px) {
-    .main-content {
-        padding-top: 50px !important;
-        padding-left: 200px !important;
-    }
-
-    .main-sidebar.sidebar-style-2 {
-        z-index: 0 !important;
-        /* left: -250px; */
-    }
-}
-
-@media (min-width:1199.96px) {
-    .overview_body {
-        justify-content: spa ce-between !important;
-    }
-
-    .overview_body .card {
-        width: 21.85% !important;
-    }
-
-    .sidebar-mini .main-content .overview_body .card {
-        width: 220px !important;
-    }
-}
-
-/* @media (min-width:1024.96px) {
-        .main-sidebar.sidebar-style-2 {
-            z-index: 0 !important;
-            left: -250px !important;
-        }
-    } */
-
-@media (min-width:320px) and (max-width:502px) {
-    .schedule .card-body {
-        width: 100% !important;
-        height: 450px !important;
-        padding: 0px 0px !important;
-        background-color: white !important;
-        border-radius: 5px !important;
-        overflow: hidden !important;
-    }
-}
-
-@media (min-width:503px) and (max-width:502px) {
-    .schedule .card-body {
-        width: 100% !important;
-        height: 450px !important;
-        padding: 0px 0px !important;
-        background-color: white !important;
-        border-radius: 5px !important;
-        overflow: hidden !important;
-    }
-}
-</style>
-
-<style>
+/* Calendar Styles - Enhanced */
 .calendar-container {
     position: relative;
     border-radius: 10px;
-    /* box-shadow: 5px 5px 15px rgb(0 0 0 / 10%), -5px -5px 15px #edf1f4; */
     width: 50%;
     min-height: 344px;
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 #dycalendar {
@@ -742,34 +254,39 @@
 #dycalendar table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 10px !important;
+    border-spacing: 8px !important;
 }
 
 .dycalendar-month-container .dycalendar-body table tr td {
-    padding: 2px 6px;
-    color: #777;
-    border: 1px solid #edf1f4;
-    border-radius: 5px !important;
+    padding: 8px 6px;
+    color: #4a5568;
+    border: 1px solid #e9ecef;
+    border-radius: 12px !important;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    box-shadow: 5px 5px 10px rgb(0 0 0 / 10%), -5px -5px 10px rgb(255 255 255);
+    transition: all 0.2s ease;
+    background: #f8fafc;
+    text-align: center;
 }
 
 .dycalendar-month-container .dycalendar-body table tr td:hover {
-    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
-        inset -5px -5px 10px rgba(255, 255, 255, 1);
+    background: #f0eefe;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(104, 14, 218, 0.15);
+    border-color: #680EDA;
 }
 
 #dycalendar table tr:first-child td {
     color: #fff;
     background-color: #680EDA;
     font-weight: 700;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px #fff;
+    box-shadow: none;
+    border: none;
+    border-radius: 12px !important;
 }
 
 #dycalendar table tr:first-child td:first-child {
-    color: #fff;
     background-color: #FF8B4F;
 }
 
@@ -779,10 +296,9 @@
 
 .dycalendar-today-date,
 .dycalendar-today-date:hover {
-    background-color: white !important;
-    color: #680EDA !important;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
-        -5px -5px 10px rgba(255, 255, 255, 1) !important;
+    background: linear-gradient(135deg, #680EDA, #9b4dff) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(104, 14, 218, 0.3) !important;
     border: none !important;
     font-weight: 700 !important;
 }
@@ -792,273 +308,392 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: baseline;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    align-items: center;
+    padding: 10px 15px !important;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .dycalendar-prev-next-btn {
     position: static !important;
-    color: #777;
-    padding: 0px 5px 0px 5px;
-    /* border-radius: 10px !important; */
+    color: #680EDA;
+    padding: 0px 10px;
     cursor: pointer !important;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 500;
-    text-shadow: 3px 0px 5px #000;
-    /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
-        -5px -5px 10px rgba(255, 255, 255, 1); */
+    transition: all 0.2s;
 }
 
-.dycalendar-prev-next-btn.prev-btn {
-    text-shadow: -3px 0px 5px #000;
-}
-
-.dycalendar-prev-next-btn.next-btn {
-    text-shadow: 3px 0px 5px #000;
-}
-
-.dycalendar-prev-next-btn.prev-btn:active {
-    color: #680EDA;
-    text-shadow: -3px 0px 5px #680EDA;
-}
-
-.dycalendar-prev-next-btn.next-btn:active {
-    color: #680EDA;
-    text-shadow: 3px 0px 5px #680EDA;
+.dycalendar-prev-next-btn:hover {
+    color: #9b4dff;
+    transform: scale(1.1);
 }
 
 .dycalendar-span-month-year {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: 0.5px;
+}
+
+/* ========== ENHANCED NOTICEBOARD STYLES ========== */
+.notice-board-modern {
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 1.25rem;
+    box-shadow: 0 2px 12px rgba(104, 14, 218, 0.06);
+    border: 1px solid rgba(104, 14, 218, 0.08);
+}
+
+.notice-board-modern:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 30px -12px rgba(104, 14, 218, 0.15);
+    border-color: rgba(104, 14, 218, 0.2);
+}
+
+.notice-inner-wrapper {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.notice-image-container {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 14px rgba(104, 14, 218, 0.08);
+}
+
+.notice-image-container:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 24px rgba(104, 14, 218, 0.15);
+}
+
+.notice-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.notice-image-container:hover img {
+    transform: scale(1.05);
+}
+
+.notice-content-area {
+    flex: 1;
+    min-width: 200px;
+}
+
+.notice-title-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+}
+
+.notice-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+    letter-spacing: -0.2px;
+    line-height: 1.4;
+}
+
+.notice-badge-new {
+    background: linear-gradient(135deg, #680EDA, #9b4dff);
+    color: white;
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    border-radius: 30px;
     font-weight: 600;
+    letter-spacing: 0.3px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(0.98);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.notice-date-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f8fafc;
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    color: #475569;
+    margin-bottom: 0.75rem;
+    border: 1px solid #e2e8f0;
+}
+
+.notice-description-preview {
+    color: #475569;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.notice-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1.5px solid #e2e8f0;
+    padding: 6px 20px;
+    border-radius: 40px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #680EDA;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.notice-action-btn:hover {
+    background: #680EDA;
+    color: white;
+    border-color: #680EDA;
+    transform: translateX(3px);
+}
+
+/* ========== ENHANCED EVENTS SECTION STYLES ========== */
+.events-modern-container {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 1.25rem;
+    box-shadow: 0 8px 24px rgba(104, 14, 218, 0.06);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(104, 14, 218, 0.1);
+}
+
+.events-header {
+    border-bottom: 2px solid #f1eefc;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.events-header h4 {
+    font-weight: 800;
+    background: linear-gradient(135deg, #680EDA, #9b4dff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.events-header h4 i {
+    background: none;
     color: #680EDA;
 }
 
-
-@media (min-width:320px) and (max-width:575px) {
-    .calendar-container {
-        position: relative;
-        border-radius: 10px;
-        box-shadow: 5px 5px 15px rgb(0 0 0 / 10%), -5px -5px 15px #edf1f4;
-        width: 100%;
-        min-height: 326px;
-    }
-
-
-
-    .dycalendar-month-container .dycalendar-body table tr td {
-        padding: 1px 3px;
-        color: #777;
-        border: 1px solid #edf1f4;
-        border-radius: 5px !important;
-        cursor: pointer;
-        font-size: 0.8rem;
-        font-weight: 500;
-        box-shadow: 5px 5px 10px rgb(0 0 0 / 10%), -5px -5px 10px rgb(255 255 255);
-    }
-
-    .course_and_schedule_body {
-        flex-wrap: wrap !important;
-        width: 100% !important;
-        height: 568px;
-    }
-
-    .schedule .card-body {
-        width: 100% !important;
-        height: 688px !important;
-        padding: 0px 0px !important;
-        background-color: white !important;
-        border-radius: 5px !important;
-        overflow: hidden !important;
-        gap: 20px;
-    }
-
-    .main-content {
-        padding-right: 5px;
-        width: 100% !important;
-    }
-
-    .main-content {
-        padding-top: 80px !important;
-        padding-left: 5px !important;
-    }
-
-
-}
-</style>
-<style>
-.carousel-item {
-    text-align: center;
-    width: 100%;
+.events-count-badge {
+    background: #f0eef8;
+    color: #680EDA;
+    padding: 4px 12px;
+    border-radius: 40px;
+    font-size: 0.75rem;
+    font-weight: 600;
 }
 
-.carousel-item img {
-    display: inline-block;
-    vertical-align: middle;
-    width: calc(50% - 57px) !important;
-    height: 450px;
-}
-
-#fancyControls {
-    border: none !important;
-}
-
-.carousel-item>div {
-    display: inline-block;
-    vertical-align: middle;
-    width: calc(50% - 57px) !important;
-    font-weight: 700;
-    font-style: italic;
-    font-size: 16px !important;
-}
-
-.carousel-control-next,
-.carousel-control-prev {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    z-index: 1;
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-align: center;
-    -webkit-box-align: center;
-    align-items: center;
-    -ms-flex-pack: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    width: 5%;
-    /* color: #fff; */
-    text-align: center;
-    opacity: .5;
-    -webkit-transition: opacity .15s ease;
-    transition: opacity .15s ease;
-    border: none !important;
-    background: transparent;
-
-}
-
-.modal-xl .modal-dialog {
-    max-width: 800px;
-    /* Set a custom maximum width */
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: black;
-    border-radius: 25% !important;
-
-}
-
-.closefancy {
-
-    background: transparent;
-
-    color: white;
-    border: none;
-    /* font-size: 16px; */
-}
-
-.modal-content {
-    background: transparent !important;
-}
-
-.modal-header {
-    background: white !important;
-}
-
-.modal-body {
-    background: white !important;
-}
-
-.fa-times {
-    font-size: 20px;
-    font-weight: 900 !important;
-    color: #000 !important;
-}
-
-.ellipsis {
+.events-marquee-wrapper {
+    flex: 1;
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 200px;
-    /* Adjust the value to fit your desired width */
+    position: relative;
+    min-height: 380px;
+    border-radius: 16px;
 }
 
-.expanded {
-    white-space: normal;
-    max-width: none;
+.events-marquee-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    will-change: transform;
 }
 
-.nonotice {
+.event-card-modern {
+    background: white;
+    border-radius: 18px;
+    transition: all 0.25s;
+    border: 1px solid #f0edfa;
+    cursor: pointer;
+}
+
+.event-card-modern:hover {
+    border-color: #d9ceff;
+    transform: translateX(4px);
+    box-shadow: 0 8px 20px rgba(104, 14, 218, 0.12);
+    background: #fefbff;
+}
+
+.event-card-link {
     display: flex !important;
-    justify-content: center !important;
-    font-weight: 600 !important;
-    font-size: 22px !important;
+    gap: 14px;
+    align-items: center;
+    padding: 12px 16px !important;
+    text-decoration: none;
 }
 
-.caption {
-    display: none;
+.event-card-image {
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 16px !important;
+    object-fit: cover;
+    background: #f5f3ff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-@media (max-width: 575px) {
-    .notice_board_list {
-        width: 100%;
-        /* Occupy full width */
+.event-card-details {
+    flex: 1;
+}
+
+.event-card-name {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.event-type-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 1.5s infinite;
+}
+
+.event-card-time {
+    font-size: 0.7rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* No Events State */
+.no-events-modern {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2.5rem 1rem;
+    background: #faf9ff;
+    border-radius: 20px;
+}
+
+.no-events-modern i {
+    font-size: 2.5rem;
+    color: #680EDA;
+    opacity: 0.5;
+    margin-bottom: 1rem;
+}
+
+/* Empty Notice State */
+.empty-notice-state {
+    text-align: center;
+    padding: 2.5rem;
+    background: #faf9ff;
+    border-radius: 24px;
+}
+
+.empty-notice-state i {
+    font-size: 2.5rem;
+    color: #680EDA;
+    opacity: 0.5;
+    margin-bottom: 1rem;
+}
+
+/* Marquee Animation - Optimized */
+@keyframes smooth-marquee {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(calc(-100% + 80px));
     }
 }
 
-/* For screens between 576px and 768px (e.g., small tablets) */
-@media (min-width: 576px) and (max-width: 767px) {
-    .col {
-        width: 50%;
-        /* Occupy half width */
+/* Loading Skeleton */
+.loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 12px;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
     }
 }
 
-
-/* For screens between 768px and 992px (e.g., tablets) */
-@media (min-width: 768px) and (max-width: 991px) {
-    .col {
-        width: 33.33%;
-        /* Occupy one-third width */
-    }
-
-    .main-content {
-        padding-top: 80px !important;
-        padding-left: 20px !important;
-    }
+/* Course Card Styles - Enhanced */
+.course-card {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f0f0f0;
 }
 
-/* For screens larger than 992px (e.g., desktops) */
-@media (min-width: 992px) {
-    .col {
-        width: 25%;
-        /* Occupy one-fourth width */
-    }
+.course-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 30px -12px rgba(104, 14, 218, 0.2) !important;
+    border-color: rgba(104, 14, 218, 0.2);
 }
 
-@media (min-width: 1440px) {
-    .main-sidebar.sidebar-style-2 {
-        z-index: 0 !important;
-
-    }
-
-    .main-content {
-        padding-top: 80px !important;
-        padding-left: 211px !important;
-    }
-}
-
-
-@media (min-width: 1440px) and (max-width: 2560px) {
-    .main-sidebar.sidebar-style-2 {
-        z-index: 0 !important;
-
-    }
-}
-</style>
-<style>
 .card-span {
     color: #680EDA !important;
     font-size: 12px;
@@ -1066,509 +701,206 @@
 }
 
 .highlighted-date {
-    background-color: blue;
-    /* Yellow background for highlighted dates */
-    color: #000;
-    /* Optional: change text color for better contrast */
-}
-</style>
-
-<style>
-/* ============== FIXED EVENTS CAROUSEL STYLES ============== */
-
-/* Override the conflicting schedule style */
-.schedule {
-    width: 100% !important;
-    height: auto !important;
-    min-height: 500px !important;
-    border: 0px !important;
-    margin: 0 !important;
-    border-radius: 5px !important;
-    overflow: hidden !important;
-}
-
-/* Main container layout */
-.course_and_schedule_body {
-    display: flex !important;
-    flex-direction: row !important;
-    width: 100% !important;
-    gap: 20px !important;
-}
-
-.schedule .card-body {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    gap: 20px !important;
-    padding: 20px !important;
-    background: white !important;
-    border-radius: 15px !important;
-    min-height: 500px !important;
-    width: 100% !important;
-}
-
-/* Calendar container - LEFT SIDE */
-.calendar-container {
-    flex: 0 0 48% !important;
-    max-width: 48% !important;
-    min-width: 300px !important;
-    min-height: 450px !important;
-    background: #ffffff !important;
-    border-radius: 10px !important;
-    padding: 10px !important;
-}
-
-/* Events container - RIGHT SIDE */
-.events_today_wrapper {
-    flex: 1 1 48% !important;
-    min-width: 300px !important;
-    height: 450px !important;
-    max-height: 450px !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    background: #f8f9fc !important;
-    border-radius: 12px !important;
-    padding: 0 !important;
-    margin-top: 0 !important;
-    position: relative !important;
-    overflow: hidden !important;
-}
-
-/* Events carousel container */
-.events-carousel-container {
-    background: #f8f9fc;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    width: 100%;
-    height: 100% !important;
-    display: flex;
-    flex-direction: column;
-}
-
-
-
-
-
-/* Event Type Colors */
-.event_type_1 {
-    background-color: #fef4ec !important;
-    border-left: 5px solid #f0a880 !important;
-}
-
-.event_type_2 {
-    background-color: #fef6d2 !important;
-    border-left: 5px solid #e8cf57 !important;
-}
-
-.event_type_3 {
-    background-color: #e4efff !important;
-    border-left: 5px solid #4688e4 !important;
-}
-
-.event_type_4 {
-    background-color: #e9f8ff !important;
-    border-left: 5px solid #67c8e2 !important;
-}
-
-/* Carousel Indicators */
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
-    min-height: 15px;
-    flex-shrink: 0;
-}
-
-.carousel-indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #dee2e6;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: inline-block;
-}
-
-.carousel-indicator:hover {
-    background: #adb5bd;
-}
-
-.carousel-indicator.active {
-    width: 20px !important;
-    border-radius: 4px !important;
-    background: #680EDA !important;
-}
-
-/* No Events Message */
-.noevents {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-    font-weight: 600;
-    height: 100% !important;
-    color: #FF8B4F;
-    background: #f8f9fc;
-    border-radius: 12px;
-    min-height: 300px;
-}
-
-/* Calendar Highlighted Dates */
-.highlighted-date {
-    background-color: #680EDA !important;
+    background: linear-gradient(135deg, #680EDA, #9b4dff) !important;
     color: white !important;
-    border-radius: 5px !important;
     font-weight: bold !important;
+    transform: scale(1.02);
 }
 
-/* Marquee Styles */
-.events-marquee-container {
-    background: #f8f9fc;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.marquee-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    flex-shrink: 0;
-}
-
-.marquee-header h4 {
-    margin: 0;
-    color: #680EDA !important;
-    font-weight: 600;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-}
-
-.marquee-header h4 i {
-    margin-right: 8px;
-    color: #680EDA;
-}
-
-.marquee-header h4 span {
-    font-size: 0.85rem;
-    color: #6c757d;
-    margin-left: 8px;
-    font-weight: normal;
-}
-
-.marquee-wrapper {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-    height: 100%;
-    mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-}
-
-.marquee-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    will-change: transform;
-}
-
-/* Marquee Animation */
-@keyframes marquee-scroll {
-    0% {
-        transform: translateY(0);
-    }
-
-    100% {
-        /* Move up by total height minus one item height to show all items once */
-        transform: translateY(calc(-100% + 70px));
-    }
-}
-
-.clone-item {
-    opacity: 0.95;
-    /* Slightly different to show it's a clone */
-}
-
-.marquee-wrapper::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    background: linear-gradient(to bottom, transparent, #f8f9fc);
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* Pause animation on hover */
-.marquee-wrapper:hover .marquee-list {
-    animation-play-state: paused !important;
-}
-
-.marquee-item {
-    flex-shrink: 0;
-    width: 100%;
-}
-
-.marquee-item .card {
-    margin: 0 !important;
-    cursor: pointer;
-    width: 100%;
-    border-radius: 8px !important;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.marquee-item .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
-}
-
-.marquee-item .card a {
-    display: flex !important;
-    justify-content: space-evenly !important;
-    align-items: center !important;
-    gap: 10px !important;
-    text-decoration: none;
-    color: inherit;
-    padding: 10px !important;
-}
-
-.marquee-item .card img {
-    height: 60px !important;
-    width: 100px !important;
+/* Event Modal Styles */
+.event-modal-image {
+    max-width: 100%;
+    max-height: 400px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 16px;
+    margin-bottom: 1rem;
 }
 
-.marquee-item .card .event-name {
-    margin: 0;
-    font-weight: 600;
-    color: #333;
-    max-width: 150px;
-    font-size: 0.95rem;
-}
-
-.marquee-item .card small {
-    color: #6c757d;
-    font-size: 0.75rem;
-    display: block;
-}
-
-
-/* Responsive */
-@media (min-width: 1200px) {
-    .carousel-slide {
-        flex: 0 0 280px;
-        width: 280px;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 1199px) {
-    .carousel-slide {
-        flex: 0 0 240px;
-        width: 240px;
+/* Responsive Styles */
+@media (min-width: 320px) and (max-width: 575px) {
+    .calendar-container {
+        width: 100%;
+        min-height: auto;
     }
 
-    .calendar-container,
-    .events_today_wrapper {
-        flex: 0 0 48% !important;
+    .dycalendar-month-container .dycalendar-body table tr td {
+        padding: 6px 2px;
+        font-size: 0.7rem;
     }
 
-    .events_today_wrapper {
-        height: 400px !important;
-        max-height: 400px !important;
+    .dycalendar-header {
+        padding: 8px 10px !important;
     }
-}
 
-@media (max-width: 767px) {
-    .course_and_schedule_body {
-        flex-direction: column !important;
+    .dycalendar-span-month-year {
+        font-size: 1rem;
     }
 
     .schedule .card-body {
         flex-direction: column !important;
+        gap: 20px;
     }
 
-    .calendar-container,
-    .events_today_wrapper {
-        flex: 0 0 100% !important;
-        max-width: 100% !important;
+    .main-content {
+        padding-right: 12px;
+        padding-left: 12px !important;
+        padding-top: 80px !important;
         width: 100% !important;
+    }
+
+    .notice-inner-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+
+    .notice-image-container {
+        width: 100%;
+        height: 160px;
+    }
+
+    .notice-action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .events-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .schedule .card-body {
+        flex-direction: column !important;
+    }
+
+    .calendar-container {
+        width: 100%;
     }
 
     .events_today_wrapper {
         margin-top: 20px !important;
-        height: 350px !important;
-        max-height: 350px !important;
+        width: 100%;
     }
 
-    .carousel-slide {
-        flex: 0 0 240px;
-        width: 240px;
+    .notice-inner-wrapper {
+        gap: 1rem;
+    }
+
+    .notice-image-container {
+        width: 100px;
+        height: 100px;
     }
 }
 
-/* Caption hidden by default */
-.caption {
-    display: none;
+@media (min-width: 768px) and (max-width: 1023px) {
+    .schedule .card-body {
+        flex-direction: row !important;
+        gap: 20px;
+    }
+
+    .calendar-container {
+        flex: 0 0 48%;
+    }
+
+    .events_today_wrapper {
+        flex: 0 0 48%;
+    }
+
+    .notice-image-container {
+        width: 100px;
+        height: 100px;
+    }
 }
 
-/* Ellipsis for long text */
-.ellipsis {
+@media (min-width: 1024px) {
+    .main-content {
+        padding-top: 50px !important;
+        padding-left: 200px !important;
+    }
+
+    .sidebar-mini .main-content {
+        padding-left: 85px !important;
+    }
+
+    .schedule {
+        width: 100% !important;
+    }
+
+    .schedule .card-body {
+        flex-direction: row !important;
+        gap: 24px;
+    }
+
+    .calendar-container {
+        flex: 0 0 48%;
+    }
+
+    .events_today_wrapper {
+        flex: 0 0 48%;
+    }
+
+    .overview_body .card {
+        width: 23% !important;
+    }
+
+    .notice-board-modern {
+        margin-bottom: 1.25rem;
+    }
+}
+
+@media (min-width: 1440px) {
+    .main-content {
+        padding-top: 80px !important;
+        padding-left: 211px !important;
+    }
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(104, 14, 218, 0.2);
+    border-top-color: #680EDA;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Modal Enhancements */
+.modal-content {
+    border-radius: 24px;
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    border: none;
 }
 
-.expanded {
-    white-space: normal;
-    max-width: none;
+.modal-header {
+    border-bottom: 1px solid #f0eef8;
 }
 
-/* Dycalendar styles */
-.dycalendar-today-date {
-    background-color: white !important;
-    color: #680EDA !important;
-    font-weight: 700 !important;
+.modal-footer {
+    border-top: 1px solid #f0eef8;
 }
 
-.dycalendar-month-container .dycalendar-body table tr td {
-    padding: 2px 6px;
-    color: #777;
-    border: 1px solid #edf1f4;
-    border-radius: 5px !important;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-</style>
-
-<!-- recommended course -->
-<style>
-.udemy-card {
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: 0.3s;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    cursor: pointer;
-}
-
-.udemy-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* IMAGE */
-.udemy-img {
-    position: relative;
-    overflow: hidden;
-}
-
-.udemy-img img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    transition: 0.4s;
-}
-
-.udemy-card:hover .udemy-img img {
-    transform: scale(1.08);
-}
-
-/* BADGE */
-.udemy-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: #5624d0;
-    color: #fff;
-    padding: 3px 8px;
-    font-size: 11px;
-    border-radius: 4px;
-}
-
-/* CONTENT */
-.udemy-content {
-    padding: 12px;
-}
-
-/* TITLE */
-.udemy-title {
-    font-size: 14px;
-    font-weight: 600;
-    height: 40px;
-    overflow: hidden;
-}
-
-/* INSTRUCTOR */
-.udemy-instructor {
-    font-size: 12px;
-    color: #777;
-    margin-bottom: 5px;
-}
-
-/* RATING */
-.udemy-rating {
-    font-size: 13px;
-    font-weight: 600;
-    color: #b4690e;
-}
-
-.udemy-rating span {
-    color: #777;
-    font-weight: normal;
-}
-
-/* META */
-.udemy-meta {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    margin-top: 5px;
-    color: #666;
-}
-
-/* AI SCORE */
-.udemy-ai {
-    margin-top: 8px;
-    font-size: 12px;
-    color: #5624d0;
-    font-weight: 600;
-}
-
-.section-title {
-    font-weight: 700;
-    font-size: 20px;
-    margin-bottom: 2px;
-}
-
-.section-subtitle {
-    font-size: 13px;
-    color: #777;
-    margin-bottom: 0;
+#noticeDetailImage {
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 </style>
 
 <link href="{{asset('assets/css/jquery.fancybox.min.css')}}" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="{{ asset('assets/css/jquery.fancybox.min.js') }}"></script>
 
-
-
-
 <div class="main-content contentpadding" style="min-height: 498px;">
     @if (session('success'))
-
     <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
     <script type="text/javascript">
     window.onload = function() {
@@ -1581,7 +913,6 @@
     }
     </script>
     @elseif(session('error'))
-
     <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
     <script type="text/javascript">
     window.onload = function() {
@@ -1591,72 +922,44 @@
             text: message,
             type: "info",
         });
-
     }
     </script>
     @endif
 
-
-    <div class="section-body mt-1" style="position:absolute; z-index:-1">
+    <div class="section-body mt-1">
         <div class="overview_container container-fluid">
-            <div class="overview_header d-flex flex-row justify-content-between align-items-center" style="">
+            <div class="overview_header d-flex flex-row justify-content-between align-items-center"></div>
 
-                <!-- <h2 class="overview_heading">
-                        Overview
-                        <div class="path">
-                            <span>E-Learning</span>
-                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                            <span>Dashboard</span>
-                        </div>
-                    </h2> -->
-
-                <!-- <select class="custom-select overview_filter">
-                        <option value="Yearly" selected>Overall</option>
-                        <option value="Yearly">Yearly</option>
-                        <option value="Monthly">Monthly</option>
-                        <option value="Weekly">Weekly</option>
-                        <option value="Daily">Daily</option>
-                    </select> -->
-            </div>
-            <div class="container-fluid d-flex flex-row  justify-content-sm-start overview_body"
-                style="display: flex !important;justify-content: space-between !important;">
-                <div class="card noShadow">
+            <!-- Overview Cards - Enhanced with hover effects -->
+            <div class="container-fluid d-flex flex-row justify-content-sm-start overview_body"
+                style="display: flex !important; justify-content: space-between !important;">
+                <div class="card noShadow" style="transition: transform 0.2s; cursor: pointer;">
                     <div class="card-body d-flex" style="align-items:center">
                         <div style="width:40%">
                             <img class="overview_img" id="overview_img_exception"
                                 src="{{asset('asset/image/progresscourse.png')}}" alt="Course in Progress" width="40%">
                         </div>
                         <div class="justify-content-between align-items-center">
-
-                            <span class="overview_count">{{$count['course_progress'][0]['course_progress']}}</span><br>
+                            <span
+                                class="overview_count">{{$count['course_progress'][0]['course_progress'] ?? 0}}</span><br>
                             <span class="card-span">Course in Progress</span>
                         </div>
                     </div>
                 </div>
-                <div class="card noShadow">
+                <div class="card noShadow" style="transition: transform 0.2s; cursor: pointer;">
                     <div class="card-body d-flex" style="align-items:center">
                         <div style="width:40%">
                             <img class="overview_img" id="overview_img_exception"
                                 src="{{asset('asset/image/completed.png')}}" alt="Course Completed" width="40%">
-
                         </div>
                         <div class="justify-content-between align-items-center">
                             <span
-                                class="overview_count">{{$count['course_completed'][0]['course_completed']}}</span><br>
+                                class="overview_count">{{$count['course_completed'][0]['course_completed'] ?? 0}}</span><br>
                             <span class="card-span">Course Completed</span>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="card noShadow">
-                        <div class="card-header">
-                            <span>Watching Time</span>
-                        </div>
-                        <div class="card-body d-flex flex-row justify-content-between align-items-center">
-                            <span class="overview_count">10h <sub>20m</sub></span>
-                            <img class="overview_img" src="{{asset('asset/image/watchingTime.png')}}" alt="Watching Time" width="40%">
-                        </div>
-                    </div> -->
-                <div class="card noShadow">
+                <div class="card noShadow" style="transition: transform 0.2s; cursor: pointer;">
                     <div class="card-body d-flex" style="align-items:center">
                         <div style="width:40%">
                             <img class="overview_img" id="overview_img_exception"
@@ -1664,59 +967,54 @@
                         </div>
                         <div class="justify-content-between align-items-center">
                             <span
-                                class="overview_count">{{$count['course_certificate'][0]['course_certificate']}}</span><br>
+                                class="overview_count">{{$count['course_certificate'][0]['course_certificate'] ?? 0}}</span><br>
                             <span class="card-span">Certificates Earned</span>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="card noShadow">
-                        <div class="card-header">
-                            <span>Certificates Achieved</span>
-                        </div>
-                        <div class="card-body d-flex flex-row justify-content-between align-items-center">
-                            <span class="overview_count">05</span>
-                            <img class="overview_img" src="{{asset('asset/image/certificateAchieved.png')}}" alt="Certificates Achieved" width="40%">
-                        </div>
-                    </div> -->
-                <div class="card noShadow">
+                <div class="card noShadow" style="transition: transform 0.2s; cursor: pointer;">
                     <div class="card-body d-flex" style="align-items:center">
                         <div style="width:40%">
                             <img class="overview_img" id="overview_img_exception"
                                 src="{{asset('asset/image/trophy.png')}}" alt="Credits Earned" width="40%">
                         </div>
                         <div class="justify-content-between align-items-center">
-                            <span class="overview_count">{{ $total_cpd_points['total_points'] }}</span><br>
+                            <span class="overview_count">{{ $total_cpd_points['total_points'] ?? 0 }}</span><br>
                             <span class="card-span">Credits Earned</span>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Calendar + Events Section -->
             <div class="container-fluid course_and_schedule_container">
                 <div class="d-flex flex-row course_and_schedule_body w-100">
                     <div class="card noShadow schedule" style="width: 100% !important;">
-
                         <div class="card-body">
-                            <!-- <iframe class="schedule_frame" src="{{asset('asset/animated-calendar/index.html')}}" width="100%" height="100%"></iframe> -->
-
                             <div class="calendar-container">
                                 <div id="dycalendar" class="dycalendar-container"></div>
                             </div>
-                            <div class="events_today_wrapper no_event">
-
+                            <div class="events_today_wrapper">
+                                <!-- Events will be loaded dynamically with loading state -->
+                                <div class="events-modern-container loading-skeleton" style="min-height: 380px;">
+                                    <div class="events-header">
+                                        <h4><i class="fas fa-calendar-alt"></i> Loading Events...</h4>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
+
+            <!-- Recommended Courses Section - Enhanced -->
             <div class="container-fluid course_and_schedule_container" style="margin-top:2%;margin-bottom:2%">
                 <div class="card course_and_schedule_container"
-                    style="background-color:white;border-radius:15px !important; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-                    <div class="noShadow recommended_courses_list">
-                        <div class="d-flex mb-4">
+                    style="background-color:white;border-radius:24px !important; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                    <div class="noShadow recommended_courses_list" style="height: auto !important;">
+                        <div class="d-flex mb-4 mt-4">
                             <div style="width:100%;text-align:center">
-                                <h5 class="section-title" style="color:#680EDA; font-weight:700;">
+                                <h5 class="section-title" style="color:#680EDA; font-weight:800; font-size: 1.5rem;">
                                     <i class="fas fa-robot" style="color:#680EDA;"></i> Recommended for You
                                 </h5>
                                 <p class="section-subtitle" style="color:#6c757d; font-size:0.9rem;">
@@ -1726,124 +1024,75 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" style="padding: 0 20px 20px 20px;">
                             @if(empty($recommendations['recommendations']))
                             <div class="col-12">
                                 <div
-                                    style="text-align: center; padding: 3rem; background: #f8f9fa; border-radius: 15px;">
+                                    style="text-align: center; padding: 3rem; background: #faf9ff; border-radius: 24px;">
                                     <i class="fas fa-compass"
-                                        style="font-size: 3rem; color: #680EDA; opacity: 0.5;"></i>
-                                    <h5 style="margin-top: 1rem; color: #4a5568;">No recommendations yet</h5>
-                                    <p style="color: #718096;">Complete more courses to see personalized recommendations
+                                        style="font-size: 3rem; color: #680EDA; opacity: 0.6;"></i>
+                                    <h5 style="margin-top: 1rem; color: #1e293b; font-weight: 600;">No recommendations
+                                        yet</h5>
+                                    <p style="color: #64748b;">Complete more courses to see personalized recommendations
                                     </p>
                                 </div>
                             </div>
                             @else
                             @foreach($recommendations['recommendations'] as $index => $row)
                             @php
-
-
-
-
-                            // Format recommendation type for display
-                            $badgeClass = match($row['recommendation_type']) {
-                            'next_level' => 'next_level_badge',
-                            'skill_gap' => 'skill_gap_badge',
-                            'popular' => 'popular_badge',
-                            'trending' => 'trending_badge',
-                            default => 'default_badge'
-                            };
-
-                            $badgeIcon = match($row['recommendation_type']) {
+                            $badgeIcon = match($row['recommendation_type'] ?? 'recommended') {
                             'next_level' => '🚀',
                             'skill_gap' => '📚',
                             'popular' => '🔥',
                             'trending' => '📈',
                             default => '✨'
                             };
-
-                            $badgeLabel = ucfirst(str_replace('_', ' ', $row['recommendation_type']));
                             $confidencePercent = round($row['confidence_score'] * 100);
-                            $typeColors = [
-                            'next_level' => ['bg' => '#e8f0ff', 'color' => '#0066cc', 'icon' => '⭐'],
-                            'skill_gap' => ['bg' => '#fff0e6', 'color' => '#cc6600', 'icon' => '📘'],
-                            'trending' => ['bg' => '#e6f7e6', 'color' => '#2e7d32', 'icon' => '📈'],
-                            'popular' => ['bg' => '#ffe6f0', 'color' => '#c2185b', 'icon' => '🔥'],
-                            'default' => ['bg' => '#f5f5f5', 'color' => '#666', 'icon' => '✨']
-                            ];
-                            $recType = $row['recommendation_type'] ?? 'recommended';
-                            $typeKey = in_array($recType, array_keys($typeColors)) ? $recType : 'default';
-                            $typeStyle = $typeColors[$typeKey];
+                            $course_name = DB::table('elearning_courses')->where('course_id',
+                            $row['recommended_course_id'])->first();
                             @endphp
-
                             <div class="col-md-6 col-lg-3 mb-4">
-                                <div class="course-card"
-                                    style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; height: 100%; display: flex; flex-direction: column;">
-
-
+                                <div class="course-card">
                                     <div
                                         style="padding:12px 16px; background:#fafafa; border-bottom:1px solid #f0f0f0; display:flex; justify-content:space-between; align-items:center;">
                                         <span
-                                            style="background:{{ $typeStyle['bg'] }}; color:{{ $typeStyle['color'] }}; padding:4px 12px; border-radius:20px; font-size:0.7rem; font-weight:500;">
-                                            {{ $typeStyle['icon'] }} {{ ucfirst(str_replace('_', ' ', $recType)) }}
+                                            style="background:#e8f0ff; color:#0066cc; padding:4px 12px; border-radius:20px; font-size:0.7rem; font-weight:500;">
+                                            {{ $badgeIcon }}
+                                            {{ ucfirst(str_replace('_', ' ', $row['recommendation_type'] ?? 'recommended')) }}
                                         </span>
-                                        <span style="font-size:0.7rem; color:#6c757d;">
-                                            AI Match: {{ $confidencePercent }}%
-                                        </span>
+                                        <span style="font-size:0.7rem; color:#6c757d;"><i
+                                                class="fas fa-chart-simple"></i> AI Match:
+                                            {{ $confidencePercent }}%</span>
                                     </div>
-
-
-                                    <!-- Content Section -->
-                                    <div style="padding: 1rem; flex: 1; flex-direction: column;">
-                                        <!-- Course Title -->
-                                        @php
-                                        $course_name = DB::table('elearning_courses')
-                                        ->where('course_id', $row['recommended_course_id'])
-                                        ->first();
-                                        @endphp
-
+                                    <div style="padding: 1.25rem; flex: 1;">
                                         <h6
-                                            style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; color: #2d3748; line-height: 1.4; min-height: 2.8rem;">
-                                            {{ $course_name->course_name }}
+                                            style="font-weight: 700; font-size: 1rem; margin-bottom: 0.75rem; color: #1e293b; line-height: 1.4;">
+                                            {{ $course_name->course_name ?? 'Course' }}
                                         </h6>
-
-
-
-
-
-
-
-
-
-                                        <!-- Confidence Progress Bar -->
-                                        <div style="margin: 0.5rem 0 0.75rem 0;">
+                                        <div style="margin: 0.75rem 0 1rem 0;">
                                             <div
-                                                style="display: flex; justify-content: space-between; font-size: 0.65rem; margin-bottom: 4px;">
-                                                <span style="color: #680EDA;"><i class="fas fa-brain"></i> AI
-                                                    Match</span>
-                                                <span style="font-weight: 600;">{{ $confidencePercent }}%</span>
+                                                style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 6px;">
+                                                <span style="color: #680EDA;"><i class="fas fa-brain"></i> Match
+                                                    Score</span>
+                                                <span
+                                                    style="font-weight: 700; color: #680EDA;">{{ $confidencePercent }}%</span>
                                             </div>
                                             <div
-                                                style="background: #e2e8f0; border-radius: 10px; height: 6px; overflow: hidden;">
+                                                style="background: #e9ecef; border-radius: 10px; height: 8px; overflow: hidden;">
                                                 <div
                                                     style="width: {{ $confidencePercent }}%; background: linear-gradient(90deg, #680EDA, #9b4dff); height: 100%; border-radius: 10px;">
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!-- Reason -->
                                         <div
-                                            style="background: #f7fafc; padding: 0.5rem; border-radius: 12px; margin-top: auto; border-left: 3px solid #680EDA;">
+                                            style="background: #f8fafc; padding: 0.75rem; border-radius: 16px; border-left: 3px solid #680EDA;">
                                             <i class="fas fa-lightbulb" style="color: #680EDA; font-size: 0.7rem;"></i>
                                             <span
-                                                style="font-size: 0.7rem; color: #4a5568; margin-left: 4px;">{{ $row['reason'] }}</span>
+                                                style="font-size: 0.75rem; color: #475569; margin-left: 6px;">{{ $row['reason'] }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-
                             @endforeach
                             @endif
                         </div>
@@ -1851,385 +1100,255 @@
                 </div>
             </div>
 
-            <div class="container-fluid noticess course_and_schedule_container" style="margin-top:2%">
+            <!-- Enhanced Notice Board -->
+            <div class="container-fluid noticess course_and_schedule_container" style="margin-top:2%; margin-bottom:2%">
                 <div class="d-flex flex-row course_and_schedule_body w-100">
-                    <div class="card noShadow notice_board_list" style="width:100% !important">
+                    <div class="card noShadow notice_board_list"
+                        style="width:100% !important; background: transparent; border: none; height: auto !important;">
+                        <div class="card-header bg-transparent border-0"
+                            style="background:transparent !important; padding: 1.5rem 1.5rem 0 1.5rem;">
+                            <h5 style="font-weight: 800; color: #680EDA; margin-bottom: 0; font-size: 1.4rem;">
+                                <i class="fas fa-bullhorn me-2"></i> Announcements & Updates
+                            </h5>
 
-                        @php $class_list = count($rows) == 0 ? "d-flex justify-content-center align-items-center" : ''
-                        @endphp
-                        <div class="card-body {{$class_list}}">
+                        </div>
+                        <div class="card-body" style="height: auto !important; padding: 1.5rem;">
                             @if(count($rows) == 0)
-                            <div class="nonotice" style="color:#680EDA"><i class="fas fa-bullhorn"
-                                    style="font-size: 3rem; color: #680EDA; opacity: 0.5;"></i>No Notice Found</div>
-                            @endif
+                            <div class="empty-notice-state">
+                                <i class="fas fa-newspaper fa-3x mb-3"></i>
+                                <h6 style="color: #680EDA; font-weight: 600;">No Announcements</h6>
+                                <p class="small text-muted mb-0">Check back later for updates</p>
+                            </div>
+                            @else
                             @foreach($rows as $key => $row)
-                            <div class="d-flex flex-row justify-content-around notice_board">
-                                @php $path = $row['notice_path'] . '/' . $row['notice_banner'];@endphp
-                                @if(file_exists(substr($path, 1)))
-                                <img class="notice_board_poster noticeHasFancy"
-                                    src="{{$row['notice_path']}}/{{$row['notice_banner']}}" alt="Notice Board"
-                                    onclick="makeFancy(event, 'noticeHasFancy')">
-                                <span class="caption">{!!html_entity_decode($row['notice_description'])!!}</span>
-
-
-                                @else
-                                <img class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/empty.jpg"
-                                    alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')">
-                                <span class="caption">{!!html_entity_decode($row['notice_description'])!!}</span>
-
-
-                                @endif
-
-                                <!-- <img style="height:200px !important;width:300" class="notice_board_poster noticeHasFancy" src="{{$row['notice_path']}}/{{$row['notice_banner']}}" data-caption="{{$row['notice_description']}}" alt="Notice Board" onclick="makeFancy(event, 'noticeHasFancy')"> -->
-                                <!-- <div class="hover_plus_wrapper">
-                                                                                                <div class="hover_plus">
-                                                                                                    <i class="bi bi-plus" aria-hidden="true"></i>
-                                                                                                </div>
-                                                                                            </div> -->
-
-                                <div class="d-flex flex-column justify-content-around notice_board_heading">
-                                    <h6 class="notice_board_event_name event-name ellipsis">
-                                        {{$row['notice_name']}}
-                                    </h6>
-                                    <span class="notice_board_event_organiser">
-                                        {{$row['notice_date']}}
-                                    </span>
+                            <div class="notice-board-modern">
+                                <div class="notice-inner-wrapper">
+                                    <div class="notice-image-container"
+                                        onclick="openNoticeFancy('{{ $row['notice_path'] }}/{{ $row['notice_banner'] }}', '{!! addslashes(html_entity_decode($row['notice_description'])) !!}')">
+                                        @php $path = $row['notice_path'] . '/' . $row['notice_banner']; @endphp
+                                        @if(file_exists(substr($path, 1)))
+                                        <img src="{{ $row['notice_path'] }}/{{ $row['notice_banner'] }}"
+                                            alt="{{ $row['notice_name'] }}"
+                                            onerror="this.src='{{asset('asset/image/empty.jpg')}}'">
+                                        @else
+                                        <img src="{{ asset('asset/image/empty.jpg') }}" alt="Notice">
+                                        @endif
+                                    </div>
+                                    <div class="notice-content-area">
+                                        <div class="notice-title-section">
+                                            <h6 class="notice-title">{{ $row['notice_name'] }}</h6>
+                                            @if($key < 3) <span class="notice-badge-new"><i
+                                                    class="fas fa-star-of-life"></i> NEW</span>
+                                                @endif
+                                        </div>
+                                        <div class="notice-date-chip">
+                                            <i class="far fa-calendar-alt"></i>
+                                            {{ \Carbon\Carbon::parse($row['notice_date'])->format('M d, Y') }}
+                                        </div>
+                                        <div class="notice-description-preview">
+                                            {!! Str::limit(strip_tags(html_entity_decode($row['notice_description'])),
+                                            120) !!}
+                                        </div>
+                                        <button class="notice-action-btn"
+                                            onclick="openNoticeDetail('{{ addslashes($row['notice_name']) }}', '{{ \Carbon\Carbon::parse($row['notice_date'])->format('F d, Y') }}', '{!! addslashes(html_entity_decode($row['notice_description'])) !!}', '{{ $row['notice_path'] }}/{{ $row['notice_banner'] }}')">
+                                            Read More <i class="fas fa-arrow-right"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <br>
-
                             </div>
                             @endforeach
-
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-            <style>
-            .course-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12) !important;
-            }
-
-            .course-card:hover img {
-                transform: scale(1.05);
-            }
-
-            /* Badge color variations - optional */
-            .next_level_badge {
-                background: linear-gradient(135deg, #667eea, #764ba2);
-            }
-
-            .skill_gap_badge {
-                background: linear-gradient(135deg, #f59e0b, #ef4444);
-            }
-
-            .popular_badge {
-                background: linear-gradient(135deg, #ec489a, #f43f5e);
-            }
-
-            .trending_badge {
-                background: linear-gradient(135deg, #10b981, #34d399);
-            }
-
-            .default_badge {
-                background: linear-gradient(135deg, #6b7280, #9ca3af);
-            }
-            </style>
-
-            <!-- Add Font Awesome if not already included -->
-            <link rel="stylesheet"
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-        </div>
-
-
-    </div>
-</div>
-<!-- Vertically centered modal -->
-<div class="modal fade" id="event_poster_modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
-            </div>
         </div>
     </div>
 </div>
 
-<!-- fancy box modal start-->
+<!-- Fancy Modal for Images -->
 <div class="modal fade" id="fancyContainer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="fancyContainerLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <!-- <h5 class="modal-title" id="fancyContainerLabel">Modal title</h5> -->
-                <div class="col-md-12" style="display: flex;justify-content: flex-end;">
-                    <button class="closefancy" onclick="removefancy()"><span aria-hidden="true"><i class="fa fa-times"
-                                aria-hidden="true"></i></span></button>
-                </div>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button> -->
+        <div class="modal-content" style="background: transparent !important; border: none;">
+            <div class="modal-header" style="background: white; border-radius: 20px 20px 0 0; border-bottom: none;">
+                <button type="button" class="btn-close" onclick="removefancy()"></button>
             </div>
-            <div class="modal-body" id="fancyWrapper">
-
-                <div id="fancyControls" class="carousel slide" data-bs-ride="carousel">
-                    <!-- js code -->
+            <div class="modal-body" style="background: white; border-radius: 0 0 20px 20px; padding: 20px;"
+                id="fancyWrapper">
+                <div id="fancyControls" class="carousel slide">
                     <button class="carousel-control-prev" type="button" data-bs-target="#fancyControls"
                         data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <!-- <span class="visually-hidden">Previous</span> -->
+                        <span class="carousel-control-prev-icon" aria-hidden="true"
+                            style="background-color: #680EDA; border-radius: 50%; padding: 20px;"></span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#fancyControls"
                         data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <!-- <span class="visually-hidden">Next</span> -->
+                        <span class="carousel-control-next-icon" aria-hidden="true"
+                            style="background-color: #680EDA; border-radius: 50%; padding: 20px;"></span>
                     </button>
                 </div>
             </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
-            </div> -->
         </div>
     </div>
 </div>
 
-<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script>
-    google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Course', 'Percentege'],
-          ['Completed', 80],
-          ['Pending', 20],
-          
-        ]);
+<!-- Event Detail Modal -->
+<div class="modal fade" id="eventDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header"
+                style="background: linear-gradient(135deg, #680EDA, #9b4dff); color: white; border: none;">
+                <h5 class="modal-title"><i class="fas fa-calendar-alt me-2"></i>Event Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding: 1.5rem;">
+                <div class="text-center mb-4">
+                    <img id="eventDetailImage" src=""
+                        style="max-width: 100%; max-height: 350px; border-radius: 20px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                </div>
+                <h4 id="eventDetailName" class="fw-bold mb-3" style="color: #1e293b;"></h4>
+                <div class="mb-3">
+                    <i class="far fa-clock me-2" style="color: #680EDA;"></i>
+                    <span id="eventDetailTime" style="color: #475569; font-weight: 500;"></span>
+                </div>
+                <div class="mt-3">
+                    <h6 style="color: #680EDA; font-weight: 700; margin-bottom: 0.75rem;">
+                        <i class="fas fa-info-circle me-2"></i>Description
+                    </h6>
+                    <p id="eventDetailDescription" style="line-height: 1.7; color: #334155; font-size: 1rem;"></p>
+                </div>
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid #f0eef8;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    style="border-radius: 30px; padding: 8px 24px;">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-        var options = {
-          title: 'Course1',
-          pieHole: 0.5,
-          pieStartAngle: -45,
-          chartArea:{
-                    left:15,
-                    right:15,
-                    top:40,
-                    bottom:20,
-                    width:'50%',
-                    height:'75%'
-                }
-        };
+<!-- Detail Modal for Notices - Enhanced -->
+<div class="modal fade" id="noticeDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header"
+                style="background: linear-gradient(135deg, #680EDA, #9b4dff); color: white; border: none;">
+                <h5 class="modal-title" id="noticeDetailTitle"><i class="fas fa-info-circle me-2"></i>Notice Details
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding: 1.5rem;">
+                <div class="text-center mb-4">
+                    <img id="noticeDetailImage" src=""
+                        style="max-width: 100%; max-height: 300px; border-radius: 20px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                </div>
+                <h6 id="noticeDetailName" class="fw-bold mb-2" style="color: #1e293b; font-size: 1.3rem;"></h6>
+                <p class="text-muted small mb-3"><i class="far fa-calendar-alt me-2"></i> <span
+                        id="noticeDetailDate"></span>
+                </p>
+                <div id="noticeDetailDescription" style="line-height: 1.7; color: #334155; font-size: 1rem;"></div>
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid #f0eef8;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    style="border-radius: 30px;">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-      }
-</script> -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-google.charts.load('current', {
-    'packages': ['line']
-});
-google.charts.setOnLoadCallback(drawChart);
-
-function drawChart() {
-
-    var data = new google.visualization.DataTable();
-    data.addColumn('number', 'Day');
-    data.addColumn('number', 'Equity Research Course');
-    data.addColumn('number', 'Finance of mergers and Acquistions');
-    data.addColumn('number', 'Stock Valuation Analysis');
-
-    data.addRows([
-        [1, 37.8, 80.8, 41.8],
-        [2, 30.9, 69.5, 32.4],
-        [3, 25.4, 57, 25.7],
-        [4, 11.7, 18.8, 10.5],
-        [5, 11.9, 17.6, 10.4],
-        [6, 8.8, 13.6, 7.7],
-        [7, 7.6, 12.3, 9.6],
-        [8, 12.3, 29.2, 10.6],
-        [9, 16.9, 42.9, 14.8],
-        [10, 12.8, 30.9, 11.6],
-        [11, 5.3, 7.9, 4.7],
-        [12, 6.6, 8.4, 5.2],
-        [13, 4.8, 6.3, 3.6],
-        [14, 4.2, 6.2, 3.4]
-    ]);
-
-    var options = {
-        chart: {
-            //   title: 'Box Office Earnings in First Two Weeks of Opening',
-            //   subtitle: 'in millions of dollars (USD)'
-
-        },
-        width: '100%',
-        height: 250,
-        chartArea: {
-            left: 15,
-            right: 15,
-            top: 0,
-            bottom: 0,
-            width: '100%',
-            height: 250,
-        },
-        axes: {
-            x: {
-                0: {
-                    side: 'top'
-                }
-            }
-        }
-    };
-
-    var chart = new google.charts.Line(document.getElementById('line_top_x'));
-
-    chart.draw(data, google.charts.Line.convertOptions(options));
-}
-</script>
-
-
-
-<!-- events script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="{{ asset('asset/js/calender.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<!-- events script -->
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <script>
-// ============== HELPER FUNCTIONS ==============
-function toggleExpansion(e) {
-    e.target.classList.toggle("ellipsis");
-}
+// ========== GLOBAL FUNCTIONS ==========
+let currentAnimationInterval = null;
 
 function removefancy() {
     $('#fancyContainer').modal('hide');
     let fancycontrols = document.querySelector('#fancyControls');
     if (fancycontrols && fancycontrols.firstChild) {
-        fancycontrols.removeChild(fancycontrols.firstChild);
+        while (fancycontrols.firstChild) {
+            fancycontrols.removeChild(fancycontrols.firstChild);
+        }
     }
 }
 
-function makeFancy(e, selector) {
-    const eventsgallery = document.querySelectorAll(`.${selector}`);
-    if (!eventsgallery.length) return;
-
-    let modalBody = document.createElement('div');
-    modalBody.setAttribute('id', 'fancyContainerInner');
-    modalBody.classList.add('carousel-inner');
-
-    for (let eventGallery of eventsgallery) {
-        let carouselItem = document.createElement('div');
-        if (e.target === eventGallery) {
-            carouselItem.classList.add('carousel-item', 'active');
-        } else {
-            carouselItem.classList.add('carousel-item');
-        }
-        let imgTag = document.createElement('img');
-        imgTag.src = eventGallery.src;
-        imgTag.style.width = '100%';
-        imgTag.style.height = 'auto';
-
-        let caption = eventGallery.parentElement?.querySelector('.caption')?.innerHTML || '';
-        let captionContainer = document.createElement('div');
-        captionContainer.innerHTML = caption;
-        captionContainer.style.padding = '20px';
-        captionContainer.style.textAlign = 'center';
-
-        carouselItem.appendChild(imgTag);
-        carouselItem.appendChild(captionContainer);
-        modalBody.appendChild(carouselItem);
+function openNoticeFancy(imgSrc, description) {
+    const modalBodyInner = document.querySelector('#fancyControls');
+    if (modalBodyInner) {
+        let innerDiv = document.createElement('div');
+        innerDiv.classList.add('carousel-inner');
+        innerDiv.innerHTML = `
+            <div class="carousel-item active">
+                <img src="${imgSrc}" style="width:100%; max-height:70vh; object-fit:contain; border-radius: 16px;">
+                <div class="p-4 text-center" style="background: white; border-radius: 16px; margin-top: 15px;">${description || 'No additional description'}</div>
+            </div>
+        `;
+        const existing = document.querySelector('#fancyContainerInner');
+        if (existing) existing.remove();
+        innerDiv.id = 'fancyContainerInner';
+        modalBodyInner.prepend(innerDiv);
+        $('#fancyContainer').modal('show');
     }
-
-    let fancyControls = document.querySelector('#fancyControls');
-    if (fancyControls) {
-        const existingInner = document.querySelector('#fancyContainerInner');
-        if (existingInner) existingInner.remove();
-        fancyControls.prepend(modalBody);
-    }
-
-    $('#fancyContainer').modal('show');
-    setTimeout(() => {
-        $('#fancyControls').carousel('cycle');
-    }, 100);
 }
 
-// ============== CALENDAR INITIALIZATION ==============
-$(document).ready(function() {
-    console.log('Document ready - initializing calendar and events');
+function openNoticeDetail(title, date, description, imgSrc) {
+    $('#noticeDetailTitle').text(title);
+    $('#noticeDetailName').text(title);
+    $('#noticeDetailDate').text(date);
+    $('#noticeDetailDescription').html(description || 'No additional details available.');
+    $('#noticeDetailImage').attr('src', imgSrc);
+    $('#noticeDetailModal').modal('show');
+}
 
-    // Initialize calendar
-    if (typeof dycalendar !== 'undefined') {
-        dycalendar.draw({
-            target: "#dycalendar",
-            type: "month",
-            highlighttoday: true,
-            prevnextbutton: "show"
+// NEW FUNCTION: Open Event Detail Modal
+
+function openEventDetail(imgSrc, name, description, time) {
+    console.log('Opening event modal:', {
+        imgSrc,
+        name,
+        description,
+        time
+    });
+
+    try {
+        // Set modal content
+        $('#eventDetailName').text(name || 'Event Details');
+        $('#eventDetailTime').text(time || 'Time not specified');
+        $('#eventDetailDescription').html(description || 'No additional details available.');
+
+        // Set image with fallback
+        const imageElement = $('#eventDetailImage');
+        imageElement.attr('src', imgSrc);
+
+        // Handle image load error
+        imageElement.off('error').on('error', function() {
+            $(this).attr('src', '/asset/image/empty.jpg');
         });
+
+        // Show modal using jQuery (works with Bootstrap 4 and 5)
+        $('#eventDetailModal').modal('show');
+
+    } catch (error) {
+        console.error('Error opening event modal:', error);
+        // Fallback alert for debugging
+        alert('Event: ' + name + '\nTime: ' + time + '\n\n' + description);
     }
+}
 
-    // Load all events
-    setTimeout(loadAllEvents, 500);
-
-    // Calendar click handler
-    function handleCalendarClick(e) {
-        const td = e.target.closest('td');
-        if (!td) return;
-
-        const clickedDate = td.innerText.trim().padStart(2, '0');
-        const monthYearElement = document.querySelector('.dycalendar-span-month-year');
-
-        if (monthYearElement && clickedDate && !isNaN(parseInt(clickedDate))) {
-            const monthYearText = monthYearElement.innerText;
-            const dateObj = new Date(`${monthYearText} ${clickedDate}`);
-
-            if (!isNaN(dateObj.getTime())) {
-                const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-                const year = dateObj.getFullYear().toString();
-                const eventsdate = clickedDate + '-' + month + '-' + year;
-                console.log('Date clicked:', eventsdate);
-                get_event(eventsdate);
-            }
-        }
-    }
-
-    // Attach click handler
-    function attachCalendarClick() {
-        document.querySelectorAll('.dycalendar-body table td').forEach(td => {
-            td.removeEventListener('click', handleCalendarClick);
-            td.addEventListener('click', handleCalendarClick);
-        });
-    }
-
-    setTimeout(attachCalendarClick, 1000);
-
-    // Observer for calendar changes
-    const calendarObserver = new MutationObserver(attachCalendarClick);
-    const calendarElement = document.getElementById('dycalendar');
-    if (calendarElement) {
-        calendarObserver.observe(calendarElement, {
-            childList: true,
-            subtree: true
-        });
-    }
-});
-
-// ============== EVENTS CAROUSEL FUNCTIONS ==============
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
 
 function formatDisplayDate(dateStr) {
     if (!dateStr || dateStr === 'Invalid Date') return 'Invalid Date';
@@ -2245,195 +1364,179 @@ function formatDisplayDate(dateStr) {
     return dateStr;
 }
 
-function getSlidesPerView() {
-    if (window.innerWidth >= 1200) return 3;
-    if (window.innerWidth >= 768) return 2;
-    return 1;
-}
+function displayEventsMarquee(events, title) {
+    const wrapperDiv = $('.events_today_wrapper');
 
-function highlightDates(eventDates) {
-    setTimeout(() => {
-        document.querySelectorAll('.dycalendar-body table td').forEach(td => {
-            td.classList.remove('highlighted-date');
-            td.style.backgroundColor = '';
-            td.style.color = '';
-            td.style.fontWeight = '';
-        });
-
-        eventDates.forEach(date => {
-            if (!date) return;
-            const day = date.split('-')[0];
-            document.querySelectorAll('.dycalendar-body table td').forEach(td => {
-                if (td.innerText.trim() === day) {
-                    td.classList.add('highlighted-date');
-                    td.style.backgroundColor = '#680EDA';
-                    td.style.color = 'white';
-                    td.style.fontWeight = 'bold';
-                }
-            });
-        });
-    }, 200);
-}
-
-function displayEventsInCarousel(events, title) {
-    console.log('displayEventsInCarousel called with:', events.length, 'events', title);
-
-    // Clear existing content
-    $('.events_today_wrapper').empty();
-
-    if (!events || events.length == 0) {
-        console.log('No events to display');
-        $('.events_today_wrapper').html(`
-            <div class="noevents">No Events Found</div>
+    if (!events || events.length === 0) {
+        wrapperDiv.html(`
+            <div class="events-modern-container">
+                <div class="events-header">
+                    <h4><i class="fas fa-calendar-alt"></i> ${escapeHtml(title)}</h4>
+                    <span class="events-count-badge">0 events</span>
+                </div>
+                <div class="no-events-modern">
+                    <i class="far fa-calendar-times"></i>
+                    <p class="mb-0">No events scheduled</p>
+                    <small class="text-muted">Select a date to view events</small>
+                </div>
+            </div>
         `);
         return;
     }
 
-    console.log('Building marquee HTML with', events.length, 'events');
-
-    let marqueeHtml = `
-        <div class="events-marquee-container">
-            <div class="marquee-header">
-                <h4>
-                    <i class="fas fa-calendar-alt"></i> ${title}
-                    <span>(${events.length} events)</span>
-                </h4>
+    let eventsHtml = `
+        <div class="events-modern-container">
+            <div class="events-header">
+                <h4><i class="fas fa-calendar-alt"></i> ${escapeHtml(title)}</h4>
+                <span class="events-count-badge">${events.length} event${events.length > 1 ? 's' : ''}</span>
             </div>
-            <div class="marquee-wrapper">
-                <div class="marquee-list">
-        `;
+            <div class="events-marquee-wrapper">
+                <div class="events-marquee-list">
+    `;
 
-    let count = 1;
-    // Show each event exactly once
-    events.forEach((row) => {
-        if (count >= 5) count = 1;
+    const eventTypeColors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD'];
 
+    events.forEach((ev, idx) => {
         let imagePath = '/asset/image/empty.jpg';
-        if (row.event_image && row.event_image !== '/empty.jpg') {
-            imagePath = row.event_image.startsWith('/') ? row.event_image :
-                `/uploads/notice/126/${row.event_image}`;
+        if (ev.event_image && ev.event_image !== '/empty.jpg') {
+            imagePath = ev.event_image.startsWith('/') ? ev.event_image :
+                `/uploads/notice/126/${ev.event_image}`;
         }
 
-        marqueeHtml += `
-            <div class="marquee-item">
-                <div class="card event_type event_type_${count}">
-                    <a class="alignments">
-                        <img class="events_image eventsHasFancy" 
-                             src="${imagePath}" 
-                             alt="${row.event_name}"
-                             onclick="makeFancy(event, 'eventsHasFancy')"
-                             onerror="this.src='/asset/image/empty.jpg'">
-                        <span class="caption" style="display:none;">${row.event_description || ''}</span>
-                        <div>
-                            <p class="event-name ellipsis" title="${row.event_name}">${row.event_name}</p>
-                            <small>${row.event_time || 'All Day'}</small>
+        const typeColor = eventTypeColors[idx % eventTypeColors.length];
+
+        // Store data in data attributes
+        const eventName = escapeHtml(ev.event_name || 'Event');
+        const eventTime = escapeHtml(ev.event_time || 'All Day');
+        const eventDesc = escapeHtml(ev.event_description || '');
+
+        eventsHtml += `
+            <div class="event-card-modern" 
+                 data-event-name="${eventName.replace(/"/g, '&quot;')}" 
+                 data-event-time="${eventTime.replace(/"/g, '&quot;')}" 
+                 data-event-desc="${eventDesc.replace(/"/g, '&quot;')}" 
+                 data-event-image="${imagePath}">
+                <div class="event-card-link">
+                    <img class="event-card-image" src="${imagePath}" onerror="this.src='/asset/image/empty.jpg'">
+                    <div class="event-card-details">
+                        <div class="event-card-name">
+                            <span class="event-type-dot" style="background: ${typeColor};"></span>
+                            ${eventName}
                         </div>
-                    </a>
+                        <div class="event-card-time">
+                            <i class="far fa-clock"></i> ${eventTime}
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
-        count++;
     });
 
-    // ONLY add clone if there are MORE THAN 1 event
     if (events.length > 1) {
-        // Add a clone of the first event at the end for seamless transition
         let firstEvent = events[0];
-        let firstCount = 1;
-
         let firstImagePath = '/asset/image/empty.jpg';
         if (firstEvent.event_image && firstEvent.event_image !== '/empty.jpg') {
             firstImagePath = firstEvent.event_image.startsWith('/') ? firstEvent.event_image :
                 `/uploads/notice/126/${firstEvent.event_image}`;
         }
 
-        marqueeHtml += `
-            <div class="marquee-item clone-item">
-                <div class="card event_type event_type_${firstCount}">
-                    <a class="alignments">
-                        <img class="events_image eventsHasFancy" 
-                             src="${firstImagePath}" 
-                             alt="${firstEvent.event_name}"
-                             onclick="makeFancy(event, 'eventsHasFancy')"
-                             onerror="this.src='/asset/image/empty.jpg'">
-                        <span class="caption" style="display:none;">${firstEvent.event_description || ''}</span>
-                        <div>
-                            <p class="event-name ellipsis" title="${firstEvent.event_name}">${firstEvent.event_name}</p>
-                            <small>${firstEvent.event_time || 'All Day'}</small>
+        const firstName = escapeHtml(firstEvent.event_name || 'Event');
+        const firstTime = escapeHtml(firstEvent.event_time || 'All Day');
+        const firstDesc = escapeHtml(firstEvent.event_description || '');
+
+        eventsHtml += `
+            <div class="event-card-modern clone-item" 
+                 data-event-name="${firstName.replace(/"/g, '&quot;')}" 
+                 data-event-time="${firstTime.replace(/"/g, '&quot;')}" 
+                 data-event-desc="${firstDesc.replace(/"/g, '&quot;')}" 
+                 data-event-image="${firstImagePath}">
+                <div class="event-card-link">
+                    <img class="event-card-image" src="${firstImagePath}" onerror="this.src='/asset/image/empty.jpg'">
+                    <div class="event-card-details">
+                        <div class="event-card-name">
+                            <span class="event-type-dot" style="background: ${eventTypeColors[0]};"></span>
+                            ${firstName}
                         </div>
-                    </a>
+                        <div class="event-card-time">
+                            <i class="far fa-clock"></i> ${firstTime}
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
     }
 
-    marqueeHtml += `
-                </div>
-            </div>
-        </div>
-        `;
+    eventsHtml += `</div></div></div>`;
+    wrapperDiv.html(eventsHtml);
 
-    $('.events_today_wrapper').html(marqueeHtml);
-    console.log('Marquee HTML appended to wrapper');
+    // Attach click event using event delegation
+    $('.events_today_wrapper').off('click', '.event-card-modern').on('click', '.event-card-modern', function(e) {
+        e.preventDefault();
+        const $this = $(this);
+        const eventName = $this.data('event-name');
+        const eventTime = $this.data('event-time');
+        const eventDesc = $this.data('event-desc');
+        const eventImage = $this.data('event-image');
 
-    // Initialize marquee animation
+        console.log('Event clicked:', {
+            eventName,
+            eventTime,
+            eventDesc,
+            eventImage
+        });
+        openEventDetail(eventImage, eventName, eventDesc, eventTime);
+    });
+
+    // Marquee animation
     setTimeout(() => {
-        initializeMarquee(events.length);
+        const list = document.querySelector('.events-marquee-list');
+        if (list && events.length > 1) {
+            const items = list.children;
+            if (items.length > 0) {
+                const itemHeight = items[0]?.offsetHeight + 12 || 85;
+                const totalItems = items.length;
+                const duration = Math.max(12, totalItems * 1.5);
+                list.style.animation = `smooth-marquee ${duration}s linear infinite`;
+
+                const wrapper = document.querySelector('.events-marquee-wrapper');
+                if (wrapper) {
+                    const newWrapper = wrapper.cloneNode(true);
+                    wrapper.parentNode.replaceChild(newWrapper, wrapper);
+
+                    newWrapper.addEventListener('mouseenter', () => {
+                        if (list) list.style.animationPlayState = 'paused';
+                    });
+                    newWrapper.addEventListener('mouseleave', () => {
+                        if (list) list.style.animationPlayState = 'running';
+                    });
+                }
+            }
+        }
     }, 100);
+}
 
+function highlightDates(eventDates) {
     setTimeout(() => {
-        document.querySelectorAll(".event-name").forEach(el => {
-            el.addEventListener("click", toggleExpansion);
+        const allCells = document.querySelectorAll('.dycalendar-body table td');
+        allCells.forEach(td => {
+            td.classList.remove('highlighted-date');
+            td.style.backgroundColor = '';
+            td.style.color = '';
+        });
+
+        eventDates.forEach(date => {
+            if (!date) return;
+            const day = String(date).split('-')[0];
+            allCells.forEach(td => {
+                if (td.innerText.trim() === day) {
+                    td.classList.add('highlighted-date');
+                }
+            });
         });
     }, 200);
 }
 
-// Update initializeMarquee function
-function initializeMarquee(eventCount) {
-    const wrapper = document.querySelector('.marquee-wrapper');
-    const list = document.querySelector('.marquee-list');
-
-    if (!wrapper || !list) return;
-
-    const items = list.children;
-    if (items.length === 0) return;
-
-    // Remove any existing animation
-    list.style.animation = 'none';
-
-    // If only one event, no need to animate
-    if (eventCount <= 1) {
-        console.log('Single event - no animation needed');
-        return;
-    }
-
-    // Force reflow
-    void list.offsetHeight;
-
-    // Calculate total height
-    const itemHeight = items[0].offsetHeight + 10; // height + gap
-    const totalHeight = itemHeight * (items.length - 1); // Exclude clone from height calculation
-
-    // Set animation duration based on number of items
-    const duration = Math.max(15, items.length * 1.5);
-
-    // Apply animation
-    list.style.animation = `marquee-scroll ${duration}s linear infinite`;
-
-    // Pause on hover
-    wrapper.addEventListener('mouseenter', () => {
-        list.style.animationPlayState = 'paused';
-    });
-
-    wrapper.addEventListener('mouseleave', () => {
-        if (eventCount > 1) {
-            list.style.animationPlayState = 'running';
-        }
-    });
-}
-
-// ============== API CALLS - FIXED FOR YOUR RESPONSE STRUCTURE ==============
-
+// ========== API CALLS ==========
 function loadAllEvents() {
     console.log('Loading all events...');
     $.ajax({
@@ -2443,38 +1546,43 @@ function loadAllEvents() {
             _token: '{{csrf_token()}}'
         },
         success: function(response) {
-            console.log('All events response:', response);
-
-            // FIX: Check if response has rows directly
+            console.log('Events loaded:', response);
             if (response && response.rows) {
-                displayEventsInCarousel(response.rows, 'All Events');
+                displayEventsMarquee(response.rows, 'Upcoming Events');
                 const eventDates = new Set(response.rows.map(row => row.event_date));
                 highlightDates(eventDates);
-            }
-            // FIX: Check if response has Data with rows
-            else if (response && response.Data) {
+            } else if (response && response.Data) {
                 let data = typeof response.Data === 'string' ? JSON.parse(response.Data) : response.Data;
                 if (data.rows) {
-                    displayEventsInCarousel(data.rows, 'All Events');
+                    displayEventsMarquee(data.rows, 'Upcoming Events');
                     const eventDates = new Set(data.rows.map(row => row.event_date));
                     highlightDates(eventDates);
                 } else {
-                    displayEventsInCarousel([], 'All Events');
+                    displayEventsMarquee([], 'Upcoming Events');
                 }
             } else {
-                console.log('No events data found in response');
-                displayEventsInCarousel([], 'All Events');
+                displayEventsMarquee([], 'Upcoming Events');
             }
         },
         error: function(xhr, status, error) {
-            console.log('Error loading events:', error);
-            displayEventsInCarousel([], 'All Events');
+            console.error('Error loading events:', error);
+            displayEventsMarquee([], 'Upcoming Events');
         }
     });
 }
 
 function get_event(eventsdate) {
     console.log('Loading events for date:', eventsdate);
+    // Show loading state
+    $('.events_today_wrapper').html(`
+        <div class="events-modern-container">
+            <div class="events-header">
+                <h4><i class="fas fa-calendar-alt"></i> Loading...</h4>
+            </div>
+            <div class="loading-skeleton" style="height: 300px; border-radius: 16px;"></div>
+        </div>
+    `);
+
     $.ajax({
         url: "{{ url('/dashboardevents/fetch') }}",
         type: 'GET',
@@ -2483,70 +1591,106 @@ function get_event(eventsdate) {
             _token: '{{csrf_token()}}'
         },
         success: function(response) {
-            console.log('Date events response:', response);
-
-            // FIX: Check if response has rows directly
             if (response && response.rows) {
-                displayEventsInCarousel(response.rows, `Events for ${formatDisplayDate(eventsdate)}`);
+                displayEventsMarquee(response.rows, `Events for ${formatDisplayDate(eventsdate)}`);
                 const eventDates = new Set(response.rows.map(row => row.event_date));
                 highlightDates(eventDates);
-            }
-            // FIX: Check if response has Data with rows
-            else if (response && response.Data) {
+            } else if (response && response.Data) {
                 let data = typeof response.Data === 'string' ? JSON.parse(response.Data) : response.Data;
                 if (data.rows) {
-                    displayEventsInCarousel(data.rows, `Events for ${formatDisplayDate(eventsdate)}`);
+                    displayEventsMarquee(data.rows, `Events for ${formatDisplayDate(eventsdate)}`);
                     const eventDates = new Set(data.rows.map(row => row.event_date));
                     highlightDates(eventDates);
                 } else {
-                    displayEventsInCarousel([], `Events for ${formatDisplayDate(eventsdate)}`);
+                    displayEventsMarquee([], `Events for ${formatDisplayDate(eventsdate)}`);
                 }
             } else {
-                console.log('No events data found in response');
-                displayEventsInCarousel([], `Events for ${formatDisplayDate(eventsdate)}`);
+                displayEventsMarquee([], `Events for ${formatDisplayDate(eventsdate)}`);
             }
         },
-        error: function(xhr, status, error) {
-            console.log('Error loading date events:', error);
-            displayEventsInCarousel([], `Events for ${formatDisplayDate(eventsdate)}`);
+        error: function() {
+            displayEventsMarquee([], `Events for ${formatDisplayDate(eventsdate)}`);
         }
     });
 }
 
-// Remove any duplicate event listeners that might be causing the error
-document.addEventListener('DOMContentLoaded', function() {
-    // This ensures no duplicate listeners
+// ========== CALENDAR INITIALIZATION ==========
+$(document).ready(function() {
+    // Initialize calendar with custom options
+    if (typeof dycalendar !== 'undefined') {
+        dycalendar.draw({
+            target: "#dycalendar",
+            type: "month",
+            highlighttoday: true,
+            prevnextbutton: "show",
+            monthformat: "full"
+        });
+    } else {
+        console.warn('dycalendar not loaded');
+    }
+
+    // Load events after calendar is ready
+    setTimeout(loadAllEvents, 100);
+
+    // Calendar click handler with improved stability
+    function handleCalendarClick(e) {
+        const td = e.target.closest('td');
+        if (!td) return;
+
+        // Skip header row cells
+        if (td.parentElement && td.parentElement.rowIndex === 0) return;
+
+        const clickedDate = td.innerText.trim().padStart(2, '0');
+        const monthYearElement = document.querySelector('.dycalendar-span-month-year');
+
+        if (monthYearElement && clickedDate && !isNaN(parseInt(clickedDate))) {
+            const monthYearText = monthYearElement.innerText;
+            const dateObj = new Date(`${monthYearText} ${clickedDate}`);
+
+            if (!isNaN(dateObj.getTime())) {
+                const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                const year = dateObj.getFullYear().toString();
+                const eventsdate = clickedDate + '-' + month + '-' + year;
+                get_event(eventsdate);
+            }
+        }
+    }
+
+    function attachCalendarClick() {
+        const cells = document.querySelectorAll('.dycalendar-body table td');
+        cells.forEach(td => {
+            // Skip header row cells by checking parent row index
+            if (td.parentElement && td.parentElement.rowIndex === 0) return;
+            td.removeEventListener('click', handleCalendarClick);
+            td.addEventListener('click', handleCalendarClick);
+        });
+    }
+
+    // Initial attach with delay for calendar render
+    setTimeout(attachCalendarClick, 500);
+
+    // Observer for calendar changes (month navigation)
+    const calendarObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList' || mutation.type === 'subtree') {
+                setTimeout(attachCalendarClick, 100);
+            }
+        });
+    });
+
+    const calendarElement = document.getElementById('dycalendar');
+    if (calendarElement) {
+        calendarObserver.observe(calendarElement, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    // Cleanup on page unload
+    $(window).on('beforeunload', function() {
+        if (calendarObserver) calendarObserver.disconnect();
+        if (currentAnimationInterval) clearTimeout(currentAnimationInterval);
+    });
 });
 </script>
-
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script> -->
-
-<!-- <script>
-    $('[data-fancybox="gallery"]').fancybox({
-        buttons: [
-            "slideShow",
-            "thumbs",
-            "zoom",
-            "fullScreen",
-            "share",
-            "close"
-        ],
-        loop: false,
-        protect: true
-    });
-    $('[data-fancybox="gallery1"]').fancybox({
-        buttons: [
-            "slideShow",
-            "thumbs",
-            "zoom",
-            "fullScreen",
-            "share",
-            "close"
-        ],
-        loop: false,
-        protect: true,
-        captionPosition: "inside"
-    });
-</script> -->
-
 @endsection
