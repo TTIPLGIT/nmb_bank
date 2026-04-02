@@ -948,7 +948,7 @@
                     <div class="card noShadow notice_board_list"
                         style="width:100% !important; background: transparent; border: none; height: auto !important;">
                         <div class="card-header bg-transparent border-0"
-                            style="background:transparent !important; padding: 1.5rem 1.5rem 0 1.5rem;">
+                            style="background:transparent !important; padding: 0rem 1.5rem 1.5rem 1.5rem;">
                             <h5 style="font-weight: 800; color: #680EDA; margin-bottom: 0; font-size: 1.4rem;">
                                 <i class="fas fa-bullhorn me-2"></i> Announcements & Updates
                             </h5>

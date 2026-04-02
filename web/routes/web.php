@@ -80,9 +80,9 @@ use App\Http\Controllers\GamificationLevelController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Elearning_chartsController;
 
-use App\Http\Controllers\ScormController;
-use App\Http\Controllers\ScormPlayerController;
-use App\Http\Controllers\ScormTrackingController;
+
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ClassController;
 
 Route::get('/check-openssl', function () {
     if (extension_loaded('openssl')) {
@@ -900,3 +900,9 @@ Route::post('/custom_filed_store', [App\Http\Controllers\DesignationController::
 Route::get('/custom_filed_fetch/{id}', [App\Http\Controllers\DesignationController::class, 'custom_filed_fetch'])->name('custom_filed_fetch');
 Route::post('/custom_field_update', [App\Http\Controllers\DesignationController::class, 'custom_field_update'])->name('custom_field_update');
 Route::post('/custom_filed_delete/{id}', [App\Http\Controllers\DesignationController::class, 'custom_filed_delete'])->name('custom_filed_delete');
+
+
+
+    Route::get('/courses', [App\Http\Controllers\CourseController::class, 'index'])->name('admin.courses.index');
+   Route::get('/admin/course/create', [App\Http\Controllers\tryController::class, 'course_create'])->name('admin.course.create');
+    

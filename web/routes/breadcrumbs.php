@@ -429,6 +429,26 @@ Breadcrumbs::for('admincourse', function (BreadcrumbTrail $trail) {
     $trail->push('Course', route('admincourse'));
 });
 
+Breadcrumbs::for('list_course', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Course', route('admin.courses.index'));
+});
+
+Breadcrumbs::for('create_course', function (BreadcrumbTrail $trail) {
+    $trail->parent('list_course');
+    $trail->push('Create Course', route('admin.course.create'));
+});
+
+Breadcrumbs::for('edit_course', function (BreadcrumbTrail $trail) {
+    $trail->parent('list_course');
+    $trail->push('Edit Course', route('admin.course.create'));
+});
+
+Breadcrumbs::for('show_course', function (BreadcrumbTrail $trail) {
+    $trail->parent('list_course');
+    $trail->push('Show Course', route('admin.course.create'));
+});
+
 
 Breadcrumbs::for('Coursepreview', function (BreadcrumbTrail $trail) {
     $trail->parent('home');

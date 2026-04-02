@@ -397,16 +397,90 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Select2 customization */
-.select2-container--default .select2-selection--multiple {
-    border: 1px solid #ced4da;
+.select2-container .select2-selection--single {
+    height: 39px !important;
+}
+
+.select2-selection__choice {
+    background-color: #680EDA !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: red !important;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-container--default .select2-search--inline .select2-search__field {
+    width: 300px !important;
+}
+
+.select2-results__option {
+    padding-right: 20px;
+    vertical-align: middle;
+}
+
+.select2-results__option:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    height: 25px;
+    width: 20px;
+    border: 2px solid #e9e9e9;
     border-radius: 4px;
-    min-height: 38px;
+    background-color: #fff;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+.select2-results__option[aria-selected=true]:before {
+    font-family: fontAwesome;
+    content: "\f00c";
+    color: #fff;
+    background-color: #f77750;
+    border: 0;
+    display: inline-block;
+    padding-left: 3px;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #fff;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #78f1f1;
+    color: #272727;
+    font-weight: bold;
+}
+
+.select2-results__option[aria-selected] {
+    cursor: pointer;
+    color: #060606 !important;
+    font-weight: bold;
+}
+
+.select2-container--default .select2-selection--multiple {
+    margin-bottom: 10px;
+}
+
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+    border-radius: 4px;
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+    border-color: #f77750;
+    border-width: 2px;
+}
+
+.select2-container--default .select2-selection--multiple {
+    border-width: 2px;
+}
+
+.select2-container--open .select2-dropdown--below {
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 </style>
 
@@ -952,9 +1026,9 @@ window.onload = function() {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>User Name <span class="text-danger">*</span></label>
-                                <select name="user_ids[]" class="user_id_course form-control js-select2" id="user_id"
-                                    required multiple="multiple">
-                                    <option value="All" selected>All</option>
+                                <select name="user_ids[]" class="form-control select2" id="user_id" required multiple>
+
+                                    <!-- <option value="All" selected>All</option> -->
                                     @foreach($rows['users'] as $data)
                                     @php
                                     // Check if this user ID is selected (only if "all" is not selected)
@@ -1292,12 +1366,25 @@ window.onload = function() {
     margin-bottom: 1.5rem;
 }
 </style>
+<script>
+$(document).ready(function() {
 
-<!-- Select2 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    $('.js-select5').select2({
+        width: '100%',
+        placeholder: "Select Class Name",
+        closeOnSelect: false,
+        allowClear: true
+    });
 
-<!-- JavaScript for modal functionality -->
-<!-- Replace the entire JavaScript section at the end with this: -->
+});
+$(".select2").select2({
+    closeOnSelect: false,
+    placeholder: "Select User Name",
+    allowHtml: true,
+    allowClear: true,
+    tags: true
+});
+</script>
 <script type="text/javascript">
 $(document).ready(function() {
     // Prevent horizontal scroll

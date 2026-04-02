@@ -2,293 +2,293 @@
 
 @section('content')
 <style>
-    input[type=checkbox] {
-        display: inline-block;
+input[type=checkbox] {
+    display: inline-block;
+}
+
+.no-arrow {
+    -moz-appearance: textfield;
+}
+
+.no-arrow::-webkit-inner-spin-button {
+    display: none;
+}
+
+.no-arrow::-webkit-outer-spin-button,
+.no-arrow::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.nav-tabs {
+    background-color: #0068a7 !important;
+    border-radius: 29px !important;
+    padding: 1px !important;
+
+}
+
+.nav-item.active {
+    background-image: linear-gradient(to right, #2a675a, #2a675a, #2a675a, #2a675a, #2a675a);
+    border-radius: 31px !important;
+    height: 100% !important;
+}
+
+.nav-link.active {
+    background-image: linear-gradient(to right, #2a675a, #2a675a, #2a675a, #2a675a, #2a675a);
+    border-radius: 31px !important;
+    height: 100% !important;
+}
+
+:root {
+    --borderWidth: 5px;
+    --height: 24px;
+    --width: 12px;
+    --borderColor: #78b13f;
+}
+
+
+
+
+.nav-justified {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.gender {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.egc {
+    display: flex;
+    border: 1px solid #350756;
+    padding: 8px 25px 8px 8px;
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.dq {
+    font-size: 16px;
+    width: 80%;
+    font-weight: 600;
+}
+
+.answer {
+    width: 15%;
+    display: flex;
+    color: #04092e !important;
+    justify-content: space-around;
+}
+
+.questions {
+    color: #000c62 !important
+}
+
+input[type='radio']:checked:after {
+    background-color: #34395e !important;
+}
+
+input[type='radio']:after {
+    background-color: #34395e !important;
+}
+
+/* radiocss */
+.switch-field {
+    display: flex;
+
+
+}
+
+.switch-field input {
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+}
+
+.switch-field label {
+    background-color: #e4e4e4;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    line-height: 1;
+    text-align: center;
+    padding: 8px 16px;
+    margin-right: -1px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.1s ease-in-out;
+}
+
+.switch-field label:hover {
+    cursor: pointer;
+}
+
+.switch-field input:checked+label {
+    background-color: #a5dc86;
+    box-shadow: none;
+}
+
+.switch-field label:first-of-type {
+    border-radius: 4px 0 0 4px;
+}
+
+.switch-field label:last-of-type {
+    border-radius: 0 4px 4px 0;
+}
+
+/* endcss */
+.vl {
+    border-left: 1px solid #350756;
+    height: 40px;
+}
+
+.close {
+    color: red;
+    opacity: 1;
+}
+
+.close:hover {
+
+    color: red;
+
+}
+
+.note {
+    background-image: linear-gradient(to right, #3f9a9d, #3f9a9d, #3f9a9d, #3f9a9d, #3f9a9d);
+}
+
+a.btn.btn-success.btn-lg.question {
+    /* float: right; */
+}
+
+.card.longquestion {
+    padding: 15px;
+}
+
+.wordquestion {
+    display: flex;
+}
+
+h4.modal-title.long {
+
+    text-align: center;
+    padding: 20px;
+    font-size: 25px;
+
+}
+
+h4.modal-title.mcq {
+    text-align: center;
+    padding: 20px;
+    font-size: 25px;
+}
+
+h4.modal-title.short {
+    text-align: center;
+    padding: 20px;
+    font-size: 25px;
+}
+
+h4.modal-title.true {
+    text-align: center;
+    padding: 20px;
+    font-size: 25px;
+}
+
+.container.edit.longquestion {
+    padding: 17px;
+}
+
+form.longqustionsform {
+
+    margin: 15px;
+    margin-right: 0px;
+    margin-left: 37px;
+}
+
+.btn>i {
+
+    /* background-color: darkolivegreen; */
+}
+
+@media only screen and (max-width: 425px) {
+    .col-sm-2.addquizmodal {
+        margin-bottom: 12px;
     }
 
-    .no-arrow {
-        -moz-appearance: textfield;
+    textarea#quistion {
+        width: 100%;
     }
 
-    .no-arrow::-webkit-inner-spin-button {
-        display: none;
+    textarea#quistions2 {
+        width: 100%;
     }
 
-    .no-arrow::-webkit-outer-spin-button,
-    .no-arrow::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+    textarea#quistion11 {
+        width: 100%;
     }
+}
 
-    .nav-tabs {
-        background-color: #0068a7 !important;
-        border-radius: 29px !important;
-        padding: 1px !important;
-
-    }
-
-    .nav-item.active {
-        background-image: linear-gradient(to right, #2a675a, #2a675a, #2a675a, #2a675a, #2a675a);
-        border-radius: 31px !important;
-        height: 100% !important;
-    }
-
-    .nav-link.active {
-        background-image: linear-gradient(to right, #2a675a, #2a675a, #2a675a, #2a675a, #2a675a);
-        border-radius: 31px !important;
-        height: 100% !important;
-    }
-
-    :root {
-        --borderWidth: 5px;
-        --height: 24px;
-        --width: 12px;
-        --borderColor: #78b13f;
-    }
-
-
-
-
-    .nav-justified {
-        display: flex !important;
-        align-items: center !important;
-    }
-
-    .gender {
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-    }
-
-    .egc {
-        display: flex;
-        border: 1px solid #350756;
-        padding: 8px 25px 8px 8px;
-        align-items: center;
-
-        justify-content: space-between;
-    }
-
-    .dq {
-        font-size: 16px;
-        width: 80%;
-        font-weight: 600;
-    }
-
-    .answer {
-        width: 15%;
-        display: flex;
-        color: #04092e !important;
-        justify-content: space-around;
-    }
-
-    .questions {
-        color: #000c62 !important
-    }
-
-    input[type='radio']:checked:after {
-        background-color: #34395e !important;
-    }
-
-    input[type='radio']:after {
-        background-color: #34395e !important;
-    }
-
-    /* radiocss */
-    .switch-field {
-        display: flex;
-
-
-    }
-
-    .switch-field input {
-        position: absolute !important;
-        clip: rect(0, 0, 0, 0);
-        height: 1px;
-        width: 1px;
-        border: 0;
-        overflow: hidden;
-    }
-
-    .switch-field label {
-        background-color: #e4e4e4;
-        color: rgba(0, 0, 0, 0.6);
-        font-size: 14px;
-        line-height: 1;
-        text-align: center;
-        padding: 8px 16px;
-        margin-right: -1px;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
-        transition: all 0.1s ease-in-out;
-    }
-
-    .switch-field label:hover {
-        cursor: pointer;
-    }
-
-    .switch-field input:checked+label {
-        background-color: #a5dc86;
-        box-shadow: none;
-    }
-
-    .switch-field label:first-of-type {
-        border-radius: 4px 0 0 4px;
-    }
-
-    .switch-field label:last-of-type {
-        border-radius: 0 4px 4px 0;
-    }
-
-    /* endcss */
-    .vl {
-        border-left: 1px solid #350756;
-        height: 40px;
-    }
-
-    .close {
-        color: red;
-        opacity: 1;
-    }
-
-    .close:hover {
-
-        color: red;
-
-    }
-
-    .note {
-        background-image: linear-gradient(to right, #3f9a9d, #3f9a9d, #3f9a9d, #3f9a9d, #3f9a9d);
-    }
-
-    a.btn.btn-success.btn-lg.question {
-        /* float: right; */
-    }
-
-    .card.longquestion {
-        padding: 15px;
-    }
-
-    .wordquestion {
-        display: flex;
-    }
-
-    h4.modal-title.long {
-
-        text-align: center;
-        padding: 20px;
-        font-size: 25px;
-
-    }
-
-    h4.modal-title.mcq {
-        text-align: center;
-        padding: 20px;
-        font-size: 25px;
-    }
-
-    h4.modal-title.short {
-        text-align: center;
-        padding: 20px;
-        font-size: 25px;
-    }
-
-    h4.modal-title.true {
-        text-align: center;
-        padding: 20px;
-        font-size: 25px;
-    }
-
-    .container.edit.longquestion {
-        padding: 17px;
-    }
-
-    form.longqustionsform {
-
-        margin: 15px;
-        margin-right: 0px;
-        margin-left: 37px;
-    }
-
-    .btn>i {
-
-        /* background-color: darkolivegreen; */
-    }
-
-    @media only screen and (max-width: 425px) {
-        .col-sm-2.addquizmodal {
-            margin-bottom: 12px;
-        }
-
-        textarea#quistion {
-            width: 100%;
-        }
-
-        textarea#quistions2 {
-            width: 100%;
-        }
-
-        textarea#quistion11 {
-            width: 100%;
-        }
-    }
-
-    @media only screen and (max-width: 1024px) {
-        .btn.btn-lg {
-            padding: 10px 9px;
-            font-size: 12px;
-        }
-    }
-
+@media only screen and (max-width: 1024px) {
     .btn.btn-lg {
-        padding: 10px 10px;
+        padding: 10px 9px;
         font-size: 12px;
     }
+}
 
-    .no-arrow::-webkit-inner-spin-button {
-        display: none;
-    }
+.btn.btn-lg {
+    padding: 10px 10px;
+    font-size: 12px;
+}
 
-    .no-arrow::-webkit-outer-spin-button,
-    .no-arrow::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+.no-arrow::-webkit-inner-spin-button {
+    display: none;
+}
 
-    .form-control.default::-webkit-inner-spin-button,
-    .form-control.default::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+.no-arrow::-webkit-outer-spin-button,
+.no-arrow::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.form-control.default::-webkit-inner-spin-button,
+.form-control.default::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 </style>
 
 
 <style>
-    #counselorerroredit {
-        color: red;
-    }
+#counselorerroredit {
+    color: red;
+}
 
-    #supervisorerroredit {
-        color: red;
-    }
+#supervisorerroredit {
+    color: red;
+}
 
-    .m-top {
-        margin-top: 5%;
-    }
+.m-top {
+    margin-top: 5%;
+}
 </style>
 <style>
-    /* .select2-container {
+/* .select2-container {
         min-width: 300px !important;
     } */
 
-    .select2-container--default .select2-search--inline .select2-search__field {
-        width: 300px !important;
-    }
+.select2-container--default .select2-search--inline .select2-search__field {
+    width: 300px !important;
+}
 
-    .select2-results__option {
-        padding-right: 20px;
-        vertical-align: middle;
-    }
+.select2-results__option {
+    padding-right: 20px;
+    vertical-align: middle;
+}
 </style>
 
 
@@ -298,61 +298,61 @@
 
     <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
     <script>
-        $('#user_id').on('select2:select', function(e) {
-            alert("welcome")
-            const selectedValue = e.params.data.id;
+    $('#user_id').on('select2:select', function(e) {
+        alert("welcome")
+        const selectedValue = e.params.data.id;
 
 
-            if (selectedValue === 'all') {
-                const allValues = [];
+        if (selectedValue === 'all') {
+            const allValues = [];
 
-                // Get all option values except "all"
-                $('#user_id option').each(function() {
-                    const val = $(this).val();
-                    if (val !== 'all') {
-                        allValues.push(val);
-                    }
-                });
-
-                // Select all users (excluding 'all')
-                $('#user_id').val(allValues).trigger('change.select2');
-            }
-        });
-
-        // Optional: Clear all selections if user manually removes everything
-        $('#user_id').on('select2:unselect', function(e) {
-            if ($('#user_id').val() === null || $('#user_id').val().length === 0) {
-                $('#user_id').val(null).trigger('change.select2');
-            }
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            var message = $('#session_data').val();
-            // alert(message);
-            console.log(message);
-            swal.fire({
-                title: "Success",
-                text: message,
-                icon: "success",
+            // Get all option values except "all"
+            $('#user_id option').each(function() {
+                const val = $(this).val();
+                if (val !== 'all') {
+                    allValues.push(val);
+                }
             });
 
-        })
+            // Select all users (excluding 'all')
+            $('#user_id').val(allValues).trigger('change.select2');
+        }
+    });
+
+    // Optional: Clear all selections if user manually removes everything
+    $('#user_id').on('select2:unselect', function(e) {
+        if ($('#user_id').val() === null || $('#user_id').val().length === 0) {
+            $('#user_id').val(null).trigger('change.select2');
+        }
+    });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+        var message = $('#session_data').val();
+        // alert(message);
+        console.log(message);
+        swal.fire({
+            title: "Success",
+            text: message,
+            icon: "success",
+        });
+
+    })
     </script>
     @elseif(session('error'))
 
     <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
     <script type="text/javascript">
-        window.onload = function() {
-            var message = $('#session_data1').val();
-            swal.fire({
-                title: "Info",
-                text: message,
-                icon: "info",
-            });
+    window.onload = function() {
+        var message = $('#session_data1').val();
+        swal.fire({
+            title: "Info",
+            text: message,
+            icon: "info",
+        });
 
-        }
+    }
     </script>
     @endif
 
@@ -388,15 +388,16 @@
 
                         <!-- <div class="col-12"> -->
                         <div class="row">
-                            <div class="col-md-2 ">
+                            <!-- hidden as per new design  -->
+                            <!-- <div class="col-md-2 ">
                                 <select class="form-control default" id="result" name="result">
 
                                     <option selected value="classlist">Class List</option>
-                                    <option value="courselist">Course List</option>
+                                    <option value="courselist">Course List</option> 
 
                                 </select>
-                            </div>
-                            <div class="col-md-6"></div>
+                            </div> -->
+                            <div class="col-md-10"></div>
 
                             <div class="col-md-2 addquizmodal" id="addClassButton">
                                 <a type="button" style="font-size:15px;margin-bottom: 15px;"
@@ -405,12 +406,12 @@
                                             aria-hidden="true"></i></span></a>
                             </div>
 
-                            <div class="col-md-2" id="addCourseButton">
+                            <!-- <div class="col-md-2" id="addCourseButton">
                                 <a type="button" style="font-size:15px;margin-bottom: 15px;"
                                     class="btn btn-success btn-lg" title="Create" href="" data-toggle="modal"
                                     data-target="#addModal">Add Course <span><i class="fa fa-plus"
                                             aria-hidden="true"></i></span></a>
-                            </div>
+                            </div> -->
                         </div>
 
                     </div>
@@ -442,8 +443,8 @@
                                                     <tr>
                                                         <th>S.No</th>
                                                         <th>Class Name</th>
-                                                        <th>Class Duration</th>
-                                                        <th>Class Resource</th>
+                                                        <!-- <th>Class Duration</th> -->
+                                                        <!-- <th>Class Resource</th> -->
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -454,25 +455,25 @@
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$data->class_name}}</td>
-                                                        <td>{{$data->class_duration}} Mins</td>
+                                                        <!-- <td>{{$data->class_duration}} Mins</td> -->
 
-                                                        <?php if ($data->class_format == 'mp4') { ?>
-                                                            <td> <img src="{{ asset('uploads/class/126/mp4.png') }}" width="50px"
-                                                                    height="50px" alt="..."></td>
+                                                        <!-- <?php if ($data->class_format == 'mp4') { ?>
+                                                        <td> <img src="{{ asset('uploads/class/126/mp4.png') }}"
+                                                                width="50px" height="50px" alt="..."></td>
                                                         <?php    } elseif ($data->class_format == 'mp3') { ?>
-                                                            <td> <img src="{{ asset('uploads/class/126/mp3.png')}}" width="50px"
-                                                                    height="50px" alt="Image" /></td>
+                                                        <td> <img src="{{ asset('uploads/class/126/mp3.png')}}"
+                                                                width="50px" height="50px" alt="Image" /></td>
                                                         <?php    } elseif ($data->class_format == 'pdf') { ?>
-                                                            <td> <img src="{{ asset('uploads/class/126/pdf.png') }}" width="50px"
-                                                                    height="50px" alt="Image" /></td>
+                                                        <td> <img src="{{ asset('uploads/class/126/pdf.png') }}"
+                                                                width="50px" height="50px" alt="Image" /></td>
                                                         <?php    } elseif ($data->class_format == 'jpg' or 'png') { ?>
-                                                            <td> <img src="{{ asset('uploads/class/126/empty.jpg') }}" width="50px"
-                                                                    height="50px" alt="Image" /></td>
+                                                        <td> <img src="{{ asset('uploads/class/126/empty.jpg') }}"
+                                                                width="50px" height="50px" alt="Image" /></td>
 
                                                         <?php    } else { ?>
-                                                            <td> <img src="uploads/class/126/{{$data->resource_name}}"
-                                                                    width="50px" height="50px" alt="Image" /></td>
-                                                        <?php    } ?>
+                                                        <td> <img src="uploads/class/126/{{$data->resource_name}}"
+                                                                width="50px" height="50px" alt="Image" /></td>
+                                                        <?php    } ?> -->
                                                         <td>
                                                             <!-- <a class="btn btn-link" title="Edit" id="gcb"
                                                                 data-toggle="modal" data-target="#addModal4"
@@ -632,9 +633,11 @@
 
 
                                                             <!-- <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal3" onclick="fetch_courseupdate_new({{$data->course_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a> -->
-                                                            <a class="btn btn-link" title="Edit" href="{{ route('admin_course_edit', \Crypt::encrypt($data->course_id)) }}">
+                                                            <a class="btn btn-link" title="Edit"
+                                                                href="{{ route('admin_course_edit', \Crypt::encrypt($data->course_id)) }}">
                                                                 <i class="fas fa-pencil-alt" style="color:blue"></i></a>
-                                                            <a class="btn btn-link" title="show" href="{{ route('admin_course_show', \Crypt::encrypt($data->course_id)) }}">
+                                                            <a class="btn btn-link" title="show"
+                                                                href="{{ route('admin_course_show', \Crypt::encrypt($data->course_id)) }}">
                                                                 <i class="fas fa-eye" style="color:green"></i></a>
 
                                                             <a type="button" title="Delete"
@@ -797,100 +800,24 @@
 
 
 <script>
-    function class_delete(class_id) {
-        //alert(class_id);
+function class_delete(class_id) {
+    //alert(class_id);
 
-        Swal.fire({
-            title: "Are you you want to delete the Class?",
-            icon: "warning",
+    Swal.fire({
+        title: "Are you you want to delete the Class?",
+        icon: "warning",
 
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Delete",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "{{ route('class_delete') }}",
-                    type: 'POST',
-                    data: {
-                        class_id: class_id,
-
-                        _token: '{{csrf_token()}}'
-                    },
-                    error: function() {
-                        alert('Something is wrong');
-                    },
-                    success: function(data) {
-
-                        if (data['data'] == 0) {
-                            Swal.fire("Info!", data['message_cus'], "info", data['message_cus'])
-                            return false
-                        }
-
-                        if (result.value) {
-                            Swal.fire("Success!", "Class Deleted Successfully!", "success").then((
-                                result) => {
-
-                                location.replace(`/admincourse`);
-
-                            })
-                        }
-
-                        // if (result.value) {
-                        //     Swal.fire("Success!", "Class Deleted Successfully!", "success").then((result) => {
-
-                        //         location.replace(`/admincourse`);
-
-                        //     })
-                        // }
-
-                    }
-
-                });
-            }
-        })
-
-
-    }
-
-    function class_edit(class_id) {
-        // alert(class_id);
-        $.ajax({
-            url: "{{ route('class_edit') }}",
-            type: 'GET',
-            data: {
-                class_id: class_id,
-
-                _token: '{{csrf_token()}}'
-            },
-
-            success: function(data) {
-
-                //alert(data);
-                console.log(data);
-            }
-        });
-
-    }
-
-
-    function course_delete(course_id) {
-        //  alert(id);
-        Swal.fire({
-            title: "Are you sure want to delete the Course?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Delete",
-        }).then((result) => {
-
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Delete",
+    }).then((result) => {
+        if (result.isConfirmed) {
             $.ajax({
-                url: "{{ route('course_delete') }}",
+                url: "{{ route('class_delete') }}",
                 type: 'POST',
                 data: {
-                    course_id: course_id,
+                    class_id: class_id,
 
                     _token: '{{csrf_token()}}'
                 },
@@ -898,28 +825,23 @@
                     alert('Something is wrong');
                 },
                 success: function(data) {
+
                     if (data['data'] == 0) {
                         Swal.fire("Info!", data['message_cus'], "info", data['message_cus'])
                         return false
                     }
 
                     if (result.value) {
-                        Swal.fire("Success!", "Course Deleted Successfully!", "success").then((
+                        Swal.fire("Success!", "Class Deleted Successfully!", "success").then((
                             result) => {
 
                             location.replace(`/admincourse`);
 
                         })
                     }
-                    // } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    //     // Handle the cancel button click (optional)
-                    //     // For example, redirecting back to the previous page:
-                    //     window.history.back();
-                    // }
-
 
                     // if (result.value) {
-                    //     Swal.fire("Success!", "Course Deleted Successfully!", "success").then((result) => {
+                    //     Swal.fire("Success!", "Class Deleted Successfully!", "success").then((result) => {
 
                     //         location.replace(`/admincourse`);
 
@@ -929,141 +851,222 @@
                 }
 
             });
-        })
-
-    }
-</script>
+        }
+    })
 
 
-<script>
-    function fetch_update(class_id, type) {
+}
 
+function class_edit(class_id) {
+    // alert(class_id);
+    $.ajax({
+        url: "{{ route('class_edit') }}",
+        type: 'GET',
+        data: {
+            class_id: class_id,
+
+            _token: '{{csrf_token()}}'
+        },
+
+        success: function(data) {
+
+            //alert(data);
+            console.log(data);
+        }
+    });
+
+}
+
+
+function course_delete(course_id) {
+    //  alert(id);
+    Swal.fire({
+        title: "Are you sure want to delete the Course?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Delete",
+    }).then((result) => {
 
         $.ajax({
-            url: "{{ url('/class/fetch') }}",
-            type: 'GET',
+            url: "{{ route('course_delete') }}",
+            type: 'POST',
             data: {
-                'class_id': class_id,
+                course_id: course_id,
+
                 _token: '{{csrf_token()}}'
-
             },
-
+            error: function() {
+                alert('Something is wrong');
+            },
             success: function(data) {
-                // correct_choices = data.rows[0]['correct_choices'].split(',');
-
-                console.log(data);
-
-                if (type == "edit") {
-
-                    $('#class_nameedit').val(data.rows[0]['class_name']);
-                    $('#class_descriptionedit').val(data.rows[0]['class_description']);
-                    $('#resource_nameedit').text(data.rows[0]['resource_name']);
-                    $('#class_durationedit').val(data.rows[0]['class_duration']);
-                    $('#class_quizedit').val(data.rows[0]['class_quiz']);
-                    if (data.rows[0]['class_quiz'] == 'yes') {
-                        $('#yesedit').show();
-                        $('#quiz_idedit').val(data.rows[0]['quiz_id']);
-                    } else {
-                        $('#yesedit').hide();
-                    }
-
-                    $('.img-fluid').attr('src', data.rows[0]['full_notice_path']);
-                    $('.img-fluid').attr('title', data.rows[0]['resource_name']);
-                    $('#eid').val(data.rows[0]['class_id']);
-
-
-                } else if (type == "class_show") {
-                    $('#class_nameshow').val(data.rows[0]['class_name']);
-                    $('#class_descriptionshow').val(data.rows[0]['class_description']);
-                    $('.img-fluidshow').attr('src', data.rows[0]['full_notice_path']);
-                    $('.img-fluidshow').attr('title', data.rows[0]['resource_name']);
-                    $('#class_durationshow').val(data.rows[0]['class_duration']);
-                    $('#class_quizshow').val(data.rows[0]['class_quiz']);
-                    $('#quiz_idshow').val(data.rows[0]['quiz_id']);
-
-                    $('#class_idshow').val(data.rows[0]['class_id']);
-
-                    $('#class_nameshow').prop('disabled', true);
-                    $('#class_descriptionshow').prop('disabled', true);
-                    $('#resource_nameshow').prop('disabled', true);
-                    $('#class_quizshow').prop('disabled', true);
-                    $('#quiz_idshow').prop('disabled', true);
-                    $('#class_durationshow').attr('class_duration', '');
-                    $('#class_idshow').attr('Action', '');
+                if (data['data'] == 0) {
+                    Swal.fire("Info!", data['message_cus'], "info", data['message_cus'])
+                    return false
                 }
-            }
-        });
 
-    }
+                if (result.value) {
+                    Swal.fire("Success!", "Course Deleted Successfully!", "success").then((
+                        result) => {
+
+                        location.replace(`/admincourse`);
+
+                    })
+                }
+                // } else if (result.dismiss === Swal.DismissReason.cancel) {
+                //     // Handle the cancel button click (optional)
+                //     // For example, redirecting back to the previous page:
+                //     window.history.back();
+                // }
+
+
+                // if (result.value) {
+                //     Swal.fire("Success!", "Course Deleted Successfully!", "success").then((result) => {
+
+                //         location.replace(`/admincourse`);
+
+                //     })
+                // }
+
+            }
+
+        });
+    })
+
+}
+</script>
+
+
+<script>
+function fetch_update(class_id, type) {
+
+
+    $.ajax({
+        url: "{{ url('/class/fetch') }}",
+        type: 'GET',
+        data: {
+            'class_id': class_id,
+            _token: '{{csrf_token()}}'
+
+        },
+
+        success: function(data) {
+            // correct_choices = data.rows[0]['correct_choices'].split(',');
+
+            console.log(data);
+
+            if (type == "edit") {
+
+                $('#class_nameedit').val(data.rows[0]['class_name']);
+                $('#class_descriptionedit').val(data.rows[0]['class_description']);
+                $('#resource_nameedit').text(data.rows[0]['resource_name']);
+                $('#class_durationedit').val(data.rows[0]['class_duration']);
+                $('#class_quizedit').val(data.rows[0]['class_quiz']);
+                if (data.rows[0]['class_quiz'] == 'yes') {
+                    $('#yesedit').show();
+                    $('#quiz_idedit').val(data.rows[0]['quiz_id']);
+                } else {
+                    $('#yesedit').hide();
+                }
+
+                $('.img-fluid').attr('src', data.rows[0]['full_notice_path']);
+                $('.img-fluid').attr('title', data.rows[0]['resource_name']);
+                $('#eid').val(data.rows[0]['class_id']);
+
+
+            } else if (type == "class_show") {
+                $('#class_nameshow').val(data.rows[0]['class_name']);
+                $('#class_descriptionshow').val(data.rows[0]['class_description']);
+                $('.img-fluidshow').attr('src', data.rows[0]['full_notice_path']);
+                $('.img-fluidshow').attr('title', data.rows[0]['resource_name']);
+                $('#class_durationshow').val(data.rows[0]['class_duration']);
+                $('#class_quizshow').val(data.rows[0]['class_quiz']);
+                $('#quiz_idshow').val(data.rows[0]['quiz_id']);
+
+                $('#class_idshow').val(data.rows[0]['class_id']);
+
+                $('#class_nameshow').prop('disabled', true);
+                $('#class_descriptionshow').prop('disabled', true);
+                $('#resource_nameshow').prop('disabled', true);
+                $('#class_quizshow').prop('disabled', true);
+                $('#quiz_idshow').prop('disabled', true);
+                $('#class_durationshow').attr('class_duration', '');
+                $('#class_idshow').attr('Action', '');
+            }
+        }
+    });
+
+}
 </script>
 
 <script>
-    function end_date() {
-        //alert("nsj");
-        var startDate = new Date($("#course_start_period").val());
-        var endDatePicker = $("#course_end_period");
+function end_date() {
+    //alert("nsj");
+    var startDate = new Date($("#course_start_period").val());
+    var endDatePicker = $("#course_end_period");
 
-        // Set the minimum date for endDatePicker
-        endDatePicker.datepicker("option", "minDate", startDate);
-        //alert(endDatePicker);
-        var examDateElement = $("#exam_date");
-        var selectedEndDate = endDatePicker.val();
-        examDateElement.val(selectedEndDate);
-    }
+    // Set the minimum date for endDatePicker
+    endDatePicker.datepicker("option", "minDate", startDate);
+    //alert(endDatePicker);
+    var examDateElement = $("#exam_date");
+    var selectedEndDate = endDatePicker.val();
+    examDateElement.val(selectedEndDate);
+}
 </script>
 <!-- Designation mapping with the role  -->
 
 
 
 <script>
-    var allDesignations = @json($rows['designation']);
-    var allUsers = @json($rows['users']);
+var allDesignations = @json($rows['designation']);
+var allUsers = @json($rows['users']);
 
-    function filterDesignations() {
-        const roleId = document.getElementById('role_id').value;
-        const designationSelect = document.getElementById('designation_id');
-        const userSelect = document.getElementById('user_id');
+function filterDesignations() {
+    const roleId = document.getElementById('role_id').value;
+    const designationSelect = document.getElementById('designation_id');
+    const userSelect = document.getElementById('user_id');
 
-        // Clear previous options
-        designationSelect.innerHTML = '<option value="">Please Select Designation</option>';
-        userSelect.innerHTML = '<option value="">Please Select User</option>';
+    // Clear previous options
+    designationSelect.innerHTML = '<option value="">Please Select Designation</option>';
+    userSelect.innerHTML = '<option value="">Please Select User</option>';
 
-        // Filter designations based on role
-        const filteredDesignations = allDesignations.filter(d => d.role_id == roleId);
+    // Filter designations based on role
+    const filteredDesignations = allDesignations.filter(d => d.role_id == roleId);
 
-        filteredDesignations.forEach(d => {
-            const opt = document.createElement('option');
-            opt.value = d.designation_id;
-            opt.textContent = d.designation_name;
-            designationSelect.appendChild(opt);
-        });
-
-
-    }
-
-    function filterNames() {
-        const roleId = document.getElementById('role_id').value;
-        const designationSelect = document.getElementById('designation_id').value;
-        const userSelect = document.getElementById('user_id');
-        console.log(allUsers);
-
-        userSelect.innerHTML = '<option value="all">All</option>';
-
-        const filteredNames = allUsers.filter(d =>
-            d.designation_id == designationSelect && d.array_roles == roleId
-        );
-
-        filteredNames.forEach(a => {
-            const opt1 = document.createElement('option');
-            opt1.value = a.id;
-            opt1.textContent = a.name;
-            userSelect.appendChild(opt1);
-        });
-    }
+    filteredDesignations.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d.designation_id;
+        opt.textContent = d.designation_name;
+        designationSelect.appendChild(opt);
+    });
 
 
+}
 
-    console.log(document.getElementById('user_id'));
+function filterNames() {
+    const roleId = document.getElementById('role_id').value;
+    const designationSelect = document.getElementById('designation_id').value;
+    const userSelect = document.getElementById('user_id');
+    console.log(allUsers);
+
+    userSelect.innerHTML = '<option value="all">All</option>';
+
+    const filteredNames = allUsers.filter(d =>
+        d.designation_id == designationSelect && d.array_roles == roleId
+    );
+
+    filteredNames.forEach(a => {
+        const opt1 = document.createElement('option');
+        opt1.value = a.id;
+        opt1.textContent = a.name;
+        userSelect.appendChild(opt1);
+    });
+}
+
+
+
+console.log(document.getElementById('user_id'));
 </script>
 
 
@@ -1196,7 +1199,8 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Course Certificate: <span class="error-star" style="color:red;">*</span></label><br>
+                                <label>Course Certificate: <span class="error-star"
+                                        style="color:red;">*</span></label><br>
 
                                 <input type="radio" class="btn-check" name="course_certificate" value="1"
                                     id="course_certificate_yes" autocomplete="off">
@@ -1254,7 +1258,7 @@
 
                     <div class="row">
 
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Summary for chatbot:<span class="error-star"
                                         style="color:red;">*</span></label>
@@ -1264,7 +1268,7 @@
                                         mp3,pdf,txt</strong></span>
 
                             </div>
-                        </div>
+                        </div>   -->
 
                         <div class="col-md-6">
 
@@ -1670,1026 +1674,1026 @@
 
 
 <style>
-    .select2-container {
-        /* min-width: 268px !important; */
-    }
+.select2-container {
+    /* min-width: 268px !important; */
+}
 
-    .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
-        list-style: none;
-        color: #000 !important;
-    }
+.select2-container--default .select2-selection--multiple .select2-selection__rendered li {
+    list-style: none;
+    color: #000 !important;
+}
 
-    .select2-container--default .select2-search--inline .select2-search__field {
-        width: 300px !important;
-    }
+.select2-container--default .select2-search--inline .select2-search__field {
+    width: 300px !important;
+}
 
-    .select2-results__option {
-        padding-right: 20px;
-        vertical-align: middle;
-    }
+.select2-results__option {
+    padding-right: 20px;
+    vertical-align: middle;
+}
 
-    .select2-results__option:before {
-        content: "";
-        display: inline-block;
-        position: relative;
-        height: 25px;
-        width: 20px;
-        border: 2px solid #e9e9e9;
-        border-radius: 4px;
-        background-color: #fff;
-        margin-right: 20px;
-        vertical-align: middle;
-    }
+.select2-results__option:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    height: 25px;
+    width: 20px;
+    border: 2px solid #e9e9e9;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-right: 20px;
+    vertical-align: middle;
+}
 
-    .select2-results__option[aria-selected=true]:before {
-        font-family: fontAwesome;
-        content: "\f00c";
-        color: #fff;
-        background-color: #f77750;
-        border: 0;
-        display: inline-block;
-        padding-left: 3px;
-    }
+.select2-results__option[aria-selected=true]:before {
+    font-family: fontAwesome;
+    content: "\f00c";
+    color: #fff;
+    background-color: #f77750;
+    border: 0;
+    display: inline-block;
+    padding-left: 3px;
+}
 
-    .select2-container--default .select2-results__option[aria-selected=true] {
-        background-color: #fff;
-    }
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #fff;
+}
 
-    .select2-container--default .select2-results__option--highlighted[aria-selected] {
-        background-color: #78f1f1;
-        color: #272727;
-        font-weight: bold;
-    }
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #78f1f1;
+    color: #272727;
+    font-weight: bold;
+}
 
-    .select2-results__option[aria-selected] {
-        cursor: pointer;
-        color: #060606 !important;
-        font-weight: bold;
-    }
+.select2-results__option[aria-selected] {
+    cursor: pointer;
+    color: #060606 !important;
+    font-weight: bold;
+}
 
-    .select2-container--default .select2-selection--multiple {
-        margin-bottom: 10px;
-    }
+.select2-container--default .select2-selection--multiple {
+    margin-bottom: 10px;
+}
 
-    .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
-        border-radius: 4px;
-    }
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+    border-radius: 4px;
+}
 
-    .select2-container--default.select2-container--focus .select2-selection--multiple {
-        border-color: #f77750;
-        border-width: 2px;
-    }
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #f77750;
+    border-width: 2px;
+}
 
-    .select2-container--default .select2-selection--multiple {
-        border-width: 2px;
-    }
+.select2-container--default .select2-selection--multiple {
+    border-width: 2px;
+}
 
-    .select2-container--open .select2-dropdown--below {
+.select2-container--open .select2-dropdown--below {
 
-        border-radius: 6px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
-    }
+}
 
-    .select2-selection .select2-selection--multiple:after {
-        content: 'hhghgh';
-    }
+.select2-selection .select2-selection--multiple:after {
+    content: 'hhghgh';
+}
 
-    /* select with icons badges single*/
-    .select-icon .select2-selection__placeholder .badge {
-        display: none;
-    }
+/* select with icons badges single*/
+.select-icon .select2-selection__placeholder .badge {
+    display: none;
+}
 
-    .select-icon .placeholder {
-        /* 	display: none; */
-    }
+.select-icon .placeholder {
+    /* 	display: none; */
+}
 
-    .select-icon .select2-results__option:before,
-    .select-icon .select2-results__option[aria-selected=true]:before {
-        display: none !important;
-        /* content: "" !important; */
-    }
+.select-icon .select2-results__option:before,
+.select-icon .select2-results__option[aria-selected=true]:before {
+    display: none !important;
+    /* content: "" !important; */
+}
 
-    .select-icon .select2-search--dropdown {
-        display: none;
-    }
+.select-icon .select2-search--dropdown {
+    display: none;
+}
 
-    .course_period {
-        font-size: 18px;
+.course_period {
+    font-size: 18px;
 
-        margin-top: 30px;
-        font-weight: bold;
+    margin-top: 30px;
+    font-weight: bold;
 
-    }
+}
 
-    tr:first-child .danger {
-        display: none;
-    }
+tr:first-child .danger {
+    display: none;
+}
 
-    .container {
-        max-width: 900px;
-        width: 100%;
-        background-color: #fff;
-        margin: auto;
-        padding: 15px;
-        box-shadow: 0 2px 20px #0001, 0 1px 6px #0001;
-        border-radius: 5px;
-        overflow-x: auto;
-    }
+.container {
+    max-width: 900px;
+    width: 100%;
+    background-color: #fff;
+    margin: auto;
+    padding: 15px;
+    box-shadow: 0 2px 20px #0001, 0 1px 6px #0001;
+    border-radius: 5px;
+    overflow-x: auto;
+}
 
-    .action_container1 {
-        float: right;
-        position: relative;
-        left: 60px;
-        top: 40px;
-        z-index: 999;
-    }
+.action_container1 {
+    float: right;
+    position: relative;
+    left: 60px;
+    top: 40px;
+    z-index: 999;
+}
 
-    .action_container2 {
-        float: right;
-        position: relative;
-        left: 60px;
-        top: 40px;
-        z-index: 999;
-    }
+.action_container2 {
+    float: right;
+    position: relative;
+    left: 60px;
+    top: 40px;
+    z-index: 999;
+}
 
-    div#align1_length {
-        position: relative;
-        top: 15px;
-    }
+div#align1_length {
+    position: relative;
+    top: 15px;
+}
 
-    div#align1_filter {
-        float: right;
-    }
+div#align1_filter {
+    float: right;
+}
 
-    div#align0_length {
-        position: relative;
-        top: 35px;
-    }
+div#align0_length {
+    position: relative;
+    top: 35px;
+}
 
-    div#align0_filter {
-        float: right;
-    }
+div#align0_filter {
+    float: right;
+}
 
-    .action_container3 {
-        float: right;
-        position: relative;
-        left: 60px;
-        top: 40px;
-        z-index: 999;
-    }
+.action_container3 {
+    float: right;
+    position: relative;
+    left: 60px;
+    top: 40px;
+    z-index: 999;
+}
 
-    ._table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+._table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-    ._table :is(th, td) {}
+._table :is(th, td) {}
 
-    /* form field design start */
-    .form_control {
-        border: 1px solid #0002;
-        background-color: transparent;
-        outline: none;
-        padding: 8px 12px;
-        font-family: 1.2rem;
-        width: 100%;
-        color: #333;
-        font-family: Arial, Helvetica, sans-serif;
-        transition: 0.3s ease-in-out;
-    }
+/* form field design start */
+.form_control {
+    border: 1px solid #0002;
+    background-color: transparent;
+    outline: none;
+    padding: 8px 12px;
+    font-family: 1.2rem;
+    width: 100%;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.3s ease-in-out;
+}
 
-    .form_control::placeholder {
-        color: inherit;
-        opacity: 0.5;
-    }
+.form_control::placeholder {
+    color: inherit;
+    opacity: 0.5;
+}
 
-    .form_control:is(:focus, :hover) {
-        box-shadow: inset 0 1px 6px #0002;
-    }
+.form_control:is(:focus, :hover) {
+    box-shadow: inset 0 1px 6px #0002;
+}
 
-    /* form field design end */
-
-
-    .success {
-        background-color: #24b96f !important;
-    }
-
-    .warning {
-        background-color: #ebba33 !important;
-    }
-
-    .primary {
-        background-color: #259dff !important;
-    }
-
-    .secondery {
-        background-color: #00bcd4 !important;
-    }
-
-    .danger {
-        background-color: #ff5722 !important;
-    }
+/* form field design end */
 
 
+.success {
+    background-color: #24b96f !important;
+}
 
-    .action_container>* {
-        border: none;
-        outline: none;
-        color: #fff;
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 14px;
-        cursor: pointer;
-        transition: 0.3s ease-in-out;
-    }
+.warning {
+    background-color: #ebba33 !important;
+}
 
-    .action_container1>* {
-        border: none;
-        outline: none;
-        color: #fff;
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 14px;
-        cursor: pointer;
-        transition: 0.3s ease-in-out;
-    }
+.primary {
+    background-color: #259dff !important;
+}
 
-    .action_container2>* {
-        border: none;
-        outline: none;
-        color: #fff;
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 14px;
-        cursor: pointer;
-        transition: 0.3s ease-in-out;
-    }
+.secondery {
+    background-color: #00bcd4 !important;
+}
 
-    .action_container3>* {
-        border: none;
-        outline: none;
-        color: #fff;
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 14px;
-        cursor: pointer;
-        transition: 0.3s ease-in-out;
-    }
+.danger {
+    background-color: #ff5722 !important;
+}
 
-    .ui-datepicker-trigger {
-        position: absolute;
-        right: 0px;
-        top: 53%;
-        left: 80%;
-        transform: translateY(-50%);
-        height: 25%;
-    }
+
+
+.action_container>* {
+    border: none;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.action_container1>* {
+    border: none;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.action_container2>* {
+    border: none;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.action_container3>* {
+    border: none;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.ui-datepicker-trigger {
+    position: absolute;
+    right: 0px;
+    top: 53%;
+    left: 80%;
+    transform: translateY(-50%);
+    height: 25%;
+}
 </style>
 <script>
-    function togglePin(show) {
-        if (show) {
-            document.getElementById('pinField').style.display = 'block';
-        } else {
-            document.getElementById('pinField').style.display = 'none';
-            document.getElementById('course_pin').value = '';
-        }
+function togglePin(show) {
+    if (show) {
+        document.getElementById('pinField').style.display = 'block';
+    } else {
+        document.getElementById('pinField').style.display = 'none';
+        document.getElementById('course_pin').value = '';
     }
+}
 </script>
 
 <script>
-    function reinitializeSelect2(element) {
-        if ($(element).data('select2')) {
+function reinitializeSelect2(element) {
+    if ($(element).data('select2')) {
 
-            $(element).select2('destroy');
-        }
-
-
-        $(element).select2({
-            closeOnSelect: false,
-            placeholder: "Select Claas Question",
-            allowClear: true,
-            tags: true,
-            language: {
-                noResults: function() {
-                    return "No Question Added";
-                }
-            }
-        });
+        $(element).select2('destroy');
     }
 
 
-    $(document).ready(function() {
-        // Call the reinitialization function after the select2 library is loaded
-        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function() {
-            reinitializeSelect2(".js-select5");
-        });
+    $(element).select2({
+        closeOnSelect: false,
+        placeholder: "Select Claas Question",
+        allowClear: true,
+        tags: true,
+        language: {
+            noResults: function() {
+                return "No Question Added";
+            }
+        }
     });
+}
+
+
+$(document).ready(function() {
+    // Call the reinitialization function after the select2 library is loaded
+    $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function() {
+        reinitializeSelect2(".js-select5");
+    });
+});
 </script>
 
 <script>
-    function reinitializeSelect2(element) {
-        if ($(element).data('select2')) {
+function reinitializeSelect2(element) {
+    if ($(element).data('select2')) {
 
-            $(element).select2('destroy');
-        }
-
-
-        $(element).select2({
-            closeOnSelect: false,
-            placeholder: "Select Claas Question",
-            allowClear: true,
-            tags: true,
-            language: {
-                noResults: function() {
-                    return "No Question Added";
-                }
-            }
-        });
+        $(element).select2('destroy');
     }
 
 
-    $(document).ready(function() {
-        // Call the reinitialization function after the select2 library is loaded
-        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function() {
-            reinitializeSelect2(".js-select6");
-        });
+    $(element).select2({
+        closeOnSelect: false,
+        placeholder: "Select Claas Question",
+        allowClear: true,
+        tags: true,
+        language: {
+            noResults: function() {
+                return "No Question Added";
+            }
+        }
     });
+}
+
+
+$(document).ready(function() {
+    // Call the reinitialization function after the select2 library is loaded
+    $.getScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js", function() {
+        reinitializeSelect2(".js-select6");
+    });
+});
 </script>
 
 <style>
-    /* .select2-container {
+/* .select2-container {
         min-width: 300px !important;
     } */
 
-    .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
-        list-style: none;
-        color: #000 !important;
-    }
+.select2-container--default .select2-selection--multiple .select2-selection__rendered li {
+    list-style: none;
+    color: #000 !important;
+}
 
-    .select2-container--default .select2-search--inline .select2-search__field {
-        width: 300px !important;
-    }
+.select2-container--default .select2-search--inline .select2-search__field {
+    width: 300px !important;
+}
 
-    .select2-results__option {
-        padding-right: 20px;
-        vertical-align: middle;
-    }
+.select2-results__option {
+    padding-right: 20px;
+    vertical-align: middle;
+}
 
-    .select2-results__option:before {
-        content: "";
-        display: inline-block;
-        position: relative;
-        height: 25px;
-        width: 20px;
-        border: 2px solid #e9e9e9;
-        border-radius: 4px;
-        background-color: #fff;
-        margin-right: 20px;
-        vertical-align: middle;
-    }
+.select2-results__option:before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    height: 25px;
+    width: 20px;
+    border: 2px solid #e9e9e9;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-right: 20px;
+    vertical-align: middle;
+}
 
-    .select2-results__option[aria-selected=true]:before {
-        font-family: fontAwesome;
-        content: "\f00c";
-        color: #fff;
-        background-color: #f77750;
-        border: 0;
-        display: inline-block;
-        padding-left: 3px;
-    }
+.select2-results__option[aria-selected=true]:before {
+    font-family: fontAwesome;
+    content: "\f00c";
+    color: #fff;
+    background-color: #f77750;
+    border: 0;
+    display: inline-block;
+    padding-left: 3px;
+}
 
-    .select2-container--default .select2-results__option[aria-selected=true] {
-        background-color: #fff;
-    }
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #fff;
+}
 
-    .select2-container--default .select2-results__option--highlighted[aria-selected] {
-        background-color: #78f1f1;
-        color: #272727;
-        font-weight: bold;
-    }
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #78f1f1;
+    color: #272727;
+    font-weight: bold;
+}
 
-    .select2-results__option[aria-selected] {
-        cursor: pointer;
-        color: #060606 !important;
-        font-weight: bold;
-    }
+.select2-results__option[aria-selected] {
+    cursor: pointer;
+    color: #060606 !important;
+    font-weight: bold;
+}
 
-    .select2-container--default .select2-selection--multiple {
-        margin-bottom: 10px;
-    }
+.select2-container--default .select2-selection--multiple {
+    margin-bottom: 10px;
+}
 
-    .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
-        border-radius: 4px;
-    }
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+    border-radius: 4px;
+}
 
-    .select2-container--default.select2-container--focus .select2-selection--multiple {
-        border-color: #f77750;
-        border-width: 2px;
-    }
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #f77750;
+    border-width: 2px;
+}
 
-    .select2-container--default .select2-selection--multiple {
-        border-width: 2px;
-    }
+.select2-container--default .select2-selection--multiple {
+    border-width: 2px;
+}
 
-    .select2-container--open .select2-dropdown--below {
+.select2-container--open .select2-dropdown--below {
 
-        border-radius: 6px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
-    }
+}
 
-    .select2-selection .select2-selection--multiple:after {
-        content: 'hhghgh';
-    }
+.select2-selection .select2-selection--multiple:after {
+    content: 'hhghgh';
+}
 
-    /* select with icons badges single*/
-    .select-icon .select2-selection__placeholder .badge {
-        display: none;
-    }
+/* select with icons badges single*/
+.select-icon .select2-selection__placeholder .badge {
+    display: none;
+}
 
 
 
-    .select-icon .select2-results__option:before,
-    .select-icon .select2-results__option[aria-selected=true]:before {
-        display: none !important;
+.select-icon .select2-results__option:before,
+.select-icon .select2-results__option[aria-selected=true]:before {
+    display: none !important;
 
-    }
+}
 
-    .select-icon .select2-search--dropdown {
-        display: none;
-    }
+.select-icon .select2-search--dropdown {
+    display: none;
+}
 
-    .course_period {
-        font-size: 18px;
+.course_period {
+    font-size: 18px;
 
-        margin-top: 30px;
-        font-weight: bold;
+    margin-top: 30px;
+    font-weight: bold;
 
-    }
+}
 </style>
 
 <script>
-    var base_url = window.location.origin;
+var base_url = window.location.origin;
 
-    function enddatepicker() {
-        $('.exam_date').datepicker({
-            dateFormat: 'dd-mm-yy',
-            showButtonPanel: true,
-            changeMonth: true,
-            changeYear: true,
-            // yearRange: '2023:2024',
-            showOn: "button",
-            buttonImage: `${base_url}/asset/image/calendar.png`,
-            buttonImageOnly: true,
-            minDate: 0,
-            maxDate: '+30Y',
-            inline: true
-        })
-    }
+function enddatepicker() {
+    $('.exam_date').datepicker({
+        dateFormat: 'dd-mm-yy',
+        showButtonPanel: true,
+        changeMonth: true,
+        changeYear: true,
+        // yearRange: '2023:2024',
+        showOn: "button",
+        buttonImage: `${base_url}/asset/image/calendar.png`,
+        buttonImageOnly: true,
+        minDate: 0,
+        maxDate: '+30Y',
+        inline: true
+    })
+}
 
-    function start_end_date() {
-        $('.startdate').datepicker({
-            dateFormat: 'dd-mm-yy',
-            showButtonPanel: true,
-            changeMonth: true,
-            changeYear: true,
-            // yearRange: '2023:2024',
-            showOn: "button",
-            buttonImage: `${base_url}/asset/image/calendar.png`,
-            buttonImageOnly: true,
-            minDate: 0,
-            maxDate: '+30Y',
-            inline: true
-        })
-        $('.enddate').datepicker({
-            dateFormat: 'dd-mm-yy',
-            showButtonPanel: true,
-            changeMonth: true,
-            changeYear: true,
-            // yearRange: '2023:2024',
-            showOn: "button",
-            buttonImage: `${base_url}/asset/image/calendar.png`,
-            buttonImageOnly: true,
-            minDate: 0,
-            maxDate: '+30Y',
-            inline: true,
-            onSelect: function(selectedDate) {
-                // alert(selectedDate);
-                var examDateInput = $("#exam_date");
-                examDateInput.val(selectedDate);
+function start_end_date() {
+    $('.startdate').datepicker({
+        dateFormat: 'dd-mm-yy',
+        showButtonPanel: true,
+        changeMonth: true,
+        changeYear: true,
+        // yearRange: '2023:2024',
+        showOn: "button",
+        buttonImage: `${base_url}/asset/image/calendar.png`,
+        buttonImageOnly: true,
+        minDate: 0,
+        maxDate: '+30Y',
+        inline: true
+    })
+    $('.enddate').datepicker({
+        dateFormat: 'dd-mm-yy',
+        showButtonPanel: true,
+        changeMonth: true,
+        changeYear: true,
+        // yearRange: '2023:2024',
+        showOn: "button",
+        buttonImage: `${base_url}/asset/image/calendar.png`,
+        buttonImageOnly: true,
+        minDate: 0,
+        maxDate: '+30Y',
+        inline: true,
+        onSelect: function(selectedDate) {
+            // alert(selectedDate);
+            var examDateInput = $("#exam_date");
+            examDateInput.val(selectedDate);
 
-                examDateInput.prop("readonly", true);
-            }
-        })
+            examDateInput.prop("readonly", true);
+        }
+    })
 
-    }
-    $(function() {
-        //start_end_date();
-    });
-
-
+}
+$(function() {
+    //start_end_date();
+});
 
 
-    $('.savebutton').prop('disabled', true);
+
+
+$('.savebutton').prop('disabled', true);
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 <script>
-    $(".js-select2").select2({
-        closeOnSelect: false,
-        placeholder: "Select Class Name",
-        allowHtml: true,
-        allowClear: true,
-        tags: true
-    });
+$(".js-select2").select2({
+    closeOnSelect: false,
+    placeholder: "Select Class Name",
+    allowHtml: true,
+    allowClear: true,
+    tags: true
+});
 </script>
 
 <script>
-    $(".js-select2").select2({
-        closeOnSelect: true,
-        placeholder: "Select User Name",
-        allowClear: true,
-        tags: true
-    });
+$(".js-select2").select2({
+    closeOnSelect: true,
+    placeholder: "Select User Name",
+    allowClear: true,
+    tags: true
+});
 
-    const $select = $('#user_id');
+const $select = $('#user_id');
 
-    $('#user_id').on('select2:select', function(e) {
+$('#user_id').on('select2:select', function(e) {
 
-        const selectedValue = e.params.data.id;
-        if (selectedValue === 'all') {
-            const allValues = [];
-            $select.on('select2:select', function(e) {
-                const selectedValue = e.params.data.id;
+    const selectedValue = e.params.data.id;
+    if (selectedValue === 'all') {
+        const allValues = [];
+        $select.on('select2:select', function(e) {
+            const selectedValue = e.params.data.id;
 
-                if (selectedValue === 'all') {
-                    const allValues = [];
+            if (selectedValue === 'all') {
+                const allValues = [];
 
-                    // Get all option values except "all"
-                    $('#user_id option').each(function() {
-                        const val = $(this).val();
-                        if (val !== 'all') {
-                            allValues.push(val);
-                        }
-                    });
-
-
-                    $select.val(allValues).trigger('change.select2');
-                }
-            });
-
-            $select.on('select2:unselect', function(e) {
-                const unselectedValue = e.params.data.id;
-
-                if (unselectedValue === 'all') {
-                    // ✅ Remove all values
-                    $select.val(null).trigger('change.select2');
-                }
-            });
-
-            // ✅ Prevent 'all' from being in the final selected list
-            $select.on('change', function() {
-                const selected = $select.val() || [];
-
-                // Remove 'all' if accidentally included
-                if (selected.includes('all')) {
-                    const filtered = selected.filter(val => val !== 'all');
-                    $select.val(filtered).trigger('change.select2');
-                }
-
-            });
-        }
-
-    });
-</script>
-
-
-<script>
-    function data(e) {
-        if (e.target.id == "class_quizedit") {
-            if (e.target.value == "yes") {
-
-                $('#yesedit').css('display', 'block');
-
-            } else {
-                $('#yesedit').css('display', 'none');
-
-
-            }
-
-
-
-        }
-
-    }
-
-    $(document).on('change', '#class_quiz', function() {
-
-        if ($(this).val() === 'yes') {
-            $('#quiz_show').show();
-        } else {
-            $('#quiz_show').hide();
-            $('#quiz_id').val('');
-        }
-
-    });
-</script>
-<script>
-    function create_tr(table_id) {
-
-        if (table_id == "table_body") {
-
-
-            var course_tags = $("#course_tags").val();
-            if (course_tags == '') {
-                swal.fire("Please Enter the Course Tags", "", "error");
-                return false;
-            } else {
-
-                // let table_body = document.getElementById(table_id),
-                //     first_tr = table_body.firstElementChild
-                // tr_clone = first_tr.cloneNode(true);
-
-                // table_body.append(tr_clone);
-
-                // clean_first_tr(table_body.firstElementChild);
-                const tableBody = document.getElementById(table_id);
-                const rows = tableBody.querySelectorAll('tr');
-                let isValid = true;
-
-                // Validate all input fields in the table
-                rows.forEach(row => {
-                    const input = row.querySelector('input');
-                    if (input && input.value.trim() === '') {
-                        isValid = false;
+                // Get all option values except "all"
+                $('#user_id option').each(function() {
+                    const val = $(this).val();
+                    if (val !== 'all') {
+                        allValues.push(val);
                     }
                 });
 
-                // If any input field is empty, show an error and do not add a new row
-                if (!isValid) {
-                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
-                    return;
-                }
 
-                // Proceed to add a new row if validation passes
-                const firstRow = tableBody.firstElementChild;
-                const newRow = firstRow.cloneNode(true);
-
-                // Remove the "Add" button from the cloned row
-                const addButton = newRow.querySelector('.success');
-                if (addButton) {
-                    addButton.remove();
-                }
-
-                // Clear the value of the input in the new row
-                newRow.querySelector('input').value = '';
-
-                // Add the "Add" button back to the original row if needed
-                const originalAddButton = tableBody.querySelector('.success');
-                if (originalAddButton) {
-                    originalAddButton.style.display = 'inline';
-                }
-
-                // Append the new row to the table body
-                tableBody.appendChild(newRow);
-                //clean_first_tr(table_body.firstElementChild);
-
-
+                $select.val(allValues).trigger('change.select2');
             }
-        }
-    }
+        });
 
-    function clean_first_tr(firstTr) {
-        let children = firstTr.children;
+        $select.on('select2:unselect', function(e) {
+            const unselectedValue = e.params.data.id;
 
-        children = Array.isArray(children) ? children : Object.values(children);
-        children.forEach(x => {
-            if (x !== firstTr.lastElementChild) {
-                x.firstElementChild.value = '';
+            if (unselectedValue === 'all') {
+                // ✅ Remove all values
+                $select.val(null).trigger('change.select2');
             }
+        });
+
+        // ✅ Prevent 'all' from being in the final selected list
+        $select.on('change', function() {
+            const selected = $select.val() || [];
+
+            // Remove 'all' if accidentally included
+            if (selected.includes('all')) {
+                const filtered = selected.filter(val => val !== 'all');
+                $select.val(filtered).trigger('change.select2');
+            }
+
         });
     }
 
+});
+</script>
 
 
-    function remove_tr(This) {
-        if (This.closest('tbody').childElementCount == 1) {
-            alert("You Don't have Permission to Delete This ?");
+<script>
+function data(e) {
+    if (e.target.id == "class_quizedit") {
+        if (e.target.value == "yes") {
+
+            $('#yesedit').css('display', 'block');
+
         } else {
-            This.closest('tr').remove();
+            $('#yesedit').css('display', 'none');
+
+
         }
+
+
+
     }
 
+}
 
-    $(document).ready(function() {
-        const cresource = document.getElementById('cresource');
+$(document).on('change', '#class_quiz', function() {
 
-        cresource.addEventListener('change', function() {
-            const file = cresource.files[0];
-            const video = document.createElement('video');
+    if ($(this).val() === 'yes') {
+        $('#quiz_show').show();
+    } else {
+        $('#quiz_show').hide();
+        $('#quiz_id').val('');
+    }
 
-            video.preload = 'metadata';
-            video.onloadedmetadata = function() {
-                window.URL.revokeObjectURL(video.src); // Release the object URL
-                const duration = video.duration;
-                $('#cduration').val((duration / 60).toFixed(2));
-                console.log('Video duration:', duration, 'seconds');
-                // You can perform additional operations with the duration here
-            };
+});
+</script>
+<script>
+function create_tr(table_id) {
 
-            video.src = URL.createObjectURL(file);
-        });
-        $(document).on('hidden.bs.modal', function() {
-            // const form = this.querySelector('.reset');
-            //alert('ef');
-            // form.reset();
-            const form_count = document.querySelectorAll('form.reset');
-            for (let index = 0; index < form_count.length; index++) {
-                $('.reset')[index].reset();
-                $('#result').val("");
-                // calcQuestionType("result");
+    if (table_id == "table_body") {
+
+
+        var course_tags = $("#course_tags").val();
+        if (course_tags == '') {
+            swal.fire("Please Enter the Course Tags", "", "error");
+            return false;
+        } else {
+
+            // let table_body = document.getElementById(table_id),
+            //     first_tr = table_body.firstElementChild
+            // tr_clone = first_tr.cloneNode(true);
+
+            // table_body.append(tr_clone);
+
+            // clean_first_tr(table_body.firstElementChild);
+            const tableBody = document.getElementById(table_id);
+            const rows = tableBody.querySelectorAll('tr');
+            let isValid = true;
+
+            // Validate all input fields in the table
+            rows.forEach(row => {
+                const input = row.querySelector('input');
+                if (input && input.value.trim() === '') {
+                    isValid = false;
+                }
+            });
+
+            // If any input field is empty, show an error and do not add a new row
+            if (!isValid) {
+                swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                return;
             }
 
-        })
+            // Proceed to add a new row if validation passes
+            const firstRow = tableBody.firstElementChild;
+            const newRow = firstRow.cloneNode(true);
+
+            // Remove the "Add" button from the cloned row
+            const addButton = newRow.querySelector('.success');
+            if (addButton) {
+                addButton.remove();
+            }
+
+            // Clear the value of the input in the new row
+            newRow.querySelector('input').value = '';
+
+            // Add the "Add" button back to the original row if needed
+            const originalAddButton = tableBody.querySelector('.success');
+            if (originalAddButton) {
+                originalAddButton.style.display = 'inline';
+            }
+
+            // Append the new row to the table body
+            tableBody.appendChild(newRow);
+            //clean_first_tr(table_body.firstElementChild);
+
+
+        }
+    }
+}
+
+function clean_first_tr(firstTr) {
+    let children = firstTr.children;
+
+    children = Array.isArray(children) ? children : Object.values(children);
+    children.forEach(x => {
+        if (x !== firstTr.lastElementChild) {
+            x.firstElementChild.value = '';
+        }
+    });
+}
+
+
+
+function remove_tr(This) {
+    if (This.closest('tbody').childElementCount == 1) {
+        alert("You Don't have Permission to Delete This ?");
+    } else {
+        This.closest('tr').remove();
+    }
+}
+
+
+$(document).ready(function() {
+    const cresource = document.getElementById('cresource');
+
+    cresource.addEventListener('change', function() {
+        const file = cresource.files[0];
+        const video = document.createElement('video');
+
+        video.preload = 'metadata';
+        video.onloadedmetadata = function() {
+            window.URL.revokeObjectURL(video.src); // Release the object URL
+            const duration = video.duration;
+            $('#cduration').val((duration / 60).toFixed(2));
+            console.log('Video duration:', duration, 'seconds');
+            // You can perform additional operations with the duration here
+        };
+
+        video.src = URL.createObjectURL(file);
+    });
+    $(document).on('hidden.bs.modal', function() {
+        // const form = this.querySelector('.reset');
+        //alert('ef');
+        // form.reset();
+        const form_count = document.querySelectorAll('form.reset');
+        for (let index = 0; index < form_count.length; index++) {
+            $('.reset')[index].reset();
+            $('#result').val("");
+            // calcQuestionType("result");
+        }
 
     })
+
+})
 </script>
 
 <script>
-    function create_tr1(table_id) {
+function create_tr1(table_id) {
 
-        if (table_id == "table_body1") {
+    if (table_id == "table_body1") {
 
-            var course_skills_required = $("#course_skills_required").val();
-            if (course_skills_required == '') {
-                swal.fire("Please Enter the Course Skills Required", "", "error");
-                return false;
-            } else {
-
-                // let table_body1 = document.getElementById(table_id),
-                //     first_tr = table_body1.firstElementChild
-                // tr_clone = first_tr.cloneNode(true);
-
-                // table_body1.append(tr_clone);
-
-                // clean_first_tr(table_body1.firstElementChild);
-                const tableBody = document.getElementById(table_id);
-                const rows = tableBody.querySelectorAll('tr');
-                let isValid = true;
-
-                // Validate all input fields in the table
-                rows.forEach(row => {
-                    const input = row.querySelector('input');
-                    if (input && input.value.trim() === '') {
-                        isValid = false;
-                    }
-                });
-
-                // If any input field is empty, show an error and do not add a new row
-                if (!isValid) {
-                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
-                    return;
-                }
-
-                // Proceed to add a new row if validation passes
-                const firstRow = tableBody.firstElementChild;
-                const newRow = firstRow.cloneNode(true);
-
-                // Remove the "Add" button from the cloned row
-                const addButton = newRow.querySelector('.success');
-                if (addButton) {
-                    addButton.remove();
-                }
-
-                // Clear the value of the input in the new row
-                newRow.querySelector('input').value = '';
-
-                // Add the "Add" button back to the original row if needed
-                const originalAddButton = tableBody.querySelector('.success');
-                if (originalAddButton) {
-                    originalAddButton.style.display = 'inline';
-                }
-
-                // Append the new row to the table body
-                tableBody.appendChild(newRow);
-            }
-        }
-    }
-
-    function clean_first_tr(firstTr) {
-        let children = firstTr.children;
-
-        children = Array.isArray(children) ? children : Object.values(children);
-        children.forEach(x => {
-            if (x !== firstTr.lastElementChild) {
-                x.firstElementChild.value = '';
-            }
-        });
-    }
-
-
-
-    function remove_tr(This) {
-        if (This.closest('tbody').childElementCount == 1) {
-            alert("You Don't have Permission to Delete This ?");
+        var course_skills_required = $("#course_skills_required").val();
+        if (course_skills_required == '') {
+            swal.fire("Please Enter the Course Skills Required", "", "error");
+            return false;
         } else {
-            This.closest('tr').remove();
+
+            // let table_body1 = document.getElementById(table_id),
+            //     first_tr = table_body1.firstElementChild
+            // tr_clone = first_tr.cloneNode(true);
+
+            // table_body1.append(tr_clone);
+
+            // clean_first_tr(table_body1.firstElementChild);
+            const tableBody = document.getElementById(table_id);
+            const rows = tableBody.querySelectorAll('tr');
+            let isValid = true;
+
+            // Validate all input fields in the table
+            rows.forEach(row => {
+                const input = row.querySelector('input');
+                if (input && input.value.trim() === '') {
+                    isValid = false;
+                }
+            });
+
+            // If any input field is empty, show an error and do not add a new row
+            if (!isValid) {
+                swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                return;
+            }
+
+            // Proceed to add a new row if validation passes
+            const firstRow = tableBody.firstElementChild;
+            const newRow = firstRow.cloneNode(true);
+
+            // Remove the "Add" button from the cloned row
+            const addButton = newRow.querySelector('.success');
+            if (addButton) {
+                addButton.remove();
+            }
+
+            // Clear the value of the input in the new row
+            newRow.querySelector('input').value = '';
+
+            // Add the "Add" button back to the original row if needed
+            const originalAddButton = tableBody.querySelector('.success');
+            if (originalAddButton) {
+                originalAddButton.style.display = 'inline';
+            }
+
+            // Append the new row to the table body
+            tableBody.appendChild(newRow);
         }
     }
+}
+
+function clean_first_tr(firstTr) {
+    let children = firstTr.children;
+
+    children = Array.isArray(children) ? children : Object.values(children);
+    children.forEach(x => {
+        if (x !== firstTr.lastElementChild) {
+            x.firstElementChild.value = '';
+        }
+    });
+}
+
+
+
+function remove_tr(This) {
+    if (This.closest('tbody').childElementCount == 1) {
+        alert("You Don't have Permission to Delete This ?");
+    } else {
+        This.closest('tr').remove();
+    }
+}
 </script>
 
 
 <script>
-    function create_tr3(table_id) {
+function create_tr3(table_id) {
 
-        if (table_id == "table_body3") {
+    if (table_id == "table_body3") {
 
-            var course_gain_skills = $("#course_gain_skills").val();
-            if (course_gain_skills == '') {
-                swal.fire("Please Enter the Course Gain Skills", "", "error");
-                return false;
-            } else {
-
-
-                // let table_body3 = document.getElementById(table_id),
-                //     first_tr = table_body3.firstElementChild
-                // tr_clone = first_tr.cloneNode(true);
-
-                // table_body3.append(tr_clone);
-
-                // clean_first_tr(table_body3.firstElementChild);
-                const tableBody = document.getElementById(table_id);
-                const rows = tableBody.querySelectorAll('tr');
-                let isValid = true;
-
-                // Validate all input fields in the table
-                rows.forEach(row => {
-                    const input = row.querySelector('input');
-                    if (input && input.value.trim() === '') {
-                        isValid = false;
-                    }
-                });
-
-                // If any input field is empty, show an error and do not add a new row
-                if (!isValid) {
-                    swal.fire("Please fill in all fields before adding a new row.", "", "error");
-                    return;
-                }
-
-                // Proceed to add a new row if validation passes
-                const firstRow = tableBody.firstElementChild;
-                const newRow = firstRow.cloneNode(true);
-
-                // Remove the "Add" button from the cloned row
-                const addButton = newRow.querySelector('.success');
-                if (addButton) {
-                    addButton.remove();
-                }
-
-                // Clear the value of the input in the new row
-                newRow.querySelector('input').value = '';
-
-                // Add the "Add" button back to the original row if needed
-                const originalAddButton = tableBody.querySelector('.success');
-                if (originalAddButton) {
-                    originalAddButton.style.display = 'inline';
-                }
-
-                // Append the new row to the table body
-                tableBody.appendChild(newRow);
-            }
-        }
-    }
-
-    function clean_first_tr(firstTr) {
-        let children = firstTr.children;
-
-        children = Array.isArray(children) ? children : Object.values(children);
-        children.forEach(x => {
-            if (x !== firstTr.lastElementChild) {
-                x.firstElementChild.value = '';
-            }
-        });
-    }
-
-
-
-    function remove_tr(This) {
-        if (This.closest('tbody').childElementCount == 1) {
-            alert("You Don't have Permission to Delete This ?");
+        var course_gain_skills = $("#course_gain_skills").val();
+        if (course_gain_skills == '') {
+            swal.fire("Please Enter the Course Gain Skills", "", "error");
+            return false;
         } else {
-            This.closest('tr').remove();
-        }
-    }
-</script>
 
 
-<script>
-    function create_tr2(table_id) {
-        let table_body2 = document.getElementById(table_id),
-            first_tr = table_body2.firstElementChild
-        tr_clone = first_tr.cloneNode(true);
+            // let table_body3 = document.getElementById(table_id),
+            //     first_tr = table_body3.firstElementChild
+            // tr_clone = first_tr.cloneNode(true);
 
-        table_body2.append(tr_clone);
+            // table_body3.append(tr_clone);
 
-        clean_first_tr(table_body2.firstElementChild);
-    }
+            // clean_first_tr(table_body3.firstElementChild);
+            const tableBody = document.getElementById(table_id);
+            const rows = tableBody.querySelectorAll('tr');
+            let isValid = true;
 
-    function clean_first_tr(firstTr) {
-        let children = firstTr.children;
+            // Validate all input fields in the table
+            rows.forEach(row => {
+                const input = row.querySelector('input');
+                if (input && input.value.trim() === '') {
+                    isValid = false;
+                }
+            });
 
-        children = Array.isArray(children) ? children : Object.values(children);
-        children.forEach(x => {
-            if (x !== firstTr.lastElementChild) {
-                x.firstElementChild.value = '';
+            // If any input field is empty, show an error and do not add a new row
+            if (!isValid) {
+                swal.fire("Please fill in all fields before adding a new row.", "", "error");
+                return;
             }
-        });
-    }
 
+            // Proceed to add a new row if validation passes
+            const firstRow = tableBody.firstElementChild;
+            const newRow = firstRow.cloneNode(true);
 
+            // Remove the "Add" button from the cloned row
+            const addButton = newRow.querySelector('.success');
+            if (addButton) {
+                addButton.remove();
+            }
 
-    function remove_tr(This) {
-        if (This.closest('tbody').childElementCount == 1) {
-            alert("You Don't have Permission to Delete This ?");
-        } else {
-            This.closest('tr').remove();
+            // Clear the value of the input in the new row
+            newRow.querySelector('input').value = '';
+
+            // Add the "Add" button back to the original row if needed
+            const originalAddButton = tableBody.querySelector('.success');
+            if (originalAddButton) {
+                originalAddButton.style.display = 'inline';
+            }
+
+            // Append the new row to the table body
+            tableBody.appendChild(newRow);
         }
     }
+}
+
+function clean_first_tr(firstTr) {
+    let children = firstTr.children;
+
+    children = Array.isArray(children) ? children : Object.values(children);
+    children.forEach(x => {
+        if (x !== firstTr.lastElementChild) {
+            x.firstElementChild.value = '';
+        }
+    });
+}
+
+
+
+function remove_tr(This) {
+    if (This.closest('tbody').childElementCount == 1) {
+        alert("You Don't have Permission to Delete This ?");
+    } else {
+        This.closest('tr').remove();
+    }
+}
+</script>
+
+
+<script>
+function create_tr2(table_id) {
+    let table_body2 = document.getElementById(table_id),
+        first_tr = table_body2.firstElementChild
+    tr_clone = first_tr.cloneNode(true);
+
+    table_body2.append(tr_clone);
+
+    clean_first_tr(table_body2.firstElementChild);
+}
+
+function clean_first_tr(firstTr) {
+    let children = firstTr.children;
+
+    children = Array.isArray(children) ? children : Object.values(children);
+    children.forEach(x => {
+        if (x !== firstTr.lastElementChild) {
+            x.firstElementChild.value = '';
+        }
+    });
+}
+
+
+
+function remove_tr(This) {
+    if (This.closest('tbody').childElementCount == 1) {
+        alert("You Don't have Permission to Delete This ?");
+    } else {
+        This.closest('tr').remove();
+    }
+}
 </script>
 
 <script>
-    function fetch_courseupdate_new(course_id, type) {
+function fetch_courseupdate_new(course_id, type) {
 
-        $.ajax({
-            url: "{{ url('/elearning/course/fetch') }}",
-            type: 'GET',
-            data: {
-                course_id: course_id,
-                type: type,
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(data) {
+    $.ajax({
+        url: "{{ url('/elearning/course/fetch') }}",
+        type: 'GET',
+        data: {
+            course_id: course_id,
+            type: type,
+            _token: '{{ csrf_token() }}'
+        },
+        success: function(data) {
 
-                const row = data.rows[0];
-                console.log(row);
-                /* ===================== EDIT MODE ===================== */
-                if (type === "edit") {
+            const row = data.rows[0];
+            console.log(row);
+            /* ===================== EDIT MODE ===================== */
+            if (type === "edit") {
 
-                    let url = "{{ url('/elearning/course/update') }}/" + course_id;
-                    $('#course_form_edit').attr('action', url);
+                let url = "{{ url('/elearning/course/update') }}/" + course_id;
+                $('#course_form_edit').attr('action', url);
 
-                    // Hidden ID
-                    $('#course_edit').val(row.course_id);
+                // Hidden ID
+                $('#course_edit').val(row.course_id);
 
-                    // Basic fields
-                    $('#course_category_id_edit').val(row.course_category);
-                    $('#role_id_edit').val(row.role_id);
-                    $('#designation_id_edit').val(row.designation_id);
+                // Basic fields
+                $('#course_category_id_edit').val(row.course_category);
+                $('#role_id_edit').val(row.role_id);
+                $('#designation_id_edit').val(row.designation_id);
 
-                    $('#course_nameedit').val(row.course_name);
-                    $('#course_descriptionedit').val(row.course_description);
-                    $('#course_instructoredit').val(row.course_instructor);
-                    $('#course_cpt_pointsedit').val(row.course_cpt_points);
+                $('#course_nameedit').val(row.course_name);
+                $('#course_descriptionedit').val(row.course_description);
+                $('#course_instructoredit').val(row.course_instructor);
+                $('#course_cpt_pointsedit').val(row.course_cpt_points);
 
-                    // Course Certificate
-                    $('input[name="course_certificate"][value="' + row.course_certificate + '"]')
-                        .prop('checked', true);
+                // Course Certificate
+                $('input[name="course_certificate"][value="' + row.course_certificate + '"]')
+                    .prop('checked', true);
 
-                    // Course Pay
-                    $('#course_payedit').val(row.course_pay);
+                // Course Pay
+                $('#course_payedit').val(row.course_pay);
 
-                    if (row.course_pay === "paid") {
-                        $('#paid1').show();
-                        $('#free1').hide();
-                        $('#course_priceedit').val(row.course_price);
-                    } else {
-                        $('#paid1').hide();
-                        $('#free1').show();
-                    }
+                if (row.course_pay === "paid") {
+                    $('#paid1').show();
+                    $('#free1').hide();
+                    $('#course_priceedit').val(row.course_price);
+                } else {
+                    $('#paid1').hide();
+                    $('#free1').show();
+                }
 
-                    // Dates
-                    $('#course_start_periodedit').val(row.course_start_period);
-                    $('#course_end_periodedit').val(row.course_end_period);
+                // Dates
+                $('#course_start_periodedit').val(row.course_start_period);
+                $('#course_end_periodedit').val(row.course_end_period);
 
-                    // Images
-                    $('#course_introductionedit').attr('src', row.introduction_path1);
-                    $('.img-fluid2').attr('src', row.banner_path1);
+                // Images
+                $('#course_introductionedit').attr('src', row.introduction_path1);
+                $('.img-fluid2').attr('src', row.banner_path1);
 
-                    // ===== USER IDS =====
-                    let userIdsArray = row.user_ids ? row.user_ids.split(',') : [];
-                    $('#user_ids_edit').val(userIdsArray).trigger('change');
+                // ===== USER IDS =====
+                let userIdsArray = row.user_ids ? row.user_ids.split(',') : [];
+                $('#user_ids_edit').val(userIdsArray).trigger('change');
 
-                    // ===== CLASSES =====
-                    let classArray = row.course_classes ? row.course_classes.split(',') : [];
-                    $('#course_classesedit').val(classArray).trigger('change');
+                // ===== CLASSES =====
+                let classArray = row.course_classes ? row.course_classes.split(',') : [];
+                $('#course_classesedit').val(classArray).trigger('change');
 
-                    // ===== TAGS =====
-                    $('#table_bodyedit').html('');
-                    if (row.course_tags) {
-                        let tags = row.course_tags.split(',');
-                        tags.forEach(function(tag) {
-                            $('#table_bodyedit').append(`
+                // ===== TAGS =====
+                $('#table_bodyedit').html('');
+                if (row.course_tags) {
+                    let tags = row.course_tags.split(',');
+                    tags.forEach(function(tag) {
+                        $('#table_bodyedit').append(`
                 <tr>
                     <td>
                         <input type="text" class="form-control default" name="course_tags[]" value="${tag}">
@@ -2701,15 +2705,15 @@
                     </td>
                 </tr>
             `);
-                        });
-                    }
+                    });
+                }
 
-                    // ===== SKILLS REQUIRED =====
-                    $('#table_body1edit').html('');
-                    if (row.course_skills_required) {
-                        let skills = row.course_skills_required.split(',');
-                        skills.forEach(function(skill) {
-                            $('#table_body1edit').append(`
+                // ===== SKILLS REQUIRED =====
+                $('#table_body1edit').html('');
+                if (row.course_skills_required) {
+                    let skills = row.course_skills_required.split(',');
+                    skills.forEach(function(skill) {
+                        $('#table_body1edit').append(`
                 <tr>
                     <td>
                         <input type="text" class="form-control default" name="course_skills_required[]" value="${skill}">
@@ -2721,15 +2725,15 @@
                     </td>
                 </tr>
             `);
-                        });
-                    }
+                    });
+                }
 
-                    // ===== GAIN SKILLS =====
-                    $('#table_body2edit').html('');
-                    if (row.course_gain_skills) {
-                        let gains = row.course_gain_skills.split(',');
-                        gains.forEach(function(gain) {
-                            $('#table_body2edit').append(`
+                // ===== GAIN SKILLS =====
+                $('#table_body2edit').html('');
+                if (row.course_gain_skills) {
+                    let gains = row.course_gain_skills.split(',');
+                    gains.forEach(function(gain) {
+                        $('#table_body2edit').append(`
                 <tr>
                     <td>
                         <input type="text" class="form-control default" name="course_gain_skills[]" value="${gain}">
@@ -2741,172 +2745,172 @@
                     </td>
                 </tr>
             `);
-                        });
-                    }
-
-                    // Select2
-                    reinitializeSelect2('.js-select5');
-                    reinitializeSelect2('.js-select6');
+                    });
                 }
 
-                /* ===================== SHOW MODE ===================== */
-                if (type === "show") {
-                    let url = "{{ url('/elearning/course/show') }}/" + course_id;
-                    $('#course_category_id_show').val(String(row.course_category)).prop('disabled', true);
-                    $('#role_id_show').val(row.role_id).prop('disabled', true);
-                    $('#designation_id_show').val(row.designation_id).prop('disabled', true);
-
-                    $('#course_nameshow').val(row.course_name).prop('disabled', true);
-                    $('#course_descriptionshow').val(row.course_description).prop('disabled', true);
-                    $('#course_instructorshow').val(row.course_instructor).prop('disabled', true);
-                    $('#course_payshow').val(row.course_pay).prop('disabled', true);
-                    $('#course_start_periodshow').val(row.course_start_period).prop('disabled', true);
-                    $('#course_end_periodshow').val(row.course_end_period).prop('disabled', true);
-                    $('#exam_nameshow').val(row.exam_name).prop('disabled', true);
-                    $('#exam_dateshow').val(row.exam_date).prop('disabled', true);
-                    $('#pass_percentageshow').val(row.pass_percentage).prop('disabled', true);
-                    $('#course_tagsshow').val(row.course_tags).prop('disabled', true);
-                    $('#course_skills_requiredshow').val(row.course_skills_required).prop('disabled', true);
-                    $('#course_gain_skillsshow').val(row.course_gain_skills).prop('disabled', true);
-                    $('#course_cpt_pointsshow').val(row.course_cpt_points).prop('disabled', true);
-                    $('#course_priceshow').val(row.course_price).prop('disabled', true);
-                    $('#course_classesshow').val(row.course_classes).prop('disabled', true);
-                    // User IDs (SHOW)
-                    let userIdsArray = row.user_ids ? row.user_ids.split(',') : [];
-                    $('#user_ids_show').val(userIdsArray).prop('disabled', true).trigger('change');
-
-                    // Certificate
-                    $('input[name="course_certificate"]').prop('disabled', true);
-
-                    // Check the correct value
-                    $('input[name="course_certificate"][value="' + row.course_certificate + '"]')
-                        .prop('checked', true);
-                    $('input[name="course_noperiod"]').prop('disabled', true);
-
-                    $('input[name="course_noperiod"][value="' + row.course_noperiod + '"]')
-                        .prop('checked', true);
-                    // corse exam
-
-                    $('input[name="course_exam"]').prop('disabled', true);
-
-                    $('input[name="course_exam"][value="' + row.course_exam + '"]')
-                        .prop('checked', true);
-
-                    // Images
-                    $('.img-fluid1').attr('src', row.introduction_path1);
-                    $('.img-fluid2').attr('src', row.banner_path1);
-
-                    // Classes
-                    $('.course_classesshow')
-                        .val(row.course_classes.split(', '))
-                        .trigger('change');
-
-                    reinitializeSelect2('.js-select5');
-                }
+                // Select2
+                reinitializeSelect2('.js-select5');
+                reinitializeSelect2('.js-select6');
             }
-        });
+
+            /* ===================== SHOW MODE ===================== */
+            if (type === "show") {
+                let url = "{{ url('/elearning/course/show') }}/" + course_id;
+                $('#course_category_id_show').val(String(row.course_category)).prop('disabled', true);
+                $('#role_id_show').val(row.role_id).prop('disabled', true);
+                $('#designation_id_show').val(row.designation_id).prop('disabled', true);
+
+                $('#course_nameshow').val(row.course_name).prop('disabled', true);
+                $('#course_descriptionshow').val(row.course_description).prop('disabled', true);
+                $('#course_instructorshow').val(row.course_instructor).prop('disabled', true);
+                $('#course_payshow').val(row.course_pay).prop('disabled', true);
+                $('#course_start_periodshow').val(row.course_start_period).prop('disabled', true);
+                $('#course_end_periodshow').val(row.course_end_period).prop('disabled', true);
+                $('#exam_nameshow').val(row.exam_name).prop('disabled', true);
+                $('#exam_dateshow').val(row.exam_date).prop('disabled', true);
+                $('#pass_percentageshow').val(row.pass_percentage).prop('disabled', true);
+                $('#course_tagsshow').val(row.course_tags).prop('disabled', true);
+                $('#course_skills_requiredshow').val(row.course_skills_required).prop('disabled', true);
+                $('#course_gain_skillsshow').val(row.course_gain_skills).prop('disabled', true);
+                $('#course_cpt_pointsshow').val(row.course_cpt_points).prop('disabled', true);
+                $('#course_priceshow').val(row.course_price).prop('disabled', true);
+                $('#course_classesshow').val(row.course_classes).prop('disabled', true);
+                // User IDs (SHOW)
+                let userIdsArray = row.user_ids ? row.user_ids.split(',') : [];
+                $('#user_ids_show').val(userIdsArray).prop('disabled', true).trigger('change');
+
+                // Certificate
+                $('input[name="course_certificate"]').prop('disabled', true);
+
+                // Check the correct value
+                $('input[name="course_certificate"][value="' + row.course_certificate + '"]')
+                    .prop('checked', true);
+                $('input[name="course_noperiod"]').prop('disabled', true);
+
+                $('input[name="course_noperiod"][value="' + row.course_noperiod + '"]')
+                    .prop('checked', true);
+                // corse exam
+
+                $('input[name="course_exam"]').prop('disabled', true);
+
+                $('input[name="course_exam"][value="' + row.course_exam + '"]')
+                    .prop('checked', true);
+
+                // Images
+                $('.img-fluid1').attr('src', row.introduction_path1);
+                $('.img-fluid2').attr('src', row.banner_path1);
+
+                // Classes
+                $('.course_classesshow')
+                    .val(row.course_classes.split(', '))
+                    .trigger('change');
+
+                reinitializeSelect2('.js-select5');
+            }
+        }
+    });
+}
+
+$('#result').on('change', function() {
+    //fetch_courseupdate_new();
+    $('#courselist').css('display', 'none');
+    $('#classlist').css('display', 'none');
+
+
+    if ($(this).val() === 'courselist') {
+        $('#courselist').css('display', 'block');
+    }
+    if ($(this).val() === 'classlist') {
+        $('#classlist').css('display', 'block');
     }
 
-    $('#result').on('change', function() {
-        //fetch_courseupdate_new();
-        $('#courselist').css('display', 'none');
-        $('#classlist').css('display', 'none');
-
-
-        if ($(this).val() === 'courselist') {
-            $('#courselist').css('display', 'block');
-        }
-        if ($(this).val() === 'classlist') {
-            $('#classlist').css('display', 'block');
-        }
-
-    });
+});
 </script>
 
 <script>
+$('#course_pay').on('change', function() {
+    $('#paid').css('display', 'none');
+    $('#free').css('display', 'none');
+
+
+    if ($(this).val() === 'paid') {
+        $('#paid').css('display', 'block');
+    }
+    if ($(this).val() === 'free') {
+        $('#free').css('display', 'block');
+    }
+
+});
+</script>
+
+<script>
+$('#course_payedit').on('change', function() {
+    $('#paid1').css('display', 'none');
+    $('#free1').css('display', 'none');
+
+
+    if ($(this).val() === 'paid') {
+        $('#paid1').css('display', 'block');
+
+    }
+    if ($(this).val() === 'free') {
+        $('#free1').css('display', 'block');
+    }
+
+});
+
+$('#course_payshow').on('change', function() {
+    $('#paid2').css('display', 'none');
+    $('#free2').css('display', 'none');
+
+
+    if ($(this).val() === 'paid') {
+        $('#paid2').css('display', 'block');
+    }
+    if ($(this).val() === 'free') {
+        $('#free2').css('display', 'block');
+    }
+
+});
+$(document).ready(function() {
+    // Handle the visibility of the paid/free sections and input values
     $('#course_pay').on('change', function() {
         $('#paid').css('display', 'none');
         $('#free').css('display', 'none');
 
+        const selectedValue = $(this).val();
 
-        if ($(this).val() === 'paid') {
+        if (selectedValue === 'paid') {
             $('#paid').css('display', 'block');
-        }
-        if ($(this).val() === 'free') {
-            $('#free').css('display', 'block');
-        }
-
-    });
-</script>
-
-<script>
-    $('#course_payedit').on('change', function() {
-        $('#paid1').css('display', 'none');
-        $('#free1').css('display', 'none');
-
-
-        if ($(this).val() === 'paid') {
-            $('#paid1').css('display', 'block');
-
-        }
-        if ($(this).val() === 'free') {
-            $('#free1').css('display', 'block');
-        }
-
-    });
-
-    $('#course_payshow').on('change', function() {
-        $('#paid2').css('display', 'none');
-        $('#free2').css('display', 'none');
-
-
-        if ($(this).val() === 'paid') {
-            $('#paid2').css('display', 'block');
-        }
-        if ($(this).val() === 'free') {
-            $('#free2').css('display', 'block');
-        }
-
-    });
-    $(document).ready(function() {
-        // Handle the visibility of the paid/free sections and input values
-        $('#course_pay').on('change', function() {
-            $('#paid').css('display', 'none');
             $('#free').css('display', 'none');
+            $('#course_price').val(''); // Clear the course_price input
 
-            const selectedValue = $(this).val();
-
-            if (selectedValue === 'paid') {
-                $('#paid').css('display', 'block');
-                $('#free').css('display', 'none');
-                $('#course_price').val(''); // Clear the course_price input
-
-            } else if (selectedValue === 'free') {
-                $('#free').css('display', 'block');
-                $('#paid').css('display', 'none');
-                $('#course_price').val('0'); // Set course_price to 0
-            }
-        });
-
+        } else if (selectedValue === 'free') {
+            $('#free').css('display', 'block');
+            $('#paid').css('display', 'none');
+            $('#course_price').val('0'); // Set course_price to 0
+        }
     });
 
-    // $('#course_pay').on('change', function() {
-    //     $('#paid').css('display', 'none');
-    //     $('#free').css('display', 'none');
+});
+
+// $('#course_pay').on('change', function() {
+//     $('#paid').css('display', 'none');
+//     $('#free').css('display', 'none');
 
 
-    //     if ($(this).val() == 'paid') {
-    //         $('#paid').css('display', 'block');
-    //         $('#free').css('display', 'none');
-    //         $('#course_price').val('');
-    //     }
-    //     if ($(this).val() === 'free') {
-    //         $('#free').css('display', 'block');
-    //         $('#paid').css('display', 'none');
-    //         document.getElementById('course_price').value = "0";
-    //     }
+//     if ($(this).val() == 'paid') {
+//         $('#paid').css('display', 'block');
+//         $('#free').css('display', 'none');
+//         $('#course_price').val('');
+//     }
+//     if ($(this).val() === 'free') {
+//         $('#free').css('display', 'block');
+//         $('#paid').css('display', 'none');
+//         document.getElementById('course_price').value = "0";
+//     }
 
-    // });
+// });
 </script>
 
 
@@ -3349,8 +3353,7 @@
 
             <div class="card longquestion" id="">
                 <h4 class="modal-title long">Edit Course:</h4>
-                <form method="POST" id="course_form_edit" action=""
-                    enctype="multipart/form-data">
+                <form method="POST" id="course_form_edit" action="" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden" name="course_edit" class="course_edit" id="course_edit">
                     <div class="row">
@@ -3481,11 +3484,11 @@
                                     name="course_banneredit" style="display:none;" accept="image/*" autocomplete="off">
                                 <?php if (!empty($data->course_banner)) { ?>
 
-                                    <img class="img-fluid2" alt="Banner Image" title="">
+                                <img class="img-fluid2" alt="Banner Image" title="">
 
                                 <?php } else { ?>
-                                    <img class="" src="uploads/class/126/empty.jpg" alt="Banner Image" width="200px"
-                                        height="200px" title="">
+                                <img class="" src="uploads/class/126/empty.jpg" alt="Banner Image" width="200px"
+                                    height="200px" title="">
 
                                 <?php } ?>
 
@@ -3763,8 +3766,7 @@
             </div>
             <div class="card longquestion" id="">
                 <h4 class="modal-title long">Show Course:</h4>
-                <form method="POST" id="course_form_show"
-                    enctype="multipart/form-data">
+                <form method="POST" id="course_form_show" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden" name="course_editshow" class="course_edit" id="course_editshow">
 
@@ -4170,31 +4172,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <script>
-    function handleExpiredCourse(course_id) {
-        Swal.fire({
-            title: 'Expired Certificate Course Detected',
-            icon: 'warning',
-            html: `
+function handleExpiredCourse(course_id) {
+    Swal.fire({
+        title: 'Expired Certificate Course Detected',
+        icon: 'warning',
+        html: `
             <ul style="text-align: left;">
                 <li>If content changes annually, <b>create a new course</b>.</li>
                 <li>If the same content is reused, <b>Copy & reassign the existing course for maintaining existing data</b>.</li>
             </ul>
         `,
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: 'Create New Course',
-            denyButtonText: `Copy & Reassign Existing`,
-            cancelButtonText: 'Close',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Trigger the "Add Course" modal
-                $('#expired_course_id').val(course_id);
-                $('#addModal').modal('show');
-            } else if (result.isDenied) {
-                // Redirect to reassign logic
-                Swal.fire({
-                    title: "Copy Course Options",
-                    html: `
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Create New Course',
+        denyButtonText: `Copy & Reassign Existing`,
+        cancelButtonText: 'Close',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Trigger the "Add Course" modal
+            $('#expired_course_id').val(course_id);
+            $('#addModal').modal('show');
+        } else if (result.isDenied) {
+            // Redirect to reassign logic
+            Swal.fire({
+                title: "Copy Course Options",
+                html: `
         <div style="text-align: left;">
             <label style="margin-bottom: 6px;">Certificate Expiry: <span style="color:red">*</span></label><br>
 
@@ -4212,552 +4214,552 @@
             </div>
         </div>
     `,
-                    showCancelButton: true,
-                    confirmButtonText: 'Copy Course',
-                    cancelButtonText: 'Cancel',
-                    didOpen: () => {
-                        const dateContainer = document.getElementById('expiry_date_container');
+                showCancelButton: true,
+                confirmButtonText: 'Copy Course',
+                cancelButtonText: 'Cancel',
+                didOpen: () => {
+                    const dateContainer = document.getElementById('expiry_date_container');
 
-                        document.querySelectorAll('input[name="certificate_expiry"]').forEach((
-                            radio) => {
-                            radio.addEventListener('change', function() {
-                                if (this.value === "1") {
-                                    dateContainer.style.display = 'block';
-                                } else {
-                                    dateContainer.style.display = 'none';
-                                    document.getElementById('expiry_date').value = '';
-                                }
-                            });
-                        });
-                    },
-                    preConfirm: () => {
-                        const selected = document.querySelector(
-                            'input[name="certificate_expiry"]:checked');
-                        const expiryDate = document.getElementById('expiry_date').value;
-
-                        if (!selected) {
-                            Swal.showValidationMessage(
-                                "Please select 'Yes' or 'No' for Certificate Expiry");
-                            return false;
-                        }
-
-                        if (selected.value === "1" && !expiryDate) {
-                            Swal.showValidationMessage(
-                                "Please enter an expiry date when 'Yes' is selected");
-                            return false;
-                        }
-
-                        return {
-                            certificate_expiry: selected.value,
-                            course_expiry_period: selected.value === "1" ? expiryDate : null
-                        };
-                    }
-                }).then((result) => {
-                    if (!result.isConfirmed) return;
-
-                    const formData = result.value;
-
-                    $.ajax({
-                        url: "{{ route('course_copy') }}",
-                        type: 'POST',
-                        data: {
-                            course_id: course_id,
-                            certificate_expiry: formData.certificate_expiry,
-                            course_expiry_period: formData.course_expiry_period,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(data) {
-                            if (data.data == 0) {
-                                Swal.fire("Info", data.message_cus, "info");
+                    document.querySelectorAll('input[name="certificate_expiry"]').forEach((
+                        radio) => {
+                        radio.addEventListener('change', function() {
+                            if (this.value === "1") {
+                                dateContainer.style.display = 'block';
                             } else {
-                                Swal.fire("Success", "Course copied successfully!", "success")
-                                    .then(() => {
-                                        location.href = `/admincourse`;
-                                    });
+                                dateContainer.style.display = 'none';
+                                document.getElementById('expiry_date').value = '';
                             }
-                        },
-                        error: function() {
-                            Swal.fire("Error", "Something went wrong", "error");
-                        }
+                        });
                     });
+                },
+                preConfirm: () => {
+                    const selected = document.querySelector(
+                        'input[name="certificate_expiry"]:checked');
+                    const expiryDate = document.getElementById('expiry_date').value;
+
+                    if (!selected) {
+                        Swal.showValidationMessage(
+                            "Please select 'Yes' or 'No' for Certificate Expiry");
+                        return false;
+                    }
+
+                    if (selected.value === "1" && !expiryDate) {
+                        Swal.showValidationMessage(
+                            "Please enter an expiry date when 'Yes' is selected");
+                        return false;
+                    }
+
+                    return {
+                        certificate_expiry: selected.value,
+                        course_expiry_period: selected.value === "1" ? expiryDate : null
+                    };
+                }
+            }).then((result) => {
+                if (!result.isConfirmed) return;
+
+                const formData = result.value;
+
+                $.ajax({
+                    url: "{{ route('course_copy') }}",
+                    type: 'POST',
+                    data: {
+                        course_id: course_id,
+                        certificate_expiry: formData.certificate_expiry,
+                        course_expiry_period: formData.course_expiry_period,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        if (data.data == 0) {
+                            Swal.fire("Info", data.message_cus, "info");
+                        } else {
+                            Swal.fire("Success", "Course copied successfully!", "success")
+                                .then(() => {
+                                    location.href = `/admincourse`;
+                                });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire("Error", "Something went wrong", "error");
+                    }
                 });
+            });
 
 
-            }
-        });
-    }
+        }
+    });
+}
 
-    function showReplacementMessage(course_id) {
-        Swal.fire({
-            title: 'Course Already Replaced',
-            icon: 'info',
-            html: `
+function showReplacementMessage(course_id) {
+    Swal.fire({
+        title: 'Course Already Replaced',
+        icon: 'info',
+        html: `
             <p>This course has already been <b>replaced</b> with a new or copied version.</p>
             <p>No further action is needed.</p>
         `,
-            confirmButtonText: 'OK'
-        });
+        confirmButtonText: 'OK'
+    });
+}
+
+
+
+function gencre() {
+
+    var cname = $("#cname").val();
+    if (cname == '') {
+        swal.fire("Please Enter the Class Name", "", "error");
+        return false;
+    }
+    var cdescription = $("#cdescription").val();
+    if (cdescription == '') {
+        swal.fire("Please Enter The Class Description", "", "error")
+        return false;
+    }
+    var cresource = $("#cresource").val();
+    if (cresource == '') {
+        swal.fire("Please Enter The Resourse", "", "error");
+        return false;
+    }
+    var class_quiz = $("#class_quiz").val();
+    if (class_quiz == '') {
+        swal.fire("Please Select the Class Quiz", "", "error");
+        return false;
+
     }
 
+    // if (class_quiz === 'yes') {
+    //     var quiz_id = $("#quiz_id").val();
+    //     if (quiz_id == '') {
+    //         swal.fire("Please Select the Quiz Name", "", "error");
+    //         return false;
+
+    //     }
 
 
-    function gencre() {
+    // } 
+    else {
+        $('#classsavebutton').css('pointer-events', 'none');
+        document.getElementById('class_form').submit();
+    }
 
-        var cname = $("#cname").val();
-        if (cname == '') {
-            swal.fire("Please Enter the Class Name", "", "error");
+}
+</script>
+
+
+<script>
+function resetSelect2() {
+    // Get the Select2 element by its ID
+    $(".js-select2").empty();
+
+}
+$('.close').on('click', function() {
+    resetSelect2();
+});
+
+$('.close').on('click', function() {
+    resetSelect2();
+});
+</script>
+<script>
+$(document).ready(function() {
+    // Course Certificate toggle
+    $('input[name="course_certificate"]').change(function() {
+        if ($(this).val() == '1') {
+            $('#certificateFields').slideDown();
+        } else {
+            $('#certificateFields').slideUp();
+            $('#cetificate_template').val('');
+            $('input[name="certificate_expiry"]').prop('checked', false);
+            $('#course_expiry_period').val('');
+            $('#expiryDateField').hide(); // Also hide date field
+        }
+    });
+
+    // Certificate Expiry toggle
+    $(document).on('change', 'input[name="certificate_expiry"]', function() {
+        if ($(this).val() == '1') {
+            $('#expiryDateField').slideDown();
+        } else {
+            $('#expiryDateField').slideUp();
+            $('#course_expiry_period').val('');
+        }
+    });
+
+
+});
+</script>
+<script>
+$(document).ready(function() {
+    // Course Certificate toggle
+    $('input[name="course_certificate"]').change(function() {
+        if ($(this).val() == '1') {
+            $('#certificateFields').slideDown();
+        } else {
+            $('#certificateFields').slideUp();
+            $('#cetificate_template').val('');
+            $('input[name="certificate_expiry"]').prop('checked', false);
+            $('#course_expiry_period').val('');
+            $('#expiryDateField').hide(); // Also hide date field
+        }
+    });
+
+    // Certificate Expiry toggle
+    $(document).on('change', 'input[name="certificate_expiry"]', function() {
+        if ($(this).val() == '1') {
+            $('#expiryDateField').slideDown();
+        } else {
+            $('#expiryDateField').slideUp();
+            $('#course_expiry_period').val('');
+        }
+    });
+
+
+});
+</script>
+
+<script>
+function gencre1(id) {
+
+
+
+    if (id == "1") {
+        var course_category = $("#course_category_id").val();
+
+        if (course_category == '') {
+            swal.fire("Please Select the Course Category", "", "error");
             return false;
         }
-        var cdescription = $("#cdescription").val();
-        if (cdescription == '') {
-            swal.fire("Please Enter The Class Description", "", "error")
+        var role_id = $("#role_id").val();
+        if (role_id == '') {
+            swal.fire("Please Select the Role", "", "error");
             return false;
         }
-        var cresource = $("#cresource").val();
-        if (cresource == '') {
-            swal.fire("Please Enter The Resourse", "", "error");
+        var designation_id = $("#designation_id").val();
+        if (designation_id == '') {
+            swal.fire("Please Select the Designation", "", "error");
             return false;
         }
-        var class_quiz = $("#class_quiz").val();
-        if (class_quiz == '') {
-            swal.fire("Please Select the Class Quiz", "", "error");
+        var user_id = $("#user_id").val();
+        if (user_id == '') {
+            swal.fire("Please Select the Users", "", "error");
             return false;
+        }
+        var course_name = $("#course_name").val();
+        if (course_name == '') {
+            swal.fire("Please Enter the Course Name", "", "error");
+            return false;
+        }
 
+        var course_description = $("#course_description").val();
+        if (course_description == '') {
+            swal.fire("Please Enter the Course Description", "", "error");
+            return false;
         }
 
-        // if (class_quiz === 'yes') {
-        //     var quiz_id = $("#quiz_id").val();
-        //     if (quiz_id == '') {
-        //         swal.fire("Please Select the Quiz Name", "", "error");
+
+        const input_array = document.querySelectorAll('input[name="course_certificate"]');
+
+
+        let AnswerSelected = false;
+        for (let row of input_array) {
+            if (row.checked === true) {
+                AnswerSelected = true;
+            }
+        }
+        if (AnswerSelected === false) {
+
+            swal.fire("Please Select the Course Certificate", "", "error");
+            return false;
+        }
+
+
+        const input_array2 = document.querySelectorAll('input[name="course_exam"]');
+
+        let AnswerSelected2 = false;
+        for (let row of input_array2) {
+            if (row.checked === true) {
+                AnswerSelected2 = true;
+            }
+        }
+        if (AnswerSelected2 === false) {
+
+            swal.fire("Please Select the Course Exam", "", "error");
+            return false;
+        }
+
+
+
+        var course_introduction = $("#course_introduction").val();
+        if (course_introduction == '') {
+            swal.fire("Please Upload the Course Introduction", "", "error")
+            return false;
+        }
+
+        var course_banner = $("#course_banner").val();
+        if (course_banner == '') {
+            swal.fire("Please Upload the Course Banner", "", "error")
+            return false;
+        }
+        var course_summary = $("#course_summary").val();
+        if (course_summary == '') {
+            swal.fire("Please Upload the Course Summary", "", "error")
+            return false;
+        }
+        // var course = $("#course").val();
+        // if (course == '') {
+        //     swal.fire("Please Select the Course Type", "", "error")
+        //     return false;
+        // }
+
+        var course_pay = $("#course_pay").val();
+        if (course_pay == '') {
+            swal.fire("Please Enter the Course Type", "", "error")
+            return false;
+        }
+
+        var course_price = $("#course_price").val();
+        if (course_pay == 'paid') {
+            if (course_price == '') {
+                swal.fire("Please Enter the Course Price", "", "error");
+                return false;
+
+            }
+        }
+        var course_noperiod = $(".course_noperiod").val();
+        // if (course_noperiod == '2') {
+        //     var course_start_period = $("#course_start_period").val();
+
+        //     if (course_start_period == '') {
+        //         swal.fire("Please Select the Course Start Period", "", "error")
         //         return false;
+        //     }
+        //     var course_end_period = $("#course_end_period").val();
+        //     if (course_end_period == '') {
+        //         swal.fire("Please Select the Course End Period", "", "error")
+        //         return false;
+        //     }
+        //     var pass_percentage = $("#pass_percentage").val();
+        //     if (pass_percentage == '') {
+        //         swal.fire("Please Enter the Pass Percentage", "", "error")
+        //         return false;
+        //     }
+        // }
+        // if (course_noperiod == '1') {
+        //     var exam_date = $("#exam_date").val();
+
+        //     if (exam_date == '') {
+        //         swal.fire("Please Select the Exam Date", "", "error")
+        //         return false;
+        //     }
+        //     var exam_name = $("#exam_name").val();
+        //     if (exam_name == '') {
+        //         swal.fire("Please Select the Exam name", "", "error")
+        //         return false;
+        //     }
+        //     var pass_percentage = $("#pass_percentage").val();
+        //     if (pass_percentage == '') {
+        //         swal.fire("Please Enter the Pass Percentage", "", "error")
+        //         return false;
+        //     }
+        // }
+
+
+        // const input_array1 = document.querySelectorAll('.course_exam');
+        // let AnswerSelected1 = false;
+        // for (let row of input_array1) {
+        //     if (row.checked === true) {
+        //         AnswerSelected1 = true;
+        //         var exam_name = $("#exam_name").val();
+        //         if (exam_name == '') {
+        //             swal.fire("Please Select the Exam Name", "", "error")
+        //             return false;
+        //         }
+        //         var exam_date = $("#exam_date").val();
+        //         if (exam_date == '') {
+        //             swal.fire("Please Select the Exam Date", "", "error")
+        //             return false;
+        //         }
+        //         var pass_percentage = $("#pass_percentage").val();
+        //         if (pass_percentage == '') {
+        //             swal.fire("Please Enter the Pass Percentage", "", "error")
+        //             return false;
+        //         }
 
         //     }
+        // }
+        // if (AnswerSelected1 === false) {
 
-
-        // } 
-        else {
-            $('#classsavebutton').css('pointer-events', 'none');
-            document.getElementById('class_form').submit();
+        //     swal.fire("Please Select the Course Exam", "", "error");
+        //     return false;
+        // }
+        var course_instructor = $("#course_instructor").val();
+        if (course_instructor == '') {
+            swal.fire("Please Enter the Course Instructor", "", "error")
+            return false;
         }
 
+        var course_tags = $("#course_tags").val();
+        if (course_tags == '') {
+            swal.fire("Please Enter the Course Tags", "", "error")
+            return false;
+        }
+
+        var course_skills_required = $("#course_skills_required").val();
+        if (course_skills_required == '') {
+            swal.fire("Please Enter the Course Skills Required", "", "error")
+            return false;
+        }
+
+        var course_gain_skills = $("#course_gain_skills").val();
+        if (course_gain_skills == '') {
+            swal.fire("Please Enter the Course Gain Skills", "", "error")
+            return false;
+        }
+        var course_cpt_points = $("#course_cpt_points").val();
+        if (course_cpt_points == '') {
+            swal.fire("Please Enter the Course CPD Points", "", "error")
+            return false;
+        }
+
+        var course_classes = $("#course_classes").val();
+        if (course_classes == '') {
+            swal.fire("Please Enter the Course Classes", "", "error")
+            return false;
+        } else {
+            $('#savebutton').css('pointer-events', 'none');
+            document.getElementById('course_form').submit();
+        }
     }
-</script>
 
 
-<script>
-    function resetSelect2() {
-        // Get the Select2 element by its ID
-        $(".js-select2").empty();
 
-    }
-    $('.close').on('click', function() {
-        resetSelect2();
-    });
+    if (id == "edit") {
+        var course_category = $("#course_categoryedit").val();
+        if (course_category == '') {
+            swal.fire("Please Select the Course Category", "", "error");
+            return false;
+        }
 
-    $('.close').on('click', function() {
-        resetSelect2();
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        // Course Certificate toggle
-        $('input[name="course_certificate"]').change(function() {
-            if ($(this).val() == '1') {
-                $('#certificateFields').slideDown();
-            } else {
-                $('#certificateFields').slideUp();
-                $('#cetificate_template').val('');
-                $('input[name="certificate_expiry"]').prop('checked', false);
-                $('#course_expiry_period').val('');
-                $('#expiryDateField').hide(); // Also hide date field
+        var course_name = $("#course_nameedit").val();
+        if (course_name == '') {
+            swal.fire("Please Enter the Course Name", "", "error");
+            return false;
+        }
+
+        var course_description = $("#course_descriptionedit").val();
+        if (course_description == '') {
+            swal.fire("Please Enter the Course Description", "", "error");
+            return false;
+        }
+
+
+        const input_array = document.querySelectorAll('#course_certificateedit');
+        let AnswerSelected = false;
+        for (let row of input_array) {
+            if (row.checked === true) {
+                AnswerSelected = true;
             }
-        });
+        }
+        if (AnswerSelected === false) {
 
-        // Certificate Expiry toggle
-        $(document).on('change', 'input[name="certificate_expiry"]', function() {
-            if ($(this).val() == '1') {
-                $('#expiryDateField').slideDown();
-            } else {
-                $('#expiryDateField').slideUp();
-                $('#course_expiry_period').val('');
-            }
-        });
+            swal.fire("Please Select the Course Certificate", "", "error");
+            return false;
+        }
 
+        // var course_introduction = $("#course_introductionedit").val();
+        // if (course_introduction == '') {
+        //     swal.fire("Please Upload the Course Introduction", "", "error")
+        //     return false;
+        // }
 
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        // Course Certificate toggle
-        $('input[name="course_certificate"]').change(function() {
-            if ($(this).val() == '1') {
-                $('#certificateFields').slideDown();
-            } else {
-                $('#certificateFields').slideUp();
-                $('#cetificate_template').val('');
-                $('input[name="certificate_expiry"]').prop('checked', false);
-                $('#course_expiry_period').val('');
-                $('#expiryDateField').hide(); // Also hide date field
-            }
-        });
+        // var course_banner = $("#course_banneredit").val();
+        // if (course_banner == '') {
+        //     swal.fire("Please Upload the Course Banner", "", "error")
+        //     return false;
+        // }
+        var course = $("#course_payedit").val();
+        if (course == '') {
+            swal.fire("Please Select the Course Type", "", "error")
+            return false;
+        }
 
-        // Certificate Expiry toggle
-        $(document).on('change', 'input[name="certificate_expiry"]', function() {
-            if ($(this).val() == '1') {
-                $('#expiryDateField').slideDown();
-            } else {
-                $('#expiryDateField').slideUp();
-                $('#course_expiry_period').val('');
-            }
-        });
+        // var course = $("#course_price").val();
+        // if (course == '') {
+        //     swal.fire("Please Enter the Course Price", "", "error")
+        //     return false;
+        // }
 
+        var course_start_period = $("#course_start_periodedit").val();
+        if (course_start_period == '') {
+            swal.fire("Please Select the Course Start Period", "", "error")
+            return false;
+        }
 
-    });
-</script>
+        var course_end_period = $("#course_end_periodedit").val();
+        if (course_end_period == '') {
+            swal.fire("Please Select the Course End Period", "", "error")
+            return false;
+        }
 
-<script>
-    function gencre1(id) {
-
-
-
-        if (id == "1") {
-            var course_category = $("#course_category_id").val();
-
-            if (course_category == '') {
-                swal.fire("Please Select the Course Category", "", "error");
-                return false;
-            }
-            var role_id = $("#role_id").val();
-            if (role_id == '') {
-                swal.fire("Please Select the Role", "", "error");
-                return false;
-            }
-            var designation_id = $("#designation_id").val();
-            if (designation_id == '') {
-                swal.fire("Please Select the Designation", "", "error");
-                return false;
-            }
-             var user_id = $("#user_id").val();
-            if (user_id == '') {
-                swal.fire("Please Select the Users", "", "error");
-                return false;
-            }
-            var course_name = $("#course_name").val();
-            if (course_name == '') {
-                swal.fire("Please Enter the Course Name", "", "error");
-                return false;
-            }
-
-            var course_description = $("#course_description").val();
-            if (course_description == '') {
-                swal.fire("Please Enter the Course Description", "", "error");
-                return false;
-            }
-
-
-            const input_array = document.querySelectorAll('input[name="course_certificate"]');
-
-
-            let AnswerSelected = false;
-            for (let row of input_array) {
-                if (row.checked === true) {
-                    AnswerSelected = true;
-                }
-            }
-            if (AnswerSelected === false) {
-
-                swal.fire("Please Select the Course Certificate", "", "error");
-                return false;
-            }
-
-
-            const input_array2 = document.querySelectorAll('input[name="course_exam"]');
-
-            let AnswerSelected2 = false;
-            for (let row of input_array2) {
-                if (row.checked === true) {
-                    AnswerSelected2 = true;
-                }
-            }
-            if (AnswerSelected2 === false) {
-
-                swal.fire("Please Select the Course Exam", "", "error");
-                return false;
-            }
-
-
-
-            var course_introduction = $("#course_introduction").val();
-            if (course_introduction == '') {
-                swal.fire("Please Upload the Course Introduction", "", "error")
-                return false;
-            }
-
-            var course_banner = $("#course_banner").val();
-            if (course_banner == '') {
-                swal.fire("Please Upload the Course Banner", "", "error")
-                return false;
-            }
-            var course_summary = $("#course_summary").val();
-            if (course_summary == '') {
-                swal.fire("Please Upload the Course Summary", "", "error")
-                return false;
-            }
-            // var course = $("#course").val();
-            // if (course == '') {
-            //     swal.fire("Please Select the Course Type", "", "error")
-            //     return false;
-            // }
-
-            var course_pay = $("#course_pay").val();
-            if (course_pay == '') {
-                swal.fire("Please Enter the Course Type", "", "error")
-                return false;
-            }
-
-            var course_price = $("#course_price").val();
-            if (course_pay == 'paid') {
-                if (course_price == '') {
-                    swal.fire("Please Enter the Course Price", "", "error");
-                    return false;
-
-                }
-            }
-            var course_noperiod = $(".course_noperiod").val();
-            // if (course_noperiod == '2') {
-            //     var course_start_period = $("#course_start_period").val();
-
-            //     if (course_start_period == '') {
-            //         swal.fire("Please Select the Course Start Period", "", "error")
-            //         return false;
-            //     }
-            //     var course_end_period = $("#course_end_period").val();
-            //     if (course_end_period == '') {
-            //         swal.fire("Please Select the Course End Period", "", "error")
-            //         return false;
-            //     }
-            //     var pass_percentage = $("#pass_percentage").val();
-            //     if (pass_percentage == '') {
-            //         swal.fire("Please Enter the Pass Percentage", "", "error")
-            //         return false;
-            //     }
-            // }
-            // if (course_noperiod == '1') {
-            //     var exam_date = $("#exam_date").val();
-
-            //     if (exam_date == '') {
-            //         swal.fire("Please Select the Exam Date", "", "error")
-            //         return false;
-            //     }
-            //     var exam_name = $("#exam_name").val();
-            //     if (exam_name == '') {
-            //         swal.fire("Please Select the Exam name", "", "error")
-            //         return false;
-            //     }
-            //     var pass_percentage = $("#pass_percentage").val();
-            //     if (pass_percentage == '') {
-            //         swal.fire("Please Enter the Pass Percentage", "", "error")
-            //         return false;
-            //     }
-            // }
-
-
-            // const input_array1 = document.querySelectorAll('.course_exam');
-            // let AnswerSelected1 = false;
-            // for (let row of input_array1) {
-            //     if (row.checked === true) {
-            //         AnswerSelected1 = true;
-            //         var exam_name = $("#exam_name").val();
-            //         if (exam_name == '') {
-            //             swal.fire("Please Select the Exam Name", "", "error")
-            //             return false;
-            //         }
-            //         var exam_date = $("#exam_date").val();
-            //         if (exam_date == '') {
-            //             swal.fire("Please Select the Exam Date", "", "error")
-            //             return false;
-            //         }
-            //         var pass_percentage = $("#pass_percentage").val();
-            //         if (pass_percentage == '') {
-            //             swal.fire("Please Enter the Pass Percentage", "", "error")
-            //             return false;
-            //         }
-
-            //     }
-            // }
-            // if (AnswerSelected1 === false) {
-
-            //     swal.fire("Please Select the Course Exam", "", "error");
-            //     return false;
-            // }
-            var course_instructor = $("#course_instructor").val();
-            if (course_instructor == '') {
-                swal.fire("Please Enter the Course Instructor", "", "error")
-                return false;
-            }
-
-            var course_tags = $("#course_tags").val();
-            if (course_tags == '') {
-                swal.fire("Please Enter the Course Tags", "", "error")
-                return false;
-            }
-
-            var course_skills_required = $("#course_skills_required").val();
-            if (course_skills_required == '') {
-                swal.fire("Please Enter the Course Skills Required", "", "error")
-                return false;
-            }
-
-            var course_gain_skills = $("#course_gain_skills").val();
-            if (course_gain_skills == '') {
-                swal.fire("Please Enter the Course Gain Skills", "", "error")
-                return false;
-            }
-            var course_cpt_points = $("#course_cpt_points").val();
-            if (course_cpt_points == '') {
-                swal.fire("Please Enter the Course CPD Points", "", "error")
-                return false;
-            }
-
-            var course_classes = $("#course_classes").val();
-            if (course_classes == '') {
-                swal.fire("Please Enter the Course Classes", "", "error")
-                return false;
-            } else {
-                $('#savebutton').css('pointer-events', 'none');
-                document.getElementById('course_form').submit();
-            }
+        var course_instructor = $("#course_instructoredit").val();
+        if (course_instructor == '') {
+            swal.fire("Please Enter the Course Instructor", "", "error")
+            return false;
         }
 
 
 
-        if (id == "edit") {
-            var course_category = $("#course_categoryedit").val();
-            if (course_category == '') {
-                swal.fire("Please Select the Course Category", "", "error");
+        var course_tags = document.querySelectorAll('#course_tagsedit');
+        var keyword_key = 0;
+        for (const course_tagsedit of course_tags) {
+            if (keyword_key != 0 && course_tagsedit.value == '') {
+                swal.fire("Please Enter the Course Tags", "", "error");
                 return false;
             }
+            keyword_key++;
 
-            var course_name = $("#course_nameedit").val();
-            if (course_name == '') {
-                swal.fire("Please Enter the Course Name", "", "error");
-                return false;
-            }
-
-            var course_description = $("#course_descriptionedit").val();
-            if (course_description == '') {
-                swal.fire("Please Enter the Course Description", "", "error");
-                return false;
-            }
-
-
-            const input_array = document.querySelectorAll('#course_certificateedit');
-            let AnswerSelected = false;
-            for (let row of input_array) {
-                if (row.checked === true) {
-                    AnswerSelected = true;
-                }
-            }
-            if (AnswerSelected === false) {
-
-                swal.fire("Please Select the Course Certificate", "", "error");
-                return false;
-            }
-
-            // var course_introduction = $("#course_introductionedit").val();
-            // if (course_introduction == '') {
-            //     swal.fire("Please Upload the Course Introduction", "", "error")
-            //     return false;
-            // }
-
-            // var course_banner = $("#course_banneredit").val();
-            // if (course_banner == '') {
-            //     swal.fire("Please Upload the Course Banner", "", "error")
-            //     return false;
-            // }
-            var course = $("#course_payedit").val();
-            if (course == '') {
-                swal.fire("Please Select the Course Type", "", "error")
-                return false;
-            }
-
-            // var course = $("#course_price").val();
-            // if (course == '') {
-            //     swal.fire("Please Enter the Course Price", "", "error")
-            //     return false;
-            // }
-
-            var course_start_period = $("#course_start_periodedit").val();
-            if (course_start_period == '') {
-                swal.fire("Please Select the Course Start Period", "", "error")
-                return false;
-            }
-
-            var course_end_period = $("#course_end_periodedit").val();
-            if (course_end_period == '') {
-                swal.fire("Please Select the Course End Period", "", "error")
-                return false;
-            }
-
-            var course_instructor = $("#course_instructoredit").val();
-            if (course_instructor == '') {
-                swal.fire("Please Enter the Course Instructor", "", "error")
-                return false;
-            }
-
-
-
-            var course_tags = document.querySelectorAll('#course_tagsedit');
-            var keyword_key = 0;
-            for (const course_tagsedit of course_tags) {
-                if (keyword_key != 0 && course_tagsedit.value == '') {
-                    swal.fire("Please Enter the Course Tags", "", "error");
-                    return false;
-                }
-                keyword_key++;
-
-            }
-
-
-            var course_skills_required1 = document.querySelectorAll('#course_skills_required');
-            var keyword_key = 0;
-            for (const course_skills_required of course_skills_required1) {
-                if (keyword_key != 0 && course_skills_required.value == '') {
-                    swal.fire("Please Enter the Course Skills Required", "", "error");
-                    return false;
-                }
-                keyword_key++;
-
-            }
-
-            var course_gain_skills1 = document.querySelectorAll('#course_skills_required');
-            var keyword_key = 0;
-            for (const course_skills_required of course_gain_skills1) {
-                if (keyword_key != 0 && course_skills_required.value == '') {
-                    swal.fire("Please Enter the Course Gain Skills", "", "error");
-                    return false;
-                }
-                keyword_key++;
-
-            }
-
-            var course_cpt_points = $("#course_cpt_pointsedit").val();
-            if (course_cpt_points == '') {
-                swal.fire("Please Enter the Course CPD Points", "", "error")
-                return false;
-            }
-
-            var course_classes = $("#course_classesedit").val();
-            if (course_classes == '') {
-                swal.fire("Please Enter the Course Classes", "", "error")
-                return false;
-            } else {
-                // $('#savebutton').css('pointer-events', 'none');
-                document.getElementById('course_form_edit').submit();
-            }
         }
 
+
+        var course_skills_required1 = document.querySelectorAll('#course_skills_required');
+        var keyword_key = 0;
+        for (const course_skills_required of course_skills_required1) {
+            if (keyword_key != 0 && course_skills_required.value == '') {
+                swal.fire("Please Enter the Course Skills Required", "", "error");
+                return false;
+            }
+            keyword_key++;
+
+        }
+
+        var course_gain_skills1 = document.querySelectorAll('#course_skills_required');
+        var keyword_key = 0;
+        for (const course_skills_required of course_gain_skills1) {
+            if (keyword_key != 0 && course_skills_required.value == '') {
+                swal.fire("Please Enter the Course Gain Skills", "", "error");
+                return false;
+            }
+            keyword_key++;
+
+        }
+
+        var course_cpt_points = $("#course_cpt_pointsedit").val();
+        if (course_cpt_points == '') {
+            swal.fire("Please Enter the Course CPD Points", "", "error")
+            return false;
+        }
+
+        var course_classes = $("#course_classesedit").val();
+        if (course_classes == '') {
+            swal.fire("Please Enter the Course Classes", "", "error")
+            return false;
+        } else {
+            // $('#savebutton').css('pointer-events', 'none');
+            document.getElementById('course_form_edit').submit();
+        }
     }
+
+}
 </script>
 
 
@@ -4765,767 +4767,767 @@
 
 
 <script>
-    var $j = jQuery.noConflict();
+var $j = jQuery.noConflict();
 
-    $j(document).ready(function() {
+$j(document).ready(function() {
 
 
-        // Initialize Select2 plugin
-        // $j('#exam_name').select2();
-        // $j('#exam_name').removeAttr('multiple');
+    // Initialize Select2 plugin
+    // $j('#exam_name').select2();
+    // $j('#exam_name').removeAttr('multiple');
 
-        //alert('egeg');
+    //alert('egeg');
 
-    });
+});
 </script>
 
 
 
 
 <script type="text/javascript">
-    var letters = /^[A-Za-z]+$/;
-    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    var number = /^\(?(\d{0})\)?[- ]?(\d{0})[- ]?(\d{4})$/;
-    var number2 = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+var letters = /^[A-Za-z]+$/;
+var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+var number = /^\(?(\d{0})\)?[- ]?(\d{0})[- ]?(\d{4})$/;
+var number2 = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
 
-    function validate(e) {
-
-
-        const cname = document.getElementById("cname");
-        const resource = document.getElementById("resource");
-        const duration = document.getElementById("duration");
+function validate(e) {
 
 
-        e.preventDefault();
-        if (cname.value == "") {
-            document.getElementById("cnameerror").innerHTML =
-                "**Please Enter the Class Name**";
-            return;
-        } else {
-            document.getElementById("cnameerror").innerText = "";
-        }
+    const cname = document.getElementById("cname");
+    const resource = document.getElementById("resource");
+    const duration = document.getElementById("duration");
 
 
-        e.preventDefault();
-        if (resource.value == "") {
-            document.getElementById("resourceerror").innerHTML =
-                "**Please Enter the Validate Resource **";
-            return;
-        } else {
-            document.getElementById("resourceerror").innerText = "";
-        }
-
-
-
-        e.preventDefault();
-        if (duration.value == "") {
-            document.getElementById("durationerror").innerHTML =
-                "**Please Enter the Valid Duration**";
-            return;
-        } else {
-            document.getElementById("durationerror").innerText = "";
-        }
-
-
-        $("#validate").submit();
-
-
+    e.preventDefault();
+    if (cname.value == "") {
+        document.getElementById("cnameerror").innerHTML =
+            "**Please Enter the Class Name**";
+        return;
+    } else {
+        document.getElementById("cnameerror").innerText = "";
     }
 
 
-    function changeimage(e) {
-        if (e.target.id == "change_banner") {
-            document.querySelector('#resourse_nameedit').style.display = "block";
-            document.querySelector('#change_cancel').style.display = "block";
-            document.querySelector('#change_banner').style.display = "none";
-        } else if (e.target.id == "change_cancel") {
-            document.querySelector('#change_cancel').style.display = "none";
-            document.querySelector('#resourse_nameedit').style.display = "none";
-            document.querySelector('#change_banner').style.display = "block";
-
-
-        } else {
-            document.querySelector('#resourse_nameedit').style.display = "none";
-            document.querySelector('#change_cancel').style.display = "none";
-            document.querySelector('#change_banner').style.display = "block";
-
-        }
-
+    e.preventDefault();
+    if (resource.value == "") {
+        document.getElementById("resourceerror").innerHTML =
+            "**Please Enter the Validate Resource **";
+        return;
+    } else {
+        document.getElementById("resourceerror").innerText = "";
     }
 
 
 
-    function changeimage1(e) {
-        if (e.target.id == "change_banner1") {
-            document.querySelector('#course_introductionedit').style.display = "block";
-            document.querySelector('#change_cancel1').style.display = "block";
-            document.querySelector('#change_banner1').style.display = "none";
-        } else if (e.target.id == "change_cancel1") {
-            document.querySelector('#change_cancel1').style.display = "none";
-            document.querySelector('#course_introductionedit').style.display = "none";
-            document.querySelector('#change_banner1').style.display = "block";
+    e.preventDefault();
+    if (duration.value == "") {
+        document.getElementById("durationerror").innerHTML =
+            "**Please Enter the Valid Duration**";
+        return;
+    } else {
+        document.getElementById("durationerror").innerText = "";
+    }
 
 
-        } else {
-            document.querySelector('#course_introductionedit').style.display = "none";
-            document.querySelector('#change_cancel1').style.display = "none";
-            document.querySelector('#change_banner1').style.display = "block";
+    $("#validate").submit();
 
-        }
+
+}
+
+
+function changeimage(e) {
+    if (e.target.id == "change_banner") {
+        document.querySelector('#resourse_nameedit').style.display = "block";
+        document.querySelector('#change_cancel').style.display = "block";
+        document.querySelector('#change_banner').style.display = "none";
+    } else if (e.target.id == "change_cancel") {
+        document.querySelector('#change_cancel').style.display = "none";
+        document.querySelector('#resourse_nameedit').style.display = "none";
+        document.querySelector('#change_banner').style.display = "block";
+
+
+    } else {
+        document.querySelector('#resourse_nameedit').style.display = "none";
+        document.querySelector('#change_cancel').style.display = "none";
+        document.querySelector('#change_banner').style.display = "block";
 
     }
 
-    function changeimage2(e) {
-        if (e.target.id == "change_banner2") {
-            document.querySelector('#course_banneredit').style.display = "block";
-            document.querySelector('#change_cancel2').style.display = "block";
-            document.querySelector('#change_banner2').style.display = "none";
-        } else if (e.target.id == "change_cancel2") {
-            document.querySelector('#change_cancel2').style.display = "none";
-            document.querySelector('#course_banneredit').style.display = "none";
-            document.querySelector('#change_banner2').style.display = "block";
+}
 
 
-        } else {
-            document.querySelector('#course_banneredit').style.display = "none";
-            document.querySelector('#change_cancel2').style.display = "none";
-            document.querySelector('#change_banner2').style.display = "block";
 
-        }
+function changeimage1(e) {
+    if (e.target.id == "change_banner1") {
+        document.querySelector('#course_introductionedit').style.display = "block";
+        document.querySelector('#change_cancel1').style.display = "block";
+        document.querySelector('#change_banner1').style.display = "none";
+    } else if (e.target.id == "change_cancel1") {
+        document.querySelector('#change_cancel1').style.display = "none";
+        document.querySelector('#course_introductionedit').style.display = "none";
+        document.querySelector('#change_banner1').style.display = "block";
+
+
+    } else {
+        document.querySelector('#course_introductionedit').style.display = "none";
+        document.querySelector('#change_cancel1').style.display = "none";
+        document.querySelector('#change_banner1').style.display = "block";
 
     }
 
-    function course_exam() {
-        const course_exam = document.querySelector('.course_exam:checked');
+}
 
-        if (course_exam && course_exam.value === "1") {
+function changeimage2(e) {
+    if (e.target.id == "change_banner2") {
+        document.querySelector('#course_banneredit').style.display = "block";
+        document.querySelector('#change_cancel2').style.display = "block";
+        document.querySelector('#change_banner2').style.display = "none";
+    } else if (e.target.id == "change_cancel2") {
+        document.querySelector('#change_cancel2').style.display = "none";
+        document.querySelector('#course_banneredit').style.display = "none";
+        document.querySelector('#change_banner2').style.display = "block";
 
-            document.querySelector('.examname').style.display = "block";
-            $('.exam_date').datepicker({
-                dateFormat: 'dd-mm-yy',
-                showButtonPanel: true,
-                changeMonth: true,
-                changeYear: true,
-                // yearRange: '2023:2024',
-                showOn: "button",
-                buttonImage: `${base_url}/asset/image/calendar.png`,
-                buttonImageOnly: true,
-                minDate: 0,
-                maxDate: '+30Y',
-                inline: true
-            })
-        } else {
-            document.querySelector('.examname').style.display = "none";
 
-        }
+    } else {
+        document.querySelector('#course_banneredit').style.display = "none";
+        document.querySelector('#change_cancel2').style.display = "none";
+        document.querySelector('#change_banner2').style.display = "block";
+
     }
+
+}
+
+function course_exam() {
+    const course_exam = document.querySelector('.course_exam:checked');
+
+    if (course_exam && course_exam.value === "1") {
+
+        document.querySelector('.examname').style.display = "block";
+        $('.exam_date').datepicker({
+            dateFormat: 'dd-mm-yy',
+            showButtonPanel: true,
+            changeMonth: true,
+            changeYear: true,
+            // yearRange: '2023:2024',
+            showOn: "button",
+            buttonImage: `${base_url}/asset/image/calendar.png`,
+            buttonImageOnly: true,
+            minDate: 0,
+            maxDate: '+30Y',
+            inline: true
+        })
+    } else {
+        document.querySelector('.examname').style.display = "none";
+
+    }
+}
 </script>
 <script>
-    function updateEndDate() {
-        const startDateInput = document.getElementById('course_start_period');
-        const endDateInput = document.getElementById('course_end_period');
+function updateEndDate() {
+    const startDateInput = document.getElementById('course_start_period');
+    const endDateInput = document.getElementById('course_end_period');
 
-        const startDate = new Date(startDateInput.value);
-        const endDate = new Date(startDate.getTime() + (10 * 24 * 60 * 60 *
-            1000)); // Adding 10 days (10 * 24 * 60 * 60 * 1000 milliseconds)
+    const startDate = new Date(startDateInput.value);
+    const endDate = new Date(startDate.getTime() + (10 * 24 * 60 * 60 *
+        1000)); // Adding 10 days (10 * 24 * 60 * 60 * 1000 milliseconds)
 
-        endDateInput.value = endDate.toISOString().split('T')[0]; // Setting the value of the end date input
+    endDateInput.value = endDate.toISOString().split('T')[0]; // Setting the value of the end date input
 
-        // Enable the end date input
-        endDateInput.disabled = false;
+    // Enable the end date input
+    endDateInput.disabled = false;
+}
+
+function no_period() {
+    const course_exam = document.querySelector('.course_noperiod:checked');
+    //alert(course_exam);
+
+    if (course_exam && course_exam.value === "1") {
+
+        // document.querySelector('.examname').style.display = "block";
+        $('.startdate').prop('disabled', false);
+        $('.enddate').prop('disabled', false);
+        // $('.startdate').datepicker();
+        // $('.enddate').datepicker();
+        start_end_date();
+        $('#exam_date').prop('readonly', true);
+        $('.exam_date').datepicker('destroy');
+        $('.exam_date').css('background', 'grey !important');
+        // Remove any associated event handlers or bindings
+        $('.exam_date').off();
+        $('.exam_date').removeClass('ui-datepicker-trigger');
+
+        // Remove the gray background color
+        $('.startdate').css('background', '');
+        $('.enddate').css('background', '');
+    } else {
+        // alert("bj");
+        $('.startdate').datepicker('destroy');
+        $('.startdate').css('background', 'grey !important');
+        // Remove any associated event handlers or bindings
+        $('.startdate').off();
+        $('.startdate').removeClass('ui-datepicker-trigger');
+
+        // Disable the form control
+        $('.startdate').prop('disabled', true);
+        $('.startdate').val('');
+        $('.enddate').val('');
+
+        $('.enddate').datepicker('destroy');
+
+        // Remove any associated event handlers or bindings
+        $('.enddate').off();
+        $('.enddate').removeClass('ui-datepicker-trigger');
+
+        // Disable the form control
+        $('.enddate').prop('disabled', true);
+        $('#exam_date').prop('readonly', false);
+        document.querySelector("#exam_date").addEventListener("keypress", function(evt) {
+            var charCode = evt.which || evt.keyCode;
+            var charStr = String.fromCharCode(charCode);
+
+            if (/[\d\.,\/;:`]/.test(charStr)) {
+                evt.preventDefault(); // Prevent entering the character
+            }
+        });
+
+        enddatepicker();
+
     }
-
-    function no_period() {
-        const course_exam = document.querySelector('.course_noperiod:checked');
-        //alert(course_exam);
-
-        if (course_exam && course_exam.value === "1") {
-
-            // document.querySelector('.examname').style.display = "block";
-            $('.startdate').prop('disabled', false);
-            $('.enddate').prop('disabled', false);
-            // $('.startdate').datepicker();
-            // $('.enddate').datepicker();
-            start_end_date();
-            $('#exam_date').prop('readonly', true);
-            $('.exam_date').datepicker('destroy');
-            $('.exam_date').css('background', 'grey !important');
-            // Remove any associated event handlers or bindings
-            $('.exam_date').off();
-            $('.exam_date').removeClass('ui-datepicker-trigger');
-
-            // Remove the gray background color
-            $('.startdate').css('background', '');
-            $('.enddate').css('background', '');
-        } else {
-            // alert("bj");
-            $('.startdate').datepicker('destroy');
-            $('.startdate').css('background', 'grey !important');
-            // Remove any associated event handlers or bindings
-            $('.startdate').off();
-            $('.startdate').removeClass('ui-datepicker-trigger');
-
-            // Disable the form control
-            $('.startdate').prop('disabled', true);
-            $('.startdate').val('');
-            $('.enddate').val('');
-
-            $('.enddate').datepicker('destroy');
-
-            // Remove any associated event handlers or bindings
-            $('.enddate').off();
-            $('.enddate').removeClass('ui-datepicker-trigger');
-
-            // Disable the form control
-            $('.enddate').prop('disabled', true);
-            $('#exam_date').prop('readonly', false);
-            document.querySelector("#exam_date").addEventListener("keypress", function(evt) {
-                var charCode = evt.which || evt.keyCode;
-                var charStr = String.fromCharCode(charCode);
-
-                if (/[\d\.,\/;:`]/.test(charStr)) {
-                    evt.preventDefault(); // Prevent entering the character
-                }
-            });
-
-            enddatepicker();
-
-        }
+}
+document.querySelector("[type='number']").addEventListener("keypress", function(evt) {
+    if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
+        evt.preventDefault();
     }
-    document.querySelector("[type='number']").addEventListener("keypress", function(evt) {
-        if ((evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) || (evt.which === 46)) {
-            evt.preventDefault();
-        }
-    });
+});
 </script>
 
 <!-- saranya -->
 <script>
-    function toggleButton() {
-        var selectBox = document.getElementById("result");
-        var button = document.getElementById("addClassButton");
-        if (selectBox.value === "classlist") {
-            button.style.display = "block";
-        } else {
-            button.style.display = "none";
-        }
+function toggleButton() {
+    var selectBox = document.getElementById("result");
+    var button = document.getElementById("addClassButton");
+    if (selectBox.value === "classlist") {
+        button.style.display = "block";
+    } else {
+        button.style.display = "none";
     }
+}
 </script>
 
 <script>
-    jQuery(document).ready(function($) {
-        $(document).on('change', 'input[name="version_type"]', function() {
-            let versionType = $(this).val();
-            let currentMajor = parseInt($('#current_major_version').val()) || 1;
-            let currentMinor = parseInt($('#current_minor_version').val()) || 0;
-            let highestMajor = parseInt($('#highest_major_version').val()) || currentMajor;
-            let existingVersionsStr = $('#existing_versions').val() || '[]';
+jQuery(document).ready(function($) {
+    $(document).on('change', 'input[name="version_type"]', function() {
+        let versionType = $(this).val();
+        let currentMajor = parseInt($('#current_major_version').val()) || 1;
+        let currentMinor = parseInt($('#current_minor_version').val()) || 0;
+        let highestMajor = parseInt($('#highest_major_version').val()) || currentMajor;
+        let existingVersionsStr = $('#existing_versions').val() || '[]';
 
-            if (versionType === 'none') {
-                $('#change_notes_group').hide();
-                $('#change_notes').removeAttr('required');
-                $('#version_preview').hide();
-            } else {
-                $('#change_notes_group').show();
-                $('#change_notes').attr('required', true);
+        if (versionType === 'none') {
+            $('#change_notes_group').hide();
+            $('#change_notes').removeAttr('required');
+            $('#version_preview').hide();
+        } else {
+            $('#change_notes_group').show();
+            $('#change_notes').attr('required', true);
 
-                // Show version preview
-                let newVersion = calculateNextVersion(currentMajor, currentMinor, highestMajor,
-                    existingVersionsStr, versionType);
-                let previewHtml = `<div class="alert alert-info mt-2" id="version_preview">
+            // Show version preview
+            let newVersion = calculateNextVersion(currentMajor, currentMinor, highestMajor,
+                existingVersionsStr, versionType);
+            let previewHtml = `<div class="alert alert-info mt-2" id="version_preview">
             <strong>Version Preview:</strong> ${currentMajor}.${currentMinor} → ${newVersion.major}.${newVersion.minor}
         </div>`;
 
-                if ($('#version_preview').length) {
-                    $('#version_preview').html(
-                        `<strong>Version Preview:</strong> ${currentMajor}.${currentMinor} → ${newVersion.major}.${newVersion.minor}`
-                    );
-                } else {
-                    $('#change_notes_group').after(previewHtml);
-                }
+            if ($('#version_preview').length) {
+                $('#version_preview').html(
+                    `<strong>Version Preview:</strong> ${currentMajor}.${currentMinor} → ${newVersion.major}.${newVersion.minor}`
+                );
+            } else {
+                $('#change_notes_group').after(previewHtml);
             }
-        });
+        }
     });
-    // Function to open edit modal with class data
-    function openClassEditModal(classId, disableFields = false) {
-        console.log('Opening edit modal for class:', classId);
+});
+// Function to open edit modal with class data
+function openClassEditModal(classId, disableFields = false) {
+    console.log('Opening edit modal for class:', classId);
 
-        // Reset form
-        $('#edit_form')[0].reset();
-        $('#change_notes_group').hide();
-        $('input[name="version_type"][value="none"]').prop('checked', true);
+    // Reset form
+    $('#edit_form')[0].reset();
+    $('#change_notes_group').hide();
+    $('input[name="version_type"][value="none"]').prop('checked', true);
 
-        // Clear previous data
-        $('#class_version_history_body').html(
-            '<tr><td colspan="7" class="text-center">Loading version history...</td></tr>');
-        $('#current_version_display').text('Loading...');
+    // Clear previous data
+    $('#class_version_history_body').html(
+        '<tr><td colspan="7" class="text-center">Loading version history...</td></tr>');
+    $('#current_version_display').text('Loading...');
 
-        // Show loading state
-        $('#savebutton').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Loading...');
+    // Show loading state
+    $('#savebutton').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Loading...');
 
-        // Load class data
-        $.ajax({
-            url: '/elearning/class/get-class-data/' + classId,
-            type: 'GET',
-            success: function(response) {
-                console.log('Class data response:', response);
+    // Load class data
+    $.ajax({
+        url: '/elearning/class/get-class-data/' + classId,
+        type: 'GET',
+        success: function(response) {
+            console.log('Class data response:', response);
 
-                if (response.success) {
-                    // Check if data is nested or direct
-                    let classData = response.data.Data || response;
+            if (response.success) {
+                // Check if data is nested or direct
+                let classData = response.data.Data || response;
 
-                    // Populate form fields
-                    $('#eid').val(classId);
-                    $('#class_nameedit').val(classData.class_name || '');
-                    $('#class_descriptionedit').val(classData.class_description || '');
-                    $('#class_durationedit').val(classData.class_duration || '');
+                // Populate form fields
+                $('#eid').val(classId);
+                $('#class_nameedit').val(classData.class_name || '');
+                $('#class_descriptionedit').val(classData.class_description || '');
+                $('#class_durationedit').val(classData.class_duration || '');
 
-                    // Set quiz selection
-                    if (classData.class_quiz) {
-                        $('#class_quizedit').val(classData.class_quiz).trigger('change');
-                        if (classData.class_quiz === 'yes' && classData.quiz_id) {
-                            setTimeout(() => {
-                                $('#quiz_idedit').val(classData.quiz_id);
-                            }, 100);
-                        }
+                // Set quiz selection
+                if (classData.class_quiz) {
+                    $('#class_quizedit').val(classData.class_quiz).trigger('change');
+                    if (classData.class_quiz === 'yes' && classData.quiz_id) {
+                        setTimeout(() => {
+                            $('#quiz_idedit').val(classData.quiz_id);
+                        }, 100);
                     }
-
-                    // Set current version
-                    let major = classData.version_major || 1;
-                    let minor = classData.version_minor || 0;
-                    $('#current_version_display').text(`${major}.${minor}`);
-                    $('#current_major_version').val(major);
-                    $('#current_minor_version').val(minor);
-
-                    // Display current resource if exists
-                    if (classData.resource_name && classData.resource_name !== '0') {
-                        let resourcePath = classData.resource_path ?
-                            classData.resource_path + '/' + classData.resource_name :
-                            '/uploads/class/126/' + classData.resource_name;
-                        $('.img-fluid').attr('src', resourcePath);
-                    }
-
-                    if (disableFields) {
-                        // Disable all input fields
-                        $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit')
-                            .prop('disabled', true);
-
-                        // Change background color to indicate readonly
-                        $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit, .select2-selection')
-                            .css('background-color', '#e9ecef');
-
-                        // Hide change banner button
-                        $('#change_banner').hide();
-
-                        // Hide version control and save button
-                        $('#version_control, #savebutton').hide();
-                    } else {
-                        // Enable all input fields
-                        $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit')
-                            .prop('disabled', false);
-
-                        // Reset background color
-                        $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit, .select2-selection')
-                            .css('background-color', '');
-
-                        // Show change banner button
-                        $('#change_banner').show();
-
-                        // Show version control and save button
-                        $('#version_control, #savebutton').show();
-                    }
-
-                    // Load version history
-                    loadClassVersionHistory(classId);
-
-                    // Open modal
-                    $('#addModal4').modal('show');
-                } else {
-                    alert('Failed to load class data: ' + (response.message || 'Unknown error'));
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error loading class:', error);
-                alert('Error loading class data. Please try again.');
-            },
-            complete: function() {
-                $('#savebutton').prop('disabled', false).html(
-                    '<i class="fas fa-save"></i> Update with Version Control');
+
+                // Set current version
+                let major = classData.version_major || 1;
+                let minor = classData.version_minor || 0;
+                $('#current_version_display').text(`${major}.${minor}`);
+                $('#current_major_version').val(major);
+                $('#current_minor_version').val(minor);
+
+                // Display current resource if exists
+                if (classData.resource_name && classData.resource_name !== '0') {
+                    let resourcePath = classData.resource_path ?
+                        classData.resource_path + '/' + classData.resource_name :
+                        '/uploads/class/126/' + classData.resource_name;
+                    $('.img-fluid').attr('src', resourcePath);
+                }
+
+                if (disableFields) {
+                    // Disable all input fields
+                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit')
+                        .prop('disabled', true);
+
+                    // Change background color to indicate readonly
+                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit, .select2-selection')
+                        .css('background-color', '#e9ecef');
+
+                    // Hide change banner button
+                    $('#change_banner').hide();
+
+                    // Hide version control and save button
+                    $('#version_control, #savebutton').hide();
+                } else {
+                    // Enable all input fields
+                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit')
+                        .prop('disabled', false);
+
+                    // Reset background color
+                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit, .select2-selection')
+                        .css('background-color', '');
+
+                    // Show change banner button
+                    $('#change_banner').show();
+
+                    // Show version control and save button
+                    $('#version_control, #savebutton').show();
+                }
+
+                // Load version history
+                loadClassVersionHistory(classId);
+
+                // Open modal
+                $('#addModal4').modal('show');
+            } else {
+                alert('Failed to load class data: ' + (response.message || 'Unknown error'));
             }
-        });
-    }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error loading class:', error);
+            alert('Error loading class data. Please try again.');
+        },
+        complete: function() {
+            $('#savebutton').prop('disabled', false).html(
+                '<i class="fas fa-save"></i> Update with Version Control');
+        }
+    });
+}
 
 
-    // Function to load class version history
-    function loadClassVersionHistory(classId) {
-        console.log('Loading version history for class:', classId);
+// Function to load class version history
+function loadClassVersionHistory(classId) {
+    console.log('Loading version history for class:', classId);
 
-        $('#class_version_history_body').html(
-            '<tr><td colspan="7" class="text-center">Loading version history...</td></tr>');
+    $('#class_version_history_body').html(
+        '<tr><td colspan="7" class="text-center">Loading version history...</td></tr>');
 
-        $.ajax({
-            url: '/elearning/class/versions/' + classId,
-            type: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                console.log('Version history raw response:', response);
+    $.ajax({
+        url: '/elearning/class/versions/' + classId,
+        type: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            console.log('Version history raw response:', response);
 
-                if (response.success) {
-                    let versionsData = [];
-                    let existingVersions = [];
+            if (response.success) {
+                let versionsData = [];
+                let existingVersions = [];
 
-                    // Extract versions data correctly
-                    if (response.versions && response.versions.Data) {
-                        versionsData = response.versions.Data;
-                    } else if (Array.isArray(response.versions)) {
-                        versionsData = response.versions;
-                    } else if (response.versions && Array.isArray(response.versions.versions)) {
-                        versionsData = response.versions.versions;
-                    }
+                // Extract versions data correctly
+                if (response.versions && response.versions.Data) {
+                    versionsData = response.versions.Data;
+                } else if (Array.isArray(response.versions)) {
+                    versionsData = response.versions;
+                } else if (response.versions && Array.isArray(response.versions.versions)) {
+                    versionsData = response.versions.versions;
+                }
 
-                    if (versionsData && versionsData.length > 0) {
-                        let html = '';
-                        let highestMajor = 1;
+                if (versionsData && versionsData.length > 0) {
+                    let html = '';
+                    let highestMajor = 1;
 
-                        // Store all versions for version checking
-                        existingVersions = versionsData.map(v => ({
-                            major: parseInt(v.version_major || 1),
-                            minor: parseInt(v.version_minor || 0)
-                        }));
+                    // Store all versions for version checking
+                    existingVersions = versionsData.map(v => ({
+                        major: parseInt(v.version_major || 1),
+                        minor: parseInt(v.version_minor || 0)
+                    }));
 
-                        // Find highest major version
-                        highestMajor = Math.max(...existingVersions.map(v => v.major));
+                    // Find highest major version
+                    highestMajor = Math.max(...existingVersions.map(v => v.major));
 
-                        // Store in hidden fields
-                        $('#highest_major_version').val(highestMajor);
-                        $('#existing_versions').val(JSON.stringify(existingVersions));
+                    // Store in hidden fields
+                    $('#highest_major_version').val(highestMajor);
+                    $('#existing_versions').val(JSON.stringify(existingVersions));
 
-                        // Sort versions by version number (newest first)
-                        versionsData.sort((a, b) => {
-                            if (b.version_major !== a.version_major) {
-                                return b.version_major - a.version_major;
-                            }
-                            return b.version_minor - a.version_minor;
-                        });
+                    // Sort versions by version number (newest first)
+                    versionsData.sort((a, b) => {
+                        if (b.version_major !== a.version_major) {
+                            return b.version_major - a.version_major;
+                        }
+                        return b.version_minor - a.version_minor;
+                    });
 
-                        // Determine if we're in view mode
-                        let isViewMode = $('#version_control').is(':visible') === false;
-                        console.log('Is View Mode:', isViewMode);
+                    // Determine if we're in view mode
+                    let isViewMode = $('#version_control').is(':visible') === false;
+                    console.log('Is View Mode:', isViewMode);
 
-                        versionsData.forEach(function(version) {
-                            // Version display with change notes
-                            let versionDisplay =
-                                `${version.version_major || 1}.${version.version_minor || 0}`;
-                            if (version.change_notes) {
-                                versionDisplay +=
-                                    `<br><small class="text-muted" title="${version.change_notes}">${version.change_notes.substring(0, 30)}${version.change_notes.length > 30 ? '...' : ''}</small>`;
-                            }
+                    versionsData.forEach(function(version) {
+                        // Version display with change notes
+                        let versionDisplay =
+                            `${version.version_major || 1}.${version.version_minor || 0}`;
+                        if (version.change_notes) {
+                            versionDisplay +=
+                                `<br><small class="text-muted" title="${version.change_notes}">${version.change_notes.substring(0, 30)}${version.change_notes.length > 30 ? '...' : ''}</small>`;
+                        }
 
-                            // Determine action button based on mode and version status
-                            let actionButton = '';
+                        // Determine action button based on mode and version status
+                        let actionButton = '';
 
-                            if (version.is_active == 1) {
-                                // Current version
-                                actionButton =
-                                    '<span class="text-muted">Current</span>';
+                        if (version.is_active == 1) {
+                            // Current version
+                            actionButton =
+                                '<span class="text-muted">Current</span>';
+                        } else {
+                            // Archived version
+                            if (isViewMode) {
+                                // In view mode - show Archived text
+                                actionButton = '<span class="text-muted">Archived</span>';
                             } else {
-                                // Archived version
-                                if (isViewMode) {
-                                    // In view mode - show Archived text
-                                    actionButton = '<span class="text-muted">Archived</span>';
-                                } else {
-                                    // In edit mode - show Restore button
-                                    actionButton = `<button class="btn btn-sm btn-warning restore-class-version" 
+                                // In edit mode - show Restore button
+                                actionButton = `<button class="btn btn-sm btn-warning restore-class-version" 
                                                     data-id="${classId}" 
                                                     data-version-id="${version.version_id || version.original_class_id}">
                                                     <i class="fas fa-history"></i> Restore
                                                 </button>`;
-                                }
                             }
+                        }
 
-                            html += `<tr>
+                        html += `<tr>
                             <td><strong>${versionDisplay}</strong></td>
                             <td>${version.class_name || 'N/A'}</td>
                             <td>${version.class_duration || 'N/A'} Mins</td>
                            
                             <td>${actionButton}</td>
                         </tr>`;
-                        });
+                    });
 
-                        $('#class_version_history_body').html(html);
-                    } else {
-                        $('#class_version_history_body').html(`
+                    $('#class_version_history_body').html(html);
+                } else {
+                    $('#class_version_history_body').html(`
                         <tr>
                             <td colspan="7" class="text-center text-info">
                                 <i class="fas fa-info-circle"></i> No version history available.
                             </td>
                         </tr>
                     `);
-                        $('#highest_major_version').val($('#current_major_version').val());
-                        $('#existing_versions').val('[]');
-                    }
-                } else {
-                    $('#class_version_history_body').html(`
+                    $('#highest_major_version').val($('#current_major_version').val());
+                    $('#existing_versions').val('[]');
+                }
+            } else {
+                $('#class_version_history_body').html(`
                     <tr>
                         <td colspan="7" class="text-center text-danger">
                             Failed to load version history: ${response.message || 'Unknown error'}
                         </td>
                     </tr>
                 `);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error loading version history:', error);
-                $('#class_version_history_body').html(`
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error loading version history:', error);
+            $('#class_version_history_body').html(`
                 <tr>
                     <td colspan="7" class="text-center text-danger">
                         <i class="fas fa-exclamation-triangle"></i> Error loading version history.
                     </td>
                 </tr>
             `);
+        }
+    });
+}
+
+// Updated submit function with correct version preview
+// Function to check if a version already exists
+function checkIfVersionExists(major, minor, existingVersionsStr) {
+    try {
+        let existingVersions = JSON.parse(existingVersionsStr || '[]');
+        return existingVersions.some(v => v.major === major && v.minor === minor);
+    } catch (e) {
+        console.error('Error parsing existing versions:', e);
+        return false;
+    }
+}
+
+// Function to calculate next version
+function calculateNextVersion(currentMajor, currentMinor, highestMajor, existingVersionsStr, updateType) {
+    let existingVersions = [];
+    try {
+        existingVersions = JSON.parse(existingVersionsStr || '[]');
+    } catch (e) {
+        console.error('Error parsing existing versions:', e);
+    }
+
+    if (updateType === 'major') {
+        // Find the highest major version and add 1
+        let nextMajor = highestMajor + 1;
+
+        // Check if this version already exists (shouldn't, but just in case)
+        while (checkIfVersionExists(nextMajor, 0, JSON.stringify(existingVersions))) {
+            nextMajor++;
+        }
+
+        return {
+            major: nextMajor,
+            minor: 0
+        };
+    } else if (updateType === 'minor') {
+        let nextMinor = currentMinor + 1;
+
+        // Check if this minor version already exists
+        while (checkIfVersionExists(currentMajor, nextMinor, JSON.stringify(existingVersions))) {
+            nextMinor++;
+        }
+
+        return {
+            major: currentMajor,
+            minor: nextMinor
+        };
+    } else {
+        // No version change
+        return {
+            major: currentMajor,
+            minor: currentMinor
+        };
+    }
+}
+
+// Updated submit function
+function submitClassVersion() {
+    // Validate required fields
+    if (!$('#class_nameedit').val().trim()) {
+        Swal.fire('Validation Error', 'Class Name is required', 'error');
+        return;
+    }
+
+    if (!$('#class_descriptionedit').val().trim()) {
+        Swal.fire('Validation Error', 'Class Description is required', 'error');
+        return;
+    }
+
+    if (!$('#class_durationedit').val().trim()) {
+        Swal.fire('Validation Error', 'Class Duration is required', 'error');
+        return;
+    }
+
+    if (!$('#class_quizedit').val()) {
+        Swal.fire('Validation Error', 'Please select if quiz is required or not', 'error');
+        return;
+    }
+
+    if ($('#class_quizedit').val() === 'yes' && !$('#quiz_idedit').val()) {
+        Swal.fire('Validation Error', 'Please select a quiz', 'error');
+        return;
+    }
+
+    let versionType = $('input[name="version_type"]:checked').val();
+    let currentMajor = parseInt($('#current_major_version').val()) || 1;
+    let currentMinor = parseInt($('#current_minor_version').val()) || 0;
+    let highestMajor = parseInt($('#highest_major_version').val()) || currentMajor;
+    let existingVersionsStr = $('#existing_versions').val() || '[]';
+
+    let newVersion;
+    let versionMessage = '';
+
+    if (versionType !== 'none') {
+        let changeNotes = $('#change_notes').val().trim();
+        if (!changeNotes) {
+            Swal.fire('Validation Error', 'Please provide change notes for ' + versionType + ' update', 'error');
+            return;
+        }
+
+        // Calculate new version
+        newVersion = calculateNextVersion(currentMajor, currentMinor, highestMajor, existingVersionsStr, versionType);
+
+        let currentVersion = `${currentMajor}.${currentMinor}`;
+        let newVersionStr = `${newVersion.major}.${newVersion.minor}`;
+
+        if (versionType === 'major') {
+            versionMessage =
+                `Current version: ${currentVersion}\nHighest major version: ${highestMajor}\nNew version will be: ${newVersionStr}`;
+        } else {
+            versionMessage = `Current version: ${currentVersion}\nNew version will be: ${newVersionStr}`;
+        }
+
+        // Confirm version update
+        Swal.fire({
+            title: 'Confirm Version Update',
+            text: versionMessage,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Proceed',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                proceedWithUpdate(versionType, newVersion);
             }
         });
-    }
-
-    // Updated submit function with correct version preview
-    // Function to check if a version already exists
-    function checkIfVersionExists(major, minor, existingVersionsStr) {
-        try {
-            let existingVersions = JSON.parse(existingVersionsStr || '[]');
-            return existingVersions.some(v => v.major === major && v.minor === minor);
-        } catch (e) {
-            console.error('Error parsing existing versions:', e);
-            return false;
-        }
-    }
-
-    // Function to calculate next version
-    function calculateNextVersion(currentMajor, currentMinor, highestMajor, existingVersionsStr, updateType) {
-        let existingVersions = [];
-        try {
-            existingVersions = JSON.parse(existingVersionsStr || '[]');
-        } catch (e) {
-            console.error('Error parsing existing versions:', e);
-        }
-
-        if (updateType === 'major') {
-            // Find the highest major version and add 1
-            let nextMajor = highestMajor + 1;
-
-            // Check if this version already exists (shouldn't, but just in case)
-            while (checkIfVersionExists(nextMajor, 0, JSON.stringify(existingVersions))) {
-                nextMajor++;
-            }
-
-            return {
-                major: nextMajor,
-                minor: 0
-            };
-        } else if (updateType === 'minor') {
-            let nextMinor = currentMinor + 1;
-
-            // Check if this minor version already exists
-            while (checkIfVersionExists(currentMajor, nextMinor, JSON.stringify(existingVersions))) {
-                nextMinor++;
-            }
-
-            return {
-                major: currentMajor,
-                minor: nextMinor
-            };
-        } else {
-            // No version change
-            return {
-                major: currentMajor,
-                minor: currentMinor
-            };
-        }
-    }
-
-    // Updated submit function
-    function submitClassVersion() {
-        // Validate required fields
-        if (!$('#class_nameedit').val().trim()) {
-            Swal.fire('Validation Error', 'Class Name is required', 'error');
-            return;
-        }
-
-        if (!$('#class_descriptionedit').val().trim()) {
-            Swal.fire('Validation Error', 'Class Description is required', 'error');
-            return;
-        }
-
-        if (!$('#class_durationedit').val().trim()) {
-            Swal.fire('Validation Error', 'Class Duration is required', 'error');
-            return;
-        }
-
-        if (!$('#class_quizedit').val()) {
-            Swal.fire('Validation Error', 'Please select if quiz is required or not', 'error');
-            return;
-        }
-
-        if ($('#class_quizedit').val() === 'yes' && !$('#quiz_idedit').val()) {
-            Swal.fire('Validation Error', 'Please select a quiz', 'error');
-            return;
-        }
-
-        let versionType = $('input[name="version_type"]:checked').val();
-        let currentMajor = parseInt($('#current_major_version').val()) || 1;
-        let currentMinor = parseInt($('#current_minor_version').val()) || 0;
-        let highestMajor = parseInt($('#highest_major_version').val()) || currentMajor;
-        let existingVersionsStr = $('#existing_versions').val() || '[]';
-
-        let newVersion;
-        let versionMessage = '';
-
-        if (versionType !== 'none') {
-            let changeNotes = $('#change_notes').val().trim();
-            if (!changeNotes) {
-                Swal.fire('Validation Error', 'Please provide change notes for ' + versionType + ' update', 'error');
-                return;
-            }
-
-            // Calculate new version
-            newVersion = calculateNextVersion(currentMajor, currentMinor, highestMajor, existingVersionsStr, versionType);
-
-            let currentVersion = `${currentMajor}.${currentMinor}`;
-            let newVersionStr = `${newVersion.major}.${newVersion.minor}`;
-
-            if (versionType === 'major') {
-                versionMessage =
-                    `Current version: ${currentVersion}\nHighest major version: ${highestMajor}\nNew version will be: ${newVersionStr}`;
-            } else {
-                versionMessage = `Current version: ${currentVersion}\nNew version will be: ${newVersionStr}`;
-            }
-
-            // Confirm version update
-            Swal.fire({
-                title: 'Confirm Version Update',
-                text: versionMessage,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Proceed',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    proceedWithUpdate(versionType, newVersion);
-                }
-            });
-        } else {
-            // Confirm direct update without version change
-            Swal.fire({
-                title: 'Confirm Update',
-                text: 'You are about to update the class without creating a new version. The current version will be overwritten. Continue?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, update',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    proceedWithUpdate(versionType, {
-                        major: currentMajor,
-                        minor: currentMinor
-                    });
-                }
-            });
-        }
-    }
-
-    function proceedWithUpdate(versionType, newVersion) {
-        // Add version data to form
-        $('<input>').attr({
-            type: 'hidden',
-            name: 'version_type',
-            value: versionType
-        }).appendTo('#edit_form');
-
-        $('<input>').attr({
-            type: 'hidden',
-            name: 'change_notes',
-            value: $('#change_notes').val()
-        }).appendTo('#edit_form');
-
-        $('<input>').attr({
-            type: 'hidden',
-            name: 'new_major_version',
-            value: newVersion.major
-        }).appendTo('#edit_form');
-
-        $('<input>').attr({
-            type: 'hidden',
-            name: 'new_minor_version',
-            value: newVersion.minor
-        }).appendTo('#edit_form');
-
-        // Submit form
-        $('#edit_form').submit();
-    }
-
-
-    // Restore version handler
-    jQuery(document).ready(function($) {
-        $(document).on('click', '.restore-class-version', function(e) {
-
-            e.preventDefault();
-            let classId = $(this).data('id');
-            let versionId = $(this).data('version-id');
-            let button = $(this);
-
-            if (confirm(
-                    'Are you sure you want to restore this version? The current version will be archived.'
-                )) {
-                button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Restoring...');
-
-                $.ajax({
-                    url: '/elearning/class/restore-version',
-                    type: 'POST',
-                    data: {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        class_id: classId,
-                        version_id: versionId
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            alert(response.message || 'Version restored successfully!');
-                            // Reload class data and version history
-                            openClassEditModal(classId);
-                        } else {
-                            alert(response.message || 'Failed to restore version');
-                            button.prop('disabled', false).html(
-                                '<i class="fas fa-history"></i> Restore');
-                        }
-                    },
-                    error: function() {
-                        alert('Error restoring version');
-                        button.prop('disabled', false).html(
-                            '<i class="fas fa-history"></i> Restore');
-                    }
+    } else {
+        // Confirm direct update without version change
+        Swal.fire({
+            title: 'Confirm Update',
+            text: 'You are about to update the class without creating a new version. The current version will be overwritten. Continue?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, update',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                proceedWithUpdate(versionType, {
+                    major: currentMajor,
+                    minor: currentMinor
                 });
             }
         });
-    });
+    }
+}
 
-    // Toggle quiz dropdown based on selection
-    function data(event) {
-        let value = $(event.target).val();
-        if (value === 'yes') {
-            $('#yesedit').show();
-            $('#quiz_idedit').prop('required', true);
-        } else {
-            $('#yesedit').hide();
-            $('#quiz_idedit').prop('required', false);
-            $('#quiz_idedit').val('');
+function proceedWithUpdate(versionType, newVersion) {
+    // Add version data to form
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'version_type',
+        value: versionType
+    }).appendTo('#edit_form');
+
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'change_notes',
+        value: $('#change_notes').val()
+    }).appendTo('#edit_form');
+
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'new_major_version',
+        value: newVersion.major
+    }).appendTo('#edit_form');
+
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'new_minor_version',
+        value: newVersion.minor
+    }).appendTo('#edit_form');
+
+    // Submit form
+    $('#edit_form').submit();
+}
+
+
+// Restore version handler
+jQuery(document).ready(function($) {
+    $(document).on('click', '.restore-class-version', function(e) {
+
+        e.preventDefault();
+        let classId = $(this).data('id');
+        let versionId = $(this).data('version-id');
+        let button = $(this);
+
+        if (confirm(
+                'Are you sure you want to restore this version? The current version will be archived.'
+            )) {
+            button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Restoring...');
+
+            $.ajax({
+                url: '/elearning/class/restore-version',
+                type: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    class_id: classId,
+                    version_id: versionId
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message || 'Version restored successfully!');
+                        // Reload class data and version history
+                        openClassEditModal(classId);
+                    } else {
+                        alert(response.message || 'Failed to restore version');
+                        button.prop('disabled', false).html(
+                            '<i class="fas fa-history"></i> Restore');
+                    }
+                },
+                error: function() {
+                    alert('Error restoring version');
+                    button.prop('disabled', false).html(
+                        '<i class="fas fa-history"></i> Restore');
+                }
+            });
         }
-    }
+    });
+});
 
-    // File upload handler
-    function changeimage(event) {
-        event.preventDefault();
-        $('#resourse_nameedit').click();
+// Toggle quiz dropdown based on selection
+function data(event) {
+    let value = $(event.target).val();
+    if (value === 'yes') {
+        $('#yesedit').show();
+        $('#quiz_idedit').prop('required', true);
+    } else {
+        $('#yesedit').hide();
+        $('#quiz_idedit').prop('required', false);
+        $('#quiz_idedit').val('');
     }
+}
+
+// File upload handler
+function changeimage(event) {
+    event.preventDefault();
+    $('#resourse_nameedit').click();
+}
 </script>
 
 
