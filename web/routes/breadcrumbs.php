@@ -86,6 +86,8 @@ Breadcrumbs::for('loginaudit', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Login Audit', route('auditlog.login'));
 });
+
+
 Breadcrumbs::for('activeoperation', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Active Operation', route('activeoperation.login'));
@@ -149,7 +151,7 @@ Breadcrumbs::for('rejected_list', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('auditlogs', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push('Audit Logs', route('auditlogs'));
+    $trail->push('Audit Logs', route('log_details'));
 });
 Breadcrumbs::for('auditlog', function (BreadcrumbTrail $trail) {
     $trail->parent('auditlogs');

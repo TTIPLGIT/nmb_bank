@@ -478,13 +478,12 @@ class AuditLogController extends BaseController
 
     $logMethod = 'Method => AuditLogController => login_search';
     try {
-      $this->WriteFileLog('20');
+      
       $inputArray = $this->decryptData($request->requestData);
       $user_id = $inputArray['user_id'];
       $from_date = $inputArray['from_date'];
       $to_date = $inputArray['to_date'];
-      $this->WriteFileLog($from_date);
-      $this->WriteFileLog($to_date);
+     
       if ($from_date != null) {
         $from_date = date('Y-m-d', strtotime($from_date));
       } else {
@@ -497,20 +496,28 @@ class AuditLogController extends BaseController
       }
 
       if ($user_id != null) {
-        $rows = DB::select("SELECT * from audit_logs inner join users  on audit_logs.user_id=users.id where audit_logs.user_id=$user_id");
+        $rows = DB::select("SELECT al.*,u.name as user_name from audit_logs as al inner join users as u on al.user_id=u.id where al.user_id=$user_id");
       }
 
 
       if ($from_date != '' && $user_id != null) {
-        // $rows = DB::select("SELECT * From login_audit inner join users on users.id=login_audit.user_id WHERE DATE_FORMAT(login_time,'%Y-%m-%d') >='".$from_date."' and DATE_FORMAT(login_time,'%Y-%m-%d') <='".$to_date."'" ); 
-        $from_date = empty($from_date) ? '1970-01-01' : date('Y-m-d', strtotime($from_date));
-        $to_date = empty($to_date) ? '9999-12-31' : date('Y-m-d', strtotime($to_date));
+            $query = DB::table('audit_logs as al')
+          ->join('users as u', 'al.user_id', '=', 'u.id')
+          ->select(
+              'al.*',
+              'u.name as user_name'
+          );
 
-        // Query to fetch records within the date range while handling empty dates.
-        $rows = DB::select("SELECT * FROM audit_logs
-                             INNER JOIN users ON audit_logs.user_id = users.id
-                             WHERE DATE(created_at) >= IFNULL('$from_date', '1970-01-01')
-                             AND DATE(created_at) <= IFNULL('$to_date', '9999-12-31') AND audit_logs.user_id = $user_id");
+      if (!empty($user_id)) {
+          $query->where('al.user_id', $user_id);
+      }
+
+      if (!empty($from_date) && !empty($to_date)) {
+          $query->whereDate('al.action_date_time', '>=', $from_date)
+                ->whereDate('al.action_date_time', '<=', $to_date);
+      }
+
+      $rows = $query->orderBy('al.action_date_time', 'DESC')->get();
       }
 
       $rows1 = DB::table('users as a')

@@ -8,9 +8,8 @@ use DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
-use Peopleaps\Scorm\Manager\ScormManager;
-use Peopleaps\Scorm\Exception\InvalidScormArchiveException;
-use Peopleaps\Scorm\Model\ScormModel;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\coursecreationmail;
 
 class AIController extends BaseController
 {
@@ -70,7 +69,7 @@ class AIController extends BaseController
                 $screens = $menus['screens'];
                 $modules = $menus['modules'];
                 $permission = $this->FillScreensByUser();
-
+                
                 return view('AI.course_create', compact('rows', 'menus', 'screens', 'modules'));
             }
             if ($objData->Code == "401") {
@@ -1102,6 +1101,7 @@ private function getEmptyDataStructure($userRole = 'User')
             $rows['course_catagory_name'] = DB::table('course_catagory')
                 ->select('*')
                 ->orderBy('catagory_id', 'desc')
+                ->where('active_flag', '0')
                 ->get();
 
             // Get designations for dropdown
@@ -1113,6 +1113,9 @@ private function getEmptyDataStructure($userRole = 'User')
             // Get users for dropdown
             $rows['users'] = DB::table('users')
                 ->select('*')
+                ->where('active_flag', '0')
+                ->where('role_id', '=', $course->role_id) // Exclude admin users
+                ->where('designation_id', '=', $course->designation_id)
                 ->orderBy('id', 'desc')
                 ->get();
 
@@ -1327,13 +1330,15 @@ private function getEmptyDataStructure($userRole = 'User')
             $user_ids = '';
             $userIds = $request->input('user_ids');
 
-            if (in_array('All', $userIds)) {
-                $user_ids = User::pluck('id')->toArray();
-                $userIds = implode(',', $user_ids);
-            }
+            // if (in_array('All', $userIds)) {
+            //     $user_ids = User::pluck('id')->toArray();
+            //     $userIds = implode(',', $user_ids);
+            // }
             // dd($request->all(),$userIds);
             // Prepare update data
-
+               
+            $userIds = implode(",",  $userIds);
+                 
             $updateData = [
 
 
@@ -1369,12 +1374,38 @@ private function getEmptyDataStructure($userRole = 'User')
             $updateData = array_filter($updateData, function ($value) {
                 return !is_null($value);
             });
+                 
+            $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . $request->session()->get("userID"));
+            $role_name_fetch = $role_name[0]->role_name;
+            $this->auditLog('elearning_courses', $id, 'Create', 'Course Creation', $request->session()->get("userID"), NOW(), $role_name_fetch);
 
+            $userIds = explode(',', $userIds);
+           
+            $users = DB::table('users')
+                ->whereIn('id', $userIds)
+                ->select('id', 'email', 'name')
+                ->get();
+                
+            foreach ($users as $user) {
+                   
+
+                Mail::to($user->email)->send(
+                    new coursecreationmail([
+                        'name'       => $user->name,
+                        'course_pin' => $request->course_pin,
+                        'course_name' => $course->course_name,
+                    ])
+                );
+
+              
+ $this->notifications_insert(null, $user->id, "{$course->course_name} course has been allocated to you.", "/elearningquestion");
+            }
+ 
             // Update the course
             $updated = DB::table('elearning_courses')
                 ->where('course_id', $id)
                 ->update($updateData);
-
+ 
             if ($updated) {
                 // Log the publishing activity
 
@@ -1387,13 +1418,10 @@ private function getEmptyDataStructure($userRole = 'User')
                     ->with('error', 'Failed to publish the course. Please try again.');
             }
         } catch (\Exception $exc) {
-            return $this->sendLog(
-                $method,
-                $exc->getCode(),
-                $exc->getMessage(),
-                $exc->getTrace()[0]['line'],
-                $exc->getTrace()[0]['file']
-            );
+           
+            return redirect()->back()
+                    ->with('error', $exc->getMessage());
+            
         }
     }
     public function getDesignationByRole(Request $request)

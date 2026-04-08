@@ -1542,20 +1542,10 @@ class UserController extends BaseController
 							'password' => $password,
 						]);
 				});
-				//KD
-				$userID = json_encode($rows[0]->id);
-
-				$forget_password_table  = DB::table('forget_password_token_list')->where('user_id', $userID)->delete();
-
-				$get_data = DB::select("SELECT  audit_id FROM remember_ps_audit WHERE user_id=" . $userID . " ORDER BY linksent_time DESC LIMIT 1");
-
-				$last_id = $get_data[0]->audit_id;
-
-				DB::table('remember_ps_audit')
-
-					->where([['user_id', '=', $userID], ['audit_id', '=', $last_id]])
-					->update(['status1' => 'Password Reset Successfully', 'active' => 1]);
-				// KD
+			
+			$role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . $rows[0]->id);
+            $role_name_fetch = $role_name[0]->role_name;
+            $this->auditLog('reset_password', $rows[0]->id, 'Password Reset', 'Password Reset', $rows[0]->id, NOW(), $role_name_fetch);
 
 				$response_status = 200;
 				$response = [
@@ -2002,8 +1992,8 @@ class UserController extends BaseController
 			$Elearning_notifications_data = DB::select("select * from notifications where (notification_url LIKE '/elearningquestion%' or notification_url LIKE '/adminevent%' or notification_url LIKE '/adminnoticeboard%' or notification_url LIKE '/examtest%' or notification_url LIKE '/ethictest%' or notification_url LIKE '/localadaptationtest%' or notification_url LIKE '/elearningadminqa%' or notification_url LIKE '%/reply/index%' or notification_url LIKE '/admincourse%')and active ='0' and  user_id =$id order by notification_id DESC;");
 			$Elearning_notifications_count = DB::select("select count(notification_url) as countflow from notifications WHERE (notification_url LIKE '/elearningquestion%' or notification_url LIKE '/adminevent%' or notification_url LIKE '/adminnoticeboard%' or notification_url LIKE '/examtest%' or notification_url LIKE '/ethictest%' or notification_url LIKE '/localadaptationtest%' or notification_url LIKE '/elearningadminqa%' or notification_url LIKE '%/reply/index%' or notification_url LIKE '/admincourse%') and active ='0'  and  user_id =$id;");
 
-			$Elearning_usernotifications_data = DB::select("select * from notifications where (notification_url LIKE '/elearning/quiz/view%'or notification_url LIKE '/ethic/quiz/list%' or notification_url LIKE '/exam/quiz/list%' or notification_url LIKE '/localadaptation/quiz/list%' or notification_url LIKE '/elearningCourse/class%' or notification_url LIKE '/elearningCourse%' or notification_url LIKE '/elearningCourse/class%' ) and active='0'and  user_id =$id order by notification_id DESC;");
-			$Elearning_usernotifications_count = DB::select("select count(notification_url) as countflow from notifications WHERE (notification_url LIKE '/elearning/quiz/view%' or notification_url LIKE '/ethic/quiz/list%' or notification_url LIKE '/exam/quiz/list%' or notification_url LIKE '/localadaptation/quiz/list%' or notification_url LIKE '/elearningCourse/class%' or notification_url LIKE '/elearningCourse%'  or notification_url LIKE '/elearningCourse/class%') and active='0'  and  user_id =$id;");
+			$Elearning_usernotifications_data = DB::select("select * from notifications where (notification_url LIKE '/elearning/quiz/view%'or notification_url LIKE '/ethic/quiz/list%' or notification_url LIKE '/elearningquestion%' or notification_url LIKE '/exam/quiz/list%' or notification_url LIKE '/localadaptation/quiz/list%' or notification_url LIKE '/elearningCourse/class%' or notification_url LIKE '/elearningCourse%' or notification_url LIKE '/elearningCourse/class%' ) and active='0'and  user_id =$id order by notification_id DESC;");
+			$Elearning_usernotifications_count = DB::select("select count(notification_url) as countflow from notifications WHERE (notification_url LIKE '/elearning/quiz/view%' or notification_url LIKE '/elearningquestion%' or notification_url LIKE '/ethic/quiz/list%' or notification_url LIKE '/exam/quiz/list%' or notification_url LIKE '/localadaptation/quiz/list%' or notification_url LIKE '/elearningCourse/class%' or notification_url LIKE '/elearningCourse%'  or notification_url LIKE '/elearningCourse/class%') and active='0'  and  user_id =$id;");
 
 			$Elearning_expiry_data = DB::select("select * from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id order by notification_id DESC;");
 			$Elearning_expiry_data_count = DB::select("select count(notification_url) as countflow from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id;");
@@ -2014,6 +2004,7 @@ class UserController extends BaseController
 							->where('ucr.course_status', 'completed')
 							->whereRaw('FIND_IN_SET(?, ec.user_ids)', [$user_id])
 							->sum('ec.course_cpt_points');
+							$this->WriteFileLog($userPoints);
 			if ($userPoints !== null) {
 
 				$level = DB::table('gamification_levels')
@@ -2317,6 +2308,7 @@ class UserController extends BaseController
 			$serviceResponse['Code'] = config('setting.status_code.success');
 			$serviceResponse['Message'] = config('setting.status_message.success');
 			$serviceResponse['Data'] = 1;
+			$serviceResponse['user_id'] = $id;
 			$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
 			$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
 			return $sendServiceResponse;

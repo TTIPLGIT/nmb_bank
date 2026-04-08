@@ -1023,26 +1023,21 @@ window.onload = function() {
                     </div>
 
                     <div class="row">
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>User Name <span class="text-danger">*</span></label>
                                 <select name="user_ids[]" class="form-control select2" id="user_id" required multiple>
-
-                                    <!-- <option value="All" selected>All</option> -->
                                     @foreach($rows['users'] as $data)
-                                    @php
-                                    // Check if this user ID is selected (only if "all" is not selected)
-                                    $isSelected = false;
-
-                                    @endphp
-                                    <option value="{{ $data->id }}" {{ $isSelected ? 'selected' : '' }}>
+                                    <option value="{{ $data->id }}">
                                         {{ $data->name }}
                                     </option>
                                     @endforeach
                                 </select>
-                                <small class="text-muted">Select "All" to assign to all users</small>
+                                <small class="text-muted">Select one or more users to assign this course</small>
                             </div>
                         </div>
+
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -1879,47 +1874,32 @@ function resetSelect2() {
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Get form and button elements
     const form = document.getElementById('publish_course_form');
     const publishButton = document.getElementById('publishbutton');
     const publishText = document.getElementById('publishText');
     const publishSpinner = document.getElementById('publishSpinner');
-
-    // Flag to track if we're submitting
     let isSubmitting = false;
 
-    // Form submit handler
     form.addEventListener('submit', function(e) {
-        e.preventDefault(); // Always prevent default first
-        e.stopPropagation(); // Stop event bubbling
+        e.preventDefault();
+        e.stopPropagation();
 
-        console.log('Form submit event triggered'); // Debug
-
-        // Prevent multiple submissions
         if (isSubmitting) {
-            console.log('Already submitting, ignoring');
             return false;
         }
 
-        // Validate form before submission
+        // Validate form
         const isValid = validateForm();
-        console.log('Validation result:', isValid); // Debug
 
         if (!isValid) {
-            console.log('Validation failed - stopping submission');
-
-            // Show error message
             Swal.fire({
                 title: "Validation Error",
                 text: "Please correct the errors in the form before submitting.",
                 icon: "error",
                 confirmButtonColor: "#dc3545",
             });
-
-            return false; // Stop execution
+            return false;
         }
-
-
 
         // Set submitting flag
         isSubmitting = true;
@@ -1929,45 +1909,33 @@ document.addEventListener('DOMContentLoaded', function() {
         publishText.textContent = 'Publishing...';
         publishSpinner.classList.remove('d-none');
 
-        // Create a new form element and submit it to avoid event listeners
+        // Submit the form
         setTimeout(() => {
-            console.log('Executing form submission');
-
-            // Method 1: Clone the form and submit the clone
-            const formClone = form.cloneNode(true);
-            formClone.style.display = 'none';
-            document.body.appendChild(formClone);
-
-            // Remove event listeners from clone
-            const newForm = formClone.cloneNode(true);
-            formClone.parentNode.replaceChild(newForm, formClone);
-
-            // Submit the clean form
-            newForm.submit();
-
-            // Method 2: Use AJAX instead (better approach)
-            // submitFormViaAjax();
-
-        }, 500);
+            form.submit();
+        }, 100);
 
         return false;
     });
 
-    // Form validation function
     function validateForm() {
         let isValid = true;
-
-        console.log('Starting validation...'); // Debug
-
-        // Clear previous error messages
         clearErrors();
+
+        // Validate User selection - Get selected users from Select2
+        const selectedUsers = $('#user_id').val();
+        console.log('Validating - Selected Users:', selectedUsers);
+
+        if (!selectedUsers || selectedUsers.length === 0) {
+            const userIdElement = document.getElementById('user_id');
+            showError(userIdElement, 'Please select at least one user');
+            isValid = false;
+        }
 
         // Validate Course Type
         const courseType = document.getElementById('course_pay');
         if (!courseType.value) {
             showError(courseType, 'Course Type is required');
             isValid = false;
-            console.log('Course Type validation failed');
         }
 
         // If paid course, validate price
@@ -1976,77 +1944,67 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!coursePrice.value || parseFloat(coursePrice.value) <= 0) {
                 showError(coursePrice, 'Valid course price is required for paid courses');
                 isValid = false;
-                console.log('Course Price validation failed');
             }
         }
 
-        // Validate Certificate Template if certificate is yes
+        // Validate Certificate fields
         const certificateYes = document.getElementById('course_certificate_yes');
-        if (certificateYes.checked) {
+        if (certificateYes && certificateYes.checked) {
             const certificateTemplate = document.getElementById('cetificate_template');
             if (!certificateTemplate.value) {
-                showError(certificateTemplate, 'Certificate Template is required when certificate is enabled');
+                showError(certificateTemplate, 'Certificate Template is required');
                 isValid = false;
-                console.log('Certificate Template validation failed');
             }
 
-            // Validate expiry date if certificate expiry is yes
             const expiryYes = document.getElementById('certificate_expiryyes');
-            if (expiryYes.checked) {
+            if (expiryYes && expiryYes.checked) {
                 const expiryDate = document.getElementById('course_expiry_period');
                 if (!expiryDate.value) {
-                    showError(expiryDate, 'Expiry Date is required when certificate expiry is enabled');
+                    showError(expiryDate, 'Expiry Date is required');
                     isValid = false;
-                    console.log('Expiry Date validation failed');
                 }
             }
         }
 
-        // Validate Course Period dates if enabled
+        // Validate Course Period dates
         const periodYes = document.getElementById('course_noperiodyes');
-        if (periodYes.checked) {
+        if (periodYes && periodYes.checked) {
             const startDate = document.getElementById('course_start_period');
             const endDate = document.getElementById('course_end_period');
 
             if (!startDate.value) {
                 showError(startDate, 'Start Date is required');
                 isValid = false;
-                console.log('Start Date validation failed');
             }
             if (!endDate.value) {
                 showError(endDate, 'End Date is required');
                 isValid = false;
-                console.log('End Date validation failed');
             }
 
-            // Validate date range
             if (startDate.value && endDate.value) {
                 const start = new Date(startDate.value);
                 const end = new Date(endDate.value);
                 if (start >= end) {
                     showError(endDate, 'End Date must be after Start Date');
                     isValid = false;
-                    console.log('Date Range validation failed');
                 }
             }
         }
 
-        // Validate Exam fields if exam is enabled
+        // Validate Exam fields
         const examYes = document.getElementById('course_examyes');
-        if (examYes.checked) {
+        if (examYes && examYes.checked) {
             const examDate = document.getElementById('exam_date');
             const passPercentage = document.getElementById('pass_percentage');
 
             if (!examDate.value) {
                 showError(examDate, 'Exam Date is required');
                 isValid = false;
-                console.log('Exam Date validation failed');
             }
 
             if (!passPercentage.value || passPercentage.value < 1 || passPercentage.value > 100) {
                 showError(passPercentage, 'Pass Percentage must be between 1 and 100');
                 isValid = false;
-                console.log('Pass Percentage validation failed');
             }
         }
 
@@ -2055,7 +2013,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!cpdPoints.value || parseFloat(cpdPoints.value) < 0) {
             showError(cpdPoints, 'Valid CPD Points are required');
             isValid = false;
-            console.log('CPD Points validation failed');
         }
 
         // Validate Instructor
@@ -2063,81 +2020,39 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!instructor.value.trim()) {
             showError(instructor, 'Course Instructor is required');
             isValid = false;
-            console.log('Instructor validation failed');
         }
 
-        // Validate PIN if restricted access is yes
+        // Validate PIN if restricted access
         const restrictedYes = document.getElementById('restricted_yes');
-        if (restrictedYes.checked) {
+        if (restrictedYes && restrictedYes.checked) {
             const pin = document.getElementById('course_pin');
             if (!pin.value || !/^\d{4,6}$/.test(pin.value)) {
                 showError(pin, 'PIN must be 4-6 digits');
                 isValid = false;
-                console.log('PIN validation failed');
             }
         }
 
-        // Validate User selection
-        const userId = document.getElementById('user_id');
-        // For Select2, get the value differently
-        const selectedUsers = $(userId).val(); // Using jQuery for Select2
-        if (!selectedUsers || selectedUsers.length === 0) {
-            showError(userId, 'At least one user must be selected');
-            isValid = false;
-            console.log('User selection validation failed');
-        }
-
-        console.log('Validation complete. Is valid?', isValid);
         return isValid;
     }
 
     function showError(element, message) {
-        // Add error class to element
         element.classList.add('is-invalid');
-
-        // Create error message element
         const errorDiv = document.createElement('div');
         errorDiv.className = 'invalid-feedback d-block';
         errorDiv.textContent = message;
-
-        // Insert after element
         element.parentNode.appendChild(errorDiv);
-
-        // Scroll to first error
-        if (!window.scrolledToError) {
-            element.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-            window.scrolledToError = true;
-        }
     }
 
     function clearErrors() {
-        // Remove error classes
         document.querySelectorAll('.is-invalid').forEach(el => {
             el.classList.remove('is-invalid');
         });
-
-        // Remove error messages
         document.querySelectorAll('.invalid-feedback').forEach(el => {
             el.remove();
         });
-
-        window.scrolledToError = false;
     }
-
-
-    // Better: Only handle display, NOT required attributes
-    document.getElementById('course_pay').addEventListener('change', function() {
-        const priceField = document.getElementById('paid');
-        if (this.value === 'paid') {
-            priceField.style.display = 'block';
-        } else {
-            priceField.style.display = 'none';
-        }
-    });
 });
+
 $(document).ready(function() {
     function closeModalForce() {
         console.log('Force closing modal');

@@ -327,11 +327,13 @@ Route::post('/uam_modules_screens/update_data', [\App\Http\Controllers\UamModule
 
 //auditlog
 Route::get('/auditlog', [auditlogController::class, 'login_index'])->name('login_index')->name('auditlog.view');
-Route::post('/auditlog/login', [\App\Http\Controllers\auditlogController::class, 'login_search'])->name('auditlog.login');
+Route::post('/auditlog', [\App\Http\Controllers\auditlogController::class, 'login_search'])->name('auditlog.login');
+Route::post('/auditlog/export', [\App\Http\Controllers\auditlogController::class, 'exportAuditLogs'])->name('auditlog.export');
+Route::post('/login-audit/export', [\App\Http\Controllers\auditlogController::class, 'exportLoginAudit'])->name('login.audit.export');
 Route::get('uamlog', [auditlogcontroller::class, 'uamlog'])->name('uamlog');
 Route::get('vreglog', [auditlogcontroller::class, 'vreglog'])->name('vreglog');
 Route::get('log_details', [auditlogcontroller::class, 'log_details'])->name('log_details');
-Route::post('/log_details_data', [\App\Http\Controllers\auditlogController::class, 'log_details_data'])->name('log_details_data');
+Route::post('/log_details', [\App\Http\Controllers\auditlogController::class, 'log_details_data'])->name('log_details_data');
 
 
 // DEEPIKA//

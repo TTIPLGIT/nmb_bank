@@ -141,63 +141,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <!-- @foreach($user_custom_values as $field)
-
-                      @php
-                      $value = $field['field_value'] ?? '';
-                      @endphp
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>{{ $field['field_label'] }}</label>
-
-                        @if($field['field_type'] == 'text')
-                        <input type="text"
-                          name="custom_fields[{{ $field['id'] }}]"
-                          class="form-control"
-                          value="{{ $value }}">
-
-                        @elseif($field['field_type'] == 'email')
-                        <input type="email"
-                          name="custom_fields[{{ $field['id'] }}]"
-                          class="form-control"
-                          value="{{ $value }}">
-
-                        @elseif($field['field_type'] == 'number')
-                        <input type="number"
-                          name="custom_fields[{{ $field['id'] }}]"
-                          class="form-control"
-                          value="{{ $value }}">
-
-                        @elseif($field['field_type'] == 'date')
-                        <input type="date"
-                          name="custom_fields[{{ $field['id'] }}]"
-                          class="form-control"
-                          value="{{ $value }}">
-
-                        @elseif($field['field_type'] == 'dropdown')
-
-                        @php
-                        $options = explode(',', $field['field_options']);
-                        @endphp
-
-                        <select name="custom_fields[{{ $field['id'] }}]" class="form-control">
-                          <option value="">Select</option>
-
-                          @foreach($options as $option)
-                          <option value="{{ trim($option) }}"
-                            {{ trim($option) == $value ? 'selected' : '' }}>
-                            {{ trim($option) }}
-                          </option>
-                          @endforeach
-
-                        </select>
-
-                        @endif
-
-                      </div>
-                    </div>
-
-                  @endforeach -->
 
                                     <div class="row" id="dynamic_field_container"></div>
 
@@ -312,7 +255,91 @@ $(document).ready(function() {
 </script>
 
 <!-- custom Field -->
+<script>
+$(document).ready(function() {
 
+    // Function to generate fields
+    function generateDynamicFields() {
+
+        let selectedOptions = $('#custom_field option:selected');
+        let container = $('#dynamic_field_container');
+        container.html("");
+
+        selectedOptions.each(function() {
+            let fieldType = $(this).data('type');
+            let fieldLabel = $(this).data('label');
+            let fieldId = $(this).val();
+            let fieldOptions = $(this).data('options');
+            let value = '';
+
+            if (typeof existingValues !== 'undefined' && existingValues && existingValues[fieldId]) {
+                value = existingValues[fieldId]['field_value'] || '';
+            }
+
+            let html = '<div class="col-md-6"><div class="form-group"><label>' + fieldLabel +
+                ' <span style="color: red;">*</span></label>';
+
+            if (fieldType === 'dropdown') {
+                html += '<select name="custom_field_value[' + fieldId +
+                    ']" class="form-control" required><option value="">Select</option>';
+                if (fieldOptions) {
+                    let options = fieldOptions.split(',');
+                    for (let i = 0; i < options.length; i++) {
+                        let opt = options[i].trim();
+                        html += '<option value="' + opt + '" ' + (opt === value ? 'selected' : '') +
+                            '>' + opt + '</option>';
+                    }
+                }
+                html += '</select>';
+            } else {
+                html += '<input type="' + (fieldType === 'text' ? 'text' : fieldType) +
+                    '" name="custom_field_value[' + fieldId + ']" value="' + value +
+                    '" class="form-control" required>';
+            }
+
+            html += '</div></div>';
+            container.append(html);
+        });
+    }
+
+    // FORCE generate fields on page load
+    generateDynamicFields();
+
+    // Also when selection changes
+    $('#custom_field').on('change', function() {
+        generateDynamicFields();
+    });
+
+    // Validation
+    $('#editUserForm').on('submit', function(e) {
+        let errors = [];
+        if (!$('#name').val()) errors.push('User Name is required');
+        if (!$('#email').val()) errors.push('Email is required');
+        if (!$('#roles_id').val()) errors.push('Roles is required');
+        if (!$('#designation_id').val()) errors.push('Designation is required');
+
+        let selectedFields = $('#custom_field').val() || [];
+        for (let i = 0; i < selectedFields.length; i++) {
+            let fieldId = selectedFields[i];
+            let value = $('[name="custom_field_value[' + fieldId + ']"]').val();
+            if (!value || value.trim() === '') {
+                let fieldLabel = $('#custom_field option[value="' + fieldId + '"]').data('label');
+                errors.push(fieldLabel + ' is required');
+            }
+        }
+
+        if (errors.length > 0) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                html: errors.join('<br>'),
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+});
+</script>
 
 <script>
 $(document).ready(function() {
@@ -426,178 +453,8 @@ var $j = jQuery.noConflict();
 $j(document).ready(function() {
     $j('#custom_field').select2();
 });
-
-
-$(document).ready(function() {
-    // Initialize Select2
-    $('#custom_field').select2({
-        placeholder: "Select Custom Fields",
-        width: '100%',
-        closeOnSelect: false,
-        allowClear: true
-    });
-
-    // Function to generate dynamic fields
-    function generateDynamicFields() {
-        let selectedOptions = $('#custom_field option:selected').filter(function() {
-            return $(this).val() !== "";
-        });
-        let container = $('#dynamic_field_container');
-
-        container.html(""); // clear old fields
-
-        selectedOptions.each(function() {
-            let fieldType = $(this).data('type');
-            let fieldLabel = $(this).data('label');
-            let fieldId = $(this).val();
-            let fieldOptions = $(this).data('options');
-
-            let value = '';
-
-            // Get existing value from the data passed from server
-            if (existingValues && existingValues[fieldId]) {
-                value = existingValues[fieldId]['field_value'] || '';
-            }
-
-            let inputField = '';
-            let wrapperStart =
-                `<div class="col-md-6"><div class="form-group"><label>${fieldLabel} <span style="color: red;font-size: 16px;">*</span></label>`;
-            let wrapperEnd = `</div></div>`;
-
-            switch (fieldType) {
-                case 'text':
-                    inputField = `${wrapperStart}
-                        <input type="text"
-                            name="custom_field_value[${fieldId}]"
-                            value="${value.replace(/"/g, '&quot;')}"
-                            class="form-control"
-                            required>
-                    ${wrapperEnd}`;
-                    break;
-
-                case 'email':
-                    inputField = `${wrapperStart}
-                        <input type="email"
-                            name="custom_field_value[${fieldId}]"
-                            value="${value.replace(/"/g, '&quot;')}"
-                            class="form-control"
-                            required>
-                    ${wrapperEnd}`;
-                    break;
-
-                case 'number':
-                    inputField = `${wrapperStart}
-                        <input type="number"
-                            name="custom_field_value[${fieldId}]"
-                            value="${value}"
-                            class="form-control"
-                            required>
-                    ${wrapperEnd}`;
-                    break;
-
-                case 'date':
-                    inputField = `${wrapperStart}
-                        <input type="date"
-                            name="custom_field_value[${fieldId}]"
-                            value="${value}"
-                            class="form-control"
-                            required>
-                    ${wrapperEnd}`;
-                    break;
-
-                case 'dropdown':
-                    let options = '';
-                    let optionArray = fieldOptions ? fieldOptions.split(',') : [];
-
-                    optionArray.forEach(function(opt) {
-                        let selected = (opt.trim() == value) ? 'selected' : '';
-                        options +=
-                            `<option value="${opt.trim()}" ${selected}>${opt.trim()}</option>`;
-                    });
-
-                    inputField = `${wrapperStart}
-                        <select name="custom_field_value[${fieldId}]" class="form-control" required>
-                            <option value="">Select</option>
-                            ${options}
-                        </select>
-                    ${wrapperEnd}`;
-                    break;
-
-                case 'textarea':
-                    inputField = `${wrapperStart}
-                        <textarea name="custom_field_value[${fieldId}]" 
-                            class="form-control" 
-                            rows="3"
-                            required>${value.replace(/"/g, '&quot;')}</textarea>
-                    ${wrapperEnd}`;
-                    break;
-
-                default:
-                    inputField = `${wrapperStart}
-                        <input type="text"
-                            name="custom_field_value[${fieldId}]"
-                            value="${value.replace(/"/g, '&quot;')}"
-                            class="form-control"
-                            required>
-                    ${wrapperEnd}`;
-                    break;
-            }
-
-            container.append(inputField);
-        });
-    }
-
-    // Trigger change event to load existing custom fields on page load
-    setTimeout(function() {
-        // Mark selected options in Select2 based on existing values
-        if (existingValues && Object.keys(existingValues).length > 0) {
-            let selectedIds = Object.keys(existingValues);
-            $('#custom_field').val(selectedIds).trigger('change');
-        }
-
-        // Generate dynamic fields
-        generateDynamicFields();
-    }, 200);
-
-    // Regenerate fields when selection changes
-    $(document).on('change', '#custom_field', function() {
-        generateDynamicFields();
-    });
-
-    // Add validation for custom fields
-    $("form[name='uam_modules']").on('submit', function(e) {
-        let isValid = true;
-
-        $('#dynamic_field_container .form-group').each(function() {
-            let input = $(this).find('input, select, textarea');
-            if (input.prop('required') && !input.val()) {
-                input.addClass('is-invalid');
-                if (!$(this).find('.error-message').length) {
-                    $(this).append(
-                        '<div class="error-message" style="color: red; font-size: 12px;">This field is required</div>'
-                    );
-                }
-                isValid = false;
-            } else {
-                input.removeClass('is-invalid');
-                $(this).find('.error-message').remove();
-            }
-        });
-
-        if (!isValid) {
-            e.preventDefault();
-            alert('Please fill all required custom fields');
-        }
-    });
-
-    // Remove error message on input
-    $(document).on('input change',
-        '#dynamic_field_container input, #dynamic_field_container select, #dynamic_field_container textarea',
-        function() {
-            $(this).removeClass('is-invalid');
-            $(this).closest('.form-group').find('.error-message').remove();
-        });
-});
 </script>
+
+
 
 @endsection

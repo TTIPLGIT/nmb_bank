@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class auditlogcontroller extends BaseController
 {
@@ -268,7 +269,7 @@ class auditlogcontroller extends BaseController
             $to_date = $request->to_date;
 
             if (empty($user_id) && empty($from_date)  && empty($to_date)) {
-                return redirect(url('auditlog'))->with('error', 'No Input for Search');
+                return redirect(url('log_details'))->with('error', 'No Input for Search');
             }
             $gatewayURL = config('setting.api_gateway_url') . '/auditlog/logdetails';
             // echo $gatewayURL;exit;
@@ -307,4 +308,131 @@ class auditlogcontroller extends BaseController
             $this->WriteFileLog($exceptionResponse);
         }
     }
+
+    public function exportAuditLogs(Request $request)
+{
+    
+    $user_id = $request->user_id;
+    $from_date = $request->from_date;
+    $to_date = $request->to_date;
+
+    $query = DB::table('audit_logs as al')
+        ->join('users as u', 'al.user_id', '=', 'u.id')
+        ->select(
+            'u.name as user_name',
+            'al.role_name',
+            'al.audit_action',
+            'al.description',
+            'al.action_date_time'
+        );
+
+    if ($user_id) {
+        $query->where('al.user_id', $user_id);
+    }
+
+    if ($from_date && $to_date) {
+        $query->whereDate('al.action_date_time', '>=', $from_date)
+              ->whereDate('al.action_date_time', '<=', $to_date);
+    }
+
+    $rows = $query->get();
+
+    // Excel headers
+    header("Content-Type: application/vnd.ms-excel");
+    header("Content-Disposition: attachment; filename=audit_logs.xls");
+
+    echo "<table border='1'>";
+    echo "<tr>
+             <th>Sl. No.</th>
+            <th>User Name</th>
+            <th>Role</th>
+            <th>Action</th>
+            <th>Description</th>
+            <th>Date</th>
+          </tr>";
+
+    foreach ($rows as $key => $row) {
+        echo "<tr>
+        <td>".($key+1)."</td>
+                <td>{$row->user_name}</td>
+                <td>{$row->role_name}</td>
+                <td>{$row->audit_action}</td>
+                <td>{$row->description}</td>
+                <td>{$row->action_date_time}</td>
+              </tr>";
+    }
+
+    echo "</table>";
+    exit;
+}
+public function exportLoginAudit(Request $request)
+{
+    $user_id = $request->user_id;
+    $from_date = $request->from_date;
+    $to_date = $request->to_date;
+
+    if ($from_date) {
+        $from_date = date('Y-m-d', strtotime($from_date));
+    }
+
+    if ($to_date) {
+        $to_date = date('Y-m-d', strtotime($to_date));
+    }
+
+    $query = DB::table('login_audit as la')
+        ->join('users as u', 'la.user_id', '=', 'u.id')
+        ->select(
+            'la.audit_id',
+            'la.login_time',
+            'la.logout_time',
+            'la.status1',
+            'u.name',
+            'u.email'
+        );
+
+    if ($user_id) {
+        $query->where('la.user_id', $user_id);
+    }
+
+    if ($from_date && $to_date) {
+        $query->whereDate('la.login_time', '>=', $from_date)
+              ->whereDate('la.login_time', '<=', $to_date);
+    }
+
+    $rows = $query->get();
+
+    // Excel headers
+    header("Content-Type: application/vnd.ms-excel");
+    header("Content-Disposition: attachment; filename=login_audit.xls");
+
+    echo "<table border='1'>";
+    echo "<tr>
+            <th>Sl. No.</th>
+            <th>Audit Id</th>
+            <th>Login Date & Time</th>
+            <th>Logout Date & Time</th>
+            <th>Logout Method</th>
+            <th>User Name</th>
+            <th>User Email</th>
+          </tr>";
+
+    foreach ($rows as $key => $row) {
+
+        $login = $row->login_time ? date('d-m-Y h:i A', strtotime($row->login_time)) : '';
+        $logout = $row->logout_time ? date('d-m-Y h:i A', strtotime($row->logout_time)) : '';
+
+        echo "<tr>
+                <td>".($key+1)."</td>
+                <td>Audit#00".($key+1)."</td>
+                <td>{$login}</td>
+                <td>{$logout}</td>
+                <td>{$row->status1}</td>
+                <td>{$row->name}</td>
+                <td>{$row->email}</td>
+              </tr>";
+    }
+
+    echo "</table>";
+    exit;
+}
 }

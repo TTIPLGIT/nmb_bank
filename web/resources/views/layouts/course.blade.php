@@ -1805,7 +1805,8 @@ function notification(notificationid) {
         },
         success: function(data) {
 
-            var url = data['notify_link'][0].notification_url;
+            var url =
+                'elearning/allCourses?sorted=Recently%20Added&tag=false&progress=false&q=false&course_id=1';
             window.location.href = url;
 
         },

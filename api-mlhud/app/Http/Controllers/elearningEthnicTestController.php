@@ -748,6 +748,32 @@ class elearningEthnicTestController extends BaseController
                     if ($progress == 100) {
 
                         $progress = $progress - 20;
+                        $coursecpt_points = DB::select("SELECT course_cpt_points from elearning_courses where course_id=$course_id and drop_course=0");
+
+                    $cpt_points = $coursecpt_points[0]->course_cpt_points;
+
+                    DB::table('user_cpt_points')
+                        ->insert([
+                            'course_id' => $course_id,
+                            'user_id' => $user_id,
+                            'cpt_points' => $cpt_points,
+                            'status' => '0',
+                            'created_by' => $user_id,
+                            'created_at' => NOW()
+
+                        ]);
+
+
+                    $userstable = DB::select("SELECT  total_cptpoints from users where id=$user_id and active_flag=0");
+                    $totalcpt_points = $userstable[0]->total_cptpoints;
+
+                    $sumofcpt = $totalcpt_points + $cpt_points;
+
+                    DB::table('users')
+                        ->where('id', $user_id)
+                        ->update([
+                            'total_cptpoints' => $sumofcpt,
+                        ]);
                     }
                     DB::table('user_course_relation')
                         ->where('course_id', $course_id)
@@ -755,6 +781,7 @@ class elearningEthnicTestController extends BaseController
                         ->update([
                             'course_progress' => $progress,
                         ]);
+                    
                 }
                 $is_completed = Db::select("SELECT * from user_class_relation where status=1 and status=0");
                 if ($is_completed == []) {

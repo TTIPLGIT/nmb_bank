@@ -47,7 +47,7 @@ class coursecreationmail extends Mailable
      */
     public function build()
     {
-       
+     
 
         return $this->from(config('setting.email_id'))
             ->subject('Course Enrollment')

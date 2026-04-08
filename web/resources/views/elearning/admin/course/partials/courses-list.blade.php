@@ -6,7 +6,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-striped" id="courses-table">
+        <table class="table table-bordered align_button" id="align">
             <thead>
                 <tr>
                     <th>S.No</th>
@@ -80,7 +80,7 @@
 
                         <a type="button" title="Delete" onclick="course_delete(<?php echo $data->course_id ?>)"
                             class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></a>
-                        @if($showHandleButton)
+                        <!-- @if($showHandleButton)
                         <a class="btn btn-link" title="Handle Expired Course"
                             onclick="handleExpiredCourse({{ $data->course_id }})">
                             <i class="fas fa-exclamation-circle" style="color:orange"></i>
@@ -90,7 +90,7 @@
                             onclick="showReplacementMessage({{ $data->course_id }})">
                             <i class="fas fa-info-circle" style="color:gray"></i>
                         </a>
-                        @endif
+                        @endif -->
 
 
 
@@ -223,5 +223,63 @@ function handleExpiredCourse(course_id) {
             });
         }
     });
+}
+
+function course_delete(course_id) {
+    //  alert(id);
+    Swal.fire({
+        title: "Are you sure want to delete the Course?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Delete",
+    }).then((result) => {
+
+        $.ajax({
+            url: "{{ route('course_delete') }}",
+            type: 'POST',
+            data: {
+                course_id: course_id,
+
+                _token: '{{csrf_token()}}'
+            },
+            error: function() {
+                alert('Something is wrong');
+            },
+            success: function(data) {
+                if (data['data'] == 0) {
+                    Swal.fire("Info!", data['message_cus'], "info", data['message_cus'])
+                    return false
+                }
+
+                if (result.value) {
+                    Swal.fire("Success!", "Course Deleted Successfully!", "success").then((
+                        result) => {
+
+                        location.replace(`/courses`);
+
+                    })
+                }
+                // } else if (result.dismiss === Swal.DismissReason.cancel) {
+                //     // Handle the cancel button click (optional)
+                //     // For example, redirecting back to the previous page:
+                //     window.history.back();
+                // }
+
+
+                // if (result.value) {
+                //     Swal.fire("Success!", "Course Deleted Successfully!", "success").then((result) => {
+
+                //         location.replace(`/admincourse`);
+
+                //     })
+                // }
+
+            }
+
+        });
+    })
+
 }
 </script>

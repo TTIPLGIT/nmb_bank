@@ -1868,7 +1868,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             <a class="nav-link has-dropdown">
                                 <i class="{{$module['class_name']}}" aria-hidden="true"></i>
                                 <span>
-                                    {{ __('dashboard.'.$module['module_name']) }}
+                                    <!-- {{ __('dashboard.'.$module['module_name']) }} -->
+                                    {{ $module['module_name'] }}
                                 </span>
                             </a>
 

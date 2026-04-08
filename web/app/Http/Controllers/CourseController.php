@@ -15,8 +15,12 @@ class CourseController extends BaseController
     public function index(Request $request)
     {
         try {
-            $courses = DB::table('elearning_courses as ec')
+         $courses = DB::table('elearning_courses as ec')
                 ->leftJoin('course_catagory as cc', 'ec.course_category', '=', 'cc.catagory_id')
+                ->Join('ai_course_response as ac', function ($join) {
+                    $join->on('ec.course_id', '=', 'ac.course_id')
+                        ->where('ac.is_published', 1);
+                })
                 ->select('ec.*', 'cc.catagory_name')
                 ->where('ec.drop_course', '0')
                 ->orderBy('ec.course_id', 'desc')

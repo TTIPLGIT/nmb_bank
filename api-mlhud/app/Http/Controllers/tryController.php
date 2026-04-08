@@ -971,8 +971,6 @@ class tryController extends BaseController
                 ->get();
             foreach ($users as $user) {
 
-                // Optional log to verify
-                $this->WriteFileLog($user->email, 'Sending Course PIN');
 
                 Mail::to($user->email)->send(
                     new coursecreationmail([
@@ -981,6 +979,7 @@ class tryController extends BaseController
                         'course_name' => $input['course_name'],
                     ])
                 );
+                 $this->notifications_insert(null, $user->id, "{$inputArray['course_name']} course has been allocated to you.", "/elearningquestion");
             }
  
 
@@ -991,7 +990,7 @@ class tryController extends BaseController
             $serviceResponse['course_id'] = $update_id;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-              $this->WritefileLog('hello');
+              
             return $sendServiceResponse;
         } catch (\Exception $exc) {
             $exceptionResponse = array();

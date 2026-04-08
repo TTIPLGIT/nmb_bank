@@ -52,6 +52,7 @@ class AIController extends BaseController
                 ->get();
                 $course_catagory_name = DB::table('course_catagory')
                 ->select('*')
+                ->where('active_flag', 0)
                 ->orderBy('catagory_id', 'desc')
                 ->get();
                 $designation = DB::table('designation')
