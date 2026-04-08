@@ -109,44 +109,43 @@ class CertifcateTemplateController extends BaseController
 
         $method = 'Method => CertificateTemplateController => store';
         try {
-            // Step 1: Validation
-            $rules = [
-                'name' => 'required|array|max:2',
-                'name.*' => 'required|string|max:255',
-                'designation' => 'required|array|max:2',
-                'designation.*' => 'required|string|max:255',
-                'signature.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-                'existing_signature.*' => 'nullable|string',
-                // 'logo' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            ];
+            // // Step 1: Validation
+            // $rules = [
+            //     'name' => 'required|array|max:2',
+            //     'name.*' => 'required|string|max:255',
+            //     'designation' => 'required|array|max:2',
+            //     'designation.*' => 'required|string|max:255',
+            //     'signature.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            //     'existing_signature.*' => 'nullable|string',
+            //     // 'logo' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            // ];
 
 
+            
 
+            // $validator = Validator::make($request->all(), $rules);
 
+            // if ($validator->fails()) {
 
-            $validator = Validator::make($request->all(), $rules);
-
-            if ($validator->fails()) {
-
-                return Redirect::back()->withErrors($validator)->withInput();
-            }
+            //     return Redirect::back()->withErrors($validator)->withInput();
+            // }
 
             // Step 2: Prepare structured data
             $entries = [];
-
+           
             foreach ($request->input('name') as $i => $name) {
 
                 $signatureFile = $request->file('signature')[$i] ?? null;
                 $existingSignature = $request->input('existing_signature')[$i] ?? null;
                 $logoFile = $request->file('logo')[$i] ?? null;
                 $existingLogo = $request->input('existing_logo')[$i] ?? null;
-
                 $entry = [
                     'name' => $name,
                     'designation' => $request->input('designation')[$i],
                     'certificate_templates_id' => $request->input('certificate_templates_id'),
                     'certificate_template_signatories_id' => $request->input('certificate_template_signatories_id')[$i] ?? '',
                 ];
+
 
 
 
@@ -167,10 +166,10 @@ class CertifcateTemplateController extends BaseController
                 }
 
                 $entries[] = $entry;
-                // dd($entries);
+               
             }
 
-
+          
             // Step 3: Encrypt & call API
             $encryptArray = $this->encryptData(['details' => $entries]);
             //    dd($validator);
@@ -178,12 +177,12 @@ class CertifcateTemplateController extends BaseController
             $apiRequest = [
                 'requestData' => $encryptArray,
             ];
-            //    dd($validator);
+              
             $gatewayURL = config('setting.api_gateway_url') . '/certificate-template/store';
 
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($apiRequest), $method);
             $response1 = json_decode($response);
-
+// dd($response1);
             // Step 4: Handle response
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data), true);
@@ -216,6 +215,7 @@ class CertifcateTemplateController extends BaseController
             try {
                 $method = 'Method => DesignationController => edit';
                 $id = $this->decryptData($id);
+                
                 $gatewayURL = config('setting.api_gateway_url') . '/certificate_template/data_edit_details/' . $this->encryptData($id);
                 $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
                 $response = json_decode($response);

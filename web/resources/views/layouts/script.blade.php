@@ -56,19 +56,19 @@
 <!-- <script type="text/javascript">$('#align').DataTable();</script> -->
 
 <script type="text/javascript">
-  // $('.savebutton').prop('disabled', true);
+// $('.savebutton').prop('disabled', true);
 
-  $(document).ready(function() {
+$(document).ready(function() {
     $('#align').DataTable({
 
 
-      "lengthMenu": [
-        [10, 50, 100, 250, -1],
-        [10, 50, 100, 250, "All"]
-      ], // page length options
+        "lengthMenu": [
+            [10, 50, 100, 250, -1],
+            [10, 50, 100, 250, "All"]
+        ], // page length options
 
-      dom: 'lBfrtip',
-      destroy: true,
+        dom: 'lBfrtip',
+        destroy: true,
 
 
     });
@@ -77,54 +77,55 @@
 
     var nav = document.getElementsByClassName("smn");
     for (let i = 0; i < nav.length; i++) {
-      let currentnav = window.location.href;
-      nav[i].parentElement.parentElement.style.display = (currentnav == nav[i].getAttribute("href")) ? "block" : "none";
-      if (currentnav == nav[i].getAttribute("href")) {
-        break;
-      }
+        let currentnav = window.location.href;
+        nav[i].parentElement.parentElement.style.display = (currentnav == nav[i].getAttribute("href")) ?
+            "block" : "none";
+        if (currentnav == nav[i].getAttribute("href")) {
+            break;
+        }
     }
     if (document.querySelector("[type='number']")) {
-      document.querySelector("[type='number']").addEventListener("keypress", function(evt) {
-        if (!$(this).hasClass('validate')) {
-          if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) {
-            evt.preventDefault();
-          }
-        }
-      });
+        document.querySelector("[type='number']").addEventListener("keypress", function(evt) {
+            if (!$(this).hasClass('validate')) {
+                if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) {
+                    evt.preventDefault();
+                }
+            }
+        });
     }
 
-  });
+});
 </script>
 <script type="text/javascript">
-  $(document).ready(function() {
+$(document).ready(function() {
     $('#align2').DataTable({
 
 
 
-      "lengthMenu": [
-        [10, 50, 100, 250, -1],
-        [10, 50, 100, 250, "All"]
-      ], // page length options
+        "lengthMenu": [
+            [10, 50, 100, 250, -1],
+            [10, 50, 100, 250, "All"]
+        ], // page length options
 
-      dom: 'lBfrtip',
-      "destroy": true,
+        dom: 'lBfrtip',
+        "destroy": true,
 
 
     });
 
-  });
+});
 </script>
 <script type="text/javascript">
-  $(document).ready(function() {
+$(document).ready(function() {
     $('#align1').DataTable({
 
 
-      "lengthMenu": [
-        [10, 50, 100, 250, -1],
-        [10, 50, 100, 250, "All"]
-      ], // page length options
+        "lengthMenu": [
+            [10, 50, 100, 250, -1],
+            [10, 50, 100, 250, "All"]
+        ], // page length options
 
-      dom: 'lBfrtip',
+        dom: 'lBfrtip',
 
 
     });
@@ -132,67 +133,67 @@
     $('#align3').DataTable({
 
 
-      "lengthMenu": [
-        [10, 50, 100, 250, -1],
-        [10, 50, 100, 250, "All"]
-      ], // page length options
+        "lengthMenu": [
+            [10, 50, 100, 250, -1],
+            [10, 50, 100, 250, "All"]
+        ], // page length options
 
-      dom: 'lBfrtip',
+        dom: 'lBfrtip',
 
 
     });
     $('#align4').DataTable({
 
 
-      "lengthMenu": [
-        [10, 50, 100, 250, -1],
-        [10, 50, 100, 250, "All"]
-      ], // page length options
+        "lengthMenu": [
+            [10, 50, 100, 250, -1],
+            [10, 50, 100, 250, "All"]
+        ], // page length options
 
-      dom: 'lBfrtip',
+        dom: 'lBfrtip',
 
 
     });
     $('#new_align').DataTable({
 
 
-      "lengthMenu": [
-        [10, 50, 100, 250, -1],
-        [10, 50, 100, 250, "All"]
-      ], // page length options
+        "lengthMenu": [
+            [10, 50, 100, 250, -1],
+            [10, 50, 100, 250, "All"]
+        ], // page length options
 
-      dom: 'lBfrtip',
+        dom: 'lBfrtip',
 
 
     });
     $('#align5').DataTable({
 
 
-      "lengthMenu": [
-        [5, 10, 20, 250, -1],
-        [5, 10, 20, 250, "All"]
-      ], // page length options
+        "lengthMenu": [
+            [5, 10, 20, 250, -1],
+            [5, 10, 20, 250, "All"]
+        ], // page length options
 
-      dom: 'lBfrtip',
+        dom: 'lBfrtip',
 
 
     });
     $('#align7').DataTable({
 
-      "paging": false,
-      "lengthMenu": [
-        [10, 50, 100, 250, -1],
-        [10, 50, 100, 250, "All"]
-      ], // page length options
+        "paging": false,
+        "lengthMenu": [
+            [10, 50, 100, 250, -1],
+            [10, 50, 100, 250, "All"]
+        ], // page length options
 
-      dom: 'lBfrtip',
+        dom: 'lBfrtip',
 
 
     });
-  });
+});
 </script>
 <script type="text/javascript">
-  $(document).ready(function() {
+$(document).ready(function() {
     // $('#tableExport').DataTable({
 
 
@@ -207,99 +208,101 @@
     //   ]
     // });
 
-  });
+});
 </script>
 
 <script type="text/javascript">
-  $(document).ready(function() {
+$(document).ready(function() {
 
     var email = $('#email').val();
     var password = $('#password').val();
 
     // set cookies to expire in 14 days
     $.cookie('email', email, {
-      expires: 14
+        expires: 14
     });
     $.cookie('password', password, {
-      expires: 14
+        expires: 14
     });
     $.cookie('remember', true, {
-      expires: 14
+        expires: 14
     });
 
-  });
+});
 </script>
 <script type="text/javascript">
-  $(document).ready(function() {
+$(document).ready(function() {
 
     $('#example').DataTable({
 
 
-      dom: 'Bfrtip',
-      buttons: [{
-        extend: 'pdfHtml5',
-        orientation: 'landscape',
-        pageSize: 'TABLOID',
-        title: 'form Details',
-        footer: true,
-      }, {
-        extend: 'copy',
-        title: 'form Details'
-      }, {
-        extend: 'csv',
-        title: 'form Details'
-      }, {
-        extend: 'excel',
-        title: 'form Details'
-      }, {
-        extend: 'print',
-        title: 'form Details'
-      }],
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'TABLOID',
+            title: 'form Details',
+            footer: true,
+        }, {
+            extend: 'copy',
+            title: 'form Details'
+        }, {
+            extend: 'csv',
+            title: 'form Details'
+        }, {
+            extend: 'excel',
+            title: 'form Details'
+        }, {
+            extend: 'print',
+            title: 'form Details'
+        }],
     });
 
-  });
+});
 </script>
 
 
 
 <script type="text/javascript">
-  $(document).ready(function() {
+$(document).ready(function() {
     $('#tendertable').DataTable({
 
 
-      dom: 'Bfrtip',
-      buttons: [{
-        extend: 'pdfHtml5',
-        orientation: 'landscape',
-        pageSize: 'TABLOID',
-        title: 'form Details',
-        footer: true,
-      }, {
-        extend: 'copy',
-        title: 'form Details'
-      }, {
-        extend: 'csv',
-        title: 'form Details'
-      }, {
-        extend: 'excel',
-        title: 'form Details'
-      }, {
-        extend: 'print',
-        title: 'form Details'
-      }],
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'TABLOID',
+            title: 'form Details',
+            footer: true,
+        }, {
+            extend: 'copy',
+            title: 'form Details'
+        }, {
+            extend: 'csv',
+            title: 'form Details'
+        }, {
+            extend: 'excel',
+            title: 'form Details'
+        }, {
+            extend: 'print',
+            title: 'form Details'
+        }],
     });
 
-  });
+});
 </script>
 
 <script type="text/javascript">
-  //Open dropdown when clicking on element
-  $(document).on('click', "a[data-dropdown='notificationMenu']", function(e) {
+//Open dropdown when clicking on element
+$(document).on('click', "a[data-dropdown='notificationMenu']", function(e) {
     e.preventDefault();
 
     var el = $(e.currentTarget);
 
-    $('body').prepend('<div id="dropdownOverlay" style="background: transparent; height:100%;width:100%;position:fixed;"></div>')
+    $('body').prepend(
+        '<div id="dropdownOverlay" style="background: transparent; height:100%;width:100%;position:fixed;"></div>'
+    )
 
     var container = $(e.currentTarget).parent();
     var dropdown = container.find('.dropdown');
@@ -309,35 +312,34 @@
     var anchorOffset = $(e.currentTarget).offset();
 
     dropdown.css({
-      'right': containerWidth / 2 + 'px',
-      'position': 'absolute',
-      'z-index': 100
+        'right': containerWidth / 2 + 'px',
+        'position': 'absolute',
+        'z-index': 100
     })
 
     container.toggleClass('expanded')
 
-  });
+});
 
-  //Close dropdowns on document click
+//Close dropdowns on document click
 
-  $(document).on('click', '#dropdownOverlay', function(e) {
+$(document).on('click', '#dropdownOverlay', function(e) {
     var el = $(e.currentTarget)[0].activeElement;
 
     if (typeof $(el).attr('data-dropdown') === 'undefined') {
-      $('#dropdownOverlay').remove();
-      $('.dropdown-container.expanded').removeClass('expanded');
+        $('#dropdownOverlay').remove();
+        $('.dropdown-container.expanded').removeClass('expanded');
     }
-  })
+})
 
-  //Dropdown collapsile tabs
-  $('.notification-tab').click(function(e) {
+//Dropdown collapsile tabs
+$('.notification-tab').click(function(e) {
     if ($(e.currentTarget).parent().hasClass('expanded')) {
-      $('.notification-group').removeClass('expanded');
+        $('.notification-group').removeClass('expanded');
     } else {
-      $('.notification-group').removeClass('expanded');
-      $(e.currentTarget).parent().toggleClass('expanded');
+        $('.notification-group').removeClass('expanded');
+        $(e.currentTarget).parent().toggleClass('expanded');
     }
-  })
-  // $('.savebutton').prop('disabled', true);
+})
+// $('.savebutton').prop('disabled', true);
 </script>
-

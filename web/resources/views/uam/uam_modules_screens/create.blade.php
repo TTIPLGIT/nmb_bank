@@ -27,7 +27,7 @@
 
 
         <div class="section-body mt-1">
-        <h5 class="text-center" style="color:darkblue">Module Screen Mapping Creation</h5>
+        
       
         {{ Breadcrumbs::render('uam_modules_screens.create') }}
             
@@ -37,6 +37,7 @@
         
               <div class="card" >
                 <div class="card-body" >
+                  <h5 class="text-center" style="color:darkblue">Module Screen Mapping Creation</h5>
                <form  name ="uam_modules_screens_submit" id="uam_modules_screens_submit"  method="POST" action="{{ route('uam_modules_screens.store') }}">
 
                 @csrf
@@ -69,9 +70,9 @@
        </div> 
                     <div class="row text-center">
                         <div class="col-md-12">
-                            <button type="button" class="btn btn-success btn-space" onclick="save_screens()" id="savebutton">Save</button>
-                              <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button>&nbsp;
-                             <a class="btn btn-danger footer_btn_cancel" href="{{ route('uam_modules_screens.index') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>
+                            <button type="button" class="btn btn-success btn-space" onclick="save_screens()" id="savebutton">Submit</button>
+                              <!-- <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button>&nbsp; -->
+                             <a class="btn btn-danger footer_btn_cancel" href="{{ route('uam_modules_screens.index') }}"> Back </a>
                            
                            
                         </div>                

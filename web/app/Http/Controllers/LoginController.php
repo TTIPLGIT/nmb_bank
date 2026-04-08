@@ -284,8 +284,6 @@ class LoginController extends BaseController
 
     $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
     $response1 = json_decode($response);
-    $this->WriteFileLog($response);
-    $this->WriteFileLog($response1);
     if ($response1->Status == 200 && $response1->Success) {
       $objData = json_decode($this->decryptData($response1->Data));
       if ($objData->Code == 200) {
@@ -388,15 +386,9 @@ class LoginController extends BaseController
 
   public function login(Request $request)
   {
-    // $remember_me = $request->has('remember_me') ? true : false; 
-
-
-    //  echo "hihui";exit;
-
-
+   
     try {
       // $hashedPassword = Hash::make('A1C194DB21969CA899D4D8E2028D5BFC');
-      // dd($hashedPassword);
       $method = 'Method => LoginController => login';
       $input = [
         'email' => $request->email,
@@ -427,7 +419,6 @@ class LoginController extends BaseController
         $input['email'] = $request->email;
         $input['password'] = $request->password;
         $input['remember_me'] = $request->has('remember_me');
-
         $encryptArray = $this->encryptData($input);
         $request = array();
         $request['requestData'] = $encryptArray;
@@ -469,7 +460,6 @@ class LoginController extends BaseController
         $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
 
         $response = json_decode($response);
-      // $gatewayURL = 'http://20.164.0.23:3300/ai/predictive-analysis/run/' . $data['user_id'] . '/' . $data['course_id'];
 
         if ($response->Status == 401) {
           if (isset($request->mobile)) {
@@ -484,7 +474,6 @@ class LoginController extends BaseController
 
         
 
-        //dd($response);
         if ($response->Status == 200 && $response->Success) {
           $objData = json_decode($this->decryptData($response->Data));
          
@@ -502,7 +491,19 @@ class LoginController extends BaseController
             session(['gd_status' => $gd_status]);
             session(['role_id' => $role_id]);
             // dd("sdaecsca");
+            $user_id = $row[0]['id'];
+            $data = [
+                'user_id' => $user_id
+            ];
+
+            $recommendations = 'http://20.164.0.23:3300/ai/recommendations/run';
+            $predictive_analysis = 'http://20.164.0.23:3300/ai/predictive-analysis/run';
             
+              $response2 = $this->AIserviceRequest($recommendations, 'POST', ['user_id' => $user_id], $method);
+              $recommendation = json_decode($response2, true);
+
+              $response3 = $this->AIserviceRequest($predictive_analysis, 'POST', ['user_id' => $user_id], $method);
+              $predective = json_decode($response3, true);
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
             $modules = $menus['modules'];
@@ -517,11 +518,21 @@ class LoginController extends BaseController
               return "2";
             }
             if ($role_id == '1') {
-              return redirect(route('admindashboard'));
-            } else {
-              
-              return redirect(route('elearningDashboard'));
-            }
+                  return redirect()
+                      ->route('admindashboard')
+                      ->with([
+                          'recommendation' => $recommendation,
+                          'predective'     => $predective
+                      ]);
+              } else {
+                  return redirect()
+                      ->route('elearningDashboard')
+                      ->with([
+                          'recommendation' => $recommendation,
+                          'predective'     => $predective
+                      ]);
+              }
+
 
            
           }
@@ -597,7 +608,7 @@ class LoginController extends BaseController
           $menus = $this->FillMenu();
           $screens = $menus['screens'];
           $modules = $menus['modules'];
-          return view('profilepage', compact('one_row', 'modules', 'screens'));
+          return view('profilepage', compact('one_row', 'modules', 'screens','menus'));
         }
       } else {
         $objData = json_decode($this->decryptData($response->Data));
@@ -851,8 +862,10 @@ class LoginController extends BaseController
       $request['requestData'] = $encryptArray;
       $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
       $response = json_decode($response);
+    
       if ($response->Status == 200 && $response->Success) {
         $objData = json_decode($this->decryptData($response->Data));
+         
         if ($objData->Code == 200) {
           $parant_data = json_decode(json_encode($objData->Data), true);
           $response_status = $parant_data['response_status'];

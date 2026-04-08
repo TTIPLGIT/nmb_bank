@@ -102,7 +102,7 @@ public function handle()
                     'user_id' => $userId,
                     'notification_status' => $status,
                     'notification_type' => 'Certificate Expire',
-                    'notification_url' => '/elearning/allCourses',
+                    'notification_url' => '/elearning/allCourses?sorted=Recently%20Added&tag=false&progress=false&q=false',
                     'megcontent' => $message,
                     'alert_meg' => $message,
                     'created_by' => 1, 

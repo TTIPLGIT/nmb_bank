@@ -2,12 +2,12 @@
 
 @section('content')
 <style type="text/css">
-    .buttons-html5 {
-        background-color: #1bcd6b !important;
-        padding: 10px;
-        border: 1px;
-        color: white;
-    }
+.buttons-html5 {
+    background-color: #1bcd6b !important;
+    padding: 10px;
+    border: 1px;
+    color: white;
+}
 </style>
 
 <div class="main-content">
@@ -15,42 +15,42 @@
 
     <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
     <script type="text/javascript">
-        window.onload = function() {
-            var message = $('#session_data').val();
-            swal({
-                title: "Success",
-                text: message,
-                type: "success",
-            });
+    window.onload = function() {
+        var message = $('#session_data').val();
+        swal({
+            title: "Success",
+            text: message,
+            type: "success",
+        });
 
-        }
+    }
     </script>
     @elseif(session('error'))
 
     <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
     <script type="text/javascript">
-        window.onload = function() {
-            var message = $('#session_data1').val();
-            swal({
-                title: "Info",
-                text: message,
-                type: "info",
-            });
+    window.onload = function() {
+        var message = $('#session_data1').val();
+        swal({
+            title: "Info",
+            text: message,
+            type: "info",
+        });
 
-        }
+    }
     </script>
     @endif
-
+    {{ Breadcrumbs::render('ai_course_create') }}
     <section class="section">
 
         <div class="col-lg-12 text-center">
-            <h4 style="color:darkblue;">Course List</h4>
+            <h4 style="color:darkblue;">Smart Course Create</h4>
         </div>
         <div class="section-body mt-2">
             <style>
-                .section {
-                    margin-top: 20px;
-                }
+            .section {
+                margin-top: 20px;
+            }
             </style>
 
 
@@ -67,99 +67,138 @@
                             </div>
                             @if (session('success'))
 
-                            <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+                            <input type="hidden" name="session_data" id="session_data" class="session_data"
+                                value="{{ session('success') }}">
                             <script type="text/javascript">
-                                window.onload = function() {
-                                    var message = $('#session_data').val();
-                                    swal({
-                                        title: "Success",
-                                        text: message,
-                                        type: "success",
-                                    });
+                            window.onload = function() {
+                                var message = $('#session_data').val();
+                                swal({
+                                    title: "Success",
+                                    text: message,
+                                    type: "success",
+                                });
 
-                                }
+                            }
                             </script>
                             @elseif(session('error'))
 
-                            <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
+                            <input type="hidden" name="session_data" id="session_data1" class="session_data"
+                                value="{{ session('error') }}">
                             <script type="text/javascript">
-                                window.onload = function() {
-                                    var message = $('#session_data1').val();
-                                    swal({
-                                        title: "Info",
-                                        text: message,
-                                        type: "info",
-                                    });
+                            window.onload = function() {
+                                var message = $('#session_data1').val();
+                                swal({
+                                    title: "Info",
+                                    text: message,
+                                    type: "info",
+                                });
 
-                                }
+                            }
                             </script>
                             @endif
-
                             <div class="card">
-                                <form action="{{route('create-course')}}" method="Post">
+                                <form action="{{route('create_course')}}" method="post" id="createCourseForm">
                                     @csrf
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Course Category <span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" name="category" placeholder="Enter Course Category" required>
+                                                    <select class="form-control" name="course_category_id"
+                                                        id="course_category_id" required>
+                                                        <option value="">---Select Category---</option>
+
+                                                        @foreach($rows['course_catagory_name'] as $data)
+                                                        <option value="{{$data['catagory_id']}}" data-badge=""
+                                                            data-name="{{ $data['catagory_name'] }}">
+                                                            {{$data['catagory_name']}}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <input type="hidden" name="course_category_name"
+                                                        id="course_category_name">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Role <span style="color: red;">*</span></label>
-                                                    <select name="role" id="" class="form-control">
+                                                    <select name="role" id="role" class="form-control" required>
+                                                        <option value="">Select Role</option>
 
+                                                        @foreach($rows['rows'] as $role)
+                                                        <option value="{{ $role['role_id'] }}"
+                                                            data-name="{{ $role['role_name'] }}">
+                                                            {{ $role['role_name'] }}
+                                                        </option>
+                                                        @endforeach
                                                     </select>
+                                                    <input type="hidden" name="role_name" id="role_name">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Designation <span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" name="designation" placeholder="Enter Designation" required>
+                                                    <select class="form-control" name="designation_id"
+                                                        id="designation_id_show" required>
+                                                        <!-- <option value="">Please Select Designation</option> -->
+                                                        @foreach( $rows['designation'] as $values)
+                                                        <option value="{{ $values['designation_name'] }}">
+                                                            {{ $values['designation_name'] }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Course Name <span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" name="course_name" placeholder="Enter Course Name" required>
+                                                    <input class="form-control" type="text" id="course_name"
+                                                        name="course_name" placeholder="Enter Course Name">
                                                 </div>
                                             </div>
+
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Course Description <span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" name="course_description" placeholder="Enter Description" required>
+                                                    <textarea class="form-control" type="text" name="course_description"
+                                                        placeholder="Enter Description" required></textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Course Type <span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" name="course_type" placeholder="Enter Course Type" required>
-                                                </div>
-                                            </div>
+
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Class Count <span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" name="class_count" placeholder="Enter Class Count" required>
+                                                    <input class="form-control" type="number" name="class_count"
+                                                        placeholder="Enter Class Count" min="1" max="6" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Course Duration <span style="color: red;">*</span></label>
-                                                    <select name="course_duration" id="course_duration" class="form-control">
-                                                        <option value="15 mins">15 - Mins</option>
-                                                        <option value="30 mins">30 - Mins</option>
-                                                        <option value="1 hour">1 HRS</option>
-                                                        <option value="2 hour">2 HRS</option>
+                                                    <label>Video Duration <span style="color: red;">*</span></label>
+                                                    <select name="course_duration" id="course_duration"
+                                                        class="form-control" required>
+                                                        <option value="15">15 - Mins</option>
+                                                        <option value="30">30 - Mins</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div style="text-align:center">
-                                        <button class="btn btn-success" type="submit">Submit</button>
+                                        <button class="btn btn-success" type="submit" id="submitBtn">
+                                            <i class="fas fa-cogs"></i> Generate
+                                        </button>
+
+                                        <div id="aiLoader" style="display:none; margin-top:15px;">
+                                            <div class="spinner-border text-success" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                            <p style="margin-top:10px; font-weight:600; color:#155724;">
+                                                Course is generating by AI, please wait...
+                                            </p>
+                                        </div>
                                     </div>
+
                                 </form>
 
                             </div>
@@ -181,15 +220,15 @@
 
 <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
 <script type="text/javascript">
-    window.onload = function() {
-        var message = $('#session_data').val();
+window.onload = function() {
+    var message = $('#session_data').val();
 
-        bootbox.alert({
-            title: "Success",
-            centerVertical: true,
-            message: message
-        });
-    }
+    bootbox.alert({
+        title: "Success",
+        centerVertical: true,
+        message: message
+    });
+}
 </script>
 @endif
 
@@ -197,24 +236,168 @@
 @if (session('failed'))
 <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('failed') }}">
 <script type="text/javascript">
-    window.onload = function() {
-        var message = $('#session_data').val();
+window.onload = function() {
+    var message = $('#session_data').val();
 
-        bootbox.alert({
-            title: "Success",
-            centerVertical: true,
-            message: message
-        });
-    }
+    bootbox.alert({
+        title: "Success",
+        centerVertical: true,
+        message: message
+    });
+}
+</script>
+@endif
+
+@if(session('error'))
+<script>
+window.onload = function() {
+    Swal.fire({
+        icon: 'error',
+        title: 'Blocked Content',
+        text: "{{ session('error') }}"
+    });
+}
 </script>
 @endif
 
 
 <script src="{{ asset('js/table2excel.js') }}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script>
+$(document).ready(function() {
+
+    $('#role').change(function() {
+
+        let role_id = $(this).val();
+        let designationSelect = $('#designation_id_show');
+
+        designationSelect.html('<option value="">Loading...</option>');
+
+        if (role_id === '') {
+            designationSelect.html('<option value="">Please Select Designation</option>');
+            return;
+        }
+
+        $.ajax({
+            url: "{{ route('get.designation.by.role') }}",
+            type: "POST",
+            data: {
+                role_id: role_id,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(response) {
+
+                designationSelect.html(
+                    '<option value="">Please Select Designation</option>');
+
+                if (response.length > 0) {
+                    $.each(response, function(key, value) {
+                        designationSelect.append(
+                            '<option value="' + value.designation_id + '">' +
+                            value.designation_name +
+                            '</option>'
+                        );
+                    });
+                }
+            }
+        });
+    });
+
+});
+// document.getElementById('createCourseForm').addEventListener('submit', function() {
+//     // Hide the button
+//     document.getElementById('submitBtn').style.display = 'none';
+
+//     // Show the loader
+//     document.getElementById('aiLoader').style.display = 'block';
+
+//     // Form will submit normally and redirect
+// });
+</script>
+
+<!-- create course -->
+
+<script>
+$('#createCourseForm').on('submit', function(e) {
+
+    e.preventDefault(); // stop form initially
+
+    let courseName = $('#course_name').val().trim();
+
+    let validPattern = /^[A-Za-z][A-Za-z0-9 ]+$/;
+    let repeatedChar = /^(.)\1+$/;
+
+    // Minimum length
+    if (courseName.length < 3) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Course name must be at least 3 characters.'
+        });
+        return;
+    }
+
+    // Maximum length
+    if (courseName.length > 50) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Course name must not exceed 50 characters.'
+        });
+        return;
+    }
+
+    // Pattern validation
+    if (!validPattern.test(courseName)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Course name must start with a letter and contain only letters, numbers and spaces.'
+        });
+        return;
+    }
+
+    // Repeated characters
+    if (repeatedChar.test(courseName)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Course name cannot contain repeated characters.'
+        });
+        return;
+    }
+
+    // If validation passed
+    $('#submitBtn').hide();
+    $('#aiLoader').show();
+
+    this.submit(); // finally submit form
+});
+</script>
 
 
 
+<script>
+$(document).ready(function() {
+
+    $('#role').change(function() {
+
+        let roleName = $('#role option:selected').data('name');
+
+        $('#role_name').val(roleName);
+
+    });
+
+    $('#course_category_id').change(function() {
+        let courseCategoryName = $('#course_category_id option:selected').data('name');
+
+
+        $('#course_category_name').val(courseCategoryName);
+
+    });
+
+});
+</script>
 
 
 

@@ -39,7 +39,7 @@ class MeetingController extends BaseController
                 $modules = $menus['modules'];
                 $permission = $this->FillScreensByUser();
 
-                return view('VirtualMeeting.meeting_create', compact('rows', 'menus', 'screens', 'modules'));
+                return view('VirtualMeeting.meeting_list', compact('rows', 'menus', 'screens', 'modules'));
             }
             if ($objData->Code == "401") {
                 return redirect(url('/'))->with('danger', 'User session Exipired');

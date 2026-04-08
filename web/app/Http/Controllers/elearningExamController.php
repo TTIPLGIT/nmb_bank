@@ -301,11 +301,17 @@ class elearningExamController extends BaseController
 
             $gatewayURL = config('setting.api_gateway_url') . '/examtest/delete';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
-            $this->WriteFileLog($response);
             $response1 = json_decode($response);
+            if ($response1->Status == 200 && $response1->Success) {
+
             $objData = json_decode($this->decryptData($response1->Data));
-            $rows = json_decode(json_encode($objData->Data), true);
-            return $rows;
+
+            return response()->json([
+                'Code' => $objData->Code,
+                'Message' => $objData->Message
+            ]);
+        }
+           
         } catch (\Exception $exc) {
             echo $exc;
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);

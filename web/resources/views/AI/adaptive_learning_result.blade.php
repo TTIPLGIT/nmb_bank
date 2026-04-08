@@ -1,387 +1,1081 @@
 @extends('layouts.adminnav')
 
 @section('content')
-
 <style>
-    /* Modern Color Palette & Variables */
-    :root {
-        --primary-color: #3f9cb5;
-        --secondary-color: #2c3e50;
-        --success-color: #2ecc71;
-        --warning-color: #f1c40f;
-        --danger-color: #e74c3c;
-        --light-bg: #f8f9fa;
-        --card-shadow: 0 10px 20px rgba(0,0,0,0.08); /* Softer, deeper shadow */
-        --card-hover-shadow: 0 15px 30px rgba(0,0,0,0.12);
+:root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --success: #2ecc71;
+    --warning: #f39c12;
+    --danger: #e74c3c;
+    --info: #3498db;
+    --dark: #2c3e50;
+    --light: #ecf0f1;
+    --gray: #95a5a6;
+    --white: #ffffff;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.container-fluid {
+    background: #f8f9fc;
+    min-height: 100vh;
+}
+
+/* Header Section */
+.header-section {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: 16px;
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    color: white;
+    box-shadow: var(--shadow);
+}
+
+.header-section h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Stat Cards */
+.stat-card {
+    background: var(--white);
+    border: none;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.stat-card .card-body {
+    padding: 20px;
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.stat-icon.primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+}
+
+.stat-icon.danger {
+    background: linear-gradient(135deg, var(--danger), #c0392b);
+    color: white;
+}
+
+.stat-icon.warning {
+    background: linear-gradient(135deg, var(--warning), #e67e22);
+    color: white;
+}
+
+.stat-icon.success {
+    background: linear-gradient(135deg, var(--success), #27ae60);
+    color: white;
+}
+
+.stat-icon.info {
+    background: linear-gradient(135deg, var(--info), #2980b9);
+    color: white;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+/* Course Sections */
+.course-section {
+    background: var(--white);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.course-section:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.course-header {
+    padding: 18px 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background: var(--white);
+}
+
+.course-header:hover {
+    background: #fafbfc;
+}
+
+.course-header.high-risk {
+    border-left-color: var(--danger);
+}
+
+.course-header.medium-risk {
+    border-left-color: var(--warning);
+}
+
+.course-header.low-risk {
+    border-left-color: var(--success);
+}
+
+.course-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 0;
+}
+
+.course-stats {
+    display: inline-flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.stat-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat-badge.students {
+    background: #e8f0fe;
+    color: var(--primary);
+}
+
+.stat-badge.high {
+    background: rgba(231, 76, 60, 0.1);
+    color: var(--danger);
+}
+
+.stat-badge.medium {
+    background: rgba(243, 156, 18, 0.1);
+    color: var(--warning);
+}
+
+.stat-badge.low {
+    background: rgba(46, 204, 113, 0.1);
+    color: var(--success);
+}
+
+.stat-badge.info {
+    background: rgba(52, 152, 219, 0.1);
+    color: var(--info);
+}
+
+/* Risk Badges */
+.risk-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 25px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.risk-badge.high {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    color: white;
+}
+
+.risk-badge.medium {
+    background: linear-gradient(135deg, #fa709a, #fee140);
+    color: #2c3e50;
+}
+
+.risk-badge.low {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: white;
+}
+
+/* Progress Bars */
+.probability-wrapper {
+    flex: 1;
+}
+
+.probability-bar-container {
+    background: #f0f0f0;
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.probability-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.6s ease;
+}
+
+.probability-fill.high {
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+}
+
+.probability-fill.medium {
+    background: linear-gradient(90deg, #fa709a, #fee140);
+}
+
+.probability-fill.low {
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+}
+
+.probability-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    min-width: 45px;
+}
+
+/* Skill Meter */
+.skill-meter {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.skill-meter-bar {
+    flex: 1;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skill-meter-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease;
+}
+
+/* Quiz Score Items */
+.quiz-score-item {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.quiz-score-bar {
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.quiz-score-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+/* Reason Text */
+.reason-text {
+    font-size: 14px;
+    color: #2c3e50;
+    line-height: 1.5;
+    background: #f8f9fa;
+    padding: 12px 15px;
+    border-radius: 12px;
+    margin-top: 12px;
+    border-left: 3px solid var(--primary);
+}
+
+.reason-text i {
+    color: var(--primary);
+    margin-right: 8px;
+}
+
+/* Buttons */
+.btn-gradient {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+    color: white;
+}
+
+.btn-outline-gradient {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 6px 18px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-gradient:hover {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Info Row */
+.info-row {
+    background: #fafbfd;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.info-row:hover {
+    background: #ffffff;
+    transform: translateX(5px);
+    box-shadow: var(--shadow);
+}
+
+/* Toggle Icon */
+.toggle-icon {
+    transition: transform 0.3s ease;
+    font-size: 18px;
+    color: var(--primary);
+}
+
+.toggle-icon.rotated {
+    transform: rotate(180deg);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
     }
 
-    /* Card Styling */
-    .adaptive-card { 
-        border: none; 
-        border-radius: 16px; /* More rounded */
-        box-shadow: var(--card-shadow); 
-        margin-bottom: 24px; 
-        background: white; 
-        overflow: hidden; 
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
-    
-    .adaptive-card:hover {
-        transform: translateY(-5px); /* Lift effect */
-        box-shadow: var(--card-hover-shadow);
-    }
+}
 
-    .adaptive-card h5 { 
-        font-weight: 700; 
-        color: var(--secondary-color); 
-        margin-bottom: 20px; 
-        border-bottom: 2px solid #f1f1f1; 
-        padding-bottom: 12px; 
-        font-size: 1.15rem; 
-        display: flex;
-        align-items: center;
-    }
-    
-    .adaptive-card h5 i {
-        margin-right: 10px;
-        color: var(--primary-color);
-        background: rgba(63, 156, 181, 0.1);
-        padding: 8px;
-        border-radius: 8px;
-    }
+.course-section {
+    animation: fadeInUp 0.5s ease-out;
+}
 
-    /* Stepper Styles - Enhanced */
-    .stepper-wrapper {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px 0 50px;
-        position: relative;
-        padding: 0 20px;
-    }
-    .stepper-item {
-        position: relative;
-        display: flex;
+/* Modal */
+.modal-content-gradient {
+    border-radius: 20px;
+    overflow: hidden;
+    border: none;
+}
+
+.modal-header-gradient {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 20px 25px;
+}
+
+.modal-header-gradient .close {
+    color: white;
+    opacity: 0.8;
+    text-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .course-header {
         flex-direction: column;
-        align-items: center;
-        flex: 1;
-        z-index: 2;
+        align-items: flex-start;
+        gap: 12px;
     }
-    .stepper-item::before {
-        position: absolute;
-        content: "";
-        border-bottom: 4px solid #e0e0e0; /* Thicker line */
-        width: 100%;
-        top: 25px;
-        left: -50%;
-        z-index: 1;
-        transition: border-color 0.4s ease;
-    }
-    .stepper-item:first-child::before { content: none; }
-    
-    .stepper-circle {
-        width: 50px; /* Larger */
-        height: 50px;
-        border-radius: 50%;
-        background-color: white;
-        border: 4px solid #e0e0e0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        font-weight: bold;
-        color: #bbb;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        z-index: 2;
-    }
-    
-    .stepper-item.completed .stepper-circle { 
-        border-color: var(--success-color); 
-        background-color: var(--success-color); 
-        color: white; 
-        transform: scale(1.1);
-    }
-    .stepper-item.completed::before { border-color: var(--success-color); }
-    
-    .stepper-item.active .stepper-circle { 
-        border-color: var(--primary-color); 
-        background-color: var(--primary-color); 
-        color: white; 
-        box-shadow: 0 0 0 5px rgba(63, 156, 181, 0.2); /* Glow effect */
-        transform: scale(1.2);
-    }
-    
-    .stepper-title { 
-        margin-top: 15px; 
-        font-weight: 700; 
-        color: #999; 
-        font-size: 0.95rem; 
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        transition: color 0.3s;
-    }
-    .stepper-item.active .stepper-title { color: var(--primary-color); }
-    .stepper-item.completed .stepper-title { color: var(--success-color); }
 
-    /* Detail Elements */
-    .info-label { font-weight: 600; color: #888; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-    .info-value { font-weight: 600; color: var(--secondary-color); font-size: 1.05rem; }
-    
-    /* Recommendation Grid */
-    .resource-card {
-        background: var(--light-bg);
-        border-radius: 12px;
-        padding: 15px;
-        margin-bottom: 15px;
-        border-left: 5px solid var(--primary-color);
-        transition: all 0.2s ease;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
+    .course-stats {
+        justify-content: flex-start;
     }
-    .resource-card:hover {
-        background: white;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        transform: translateX(5px);
-    }
-    .resource-icon {
-        font-size: 1.2rem;
-        color: var(--primary-color);
-        margin-right: 15px;
-        width: 30px;
-        text-align: center;
-    }
-    .resource-title {
-        font-weight: 600;
-        color: #333;
-    }
-    
-    .hero-banner {
-        background: linear-gradient(135deg, #3f9cb5 0%, #2980b9 100%);
-        color: white;
-        padding: 40px; /* More padding */
-        border-radius: 16px;
-        margin-bottom: 40px;
-        text-align: center;
-        box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
-        position: relative;
-        overflow: hidden;
-    }
-    /* Subtle background pattern for hero */
-    .hero-banner::after {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 20%),
-                          radial-gradient(circle at 80% 30%, rgba(255,255,255,0.15) 0%, transparent 20%);
-        pointer-events: none;
-    }
-    
-    .score-box { text-align: center; padding: 15px; }
-    .score-val { font-size: 3rem; font-weight: 800; color: var(--secondary-color); line-height: 1; margin-bottom: 5px; }
-    .score-label { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
 
-    .decision-alert { padding: 25px; border-radius: 12px; display: flex; align-items: flex-start; }
-    .decision-icon { font-size: 2rem; margin-right: 20px; margin-top: 5px; }
-    .decision-content { flex: 1; }
-    
-    .decision-PROCEED { background-color: #e8f5e9; color: #1b5e20; border-left: 6px solid #2ecc71; }
-    .decision-PROCEED .decision-icon { color: #2ecc71; }
-    
-    .decision-RETAKE { background-color: #ffebee; color: #b71c1c; border-left: 6px solid #e74c3c; }
-    .decision-RETAKE .decision-icon { color: #e74c3c; }
-    
-    .decision-REVIEW { background-color: #fff8e1; color: #f57f17; border-left: 6px solid #f1c40f; }
-    .decision-REVIEW .decision-icon { color: #f1c40f; }
+    .stat-value {
+        font-size: 22px;
+    }
 
-    /* Layout tweaks */
-    .row.display-flex { display: flex; flex-wrap: wrap; }
-    .row.display-flex > [class*='col-'] { display: flex; flex-direction: column; }
-    
-    .badge-custom { padding: 6px 12px; border-radius: 30px; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.5px; }
-    .badge-soft-primary { background: rgba(63, 156, 181, 0.15); color: #3f9cb5; }
-    .badge-soft-secondary { background: rgba(108, 117, 125, 0.15); color: #6c757d; }
-    .badge-soft-success { background: rgba(46, 204, 113, 0.15); color: #2ecc71; }
+    .header-section h1 {
+        font-size: 1.3rem;
+    }
+}
 </style>
 
 <div class="main-content">
-<div class="container-fluid">
-    <section class="section">
-    <div class="row">
-        <div class="col-12">
-            <div class="hero-banner">
-                <h2 class="mb-2"><i class="fa fa-sitemap"></i> Adaptive Learning Pathway</h2>
-                <p class="mb-0" style="opacity: 0.9;">AI-Driven Insights for <strong>{{ $data['fetched_data']['user']['designation_name'] ?? 'Learner' }}</strong></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Stepper Visualization -->
-    <div class="row mb-3">
-        <div class="col-12">
-            <div class="stepper-wrapper">
-                <div class="stepper-item completed">
-                    <div class="stepper-circle"><i class="fa fa-check"></i></div>
-                    <div class="stepper-title">Assessment</div>
+    <div class="container-fluid py-4">
+        {{-- USER VIEW (Single Learner) --}}
+        <!-- Header -->
+        <div class="header-section">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    @php
+                    $username = DB::table('users')->where('id',
+                    $data['fetched_data']['user']['user_id'])->value('name');
+                    @endphp
+                    <h1><i class="fas fa-chart-line mr-3"></i>Your Learning Pathway Analysis</h1>
+                    <p class="mb-0 opacity-8">
+                        <i class="fas fa-user mr-2"></i>{{ $username }} |
+                        <i class="fas fa-book ml-2 mr-2"></i>{{ $data['fetched_data']['course']['course_name'] }}
+                    </p>
                 </div>
-                <!-- Logic to determine active step could be more dynamic here if we had state, assuming Completed Assessment forces Next active -->
-                <div class="stepper-item active">
-                    <div class="stepper-circle"><i class="fa fa-cogs"></i></div>
-                    <div class="stepper-title">AI Processing</div>
-                </div>
-                <div class="stepper-item">
-                    <div class="stepper-circle"><i class="fa fa-arrow-right"></i></div>
-                    <div class="stepper-title">Next Steps</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row display-flex">
-        <!-- Left Column: Context -->
-        <div class="col-md-4">
-            <div class="adaptive-card p-4 h-100">
-                <h5><i class="fa fa-user"></i> Learner Profile</h5>
-                <div class="mb-4">
-                    <div class="info-label">Name</div>
-                    <div class="info-value">{{ $data['fetched_data']['user']['designation_name'] ?? 'N/A' }}</div>
-                </div>
-                <div class="mb-4">
-                    <div class="info-label">Role</div>
-                    <div class="info-value">{{ $data['fetched_data']['user']['role_name'] ?? 'N/A' }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="info-label">Current CPT Points</div>
-                    <span class="badge badge-custom badge-soft-primary">{{ $data['fetched_data']['user']['total_cptpoints'] ?? 0 }} Points</span>
+                <div class="text-center mt-2 mt-md-0">
+                    <div class="stat-value text-white">{{ $data['fetched_data']['user']['total_cptpoints'] }}</div>
+                    <div class="stat-label text-white-50">CPT Points Earned</div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="adaptive-card p-4 h-100">
-                <h5><i class="fa fa-book"></i> Course Context</h5>
-                <div class="mb-4">
-                    <div class="info-label">Course Name</div>
-                    <div class="info-value">{{ $data['fetched_data']['course']['course_name'] ?? 'Unknown Course' }}</div>
-                </div>
-                <div class="mb-3">
-                    <div class="info-label">Skills Required</div>
-                    <div class="mt-2">
-                        @forelse($data['fetched_data']['course']['skills_required'] ?? [] as $skill)
-                            <span class="badge badge-custom badge-soft-secondary mr-1 mb-1">{{ $skill }}</span>
-                        @empty
-                            <span class="text-muted small">No specific skills listed.</span>
-                        @endforelse
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Assessment Score -->
-        <div class="col-md-4">
-            <div class="adaptive-card p-4 h-100">
-                <h5><i class="fa fa-chart-pie"></i> Assessment Results</h5>
-                <div class="row align-items-center justify-content-center h-75">
-                    <div class="col-6 border-right">
-                        <div class="score-box">
-                            <div class="score-val text-primary">{{ $data['fetched_data']['assessment']['assessment_percentage'] ?? 0 }}%</div>
-                            <div class="score-label">Score</div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="score-box">
-                            <div class="score-val text-success">
-                                {{ $data['fetched_data']['assessment']['passed_quizzes'] ?? 0 }}/{{ $data['fetched_data']['assessment']['total_quizzes'] ?? 0 }}
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="stat-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="stat-value">
+                                    {{ $data['fetched_data']['assessment']['assessment_percentage'] }}%</div>
+                                <div class="stat-label">Assessment Score</div>
                             </div>
-                            <div class="score-label">Quizzes Passed</div>
+                            <div class="stat-icon primary"><i class="fas fa-chart-line"></i></div>
+                        </div>
+                        <div class="probability-bar-container mt-3">
+                            <div class="probability-fill {{ $data['fetched_data']['assessment']['assessment_percentage'] < 50 ? 'high' : ($data['fetched_data']['assessment']['assessment_percentage'] < 70 ? 'medium' : 'low') }}"
+                                style="width: {{ $data['fetched_data']['assessment']['assessment_percentage'] }}%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="stat-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="stat-value">
+                                    {{ $data['fetched_data']['assessment']['passed_quizzes'] }}/{{ $data['fetched_data']['assessment']['total_quizzes'] }}
+                                </div>
+                                <div class="stat-label">Quizzes Passed</div>
+                            </div>
+                            <div class="stat-icon info"><i class="fas fa-puzzle-piece"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="stat-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="stat-value">{{ $data['fetched_data']['progress']['course_progress'] }}%
+                                </div>
+                                <div class="stat-label">Course Progress</div>
+                            </div>
+                            <div class="stat-icon warning"><i class="fas fa-tasks"></i></div>
+                        </div>
+                        <div class="probability-bar-container mt-3">
+                            <div class="probability-fill low"
+                                style="width: {{ $data['fetched_data']['progress']['course_progress'] }}%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="stat-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="stat-value">{{ $data['skill_analysis']['skill_mastery_percentage'] }}%</div>
+                                <div class="stat-label">Skill Mastery</div>
+                            </div>
+                            <div class="stat-icon success"><i class="fas fa-brain"></i></div>
+                        </div>
+                        <div class="probability-bar-container mt-3">
+                            <div class="probability-fill low"
+                                style="width: {{ $data['skill_analysis']['skill_mastery_percentage'] }}%"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <!-- AI Decision -->
-        <div class="col-md-12">
-            <div class="adaptive-card p-4">
-                <h5><i class="fa fa-brain"></i> AI Decision Engine</h5>
-                
-                @php
-                    $decision = strtoupper($data['adaptive_decision']['decision'] ?? 'REVIEW');
-                    $alertClass = 'decision-REVIEW'; // Default
-                    $icon = 'fa-exclamation-triangle';
-                    
-                    if(str_contains($decision, 'PROCEED') || str_contains($decision, 'PASS') || str_contains($decision, 'NEXT')) {
-                        $alertClass = 'decision-PROCEED';
-                        $icon = 'fa-check-circle';
-                    } elseif(str_contains($decision, 'RETAKE') || str_contains($decision, 'FAIL')) {
-                        $alertClass = 'decision-RETAKE';
-                        $icon = 'fa-times-circle';
-                    }
-                @endphp
-
-                <div class="decision-alert {{ $alertClass }} mb-3">
-                    <div class="decision-icon">
-                        <i class="fa {{ $icon }}"></i>
+        <!-- AI Decision Card -->
+        <div class="course-section">
+            <div class="course-header {{ $data['adaptive_decision']['decision'] == 'remediate' ? 'high-risk' : 'low-risk' }}"
+                onclick="toggleCourse(this, 'ai-decision')">
+                <div class="d-flex align-items-center">
+                    <div class="mr-3">
+                        <i class="fas fa-robot fa-2x" style="color: var(--primary);"></i>
                     </div>
-                    <div class="decision-content">
-                        <h4 class="alert-heading text-capitalize font-weight-bold">{{ $data['adaptive_decision']['decision'] ?? 'Review Needed' }}</h4>
-                        <p class="mb-2" style="font-size: 1.05rem;">{{ $data['adaptive_decision']['primary_reason'] ?? 'No reason provided.' }}</p>
-                        <div class="mt-3 pt-3 border-top border-light">
-                            <p class="mb-0"><strong><i class="fa fa-sliders-h"></i> Difficulty Adjustment:</strong> <span class="badge badge-light border">{{ $data['adaptive_decision']['difficulty_adjustment'] ?? 'None' }}</span></p>
+                    <div>
+                        <h5 class="course-title mb-1">AI-Powered Decision:
+                            {{ ucfirst($data['adaptive_decision']['decision']) }} Path</h5>
+                        <div class="course-stats mt-2">
+                            <span
+                                class="risk-badge {{ $data['adaptive_decision']['decision'] == 'remediate' ? 'high' : 'low' }}">
+                                <i class="fas fa-flag-checkered"></i>
+                                {{ ucfirst($data['adaptive_decision']['decision']) }}
+                            </span>
+                            <span class="stat-badge info">
+                                <i class="fas fa-chart-line"></i> Confidence: {{ round($data['confidence'] * 100) }}%
+                            </span>
+                            <span class="stat-badge students">
+                                <i
+                                    class="fas fa-arrow-{{ $data['adaptive_decision']['difficulty_adjustment'] == 'increase' ? 'up' : ($data['adaptive_decision']['difficulty_adjustment'] == 'decrease' ? 'down' : 'right') }}"></i>
+                                Difficulty: {{ ucfirst($data['adaptive_decision']['difficulty_adjustment']) }}
+                            </span>
                         </div>
                     </div>
                 </div>
+                <div class="d-flex align-items-center">
+                    <div class="text-center mr-3">
+                        <div class="small text-muted">Priority</div>
+                        <div
+                            class="font-weight-bold {{ $data['recommendations']['priority'] == 'high' ? 'text-danger' : 'text-warning' }}">
+                            {{ ucfirst($data['recommendations']['priority']) }}
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- Recommendations -->
-        <div class="col-md-12">
-            <div class="adaptive-card p-4">
-                <h5><i class="fa fa-bullseye"></i> Tailored Recommendations & Path Forward</h5>
-                
+            <div id="ai-decision" class="p-4" style="display: none; background: #fafbfd;">
                 <div class="row">
-                    <div class="col-md-5">
-                         <h6 class="text-muted text-uppercase mb-4" style="font-size: 0.8rem; letter-spacing: 1px; font-weight: 700;">Recommended Focus Areas</h6>
-                         <div class="d-flex flex-wrap">
-                            @forelse($data['recommendations']['skill_focus'] ?? [] as $skill)
-                                <div class="card p-3 mr-2 mb-2 border text-center shadow-sm" style="min-width: 140px; background: white; border-radius: 12px;">
-                                    <i class="fa fa-crosshairs text-primary mb-2" style="font-size: 1.5rem;"></i>
-                                    <small class="font-weight-bold d-block text-dark">{{ $skill }}</small>
-                                </div>
-                            @empty
-                                <div class="text-muted pl-2">No specific focus areas recommended.</div>
-                            @endforelse
-                         </div>
+                    <div class="col-md-6">
+                        <div class="reason-text mb-3">
+                            <i class="fas fa-robot"></i> {{ $data['adaptive_decision']['primary_reason'] }}
+                        </div>
+                        <div class="mt-3">
+                            <strong>Supporting Factors:</strong>
+                            <ul class="mt-2">
+                                @foreach($data['adaptive_decision']['all_reasons'] as $reason)
+                                <li><i class="fas fa-check-circle text-success mr-2"></i>{{ $reason }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
-                    <div class="col-md-7">
-                        <h6 class="text-muted text-uppercase mb-4" style="font-size: 0.8rem; letter-spacing: 1px; font-weight: 700;">Suggested Resources</h6>
-                        <div class="resources-grid">
-                            @forelse($data['recommendations']['suggested_resources'] ?? [] as $r)
-                                <div class="resource-card">
-                                    <div class="resource-icon">
-                                        <i class="fa fa-book-open"></i>
-                                    </div>
-                                    <div class="resource-title">{{ $r }}</div>
-                                    <div class="ml-auto text-primary">
-                                        <i class="fa fa-chevron-right"></i>
-                                    </div>
+                    <div class="col-md-6">
+                        <div class=" p-3 rounded-3 shadow-sm">
+                            <div class="small text-muted mb-2">DECISION CONFIDENCE</div>
+                            <div class="d-flex align-items-center">
+                                <div class="probability-bar-container flex-grow-1 mr-3">
+                                    <div class="probability-fill low"
+                                        style="width: {{ round($data['confidence'] * 100) }}%"></div>
                                 </div>
-                            @empty
-                                <div class="alert alert-light text-center w-100">No additional resources suggested at this time.</div>
-                            @endforelse
+                                <span class="probability-text">{{ round($data['confidence'] * 100) }}%</span>
+                            </div>
+                            <div class="small text-muted mt-2">Decision Source:
+                                {{ ucfirst(str_replace('_', ' ', $data['adaptive_decision']['decision_source'])) }}
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
+        <!-- Quiz Performance Breakdown -->
+        <div class="course-section">
+            <div class="course-header low-risk" onclick="toggleCourse(this, 'quiz-performance')">
+                <div class="d-flex align-items-center">
+                    <div class="mr-3">
+                        <i class="fas fa-puzzle-piece fa-2x" style="color: var(--primary);"></i>
+                    </div>
+                    <div>
+                        <h5 class="course-title mb-1">Quiz Performance Breakdown</h5>
+                        <div class="course-stats mt-2">
+                            <span class="stat-badge students"><i class="fas fa-chart-line"></i> Average:
+                                {{ $data['fetched_data']['assessment']['assessment_percentage'] }}%</span>
+                            <span class="stat-badge info"><i class="fas fa-repeat"></i> Retries:
+                                {{ $data['fetched_data']['progress']['retry_count'] }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="text-center mr-3">
+                        <div class="small text-muted">Passed</div>
+                        <div class="font-weight-bold">
+                            {{ $data['fetched_data']['assessment']['passed_quizzes'] }}/{{ $data['fetched_data']['assessment']['total_quizzes'] }}
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+            </div>
+            <div id="quiz-performance" class="p-4" style="display: none; background: #fafbfd;">
+                <div class="row">
+                    @foreach($data['fetched_data']['assessment']['quiz_scores'] as $index => $score)
+                    <div class="col-md-6 mb-3">
+                        <div class="quiz-score-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Quiz {{ $index + 1 }}</strong>
+                                    <span class="text-muted ml-2 small">(Attempt {{ $index + 1 }})</span>
+                                </div>
+                                <div
+                                    class="font-weight-bold {{ $score >= 70 ? 'text-success' : ($score >= 40 ? 'text-warning' : 'text-danger') }}">
+                                    {{ $score }}%
+                                </div>
+                            </div>
+                            <div class="quiz-score-bar">
+                                <div class="quiz-score-fill {{ $score >= 70 ? 'bg-success' : ($score >= 40 ? 'bg-warning' : 'bg-danger') }}"
+                                    style="width: {{ $score }}%"></div>
+                            </div>
+                            @if($score < 50) <div class="small text-danger mt-2">
+                                <i class="fas fa-exclamation-circle"></i> Below passing threshold
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                @endforeach
             </div>
         </div>
     </div>
-    </section>
+
+    <!-- Skill Gap Analysis -->
+    <div class="course-section">
+        <div class="course-header {{ $data['skill_analysis']['gap_severity'] }}-risk"
+            onclick="toggleCourse(this, 'skill-analysis')">
+            <div class="d-flex align-items-center">
+                <div class="mr-3">
+                    <i class="fas fa-brain fa-2x" style="color: var(--primary);"></i>
+                </div>
+                <div>
+                    <h5 class="course-title mb-1">Skill Gap Analysis</h5>
+                    <div class="course-stats mt-2">
+                        <span class="risk-badge {{ $data['skill_analysis']['gap_severity'] }}">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            {{ ucfirst($data['skill_analysis']['gap_severity']) }} Gap Severity
+                        </span>
+                        <span class="stat-badge info">
+                            <i class="fas fa-chart-line"></i> Signal:
+                            {{ ucfirst($data['fetched_data']['skill_gap_confidence']['gap_signal_strength']) }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="text-center mr-3">
+                    <div class="small text-muted">Mastery</div>
+                    <div class="font-weight-bold">{{ $data['skill_analysis']['skill_mastery_percentage'] }}%</div>
+                </div>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+        </div>
+        <div id="skill-analysis" class="p-4" style="display: none; background: #fafbfd;">
+            <div class="row">
+                <div class="col-md-6">
+                    @if(!empty($data['skill_analysis']['missing_skills']))
+                    <div class="mb-3">
+                        <strong class="text-danger">Missing Skills:</strong>
+                        <div class="mt-2">
+                            @foreach($data['skill_analysis']['missing_skills'] as $skill)
+                            <span class="stat-badge high mr-2 mb-2 d-inline-block">
+                                <i class="fas fa-exclamation-circle"></i> {{ ucfirst($skill) }}
+                            </span>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
+                    @if(!empty($data['skill_analysis']['matched_skills']))
+                    <div class="mb-3">
+                        <strong class="text-success">Skills Acquired:</strong>
+                        <div class="mt-2">
+                            @foreach($data['skill_analysis']['matched_skills'] as $skill)
+                            <span class="stat-badge low mr-2 mb-2 d-inline-block">
+                                <i class="fas fa-check-circle"></i> {{ ucfirst($skill) }}
+                            </span>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+                </div>
+                <div class="col-md-6">
+                    <div class=" p-3 rounded-3 shadow-sm">
+                        <div class="small text-muted mb-2">Gap Signal Strength</div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="probability-bar-container flex-grow-1 mr-3">
+                                @php
+                                $signal = $data['fetched_data']['skill_gap_confidence']['gap_signal_strength'];
+                                $signalWidth = $signal == 'strong' ? 100 : ($signal == 'moderate' ? 66 : 33);
+                                @endphp
+                                <div class="probability-fill {{ $signal == 'strong' ? 'high' : ($signal == 'moderate' ? 'medium' : 'low') }}"
+                                    style="width: {{ $signalWidth }}%"></div>
+                            </div>
+                            <span class="probability-text">{{ ucfirst($signal) }}</span>
+                        </div>
+                        <div class="small text-muted">Data Sources:</div>
+                        <div class="mt-1">
+                            @foreach($data['fetched_data']['skill_gap_confidence']['data_sources'] as $source)
+                            <span class="stat-badge info mr-1"><i class="fas fa-database"></i>
+                                {{ ucfirst(str_replace('_', ' ', $source)) }}</span>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Learning Path Update -->
+    <div class="course-section">
+        <div class="course-header high-risk" onclick="toggleCourse(this, 'learning-path')">
+            <div class="d-flex align-items-center">
+                <div class="mr-3">
+                    <i class="fas fa-map-signs fa-2x" style="color: var(--primary);"></i>
+                </div>
+                <div>
+                    <h5 class="course-title mb-1">Recommended Learning Path</h5>
+                    <div class="course-stats mt-2">
+                        <span class="risk-badge high"><i class="fas fa-bolt"></i>
+                            {{ ucfirst($data['learning_path_update']['effective_timing']) }} Action</span>
+                        <span class="stat-badge info"><i class="fas fa-clock"></i>
+                            {{ $data['learning_path_update']['estimated_duration_hours'] }} Hours</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="text-center mr-3">
+                    <div class="small text-muted">Mandatory</div>
+                    <div class="font-weight-bold">{{ $data['learning_path_update']['is_mandatory'] ? 'Yes' : 'No' }}
+                    </div>
+                </div>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+        </div>
+        <div id="learning-path" class="p-4" style="display: none; background: #fafbfd;">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="reason-text mb-3">
+                        <i class="fas fa-info-circle"></i> {{ $data['learning_path_update']['reason'] }}
+                    </div>
+                    @php
+                    $class_name =
+                    DB::table('elearning_classes')->where('class_id',$data['learning_path_update']['target_module']['entity_id'])->value('class_name');
+
+                    @endphp
+                    <div class=" p-3 rounded-3 shadow-sm mb-3">
+                        <strong>Target Module:</strong>
+                        <p class="mb-0 mt-1">{{ $class_name }}</p>
+                        <small class="text-muted">Type:
+                            {{ ucfirst($data['learning_path_update']['action_type']) }}</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    @if(!empty($data['learning_path_update']['supplementary_content']))
+                    <div class="mb-3">
+                        <strong>Supplementary Content:</strong>
+                        <div class="mt-2">
+                            @foreach($data['learning_path_update']['supplementary_content'] as $content)
+                            <div class="info-row">
+                                <i class="fas fa-book mr-2"></i> {{ $content['name'] }}
+                                @if($content['is_optional'])
+                                <span class="stat-badge info ml-2">Optional</span>
+                                @else
+                                <span class="risk-badge high ml-2" style="font-size: 9px;">Required</span>
+                                @endif
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+                    <div class="bg-warning bg-opacity-10 p-3 rounded-3" style="background: #fff3cd;">
+                        <i class="fas fa-chart-line mr-2"></i>
+                        {{ $data['learning_path_update']['progress_impact'] }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Recommendations & Guidance -->
+    <div class="course-section">
+        <div class="course-header low-risk" onclick="toggleCourse(this, 'recommendations')">
+            <div class="d-flex align-items-center">
+                <div class="mr-3">
+                    <i class="fas fa-lightbulb fa-2x" style="color: var(--primary);"></i>
+                </div>
+                <div>
+                    <h5 class="course-title mb-1">AI Recommendations & Guidance</h5>
+                    <div class="course-stats mt-2">
+                        <span class="stat-badge info"><i class="fas fa-clock"></i>
+                            {{ $data['recommendations']['estimated_time_to_next_level'] }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="text-center mr-3">
+                    <div class="small text-muted">Focus Skills</div>
+                    <div class="font-weight-bold">{{ $data['fetched_data']['ui_summary']['focus_skills'] }}</div>
+                </div>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+        </div>
+        <div id="recommendations" class="p-4" style="display: none; background: #fafbfd;">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class=" p-3 rounded-3 shadow-sm mb-3">
+                        <strong><i class="fas fa-file-alt mr-2"></i> Content Types</strong>
+                        <div class="mt-2">
+                            @foreach($data['recommendations']['content_type_suggestion'] as $content)
+                            <span class="stat-badge info mr-2 mb-2 d-inline-block">
+                                <i
+                                    class="fas fa-{{ $content == 'video' ? 'video' : ($content == 'basics' ? 'book' : 'puzzle-piece') }}"></i>
+                                {{ ucfirst($content) }}
+                            </span>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class=" p-3 rounded-3 shadow-sm">
+                        <strong><i class="fas fa-bookmark mr-2"></i> Focus Areas</strong>
+                        <div class="mt-2">
+                            @foreach($data['ai_reasoning']['focus_areas'] as $area)
+                            <div class="mb-1"><i class="fas fa-crosshairs text-danger mr-2"></i> {{ ucfirst($area) }}
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class=" p-3 rounded-3 shadow-sm mb-3">
+                        <strong><i class="fas fa-graduation-cap mr-2"></i> Suggested Resources</strong>
+                        <div class="mt-2">
+                            @foreach($data['recommendations']['suggested_resources'] as $resource)
+                            <div class="mb-1"><i class="fas fa-chevron-right text-primary mr-2"></i> {{ $resource }}
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class=" p-3 rounded-3 shadow-sm mb-3">
+                        <strong><i class="fas fa-lightbulb text-warning mr-2"></i> Learning Tips</strong>
+                        <div class="mt-2">
+                            @foreach($data['ai_reasoning']['learning_tips'] as $tip)
+                            <div class="mb-1"><i class="fas fa-check-circle text-success mr-2"></i> {{ $tip }}</div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Encouragement -->
+            <div class="reason-text mt-3" style="border-left-color: var(--success);">
+                <i class="fas fa-heart text-danger"></i> {{ $data['ai_reasoning']['encouragement'] }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Quality Details -->
+    <div class="course-section">
+        <div class="course-header low-risk" onclick="toggleCourse(this, 'performance-details')">
+            <div class="d-flex align-items-center">
+                <div class="mr-3">
+                    <i class="fas fa-chart-bar fa-2x" style="color: var(--primary);"></i>
+                </div>
+                <div>
+                    <h5 class="course-title mb-1">Detailed Performance Analysis</h5>
+                    <div class="course-stats mt-2">
+                        <span class="stat-badge {{ $data['fetched_data']['performance_quality']['accuracy_level'] }}">
+                            <i class="fas fa-bullseye"></i> Accuracy:
+                            {{ ucfirst($data['fetched_data']['performance_quality']['accuracy_level']) }}
+                        </span>
+                        <span class="stat-badge info">
+                            <i class="fas fa-chart-line"></i> Confidence:
+                            {{ round($data['fetched_data']['performance_quality']['performance_confidence'] * 100) }}%
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="text-center mr-3">
+                    <div class="small text-muted">Error Type</div>
+                    <div class="font-weight-bold">
+                        {{ ucfirst($data['fetched_data']['performance_quality']['error_type']) }}</div>
+                </div>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+        </div>
+        <div id="performance-details" class="p-4" style="display: none; background: #fafbfd;">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class=" p-3 rounded-3 shadow-sm mb-3">
+                        <strong>Performance Quality</strong>
+                        <table class="table table-sm mt-2 mb-0">
+                            <tr>
+                                <td class="text-muted">Accuracy Level</td>
+                                <td
+                                    class="font-weight-bold text-{{ $data['fetched_data']['performance_quality']['accuracy_level'] == 'high' ? 'success' : ($data['fetched_data']['performance_quality']['accuracy_level'] == 'medium' ? 'warning' : 'danger') }}">
+                                    {{ ucfirst($data['fetched_data']['performance_quality']['accuracy_level']) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Attempt Efficiency</td>
+                                <td class="font-weight-bold">
+                                    {{ ucfirst($data['fetched_data']['performance_quality']['attempt_efficiency']) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Time Efficiency</td>
+                                <td class="font-weight-bold">
+                                    {{ ucfirst($data['fetched_data']['performance_quality']['time_efficiency']) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Error Type</td>
+                                <td class="font-weight-bold">
+                                    {{ ucfirst($data['fetched_data']['performance_quality']['error_type']) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Performance Confidence</td>
+                                <td class="font-weight-bold">
+                                    {{ round($data['fetched_data']['performance_quality']['performance_confidence'] * 100) }}%
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class=" p-3 rounded-3 shadow-sm mb-3">
+                        <strong>Impact Projection</strong>
+                        <table class="table table-sm mt-2 mb-0">
+                            <tr>
+                                <td class="text-muted">Expected Skill Improvement</td>
+                                <td class="font-weight-bold text-success">
+                                    +{{ $data['fetched_data']['impact_projection']['expected_skill_improvement'] }}%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Risk Reduction Level</td>
+                                <td class="font-weight-bold">
+                                    {{ $data['fetched_data']['impact_projection']['risk_reduction_level'] }}%</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Post-Completion Confidence</td>
+                                <td class="font-weight-bold">
+                                    {{ number_format($data['fetched_data']['impact_projection']['post_completion_confidence'], 1) }}%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Decision Stability</td>
+                                <td class="font-weight-bold">
+                                    {{ ucfirst($data['fetched_data']['adaptive_context']['decision_stability']) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">False Positive Risk</td>
+                                <td
+                                    class="font-weight-bold text-{{ $data['fetched_data']['skill_gap_confidence']['false_positive_risk'] == 'high' ? 'danger' : 'warning' }}">
+                                    {{ ucfirst($data['fetched_data']['skill_gap_confidence']['false_positive_risk']) }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Alert if needed -->
+            @if($data['fetched_data']['engagement_diagnostics']['engagement_risk'] == 'high' ||
+            $data['ai_reasoning']['risk_level'] == 'High')
+            <div class="alert alert-danger mt-3">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                <strong>High Risk Alert:</strong> {{ $data['ai_reasoning']['admin_insights'] }}
+                @if($data['ai_reasoning']['intervention_recommended'])
+                <br><small>Intervention recommended immediately.</small>
+                @endif
+            </div>
+            @endif
+        </div>
+    </div>
+
 </div>
 </div>
 
+<!-- Modal for Details -->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-gradient">
+            <div class="modal-header-gradient">
+                <h5 class="modal-title" id="modalTitle"><i class="fas fa-chart-line mr-2"></i>Learning Details</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body p-4" id="modalBody"></div>
+            <div class="modal-footer border-0 pb-4">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Toggle course expansion
+function toggleCourse(element, sectionId) {
+    const content = document.getElementById(sectionId);
+    const icon = element.querySelector('.toggle-icon');
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+    } else {
+        content.style.display = 'none';
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+    }
+}
+
+// Animate progress bars on load
+document.addEventListener('DOMContentLoaded', function() {
+    // All sections start closed
+    // Animate progress bars
+    setTimeout(() => {
+        document.querySelectorAll('.probability-fill, .quiz-score-fill, .skill-meter-fill').forEach(
+            bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+    }, 200);
+});
+</script>
 @endsection

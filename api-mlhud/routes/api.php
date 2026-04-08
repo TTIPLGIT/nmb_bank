@@ -899,9 +899,31 @@ Route::get('/elearning_allcourse_show', [\App\Http\Controllers\tryController::cl
 
 Route::get('/show-all-tables', [App\Http\Controllers\AttendanceController::class, 'showAllTable']);
 
+
 // AI Course
-Route::get('/ai/ai_course_list', [App\Http\Controllers\AIController::class, 'ai_course_list']);
+Route::get('/ai/course_list', [App\Http\Controllers\AIController::class, 'ai_course_list']);
 Route::get('/ai/ai_course_create', [App\Http\Controllers\AIController::class, 'ai_course_create']);
 Route::get('/meeting/list', [App\Http\Controllers\AIController::class, 'meeting_list']);
 Route::get('/meeting/create', [App\Http\Controllers\AIController::class, 'meeting_create']);
 Route::get('/adaptive/learning/list', [App\Http\Controllers\AIController::class, 'adaptive_learning_list']);
+Route::get('/predictive/analysis/list', [App\Http\Controllers\AIController::class, 'predictive_analysis']);
+
+// Add these API routes
+Route::post('/elearning/question_quiz/update-with-version', [App\Http\Controllers\ElearningQuestionController::class, 'quiz_update_with_version']);
+Route::post('/elearning/question_quiz/get-versions', [App\Http\Controllers\ElearningQuestionController::class, 'get_quiz_versions']);
+Route::post('/elearning/question_quiz/restore-version', [App\Http\Controllers\ElearningQuestionController::class, 'restore_quiz_version']);
+Route::post('/elearning/question_quiz/get-quiz-data', [App\Http\Controllers\ElearningQuestionController::class, 'get_quiz_data']);
+
+Route::post('/class/get-class-data', [App\Http\Controllers\tryController::class, 'get_class_data']);
+Route::post('/class/class_update_with_version', [App\Http\Controllers\tryController::class, 'class_update_with_version']);
+Route::post('/class/get-class-versions', [App\Http\Controllers\tryController::class, 'get_class_versions']);
+Route::post('/class/restore-class-version', [App\Http\Controllers\tryController::class, 'restore_class_version']);
+
+// custom field
+Route::get('/custom_filed/get_data', [App\Http\Controllers\DesignationController::class, 'custom_filed']);
+Route::get('/custom_filed_create', [App\Http\Controllers\DesignationController::class, 'custom_filed_create']);
+Route::post('/custom_filed_store', [App\Http\Controllers\DesignationController::class, 'custom_filed_store']);
+Route::get('/custom_filed_fetch/{id}', [App\Http\Controllers\DesignationController::class, 'custom_filed_fetch']);
+Route::post('/custom_filed_update', [App\Http\Controllers\DesignationController::class, 'custom_filed_update']);
+Route::post('/custom_filed_delete/{id}', [App\Http\Controllers\DesignationController::class, 'custom_filed_delete']);
+

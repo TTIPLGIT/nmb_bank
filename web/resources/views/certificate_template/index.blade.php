@@ -2,30 +2,30 @@
 
 @section('content')
 <style>
-    a:hover,
-    a:focus {
-        text-decoration: none;
-        outline: none;
-    }
+a:hover,
+a:focus {
+    text-decoration: none;
+    outline: none;
+}
 
-    .danger {
-        background-color: #ffdddd;
-        border-left: 6px solid #f44336;
-    }
+.danger {
+    background-color: #ffdddd;
+    border-left: 6px solid #f44336;
+}
 
-    #align {
-        border-collapse: collapse !important;
-    }
+#align {
+    border-collapse: collapse !important;
+}
 
-    table.dataTable.no-footer {
-        border-bottom: .5px solid #002266 !important;
-    }
+table.dataTable.no-footer {
+    border-bottom: .5px solid #002266 !important;
+}
 
-    thead th {
-        height: 5px;
-        border-bottom: solid 1px #ddd;
-        font-weight: bold;
-    }
+thead th {
+    height: 5px;
+    border-bottom: solid 1px #ddd;
+    font-weight: bold;
+}
 </style>
 <div class="main-content module_space">
 
@@ -40,9 +40,9 @@
 
 
             <style>
-                .section {
-                    margin-top: 20px;
-                }
+            .section {
+                margin-top: 20px;
+            }
             </style>
 
             <div class="row">
@@ -56,40 +56,46 @@
                                 <div class="col-lg-12 text-center">
                                     <h4>List of Certificate Template</h4>
                                 </div>
-                                <div class="row" style="justify-content:end">
-                                    <a type="button" href="{{route('certificate_template.create')}}" class="btn btn-labeled btn-success mb-2" title="New Template" style="border-color:#a9ca !important; color:white !important;margin: 0 0 2px 15px;">
-                                    <span class="btn-label" style="font-size:15px !important; padding:8px !important"><i class="fa fa-plus"></i></span><span style="font-size:15px !important; padding:8px !important">New Template</span></a>
-                                </div>
+                                <!-- <div class="row" style="justify-content:end">
+                                    <a type="button" href="{{route('certificate_template.create')}}"
+                                        class="btn btn-labeled btn-success mb-2" title="New Template"
+                                        style="border-color:#a9ca !important; color:white !important;margin: 0 0 2px 15px;">
+                                        <span class="btn-label"
+                                            style="font-size:15px !important; padding:8px !important"><i
+                                                class="fa fa-plus"></i></span><span
+                                            style="font-size:15px !important; padding:8px !important">New
+                                            Template</span></a>
+                                </div> -->
                             </div>
                             @if (session('success'))
 
                             <input type="hidden" name="session_data" id="session_data" class="session_data"
                                 value="{{ session('success') }}">
                             <script type="text/javascript">
-                                window.onload = function() {
-                                    var message = $('#session_data').val();
-                                    swal({
-                                        title: "Success",
-                                        text: message,
-                                        type: "success",
-                                    });
+                            window.onload = function() {
+                                var message = $('#session_data').val();
+                                swal({
+                                    title: "Success",
+                                    text: message,
+                                    type: "success",
+                                });
 
-                                }
+                            }
                             </script>
                             @elseif(session('error'))
 
                             <input type="hidden" name="session_data" id="session_data1" class="session_data"
                                 value="{{ session('error') }}">
                             <script type="text/javascript">
-                                window.onload = function() {
-                                    var message = $('#session_data1').val();
-                                    swal({
-                                        title: "Info",
-                                        text: message,
-                                        type: "info",
-                                    });
+                            window.onload = function() {
+                                var message = $('#session_data1').val();
+                                swal({
+                                    title: "Info",
+                                    text: message,
+                                    type: "info",
+                                });
 
-                                }
+                            }
                             </script>
                             @endif
 
@@ -167,32 +173,32 @@
 
 
 <script>
-    function myFunction(id) {
+function myFunction(id) {
 
-        swal({
-            message: "Are You Sure to delete this data.",
-            title: "Confirmation For Delete ?",
-            centerVertical: true,
-            buttons: {
-                confirm: {
-                    label: 'Yes',
-                    className: 'btn-success'
-                },
-                cancel: {
-                    label: 'No',
-                    className: 'btn-danger'
-                }
+    swal({
+        message: "Are You Sure to delete this data.",
+        title: "Confirmation For Delete ?",
+        centerVertical: true,
+        buttons: {
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success'
             },
-            callback: function(result) {
-                if (result == true) {
-                    var url = $('#' + id).val();
-                    window.location.href = url;
-                }
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
             }
-        });
+        },
+        callback: function(result) {
+            if (result == true) {
+                var url = $('#' + id).val();
+                window.location.href = url;
+            }
+        }
+    });
 
 
-    }
+}
 </script>
 
 

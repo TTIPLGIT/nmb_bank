@@ -1470,7 +1470,7 @@
                                 ->value('result'); // Assuming 'status' column holds the pass/fail status
 
                                 @endphp
-                                
+
                                 @php $id=Crypt::encrypt($course_certificate[0]->course_id); @endphp
                                 @if($quizz_hide == "classshow")
                                 <a style="display:flex;justify-content: center;align-items: center;"
@@ -1805,7 +1805,8 @@ function notification(notificationid) {
         },
         success: function(data) {
 
-            var url = data['notify_link'][0].notification_url;
+            var url =
+                'elearning/allCourses?sorted=Recently%20Added&tag=false&progress=false&q=false&course_id=1';
             window.location.href = url;
 
         },

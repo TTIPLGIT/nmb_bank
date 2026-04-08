@@ -31,7 +31,7 @@
 
 
 
-    {{ Breadcrumbs::render('certificate_template.index') }}
+    {{ Breadcrumbs::render('meeting_list') }}
 
     <section class="section">
 
@@ -57,8 +57,8 @@
                                     <h4>Meeting List</h4>
                                 </div>
                                 <div class="row" style="justify-content:end">
-                                    <a type="button" class="btn btn-labeled btn-success mb-2" title="New Template" style="border-color:#a9ca !important; color:white !important;margin: 0 0 2px 15px;" data-toggle="modal" data-target="#addeducationcourseModal">
-                                    <span class="btn-label" style="font-size:15px !important; padding:8px !important"><i class="fa fa-plus"></i></span><span style="font-size:15px !important; padding:8px !important">New Template</span></a>
+                                    <a type="button" class="btn btn-labeled btn-success mb-2" title="Meeting Initiate" style="border-color:#a9ca !important; color:white !important;margin: 0 0 2px 15px;" href="{{route('virtual_meeting')}}">
+                                        <span class="btn-label" style="font-size:15px !important; padding:8px !important"><i class="fa fa-plus"></i></span><span style="font-size:15px !important; padding:8px !important">Meeting Initiate</span></a>
                                 </div>
                             </div>
                             @if (session('success'))
@@ -93,22 +93,28 @@
                             </script>
                             @endif
 
-
-
                             <div class="table-wrapper">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="align">
                                         <thead>
                                             <tr>
                                                 <th>S.No</th>
-                                                <th>Certificate Name</th>
-                                                <th>Action</th>
+                                                <th>Meeting Name</th>
+                                                <th>Meeting Date</th>
+                                                <th>join_url</th>
+                                                <th>status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           <tr>
-
-                                           </tr>
+                                            @foreach($rows['meeting'] as $meeting)
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$meeting['topic']}}</td>
+                                                <td>{{$meeting['meeting_date']}}</td>
+                                                <td>{{$meeting['join_url']}}</td>
+                                                <td>{{$meeting['status']}}</td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
 
                                     </table>

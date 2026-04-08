@@ -220,12 +220,14 @@ class UamRolesController extends BaseController
                      $screens_data =  $parant_data['screens_data'];
                      $permissions_data =  $parant_data['permissions_data'];
                      $parent_module_data =  $parant_data['parent_module_data'];
+                     $uam_role_screen_permissions =  $parant_data['uam_role_screen_permissions'];
+                      $uam_role_screens =  $parant_data['uam_role_screens'];
                      $rows =  $parant_data['rows'];
                      $menus = $this->FillMenu();
                      $screens = $menus['screens'];
                      $modules = $menus['modules'];
                     
-                     return view('uam.uam_roles.edit',compact('module_data','screens_data','permissions_data','parent_module_data','rows','screens','modules'));
+                     return view('uam.uam_roles.edit',compact('uam_role_screens','uam_role_screen_permissions','rows','module_data','parent_module_data','screens_data','permissions_data','screens','modules'));
                  }
              } 
              else {
@@ -264,12 +266,14 @@ class UamRolesController extends BaseController
                       $screens_data =  $parant_data['screens_data'];
                       $permissions_data =  $parant_data['permissions_data'];
                       $parent_module_data =  $parant_data['parent_module_data'];
-                      
+                      $uam_role_screen_permissions =  $parant_data['uam_role_screen_permissions'];
+                      $uam_role_screens =  $parant_data['uam_role_screens'];
+                   
                       $rows =  $parant_data['rows'];
                       $menus = $this->FillMenu();
                       $screens = $menus['screens'];
                       $modules = $menus['modules'];
-                      return view('uam.uam_roles.show',compact('rows','module_data','parent_module_data','screens_data','permissions_data','screens','modules'));
+                      return view('uam.uam_roles.show',compact('uam_role_screens','uam_role_screen_permissions','rows','module_data','parent_module_data','screens_data','permissions_data','screens','modules'));
                   }
               } 
               else {
@@ -334,20 +338,32 @@ class UamRolesController extends BaseController
           return Redirect::back()->withErrors($validator);
       }else{
      
-          $directorate = $request->screen_id;
-          $screen_id =  explode("-", $directorate); 
-          $directorate1 = $request->permission_id;
-          $permission_id =  explode(":", $directorate1);
+          $groups = explode('-', $request->displayItems);
+          $screen_id = [];
+
+            foreach ($groups as $group) {
+                $items = explode(',', $group);
+                foreach ($items as $item) {
+                    if (str_contains($item, ':')) {
+                        $screen_id[] = $item;
+                    }
+                }
+            }
+          $permissionID = $request->permission_id;
+          $permission_id =  explode(":", $permissionID);
      
           $data = array();
           $data['role_name'] = $request->role_name;
           $data['role_id'] = $request->role_id;
           $data['screen_id'] = $screen_id;
           $data['permission_id'] = $permission_id;
+         
           $encryptArray = $this->encryptData($data);
           $request = array();
           $request['requestData'] = $encryptArray;
+          
           $gatewayURL = config('setting.api_gateway_url').'/uam_roles/updatedata';
+         
           $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
         
 

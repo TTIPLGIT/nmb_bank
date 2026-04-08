@@ -211,7 +211,6 @@ class UamModulesController extends BaseController
             $module_name  =  $input['module_name'];
             $id = $input['module_id'];
 
-
             $module_check = DB::select("select * from uam_modules where module_name = '$module_name' and module_id != '$id' and active_flag = 0 ");
 
 
@@ -236,13 +235,20 @@ class UamModulesController extends BaseController
                         $disp_order = $input['display_order'];
                     }
 
+                    if ($input['class_name'] == "") {
+                        $class_name = "fa fa-th-list";
+                    } else {
+                        $class_name = $input['class_name'];
+                    }
 
-                    DB::table('uam_modules')
+
+                DB::table('uam_modules')
                         ->where('module_id', $input['module_id'])
                         ->update([
                             'module_name' => $input['module_name'],
                             'display_order' => $disp_order,
                             'parent_module_id' => $parent,
+                            'class_name' => $class_name,
                             'active_flag' => 0,
                             'last_modified_by' => auth()->user()->id,
                             'last_modified_date' => NOW()
@@ -358,9 +364,9 @@ class UamModulesController extends BaseController
     public function data_delete($id)
     {
         try {
-
             $method = 'Method => UamModulesController => data_delete';
             $id = $this->decryptData($id);
+
             if ($id == 5) {
 
                 $serviceResponse = array();
@@ -372,10 +378,9 @@ class UamModulesController extends BaseController
                 return $sendServiceResponse;
             }
 
-            $check = DB::select("select * from uam_module_screens where module_id = '$id' and active_flag = '0' ");
+            $check = DB::select("select * from uam_module_screens where module_id = $id and active_flag = 0");
 
-            if ($check != []) {
-
+            if ($check == []) {
                 DB::table('uam_modules')
                     ->where('module_id', $id)
                     ->update([

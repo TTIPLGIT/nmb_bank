@@ -151,7 +151,7 @@ class UamRolesController extends BaseController
 
             $role_name = $input['role_name'];
 
-            $role_name_check = DB::select("select * from uam_roles where role_name = '$role_name'");
+            $role_name_check = DB::select("select * from uam_roles where role_name = '$role_name' and active_flag = 0");
 
             if (json_encode($role_name_check) == '[]') {
 
@@ -160,15 +160,13 @@ class UamRolesController extends BaseController
                 DB::transaction(function () use ($input) {
                     $nextId = DB::table('uam_roles')->max('role_id') + 1;
                     // dd($input['client_role_id']);
-                    $role_id = DB::table('uam_roles')
-                        ->insertGetId([
-                            'role_id' => $nextId,
-                            'role_name' => $input['role_name'],
-                            'active_flag' => 0,
-                            'created_by' => auth()->user()->id,
-                            'client_role_id' => $input['client_role_id'],
-                            'created_date' => NOW()
-                        ]);
+                  $role_id = DB::table('uam_roles')->insertGetId([
+    'role_name' => $input['role_name'],
+    'active_flag' => 0,
+    'created_by' => auth()->user()->id,
+    'client_role_id' => $input['client_role_id'],
+    'created_date' => now()
+]);
 
 
                     // Deepika
@@ -191,16 +189,19 @@ class UamRolesController extends BaseController
                     $screen_unique = array_unique($input['screen_id']);
 
 
-
+                  
 
                     $unique = array_values($screen_unique);
 
                     $screenidcount = count($unique);
+                      $this->WriteFileLog($screenidcount);
                     for ($i = 0; $i < $screenidcount; $i++) {
 
                         $iparr = explode(":", $unique[$i]);
 
-                        $rowsdata =  DB::select("select a.module_screen_id from uam_module_screens as a where a.module_id = $iparr[0]   and a.screen_id = $iparr[1] ");
+                        $rowsdata =  DB::select("select a.module_screen_id from uam_module_screens as a where a.module_id = $iparr[0]   
+                        and a.screen_id = $iparr[1] ");
+                        $this->WriteFileLog($role_id);
                         $screen_permission_id = DB::table('uam_role_screens')->insertGetId([
                             'screen_id' => $iparr[1],
                             'module_id' => $iparr[0],
@@ -296,22 +297,22 @@ class UamRolesController extends BaseController
             $isMobile = isset($request['isMobile']);
 
             $inputArray = $isMobile ? $request : $this->decryptData($request->requestData);
-            // $this->WriteFileLog($isMobile);
+            
             $input = [
                 'role_name' => $inputArray['role_name'],
                 'role_id' => $inputArray['role_id'],
                 'screen_id' => $inputArray['screen_id'],
                 'permission_id' => $inputArray['permission_id'],
-                'client_role_id' => $inputArray['client_role_id']
+                'client_role_id' => '1',
 
             ];
 
             $role_name = $input['role_name'];
             $role_id = $input['role_id'];
-            $this->WriteFileLog($role_id);
+            
 
             if ($isMobile) {
-                $this->WriteFileLog('jii1');
+                
                 $role_id = DB::table('uam_roles')
                     ->where('active_flag', 0)
                     ->where('client_role_id', $input['client_role_id'])
@@ -332,114 +333,180 @@ class UamRolesController extends BaseController
                 $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
                 return $sendServiceResponse;
             } else {
-                $this->WriteFileLog($role_id);
-                $role_name_check = DB::select("select * from uam_roles where not role_id = '$role_id' and role_name = '$role_name' ");
-                if (json_encode($role_name_check) == '[]') {
 
+    // ✅ Better role name check
+    $role_name_check = DB::table('uam_roles')
+        ->where('role_id', '!=', $role_id)
+        ->where('role_name', $role_name)
+        ->where('active_flag', 0)
+        ->get();
 
+    if ($role_name_check->isEmpty()) {
 
-                    DB::transaction(function () use ($input) {
+        DB::transaction(function () use ($input) {
 
-                        $rows1 = DB::table('uam_role_screens')->where('role_id', $input['role_id'])->delete();
+            // ✅ Update role
+            DB::table('uam_roles')
+                ->where('role_id', $input['role_id'])
+                ->update([
+                    'role_name' => $input['role_name'],
+                    'active_flag' => 0,
+                    'last_modified_by' => auth()->user()->id,
+                    'last_modified_date' => now()
+                ]);
 
-                        $rows2 = DB::table('uam_role_screen_permissions')->where('role_id', $input['role_id'])->delete();
+            // ✅ Notification
+            DB::table('notifications')->insert([
+                'user_id' => auth()->user()->id,
+                'notification_status' => 'Role Updated',
+                'notification_url' => 'uam_roles',
+                'megcontent' => "Role " . $input['role_name'] . " updated successfully.",
+                'alert_meg' => "Role " . $input['role_name'] . " updated successfully.",
+                'created_by' => auth()->user()->id,
+                'created_at' => now()
+            ]);
 
-                        DB::table('uam_roles')
-                            ->where('role_id', $input['role_id'])
-                            ->update([
-                                'role_name' => $input['role_name'],
-                                'active_flag' => 0,
-                                'last_modified_by' => auth()->user()->id,
-                                'last_modified_date' => NOW()
-                            ]);
+            /*
+            |--------------------------------------------------------------------------
+            | SCREEN HANDLING
+            |--------------------------------------------------------------------------
+            */
+            if (!empty($input['screen_id'])) {
 
+                // ✅ Delete only if new data exists
+                DB::table('uam_role_screens')
+                    ->where('role_id', $input['role_id'])
+                    ->delete();
 
-                        // deepika
-                        $notifications = DB::table('notifications')->insertGetId([
-                            'user_id' => auth()->user()->id,
-                            'notification_status' => 'Role Updated',
-                            'notification_url' => 'uam_roles',
-                            'megcontent' => "Role " .  $input['role_name'] . " updated Successfully .",
-                            'alert_meg' => "Role " . $input['role_name'] . " updated Successfully .",
-                            'created_by' => auth()->user()->id,
-                            'created_at' => NOW()
-                        ]);
+                $uniqueScreens = array_values(array_unique($input['screen_id']));
 
-                        $screen_unique = array_unique($input['screen_id']);
+                foreach ($uniqueScreens as $screen) {
 
-                        $unique = array_values($screen_unique);
+                    $iparr = explode(":", $screen);
 
-                        $screenidcount = count($unique);
+                    if (count($iparr) < 2) continue;
 
-                        for ($i = 0; $i < $screenidcount; $i++) {
+                    $module_id = $iparr[0];
+                    $screen_id = $iparr[1];
 
-                            $iparr = explode(":", $unique[$i]);
+                    $rowsdata = DB::table('uam_module_screens')
+                        ->where('module_id', $module_id)
+                        ->where('screen_id', $screen_id)
+                        ->first();
 
-                            $rowsdata =  DB::select("select a.module_screen_id from uam_module_screens as a where a.module_id = $iparr[0]   and a.screen_id = $iparr[1] ");
+                    if (!$rowsdata) continue;
 
-
-                            $screen_permission_id = DB::table('uam_role_screens')->insertGetId([
-                                'screen_id' => $iparr[1],
-                                'module_id' => $iparr[0],
-                                'module_screen_id' => json_encode($rowsdata[0]->module_screen_id),
-                                'role_id' => $input['role_id'],
-                                'active_flag' => 0,
-                                'created_by' => auth()->user()->id,
-                                'created_date' => NOW()
-                            ]);
-                        }
-
-                        $permissioncount = count($input['permission_id']);
-
-                        for ($j = 0; $j < $permissioncount; $j++) {
-
-                            $permission =  $input['permission_id'][$j];
-
-                            $permissiondata = substr($permission, 6);
-
-                            $iparr = explode("-", $permissiondata);
-
-                            $module_id = $iparr[1];
-
-                            $screen_id = $iparr[2];
-
-                            $role_id = $input['role_id'];
-
-                            $rows =  DB::select("select a.role_screen_id from uam_role_screens as a where a.module_id = $module_id and a.role_id = $role_id  and a.screen_id = $screen_id ");
-
-                            $role_screen_permissions_id = DB::table('uam_role_screen_permissions')->insertGetId([
-                                'role_screen_id' =>  json_encode($rows[0]->role_screen_id),
-                                'screen_permission_id' => $iparr[0],
-                                'role_id' => $input['role_id'],
-                                'array_permission' => $permission,
-                                'active_flag' => 0,
-                                'created_by' => auth()->user()->id,
-                                'created_date' => NOW()
-                            ]);
-                        }
-                        // Deepika
-                        $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
-                        $role_name_fetch = $role_name[0]->role_name;
-                        $this->auditLog('uam_roles', $input['role_id'], 'Update', 'Update uam role', auth()->user()->id, NOW(), $role_name_fetch);
-                    });
-
-                    $serviceResponse = array();
-                    $serviceResponse['Code'] = config('setting.status_code.success');
-                    $serviceResponse['Message'] = config('setting.status_message.success');
-                    $serviceResponse['Data'] = 1;
-                    $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-                    $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
-                    return $sendServiceResponse;
-                } else {
-                    $serviceResponse = array();
-                    $serviceResponse['Code'] = 400;
-                    $serviceResponse['Message'] = config('setting.status_message.success');
-                    $serviceResponse['Data'] = 1;
-                    $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-                    $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true, $isMobile);
-                    return $sendServiceResponse;
+                    DB::table('uam_role_screens')->insert([
+                        'screen_id' => $screen_id,
+                        'module_id' => $module_id,
+                        'module_screen_id' => $rowsdata->module_screen_id,
+                        'role_id' => $input['role_id'],
+                        'active_flag' => 0,
+                        'created_by' => auth()->user()->id,
+                        'created_date' => now()
+                    ]);
                 }
             }
+
+            /*
+            |--------------------------------------------------------------------------
+            | PERMISSION HANDLING
+            |--------------------------------------------------------------------------
+            */
+            if (!empty($input['permission_id'])) {
+
+                // ✅ Delete only if new data exists
+                DB::table('uam_role_screen_permissions')
+                    ->where('role_id', $input['role_id'])
+                    ->delete();
+
+                foreach ($input['permission_id'] as $permission) {
+
+                    $permissiondata = substr($permission, 6);
+                    $iparr = explode("-", $permissiondata);
+
+                    if (count($iparr) < 3) continue;
+
+                    $screen_permission_id = $iparr[0];
+                    $module_id = $iparr[1];
+                    $screen_id = $iparr[2];
+                    $role_id = $input['role_id'];
+
+                    $rows = DB::table('uam_role_screens')
+                        ->where('module_id', $module_id)
+                        ->where('role_id', $role_id)
+                        ->where('screen_id', $screen_id)
+                        ->first();
+
+                    if (!$rows) continue;
+
+                    DB::table('uam_role_screen_permissions')->insert([
+                        'role_screen_id' => $rows->role_screen_id,
+                        'screen_permission_id' => $screen_permission_id,
+                        'role_id' => $role_id,
+                        'array_permission' => $permission,
+                        'active_flag' => 0,
+                        'created_by' => auth()->user()->id,
+                        'created_date' => now()
+                    ]);
+                }
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | AUDIT LOG
+            |--------------------------------------------------------------------------
+            */
+            $role_name = DB::table('uam_roles as ur')
+                ->join('users as us', 'us.array_roles', '=', 'ur.role_id')
+                ->where('us.id', auth()->user()->id)
+                ->select('ur.role_name')
+                ->first();
+
+            $role_name_fetch = $role_name ? $role_name->role_name : '';
+
+            $this->auditLog(
+                'uam_roles',
+                $input['role_id'],
+                'Update',
+                'Update uam role',
+                auth()->user()->id,
+                now(),
+                $role_name_fetch
+            );
+        });
+
+        // ✅ Success Response
+        $serviceResponse = [
+            'Code' => config('setting.status_code.success'),
+            'Message' => config('setting.status_message.success'),
+            'Data' => 1
+        ];
+
+        return $this->SendServiceResponse(
+            json_encode($serviceResponse, JSON_FORCE_OBJECT),
+            config('setting.status_code.success'),
+            true,
+            $isMobile
+        );
+
+    } else {
+
+        // ❌ Role name already exists
+        $serviceResponse = [
+            'Code' => 400,
+            'Message' => 'Role name already exists',
+            'Data' => 0
+        ];
+
+        return $this->SendServiceResponse(
+            json_encode($serviceResponse, JSON_FORCE_OBJECT),
+            400,
+            true,
+            $isMobile
+        );
+    }
+}
         } catch (\Exception $exc) {
             $exceptionResponse = array();
             $exceptionResponse['ServiceMethod'] = $method;
@@ -462,13 +529,14 @@ class UamRolesController extends BaseController
             $method = 'Method => UamRolesController => data_edit';
 
             $id = $this->decryptData($id);
-            // $this->WriteFileLog(($id));
+
             $rows = DB::table('uam_roles')
                 ->select('*')
                 ->where([['role_id', $id], ['active_flag', 0]])
                 ->get();
 
-           
+            // $rows = DB::select("select a.role_id,a.role_name,c.array_permission from uam_roles as a 
+            // inner join uam_role_screen_permissions as c on c.role_id = a.role_id where a.role_id = '$id' and a.active_flag = 0");
 
 
 
@@ -489,13 +557,22 @@ class UamRolesController extends BaseController
                 ->select('*')
                 ->get();
 
-
+             $uam_role_screen_permissions = DB::table('uam_role_screen_permissions')
+                ->select('*')
+                ->where('role_id', $id)
+                ->get();
+            $uam_role_screens = DB::table('uam_role_screens')
+                ->select('*')
+                ->where('role_id', $id)
+                ->get();
             $response = [
                 'rows' => $rows,
                 'parent_module_data' => $parent_module_data,
                 'module_data' => $module_data,
                 'screens_data' => $screens_data,
-                'permissions_data' => $permissions_data
+                'permissions_data' => $permissions_data,
+                'uam_role_screen_permissions' => $uam_role_screen_permissions,
+                'uam_role_screens' => $uam_role_screens,
             ];
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');

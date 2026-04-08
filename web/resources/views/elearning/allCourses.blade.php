@@ -2,268 +2,348 @@
 
 @section('content')
 <style>
-    /* main-container */
+/* main-container */
+.scorm-course-card {
+    border: 2px solid #dcdcdc;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    padding: 15px;
+    text-align: center;
+    width: 270px;
+    margin: 15px auto;
+    overflow: hidden;
+    position: relative;
+    min-height: 380px;
+    transition: all 0.3s ease-in-out;
+}
 
+.scorm-course-card:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    border-color: #6c63ff;
+    transform: translateY(-5px);
+}
 
-    .all_courses_main_header {
-        width: fit-content;
-        color: #680EDA;
-        font-weight: 900;
-        font-size: 1.5rem !important;
+.scorm-course-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.scorm-course-title {
+    color: #1e2a78;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 20px;
+    min-height: 40px;
+}
+
+.scorm-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.scorm-badge-scorm {
+    background: #ff9800;
+}
+
+.scorm-badge-pin {
+    background: #dc3545;
+}
+
+.scorm-progress {
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #eaeaea;
+    margin-top: 10px;
+}
+
+.scorm-progress-bar {
+    background: linear-gradient(90deg, #5cb85c, #9be15d);
+    height: 100%;
+    transition: width 0.4s ease;
+}
+
+.scorm-progress-text {
+    font-size: 12px;
+    color: #444;
+    font-weight: 500;
+}
+
+.scorm-disabled-link {
+    cursor: not-allowed;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.all_courses_main_header {
+    width: fit-content;
+    color: #680EDA;
+    font-weight: 900;
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem !important;
+}
+
+/* remove card bocy shadow */
+.noShadow .card-body {
+    box-shadow: none !important;
+}
+
+/* filters mobile */
+.filters_header {
+    background: #eee !important;
+    color: #000 !important;
+}
+
+/* sort and filter header*/
+.all_courses_sort_header,
+.all_courses_filter_header {
+    display: none !important;
+}
+
+/* sort and filter options */
+.form-control {
+    background-color: #fdfdff !important;
+    box-shadow: none !important;
+    border: 1px solid #000 !important;
+    border-radius: 0px !important;
+}
+
+.all_courses_sort_select {
+    font-weight: 800;
+    width: 20%;
+    color: #000000 !important;
+    border: 1px solid #000 !important;
+    border-radius: 0px !important;
+    margin-bottom: 1rem;
+}
+
+.all_courses_filter_container {
+    font-weight: 800;
+    width: 45%;
+    margin-left: 2%;
+    margin-bottom: 1rem;
+    border-radius: 0px !important;
+}
+
+.all_courses_filter_select {
+    font-weight: 800;
+    width: 40%;
+    color: #000000 !important;
+    margin-right: 2%;
+    border: 1px solid #000 !important;
+    border-radius: 0px !important;
+}
+
+.all_courses_reset_btn {
+    width: fit-content;
+    text-align: left;
+    color: #40c2b2 !important;
+    border: 0px !important;
+    padding: 0px 0px !important;
+    background-color: transparent !important;
+}
+
+.all_courses_reset_btn:disabled {
+    color: #1c1d1f !important;
+}
+
+/* search section */
+.all_courses_search_container {
+    font-weight: 800;
+    width: 25%;
+    margin-left: auto;
+    margin-bottom: 1rem;
+    border-radius: 0px !important;
+}
+
+.all_courses_search_container button {
+    color: #fff !important;
+    background-color: #000 !important;
+    border: 1px solid #000;
+    border-left: 0px !important;
+    width: 3rem;
+    margin-top: -10px;
+    height: 41px;
+    font-size: 1.2rem;
+}
+
+.all_courses_search_container .form-control::placeholder {
+    color: #000000 !important;
+}
+
+/* Course list section */
+.all_courses_courselist_container {
+    margin-top: 1rem !important;
+}
+
+.all_courses_courselist {
+    margin: 0px !important;
+    margin-bottom: 2rem !important;
+    border: 0px !important;
+    box-shadow: none !important;
+}
+
+.all_courses_courselist .card-header {
+    overflow: hidden !important;
+    padding: 0px !important;
+    height: 8rem !important;
+}
+
+.all_courses_courselist .card-body {
+    padding: 5% !important;
+}
+
+.all_courses_courselist .card-title h5 {
+    color: #000;
+    font-size: 1.3rem;
+    line-height: 2rem;
+    text-transform: capitalize;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.course_image {
+    width: 100%;
+}
+
+.course_total_progress {
+    height: 0.25rem !important;
+    box-shadow: none !important;
+    margin-top: 50px;
+}
+
+/* paginnation sectiion */
+.all_courses_paginate_container {
+    margin-top: 2rem;
+}
+
+.all_courses_paginate {
+    margin-bottom: 0px !important;
+}
+
+.all_courses_pagination_page_number .page-link {
+    color: #141ad8 !important;
+    background-color: transparent !important;
+    border: 0px solid #000 !important;
+}
+
+.all_courses_pagination_page_number .page-link.active {
+    text-decoration: 2.2px underline #000;
+}
+
+.all_courses_pagination_nav .page-link {
+    color: #000 !important;
+    background-color: transparent !important;
+    border: 1px solid #000 !important;
+    border-radius: 50%;
+}
+
+.all_courses_pagination_page_number {
+    display: flex;
+    flex-direction: row;
+}
+
+#searchResultnone {
+    font-size: 25px;
+    color: #ff443a;
+    font-weight: 600;
+}
+
+.allCoursePagination .page-item:first-child .page-link,
+.allCoursePagination .page-item:last-child .page-link {
+    font-size: 2rem !important;
+    line-height: 0.78em !important;
+    font-weight: 600 !important;
+    padding: .2rem .65rem .3rem .65rem !important;
+}
+
+.wishList-badge {
+    position: absolute;
+    top: 5px;
+    right: 20px !important;
+    width: 30px;
+    height: 30px;
+    font-size: 13px !important;
+    color: red;
+    background-color: transparent !important;
+    border: 0px;
+    border-radius: 5px !important;
+    padding: 0px !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width:319.96px) {
+
+    /* .all_courses_sort_select{
+            width: 100%;
+        } */
+    .all_courses_filters_popper {
         margin-bottom: 1rem !important;
+        font-size: 1rem;
+        font-weight: 700;
+        background-color: #fff;
+        padding: 0.5% 3%;
+        color: #40c2b2;
+        border: 0px !important;
+        border-radius: 10px;
+        box-shadow: 0.1rem 0.1rem 0.2rem #6c757d;
     }
 
-    /* remove card bocy shadow */
-    .noShadow .card-body {
-        box-shadow: none !important;
+    .all_courses_filters_popper i {
+        font-size: 0.75rem;
+        vertical-align: middle;
+        color: #40c2b2;
+        font-weight: 700;
     }
 
-    /* filters mobile */
-    .filters_header {
-        background: #eee !important;
-        color: #000 !important;
+    .all_courses_filter_block2 {
+        display: none !important;
+    }
+}
+
+@media (min-width:767.96px) {
+    .all_courses_sort_header {
+        display: inline-block !important;
+        width: 20%;
+        color: #1c1d1f !important;
+        margin-bottom: 0.75rem;
+        text-align: left;
     }
 
-    /* sort and filter header*/
-    .all_courses_sort_header,
     .all_courses_filter_header {
+        display: inline-block !important;
+        width: 20%;
+        color: #1c1d1f !important;
+        margin-left: 2%;
+        margin-bottom: 0.75rem;
+        text-align: left;
+    }
+
+    .all_courses_filters_popper {
         display: none !important;
     }
 
-    /* sort and filter options */
-    .form-control {
-        background-color: #fdfdff !important;
-        box-shadow: none !important;
-        border: 1px solid #000 !important;
-        border-radius: 0px !important;
+    .all_courses_filter_block2 {
+        display: flex !important;
     }
+}
 
-    .all_courses_sort_select {
-        font-weight: 800;
-        width: 20%;
-        color: #000000 !important;
-        border: 1px solid #000 !important;
-        border-radius: 0px !important;
-        margin-bottom: 1rem;
-    }
-
-    .all_courses_filter_container {
-        font-weight: 800;
-        width: 45%;
-        margin-left: 2%;
-        margin-bottom: 1rem;
-        border-radius: 0px !important;
-    }
-
-    .all_courses_filter_select {
-        font-weight: 800;
-        width: 40%;
-        color: #000000 !important;
-        margin-right: 2%;
-        border: 1px solid #000 !important;
-        border-radius: 0px !important;
-    }
-
-    .all_courses_reset_btn {
-        width: fit-content;
-        text-align: left;
-        color: #40c2b2 !important;
-        border: 0px !important;
-        padding: 0px 0px !important;
-        background-color: transparent !important;
-    }
-
-    .all_courses_reset_btn:disabled {
-        color: #1c1d1f !important;
-    }
-
-    /* search section */
-    .all_courses_search_container {
-        font-weight: 800;
-        width: 25%;
-        margin-left: auto;
-        margin-bottom: 1rem;
-        border-radius: 0px !important;
-    }
-
-    .all_courses_search_container button {
-        color: #fff !important;
-        background-color: #000 !important;
-        border: 1px solid #000;
-        border-left: 0px !important;
-        width: 3rem;
-        margin-top: -10px;
-        height: 41px;
-        font-size: 1.2rem;
-    }
-
-    .all_courses_search_container .form-control::placeholder {
-        color: #000000 !important;
-    }
-
-    /* Course list section */
-    .all_courses_courselist_container {
-        margin-top: 1rem !important;
-    }
-
-    .all_courses_courselist {
-        margin: 0px !important;
-        margin-bottom: 2rem !important;
-        border: 0px !important;
-        box-shadow: none !important;
-    }
-
-    .all_courses_courselist .card-header {
-        overflow: hidden !important;
-        padding: 0px !important;
-        height: 8rem !important;
-    }
-
-    .all_courses_courselist .card-body {
-        padding: 5% !important;
-    }
-
-    .all_courses_courselist .card-title h5 {
-        color: #000;
-        font-size: 1.3rem;
-        line-height: 2rem;
-        text-transform: capitalize;
-        white-space: nowrap;
-        width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .course_image {
-        width: 100%;
-    }
-
-    .course_total_progress {
-        height: 0.25rem !important;
-        box-shadow: none !important;
-        margin-top: 50px;
-    }
-
-    /* paginnation sectiion */
-    .all_courses_paginate_container {
-        margin-top: 2rem;
-    }
-
-    .all_courses_paginate {
-        margin-bottom: 0px !important;
-    }
-
-    .all_courses_pagination_page_number .page-link {
-        color: #141ad8 !important;
-        background-color: transparent !important;
-        border: 0px solid #000 !important;
-    }
-
-    .all_courses_pagination_page_number .page-link.active {
-        text-decoration: 2.2px underline #000;
-    }
-
-    .all_courses_pagination_nav .page-link {
-        color: #000 !important;
-        background-color: transparent !important;
-        border: 1px solid #000 !important;
-        border-radius: 50%;
-    }
-
-    .all_courses_pagination_page_number {
-        display: flex;
-        flex-direction: row;
-    }
-
-    #searchResultnone {
-        font-size: 25px;
-        color: #ff443a;
-        font-weight: 600;
-    }
-
-    .allCoursePagination .page-item:first-child .page-link,
-    .allCoursePagination .page-item:last-child .page-link {
-        font-size: 2rem !important;
-        line-height: 0.78em !important;
-        font-weight: 600 !important;
-        padding: .2rem .65rem .3rem .65rem !important;
-    }
-
-    .wishList-badge {
-        position: absolute;
-        top: 5px;
-        right: 20px !important;
-        width: 30px;
-        height: 30px;
-        font-size: 13px !important;
-        color: red;
-        background-color: transparent !important;
-        border: 0px;
-        border-radius: 5px !important;
-        padding: 0px !important;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-
-    @media (min-width:319.96px) {
-
-        /* .all_courses_sort_select{
-            width: 100%;
-        } */
-        .all_courses_filters_popper {
-            margin-bottom: 1rem !important;
-            font-size: 1rem;
-            font-weight: 700;
-            background-color: #fff;
-            padding: 0.5% 3%;
-            color: #40c2b2;
-            border: 0px !important;
-            border-radius: 10px;
-            box-shadow: 0.1rem 0.1rem 0.2rem #6c757d;
-        }
-
-        .all_courses_filters_popper i {
-            font-size: 0.75rem;
-            vertical-align: middle;
-            color: #40c2b2;
-            font-weight: 700;
-        }
-
-        .all_courses_filter_block2 {
-            display: none !important;
-        }
-    }
-
-    @media (min-width:767.96px) {
-        .all_courses_sort_header {
-            display: inline-block !important;
-            width: 20%;
-            color: #1c1d1f !important;
-            margin-bottom: 0.75rem;
-            text-align: left;
-        }
-
-        .all_courses_filter_header {
-            display: inline-block !important;
-            width: 20%;
-            color: #1c1d1f !important;
-            margin-left: 2%;
-            margin-bottom: 0.75rem;
-            text-align: left;
-        }
-
-        .all_courses_filters_popper {
-            display: none !important;
-        }
-
-        .all_courses_filter_block2 {
-            display: flex !important;
-        }
-    }
-
-    @media (min-width:1024.96px) {
+/* @media (min-width:1024.96px) {
         .main-content {
             padding-left: 220px !important;
         }
@@ -271,111 +351,144 @@
         .sidebar-mini .main-content {
             padding-left: 85px !important;
         }
-    }
+    } */
 
-    @media (min-width:320px) {
-        .filter_align {
-            display: flex;
-            font-size: 12px;
-            gap: 7px;
-            align-items: center;
-        }
-
-
-
-    }
-
-    .course_paid {
-        height: 30px !important;
-        width: 25% !important;
-        border-radius: 20px;
-        position: absolute;
-        padding: 6px 0px 0px 15px;
-        color: #ffffff;
-        align-items: center;
-        margin-left: 2%;
-        font-size: 16px;
-        margin-bottom: 15px;
-        text-transform: capitalize;
-    }
-
-    .blinking-warning {
-        background-color: #ff0015;
-        color: white;
-        padding: 2px 6px;
-        border-radius: 20px;
-        font-size: 12px;
-        /* animation: blinker 2s linear infinite; */
-    }
-
-    @keyframes blinker {
-        50% {
-            opacity: 0;
-        }
-    }
-
-    .highlight-new-course {
-        border: 3px solid #4CAF50;
-        box-shadow: 0 0 12px #4CAF50;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .locked-course-card {
-        pointer-events: none;
-        opacity: 0.7;
-
-    }
-
-    .locked-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background: rgb(17 52 80 / 60%);
-        z-index: 10;
+@media (min-width:320px) {
+    .filter_align {
         display: flex;
-        justify-content: center;
+        font-size: 12px;
+        gap: 7px;
         align-items: center;
-        flex-direction: column;
-        color: #fff;
-        font-weight: bold;
-        font-size: 16px;
-        border-radius: 5px;
     }
 
-    .lock-icon {
-        font-size: 70px;
-        margin-bottom: 8px;
-        color: #000000ff;
-    }
 
-    .locked-text {
-        font-weight: bold;
-        font-size: 25px;
-        color: #000000ff;
-    }
 
-    .modal-backdrop.show {
-        opacity: 0 !important;
-    }
+}
 
-    .modal-backdrop {
-        pointer-events: none !important;
-    }
+.course_paid {
+    height: 30px !important;
+    width: 25% !important;
+    border-radius: 20px;
+    position: absolute;
+    padding: 6px 0px 0px 15px;
+    color: #ffffff;
+    align-items: center;
+    margin-left: 2%;
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-transform: capitalize;
+}
 
-    .open_modal {
-        z-index: 99999 !important;
-    }
+.blinking-warning {
+    background-color: #ff0015;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 20px;
+    font-size: 12px;
+    /* animation: blinker 2s linear infinite; */
+}
 
-    .open_modal_contents {
-        pointer-events: auto !important;
+@keyframes blinker {
+    50% {
+        opacity: 0;
     }
+}
 
-    #entered_pin {
-        pointer-events: auto !important;
-        background: #fff !important;
-    }
+.highlight-new-course {
+    border: 3px solid #4CAF50;
+    box-shadow: 0 0 12px #4CAF50;
+    transition: all 0.3s ease-in-out;
+}
+
+.locked-course-card {
+    pointer-events: none;
+    opacity: 0.7;
+
+}
+
+.locked-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgb(17 52 80 / 60%);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.lock-icon {
+    font-size: 70px;
+    margin-bottom: 8px;
+    color: #000000ff;
+}
+
+.locked-text {
+    font-weight: bold;
+    font-size: 25px;
+    color: #000000ff;
+}
+
+.modal-backdrop.show {
+    opacity: 0 !important;
+}
+
+.modal-backdrop {
+    pointer-events: none !important;
+}
+
+.open_modal {
+    z-index: 99999 !important;
+}
+
+.open_modal_contents {
+    pointer-events: auto !important;
+}
+
+#entered_pin {
+    pointer-events: auto !important;
+    background: #fff !important;
+}
+
+.scorm-result {
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.scorm-score {
+    color: #333;
+}
+
+.scorm-status-pass {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.scorm-status-fail {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.scorm-status-incomplete {
+    color: #ff9800;
+    font-weight: 600;
+}
+
+.scorm-cert-available {
+    color: #007bff;
+    font-weight: 600;
+}
+
+.scorm-cert-na {
+    color: #999;
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 <?php
@@ -462,6 +575,8 @@ use Carbon\Carbon; ?>
 
 
                 <div class="row">
+
+
 
                     @foreach($availableCourses as $key => $value)
                     @php
@@ -667,12 +782,10 @@ use Carbon\Carbon; ?>
                                     @php $isWishlisted = in_array($value->course_id, $wishlistedCourseIds); @endphp
                                     <span class="btn btn-outline-danger wishList-badge"
                                         title="{{ $isWishlisted ? 'Added to Wishlist' : 'Add to Wishlist ❤️' }}"
-                                        id="wish_{{$value->course_id}}"
-                                        style="position: absolute;top: 12px;right: 12px;background: #fff;border-radius: 50%;padding: 6px;
+                                        id="wish_{{$value->course_id}}" style="position: absolute;top: 12px;right: 12px;background: #fff;border-radius: 50%;padding: 6px;
                                               box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 5;">
                                         <i class="{{ $isWishlisted ? 'fa fa-heart' : 'fa fa-heart-o' }}"
-                                            aria-hidden="true"
-                                            id="wishHeart_{{$value->course_id}}"
+                                            aria-hidden="true" id="wishHeart_{{$value->course_id}}"
                                             style="color: {{ $isWishlisted ? '#ff4b5c' : '#999' }}; font-size:18px;">
                                         </i>
                                     </span>
@@ -680,106 +793,258 @@ use Carbon\Carbon; ?>
                                     {{-- 📘 Course Image --}}
                                     @php
                                     $id = Crypt::encrypt($value->course_id);
-                                    $imageUrl = config('setting.base_url') . 'uploads/course/126/' . $value->course_banner;
+
+                                    $imageUrl = config('setting.base_url') . 'uploads/course/126/' .
+                                    $value->course_banner;
                                     @endphp
                                     @if($value->restricted_access == 1)
+
+
+                                    @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
                                     <a href="javascript:void(0)" onclick="openPinModal('{{ $id }}')">
+                                        <img src="{{ $imageUrl }}" alt="Course Image" class="course_image"
+                                            style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;"></a>
+                                    @else
+                                    <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image"
+                                        class="course_image"
+                                        style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;">
+                                    @endif
+                                    @else
+                                    <a href="{{ route('elearningCourse', $id) }}">
+                                        @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
+                                        <img src="{{ $imageUrl }}" alt="Course Image" class="course_image"
+                                            style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;">
+                                        @else
                                         <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image"
                                             class="course_image"
                                             style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;">
-                                        @else
-                                        <a href="{{ route('elearningCourse', $id) }}">
-                                            @if(file_exists(public_path('uploads/course/126/' . $value->course_banner)))
-                                            <img src="{{ $imageUrl }}" alt="Course Image" class="course_image"
-                                                style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;">
-                                            @else
-                                            <img src="{{ asset('assets/images/Talentra.jpg') }}" alt="Fallback Image"
-                                                class="course_image"
-                                                style="width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px;">
-                                            @endif
-                                        </a>
                                         @endif
+                                    </a>
+                                    @endif
 
-                                        {{-- 🧾 Card Body --}}
-                                        <div class="card-body" style="padding: 10px 0;">
-                                            <div class="card-title" title="{{ $value->course_name }}">
-                                                <h5 style="color:#1e2a78; font-weight:600; font-size:16px; margin-bottom:8px;">
-                                                    {{ $value->course_name }}
-                                                </h5>
+                                    {{-- 🧾 Card Body --}}
+                                    <div class="card-body" style="padding: 10px 0;">
+                                        <div class="card-title" title="{{ $value->course_name }}">
+                                            <h5
+                                                style="color:#1e2a78; font-weight:600; font-size:16px; margin-bottom:8px;">
+                                                {{ $value->course_name }}
+                                            </h5>
 
-                                                {{-- 🔔 Expiry Section with Fixed Height --}}
-                                                <div style="min-height: 40px; display: flex; justify-content: center;align-items: center;margin-bottom: 8px">
-                                                    @if($showExpiryBadge)
-                                                    <a href="javascript:void(0);" onclick="highlightCopiedCourse({{ $value->course_id }})">
-                                                        <div style="background-color: #fff5e6; color: #b35c00; border-radius: 6px;
+                                            {{-- 🔔 Expiry Section with Fixed Height --}}
+                                            <div
+                                                style="min-height: 40px; display: flex; justify-content: center;align-items: center;margin-bottom: 8px">
+                                                @if($showExpiryBadge)
+                                                <a href="javascript:void(0);"
+                                                    onclick="highlightCopiedCourse({{ $value->course_id }})">
+                                                    <div
+                                                        style="background-color: #fff5e6; color: #b35c00; border-radius: 6px;
                                                          font-size: 13px;padding:4px 8px;display:inline-block;box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                                                            ⚠ {{ \Carbon\Carbon::parse($value->course_expiry_period)->isPast() ? 'Certificate Expired' : 'Your Course Will Expire Soon' }}
-                                                        </div>
-                                                    </a>
-                                                    @elseif($expiryMessage)
-                                                    <a href="javascript:void(0);" onclick="highlightCopiedCourse({{ $value->course_id }})">
-                                                        <div style="background-color: #f8d7da;color: #721c24;border-radius: 8px;font-size:13px;padding:6px 12px;
+                                                        ⚠
+                                                        {{ \Carbon\Carbon::parse($value->course_expiry_period)->isPast() ? 'Certificate Expired' : 'Your Course Will Expire Soon' }}
+                                                    </div>
+                                                </a>
+                                                @elseif($expiryMessage)
+                                                <a href="javascript:void(0);"
+                                                    onclick="highlightCopiedCourse({{ $value->course_id }})">
+                                                    <div style="background-color: #f8d7da;color: #721c24;border-radius: 8px;font-size:13px;padding:6px 12px;
                                                            margin-top:-10px;box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                                                            {!! $expiryMessage !!}
-                                                        </div>
-                                                    </a>
-                                                    @else
-                                                    {{-- Empty space to maintain height --}}
-                                                    <div style="height: 20px; visibility: hidden;">placeholder</div>
-                                                    @endif
-                                                </div>
+                                                        {!! $expiryMessage !!}
+                                                    </div>
+                                                </a>
+                                                @else
+                                                {{-- Empty space to maintain height --}}
+                                                <div style="height: 20px; visibility: hidden;">placeholder</div>
+                                                @endif
                                             </div>
-
-                                            {{-- 👨‍🏫 Instructor + Paid/Free --}}
-                                            <div class="card-text" style="margin-bottom:10px;">
-                                                <h6 style="font-size:13px; color:#333;">
-                                                    <span>{{ $value->course_instructor }}</span>
-                                                    <span style="float:right;background-color: {{ $value->course_pay == 'paid' ? '#1d33d3' : '#0ecf26' }};
-                                                   color:#fff;border-radius:4px;padding:2px 8px; margin-top:-5px;font-size:18px;text-transform:capitalize;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-                                                        {{ $value->course_pay }}
-                                                    </span>
-                                                </h6>
-                                            </div>
-
-                                            {{-- 📊 Progress Bar --}}
-                                            <div class="progress course_total_progress" style=" height:10px; border-radius:5px; overflow:hidden;
-                                             background-color:#eaeaea;margin-top:10px;">
-                                                <div class="progress-bar" role="progressbar"
-                                                    style="width: {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%;
-                                                background: linear-gradient(90deg, #5cb85c, #9be15d);transition: width 0.6s ease;">
-                                                </div>
-                                            </div>
-
-                                            <span style="font-size:12px; color:#444; font-weight:500; display:block; margin-top:6px;">
-                                                {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}% COMPLETED
-                                            </span>
                                         </div>
+
+                                        {{-- 👨‍🏫 Instructor + Paid/Free --}}
+                                        <div class="card-text" style="margin-bottom:10px;">
+                                            <h6 style="font-size:13px; color:#333;">
+                                                <span>{{ $value->course_instructor }}</span>
+                                                <span
+                                                    style="float:right;background-color: {{ $value->course_pay == 'paid' ? '#1d33d3' : '#0ecf26' }};
+                                                   color:#fff;border-radius:4px;padding:2px 8px; margin-top:-5px;font-size:18px;text-transform:capitalize;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+                                                    {{ $value->course_pay }}
+                                                </span>
+                                            </h6>
+                                        </div>
+
+                                        {{-- 📊 Progress Bar --}}
+                                        <div class="progress course_total_progress" style=" height:10px; border-radius:5px; overflow:hidden;
+                                             background-color:#eaeaea;margin-top:10px;">
+                                            <div class="progress-bar" role="progressbar"
+                                                style="width: {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%;
+                                                background: linear-gradient(90deg, #5cb85c, #9be15d);transition: width 0.6s ease;">
+                                            </div>
+                                        </div>
+
+                                        <span
+                                            style="font-size:12px; color:#444; font-weight:500; display:block; margin-top:6px;">
+                                            {{ isset($courseProgress[$value->course_id]) ? $courseProgress[$value->course_id]->course_progress : '0' }}%
+                                            COMPLETED
+                                        </span>
+                                    </div>
                                 </div>
                                 <script>
-                                    function highlightCopiedCourse(originalCourseId) {
-                                        const matchingCard = document.querySelector(`[data-expired-course-id='${originalCourseId}']`);
-                                        if (matchingCard) {
-                                            matchingCard.scrollIntoView({
-                                                behavior: 'smooth',
-                                                block: 'center'
-                                            });
-                                            matchingCard.classList.add('highlight-new-course');
-                                            setTimeout(() => {
-                                                matchingCard.classList.remove('highlight-new-course');
-                                            }, 2000);
-                                        } else {
-                                            Swal.fire({
-                                                title: "Please Contact your supervisor",
-                                                text: "The new or copied course is not yet created.",
-                                                icon: "info"
-                                            });
-                                        }
+                                function highlightCopiedCourse(originalCourseId) {
+                                    const matchingCard = document.querySelector(
+                                        `[data-expired-course-id='${originalCourseId}']`);
+                                    if (matchingCard) {
+                                        matchingCard.scrollIntoView({
+                                            behavior: 'smooth',
+                                            block: 'center'
+                                        });
+                                        matchingCard.classList.add('highlight-new-course');
+                                        setTimeout(() => {
+                                            matchingCard.classList.remove('highlight-new-course');
+                                        }, 2000);
+                                    } else {
+                                        Swal.fire({
+                                            title: "Please Contact your supervisor",
+                                            text: "The new or copied course is not yet created.",
+                                            icon: "info"
+                                        });
                                     }
+                                }
                                 </script>
 
                         </div>
                     </div>
                     @endforeach
+
+
+
+                    {{-- SCORM Courses Section --}}
+                    @if($scormCourses->count() > 0)
+
+                    <div class="col-12">
+                        <h4 style="margin:30px 0 10px 10px;">External Courses</h4>
+                    </div>
+
+                    @foreach($scormCourses as $scorm)
+
+                    @php
+                    $id = Crypt::encrypt($scorm->scorm_course_id);
+                    $scormid = Crypt::encrypt($scorm->scorm_id);
+                    $imageUrl = config('setting.base_url') . 'uploads/course/' . $scorm->created_by . '/' .
+                    $scorm->course_banner;
+                    $isCompleted = in_array($scorm->lesson_status, ['completed','passed','failed']);
+                    $status = $scorm->lesson_status; // completed, passed, failed, incomplete
+                    @endphp
+
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="scorm-course-card {{ $scorm->restricted_access == 1 ? 'scorm-restricted' : '' }}">
+
+                            {{-- Badge --}}
+                            @if($scorm->restricted_access == 1)
+                            <span class="scorm-badge scorm-badge-pin">🔒 PIN Required</span>
+                            @else
+                            <span class="scorm-badge scorm-badge-scorm">SCORM</span>
+                            @endif
+
+                            {{-- Image --}}
+
+                            @if($scorm->restricted_access == 1 && !$isCompleted)
+
+                            <a href="javascript:void(0)"
+                                onclick="scormopenPinModal('{{ $id }}','{{ $scormid }}','{{ $status }}','{{ $scorm->course_certificate }}')">
+                                <img src="{{ $imageUrl }}" class="scorm-course-img">
+                            </a>
+                            @elseif($scorm->restricted_access == 0 && !$isCompleted)
+                            <a href="{{ route('scorm.launch', $scormid) }}">
+                                <img src="{{ $imageUrl }}" class="scorm-course-img">
+                            </a>
+                            @else
+
+                            {{-- If incomplete OR failed → allow relaunch --}}
+                            @if($status == 'incomplete')
+
+                            <a href="{{ route('scorm.launch', $scormid) }}">
+                                <img src="{{ $imageUrl }}" class="scorm-course-img">
+                            </a>
+                            @elseif($status == 'failed')
+
+                            <a href="javascript:void(0);" class="scorm-disabled-link">
+                                <img src="{{ $imageUrl }}" class="scorm-course-img">
+                            </a>
+
+
+
+                            @elseif(($status == 'completed' || $status == 'passed') && $scorm->course_certificate ==
+                            '1')
+
+                            <a href="{{ url('/certificate/view/'.encrypt($scorm->scorm_id)) }}">
+                                <img src="{{ $imageUrl }}" class="scorm-course-img">
+                            </a>
+
+
+                            @else
+
+                            <a href="javascript:void(0);" class="scorm-disabled-link">
+                                <img src="{{ $imageUrl }}" class="scorm-course-img">
+                            </a>
+
+                            @endif
+
+                            @endif
+
+                            {{-- Body --}}
+                            <div class="scorm-card-body">
+                                <h5 class="scorm-course-title">{{ $scorm->course_name }}</h5>
+
+                                <div class="scorm-progress">
+                                    <div class="scorm-progress-bar" style="width: {{ $scorm->progress }}%;"></div>
+                                </div>
+
+                                <span class="scorm-progress-text">
+                                    {{ $scorm->progress }}% COMPLETED
+                                </span>
+                                {{-- Result Status --}}
+                                <div class="scorm-result mt-2">
+
+                                    {{-- Show Score if available --}}
+                                    @if(!empty($scorm->score))
+                                    <div class="scorm-score">
+                                        <strong>Score:</strong> {{ $scorm->score }}%
+                                    </div>
+                                    @endif
+
+                                    {{-- Show Pass / Fail --}}
+                                    @if($status == 'passed' || $status == 'completed')
+                                    <div class="scorm-status scorm-status-pass">
+                                        ✅ Passed
+                                    </div>
+                                    @elseif($status == 'failed')
+                                    <div class="scorm-status scorm-status-fail">
+                                        ❌ Failed
+                                    </div>
+                                    @elseif($status == 'incomplete')
+                                    <div class="scorm-status scorm-status-incomplete">
+                                        ⏳ Incomplete
+                                    </div>
+                                    @endif
+
+                                    {{-- Certificate Availability --}}
+                                    @if(($status == 'passed' || $status == 'completed') && $scorm->course_certificate ==
+                                    '1')
+                                    <div class="scorm-certificate scorm-cert-available">
+                                        🎓 Certificate Available
+                                    </div>
+                                    @elseif($scorm->course_certificate == '2')
+                                    <div class="scorm-certificate scorm-cert-na">
+                                        🚫 No Certificate
+                                    </div>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @endforeach
+                    @endif
 
                     <div class="modal fade open_modal" id="pinModal" tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered">
@@ -789,7 +1054,8 @@ use Carbon\Carbon; ?>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body text-center">
-                                    <input type="password" id="entered_pin" class="form-control" placeholder="Enter PIN">
+                                    <input type="password" id="entered_pin" class="form-control"
+                                        placeholder="Enter PIN">
                                     <input type="hidden" id="pin_course_id">
                                     <div class="text-danger mt-2" id="pinError"></div>
                                 </div>
@@ -801,43 +1067,130 @@ use Carbon\Carbon; ?>
                     </div>
 
                     <script>
-                        $('#pinModal').on('shown.bs.modal', function() {
-                            $('#entered_pin').trigger('focus');
-                        });
+                    $('#pinModal').on('shown.bs.modal', function() {
+                        $('#entered_pin').trigger('focus');
+                    });
 
-                        function openPinModal(courseId) {
-                            $('#pin_course_id').val(courseId);
-                            $('#entered_pin').val('');
-                            $('#pinError').hide();
-                            $('#pinModal').modal('show');
+                    function openPinModal(courseId) {
+
+                        $('#pin_course_id').val(courseId);
+                        $('#entered_pin').val('');
+                        $('#pinError').hide();
+                        $('#pinModal').modal('show');
+                    }
+
+                    function verifyPin() {
+                        let pin = $('#entered_pin').val();
+                        let courseId = $('#pin_course_id').val();
+
+                        if (pin == '') {
+                            $('#pinError').text('Please enter PIN').show();
+                            return;
                         }
 
-                        function verifyPin() {
-                            let pin = $('#entered_pin').val();
-                            let courseId = $('#pin_course_id').val();
-
-                            if (pin == '') {
-                                $('#pinError').text('Please enter PIN').show();
-                                return;
-                            }
-
-                            $.ajax({
-                                url: "{{ route('verify.course.pin') }}",
-                                type: "POST",
-                                data: {
-                                    _token: "{{ csrf_token() }}",
-                                    course_id: courseId,
-                                    pin: pin
-                                },
-                                success: function(res) {
-                                    if (res.status == true) {
-                                        window.location.href = res.redirect;
-                                    } else {
-                                        $('#pinError').text('Invalid PIN').show();
-                                    }
+                        $.ajax({
+                            url: "{{ route('verify.course.pin') }}",
+                            type: "POST",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                course_id: courseId,
+                                pin: pin
+                            },
+                            success: function(res) {
+                                if (res.status == true) {
+                                    window.location.href = res.redirect;
+                                } else {
+                                    $('#pinError').text('Invalid PIN').show();
                                 }
+                            }
+                        });
+                    }
+                    </script>
+
+                    <!-- PIN Modal -->
+                    <div class="modal fade" id="scormpinModal" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Enter Access PIN</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <input type="password" id="coursePin" class="form-control" placeholder="Enter PIN">
+                                    <div id="scormpinError"
+                                        style="color:red;font-size:13px;margin-top:8px;display:none;">
+                                        Invalid PIN
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" onclick="validatePin()">Submit</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                    let selectedCourseId = null;
+                    let selectedCompleted = false;
+                    let selectedCertificate = 0;
+
+                    function scormopenPinModal(courseId, scormId, isCompleted, certificate) {
+
+                        selectedCourseId = courseId;
+                        selectedScormId = scormId;
+                        selectedCompleted = (isCompleted === '1');
+                        selectedCertificate = certificate;
+
+                        document.getElementById('coursePin').value = '';
+                        document.getElementById('scormpinError').style.display = 'none';
+
+                        var modal = new bootstrap.Modal(document.getElementById('scormpinModal'));
+                        modal.show();
+                    }
+
+                    function validatePin() {
+
+                        let pin = document.getElementById('coursePin').value;
+
+                        fetch('/scorm/validate-pin', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    course_id: selectedCourseId,
+                                    pin: pin
+                                })
+                            })
+                            .then(res => res.json())
+                            .then(response => {
+
+                                if (response.valid) {
+
+                                    if (selectedCompleted) {
+
+                                        if (selectedCertificate == '1') {
+                                            window.location.href = '/certificate/view/' + selectedScormId;
+                                        } else {
+                                            window.location.href =
+                                                `/elearning/allCourses?sorted=Recently+Added&tag=false&progress=false&q=false&course_id=1`;
+                                        }
+
+                                    } else {
+                                        window.location.href = '/scorm/' + selectedScormId + '/launch';
+                                    }
+
+                                } else {
+                                    document.getElementById('scormpinError').style.display = 'block';
+                                }
+
                             });
-                        }
+                    }
                     </script>
 
                 </div>
@@ -861,154 +1214,159 @@ use Carbon\Carbon; ?>
             <input type="hidden" class="courseFilter" id="filterTagMessage" value="{{$tagFilter}}">
             <input type="hidden" class="courseFilter" id="filterProgressMessage" value="{{$progressFilter}}">
             <script>
-                let courseListContainer = document.querySelector('.all_courses_courselist_container .row');
-                let searchResultnone = document.querySelector('#searchResultnone');
-                let isSearch = document.querySelector('#searchMessage');
-                let isSorted = document.querySelector('#sortMessage');
-                let sortOption = document.querySelector('.all_courses_sort_select');
-                let courseSearchInput = document.querySelector('#courseSearch');
-                let courseSearchButton = document.querySelector('#courseSearchButton');
-                let allCoursesForm = document.querySelector('.all_courses_filter_block2');
-                let sortInput = document.querySelector('.all_courses_sort_select');
-                let pageLinks = document.querySelectorAll('a.page-link');
-                let filters = document.querySelectorAll('.all_courses_filter_select');
-                let isTagFiltered = document.querySelector('#filterTagMessage');
-                let isProgressFiltered = document.querySelector('#filterProgressMessage');
-                let resetButton = document.querySelector('.all_courses_reset_btn');
-                let wishListBadges = document.querySelectorAll('.wishList-badge');
+            let courseListContainer = document.querySelector('.all_courses_courselist_container .row');
+            let searchResultnone = document.querySelector('#searchResultnone');
+            let isSearch = document.querySelector('#searchMessage');
+            let isSorted = document.querySelector('#sortMessage');
+            let sortOption = document.querySelector('.all_courses_sort_select');
+            let courseSearchInput = document.querySelector('#courseSearch');
+            let courseSearchButton = document.querySelector('#courseSearchButton');
+            let allCoursesForm = document.querySelector('.all_courses_filter_block2');
+            let sortInput = document.querySelector('.all_courses_sort_select');
+            let pageLinks = document.querySelectorAll('a.page-link');
+            let filters = document.querySelectorAll('.all_courses_filter_select');
+            let isTagFiltered = document.querySelector('#filterTagMessage');
+            let isProgressFiltered = document.querySelector('#filterProgressMessage');
+            let resetButton = document.querySelector('.all_courses_reset_btn');
+            let wishListBadges = document.querySelectorAll('.wishList-badge');
 
-                if (isSearch.value == "false") {
-                    courseSearchInput.value = "";
-                } else {
-                    courseSearchInput.value = isSearch.value;
-                }
-                sortOption.value = isSorted.value;
-                filters[0].value = isTagFiltered.value;
-                filters[1].value = isProgressFiltered.value;
+            if (isSearch.value == "false") {
+                courseSearchInput.value = "";
+            } else {
+                courseSearchInput.value = isSearch.value;
+            }
+            sortOption.value = isSorted.value;
+            filters[0].value = isTagFiltered.value;
+            filters[1].value = isProgressFiltered.value;
 
-                if (courseListContainer.innerText == "") {
-                    searchResultnone.style.display = "block";
-                }
+            if (courseListContainer.innerText == "") {
+                searchResultnone.style.display = "block";
+            }
 
-                function courseSearch(e) {
+            function courseSearch(e) {
+                e.preventDefault();
+                let url = new URL(allCoursesForm.action);
+                url.searchParams.set('sorted', sortOption.value);
+                url.searchParams.set('tag', filters[0].value);
+                url.searchParams.set('progress', filters[1].value);
+                url.searchParams.set('q', courseSearchInput.value);
+                allCoursesForm.action = url;
+                allCoursesForm.submit();
+            }
+
+            function courseSort(e) {
+                let url = new URL(allCoursesForm.action);
+                url.searchParams.set('sorted', sortOption.value);
+                url.searchParams.set('tag', filters[0].value);
+                url.searchParams.set('progress', filters[1].value);
+                url.searchParams.set('q', isSearch.value);
+                allCoursesForm.action = url;
+                allCoursesForm.submit();
+            }
+
+            function sortOrder(e) {
+                e.preventDefault()
+                let url = new URL(e.target.href);
+                url.searchParams.set('sorted', isSorted.value);
+                url.searchParams.set('tag', filters[0].value);
+                url.searchParams.set('progress', filters[1].value);
+                url.searchParams.set('q', isSearch.value);
+                e.target.href = url;
+                window.location = url;
+            }
+
+            function filterBy(e) {
+                let url = new URL(allCoursesForm.action);
+                url.searchParams.set('sorted', sortOption.value);
+                url.searchParams.set('tag', filters[0].value);
+                url.searchParams.set('progress', filters[1].value);
+                url.searchParams.set('q', isSearch.value);
+                allCoursesForm.action = url;
+                allCoursesForm.submit();
+                // alert(`http://localhost:60157/elearningAllCourses/filter?sorted=${isSorted.value}&tag=${e.target.value}`);
+                // window.location = `http://localhost:60157/elearningAllCourses/filter?sorted=${isSorted.value}&tag=${e.target.value}`;
+            }
+
+            function courseReset(e) {
+                window.location =
+                    `{{ route('elearningAllCourses') }}?sorted=Recently Added&tag=false&progress=false&q=false`;
+            }
+
+            courseSearchInput.addEventListener("keypress", (e) => {
+                if (e.key === "Enter") {
                     e.preventDefault();
-                    let url = new URL(allCoursesForm.action);
-                    url.searchParams.set('sorted', sortOption.value);
-                    url.searchParams.set('tag', filters[0].value);
-                    url.searchParams.set('progress', filters[1].value);
-                    url.searchParams.set('q', courseSearchInput.value);
-                    allCoursesForm.action = url;
-                    allCoursesForm.submit();
+                    courseSearchButton.click();
                 }
+            });
+            courseSearchButton.addEventListener("click", courseSearch);
 
-                function courseSort(e) {
-                    let url = new URL(allCoursesForm.action);
-                    url.searchParams.set('sorted', sortOption.value);
-                    url.searchParams.set('tag', filters[0].value);
-                    url.searchParams.set('progress', filters[1].value);
-                    url.searchParams.set('q', isSearch.value);
-                    allCoursesForm.action = url;
-                    allCoursesForm.submit();
-                }
+            sortInput.addEventListener("change", courseSort);
 
-                function sortOrder(e) {
-                    e.preventDefault()
-                    let url = new URL(e.target.href);
-                    url.searchParams.set('sorted', isSorted.value);
-                    url.searchParams.set('tag', filters[0].value);
-                    url.searchParams.set('progress', filters[1].value);
-                    url.searchParams.set('q', isSearch.value);
-                    e.target.href = url;
-                    window.location = url;
-                }
+            for (const pageLink of pageLinks) {
+                pageLink.addEventListener("click", sortOrder);
+            }
 
-                function filterBy(e) {
-                    let url = new URL(allCoursesForm.action);
-                    url.searchParams.set('sorted', sortOption.value);
-                    url.searchParams.set('tag', filters[0].value);
-                    url.searchParams.set('progress', filters[1].value);
-                    url.searchParams.set('q', isSearch.value);
-                    allCoursesForm.action = url;
-                    allCoursesForm.submit();
-                    // alert(`http://localhost:60157/elearningAllCourses/filter?sorted=${isSorted.value}&tag=${e.target.value}`);
-                    // window.location = `http://localhost:60157/elearningAllCourses/filter?sorted=${isSorted.value}&tag=${e.target.value}`;
-                }
+            resetButton.addEventListener("click", courseReset);
 
-                function courseReset(e) {
-                    window.location =
-                        `{{ route('elearningAllCourses') }}?sorted=Recently Added&tag=false&progress=false&q=false`;
-                }
+            for (const filter of filters) {
+                filter.addEventListener("change", filterBy);
+            }
 
-                courseSearchInput.addEventListener("keypress", (e) => {
-                    if (e.key === "Enter") {
-                        e.preventDefault();
-                        courseSearchButton.click();
-                    }
-                });
-                courseSearchButton.addEventListener("click", courseSearch);
-
-                sortInput.addEventListener("change", courseSort);
-
-                for (const pageLink of pageLinks) {
-                    pageLink.addEventListener("click", sortOrder);
-                }
-
-                resetButton.addEventListener("click", courseReset);
-
-                for (const filter of filters) {
-                    filter.addEventListener("change", filterBy);
-                }
-
-                // wishlist addition
-                function addWishList(e) {
-                    let id = `${e.target.id}`.replace(/\D/g, "");
-                    Swal.fire({
-                        title: "Are you sure,you want to proceed the wishlist?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Yes",
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                url: "{{ url('/addWishList') }}",
-                                type: 'GET',
-                                data: {
-                                    'id': id,
-                                    _token: '{{csrf_token()}}'
-                                },
-                                success: function(data) {
-                                    // $('#submitSuccess').modal('show');
-                                    console.log(data);
-                                    //alert(data);                                                                                                                  
-                                    if (data == "wishlist added") {
-                                        swal.fire({
-                                            title: "Success",
-                                            text: "Wishlist Added Successfully",
-                                            icon: "success",
-                                        });
-                                    } else if (data == "already added") {
-                                        swal.fire({
-                                            title: "Success",
-                                            text: "Wishlist Removed Successfully",
-                                            icon: "success",
-                                        });
-                                    } else {
-                                        Swal.fire("Error!", "Failed to add to Wishlist.", "error");
-                                    }
+            // wishlist addition
+            function addWishList(e) {
+                let id = `${e.target.id}`.replace(/\D/g, "");
+                Swal.fire({
+                    title: "Are you sure,you want to proceed the wishlist?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "{{ url('/addWishList') }}",
+                            type: 'GET',
+                            data: {
+                                'id': id,
+                                _token: '{{csrf_token()}}'
+                            },
+                            success: function(data) {
+                                // $('#submitSuccess').modal('show');
+                                console.log(data);
+                                let response = data.trim();
+                                //alert(data);                                                                                                                  
+                                if (response == "wishlist added") {
+                                    Swal.fire({
+                                        title: "Success",
+                                        text: "Wishlist Added Successfully",
+                                        icon: "success",
+                                    }).then(() => {
+                                        location.reload(); // ✅ reload after popup closes
+                                    });
+                                } else if (response == "already added") {
+                                    Swal.fire({
+                                        title: "Success",
+                                        text: "Wishlist Removed Successfully",
+                                        icon: "success",
+                                    }).then(() => {
+                                        location.reload(); // ✅ reload after popup closes
+                                    });
+                                } else {
+                                    Swal.fire("Error!", "Failed to add to Wishlist.", "error");
                                 }
-                                // error: function(error) {
-                                //     console.log('error; ' + eval(error));
-                                // }
-                            });
-                        }
-                    })
+                            }
+                            // error: function(error) {
+                            //     console.log('error; ' + eval(error));
+                            // }
+                        });
+                    }
+                })
 
-                }
-                for (let wishListBadge of wishListBadges) {
-                    wishListBadge.addEventListener('click', addWishList);
-                }
+            }
+            for (let wishListBadge of wishListBadges) {
+                wishListBadge.addEventListener('click', addWishList);
+            }
             </script>
         </div>
     </section>
