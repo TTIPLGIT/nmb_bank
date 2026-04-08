@@ -2,30 +2,30 @@
 
 @section('content')
 <style>
-    a:hover,
-    a:focus {
-        text-decoration: none;
-        outline: none;
-    }
+a:hover,
+a:focus {
+    text-decoration: none;
+    outline: none;
+}
 
-    .danger {
-        background-color: #ffdddd;
-        border-left: 6px solid #f44336;
-    }
+.danger {
+    background-color: #ffdddd;
+    border-left: 6px solid #f44336;
+}
 
-    #align {
-        border-collapse: collapse !important;
-    }
+#align {
+    border-collapse: collapse !important;
+}
 
-    table.dataTable.no-footer {
-        border-bottom: .5px solid #002266 !important;
-    }
+table.dataTable.no-footer {
+    border-bottom: .5px solid #002266 !important;
+}
 
-    thead th {
-        height: 5px;
-        border-bottom: solid 1px #ddd;
-        font-weight: bold;
-    }
+thead th {
+    height: 5px;
+    border-bottom: solid 1px #ddd;
+    font-weight: bold;
+}
 </style>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -42,13 +42,13 @@
 
         <div class="section-body mt-2">
             <div style="text-align:end">
-                <a type="button" style="font-size:15px; margin-bottom:15px;margin-right: 15px;" class="btn btn-success btn-lg"
-                    href="{{ route('custom_filed_create') }}">New Custom Field </a>
+                <a type="button" style="font-size:15px; margin-bottom:15px;margin-right: 15px;"
+                    class="btn btn-success btn-lg" href="{{ route('custom_filed_create') }}">New Custom Field </a>
             </div>
             <style>
-                .section {
-                    margin-top: 20px;
-                }
+            .section {
+                margin-top: 20px;
+            }
             </style>
 
             <div class="row">
@@ -69,30 +69,30 @@
                             <input type="hidden" name="session_data" id="session_data" class="session_data"
                                 value="{{ session('success') }}">
                             <script type="text/javascript">
-                                window.onload = function() {
-                                    var message = $('#session_data').val();
-                                    swal({
-                                        title: "Success",
-                                        text: message,
-                                        type: "success",
-                                    });
+                            window.onload = function() {
+                                var message = $('#session_data').val();
+                                swal({
+                                    title: "Success",
+                                    text: message,
+                                    type: "success",
+                                });
 
-                                }
+                            }
                             </script>
                             @elseif(session('error'))
 
                             <input type="hidden" name="session_data" id="session_data1" class="session_data"
                                 value="{{ session('error') }}">
                             <script type="text/javascript">
-                                window.onload = function() {
-                                    var message = $('#session_data1').val();
-                                    swal({
-                                        title: "Info",
-                                        text: message,
-                                        type: "info",
-                                    });
+                            window.onload = function() {
+                                var message = $('#session_data1').val();
+                                swal({
+                                    title: "Info",
+                                    text: message,
+                                    type: "info",
+                                });
 
-                                }
+                            }
                             </script>
                             @endif
 
@@ -118,33 +118,34 @@
                                                 <td>{{ ++$key }}</td>
                                                 <td>{{ $row['field_label'] }}</td>
                                                 <td>{{ $row['field_type'] }}</td>
-                                                <td>
-                                                    <div class="d-flex justify-content-around align-items-center" style="gap:10px;">
-                                                        <!-- Edit -->
-                                                        <a class="btn btn-link" type="show"
-                                                            onclick="fetch_show('{{ Crypt::encrypt($row['id']) }}','edit')"
-                                                            title="Edit" id="gcb" href="" data-toggle="modal"
-                                                            data-target="#showmodal"><i class="fas fa-pencil-alt"
-                                                                style="color:blue"></i></a>
+                                                <td style="text-align:center">
 
-                                                        <!-- Show -->
-                                                        <a class="btn btn-link" type="show"
-                                                            onclick="fetch_show('{{ Crypt::encrypt($row['id']) }}','show')"
-                                                            title="Edit" id="gcb" href="" data-toggle="modal"
-                                                            data-target="#showmodal" href="javascript:void(0);"><i class="fas fa-eye"
-                                                                style="color:green"></i></a>
+                                                    <!-- Edit -->
+                                                    <a class=" btn btn-link" type="show"
+                                                        onclick="fetch_show('{{ Crypt::encrypt($row['id']) }}','edit')"
+                                                        title="Edit" id="gcb" href="" data-toggle="modal"
+                                                        data-target="#showmodal"><i class="fas fa-pencil-alt"
+                                                            style="color:blue"></i></a>
 
-                                                        <!-- Delete -->
-                                                        <form id="delete-form-{{ $row['id'] }}" action="{{ route('custom_filed_delete', \Crypt::encrypt($row['id'])) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <a type="button" title="Delete"
-                                                                onclick="confirmDelete({{ $row['id'] }})"
-                                                                class="btn btn-link p-0">
-                                                                <i class="far fa-trash-alt" style="color:red"></i>
-                                                            </a>
-                                                        </form>
-                                                    </div>
+                                                    <!-- Show -->
+                                                    <a class="btn btn-link" type="show"
+                                                        onclick="fetch_show('{{ Crypt::encrypt($row['id']) }}','show')"
+                                                        title="Edit" id="gcb" href="" data-toggle="modal"
+                                                        data-target="#showmodal" href="javascript:void(0);"><i
+                                                            class="fas fa-eye" style="color:green"></i></a>
+
+                                                    <!-- Delete -->
+                                                    <form id="delete-form-{{ $row['id'] }}"
+                                                        action="{{ route('custom_filed_delete', \Crypt::encrypt($row['id'])) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <a type="button" title="Delete"
+                                                            onclick="confirmDelete({{ $row['id'] }})"
+                                                            class="btn btn-link p-0">
+                                                            <i class="far fa-trash-alt" style="color:red"></i>
+                                                        </a>
+                                                    </form>
+
                                                 </td>
                                             </tr>
 
@@ -186,7 +187,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Field Label :<span style="color: red;">*</span></label>
-                                <input class="form-control" type="text" id="field_label" name="field_label" placeholder="Enter Field Label" required>
+                                <input class="form-control" type="text" id="field_label" name="field_label"
+                                    placeholder="Enter Field Label" required>
                                 @error('field_label')
                                 <div class="error">{{ $message }}</div>
                                 @enderror
@@ -196,7 +198,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Field Name :<span style="color: red;">*</span></label>
-                                <input class="form-control" type="text" id="field_name" name="field_name" placeholder="Enter Field Name" required>
+                                <input class="form-control" type="text" id="field_name" name="field_name"
+                                    placeholder="Enter Field Name" required>
                                 @error('field_name')
                                 <div class="error">{{ $message }}</div>
                                 @enderror
@@ -212,20 +215,21 @@
                                     <option value="number">Number</option>
                                     <option value="date">Date</option>
                                     <option value="dropdown">Dropdown</option>
-                                    <option value="checkbox">Checkbox</option>
+                                    <!-- <option value="checkbox">Checkbox</option> -->
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-6" style="display:none;" id="options_section">
                             <div class="form-group">
                                 <label>Dropdown Options (Comma separated) : <span style="color: red;">*</span></label>
-                                <input class="form-control" type="text" id="field_options" name="field_options" placeholder="Enter Field Name">
+                                <input class="form-control" type="text" id="field_options" name="field_options"
+                                    placeholder="Enter Field Name">
                                 @error('field_options')
                                 <div class="error">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label>Required Field :</label>
                                 <input type="hidden" name="is_required" value="0">
@@ -241,11 +245,12 @@
                                 <div class="error">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="row mt-4">
                         <div class="col-12 mb-5 d-flex justify-content-center gap-2">
-                            <button style="margin-right:10px" class="btn btn-success" id="updateButton" onclick="gencre(event)">Update</button>
+                            <button style="margin-right:10px" class="btn btn-success" id="updateButton"
+                                onclick="gencre(event)">Update</button>
                             <a class="btn btn-danger" style="color:white;" href="{{ route('custom_filed') }}">Back</a>
                         </div>
                     </div>
@@ -257,60 +262,60 @@
 </div>
 
 <script>
-    function confirmDelete(id) {
+function confirmDelete(id) {
 
-        swal({
-                title: "Confirmation For Delete?",
-                text: "Are you sure you want to delete this data?",
-                icon: "warning",
-                buttons: ["No", "Yes"],
-                dangerMode: true,
-            })
-            .then((willDelete) => {
+    swal({
+            title: "Confirmation For Delete?",
+            text: "Are you sure you want to delete this data?",
+            icon: "warning",
+            buttons: ["No", "Yes"],
+            dangerMode: true,
+        })
+        .then((willDelete) => {
 
-                if (willDelete) {
-                    document.getElementById('delete-form-' + id).submit();
-                }
-
-            });
-
-
-    }
-
-    function fetch_show(id, type) {
-        $.ajax({
-            url: "/custom_filed_fetch/" + id,
-            type: 'GET',
-            data: {
-                'id': id,
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(data) {
-                console.log(data);
-
-                let row = data.rows[0];
-
-                $('#field_label').prop('disabled', false).val(row.field_label);
-                $('#field_name').prop('disabled', false).val(row.field_name);
-                $('#field_type').prop('disabled', false).val(row.field_type);
-                $('#field_options').prop('disabled', false).val(row.field_options);
-
-                $('#id').val(id);
-
-                if (type === "show") {
-                    $('#field_label,#field_name,#field_type,#field_options').prop('disabled', true);
-                    $('#updateButton').hide();
-                    $('#sub_title_name').html("Show Custom Field");
-                    $('#title_name').html("Show Custom Field");
-                } else {
-                    $('#field_label,#field_name,#field_type,#field_options').prop('disabled', false);
-                    $('#updateButton').show();
-                    $('#sub_title_name').html("Edit Custom Field");
-                    $('#title_name').html("Edit Custom Field");
-                }
+            if (willDelete) {
+                document.getElementById('delete-form-' + id).submit();
             }
+
         });
-    }
+
+
+}
+
+function fetch_show(id, type) {
+    $.ajax({
+        url: "/custom_filed_fetch/" + id,
+        type: 'GET',
+        data: {
+            'id': id,
+            _token: '{{ csrf_token() }}'
+        },
+        success: function(data) {
+            console.log(data);
+
+            let row = data.rows[0];
+
+            $('#field_label').prop('disabled', false).val(row.field_label);
+            $('#field_name').prop('disabled', false).val(row.field_name);
+            $('#field_type').prop('disabled', false).val(row.field_type);
+            $('#field_options').prop('disabled', false).val(row.field_options);
+
+            $('#id').val(id);
+
+            if (type === "show") {
+                $('#field_label,#field_name,#field_type,#field_options').prop('disabled', true);
+                $('#updateButton').hide();
+                $('#sub_title_name').html("Show Custom Field");
+                $('#title_name').html("Show Custom Field");
+            } else {
+                $('#field_label,#field_name,#field_type,#field_options').prop('disabled', false);
+                $('#updateButton').show();
+                $('#sub_title_name').html("Edit Custom Field");
+                $('#title_name').html("Edit Custom Field");
+            }
+        }
+    });
+}
 </script>
 
 @endsection

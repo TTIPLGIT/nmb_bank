@@ -336,8 +336,10 @@ class UserController extends BaseController
                 $gatewayURL =  config('setting.api_gateway_url') . '/user/get_roles_list';
                 $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
                 $response = json_decode($response);
+               
                 if ($response->Status == 200 && $response->Success) {
                     $objData = json_decode($this->decryptData($response->Data));
+                    
                     if ($objData->Code == 200) {
                         $parant_data = json_decode(json_encode($objData->Data), true);
                         $rows =  $parant_data['rows'];
@@ -357,6 +359,9 @@ class UserController extends BaseController
                         $screens = $menus['screens'];
                         $modules = $menus['modules'];
                         return view('uam.user.create', compact('rows', 'designation', 'dashboard', 'project_roles', 'screens', 'modules','custom_field'));
+                    }
+                    else {
+                        return redirect()->route('not_allow');
                     }
                 } else {
                     $objData = json_decode($this->decryptData($response->Data));
@@ -446,9 +451,12 @@ class UserController extends BaseController
                 $request1['requestData'] = $encryptArray;
 
                 $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request1), $method);
+              
                 $response1 = json_decode($response);
+              
                 if ($response1->Status == 200 && $response1->Success) {
                     $objData = json_decode($this->decryptData($response1->Data));
+                      
                     if ($objData->Code == 200) {
 
                         $parant_data = json_decode(json_encode($objData->Data), true);
@@ -461,7 +469,7 @@ class UserController extends BaseController
                     }
 
                     if ($objData->Code == 400) {
-                        return redirect(route('user.create'))->with('success', 'Email already found.Please change email id');
+                        return redirect(route('user.create'))->with('error', 'Email already found.Please change email id');
                     }
                 } else {
                     $objData = json_decode($this->decryptData($response1->Data));
@@ -552,9 +560,35 @@ class UserController extends BaseController
                         $designation =  $parant_data['designation'];
                         //    $document_category = $parant_data['document_category'];
                         $project_roles =  $parant_data['project_roles'];
-                        $user_custom_values =  $parant_data['user_custom_values'];
-                        $custom_field = $parant_data['custom_field'];
-                        //    $document_folder_structure_id =  $parant_data['document_folder_structure_id'];
+     $user_custom_value = $parant_data['user_custom_values'] ?? [];
+$custom_field = $parant_data['custom_field'] ?? [];
+
+// Build lookup array for existing values
+$user_values_lookup = [];
+foreach($user_custom_value as $value_item) {
+    if (isset($value_item['id']) && isset($value_item['field_value']) && $value_item['field_value'] !== '') {
+        $user_values_lookup[$value_item['id']] = $value_item['field_value'];
+    }
+}
+
+// ONLY include fields that have actual values
+$user_custom_values = [];
+foreach($user_values_lookup as $fieldId => $value) {
+    // Find the field definition
+    $fieldDefinition = collect($custom_field)->firstWhere('id', $fieldId);
+    if ($fieldDefinition) {
+        $user_custom_values[$fieldId] = [
+            'field_value' => $value,
+            'field_label' => $fieldDefinition['field_label'],
+            'field_type' => $fieldDefinition['field_type'],
+            'field_options' => $fieldDefinition['field_options'],
+            'field_name' => $fieldDefinition['field_name'] ?? ''
+        ];
+    }
+}
+
+
+
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
                         $modules = $menus['modules'];
@@ -900,6 +934,7 @@ class UserController extends BaseController
             $gatewayURL = config('setting.api_gateway_url') . '/user/notifications';
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
             $response = json_decode($response);
+           
             if ($response->Status == 200 && $response->Success) {
                 $objData = json_decode($this->decryptData($response->Data));
                 if ($objData->Code == 200) {

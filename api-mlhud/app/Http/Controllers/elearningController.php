@@ -280,13 +280,15 @@ class elearningController extends BaseController
 
             if (!empty($event_date) && $event_date != 'undefined' && $event_date != 'null') {
                 // Return events for specific date
-                $rows = DB::select("SELECT * from elearning_events  
+                $rows = DB::select("SELECT distinct
+                * from elearning_events  
             WHERE (user_category = $role_id or user_category = 0) 
             AND event_status = 0 
             AND event_date = '$event_date'");
             } else {
                 // Return ALL events (for initial load)
-                $rows = DB::select("SELECT * from elearning_events  
+                $rows = DB::select("SELECT distinct
+                * from elearning_events  
             WHERE (user_category = $role_id or user_category = 0) 
             AND event_status = 0 
             ORDER BY event_date DESC");

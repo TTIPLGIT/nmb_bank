@@ -290,7 +290,6 @@ class GamificationLevelController extends BaseController
                 'course_id' => $request->input('course_id'),
             ];
 
-            $this->WriteFileLog($data);
 
             $encryptArray = $this->encryptData($data);
             $requestData = ['requestData' => $encryptArray];
@@ -302,8 +301,9 @@ class GamificationLevelController extends BaseController
             $response1 = json_decode($response);
             $objData = json_decode($this->decryptData($response1->Data));
             $rows = json_decode(json_encode($objData->Data), true);
-            // dd($rows);
-            return view('Gamifications.leaderboard', compact('rows', 'modules', 'screens'));
+            $user_id = $request->session()->get("userID");
+            
+            return view('Gamifications.leaderboard', compact('rows', 'modules', 'screens','user_id','menus'));
         } catch (\Exception $exc) {
             return $this->sendLog(
                 $method,

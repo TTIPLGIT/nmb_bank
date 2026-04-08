@@ -13,13 +13,25 @@
     position: relative;
 }
 
+.course-intro-box {
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 10px;
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+.course-intro-box strong {
+    color: #2c7a7b;
+}
+
 .course-banner {
     width: 100%;
     height: 80px;
     background-size: cover;
     background-position: center;
     border-radius: 8px;
-    margin-bottom: 20px;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -156,10 +168,10 @@
 
 /* Buttons */
 .preview-btn {
-    background: #28a745;
+    background: #282da7;
     color: white;
     border: none;
-    padding: 6px 15px;
+    /* padding: 6px 15px; */
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
@@ -167,7 +179,7 @@
 }
 
 .preview-btn:hover {
-    background: #218838;
+    background: #141985;
     transform: translateY(-1px);
 }
 
@@ -208,25 +220,25 @@
 }
 
 .nav-tabs .nav-link {
-    border: none;
-    color: #6c757d;
-    font-weight: 500;
-    padding: 10px 20px;
-    margin-right: 5px;
-    border-radius: 8px 8px 0 0;
-    transition: all 0.3s ease;
+    border: none !important;
+    color: #6c757d !important;
+    font-weight: 500 !important;
+    padding: 10px 20px !important;
+    margin-right: 5px !important;
+    border-radius: 8px 8px 0 0 !important;
+    transition: all 0.3s ease !important;
 }
 
 .nav-tabs .nav-link:hover {
-    color: #495057;
-    background-color: #f8f9fa;
+    color: #495057 !important;
+    background-color: #f8f9fa !important;
 }
 
 .nav-tabs .nav-link.active {
-    color: #fff;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
-    border-radius: 8px 8px 0 0;
+    color: #fff !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
+    border-radius: 8px 8px 0 0 !important;
 }
 
 /* Badge Styles */
@@ -331,6 +343,10 @@
     }
 }
 
+.tab-icon {
+    color: #42147c !important;
+}
+
 /* Modal Enhancements */
 .modal-content {
     border: none;
@@ -385,161 +401,304 @@
 </style>
 
 <!-- Main Content Wrapper -->
-<div class="content-wrapper">
-    <!-- Course Banner -->
+<div class="main-content">
+    <section class="section">
+        <div class="col-lg-12 text-center">
+            <h4 style="color:darkblue;">Course Details</h4>
+        </div>
+        <!-- Course Banner -->
 
-    <div class="course-banner">
 
 
-    </div>
 
 
-    <!-- Course Header -->
-    <div class="course-header">
-        <h1>{{ $course['course_name'] }}</h1>
-        <p class="lead">{{ $course['course_description'] }}</p>
 
-        <div class="course-meta-grid">
-            <div class="meta-card">
-                <small>Category</small>
-                <div class="fw-bold">{{ $course['category'] }}</div>
-            </div>
-            <div class="meta-card">
-                <small>Role</small>
-                <div class="fw-bold">{{ $course['role'] }}</div>
-            </div>
-            <div class="meta-card">
-                <small>Designation</small>
-                <div class="fw-bold">{{ $course['designation'] }}</div>
-            </div>
-            <div class="meta-card">
-                <small>Type</small>
-                <div class="fw-bold">{{ $course['course_type'] ?? 'Technical' }}</div>
-            </div>
-            <div class="meta-card">
-                <small>Duration</small>
-                <div class="fw-bold">{{ $course['course_duration'] }}</div>
-            </div>
-            <div class="meta-card">
-                <small>Classes</small>
-                <div class="fw-bold">{{ $course['class_count'] }}</div>
-            </div>
-            <div class="meta-card">
-                <small>Completion Logic</small>
-                <div class="fw-bold">{{ $course['completion_points_logic'] }}</div>
+
+        <!-- Course Header -->
+        <div class="course-header">
+            <h1>{{ $course['course_name'] }}</h1>
+            <p class="lead">{{ $course['course_description'] }}</p>
+
+            <div class="course-meta-grid">
+                <div class="meta-card">
+                    <small>Category</small>
+                    <div class="fw-bold">{{ $course['category'] }}</div>
+                </div>
+                <div class="meta-card">
+                    <small>Role</small>
+                    <div class="fw-bold">{{ $course['role'] }}</div>
+                </div>
+                <div class="meta-card">
+                    <small>Designation</small>
+                    <div class="fw-bold">{{ $course['designation'] }}</div>
+                </div>
+                <div class="meta-card">
+                    <small>Type</small>
+                    <div class="fw-bold">{{ $course['course_type'] ?? 'Technical' }}</div>
+                </div>
+                <div class="meta-card">
+                    <small>Duration</small>
+                    <div class="fw-bold">{{ $course['course_duration'] }}</div>
+                </div>
+                <div class="meta-card">
+                    <small>Classes</small>
+                    <div class="fw-bold">{{ $course['class_count'] }}</div>
+                </div>
+                <div class="meta-card">
+                    <small>Completion Logic</small>
+                    <div class="fw-bold">{{ $course['completion_points_logic'] }}</div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Course Introduction -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title text-primary"><i class="fas fa-info-circle mr-2"></i>Course Introduction</h5>
-            <div class="bg-light p-3 rounded">
-                <pre
-                    style="white-space: pre-wrap; background: none; border: none; padding: 0; margin: 0; font-family: inherit; font-size: 15px;">{{ $course['course_introduction'] }}</pre>
+        <!-- Course Introduction -->
+        <div class="card mb-4 shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-info-circle mr-2"></i>Course Introduction
+                </h5>
+
+                <div class="course-intro-box">
+                    {!! nl2br(e($course['course_introduction'])) !!}
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Navigation Tabs -->
-    <ul class="nav nav-tabs" id="courseTabs">
-        <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#classes">
-                <i class="fas fa-book mr-2"></i>Classes
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#quiz">
-                <i class="fas fa-question-circle mr-2"></i>Quiz
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#exam_section">
-                <i class="fas fa-graduation-cap mr-2"></i>Final Exam
-            </a>
-        </li>
-    </ul>
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs" id="courseTabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#classes">
+                    <i class="fas fa-book mr-2 tab-icon"></i>Classes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#quiz">
+                    <i class="fas fa-question-circle mr-2 tab-icon"></i>Quiz
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#exam_section">
+                    <i class="fas fa-graduation-cap mr-2 tab-icon"></i>Final Exam
+                </a>
+            </li>
+        </ul>
 
-    <div class="tab-content-area">
-        <div class="tab-content">
+        <div class="tab-content-area">
+            <div class="tab-content">
 
-            <div class="tab-pane fade show active" id="classes">
-                <div id="classesAccordion">
+                <div class="tab-pane fade show active" id="classes">
+                    <div id="classesAccordion">
+                        @foreach($course['classes'] as $cIndex => $class)
+                        <div class="class-card">
+                            <div class="class-card-header" onclick="toggleClass({{ $cIndex }})">
+                                <div class="d-flex align-items-center">
+                                    <!-- ADD THIS CHECKBOX -->
+                                    <input type="checkbox" class="form-check-input class-check" id="class_{{ $cIndex }}"
+                                        data-index="{{ $cIndex }}" checked disabled>
+                                    <label class="mb-0 ml-2 fw-bold" for="class_{{ $cIndex }}">
+                                        <i class="fas fa-chalkboard-teacher mr-2"></i>
+                                        {{ $class['class_name'] }}
+                                        <small class="text-muted ml-2">({{ $class['estimated_duration'] }})</small>
+                                    </label>
+                                </div>
+                                <i class="fas fa-chevron-down text-secondary" id="classIcon{{ $cIndex }}"></i>
+                            </div>
+
+                            <div class="class-details" id="classDetails{{ $cIndex }}" style="display: none;">
+                                <p class="mb-3">{{ $class['class_description'] }}</p>
+
+                                @if(isset($class['video_slides']) && count($class['video_slides']) > 0)
+                                <h6 class="mt-4 mb-3">
+                                    <i class="fas fa-images mr-2"></i>Slides ({{ count($class['video_slides']) }})
+                                </h6>
+                                <div class="slides-container">
+                                    @foreach($class['video_slides'] as $sIndex => $slide)
+                                    <div class="slide-item">
+                                        <span class="d-flex align-items-center">
+                                            <i class="fas fa-file-powerpoint mr-2"></i>
+                                            Slide {{ $sIndex + 1 }}: {{ $slide['title'] }}
+                                        </span>
+                                        <button type="button" class="preview-btn"
+                                            onclick="showSlideModal('{{ $slide['title'] }}', `{{ addslashes($slide['visual_text']) }}`, `{{ addslashes($slide['voiceover_script']) }}`, '{{ $slide['voiceover_audio_url'] ?? '' }}')">
+                                            <i class="fas fa-eye mr-1"></i> Preview
+                                        </button>
+                                    </div>
+                                    @endforeach
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Quiz Tab -->
+                <div class="tab-pane fade" id="quiz">
+                    <div class="select-all-container">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="selectAllQuiz" checked>
+                            <label class="form-check-label fw-bold" for="selectAllQuiz">
+                                <i class="fas fa-check-double mr-2"></i>Select All Quiz Questions
+                            </label>
+                        </div>
+                    </div>
+
                     @foreach($course['classes'] as $cIndex => $class)
-                    <div class="class-card">
-                        <div class="class-card-header" onclick="toggleClass({{ $cIndex }})">
-                            <div class="d-flex align-items-center">
-                                <!-- ADD THIS CHECKBOX -->
-                                <input type="checkbox" class="form-check-input class-check" id="class_{{ $cIndex }}"
-                                    data-index="{{ $cIndex }}" checked disabled>
-                                <label class="mb-0 ml-2 fw-bold" for="class_{{ $cIndex }}">
-                                    <i class="fas fa-chalkboard-teacher mr-2 text-primary"></i>
-                                    {{ $class['class_name'] }}
-                                    <small class="text-muted ml-2">({{ $class['estimated_duration'] }})</small>
+                    @if(isset($class['quiz']) && !empty(array_filter($class['quiz'])))
+                    <div class="mb-4">
+                        <h5 class="card-title">
+                            <i class="fas fa-chalkboard-teacher mr-2"></i>{{ $class['class_name'] }}
+                        </h5>
+
+                        <!-- Long Answer Questions -->
+                        @if(isset($class['quiz']['long']) && count($class['quiz']['long']) > 0)
+                        <h6 class="mb-3 text-secondary">
+                            <i class="fas fa-align-left mr-2"></i>Long Answer Questions
+                        </h6>
+                        @foreach($class['quiz']['long'] as $qIndex => $q)
+                        <div class="question-card">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input question-check"
+                                    id="quiz_long_{{ $cIndex }}_{{ $qIndex }}" data-type="long"
+                                    data-class="{{ $cIndex }}" data-index="{{ $qIndex }}" checked>
+                                <label class="form-check-label fw-bold" for="quiz_long_{{ $cIndex }}_{{ $qIndex }}">
+                                    {{ $q['question_text'] }}
                                 </label>
                             </div>
-                            <i class="fas fa-chevron-down text-secondary" id="classIcon{{ $cIndex }}"></i>
-                        </div>
-
-                        <div class="class-details" id="classDetails{{ $cIndex }}" style="display: none;">
-                            <p class="mb-3">{{ $class['class_description'] }}</p>
-
-                            @if(isset($class['video_slides']) && count($class['video_slides']) > 0)
-                            <h6 class="mt-4 mb-3 text-primary">
-                                <i class="fas fa-images mr-2"></i>Slides ({{ count($class['video_slides']) }})
-                            </h6>
-                            <div class="slides-container">
-                                @foreach($class['video_slides'] as $sIndex => $slide)
-                                <div class="slide-item">
-                                    <span class="d-flex align-items-center">
-                                        <i class="fas fa-file-powerpoint mr-2 text-primary"></i>
-                                        Slide {{ $sIndex + 1 }}: {{ $slide['title'] }}
-                                    </span>
-                                    <button type="button" class="preview-btn"
-                                        onclick="showSlideModal('{{ $slide['title'] }}', `{{ addslashes($slide['visual_text']) }}`, `{{ addslashes($slide['voiceover_script']) }}`, '{{ $slide['voiceover_audio_url'] ?? '' }}')">
-                                        <i class="fas fa-eye mr-1"></i> Preview
-                                    </button>
-                                </div>
-                                @endforeach
+                            <div class="long-answer mt-2">
+                                <div class="long-answer-label">Answer:</div>
+                                <div>{{ $q['answer'] }}</div>
                             </div>
-                            @endif
                         </div>
+                        @endforeach
+                        @endif
+
+                        <!-- MCQ Questions -->
+                        @if(isset($class['quiz']['mcq']) && count($class['quiz']['mcq']) > 0)
+                        <h6 class="mb-3 text-secondary">
+                            <i class="fas fa-list-ol mr-2"></i>MCQ Questions
+                        </h6>
+                        @foreach($class['quiz']['mcq'] as $qIndex => $q)
+                        <div class="question-card">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input question-check"
+                                    id="quiz_mcq_{{ $cIndex }}_{{ $qIndex }}" data-type="mcq" data-class="{{ $cIndex }}"
+                                    data-index="{{ $qIndex }}" checked>
+                                <label class="form-check-label fw-bold" for="quiz_mcq_{{ $cIndex }}_{{ $qIndex }}">
+                                    {{ $q['question_text'] }}
+                                </label>
+                            </div>
+                            <ul class="list-unstyled ml-4 mt-2">
+                                @foreach($q['options'] as $opt)
+                                <li
+                                    class="{{ $opt['option_id'] == $q['correct_option_id'] ? 'text-success' : '' }} mb-1">
+                                    <i class="fas fa-circle fa-xs mr-2"></i>
+                                    {{ $opt['option_id'] }}. {{ $opt['text'] }}
+                                    @if($opt['option_id'] == $q['correct_option_id'])
+                                    <small class="badge badge-success ml-2">
+                                        <i class="fas fa-check mr-1"></i>Correct
+                                    </small>
+                                    @endif
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endforeach
+                        @endif
+
+                        <!-- Short Answer Questions -->
+                        @if(isset($class['quiz']['short']) && count($class['quiz']['short']) > 0)
+                        <h6 class="mb-3 text-secondary">
+                            <i class="fas fa-pen-alt mr-2"></i>Short Answer Questions
+                        </h6>
+                        @foreach($class['quiz']['short'] as $qIndex => $q)
+                        <div class="question-card">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input question-check"
+                                    id="quiz_short_{{ $cIndex }}_{{ $qIndex }}" data-type="short"
+                                    data-class="{{ $cIndex }}" data-index="{{ $qIndex }}" checked>
+                                <label class="form-check-label fw-bold" for="quiz_short_{{ $cIndex }}_{{ $qIndex }}">
+                                    {{ $q['question_text'] }}
+                                </label>
+                            </div>
+                            <div class="bg-light p-3 rounded mt-2 border">
+                                <strong><i class="fas fa-lightbulb mr-2 text-warning"></i>Answer:</strong>
+                                <span class="ml-1">{{ $q['answer'] }}</span>
+                            </div>
+                        </div>
+                        @endforeach
+                        @endif
+
+                        <!-- True/False Questions -->
+                        @if(isset($class['quiz']['true_false']) && count($class['quiz']['true_false']) > 0)
+                        <h6 class="mb-3 text-secondary">
+                            <i class="fas fa-check-circle mr-2"></i>True/False Questions
+                        </h6>
+                        @foreach($class['quiz']['true_false'] as $qIndex => $q)
+                        <div class="question-card">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input question-check"
+                                    id="quiz_tf_{{ $cIndex }}_{{ $qIndex }}" data-type="true_false"
+                                    data-class="{{ $cIndex }}" data-index="{{ $qIndex }}" checked>
+                                <label class="form-check-label fw-bold" for="quiz_tf_{{ $cIndex }}_{{ $qIndex }}">
+                                    {{ $q['question_text'] }}
+                                </label>
+                            </div>
+                            <div class="true-false-container mt-2">
+                                <!-- <div class="true-false-option">
+                                <span class="true-false-badge true-badge">True,{{ $q['answer'] }}</span>
+                                @if($q['answer'] == 'True')
+                                <small class="badge badge-success ml-2">
+                                    <i class="fas fa-check mr-1"></i>Correct Answer
+                                </small>
+                                @endif
+                            </div>
+                            <div class="true-false-option">
+                                <span class="true-false-badge false-badge">False</span>
+                                @if($q['answer'] == 'False')
+                                <small class="badge badge-success ml-2">
+                                    <i class="fas fa-check mr-1"></i>Correct Answer
+                                </small>
+                                @endif
+                            </div> -->
+                                <div class="mt-2">
+                                    <small class="text-success">
+                                        <i class="fas fa-check mr-1"></i>
+                                        Correct Answer:
+                                        {{ $q['answer'] == 'True' ? 'True' : 'False' }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                        @endif
                     </div>
+                    @endif
                     @endforeach
                 </div>
-            </div>
 
-            <!-- Quiz Tab -->
-            <div class="tab-pane fade" id="quiz">
-                <div class="select-all-container">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="selectAllQuiz">
-                        <label class="form-check-label fw-bold" for="selectAllQuiz">
-                            <i class="fas fa-check-double mr-2"></i>Select All Quiz Questions
-                        </label>
+                <!-- Final Exam Tab -->
+                <div class="tab-pane fade" id="exam_section">
+                    <div class="select-all-container">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="selectAllExam" checked>
+                            <label class="form-check-label fw-bold" for="selectAllExam">
+                                <i class="fas fa-check-double mr-2"></i>Select All Exam Questions
+                            </label>
+                        </div>
                     </div>
-                </div>
-
-                @foreach($course['classes'] as $cIndex => $class)
-                @if(isset($class['quiz']) && !empty(array_filter($class['quiz'])))
-                <div class="mb-4">
-                    <h5 class="text-primary mb-3">
-                        <i class="fas fa-chalkboard-teacher mr-2"></i>{{ $class['class_name'] }}
-                    </h5>
 
                     <!-- Long Answer Questions -->
-                    @if(isset($class['quiz']['long']) && count($class['quiz']['long']) > 0)
+                    @if(isset($course['final_exam']['long']) && count($course['final_exam']['long']) > 0)
                     <h6 class="mb-3 text-secondary">
                         <i class="fas fa-align-left mr-2"></i>Long Answer Questions
                     </h6>
-                    @foreach($class['quiz']['long'] as $qIndex => $q)
+                    @foreach($course['final_exam']['long'] as $qIndex => $q)
                     <div class="question-card">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input question-check"
-                                id="quiz_long_{{ $cIndex }}_{{ $qIndex }}" data-type="long" data-class="{{ $cIndex }}"
-                                data-index="{{ $qIndex }}" checked>
-                            <label class="form-check-label fw-bold" for="quiz_long_{{ $cIndex }}_{{ $qIndex }}">
+                            <input type="checkbox" class="form-check-input question-check" id="exam_long_{{ $qIndex }}"
+                                data-type="long" data-index="{{ $qIndex }}" checked>
+                            <label class="form-check-label fw-bold" for="exam_long_{{ $qIndex }}">
                                 {{ $q['question_text'] }}
                             </label>
                         </div>
@@ -552,17 +711,16 @@
                     @endif
 
                     <!-- MCQ Questions -->
-                    @if(isset($class['quiz']['mcq']) && count($class['quiz']['mcq']) > 0)
+                    @if(isset($course['final_exam']['mcq']) && count($course['final_exam']['mcq']) > 0)
                     <h6 class="mb-3 text-secondary">
                         <i class="fas fa-list-ol mr-2"></i>MCQ Questions
                     </h6>
-                    @foreach($class['quiz']['mcq'] as $qIndex => $q)
+                    @foreach($course['final_exam']['mcq'] as $qIndex => $q)
                     <div class="question-card">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input question-check"
-                                id="quiz_mcq_{{ $cIndex }}_{{ $qIndex }}" data-type="mcq" data-class="{{ $cIndex }}"
-                                data-index="{{ $qIndex }}" checked>
-                            <label class="form-check-label fw-bold" for="quiz_mcq_{{ $cIndex }}_{{ $qIndex }}">
+                            <input type="checkbox" class="form-check-input question-check" id="exam_mcq_{{ $qIndex }}"
+                                data-type="mcq" data-index="{{ $qIndex }}" checked>
+                            <label class="form-check-label fw-bold" for="exam_mcq_{{ $qIndex }}">
                                 {{ $q['question_text'] }}
                             </label>
                         </div>
@@ -584,17 +742,16 @@
                     @endif
 
                     <!-- Short Answer Questions -->
-                    @if(isset($class['quiz']['short']) && count($class['quiz']['short']) > 0)
+                    @if(isset($course['final_exam']['short']) && count($course['final_exam']['short']) > 0)
                     <h6 class="mb-3 text-secondary">
                         <i class="fas fa-pen-alt mr-2"></i>Short Answer Questions
                     </h6>
-                    @foreach($class['quiz']['short'] as $qIndex => $q)
+                    @foreach($course['final_exam']['short'] as $qIndex => $q)
                     <div class="question-card">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input question-check"
-                                id="quiz_short_{{ $cIndex }}_{{ $qIndex }}" data-type="short" data-class="{{ $cIndex }}"
-                                data-index="{{ $qIndex }}" checked>
-                            <label class="form-check-label fw-bold" for="quiz_short_{{ $cIndex }}_{{ $qIndex }}">
+                            <input type="checkbox" class="form-check-input question-check" id="exam_short_{{ $qIndex }}"
+                                data-type="short" data-index="{{ $qIndex }}" checked>
+                            <label class="form-check-label fw-bold" for="exam_short_{{ $qIndex }}">
                                 {{ $q['question_text'] }}
                             </label>
                         </div>
@@ -607,17 +764,16 @@
                     @endif
 
                     <!-- True/False Questions -->
-                    @if(isset($class['quiz']['true_false']) && count($class['quiz']['true_false']) > 0)
+                    @if(isset($course['final_exam']['true_false']) && count($course['final_exam']['true_false']) > 0)
                     <h6 class="mb-3 text-secondary">
                         <i class="fas fa-check-circle mr-2"></i>True/False Questions
                     </h6>
-                    @foreach($class['quiz']['true_false'] as $qIndex => $q)
+                    @foreach($course['final_exam']['true_false'] as $qIndex => $q)
                     <div class="question-card">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input question-check"
-                                id="quiz_tf_{{ $cIndex }}_{{ $qIndex }}" data-type="true_false"
-                                data-class="{{ $cIndex }}" data-index="{{ $qIndex }}" checked>
-                            <label class="form-check-label fw-bold" for="quiz_tf_{{ $cIndex }}_{{ $qIndex }}">
+                            <input type="checkbox" class="form-check-input question-check" id="exam_tf_{{ $qIndex }}"
+                                data-type="true_false" data-index="{{ $qIndex }}" checked>
+                            <label class="form-check-label fw-bold" for="exam_tf_{{ $qIndex }}">
                                 {{ $q['question_text'] }}
                             </label>
                         </div>
@@ -625,7 +781,7 @@
                             <div class="true-false-option">
                                 <span class="true-false-badge true-badge">True</span>
                                 @if($q['answer'] == 'True')
-                                <small class="badge badge-success">
+                                <small class="badge badge-success ml-2">
                                     <i class="fas fa-check mr-1"></i>Correct Answer
                                 </small>
                                 @endif
@@ -633,7 +789,7 @@
                             <div class="true-false-option">
                                 <span class="true-false-badge false-badge">False</span>
                                 @if($q['answer'] == 'False')
-                                <small class="badge badge-success">
+                                <small class="badge badge-success ml-2">
                                     <i class="fas fa-check mr-1"></i>Correct Answer
                                 </small>
                                 @endif
@@ -643,171 +799,53 @@
                     @endforeach
                     @endif
                 </div>
-                @endif
-                @endforeach
             </div>
+            <form action="{{ route('ai_course_store') }}" method="post" id="courseForm">
+                @csrf
+                <input type="hidden" name="course_data" id="courseData"
+                    value="{{ json_encode($course, JSON_UNESCAPED_UNICODE) }}">
+                <input type="hidden" name="selected_questions" id="selectedQuestions" value="">
 
-            <!-- Final Exam Tab -->
-            <div class="tab-pane fade" id="exam_section">
-                <div class="select-all-container">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="selectAllExam">
-                        <label class="form-check-label fw-bold" for="selectAllExam">
-                            <i class="fas fa-check-double mr-2"></i>Select All Exam Questions
-                        </label>
-                    </div>
-                </div>
 
-                <!-- Long Answer Questions -->
-                @if(isset($course['final_exam']['long']) && count($course['final_exam']['long']) > 0)
-                <h6 class="mb-3 text-secondary">
-                    <i class="fas fa-align-left mr-2"></i>Long Answer Questions
-                </h6>
-                @foreach($course['final_exam']['long'] as $qIndex => $q)
-                <div class="question-card">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input question-check" id="exam_long_{{ $qIndex }}"
-                            data-type="long" data-index="{{ $qIndex }}" checked>
-                        <label class="form-check-label fw-bold" for="exam_long_{{ $qIndex }}">
-                            {{ $q['question_text'] }}
-                        </label>
-                    </div>
-                    <div class="long-answer mt-2">
-                        <div class="long-answer-label">Answer:</div>
-                        <div>{{ $q['answer'] }}</div>
-                    </div>
-                </div>
-                @endforeach
-                @endif
-
-                <!-- MCQ Questions -->
-                @if(isset($course['final_exam']['mcq']) && count($course['final_exam']['mcq']) > 0)
-                <h6 class="mb-3 text-secondary">
-                    <i class="fas fa-list-ol mr-2"></i>MCQ Questions
-                </h6>
-                @foreach($course['final_exam']['mcq'] as $qIndex => $q)
-                <div class="question-card">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input question-check" id="exam_mcq_{{ $qIndex }}"
-                            data-type="mcq" data-index="{{ $qIndex }}" checked>
-                        <label class="form-check-label fw-bold" for="exam_mcq_{{ $qIndex }}">
-                            {{ $q['question_text'] }}
-                        </label>
-                    </div>
-                    <ul class="list-unstyled ml-4 mt-2">
-                        @foreach($q['options'] as $opt)
-                        <li class="{{ $opt['option_id'] == $q['correct_option_id'] ? 'text-success' : '' }} mb-1">
-                            <i class="fas fa-circle fa-xs mr-2"></i>
-                            {{ $opt['option_id'] }}. {{ $opt['text'] }}
-                            @if($opt['option_id'] == $q['correct_option_id'])
-                            <small class="badge badge-success ml-2">
-                                <i class="fas fa-check mr-1"></i>Correct
-                            </small>
-                            @endif
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endforeach
-                @endif
-
-                <!-- Short Answer Questions -->
-                @if(isset($course['final_exam']['short']) && count($course['final_exam']['short']) > 0)
-                <h6 class="mb-3 text-secondary">
-                    <i class="fas fa-pen-alt mr-2"></i>Short Answer Questions
-                </h6>
-                @foreach($course['final_exam']['short'] as $qIndex => $q)
-                <div class="question-card">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input question-check" id="exam_short_{{ $qIndex }}"
-                            data-type="short" data-index="{{ $qIndex }}" checked>
-                        <label class="form-check-label fw-bold" for="exam_short_{{ $qIndex }}">
-                            {{ $q['question_text'] }}
-                        </label>
-                    </div>
-                    <div class="bg-light p-3 rounded mt-2 border">
-                        <strong><i class="fas fa-lightbulb mr-2 text-warning"></i>Answer:</strong>
-                        <span class="ml-1">{{ $q['answer'] }}</span>
-                    </div>
-                </div>
-                @endforeach
-                @endif
-
-                <!-- True/False Questions -->
-                @if(isset($course['final_exam']['true_false']) && count($course['final_exam']['true_false']) > 0)
-                <h6 class="mb-3 text-secondary">
-                    <i class="fas fa-check-circle mr-2"></i>True/False Questions
-                </h6>
-                @foreach($course['final_exam']['true_false'] as $qIndex => $q)
-                <div class="question-card">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input question-check" id="exam_tf_{{ $qIndex }}"
-                            data-type="true_false" data-index="{{ $qIndex }}" checked>
-                        <label class="form-check-label fw-bold" for="exam_tf_{{ $qIndex }}">
-                            {{ $q['question_text'] }}
-                        </label>
-                    </div>
-                    <div class="true-false-container mt-2">
-                        <div class="true-false-option">
-                            <span class="true-false-badge true-badge">True</span>
-                            @if($q['answer'] == 'True')
-                            <small class="badge badge-success">
-                                <i class="fas fa-check mr-1"></i>Correct Answer
-                            </small>
-                            @endif
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="selection-counts" id="selectionCounts">
+                            <div class="selection-count-item">
+                                <i class="fas fa-book"></i>
+                                <span id="classCount">Classes: 0</span>
+                            </div>
+                            <div class="selection-count-item">
+                                <i class="fas fa-question-circle"></i>
+                                <span id="quizCount">Quiz: 0</span>
+                            </div>
+                            <div class="selection-count-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span id="examCount">Exam: 0</span>
+                            </div>
                         </div>
-                        <div class="true-false-option">
-                            <span class="true-false-badge false-badge">False</span>
-                            @if($q['answer'] == 'False')
-                            <small class="badge badge-success">
-                                <i class="fas fa-check mr-1"></i>Correct Answer
-                            </small>
-                            @endif
+                        <div>
+                            <button type="submit" class="btn btn-success btn-lg px-4 py-2" id="submitBtn">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                <span id="submitText">Submit Course</span>
+                                <span id="submitSpinner" class="spinner-border spinner-border-sm ml-2 d-none"
+                                    role="status" aria-hidden="true"></span>
+                            </button>
+                            <a href="{{ route('ai_course_create') }}" class="btn btn-secondary btn-lg px-4 py-2 ml-3">
+                                <i class="fas fa-times mr-2"></i>
+                                Cancel
+                            </a>
+
                         </div>
                     </div>
-                </div>
-                @endforeach
-                @endif
-            </div>
+
+            </form>
         </div>
-    </div>
-</div> <!-- End content-wrapper -->
+
+    </section>
+</div>
 
 
-<form action="{{ route('ai_course_store') }}" method="post" id="courseForm">
-    @csrf
-    <input type="hidden" name="course_data" id="courseData" value="{{ json_encode($course, JSON_UNESCAPED_UNICODE) }}">
-    <input type="hidden" name="selected_questions" id="selectedQuestions" value="">
 
-    <div class="sticky-footer">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="selection-counts" id="selectionCounts">
-                    <div class="selection-count-item">
-                        <i class="fas fa-book text-primary"></i>
-                        <span id="classCount">Classes: 0</span>
-                    </div>
-                    <div class="selection-count-item">
-                        <i class="fas fa-question-circle text-primary"></i>
-                        <span id="quizCount">Quiz: 0</span>
-                    </div>
-                    <div class="selection-count-item">
-                        <i class="fas fa-graduation-cap text-primary"></i>
-                        <span id="examCount">Exam: 0</span>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-success btn-lg px-4 py-2" id="submitBtn">
-                        <i class="fas fa-paper-plane mr-2"></i>
-                        <span id="submitText">Submit Course</span>
-                        <span id="submitSpinner" class="spinner-border spinner-border-sm ml-2 d-none" role="status"
-                            aria-hidden="true"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
 
 <!-- Slide Modal -->
 <div class="modal fade" id="slideModal" tabindex="-1">
@@ -819,15 +857,15 @@
             </div>
             <div class="modal-body">
                 <div class="mb-4">
-                    <h6><i class="fas fa-list-alt mr-2 text-primary"></i>Slide Content:</h6>
+                    <h6><i class="fas fa-list-alt mr-2"></i>Slide Content:</h6>
                     <div id="slideContent" class="border p-3 rounded"></div>
                 </div>
                 <div class="mt-4">
-                    <h6><i class="fas fa-microphone mr-2 text-primary"></i>Voice-over Script:</h6>
+                    <h6><i class="fas fa-microphone mr-2"></i>Voice-over Script:</h6>
                     <div id="voiceoverScript" class="bg-light p-3 rounded border"></div>
                 </div>
                 <div id="audioSection" class="mt-4" style="display: none;">
-                    <h6><i class="fas fa-volume-up mr-2 text-primary"></i>Audio:</h6>
+                    <h6><i class="fas fa-volume-up mr-2"></i>Audio:</h6>
                     <audio controls id="slideAudio" class="w-100"></audio>
                 </div>
             </div>

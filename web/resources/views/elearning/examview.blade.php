@@ -246,20 +246,6 @@ body {
     }
 
 }
-
-
-
-
-
-@media (min-width:1024.96px) {
-    .main-content {
-        padding-left: 220px !important;
-    }
-
-    .sidebar-mini .main-content {
-        padding-left: 85px !important;
-    }
-}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 
@@ -305,7 +291,7 @@ body {
                 @php
                 $id = $quizId;
                 @endphp
-                
+
                 <form id="quizForm" class="row" action="{{ route('course.examstore', $quizId) }}" method="post">
 
                     @csrf

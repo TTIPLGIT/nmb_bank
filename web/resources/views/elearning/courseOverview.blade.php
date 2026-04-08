@@ -270,15 +270,7 @@
     }
 }
 
-@media (min-width:1024.96px) {
-    .main-content {
-        padding-left: 220px !important;
-    }
 
-    .sidebar-mini .main-content {
-        padding-left: 85px !important;
-    }
-}
 
 @media (min-width:320px) and (max-width:1024px) {
     .courseClassNum {
@@ -717,13 +709,13 @@ if ($daysLeft <= 30 && $daysLeft>= 0) {
                                 @endif
 
                                 @if($enrolled == "True")
-                                <div class="progress mb-4 courseOverviewProgress">
+                                <!-- <div class="progress mb-4 courseOverviewProgress">
                                     <div class="progress-bar bg-info" role="progressbar"
                                         style="width: {{isset($courseProgress[$courseDetail->course_id]) ? $courseProgress[$courseDetail->course_id]->course_progress : '0'}}% ;"
                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                         {{isset($courseProgress[$courseDetail->course_id]) ? $courseProgress[$courseDetail->course_id]->course_progress : '0'}}%
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="d-flex flex-row justify-content-center mb-2">
                                     @php $id=Crypt::encrypt($courseDetail->course_id); @endphp

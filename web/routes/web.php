@@ -80,9 +80,9 @@ use App\Http\Controllers\GamificationLevelController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Elearning_chartsController;
 
-use App\Http\Controllers\ScormController;
-use App\Http\Controllers\ScormPlayerController;
-use App\Http\Controllers\ScormTrackingController;
+
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ClassController;
 
 Route::get('/check-openssl', function () {
     if (extension_loaded('openssl')) {
@@ -327,11 +327,13 @@ Route::post('/uam_modules_screens/update_data', [\App\Http\Controllers\UamModule
 
 //auditlog
 Route::get('/auditlog', [auditlogController::class, 'login_index'])->name('login_index')->name('auditlog.view');
-Route::post('/auditlog/login', [\App\Http\Controllers\auditlogController::class, 'login_search'])->name('auditlog.login');
+Route::post('/auditlog', [\App\Http\Controllers\auditlogController::class, 'login_search'])->name('auditlog.login');
+Route::post('/auditlog/export', [\App\Http\Controllers\auditlogController::class, 'exportAuditLogs'])->name('auditlog.export');
+Route::post('/login-audit/export', [\App\Http\Controllers\auditlogController::class, 'exportLoginAudit'])->name('login.audit.export');
 Route::get('uamlog', [auditlogcontroller::class, 'uamlog'])->name('uamlog');
 Route::get('vreglog', [auditlogcontroller::class, 'vreglog'])->name('vreglog');
 Route::get('log_details', [auditlogcontroller::class, 'log_details'])->name('log_details');
-Route::post('/log_details_data', [\App\Http\Controllers\auditlogController::class, 'log_details_data'])->name('log_details_data');
+Route::post('/log_details', [\App\Http\Controllers\auditlogController::class, 'log_details_data'])->name('log_details_data');
 
 
 // DEEPIKA//
@@ -900,3 +902,9 @@ Route::post('/custom_filed_store', [App\Http\Controllers\DesignationController::
 Route::get('/custom_filed_fetch/{id}', [App\Http\Controllers\DesignationController::class, 'custom_filed_fetch'])->name('custom_filed_fetch');
 Route::post('/custom_field_update', [App\Http\Controllers\DesignationController::class, 'custom_field_update'])->name('custom_field_update');
 Route::post('/custom_filed_delete/{id}', [App\Http\Controllers\DesignationController::class, 'custom_filed_delete'])->name('custom_filed_delete');
+
+
+
+    Route::get('/courses', [App\Http\Controllers\CourseController::class, 'index'])->name('admin.courses.index');
+   Route::get('/admin/course/create', [App\Http\Controllers\tryController::class, 'course_create'])->name('admin.course.create');
+    

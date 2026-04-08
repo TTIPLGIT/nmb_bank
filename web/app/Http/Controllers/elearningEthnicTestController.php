@@ -515,13 +515,14 @@ class elearningEthnicTestController extends BaseController
             $availableCourseIds = [];
             $time = time();
             $currentTime = date("Y-m-d");
-            // dd($currentTime);
+           
             foreach ($Courses as $course) {
                 if ($course->course_start_period == "" || $course->course_end_period == "") {
                     array_splice($availableCourseIds, 1, 0, $course->course_id);
                 } else {
-                    $courseStartPeriod = date("Y-m-d H:i:s", strtotime($course->course_start_period));
-                    $courseEndPeriod = date("Y-m-d H:i:s", strtotime($course->course_end_period));
+                    $courseStartPeriod = date("Y-m-d", strtotime($course->course_start_period));
+                    $courseEndPeriod = date("Y-m-d", strtotime($course->course_end_period));
+                    
                     if ($currentTime >= $courseStartPeriod && $currentTime <= $courseEndPeriod) {
                         array_splice($availableCourseIds, 1, 0, $course->course_id);
                     }
@@ -1566,30 +1567,30 @@ $scormCourses = DB::table('scorm_courses as sc')
                 )
                 ->get();
             // dd($courseDetailsLists);
-            if ($results && $courseDetailslist) {
-                $old_cptPoints = $results->total_cptpoints;
-                $new_cptPoints = $courseDetailslist->course_cpt_points;
+            // if ($results && $courseDetailslist) {
+            //     $old_cptPoints = $results->total_cptpoints;
+            //     $new_cptPoints = $courseDetailslist->course_cpt_points;
 
-                // Check: has this course’s points already been added?
-                $expectedPoints = $old_cptPoints + $new_cptPoints;
+            //     // Check: has this course’s points already been added?
+            //     $expectedPoints = $old_cptPoints + $new_cptPoints;
 
-                $alreadyAwarded = DB::table('users')
-                    ->where('id', $user_id)
-                    ->where('total_cptpoints', '>=', $expectedPoints)
-                    ->exists();
+            //     $alreadyAwarded = DB::table('users')
+            //         ->where('id', $user_id)
+            //         ->where('total_cptpoints', '>=', $expectedPoints)
+            //         ->exists();
 
-                if (!$alreadyAwarded) {
-                    // First time → add points
-                    $updated_points = $old_cptPoints + $new_cptPoints;
+            //     if (!$alreadyAwarded) {
+            //         // First time → add points
+            //         $updated_points = $old_cptPoints + $new_cptPoints;
 
-                    DB::table('users')
-                        ->where('id', $user_id)
-                        ->update([
-                            'total_cptpoints' => $updated_points,
-                            'updated_at'      => now(),
-                        ]);
-                }
-            }
+            //         DB::table('users')
+            //             ->where('id', $user_id)
+            //             ->update([
+            //                 'total_cptpoints' => $updated_points,
+            //                 'updated_at'      => now(),
+            //             ]);
+            //     }
+            // }
 
 
             $Courses = DB::table('elearning_courses as c')
@@ -2142,41 +2143,40 @@ $scormCourses = DB::table('scorm_courses as sc')
             }
 
             $is_completed = Db::select("SELECT * from user_class_relation where (status=1 or status=0) and course_id=$course_id and user_id=$user_id");
-            $this->WriteFileLog($is_completed);
             if ($is_completed == []) {
                 $is_examthere = DB::select("SELECT * from elearning_courses where (course_exam=1) and course_id=$course_id and drop_course=0");
 
                 if ($is_examthere == []) {
-                    DB::table('user_course_relation')
-                        ->where('course_id', $course_id)
-                        ->where('user_id', $user_id)
-                        ->update([
-                            'course_status' => "Completed",
-                            'status' => 2,
-                            'course_progress' => 100,
-                        ]);
+                    // DB::table('user_course_relation')
+                    //     ->where('course_id', $course_id)
+                    //     ->where('user_id', $user_id)
+                    //     ->update([
+                    //         'course_status' => "Completed",
+                    //         'status' => 2,
+                    //         'course_progress' => 100,
+                    //     ]);
 
 
-                    $coursecpt_points = DB::select("SELECT course_cpt_points from elearning_courses where course_id=$course_id and drop_course=0");
+                    // $coursecpt_points = DB::select("SELECT course_cpt_points from elearning_courses where course_id=$course_id and drop_course=0");
 
-                    $cpt_points = $coursecpt_points[0]->course_cpt_points;
+                    // $cpt_points = $coursecpt_points[0]->course_cpt_points;
 
-                    DB::table('user_cpt_points')
-                        ->insert([
-                            'course_id' => $course_id,
-                            'user_id' => $user_id,
-                            'cpt_points' => $cpt_points,
-                            'status' => '0',
-                            'created_by' => $user_id,
-                            'created_at' => NOW()
+                    // DB::table('user_cpt_points')
+                    //     ->insert([
+                    //         'course_id' => $course_id,
+                    //         'user_id' => $user_id,
+                    //         'cpt_points' => $cpt_points,
+                    //         'status' => '0',
+                    //         'created_by' => $user_id,
+                    //         'created_at' => NOW()
 
-                        ]);
+                    //     ]);
 
 
-                    $userstable = DB::select("SELECT  total_cptpoints from users where id=$user_id and active_flag=0");
-                    $totalcpt_points = $userstable[0]->total_cptpoints;
+                    // $userstable = DB::select("SELECT  total_cptpoints from users where id=$user_id and active_flag=0");
+                    // $totalcpt_points = $userstable[0]->total_cptpoints;
 
-                    $sumofcpt = $totalcpt_points + $cpt_points;
+                    // $sumofcpt = $totalcpt_points + $cpt_points;
 
                     DB::table('users')
                         ->where('id', $user_id)

@@ -311,9 +311,11 @@ class GamificationLevelController extends BaseController
                     'users.id as id',
                     'users.name',
                     'users.profile_image',
+                   
+                     DB::raw('MAX(users.total_cptpoints) as total_points'),
                     DB::raw($metricColumn . ' as total_metric'),
                     DB::raw('SUM(cpt_points_hours_calculate.hours) as total_hours'),
-                    DB::raw('SUM(user_cpt_points.cpt_points) as total_points')
+                    // DB::raw('SUM(user_cpt_points.cpt_points) as total_points')
                 )
                 ->groupBy('users.id', 'users.name', 'users.profile_image')
                 ->orderByDesc('total_metric')
@@ -364,7 +366,7 @@ class GamificationLevelController extends BaseController
                 ->select('reward_type', 'reward_name', 'icon', 'user_id')
                 ->orderBy('id', 'desc')
                 ->get()
-                ->groupBy('user_id');
+                ->groupBy('user_id','reward_name');
 
 
             $enrichedLeaderboard = $leaderboard->transform(function ($user) use ($rewardsGrouped, $levels, $default_level_icon) {

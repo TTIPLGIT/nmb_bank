@@ -848,12 +848,12 @@ class tryController extends BaseController
             $introduction_extension = $introduction_extension[1];
             $userIdsString = implode(",",  $inputArray['user_ids']);
 
-            $this->WritefileLog('jiiii');
+          
 
 
             $input = [
                 'course_banner' => $inputArray['course_banner'],
-                'course_summary' => $inputArray['course_summary'],
+                // 'course_summary' => $inputArray['course_summary'],
                 'course_name' => $inputArray['course_name'],
                 'course_instructor' => $inputArray['course_instructor'],
 
@@ -869,7 +869,7 @@ class tryController extends BaseController
                 'course_noperiod' => $inputArray['course_noperiod'],
                 'course_introduction' => $inputArray['course_introduction'],
                 'introduction_path' => $inputArray['introduction_path'],
-                'summary_path' => $inputArray['summary_path'],
+                // 'summary_path' => $inputArray['summary_path'],
                 'banner_path' => $inputArray['banner_path'],
 
                 'course_tags' => $course_tags_name,
@@ -899,7 +899,7 @@ class tryController extends BaseController
                 'course_pin' => $inputArray['course_pin'],
 
             ];
-            $this->WritefileLog($input);
+          
 
             // dd("welcome");
 
@@ -907,7 +907,7 @@ class tryController extends BaseController
                 return DB::table('elearning_courses')
                     ->insertGetId([
                         'course_banner' => $input['course_banner'],
-                        'course_summary' => $input['course_summary'],
+                        // 'course_summary' => $input['course_summary'],
                         'course_name' => $input['course_name'],
                         'course_instructor' => $input['course_instructor'],
                         'exam_id' => $input['examname'],
@@ -923,7 +923,7 @@ class tryController extends BaseController
                         'course_certificate' => $input['course_certificate'],
                         'course_exam' => $input['course_exam'],
                         'course_introduction' => $input['course_introduction'],
-                        'summary_path' => $input['summary_path'],
+                        // 'summary_path' => $input['summary_path'],
                         'introduction_path' => $input['introduction_path'],
                         'banner_path' => $input['banner_path'],
 
@@ -971,8 +971,6 @@ class tryController extends BaseController
                 ->get();
             foreach ($users as $user) {
 
-                // Optional log to verify
-                $this->WriteFileLog($user->email, 'Sending Course PIN');
 
                 Mail::to($user->email)->send(
                     new coursecreationmail([
@@ -981,8 +979,9 @@ class tryController extends BaseController
                         'course_name' => $input['course_name'],
                     ])
                 );
+                 $this->notifications_insert(null, $user->id, "{$inputArray['course_name']} course has been allocated to you.", "/elearningquestion");
             }
-
+ 
 
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
@@ -991,6 +990,7 @@ class tryController extends BaseController
             $serviceResponse['course_id'] = $update_id;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+              
             return $sendServiceResponse;
         } catch (\Exception $exc) {
             $exceptionResponse = array();
@@ -1387,10 +1387,10 @@ class tryController extends BaseController
                 // ✅ FILES
                 'course_banner' => $inputArray['course_banner'],
                 'course_introduction' => $inputArray['course_introduction'],
-                'course_summary' => $inputArray['course_summary'],
+                // 'course_summary' => $inputArray['course_summary'],
                 'banner_path' => $inputArray['banner_path'],
                 'introduction_path' => $inputArray['introduction_path'],
-                'summary_path' => $inputArray['summary_path'],
+                // 'summary_path' => $inputArray['summary_path'],
 
                 // ✅ ACCESS CONTROL
                 'role_id' => implode(',', (array) ($inputArray['role_id'] ?? [])),
@@ -1412,7 +1412,7 @@ class tryController extends BaseController
                 ->update([
 
                     'course_banner' => $input['course_banner'],
-                    'course_summary' => $input['course_summary'],
+                    // 'course_summary' => $input['course_summary'],
                     'course_name' => $input['course_name'],
                     'course_instructor' => $input['course_instructor'],
 
@@ -1434,7 +1434,7 @@ class tryController extends BaseController
 
                     'course_introduction' => $input['course_introduction'],
 
-                    'summary_path' => $input['summary_path'],
+                    // 'summary_path' => $input['summary_path'],
                     'introduction_path' => $input['introduction_path'],
                     'banner_path' => $input['banner_path'],
 

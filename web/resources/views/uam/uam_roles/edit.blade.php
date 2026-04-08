@@ -164,8 +164,8 @@
                             <div class="col-md-12 btn_update_undo">
 
                                 <button class="btn btn-success btn-space" type="submit">Update</button>&nbsp;
-                                <button class="btn btn-primary" type="reset" onclick="mycheckfunction()"><i
-                                        class="fa fa-undo"></i> Undo </button>&nbsp;
+                                <!-- <button class="btn btn-primary" type="reset" onclick="mycheckfunction()"><i
+                                        class="fa fa-undo"></i> Undo </button>&nbsp; -->
                                 <a class="btn btn-danger footer_btn_cancel" href="{{ route('uam_roles.index') }}"><i
                                         class="fa fa-times"></i> Cancel </a>&nbsp;
                             </div>

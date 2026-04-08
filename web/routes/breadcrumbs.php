@@ -86,6 +86,8 @@ Breadcrumbs::for('loginaudit', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Login Audit', route('auditlog.login'));
 });
+
+
 Breadcrumbs::for('activeoperation', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Active Operation', route('activeoperation.login'));
@@ -149,7 +151,7 @@ Breadcrumbs::for('rejected_list', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('auditlogs', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push('Audit Logs', route('auditlogs'));
+    $trail->push('Audit Logs', route('log_details'));
 });
 Breadcrumbs::for('auditlog', function (BreadcrumbTrail $trail) {
     $trail->parent('auditlogs');
@@ -429,6 +431,26 @@ Breadcrumbs::for('admincourse', function (BreadcrumbTrail $trail) {
     $trail->push('Course', route('admincourse'));
 });
 
+Breadcrumbs::for('list_course', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Course', route('admin.courses.index'));
+});
+
+Breadcrumbs::for('create_course', function (BreadcrumbTrail $trail) {
+    $trail->parent('list_course');
+    $trail->push('Create Course', route('admin.course.create'));
+});
+
+Breadcrumbs::for('edit_course', function (BreadcrumbTrail $trail) {
+    $trail->parent('list_course');
+    $trail->push('Edit Course', route('admin.course.create'));
+});
+
+Breadcrumbs::for('show_course', function (BreadcrumbTrail $trail) {
+    $trail->parent('list_course');
+    $trail->push('Show Course', route('admin.course.create'));
+});
+
 
 Breadcrumbs::for('Coursepreview', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
@@ -599,4 +621,24 @@ Breadcrumbs::for('catagory_create', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('custom_field.index', function ($trail) {
     $trail->parent('home');
     $trail->push('Custom Field List', route('custom_filed'));
+});
+
+Breadcrumbs::for('ai_course_list', function ($trail) {
+    $trail->parent('home');
+    $trail->push('AI Course List', route('ai_course_list'));
+});
+
+Breadcrumbs::for('ai_course_create', function ($trail) {
+    $trail->parent('ai_course_list');
+    $trail->push('AI Course Create', route('ai_course_create'));
+});
+
+Breadcrumbs::for('text_to_audio', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Text to Speech', route('text_to_audio'));
+});
+
+Breadcrumbs::for('adaptive_learning_list', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Adaptive Learning List', route('adaptive_learning_list'));
 });

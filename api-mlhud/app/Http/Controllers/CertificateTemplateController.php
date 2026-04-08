@@ -283,50 +283,91 @@ class CertificateTemplateController extends BaseController
         }
     }
 
-    public function data_edit_details($id)
-    {
-        try {
+   public function data_edit_details($id)
+{
+    try {
 
-            $method = 'Method => CertificateTemplateController => data_edit';
+        $method = 'Method => CertificateTemplateController => data_edit';
 
-            $id = $this->decryptData($id);
-            $certificate_templates = DB::table('certificate_templates')
-                ->select('*')
-                ->where('certificate_templates_id', $id)
-                ->first();
+        $id = $this->decryptData($id);
+        
+        // Get certificate template details
+        $certificate_templates = DB::table('certificate_templates')
+            ->select('*')
+            ->where('certificate_templates_id', $id)
+            ->first();
 
+        // Get existing signatories for this template
+        $existing_signatories = DB::table('certificate_template_signatories')
+            ->select('*')
+            ->where('certificate_template_id', $id)
+            ->get()
+            ->toArray();
 
-            $rows = DB::table('certificate_template_signatories')
-                ->select('*')
-                ->where('certificate_template_id', $id)
-                ->get();
-
-
-            $response = [
-                'rows' => $rows,
-                'certificate_templates' => $certificate_templates
-
-            ];
-
-            $serviceResponse = array();
-            $serviceResponse['Code'] = config('setting.status_code.success');
-            $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] = $response;
-            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-
-            return $sendServiceResponse;
-        } catch (\Exception $exc) {
-            $exceptionResponse = array();
-            $exceptionResponse['ServiceMethod'] = $method;
-            $exceptionResponse['Exception'] = $exc->getMessage();
-            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
-            $serviceResponse = array();
-            $serviceResponse['Code'] = config('setting.status_code.exception');
-            $serviceResponse['Message'] = $exc->getMessage();
-            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
-            return $sendServiceResponse;
+        // Get the number of signatures required from the template
+        $requiredSignatures = $certificate_templates->number_of_signature ?? 0;
+        
+        // Prepare signatories array
+        $signatories = [];
+        
+        // If existing signatories exist, use them
+        if(count($existing_signatories) > 0) {
+            $signatories = $existing_signatories;
         }
+        
+        // Get current signatories count
+        $currentCount = count($signatories);
+        
+        // Ensure we have exactly 'number_of_signature' entries
+        if($currentCount < $requiredSignatures) {
+            // Add empty entries to match required count
+            for($i = $currentCount; $i < $requiredSignatures; $i++) {
+                $signatories[] = (object)[
+                    'certificate_template_signatories_id' => null,
+                    'certificate_template_id' => $id,
+                    'name' => '',
+                    'title' => '',
+                    'signature_path' => null,
+                    'created_at' => null,
+                    'updated_at' => null
+                ];
+            }
+        } elseif($currentCount > $requiredSignatures) {
+            // If more signatories exist than required, trim to required count
+            $signatories = array_slice($signatories, 0, $requiredSignatures);
+        }
+        
+        // Optional: Add a flag to indicate if the count matches
+        $signatureCountValid = ($currentCount == $requiredSignatures);
+
+        $response = [
+            'rows' => $signatories,
+            'certificate_templates' => $certificate_templates,
+            'total_signatures' => $requiredSignatures,
+            'existing_signatures_count' => $currentCount,
+            'signature_count_valid' => $signatureCountValid
+        ];
+
+        $serviceResponse = array();
+        $serviceResponse['Code'] = config('setting.status_code.success');
+        $serviceResponse['Message'] = config('setting.status_message.success');
+        $serviceResponse['Data'] = $response;
+        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+
+        return $sendServiceResponse;
+        
+    } catch (\Exception $exc) {
+        $exceptionResponse = array();
+        $exceptionResponse['ServiceMethod'] = $method;
+        $exceptionResponse['Exception'] = $exc->getMessage();
+        $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+        $serviceResponse = array();
+        $serviceResponse['Code'] = config('setting.status_code.exception');
+        $serviceResponse['Message'] = $exc->getMessage();
+        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+        return $sendServiceResponse;
     }
+}
 }

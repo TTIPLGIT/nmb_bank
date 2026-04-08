@@ -608,7 +608,7 @@ class LoginController extends BaseController
           $menus = $this->FillMenu();
           $screens = $menus['screens'];
           $modules = $menus['modules'];
-          return view('profilepage', compact('one_row', 'modules', 'screens'));
+          return view('profilepage', compact('one_row', 'modules', 'screens','menus'));
         }
       } else {
         $objData = json_decode($this->decryptData($response->Data));
@@ -862,8 +862,10 @@ class LoginController extends BaseController
       $request['requestData'] = $encryptArray;
       $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
       $response = json_decode($response);
+    
       if ($response->Status == 200 && $response->Success) {
         $objData = json_decode($this->decryptData($response->Data));
+         
         if ($objData->Code == 200) {
           $parant_data = json_decode(json_encode($objData->Data), true);
           $response_status = $parant_data['response_status'];
