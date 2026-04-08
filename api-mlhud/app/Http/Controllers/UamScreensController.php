@@ -23,7 +23,7 @@ class UamScreensController extends BaseController
             $rows = DB::table('uam_screens as a')
                 ->select('a.*')
                 ->where('a.active_flag', 0)
-                ->orderBy('a.display_order', 'ASC')
+                ->orderBy('a.screen_id', 'ASC')
                 ->get();
 
             $response = [
@@ -430,7 +430,10 @@ class UamScreensController extends BaseController
                 ->select('a.*')
                 ->where('a.screen_id', $id)
                 ->get();
-
+            $uam_screen_permissions = DB::table('uam_screen_permissions as a')
+                ->select('a.permission')
+                ->where('a.screen_id', $id)
+                ->get();
 
             //    $work_flow_row = DB::table('work_flow')
             //  ->select('work_flow.*')
@@ -451,6 +454,7 @@ class UamScreensController extends BaseController
 
             $response = [
                 'rows' => $rows,
+                'uam_screen_permissions' => $uam_screen_permissions,
             ];
 
             $serviceResponse = array();
@@ -487,7 +491,7 @@ class UamScreensController extends BaseController
 
             $screen_check = DB::select("select * from uam_module_screens where screen_id = '$id'");
 
-            if ($screen_check  != []) {
+            if ($screen_check  == []) {
 
                 DB::table('uam_screens')
                     ->where('screen_id', $id)

@@ -269,7 +269,7 @@
                         <div class="row">
                             <div class="col agreecolor">
                                 <input type="checkbox" value="check" id="check"> <label for="check">I Agree that the
-                                    information provided is correct</label>
+                                    information provided is correct</label><br>
                                 <span class="message_error" id="checkederror"></span>
                             </div>
                         </div>
@@ -501,11 +501,7 @@
 
             document.getElementById("doberror").innerHTML =
                 "**Please Select the DOB**";
-        } else if (getAge(cleave_date.value) < 18) {
-            document.getElementById("doberror").innerHTML =
-                "**User is not allowed to enter the site at this time, the user must be ablove 18.**";
-            cleave_date.focus();
-            return false;
+        
         } else {
             document.getElementById("doberror").innerText = "";
         }

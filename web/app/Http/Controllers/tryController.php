@@ -134,6 +134,7 @@ class tryController extends BaseController
 
             $rows['course_catagory_name'] = DB::table('course_catagory')
                 ->select('*')
+                ->where('active_flag', '0')
                 ->orderBy('catagory_id', 'desc')
                 ->get();
 
@@ -180,7 +181,83 @@ class tryController extends BaseController
             $modules = $menus['modules'];
             $category = tryController::course_list($request);
             $rows2['course_category'] = $category['rows2']['course_category'];
-            // $rows2['course_category'] = $category['rows2']['course_category'];
+
+            $rows3['elearning_classes'] = DB::table('elearning_classes')
+                ->select('*')
+                ->where('drop_class', '0')
+                ->orderBy('class_id', 'desc')
+                ->get();
+
+
+
+            return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'roles', 'user_id', 'rows1', 'rows2'));
+        } catch (\Exception $exc) {
+
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        }
+    }
+
+    public function admin_course_show($id, Request $request)
+    {
+
+        try {
+            $method = 'Method => tryController => admincourse';
+            $id = $this->decryptData($id);
+            $rows = array();
+
+            $rows['elearning_classes'] = DB::table('elearning_classes')
+                ->select('*')
+                ->where('drop_class', '0')
+                ->orderBy('class_id', 'desc')
+                ->get();
+            $rows['course_catagory_name'] = DB::table('course_catagory')
+                ->select('*')
+                ->orderBy('catagory_id', 'desc')
+                ->get();
+
+
+
+            $rows['designation'] = DB::table('designation')
+                ->select('*')
+                ->orderBy('designation_id', 'desc')
+                ->get();
+
+
+            $rows['users'] = DB::table('users')
+                ->select('*')
+                ->orderBy('id', 'desc')
+                ->get();
+
+
+            $roles = DB::table('uam_roles')
+                ->select('*')
+                ->where('active_flag', 0)
+                ->get();
+
+
+            $rows1 = array();
+            $rows1['elearning_courses'] = DB::table('elearning_courses')
+                ->select('*')
+                ->where('drop_course', '0')
+                ->where('course_id', $id)
+                ->orderBy('course_id', 'desc')
+                ->get();
+
+            $rows1['exam_list'] = DB::table('elearning_exam')
+                ->select('*')
+                ->where('active_flag', '0')
+                ->orderBy('id', 'desc')
+                ->get();
+
+
+            $rows1['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz  AS e left join elearning_localadaptation AS l ON e.quiz_id=l.quiz_id left join elearning_ethnictest AS et ON e.quiz_id=et.quiz_id left join elearning_exam AS el ON e.quiz_id=el.quiz_id WHERE l.quiz_id IS NULL  AND e.drop_quiz=0');
+            $rows1['certificate_templates'] = DB::select("SELECT * from certificate_templates WHERE active_flag ='0'");
+
+
+            $menus = $this->FillMenu();
+
+            $screens = $menus['screens'];
+            $modules = $menus['modules'];
 
 
             $rows3['elearning_classes'] = DB::table('elearning_classes')
@@ -188,12 +265,86 @@ class tryController extends BaseController
                 ->where('drop_class', '0')
                 ->orderBy('class_id', 'desc')
                 ->get();
-            $rows1['quiz_name'] = DB::select("SELECT * from elearning_practice_quiz WHERE drop_quiz ='0'");
+
+
+            return view('elearning.admin.course.course_show', compact('modules', 'screens', 'rows', 'roles', 'rows1', 'rows3'));
+        } catch (\Exception $exc) {
+
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+        }
+    }
+
+    public function admin_course_edit($id, Request $request)
+    {
+
+        try {
+            $method = 'Method => tryController => admincourse';
+            $id = $this->decryptData($id);
+            $rows = array();
+
+            $rows['elearning_classes'] = DB::table('elearning_classes')
+                ->select('*')
+                ->where('drop_class', '0')
+                ->orderBy('class_id', 'desc')
+                ->get();
+            $rows['course_catagory_name'] = DB::table('course_catagory')
+                ->select('*')
+                ->orderBy('catagory_id', 'desc')
+                ->get();
 
 
 
+            $rows['designation'] = DB::table('designation')
+                ->select('*')
+                ->orderBy('designation_id', 'desc')
+                ->get();
 
-            return view('elearning.admin.course.admincourse', compact('modules', 'screens', 'rows', 'roles', 'user_id', 'rows1', 'rows2'));
+
+            $rows['users'] = DB::table('users')
+                ->select('*')
+                ->orderBy('id', 'desc')
+                ->get();
+
+
+            $roles = DB::table('uam_roles')
+                ->select('*')
+                ->where('active_flag', 0)
+                ->get();
+
+
+            $rows1 = array();
+            $rows1['elearning_courses'] = DB::table('elearning_courses')
+                ->select('*')
+                ->where('drop_course', '0')
+                ->where('course_id', $id)
+                ->orderBy('course_id', 'desc')
+                ->get();
+
+            $rows1['exam_list'] = DB::table('elearning_exam')
+                ->select('*')
+                ->where('active_flag', '0')
+                ->orderBy('id', 'desc')
+                ->get();
+
+
+            $rows1['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz  AS e left join elearning_localadaptation AS l ON e.quiz_id=l.quiz_id left join elearning_ethnictest AS et ON e.quiz_id=et.quiz_id left join elearning_exam AS el ON e.quiz_id=el.quiz_id WHERE l.quiz_id IS NULL  AND e.drop_quiz=0');
+            $rows1['certificate_templates'] = DB::select("SELECT * from certificate_templates WHERE active_flag ='0'");
+
+
+            $menus = $this->FillMenu();
+
+            $screens = $menus['screens'];
+            $modules = $menus['modules'];
+
+
+            $rows3['elearning_classes'] = DB::table('elearning_classes')
+                ->select('*')
+                ->where('drop_class', '0')
+                ->orderBy('class_id', 'desc')
+                ->get();
+
+
+            return view('elearning.admin.course.course_edit', compact('modules', 'screens', 'rows', 'roles', 'rows1', 'rows3'));
         } catch (\Exception $exc) {
 
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
@@ -366,7 +517,7 @@ class tryController extends BaseController
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/class/store';
 
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-            // dd($data);
+            // dd($data);  
             $menus = $this->FillMenu();
 
             $screens = $menus['screens'];
@@ -510,22 +661,18 @@ class tryController extends BaseController
     }
     public function class_update(Request $request, $class_id)
     {
-
         try {
-
             $user_id = $request->session()->get("userID");
             if ($user_id == null) {
                 return view('auth.login');
             }
             $method = 'Method => tryController => update';
+
             $validator = Validator::make($request->all(), [
-                'resource_nameedit' => 'required|file|mimetypes:application/pdf,audio/mpeg,video/mp4',
+                'resource_nameedit' => 'nullable|file|mimetypes:application/pdf,audio/mpeg,video/mp4',
             ]);
 
-
-
             $data = array();
-
             $data['class_name'] = $request->class_nameedit;
             $data['class_description'] = $request->class_descriptionedit;
             $data['resource_name'] = $request->resource_nameedit;
@@ -533,46 +680,55 @@ class tryController extends BaseController
             $data['class_quiz'] = $request->class_quizedit;
             $data['quiz_id'] = $request->quiz_idedit;
 
-            if (isset($request['resource_nameedit'])) {
+            // Add version control data
+            $data['version_type'] = $request->version_type;
+            $data['change_notes'] = $request->change_notes;
+            $data['current_major_version'] = $request->current_major_version;
+            $data['current_minor_version'] = $request->current_minor_version;
+
+            // Handle file upload
+            if ($request->hasFile('resource_nameedit')) {
                 if ($validator->fails()) {
-                    // Validation failed
                     return redirect()->back()->with('error', 'Files not applicable');
                 }
-                $storagepath_ursb_old = public_path() . '/uploads/class/' . $user_id; //system_store_pdf
-                $storagepath_ursb = '/uploads/class/' . $user_id; //database_location
+
+                $storagepath_ursb_old = public_path() . '/uploads/class/' . $user_id;
+                $storagepath_ursb = '/uploads/class/' . $user_id;
+
                 if (!File::exists($storagepath_ursb_old)) {
-                    File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
+                    File::makeDirectory($storagepath_ursb_old);
                 }
+
                 $data['resourse_path'] = $storagepath_ursb;
-                $documentsb =  $request['resource_nameedit'];
+                $documentsb = $request['resource_nameedit'];
                 $files = $documentsb->getClientOriginalName();
                 $findspace = array(' ', '&', "'", '"');
                 $replacewith = array('-', '-');
-                $proposal_files = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
-                $documentsb->move($storagepath_ursb_old, $proposal_files); //storing the file in the system
+                $proposal_files = str_replace($findspace, $replacewith, $files);
+                $documentsb->move($storagepath_ursb_old, $proposal_files);
                 $data['resource_name'] = $proposal_files;
             } else {
                 $data['resource_name'] = 0;
                 $data['resourse_path'] = 0;
             }
+
             $data['eid'] = $request->eid;
-            $encryptArray = $data;
 
             $encryptArray = $this->encryptData($data);
-            $request = array();
-            $request['requestData'] = $encryptArray;
-            $gatewayURL = config('setting.api_gateway_url') . '/class/class_update';
+            $requestData = array();
+            $requestData['requestData'] = $encryptArray;
 
-            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-            //dd($response);
+            // Call the new version control API endpoint
+            $gatewayURL = config('setting.api_gateway_url') . '/class/class_update_with_version';
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
 
             $response1 = json_decode($response);
+
             if ($response1->Status == 200 && $response1->Success) {
-                return redirect(route('admincourse'))->with('success', 'Class Updated Successfully');
+                return redirect(route('admincourse'))->with('success', 'Class Updated Successfully with Version Control');
             } else {
                 $objData = json_decode($this->decryptData($response1->Data));
-                return view('errors.errors');
-                exit;
+                return redirect()->back()->with('error', 'Update failed: ' . ($objData->message ?? 'Unknown error'));
             }
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
@@ -608,7 +764,6 @@ class tryController extends BaseController
         }
         $method = 'Method => tryController => event_store';
         try {
-            dd($request);
 
             $data = array();
             $data['event_name'] = $request->event_name;
@@ -845,14 +1000,14 @@ class tryController extends BaseController
 
     public function course_store(Request $request)
     {
-        // dd($request);
+       
         $validator = Validator::make($request->all(), [
             'course_banner' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
-        $validator = Validator::make($request->all(), [
-            'course_summary' => 'required|mimes:pdf,txt,mp3',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'course_summary' => 'required|mimes:pdf,txt,mp3,jpeg,png,jpg,gif',
+        // ]);
 
 
         if ($validator->fails()) {
@@ -906,15 +1061,24 @@ class tryController extends BaseController
             $data['expiry_type'] = $request->expiry_type;
             $data['expiry_input'] = $request->expiry_input;
 
+            $data['restricted_access'] = $request->restricted_access;
 
 
-          
+            $restricted_access = $inputArray['restricted_access'] ?? 0;
+
+            if ($restricted_access == 1) {
+                $data['course_pin'] = rand(100000, 999999);
+                $data['course_pin_created_at'] = now();
+            } else {
+                $data['course_pin'] = null;
+                $data['course_pin_created_at'] = null;
+            }
+
             $encryptArray = $data;
 
             $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
 
             $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
-
             // dd( $storagepath_ursb_old);
             if (!File::exists($storagepath_ursb_old)) {
 
@@ -950,21 +1114,19 @@ class tryController extends BaseController
             $data['course_banner'] = $proposal_files1;
 
 
-            // dd($data);
             $storagepath_ursb_old2 = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
             $storagepath_ursb2 = '/uploads/course/' . $user_id; //database_location
             if (!File::exists($storagepath_ursb_old2)) {
                 File::makeDirectory($storagepath_ursb_old2); //folder_creation_when_folder_doesn't_esist
             }
-            $data['summary_path'] = $storagepath_ursb2;
-            $documentsb =  $request['course_summary'];
-            $files = $documentsb->getClientOriginalName();
-            $findspace = array(' ', '&', "'", '"');
-            $replacewith = array('-', '-');
-            $proposal_files2 = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
-            $documentsb->move($storagepath_ursb_old2, $proposal_files2); //storing the file in the system
-            $data['course_summary'] = $proposal_files2;
-            //dd($data);
+            // $data['summary_path'] = $storagepath_ursb2;
+            // $documentsb =  $request['course_summary'];
+            // $files = $documentsb->getClientOriginalName();
+            // $findspace = array(' ', '&', "'", '"');
+            // $replacewith = array('-', '-');
+            // $proposal_files2 = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
+            // $documentsb->move($storagepath_ursb_old2, $proposal_files2); //storing the file in the system
+            // $data['course_summary'] = $proposal_files2;
 
             $encryptArray = $data;
             $request = array();
@@ -973,56 +1135,55 @@ class tryController extends BaseController
 
 
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/course/store';
-
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+           
             $menus = $this->FillMenu();
 
             $screens = $menus['screens'];
             $modules = $menus['modules'];
 
             $response1 = json_decode($response);
-
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
 
-                    $ext = strtolower(pathinfo($proposal_files2, PATHINFO_EXTENSION));
+                    // $ext = strtolower(pathinfo($proposal_files2, PATHINFO_EXTENSION));
 
-                    $originalPath = $storagepath_ursb_old2 . '/' . $proposal_files2;
+                    // $originalPath = $storagepath_ursb_old2 . '/' . $proposal_files2;
 
-                    $fileTypeMap = [
-                        'mp3' => 'audio',
-                        'txt' => 'text',
-                        'pdf' => 'pdf',
-                        'png' => 'png',
-                        'jpeg' => 'jpeg',
-                        'jpg' => 'jpg',
-                        'gif' => 'gif'
-                    ];
-                    // dd($fileTypeMap);
-                    $file_type = $fileTypeMap[$ext] ?? 'unknown';
-                    // dd($file_type);
-                    // dd($data['course_description']);
-                    $response = Http::attach(
-                        'file',
-                        file_get_contents($originalPath),
-                        $proposal_files2
-                    )->post('http://localhost:6061/upload', [
-                        'file_type' => $file_type,
-                        'course_id' => $objData->course_id,
-                        'course_name' => $data['course_name'],
-                        'course_description' => $data['course_description']
-                    ]);
-                    // dd($originalPath,$proposal_files,$objData);
-                    Log::info('API triggered with original file: ' . $ext);
-                    Log::info('API triggered with original file: ' . $response->body());
+                    // $fileTypeMap = [
+                    //     'mp3' => 'audio',
+                    //     'txt' => 'text',
+                    //     'pdf' => 'pdf',
+                    //     'png' => 'png',
+                    //     'jpeg' => 'jpeg',
+                    //     'jpg' => 'jpg',
+                    //     'gif' => 'gif'
+                    // ];
+                    // // dd($fileTypeMap);
+                    // $file_type = $fileTypeMap[$ext] ?? 'unknown';
+                    // // dd($file_type);
+                    // // dd($data['course_description']);
+                    // $response = Http::attach(
+                    //     'file',
+                    //     file_get_contents($originalPath),
+                    //     $proposal_files2
+                    // )->post('http://localhost:6061/upload', [
+                    //     'file_type' => $file_type,
+                    //     'course_id' => $objData->course_id,
+                    //     'course_name' => $data['course_name'],
+                    //     'course_description' => $data['course_description']
+                    // ]);
+                    // // dd($originalPath,$proposal_files,$objData);
+                    // Log::info('API triggered with original file: ' . $ext);
+                    // Log::info('API triggered with original file: ' . $response->body());
 
 
-                    return redirect(route('admincourse'))->with('success', 'Course Created Successfully');
+                    return redirect(route('admin.courses.index'))->with('success', 'Course Created Successfully');
                 }
 
                 if ($objData->Code == 400) {
-                    return redirect(route('admincourse'))->with('fail', 'Course Failed To Create');
+                    return redirect(route('admin.courses.index'))->with('error', 'Course Failed To Create');
                 }
             } else {
                 $objData = json_decode($this->decryptData($response1->Data));
@@ -1281,19 +1442,19 @@ class tryController extends BaseController
     }
     public function  course_update(Request $request, $course_id)
     {
-
         try {
-
+           
             $user_id = $request->session()->get("userID");
             if ($user_id == null) {
                 return view('auth.login');
             }
+
             $method = 'Method => tryController => course_update';
 
-            $data = array();
-            $data['course_category'] = $request->course_categoryedit;
-            $data['course_banner'] = $request->course_banneredit;
-            $data['course_certificate'] = $request->course_certificateedit;
+            $data = [];
+
+            // ================= BASIC FIELDS =================
+            $data['course_edit'] = $request->course_edit;
             $data['course_name'] = $request->course_nameedit;
             $data['course_instructor'] = $request->course_instructoredit;
             $data['course_start_period'] = $request->course_start_periodedit;
@@ -1301,68 +1462,155 @@ class tryController extends BaseController
             $data['course_pay'] = $request->course_payedit;
             $data['course_price'] = $request->course_priceedit;
             $data['course_description'] = $request->course_descriptionedit;
-            //$data['course_introduction'] = $request->course_introductionedit;
+            $data['course_certificate'] = $request->course_certificateedit;
+            $data['course_exam'] = $request->course_examedit;
+            $data['course_noperiod'] = $request->course_noperiod;
             $data['course_tags'] = $request->course_tagsedit;
             $data['course_skills_required'] = $request->course_skills_requirededit;
             $data['course_gain_skills'] = $request->course_gain_skillsedit;
             $data['course_classes'] = $request->course_classesedit;
             $data['course_cpt_points'] = $request->course_cpt_pointsedit;
-            $data['course_edit'] = $request->course_edit;
+            $data['course_category'] = $request->course_categoryedit;
+
+            $data['examname'] = $request->exam_nameshow;
+            $data['exam_date'] = $request->exam_dateshow;
+
+            $data['cetificate_template'] = $request->cetificate_template;
+            $data['certificate_expiry'] = $request->certificate_expiry;
+            $data['course_expiry_period'] = $request->course_expiry_period;
+
+            $data['pass_percentage'] = $request->pass_percentageshow;
+
+            $data['expiry_type'] = $request->expiry_type;
+            $data['expiry_input'] = $request->expiry_input;
+
+            $data['restricted_access'] = $request->restricted_access;
+            $data['user_ids'] = $request->user_ids;
+
+            $data['role_id'] = $request->role_id;
+
+            $data['designation_id'] = $request->designation_id;
+             $data['restricted_access'] = $request->restricted_access;
 
 
-            $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
-            $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
-            if (!File::exists($storagepath_ursb_old)) {
-                File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
+            $restricted_access = $inputArray['restricted_access'] ?? 0;
+          
+            if ($request->restricted_access == 1) {
+                $data['course_pin'] = rand(100000, 999999);
+                $data['course_pin_created_at'] = now();
+            } else {
+                $data['course_pin'] = null;
+                $data['course_pin_created_at'] = null;
             }
-            $data['banner_path'] = $storagepath_ursb;
-            $documentsb =  $request['course_banneredit'];
-            $files = $documentsb->getClientOriginalName();
-            $findspace = array(' ', '&', "'", '"');
-            $replacewith = array('-', '-');
-            $proposal_files = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
-            $documentsb->move($storagepath_ursb_old, $proposal_files); //storing the file in the system
-            $data['course_banner'] = $proposal_files;
-            $data['course_edit'] = $request->course_edit;
-            $encryptArray = $data;
 
-            $encryptArray = $this->encryptData($data);
-            $request = array();
-            $request['requestData'] = $encryptArray;
+            // ================= PATH SETUP =================
+            $storagePath = public_path() . '/uploads/course/' . $user_id;
+            $dbPath = '/uploads/course/' . $user_id;
 
-            $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
-            $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
-            if (!File::exists($storagepath_ursb_old)) {
-                File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
+            if (!File::exists($storagePath)) {
+                File::makeDirectory($storagePath, 0777, true, true);
             }
-            $data['introduction_path'] = $storagepath_ursb;
-            $documentsb =  $request['course_introductionedit'];
-            $files = $documentsb->getClientOriginalName();
-            $findspace = array(' ', '&', "'", '"');
-            $replacewith = array('-', '-');
-            $proposal_files = str_replace($findspace, $replacewith, $files); //proper_file_name-database field
-            $documentsb->move($storagepath_ursb_old, $proposal_files); //storing the file in the system
-            $data['course_introduction'] = $proposal_files;
 
+            $data['introduction_path'] = $dbPath;
+            $data['banner_path'] = $dbPath;
+            $data['summary_path'] = $dbPath;
 
+            // ================= INTRODUCTION FILE =================
+            if ($request->hasFile('course_introductionedit')) {
+
+                $file = $request->file('course_introductionedit');
+                $filename = str_replace([' ', '&', "'", '"'], '-', $file->getClientOriginalName());
+
+                $file->move($storagePath, $filename);
+                $data['course_introduction'] = $filename;
+            } else {
+                $data['course_introduction'] = $request->old_course_introduction;
+            }
+
+            // ================= BANNER FILE =================
+            if ($request->hasFile('course_banneredit')) {
+
+                $file = $request->file('course_banneredit');
+                $filename = str_replace([' ', '&', "'", '"'], '-', $file->getClientOriginalName());
+
+                $file->move($storagePath, $filename);
+                $data['course_banner'] = $filename;
+            } else {
+                $data['course_banner'] = $request->old_course_banner;
+            }
+
+            // ================= SUMMARY FILE =================
+            if ($request->hasFile('course_summaryedit')) {
+
+                $file = $request->file('course_summaryedit');
+                $filename = str_replace([' ', '&', "'", '"'], '-', $file->getClientOriginalName());
+
+                $file->move($storagePath, $filename);
+                $data['course_summary'] = $filename;
+            } else {
+                $data['course_summary'] = $request->old_course_summary;
+                $filename = $request->old_course_summary; // needed for API
+            }
+
+            // ================= API REQUEST =================
             $encryptArray = $this->encryptData($data);
-            $request = array();
-            $request['requestData'] = $encryptArray;
 
+            $payload = [
+                'requestData' => $encryptArray
+            ];
 
             $gatewayURL = config('setting.api_gateway_url') . '/elearning/course/course_update';
 
-            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-
-
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($payload), $method);
             $response1 = json_decode($response);
-
             if ($response1->Status == 200 && $response1->Success) {
-                return redirect(route('elearning.admincourse'))->with('success', 'Question  Updated Successfully');
-            } else {
+
                 $objData = json_decode($this->decryptData($response1->Data));
-                echo json_encode($objData->Code);
-                exit;
+
+                if ($objData->Code == 200) {
+                    // ================= FILE UPLOAD API =================
+                    // if (!empty($filename)) {
+
+                    //     $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                    //     $originalPath = $storagePath . '/' . $filename;
+
+                    //     $fileTypeMap = [
+                    //         'mp3' => 'audio',
+                    //         'txt' => 'text',
+                    //         'pdf' => 'pdf',
+                    //         'png' => 'png',
+                    //         'jpeg' => 'jpeg',
+                    //         'jpg' => 'jpg',
+                    //         'gif' => 'gif'
+                    //     ];
+
+                    //     $file_type = $fileTypeMap[$ext] ?? 'unknown';
+
+                    //     if (file_exists($originalPath)) {
+
+                    //         Http::attach(
+                    //             'file',
+                    //             file_get_contents($originalPath),
+                    //             $filename
+                    //         )->post('http://localhost:6061/upload', [
+                    //             'file_type' => $file_type,
+                    //             'course_id' => $objData->course_id,
+                    //             'course_name' => $data['course_name'],
+                    //             'course_description' => $data['course_description']
+                    //         ]);
+
+                    //         Log::info('Update API triggered: ' . $filename);
+                    //     }
+                    // }
+
+                    return redirect(route('admin.courses.index'))->with('success', 'Course Updated Successfully');
+                }
+
+                if ($objData->Code == 400) {
+                    return redirect(route('admin.courses.index'))->with('error', 'Course Updated Fail');
+                }
+            } else {
+                return view('errors.errors');
             }
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
@@ -1649,7 +1897,6 @@ class tryController extends BaseController
 
     public function allCourses(Request $request)
     {
-
         // Authentication
         $method = 'Method => tryController => allCourses';
         try {
@@ -1859,4 +2106,230 @@ class tryController extends BaseController
 
         //
     }
+    public function verifyPin(Request $request)
+    {
+
+        $courseId = Crypt::decrypt($request->course_id);
+
+        $course = Course::where('course_id', $courseId)->first();
+       
+        if ($course->course_pin == $request->pin) {
+            return response()->json([
+                'status' => true,
+                'redirect' => route('elearningCourse', $request->course_id)
+            ]);
+        }
+
+        return response()->json(['status' => false]);
+    }
+
+    public function getClassData($id)
+    {
+        try {
+            $method = 'Method => ElearningQuestionController => getClassData';
+
+            $data = array();
+            $data['class_id'] = $id;
+
+            $encryptArray = $this->encryptData($data);
+            $requestData = array();
+            $requestData['requestData'] = $encryptArray;
+
+            $gatewayURL = config('setting.api_gateway_url') . '/class/get-class-data';
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+
+            $response1 = json_decode($response);
+
+            if ($response1->Status == 200 && $response1->Success) {
+                $decryptedData = $this->decryptData($response1->Data);
+                return response()->json(['success' => true, 'data' => json_decode($decryptedData, true)]);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Failed to load class data']);
+            }
+        } catch (\Exception $exc) {
+            return response()->json(['success' => false, 'message' => $exc->getMessage()]);
+        }
+    }
+
+    public function getClassVersions($id)
+    {
+        try {
+            $method = 'Method => ElearningQuestionController => getClassVersions';
+
+            $data = array();
+            $data['class_id'] = $id;
+
+            $encryptArray = $this->encryptData($data);
+            $requestData = array();
+            $requestData['requestData'] = $encryptArray;
+
+            $gatewayURL = config('setting.api_gateway_url') . '/class/get-class-versions';
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+
+            // Check if response is empty
+            if (!$response) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Empty response from API'
+                ]);
+            }
+
+            $response1 = json_decode($response);
+
+            // Check if response1 is null or missing expected properties
+            if (!$response1) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid response format from API'
+                ]);
+            }
+
+            // Check if Status and Success properties exist
+            if (!isset($response1->Status) || !isset($response1->Success)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Missing Status or Success in API response'
+                ]);
+            }
+
+            if ($response1->Status == 200 && $response1->Success) {
+                // Check if Data exists
+                if (!isset($response1->Data)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'No data in API response'
+                    ]);
+                }
+
+                $decryptedData = $this->decryptData($response1->Data);
+
+                // Check if decryption was successful
+                if (!$decryptedData) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Failed to decrypt data'
+                    ]);
+                }
+
+                $versions = json_decode($decryptedData, true);
+
+                // Ensure versions is an array
+                if (!is_array($versions)) {
+                    $versions = [];
+                }
+
+                return response()->json([
+                    'success' => true,
+                    'versions' => $versions
+                ]);
+            } else {
+                $errorMsg = 'Failed to load versions';
+                if (isset($response1->Message)) {
+                    $errorMsg = $response1->Message;
+                }
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $errorMsg
+                ]);
+            }
+        } catch (\Exception $exc) {
+            return response()->json([
+                'success' => false,
+                'message' => $exc->getMessage()
+            ]);
+        }
+    }
+    public function restoreClassVersion(Request $request)
+    {
+        try {
+            $method = 'Method => ElearningQuestionController => restoreClassVersion';
+
+            $data = array();
+            $data['class_id'] = $request->class_id;
+            $data['version_id'] = $request->version_id;
+
+            $encryptArray = $this->encryptData($data);
+            $requestData = array();
+            $requestData['requestData'] = $encryptArray;
+
+            $gatewayURL = config('setting.api_gateway_url') . '/class/restore-class-version';
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+
+            $response1 = json_decode($response);
+
+            if ($response1->Status == 200 && $response1->Success) {
+                return response()->json(['success' => true, 'message' => 'Version restored successfully']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Failed to restore version']);
+            }
+        } catch (\Exception $exc) {
+            return response()->json(['success' => false, 'message' => $exc->getMessage()]);
+        }
+    }
+    public function course_create()
+{
+    try {
+        $method = 'Method => tryController => course_create';
+        
+        $rows = array();
+        $rows['elearning_classes'] = DB::table('elearning_classes')
+            ->select('*')
+            ->where('drop_class', '0')
+            ->orderBy('class_id', 'desc')
+            ->get();
+
+        $rows['course_catagory_name'] = DB::table('course_catagory')
+            ->select('*')
+            ->where('active_flag', '0')
+            ->orderBy('catagory_id', 'desc')
+            ->get();
+
+        $rows['designation'] = DB::table('designation')
+            ->select('*')
+            ->orderBy('designation_id', 'desc')
+            ->get();
+
+        $rows['users'] = DB::table('users')
+            ->select('*')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $roles = DB::table('uam_roles')
+            ->select('*')
+            ->where('active_flag', 0)
+            ->get();
+
+        $rows1 = array();
+        $rows1['elearning_courses'] = DB::table('elearning_courses')
+            ->select('*')
+            ->where('drop_course', '0')
+            ->orderBy('course_id', 'desc')
+            ->get();
+
+        $rows1['exam_list'] = DB::table('elearning_exam')
+            ->select('*')
+            ->where('elearning_exam.active_flag', '0')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $rows1['quiz_dropdown'] = DB::select('SELECT e.* from elearning_practice_quiz AS e 
+            LEFT JOIN elearning_localadaptation AS l ON e.quiz_id=l.quiz_id 
+            LEFT JOIN elearning_ethnictest AS et ON e.quiz_id=et.quiz_id 
+            LEFT JOIN elearning_exam AS el ON e.quiz_id=el.quiz_id 
+            WHERE l.quiz_id IS NULL AND e.drop_quiz=0');
+            
+        $rows1['certificate_templates'] = DB::select("SELECT * from certificate_templates WHERE active_flag ='0'");
+
+        $menus = $this->FillMenu();
+        $screens = $menus['screens'];
+        $modules = $menus['modules'];
+
+        return view('elearning.admin.course.create', compact('modules', 'screens', 'rows', 'roles', 'rows1'));
+        
+    } catch (\Exception $exc) {
+        return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), 
+                              $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
+    }
+}
 }

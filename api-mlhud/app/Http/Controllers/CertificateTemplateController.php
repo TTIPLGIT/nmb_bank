@@ -22,7 +22,7 @@ class CertificateTemplateController extends BaseController
             $method = 'Method => CertificateTemplateController => get_data';
 
 
-            $rows = DB::select('select `a`.* from `certificate_templates` as `a` where `a`.`active_flag` = 0 ');
+            $rows = DB::select('select `a`.* from `certificate_templates` as `a`');
 
             $response = [
                 'rows' => $rows
@@ -60,10 +60,9 @@ class CertificateTemplateController extends BaseController
         try {
             $inputArray = $this->decryptData($request->requestData);
             $entries = $inputArray['details'] ?? [];
-            // $this->WriteFileLog($inputArray);
 
             // $template_id = $inputArray['details'][0]['certificate_templates_id'];
-            // $this->WriteFileLog($template_id);
+
             if (empty($entries)) {
                 return $this->SendServiceResponse(
                     json_encode(['Code' => 422, 'Message' => 'No data provided', 'Data' => null], JSON_FORCE_OBJECT),
@@ -71,125 +70,140 @@ class CertificateTemplateController extends BaseController
                     false
                 );
             }
-
-
-
             DB::transaction(function () use ($entries, $userID) {
                 $certificateTemplateId = $entries[0]['certificate_templates_id'] ?? null;
+
+                if (empty($certificateTemplateId)) {
+
+                    $certificateTemplateId = DB::table('certificate_templates')->insertGetId([
+                        'template_name' => $entries[0]['name'],
+                        'file_name' => $entries[0]['name'],
+                        'active_flag' => 1,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                } else {
+
+                    if (!empty($entries[0]['logo_file_content'])) {
+                        // $this->WriteFileLog('A');
+                        $fileContent = base64_decode($entries[0]['logo_file_content']);
+                        $uniqueFileName = uniqid() . '_' . $entries[0]['logo_file_name'];
+
+                        file_put_contents(public_path('images/logo/' . $uniqueFileName), $fileContent);
+                        $logoPath = 'images/logo/' . $uniqueFileName;
+                    } elseif (!empty($entries[0]['logo_path'])) {
+
+                        $this->WriteFileLog('3');
+                        if (str_starts_with($entries[0]['logo_path'], 'images/logo/')) {
+
+                            $logoPath = $entries[0]['logo_path'];
+                        }
+                        // If base64 new upload
+                        else {
+
+                            if (!empty($entries[0]['logo_file_name'])) {
+                                $this->WriteFileLog('4');
+                                $fileContent = base64_decode($entries[0]['logo_path']);
+                                $uniqueFileName = uniqid() . '_' . $entries[0]['logo_file_name'];
+                                $this->WriteFileLog('5');
+                                file_put_contents(public_path('images/logo/' . $uniqueFileName), $fileContent);
+
+                                $logoPath = 'images/logo/' . $uniqueFileName;
+                            }
+                        }
+
+                        DB::table('certificate_templates')
+                            ->where('certificate_templates_id', $certificateTemplateId)
+                            ->update([
+
+                                'logo' => $logoPath,
+
+                            ]);
+                    }
+                    DB::table('certificate_templates')
+                        ->where('certificate_templates_id', $certificateTemplateId)
+                        ->update([
+
+                            'logo' => $logoPath,
+
+                        ]);
+                }
+
                 $submittedIds = [];
                 $sort = 1;
 
                 foreach ($entries as $entry) {
 
-                    $signatoryId = $entry['certificate_template_signatories_id']  ?? null;
-                    $template_id = $entry['certificate_templates_id'];
-                    // $this->WriteFileLog($template_id);
+                    $signatoryId = $entry['certificate_template_signatories_id'] ?? null;
 
-                    $name = $entry['name'];
-                    $title = $entry['designation'];
+                    // ---- SIGNATURE FILE ----
                     $relativePath = null;
-                    // $this->WriteFileLog($entry['logo_file_content']);
-
-                    // Handle new file upload or use existing path
+                   
                     if (!empty($entry['signature_file_content'])) {
-                        $fileName = $entry['signature_file_name'];
+                       
                         $fileContent = base64_decode($entry['signature_file_content']);
-
-                        $storagePath = public_path('images/signatures');
-                        if (!file_exists($storagePath)) {
-                            mkdir($storagePath, 0755, true);
-                        }
-
-                        $uniqueFileName = uniqid() . '_' . $fileName;
-                        $filePath = $storagePath . '/' . $uniqueFileName;
-                        file_put_contents($filePath, $fileContent);
-
+                        $uniqueFileName = uniqid() . '_' . $entry['signature_file_name'];
+                         
+                        file_put_contents(public_path('images/signatures/' . $uniqueFileName), $fileContent);
+                        
                         $relativePath = 'images/signatures/' . $uniqueFileName;
-                    } elseif (!empty($entry['signature_path'])) {
-                        $relativePath = $entry['signature_path'];
-                    }
-
-                    if (!empty($entry['logo_file_content'])) {
-                        $fileName1 = $entry['logo_file_name'];
-                        $fileContent1 = base64_decode($entry['logo_file_content']);
-
-                        $storagePath = public_path('images/logo');
-                        if (!file_exists($storagePath)) {
-                            mkdir($storagePath, 0755, true);
+                    } 
+                    elseif (!empty($entry['signature_path'])) {
+                        $this->WriteFileLog('1');
+                        if (str_starts_with($entry['signature_path'], 'images/signatures/')) {
+                            $this->WriteFileLog('1.1');
+                            $relativePath = $entry['signature_path'];
                         }
+                        // If new base64 upload
+                        else {
+                            $this->WriteFileLog('2');
+                            if (!empty($entry['signature_file_name'])) {
+                                $this->WriteFileLog('2.1');
+                                $fileContent = base64_decode($entry['signature_path']);
+                                $uniqueFileName = uniqid() . '_' . $entry['signature_file_name'];
+                                $this->WriteFileLog('2.2');
+                                file_put_contents(public_path('images/signatures/' . $uniqueFileName), $fileContent);
 
-                        $uniqueFileName1 = uniqid() . '_' . $fileName1;
-                        $filePath1 = $storagePath . '/' . $uniqueFileName1;
-                        file_put_contents($filePath1, $fileContent1);
-
-                        $relativePath1 = 'images/logo/' . $uniqueFileName1;
-                    } elseif (!empty($entry['logo_path'])) {
-                        $relativePath1 = $entry['logo_path'];
-                    }
-                    if ($template_id) {
-
-                        DB::table('certificate_templates')
-                            ->where('certificate_templates_id', $template_id)
-                            ->update([
-                                'logo' => $relativePath1,
-                                'updated_at' => now(),
-                            ]);
-                    } else {
-
-                        DB::table('certificate_templates')->insertGetId([
-                            'template_name' => $templateName ?? 'New Template',
-                            'file_name'     => $fileName ?? null,
-                            'company_name'  => $companyName ?? null,
-                            'logo'          => $relativePath1,
-                            'active_flag'   => 1,
-                            'created_at'    => now(),
-                            'updated_at'    => now(),
-                        ]);
+                                $relativePath = 'images/signatures/' . $uniqueFileName;
+                            }
+                        }
                     }
 
                     if ($signatoryId) {
-                        // Update existing signatory
-
-
                         DB::table('certificate_template_signatories')
                             ->where('certificate_template_signatories_id', $signatoryId)
                             ->update([
-                                'name' => $name,
-                                'title' => $title,
+                                'name' => $entry['name'],
+                                'title' => $entry['designation'],
                                 'signature_path' => $relativePath,
                                 'sort_order' => $sort++,
                                 'updated_at' => now(),
                             ]);
 
-
-
-                        if (!empty($signatoryId)) {
-                            $submittedIds[] = $signatoryId;
-                        }
+                        $submittedIds[] = $signatoryId;
                     } else {
-                        // Insert new signatory
                         $newId = DB::table('certificate_template_signatories')->insertGetId([
                             'certificate_template_id' => $certificateTemplateId,
-                            'name' => $name,
-                            'title' => $title,
+                            'name' => $entry['name'],
+                            'title' => $entry['designation'],
                             'signature_path' => $relativePath,
                             'sort_order' => $sort++,
                             'created_at' => now(),
                             'updated_at' => now(),
                         ]);
 
-
-
                         $submittedIds[] = $newId;
                     }
                 }
 
-                // Delete removed signatories
                 DB::table('certificate_template_signatories')
                     ->where('certificate_template_id', $certificateTemplateId)
                     ->whereNotIn('certificate_template_signatories_id', $submittedIds)
                     ->delete();
             });
+
+
+
 
             $serviceResponse = [
                 'Code' => config('setting.status_code.success'),
@@ -269,50 +283,91 @@ class CertificateTemplateController extends BaseController
         }
     }
 
-    public function data_edit_details($id)
-    {
-        try {
+   public function data_edit_details($id)
+{
+    try {
 
-            $method = 'Method => CertificateTemplateController => data_edit';
+        $method = 'Method => CertificateTemplateController => data_edit';
 
-            $id = $this->decryptData($id);
-            $certificate_templates = DB::table('certificate_templates')
-                ->select('*')
-                ->where('certificate_templates_id', $id)
-                ->first();
+        $id = $this->decryptData($id);
+        
+        // Get certificate template details
+        $certificate_templates = DB::table('certificate_templates')
+            ->select('*')
+            ->where('certificate_templates_id', $id)
+            ->first();
 
+        // Get existing signatories for this template
+        $existing_signatories = DB::table('certificate_template_signatories')
+            ->select('*')
+            ->where('certificate_template_id', $id)
+            ->get()
+            ->toArray();
 
-            $rows = DB::table('certificate_template_signatories')
-                ->select('*')
-                ->where('certificate_template_id', $id)
-                ->get();
-
-
-            $response = [
-                'rows' => $rows,
-                'certificate_templates' => $certificate_templates
-
-            ];
-
-            $serviceResponse = array();
-            $serviceResponse['Code'] = config('setting.status_code.success');
-            $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] = $response;
-            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-
-            return $sendServiceResponse;
-        } catch (\Exception $exc) {
-            $exceptionResponse = array();
-            $exceptionResponse['ServiceMethod'] = $method;
-            $exceptionResponse['Exception'] = $exc->getMessage();
-            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
-            $serviceResponse = array();
-            $serviceResponse['Code'] = config('setting.status_code.exception');
-            $serviceResponse['Message'] = $exc->getMessage();
-            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
-            return $sendServiceResponse;
+        // Get the number of signatures required from the template
+        $requiredSignatures = $certificate_templates->number_of_signature ?? 0;
+        
+        // Prepare signatories array
+        $signatories = [];
+        
+        // If existing signatories exist, use them
+        if(count($existing_signatories) > 0) {
+            $signatories = $existing_signatories;
         }
+        
+        // Get current signatories count
+        $currentCount = count($signatories);
+        
+        // Ensure we have exactly 'number_of_signature' entries
+        if($currentCount < $requiredSignatures) {
+            // Add empty entries to match required count
+            for($i = $currentCount; $i < $requiredSignatures; $i++) {
+                $signatories[] = (object)[
+                    'certificate_template_signatories_id' => null,
+                    'certificate_template_id' => $id,
+                    'name' => '',
+                    'title' => '',
+                    'signature_path' => null,
+                    'created_at' => null,
+                    'updated_at' => null
+                ];
+            }
+        } elseif($currentCount > $requiredSignatures) {
+            // If more signatories exist than required, trim to required count
+            $signatories = array_slice($signatories, 0, $requiredSignatures);
+        }
+        
+        // Optional: Add a flag to indicate if the count matches
+        $signatureCountValid = ($currentCount == $requiredSignatures);
+
+        $response = [
+            'rows' => $signatories,
+            'certificate_templates' => $certificate_templates,
+            'total_signatures' => $requiredSignatures,
+            'existing_signatures_count' => $currentCount,
+            'signature_count_valid' => $signatureCountValid
+        ];
+
+        $serviceResponse = array();
+        $serviceResponse['Code'] = config('setting.status_code.success');
+        $serviceResponse['Message'] = config('setting.status_message.success');
+        $serviceResponse['Data'] = $response;
+        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+
+        return $sendServiceResponse;
+        
+    } catch (\Exception $exc) {
+        $exceptionResponse = array();
+        $exceptionResponse['ServiceMethod'] = $method;
+        $exceptionResponse['Exception'] = $exc->getMessage();
+        $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+        $serviceResponse = array();
+        $serviceResponse['Code'] = config('setting.status_code.exception');
+        $serviceResponse['Message'] = $exc->getMessage();
+        $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+        $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+        return $sendServiceResponse;
     }
+}
 }

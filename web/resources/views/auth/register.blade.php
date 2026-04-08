@@ -310,7 +310,6 @@
 
 
     function validate(e) {
-        console.log("Validation started");  // Check if validation starts
         const surname = document.getElementById("surname");
         const givenname = document.getElementById("givenname");
         const email = document.getElementById("email");
@@ -323,7 +322,6 @@
         e.preventDefault();
 
         if (surname.value == "") {
-            console.log("Surname is empty");  // Log when surname is empty
             $('#surname').addClass('is-invalid');
             document.getElementById("surnameerror").innerHTML =
                 "**Please Enter the Surname**";
@@ -456,11 +454,7 @@
 
             document.getElementById("doberror").innerHTML =
                 "**Please Select the DOB**";
-        } else if (getAge(cleave_date.value) < 18) {
-            document.getElementById("doberror").innerHTML =
-                "**User is not allowed to enter the site at this time, the user must be ablove 18.**";
-            cleave_date.focus();
-            return false;
+        
         } else {
             document.getElementById("doberror").innerText = "";
         }
@@ -485,13 +479,10 @@
         //   }
 
         const validation_parameter = $('.is-invalid');
-        console.log("Invalid fields count:", validation_parameter.length);
         if (validation_parameter.length == 0) {
-            console.log("All validations passed");
             preventSubmitButton('form_submit_handle');
             $("#register").submit();
         } else {
-            console.log("Some validations failed");
         }
         function validate(e) {
             alert('Testing validate function');  // Initial alert
@@ -621,7 +612,6 @@
                 alert('Something is wrong');
             },
             success: function (data) {
-                console.log(data);
                 swal({
                     title: "Success",
                     text: "Otp Sent Successfully",

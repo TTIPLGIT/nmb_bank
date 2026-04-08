@@ -9,8 +9,52 @@
     .mystyle {
         border: 2px solid red;
     }
+
+    .custom-dropdown {
+        position: relative;
+        width: 100%;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .custom-dropdown .selected {
+        padding: 5px 10px;
+    }
+
+    .custom-dropdown .dropdown-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        border: 1px solid #ccc;
+        background: #fff;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: none;
+        max-height: 200px;
+        overflow-y: auto;
+        border-radius: 5px;
+        z-index: 999;
+    }
+
+    .custom-dropdown .dropdown-list li {
+        display: flex;
+        justify-content: space-between;
+        /* text left, icon right */
+        align-items: center;
+        padding: 8px 12px;
+        cursor: pointer;
+        gap: 8px;
+    }
+
+    .custom-dropdown .dropdown-list li:hover {
+        background: #f0f0f0;
+    }
 </style>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -19,8 +63,7 @@
 
 
                     <div class="d-flex justify-content-start  ml-3 mb-3">
-                        <a href="{{ route('catagory_create') }}" class="btn btn-success " style="margin-right:100px">Create <i class="fa fa-plus"
-                                aria-hidden="true"></i></a>
+                        <a href="{{ route('catagory_create') }}" class="btn btn-success " style="margin-right:100px">Create </a>
                     </div>
 
                     <div class="row">
@@ -33,8 +76,8 @@
                                     <h4 style="color:black; text-align: center;">List Category</h4>
                                     <div class="row">
                                         <!-- <div class="col-lg-12 text-center">
-          <h4 style="color:darkblue;">Folder List</h4>
-        </div> -->
+                                                <h4 style="color:darkblue;">Folder List</h4>
+                                                </div> -->
 
                                     </div>
                                     @if (session('success'))
@@ -75,10 +118,10 @@
                                                                     style="color:green"></i></a>
 
 
-                                                            <a type="button" title="Delete"
+                                                            <!-- <a type="button" title="Delete"
                                                                 onclick="fetch_delete({{$catagory['catagory_id']}},'delete')"
                                                                 class="btn btn-link"><i class="far fa-trash-alt"
-                                                                    style="color:red"></i></a>
+                                                                    style="color:red"></i></a> -->
                                                         </td>
 
                                                     </tr>
@@ -149,12 +192,28 @@
                             <input type="text" class="form-control" name="badge_name" id="badge_name">
                         </div>
                         <div class="form-group col-md-4">
-                            <label>Course to achieve this Badge<span class="text-danger">*</span></label>
-                            <input type="number" class="form-control" name="badge_count" id="badge_count">
+                            <label>Number of Course to achieve this Badge<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" min="1" name="badge_count" id="badge_count">
                         </div>
+
                         <div class="form-group col-md-4">
-                            <label>Badge Icon<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="badge_icon" id="badge_icon">
+                            <label>Badge Icon <span class="text-danger">*</span></label>
+                            <div class="custom-dropdown badge-dropdown form-control">
+                                <div class="selected"
+                                    style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                                    <span>-- Select Badge Icon --</span>
+                                    <span>▼</span>
+                                </div>
+                                <ul class="dropdown-list">
+                                    @foreach($icons as $icon)
+                                    <li data-value="{{ $icon['icon'] }}">
+                                        <span>{{ $icon['icon_name'] }}</span>
+                                        <i class="{{ $icon['icon'] }}" style="color:blue; font-size:20px;"></i>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <input type="hidden" name="badge_icon" id="badge_icon" />
                         </div>
                     </div>
 
@@ -175,8 +234,8 @@
                             <input type="text" class="form-control" name="streak_name" id="streak_name">
                         </div>
                         <div class="form-group col-md-4">
-                            <label>Course to achieve this Streak<span class="text-danger">*</span></label>
-                            <input type="number" class="form-control" name="number_course_for_streak" id="streak_count">
+                            <label>Number of Course to achieve this Streak<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" min="1" name="number_course_for_streak" id="streak_count">
                         </div>
                         <div class="form-group col-md-4">
                             <label>Bonus Points<span class="text-danger">*</span></label>
@@ -189,26 +248,41 @@
                             <div class="form-group d-flex align-items-center flex-wrap gap-10">
 
                                 <div>
-                                    <input type="radio" class="btn-check" name="complete_within" value="Day" id="achieve_day" autocomplete="off" onclick="toggleAchieveInput()">
+                                    <input type="radio" class="btn-check" name="complete_within_type" value="Day" id="achieve_day" autocomplete="off" onclick="toggleAchieveInput()">
                                     <label class="btn btn-outline-primary" for="achieve_day" style="color:black">Day</label>
                                 </div>
 
 
                                 <div>
-                                    <input type="radio" class="btn-check" name="complete_within" value="time" id="achieve_time" autocomplete="off" onclick="toggleAchieveInput()">
+                                    <input type="radio" class="btn-check" name="complete_within_type" value="time" id="achieve_time" autocomplete="off" onclick="toggleAchieveInput()">
                                     <label class="btn btn-outline-primary" for="achieve_time" style="color:black">Hours</label>
                                 </div>
 
                                 <div style="flex-grow: 1; padding-left:30px; min-width: 150px;">
-                                    <input type="number" class="form-control" name="complete_within_type" id="achieve_value" placeholder="Enter Time or Day">
+                                    <input type="number" class="form-control" name="complete_within" min="1" id="achieve_value" placeholder="Enter Time or Day">
                                 </div>
                             </div>
                         </div>
 
 
-                        <div class="form-group col-6">
+                        <div class="form-group col-md-4">
                             <label>Streak Icon <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="streak_icon" id="achieve_icon">
+                            <div class="custom-dropdown streak-dropdown form-control">
+                                <div class="selected"
+                                    style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                                    <span>-- Select Badge Icon --</span>
+                                    <span>▼</span>
+                                </div>
+                                <ul class="dropdown-list">
+                                    @foreach($icons as $icon)
+                                    <li data-value="{{ $icon['icon'] }}">
+                                        <span>{{ $icon['icon_name'] }}</span>
+                                        <i class="{{ $icon['icon'] }}" style="color:blue; font-size:20px;"></i>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <input type="hidden" name="streak_icon" id="achieve_icon" />
                         </div>
 
                     </div>
@@ -224,7 +298,7 @@
 
                     <div class="form-group  col-6" id="unlockPointsDiv" style="display: none;">
                         <label class="form-label">Points to Unlock<span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" name="points_to_unlock" placeholder="Enter points" id="points_to_unlock">
+                        <input type="number" class="form-control" name="points_to_unlock" min="1" placeholder="Enter points" id="points_to_unlock">
 
 
                     </div>
@@ -329,11 +403,10 @@
         if (!courseLocked) {
             Swal.fire("Please select 'Yes' or 'No' for Course Locked.", "", "error");
             return false;
-
-            if ($("#points_to_unlock").val().trim() === '') {
-                Swal.fire("Please Enter the points to unlock", "error");
-                return false;
-            }
+        }
+        if ($("#points_to_unlock").val().trim() === '') {
+            Swal.fire("Please Enter the points to unlock", "error");
+            return false;
         }
 
         document.getElementById("catagory_Update").submit();
@@ -379,7 +452,7 @@
                 $('#streak_name').prop('disabled', false).val(row.streak_name);
                 $('#streak_count').prop('disabled', false).val(row.number_course_for_streak);
                 $('#streak_points').prop('disabled', false).val(row.bonus_point);
-                $('#achieve_value').prop('disabled', false).val(row.complete_within_type);
+                $('#achieve_value').prop('disabled', false).val(row.complete_within);
                 $('#achieve_icon').prop('disabled', false).val(row.streak_icon);
                 $('#points_to_unlock').prop('disabled', false).val(row.points_to_unlock);
                 $('#catagory_id').val(catagory_id);
@@ -406,16 +479,54 @@
                     $('#course_locked_no').prop('checked', true);
                 }
 
-                if (row.complete_within === "time") {
-                    $('#achieve_time').prop('checked', true);
-                    $('#label_achieve_time').addClass('active');
-                    $('#label_achieve_day').removeClass('active');
-                } else if (row.complete_within === "day") {
-                    $('#achieve_date').prop('checked', true);
-                    $('#label_achieve_day').addClass('active');
-                    $('#label_achieve_time').removeClass('active');
+                if (row.complete_within_type === "time") {
+                    $('#achieve_time').prop('checked', true);;
+                } else if (row.complete_within_type === "Day" || row.complete_within_type === "day") {
+                    $('#achieve_day').prop('checked', true);
+                }
+                // STREAK ICON
+                $('.streak-dropdown .selected i').remove();
+                $('.badge-dropdown .selected i').remove();
+                // BADGE ICON
+                $('#badge_icon').val(row.badge_icon);
+
+                if (row.badge_icon) {
+
+                    let badgeItem = $('.badge-dropdown .dropdown-list li[data-value="' + row.badge_icon + '"]');
+
+                    if (badgeItem.length) {
+
+                        let iconName = badgeItem.find('span').text();
+                        let iconHtml = badgeItem.find('i')[0].outerHTML;
+
+                        $('.badge-dropdown .selected').html(
+                            '<span>' + iconName + '</span><span>▼</span>'
+                        );
+
+                        $('.badge-dropdown .selected').prepend(iconHtml);
+                    }
                 }
 
+
+                // STREAK ICON
+                $('#achieve_icon').val(row.streak_icon);
+
+                if (row.streak_icon) {
+
+                    let streakItem = $('.streak-dropdown .dropdown-list li[data-value="' + row.streak_icon + '"]');
+
+                    if (streakItem.length) {
+
+                        let iconName = streakItem.find('span').text();
+                        let iconHtml = streakItem.find('i')[0].outerHTML;
+
+                        $('.streak-dropdown .selected').html(
+                            '<span>' + iconName + '</span><span>▼</span>'
+                        );
+
+                        $('.streak-dropdown .selected').prepend(iconHtml);
+                    }
+                }
 
 
 
@@ -423,6 +534,11 @@
 
                 if (type === "show") {
                     $('#catagory_name, #sub_catagory, #description, #badge_yes, #badge_no, #badge_name, #badge_count, #badge_icon,#streak_challenge_yes,#streak_challenge_no, #streak_name,#streak_count,#streak_points,#achieve_day,#achieve_time,#achieve_value,#achieve_icon,#course_locked_yes,#course_locked_no,#points_to_unlock').prop('disabled', true);
+                     $('.custom-dropdown').css({
+                        'pointer-events': 'none',
+                        'background-color': '#e9ecef'
+                    });
+
                     $('#updateButton').hide();
                     $('#sub_title_name').html("Category");
                     $('#title_name').html("Category");
@@ -448,7 +564,7 @@
         } else {
             $('#streak_name, #streak_count, #streak_points,#achieve_value,#achieve_icon').closest('.form-group').hide();
         }
-       
+
 
 
     }
@@ -528,6 +644,7 @@
     }
 </script>
 
+<!-- delete -->
 <script>
     function fetch_delete(catagory_id, type) {
         Swal.fire({
@@ -565,6 +682,39 @@
         });
 
     }
+</script>
+
+<!-- dropdown -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".custom-dropdown").forEach(function(dropdown) {
+            const selected = dropdown.querySelector(".selected");
+            const list = dropdown.querySelector(".dropdown-list");
+            const hiddenInput = dropdown.nextElementSibling; // hidden input right after dropdown
+
+            // Toggle dropdown
+            selected.addEventListener("click", () => {
+                list.style.display = list.style.display === "block" ? "none" : "block";
+            });
+
+            // Handle option click
+            list.querySelectorAll("li").forEach(item => {
+                item.addEventListener("click", function() {
+                    selected.innerHTML = this.innerHTML; // Show icon + text
+                    hiddenInput.value = this.dataset.value; // Save icon class
+                    list.style.display = "none"; // Close dropdown
+                });
+            });
+
+            // Close if clicked outside
+            document.addEventListener("click", (e) => {
+                if (!dropdown.contains(e.target)) {
+                    list.style.display = "none";
+                }
+            });
+        });
+    });
 </script>
 
 @endsection

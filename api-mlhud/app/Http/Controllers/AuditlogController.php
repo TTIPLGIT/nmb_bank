@@ -431,4 +431,128 @@ class AuditLogController extends BaseController
       return $sendServiceResponse;
     }
   }
+
+  public function logdetails()
+  {
+    try {
+      $this->WriteFileLog('30');
+      $method = 'Method => AuditLogController => get_login';
+      // $rows = DB::table('operations_audit_logs as a')
+      // ->select('a.*','users.name')
+      // ->join('users', 'users.id', '=', 'a.user_id')
+      // ->get();
+      $rows1 = DB::table('users as a')
+        ->select('a.*',)
+
+        ->get();
+      $rows = [];
+      $response = [
+        'rows1' => $rows1,
+        'rows' => $rows
+      ];
+
+      $serviceResponse = array();
+      $serviceResponse['Code'] = config('setting.status_code.success');
+      $serviceResponse['Message'] = config('setting.status_message.success');
+      $serviceResponse['Data'] = $response;
+      $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+      $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+      return $sendServiceResponse;
+    } catch (\Exception $exc) {
+      $exceptionResponse = array();
+      $exceptionResponse['ServiceMethod'] = $method;
+      $exceptionResponse['Exception'] = $exc->getMessage();
+      $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+      $serviceResponse = array();
+      $serviceResponse['Code'] = config('setting.status_code.exception');
+      $serviceResponse['Message'] = $exc->getMessage();
+      $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+      $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+      return $sendServiceResponse;
+    }
+  }
+
+  public function logdetailsdata(Request $request)
+
+  {
+
+    $logMethod = 'Method => AuditLogController => login_search';
+    try {
+      
+      $inputArray = $this->decryptData($request->requestData);
+      $user_id = $inputArray['user_id'];
+      $from_date = $inputArray['from_date'];
+      $to_date = $inputArray['to_date'];
+     
+      if ($from_date != null) {
+        $from_date = date('Y-m-d', strtotime($from_date));
+      } else {
+        $from_date = '';
+      }
+      if ($to_date != null) {
+        $to_date = date('Y-m-d', strtotime($to_date));
+      } else {
+        $to_date = $from_date;
+      }
+
+      if ($user_id != null) {
+        $rows = DB::select("SELECT al.*,u.name as user_name from audit_logs as al inner join users as u on al.user_id=u.id where al.user_id=$user_id");
+      }
+
+
+      if ($from_date != '' && $user_id != null) {
+            $query = DB::table('audit_logs as al')
+          ->join('users as u', 'al.user_id', '=', 'u.id')
+          ->select(
+              'al.*',
+              'u.name as user_name'
+          );
+
+      if (!empty($user_id)) {
+          $query->where('al.user_id', $user_id);
+      }
+
+      if (!empty($from_date) && !empty($to_date)) {
+          $query->whereDate('al.action_date_time', '>=', $from_date)
+                ->whereDate('al.action_date_time', '<=', $to_date);
+      }
+
+      $rows = $query->orderBy('al.action_date_time', 'DESC')->get();
+      }
+
+      $rows1 = DB::table('users as a')
+        ->select('a.*',)
+        ->get();
+      $response = [
+        'rows' => $rows,
+        'rows1' =>$rows1
+      ];
+
+
+
+
+      // echo json_encode($rows);exit;
+      // return $rows;   
+
+      $serviceResponse = array();
+      $serviceResponse['Code'] = config('setting.status_code.success');
+      $serviceResponse['Message'] = config('setting.status_message.success');
+      $serviceResponse['Data'] = $response;
+      $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+      $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+      return $sendServiceResponse;
+    } catch (\Exception $exc) {
+      $exceptionResponse = array();
+      $exceptionResponse['ServiceMethod'] = $logMethod;
+      $exceptionResponse['Exception'] = $exc->getMessage();
+      $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+      $this->WriteFileLog($exceptionResponse);
+      $serviceResponse = array();
+      $serviceResponse['Code'] = config('setting.status_code.exception');
+      $serviceResponse['Message'] = $exc->getMessage();
+      $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+      $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+      return $sendServiceResponse;
+    }
+  }
 }

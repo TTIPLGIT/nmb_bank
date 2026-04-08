@@ -123,7 +123,7 @@ else{
              }
     
               if ($objData->Code == 400) {
-               return Redirect::back()->with('fail', 'Uam Screen Name Already Exists');
+               return redirect(route('uam_screens.index'))->with('fail', 'Uam Screen Name Already Exists');
               }
     
          }
@@ -155,12 +155,13 @@ else{
           if ($objData->Code == 200) {
             $parant_data = json_decode(json_encode($objData->Data), true);
             $rows =  $parant_data['rows'];
+            $uam_screen_permissions =  $parant_data['uam_screen_permissions'];
             // $work_flow_row =  $parant_data['work_flow_row'];
             $menus = $this->FillMenu();  
             $screens = $menus['screens'];
             $modules = $menus['modules'];
             $permissions = config('permission.screen_permission');
-            return view('uam.uam_screens.show', compact('rows','permissions','screens','modules'));
+            return view('uam.uam_screens.show', compact('rows','permissions','screens','modules','uam_screen_permissions'));
         }  
     }
     else {
@@ -199,12 +200,13 @@ else{
               if ($objData->Code == 200) {
                 $parant_data = json_decode(json_encode($objData->Data), true);
                 $rows =  $parant_data['rows'];
+                $uam_screen_permissions =  $parant_data['uam_screen_permissions'];
                 // $work_flow_row =  $parant_data['work_flow_row'];
                 $menus = $this->FillMenu();  
                 $screens = $menus['screens'];
                 $modules = $menus['modules'];
                 $permissions = config('permission.screen_permission');
-                return view('uam.uam_screens.edit', compact('rows','permissions','screens','modules'));
+                return view('uam.uam_screens.edit', compact('rows','permissions','screens','modules','uam_screen_permissions'));
             }  
         }
         else {
@@ -308,6 +310,7 @@ else{
         $id = $this->decryptData($id);
         $gatewayURL = config('setting.api_gateway_url').'/uam_screens/data_delete/'.$this->encryptData($id);
         $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+
         $response1 = json_decode($response);
         if($response1->Status == 200 && $response1->Success){
             $objData = json_decode($this->decryptData($response1->Data));

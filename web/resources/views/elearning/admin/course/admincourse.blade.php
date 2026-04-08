@@ -388,15 +388,16 @@ form.longqustionsform {
 
                         <!-- <div class="col-12"> -->
                         <div class="row">
-                            <div class="col-md-2 ">
+                            <!-- hidden as per new design  -->
+                            <!-- <div class="col-md-2 ">
                                 <select class="form-control default" id="result" name="result">
 
                                     <option selected value="classlist">Class List</option>
-                                    <option value="courselist">Course List</option>
+                                    <option value="courselist">Course List</option> 
 
                                 </select>
-                            </div>
-                            <div class="col-md-6"></div>
+                            </div> -->
+                            <div class="col-md-10"></div>
 
                             <div class="col-md-2 addquizmodal" id="addClassButton">
                                 <a type="button" style="font-size:15px;margin-bottom: 15px;"
@@ -405,12 +406,12 @@ form.longqustionsform {
                                             aria-hidden="true"></i></span></a>
                             </div>
 
-                            <div class="col-md-2" id="addCourseButton">
+                            <!-- <div class="col-md-2" id="addCourseButton">
                                 <a type="button" style="font-size:15px;margin-bottom: 15px;"
                                     class="btn btn-success btn-lg" title="Create" href="" data-toggle="modal"
                                     data-target="#addModal">Add Course <span><i class="fa fa-plus"
                                             aria-hidden="true"></i></span></a>
-                            </div>
+                            </div> -->
                         </div>
 
                     </div>
@@ -434,7 +435,7 @@ form.longqustionsform {
 
                             <div class="card mt-0">
                                 <div class="card-body">
-                                    <h3 style="margin-top:10px;text-align:center;">Class List View</h3>
+                                    <h3 style="margin-top:10px;text-align:center;">Course Template List View</h3>
                                     <div class="table-wrapper">
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="align3">
@@ -442,8 +443,8 @@ form.longqustionsform {
                                                     <tr>
                                                         <th>S.No</th>
                                                         <th>Class Name</th>
-                                                        <th>Class Duration</th>
-                                                        <th>Class Resource</th>
+                                                        <!-- <th>Class Duration</th> -->
+                                                        <!-- <th>Class Resource</th> -->
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -454,36 +455,48 @@ form.longqustionsform {
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$data->class_name}}</td>
-                                                        <td>{{$data->class_duration}} Mins</td>
+                                                        <!-- <td>{{$data->class_duration}} Mins</td> -->
 
-                                                        <?php if ($data->class_format == 'mp4') { ?>
-                                                        <td> <img src="uploads/class/126/mp4.png" width="50px"
-                                                                height="50px" alt="..."></td>
+                                                        <!-- <?php if ($data->class_format == 'mp4') { ?>
+                                                        <td> <img src="{{ asset('uploads/class/126/mp4.png') }}"
+                                                                width="50px" height="50px" alt="..."></td>
                                                         <?php    } elseif ($data->class_format == 'mp3') { ?>
-                                                        <td> <img src="uploads/class/126/mp3.png" width="50px"
-                                                                height="50px" alt="Image" /></td>
+                                                        <td> <img src="{{ asset('uploads/class/126/mp3.png')}}"
+                                                                width="50px" height="50px" alt="Image" /></td>
                                                         <?php    } elseif ($data->class_format == 'pdf') { ?>
-                                                        <td> <img src="uploads/class/126/pdf.png" width="50px"
-                                                                height="50px" alt="Image" /></td>
+                                                        <td> <img src="{{ asset('uploads/class/126/pdf.png') }}"
+                                                                width="50px" height="50px" alt="Image" /></td>
                                                         <?php    } elseif ($data->class_format == 'jpg' or 'png') { ?>
-                                                        <td> <img src="uploads/class/126/empty.jpg" width="50px"
-                                                                height="50px" alt="Image" /></td>
+                                                        <td> <img src="{{ asset('uploads/class/126/empty.jpg') }}"
+                                                                width="50px" height="50px" alt="Image" /></td>
 
                                                         <?php    } else { ?>
                                                         <td> <img src="uploads/class/126/{{$data->resource_name}}"
                                                                 width="50px" height="50px" alt="Image" /></td>
-                                                        <?php    } ?>
+                                                        <?php    } ?> -->
                                                         <td>
-                                                            <a class="btn btn-link" title="Edit" id="gcb"
+                                                            <!-- <a class="btn btn-link" title="Edit" id="gcb"
                                                                 data-toggle="modal" data-target="#addModal4"
                                                                 onclick="fetch_update({{$data->class_id}},'edit')">
                                                                 <i class="fas fa-pencil-alt"
                                                                     style="color: blue !important"></i></a>
-                                                            <a class="btn btn-link"
-                                                                onclick="fetch_update({{$data->class_id}},'class_show')"
-                                                                title="Show" id="gcb" href="" data-toggle="modal"
-                                                                data-target="#addModalquiz1"><i class="fas fa-eye"
-                                                                    style="color:green"></i></a>
+                                                            <!-- Replace your existing edit button with this -->
+                                                            <a class="btn btn-link" title="Edit"
+                                                                href="javascript:void(0);"
+                                                                onclick="openClassEditModal({{$data->class_id}})"
+                                                                style="margin-top: 0px !important;">
+                                                                <i class="fas fa-pencil-alt"
+                                                                    style="color: blue !important"></i>
+                                                            </a>
+                                                            <a class="btn btn-link" title="show" data-toggle="modal"
+                                                                onclick="openClassEditModal({{$data->class_id}},
+                                                                    true)"> <i class="fas fa-eye"
+                                                                    style="color: blue !important"></i></a>
+                                                            <!-- <a class="btn btn-link"
+                                                                    onclick="fetch_update({{$data->class_id}},'class_show')"
+                                                                    title="Show" id="gcb" href="" data-toggle="modal"
+                                                                    data-target="#addModalquiz1"><i class="fas fa-eye"
+                                                                        style="color:green"></i></a> -->
 
 
                                                             <a type="button" title="Delete"
@@ -532,10 +545,10 @@ form.longqustionsform {
                                                     <tr>
                                                         <th>S.No</th>
                                                         <th>Course Name</th>
-                                                        <th>Course Banner</th>
-                                                        <th>Start Date</th>
-                                                        <th>End Date</th>
-                                                        <th>Price</th>
+                                                        <!-- <th>Course Banner</th> -->
+                                                        <!-- <th>Start Date</th> -->
+                                                        <!-- <th>End Date</th> -->
+                                                        <!-- <th>Price</th> -->
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -563,18 +576,18 @@ form.longqustionsform {
 
                                                                         @endif -->
 
-                                                        <?php if (!empty($data->course_banner)) { ?>
+                                                        <!-- <?php if (!empty($data->course_banner)) { ?>
 
 
-                                                        <td><img src="uploads/course/126/{{$data->course_banner}}"
-                                                                width="50px" height="50px" alt="Image" /></td>
+                                                            <td><img src="uploads/course/126/{{$data->course_banner}}"
+                                                                    width="50px" height="50px" alt="Image" /></td>
                                                         <?php    } else { ?>
-                                                        <td> <img src="uploads/class/126/empty.jpg" width="50px"
-                                                                height="50px" alt="..."></td>
-                                                        <?php    } ?>
-                                                        <td>{{$data->course_start_period}}</td>
-                                                        <td>{{$data->course_end_period}}</td>
-                                                        @if(!empty($data->course_price))
+                                                            <td> <img src="uploads/class/126/empty.jpg" width="50px"
+                                                                    height="50px" alt="..."></td>
+                                                        <?php    } ?> -->
+                                                        <!-- <td>{{$data->course_start_period}}</td> -->
+                                                        <!-- <td>{{$data->course_end_period}}</td> -->
+                                                        <!-- @if(!empty($data->course_price))
 
                                                         <td>Rs. {{$data->course_price}}</td>
                                                         <td>Rs. {{$data->course_price}}</td>
@@ -582,7 +595,7 @@ form.longqustionsform {
                                                         @else
                                                         <td>Rs. 0</td>
 
-                                                        @endif
+                                                        @endif -->
                                                         <td>
                                                             @php
                                                             $showHandleButton = false;
@@ -620,10 +633,12 @@ form.longqustionsform {
 
 
                                                             <!-- <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal3" onclick="fetch_courseupdate_new({{$data->course_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a> -->
-                                                            <a class="btn btn-link" title="show" data-toggle="modal"
-                                                                data-target="#addModal5"
-                                                                onclick="fetch_courseupdate_new({{$data->course_id}},'show')"><i
-                                                                    class="fas fa-eye" style="color:green"></i></a>
+                                                            <a class="btn btn-link" title="Edit"
+                                                                href="{{ route('admin_course_edit', \Crypt::encrypt($data->course_id)) }}">
+                                                                <i class="fas fa-pencil-alt" style="color:blue"></i></a>
+                                                            <a class="btn btn-link" title="show"
+                                                                href="{{ route('admin_course_show', \Crypt::encrypt($data->course_id)) }}">
+                                                                <i class="fas fa-eye" style="color:green"></i></a>
 
                                                             <a type="button" title="Delete"
                                                                 onclick="course_delete(<?php echo $data->course_id ?>)"
@@ -654,9 +669,6 @@ form.longqustionsform {
                                             </table>
                                         </div>
                                     </div>
-
-
-
                                 </div>
                             </div>
                         </div>
@@ -681,7 +693,7 @@ form.longqustionsform {
     </div>
 
 </div>
-</div>
+
 <div class="modal fade" id="addModalquiz1">
     <div class="modal-dialog modal-lg">
 
@@ -1187,7 +1199,8 @@ console.log(document.getElementById('user_id'));
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Course Certificate:</label><br>
+                                <label>Course Certificate: <span class="error-star"
+                                        style="color:red;">*</span></label><br>
 
                                 <input type="radio" class="btn-check" name="course_certificate" value="1"
                                     id="course_certificate_yes" autocomplete="off">
@@ -1226,7 +1239,7 @@ console.log(document.getElementById('user_id'));
                             <div class="form-group">
                                 <label>Course Introduction:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="file" class="form-control default" id="course_introduction"
-                                    name="course_introduction" required>
+                                    name="course_introduction" accept=".mp4,.mp3,.png,.jpg,.jpeg" required>
                                 <span style="color:red !important"><strong>Following files could be uploaded as
                                         mp4,mp3,png,jpg</strong></span>
 
@@ -1245,17 +1258,17 @@ console.log(document.getElementById('user_id'));
 
                     <div class="row">
 
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label>Course Summary for chatbot:<span class="error-star"
                                         style="color:red;">*</span></label>
                                 <input type="file" class="form-control default" id="course_summary"
-                                    name="course_summary" required>
+                                    name="course_summary" accept=".mp3,.pdf,.txt" required>
                                 <span style="color:red !important"><strong>Following files could be uploaded as
                                         mp3,pdf,txt</strong></span>
 
                             </div>
-                        </div>
+                        </div>   -->
 
                         <div class="col-md-6">
 
@@ -1265,8 +1278,8 @@ console.log(document.getElementById('user_id'));
 
                                 <select class="form-control " name="course_pay" id="course_pay">
                                     <option value="">---Select Course Type---</option>
-                                    <option value="paid">Paid Course</option>
-                                    <option value="free">Free Course</option>
+                                    <!-- <option value="paid">Paid Course</option> -->
+                                    <option value="free" selected>Free Course</option>
                                 </select>
 
                             </div>
@@ -1609,16 +1622,42 @@ console.log(document.getElementById('user_id'));
                     </div>
 
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Restricted Course Access:<span class="error-star"
+                                        style="color:red;">*</span></label><br>
 
+                                <input type="radio" class="btn-check" name="restricted_access" value="1"
+                                    id="restricted_yes" autocomplete="off" onclick="togglePin(true)">
+                                <label class="btn btn-outline-primary" for="restricted_yes">Yes</label>
+
+                                <input type="radio" class="btn-check" name="restricted_access" value="0"
+                                    id="restricted_no" autocomplete="off" checked onclick="togglePin(false)">
+                                <label class="btn btn-outline-primary" for="restricted_no">No</label>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-md-6" id="pinField" style="display:none;">
+                            <div class="form-group">
+                                <label>Access PIN:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="password" class="form-control default" name="course_pin" id="course_pin"
+                                    placeholder="Enter 4-6 digit PIN" autocomplete="off">
+                            </div>
+                        </div> -->
+                    </div>
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
                             <a class="btn btn-success btn-space savebutton" type="submit" onclick="gencre1(1)"
-                                id="savebutton">Submit </a>
+                                id="savebutton" style="color:white">Submit </a>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="resetSelect2()"
                                 value="Cancel">
                         </div>
                     </div>
+
+
+
                 </form>
             </div>
 
@@ -1911,6 +1950,16 @@ div#align0_filter {
     height: 25%;
 }
 </style>
+<script>
+function togglePin(show) {
+    if (show) {
+        document.getElementById('pinField').style.display = 'block';
+    } else {
+        document.getElementById('pinField').style.display = 'none';
+        document.getElementById('course_pin').value = '';
+    }
+}
+</script>
 
 <script>
 function reinitializeSelect2(element) {
@@ -2172,56 +2221,56 @@ const $select = $('#user_id');
 
 $('#user_id').on('select2:select', function(e) {
 
+    const selectedValue = e.params.data.id;
+    if (selectedValue === 'all') {
+        const allValues = [];
+        $select.on('select2:select', function(e) {
             const selectedValue = e.params.data.id;
-            console.log(selectedValue)
-            console.log(selectedValue === 'all')
-            console.log(selectedValue == 'all')
+
             if (selectedValue === 'all') {
                 const allValues = [];
-                $select.on('select2:select', function(e) {
-                    const selectedValue = e.params.data.id;
 
-                    if (selectedValue === 'all') {
-                        const allValues = [];
-
-                        // Get all option values except "all"
-                        $('#user_id option').each(function() {
-                            const val = $(this).val();
-                            if (val !== 'all') {
-                                allValues.push(val);
-                            }
-                        });
-
-
-                        $select.val(allValues).trigger('change.select2');
+                // Get all option values except "all"
+                $('#user_id option').each(function() {
+                    const val = $(this).val();
+                    if (val !== 'all') {
+                        allValues.push(val);
                     }
                 });
 
-                $select.on('select2:unselect', function(e) {
-                    const unselectedValue = e.params.data.id;
 
-                    if (unselectedValue === 'all') {
-                        // ✅ Remove all values
-                        $select.val(null).trigger('change.select2');
-                    }
-                });
+                $select.val(allValues).trigger('change.select2');
+            }
+        });
 
-                // ✅ Prevent 'all' from being in the final selected list
-                $select.on('change', function() {
-                    const selected = $select.val() || [];
+        $select.on('select2:unselect', function(e) {
+            const unselectedValue = e.params.data.id;
 
-                    // Remove 'all' if accidentally included
-                    if (selected.includes('all')) {
-                        const filtered = selected.filter(val => val !== 'all');
-                        $select.val(filtered).trigger('change.select2');
-                    }
-                });
+            if (unselectedValue === 'all') {
+                // ✅ Remove all values
+                $select.val(null).trigger('change.select2');
+            }
+        });
+
+        // ✅ Prevent 'all' from being in the final selected list
+        $select.on('change', function() {
+            const selected = $select.val() || [];
+
+            // Remove 'all' if accidentally included
+            if (selected.includes('all')) {
+                const filtered = selected.filter(val => val !== 'all');
+                $select.val(filtered).trigger('change.select2');
+            }
+
+        });
+    }
+
+});
 </script>
 
 
 <script>
 function data(e) {
-    // alert(e);
     if (e.target.id == "class_quizedit") {
         if (e.target.value == "yes") {
 
@@ -2235,19 +2284,20 @@ function data(e) {
 
 
 
-    } else if (e.target.id == "class_quiz") {
-        if (e.target.value == "yes") {
-
-            $('#yes').css('display', 'block');
-            $('#no').css('display', 'none');
-        } else {
-            $('#yes').css('display', 'none');
-            $('#no').css('display', 'block');
-
-        }
     }
 
 }
+
+$(document).on('change', '#class_quiz', function() {
+
+    if ($(this).val() === 'yes') {
+        $('#quiz_show').show();
+    } else {
+        $('#quiz_show').hide();
+        $('#quiz_id').val('');
+    }
+
+});
 </script>
 <script>
 function create_tr(table_id) {
@@ -2575,269 +2625,192 @@ function remove_tr(This) {
 <script>
 function fetch_courseupdate_new(course_id, type) {
 
-
     $.ajax({
         url: "{{ url('/elearning/course/fetch') }}",
         type: 'GET',
         data: {
-            'course_id': course_id,
-            'type': type,
-            _token: '{{csrf_token()}}'
-
+            course_id: course_id,
+            type: type,
+            _token: '{{ csrf_token() }}'
         },
-
         success: function(data) {
-            // correct_choices = data.rows[0]['correct_choices'].split(',');
 
-            console.log(data);
+            const row = data.rows[0];
+            console.log(row);
+            /* ===================== EDIT MODE ===================== */
+            if (type === "edit") {
 
-            if (type == "edit") {
+                let url = "{{ url('/elearning/course/update') }}/" + course_id;
+                $('#course_form_edit').attr('action', url);
 
-                $('#course_categoryedit').val(data.rows[0]['course_category']);
-                $('#course_nameedit').val(data.rows[0]['course_name']);
+                // Hidden ID
+                $('#course_edit').val(row.course_id);
 
-                $('#course_descriptionedit').val(data.rows[0]['course_description']);
+                // Basic fields
+                $('#course_category_id_edit').val(row.course_category);
+                $('#role_id_edit').val(row.role_id);
+                $('#designation_id_edit').val(row.designation_id);
 
-                //$('#course_certificateedit').val(data.rows[0]['course_certificate']);
+                $('#course_nameedit').val(row.course_name);
+                $('#course_descriptionedit').val(row.course_description);
+                $('#course_instructoredit').val(row.course_instructor);
+                $('#course_cpt_pointsedit').val(row.course_cpt_points);
 
-                if (data.rows[0]['course_certificate'] == "1") {
-                    $('.answer_edit_on').prop('checked', true)
+                // Course Certificate
+                $('input[name="course_certificate"][value="' + row.course_certificate + '"]')
+                    .prop('checked', true);
 
+                // Course Pay
+                $('#course_payedit').val(row.course_pay);
+
+                if (row.course_pay === "paid") {
+                    $('#paid1').show();
+                    $('#free1').hide();
+                    $('#course_priceedit').val(row.course_price);
                 } else {
-                    $('.answer_edit_off').prop('checked', true)
-
+                    $('#paid1').hide();
+                    $('#free1').show();
                 }
 
+                // Dates
+                $('#course_start_periodedit').val(row.course_start_period);
+                $('#course_end_periodedit').val(row.course_end_period);
 
-                $('#course_certificateedit').val(data.rows[0]['course_certificate']);
-                // $('#course_introductionedit').val(data.rows[0]['course_introduction']);
+                // Images
+                $('#course_introductionedit').attr('src', row.introduction_path1);
+                $('.img-fluid2').attr('src', row.banner_path1);
 
-                $('.img-fluid1').attr('src', data.rows[0]['introduction_path1']);
-                $('.img-fluid1').attr('title', data.rows[0]['course_introduction']);
+                // ===== USER IDS =====
+                let userIdsArray = row.user_ids ? row.user_ids.split(',') : [];
+                $('#user_ids_edit').val(userIdsArray).trigger('change');
 
-                // $('#course_banneredit').val(data.rows[0]['course_banner']);
-                $('.img-fluid2').attr('src', data.rows[0]['banner_path1']);
-                $('.img-fluid2').attr('title', data.rows[0]['course_banner']);
+                // ===== CLASSES =====
+                let classArray = row.course_classes ? row.course_classes.split(',') : [];
+                $('#course_classesedit').val(classArray).trigger('change');
 
-                $('#course_payedit').val(data.rows[0]['course_pay']);
-                var course_payedit = document.querySelector('#course_payedit').value;
-                if (course_payedit == "paid") {
-                    $('#paid1').css('display', 'block');
-                    $('#free1').css('display', 'none');
-                    $('#course_priceedit').val(data.rows[0]['course_price']);
-
-
-                } else {
-                    $('#paid1').css('display', 'none');
-                    $('#free1').css('display', 'block');
-                    $('#course_price').val(data.rows[0]['course_price']);
-                }
-                $('#course_start_periodedit').val(data.rows[0]['course_start_period']);
-                $('#course_end_periodedit').val(data.rows[0]['course_end_period']);
-                $('#course_instructoredit').val(data.rows[0]['course_instructor']);
-
-                //$('#course_tags').val(data.rows[0]['course_tags']);
-                const keyarray = data.rows[0]['course_tags'].split(',');
-                console.log(keyarray, "actual_data");
-                for (const keyobject of keyarray) {
-                    let table_body2 = document.getElementById('table_bodyedit');
-                    first_tr = table_body2.firstElementChild
-                    tr_clone = first_tr.cloneNode(true);
-                    tr_clone.firstElementChild.firstElementChild.value = keyobject;
-                    tr_clone.querySelector('input').setAttribute("readonly", "");
-                    table_body2.append(tr_clone);
-
-                    clean_first_tr(table_body2.firstElementChild);
-                }
-                const keyarray1 = data.rows[0]['course_skills_required'].split(',');
-                console.log(keyarray1, "actual_data");
-                for (const keyobject of keyarray1) {
-                    let table_body2 = document.getElementById('table_body1edit');
-                    first_tr = table_body2.firstElementChild
-                    tr_clone = first_tr.cloneNode(true);
-                    tr_clone.firstElementChild.firstElementChild.value = keyobject;
-                    tr_clone.querySelector('input').setAttribute("readonly", "");
-                    table_body2.append(tr_clone);
-
-                    clean_first_tr(table_body2.firstElementChild);
+                // ===== TAGS =====
+                $('#table_bodyedit').html('');
+                if (row.course_tags) {
+                    let tags = row.course_tags.split(',');
+                    tags.forEach(function(tag) {
+                        $('#table_bodyedit').append(`
+                <tr>
+                    <td>
+                        <input type="text" class="form-control default" name="course_tags[]" value="${tag}">
+                    </td>
+                    <td>
+                        <button class="danger" onclick="remove_tr(this)">
+                            <i class="fa fa-close"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
+                    });
                 }
 
-                const keyarray2 = data.rows[0]['course_gain_skills'].split(',');
-                console.log(keyarray2, "actual_data");
-                for (const keyobject of keyarray2) {
-                    let table_body2 = document.getElementById('table_body2edit');
-                    first_tr = table_body2.firstElementChild
-                    tr_clone = first_tr.cloneNode(true);
-                    tr_clone.firstElementChild.firstElementChild.value = keyobject;
-                    tr_clone.querySelector('input').setAttribute("readonly", "");
-                    table_body2.append(tr_clone);
-
-                    clean_first_tr(table_body2.firstElementChild);
+                // ===== SKILLS REQUIRED =====
+                $('#table_body1edit').html('');
+                if (row.course_skills_required) {
+                    let skills = row.course_skills_required.split(',');
+                    skills.forEach(function(skill) {
+                        $('#table_body1edit').append(`
+                <tr>
+                    <td>
+                        <input type="text" class="form-control default" name="course_skills_required[]" value="${skill}">
+                    </td>
+                    <td>
+                        <button class="danger" onclick="remove_tr(this)">
+                            <i class="fa fa-close"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
+                    });
                 }
-                $('#course_cpt_pointsedit').val(data.rows[0]['course_cpt_points']);
-                // course_classesedit
 
-                $('.course_classesedit').val(data.rows[0]['course_classes'].split(', '));
-                reinitializeSelect2(".js-select6");
-                $('#course_edit').val(data.rows[0]['course_id']);
-
-
-            } else if (type == "show") {
-                console.log(data);
-                $('#course_categoryshow').val(data.rows[0]['course_category']);
-                $('#course_nameshow').val(data.rows[0]['course_name']);
-
-                $('#course_descriptionshow').val(data.rows[0]['course_description']);
-
-                $('#course_category_id_show').val(data.rows[0]['course_category']);
-                $('#course_category_id_show').prop('disabled', true);
-                $('#role_id_show').val(data.rows[0]['role_id']);
-                $('#role_id_show').prop('disabled', true);
-                $('#designation_id_show').val(data.rows[0]['designation_id']);
-                $('#designation_id_show').prop('disabled', true);
-
-                let userIdsString = data.rows[0]['user_ids']; // "565,557"
-                let userIdsArray = userIdsString.split(',');
-
-                $('#user_ids_show').val(userIdsArray).trigger('change');
-                $('#user_ids_show').prop('disabled', true);
-
-                //$('#course_certificateedit').val(data.rows[0]['course_certificate']);
-
-                if (data.rows[0]['course_certificate'] == "1") {
-                    $('.answer_show_on').prop('checked', true)
-
-                    $('.answer_show_on1').css('background-color', 'blue');
-                } else {
-                    $('.answer_show_off').prop('checked', true)
-                    $('.answer_show_off1').css('background-color', 'red');
+                // ===== GAIN SKILLS =====
+                $('#table_body2edit').html('');
+                if (row.course_gain_skills) {
+                    let gains = row.course_gain_skills.split(',');
+                    gains.forEach(function(gain) {
+                        $('#table_body2edit').append(`
+                <tr>
+                    <td>
+                        <input type="text" class="form-control default" name="course_gain_skills[]" value="${gain}">
+                    </td>
+                    <td>
+                        <button class="danger" onclick="remove_tr(this)">
+                            <i class="fa fa-close"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
+                    });
                 }
-                // Show/hide certificate section
-                console.log(data.rows[0]['certificate_expiry']);
-                if (data.rows[0]['course_certificate'] == "1") {
 
-                    $('#certificateFields_edit').show();
+                // Select2
+                reinitializeSelect2('.js-select5');
+                reinitializeSelect2('.js-select6');
+            }
 
-                    // Handle certificate_expiry
-                    if (data.rows[0]['certificate_expiry'] == "1") {
-                        $('#certificate_expiryyes_show').prop('checked', true);
-                        $('#expiryDateField_show').show();
-                        $('#course_expiry_period_show').val(data.rows[0][
-                            'course_expiry_period'
-                        ]); // set expiry date
-                    } else {
-                        $('#certificate_expiryno_show').prop('checked', true);
-                        $('#expiryDateField_show').hide();
-                    }
+            /* ===================== SHOW MODE ===================== */
+            if (type === "show") {
+                let url = "{{ url('/elearning/course/show') }}/" + course_id;
+                $('#course_category_id_show').val(String(row.course_category)).prop('disabled', true);
+                $('#role_id_show').val(row.role_id).prop('disabled', true);
+                $('#designation_id_show').val(row.designation_id).prop('disabled', true);
 
-                    // Set selected certificate template
-                    $('#cetificate_template_show').val(data.rows[0]['cetificate_template']);
-                } else {
-                    $('#certificateFields_edit').hide();
-                    $('#expiryDateField_show').hide();
-                    $('#certificate_expiryyes_show').prop('checked', false);
-                    $('#certificate_expiryno_show').prop('checked', false);
-                    $('#cetificate_template_show').val('');
-                }
-                $('#course_certificateshow').val(data.rows[0]['course_certificate']);
+                $('#course_nameshow').val(row.course_name).prop('disabled', true);
+                $('#course_descriptionshow').val(row.course_description).prop('disabled', true);
+                $('#course_instructorshow').val(row.course_instructor).prop('disabled', true);
+                $('#course_payshow').val(row.course_pay).prop('disabled', true);
+                $('#course_start_periodshow').val(row.course_start_period).prop('disabled', true);
+                $('#course_end_periodshow').val(row.course_end_period).prop('disabled', true);
+                $('#exam_nameshow').val(row.exam_name).prop('disabled', true);
+                $('#exam_dateshow').val(row.exam_date).prop('disabled', true);
+                $('#pass_percentageshow').val(row.pass_percentage).prop('disabled', true);
+                $('#course_tagsshow').val(row.course_tags).prop('disabled', true);
+                $('#course_skills_requiredshow').val(row.course_skills_required).prop('disabled', true);
+                $('#course_gain_skillsshow').val(row.course_gain_skills).prop('disabled', true);
+                $('#course_cpt_pointsshow').val(row.course_cpt_points).prop('disabled', true);
+                $('#course_priceshow').val(row.course_price).prop('disabled', true);
+                $('#course_classesshow').val(row.course_classes).prop('disabled', true);
+                // User IDs (SHOW)
+                let userIdsArray = row.user_ids ? row.user_ids.split(',') : [];
+                $('#user_ids_show').val(userIdsArray).prop('disabled', true).trigger('change');
 
-                if (data.rows[0]['course_exam'] == "1") {
-                    $('.exam_show_on').prop('checked', true)
+                // Certificate
+                $('input[name="course_certificate"]').prop('disabled', true);
 
-                    $('.exam_show_on1').css('background-color', 'blue');
+                // Check the correct value
+                $('input[name="course_certificate"][value="' + row.course_certificate + '"]')
+                    .prop('checked', true);
+                $('input[name="course_noperiod"]').prop('disabled', true);
 
-                    $('.examnameshow').css('display', 'block');
+                $('input[name="course_noperiod"][value="' + row.course_noperiod + '"]')
+                    .prop('checked', true);
+                // corse exam
 
+                $('input[name="course_exam"]').prop('disabled', true);
 
-                } else {
-                    $('.exam_show_off').prop('checked', true)
-                    $('.exam_show_off1').css('background-color', 'red');
-                    $('.examnameshow').css('display', 'none');
-                }
-                $('#course_examshow').val(data.rows[0]['course_exam']);
+                $('input[name="course_exam"][value="' + row.course_exam + '"]')
+                    .prop('checked', true);
 
-                $('.img-fluid1').attr('src', data.rows[0]['introduction_path1']);
-                $('.img-fluid1').attr('title', data.rows[0]['course_introduction']);
+                // Images
+                $('.img-fluid1').attr('src', row.introduction_path1);
+                $('.img-fluid2').attr('src', row.banner_path1);
 
+                // Classes
+                $('.course_classesshow')
+                    .val(row.course_classes.split(', '))
+                    .trigger('change');
 
-                $('.img-fluid2').attr('src', data.rows[0]['banner_path1']);
-                $('.img-fluid2').attr('title', data.rows[0]['course_banner']);
-
-                $('#course_payshow').val(data.rows[0]['course_pay']);
-                var course_payshow = document.querySelector('#course_payshow').value;
-                if (course_payshow == "paid") {
-                    $('#paid2').css('display', 'block');
-                    $('#free2').css('display', 'none');
-                    $('#course_priceshow').val(data.rows[0]['course_price']);
-
-
-                } else {
-                    $('#paid1').css('display', 'none');
-                    $('#free1').css('display', 'block');
-                    $('#course_price').val(data.rows[0]['course_price']);
-                }
-                $('#course_noperiodshow').val(data.rows[0]['course_noperiod']);
-                $('#course_start_periodshow').val(data.rows[0]['course_start_period']);
-                $('#course_end_periodshow').val(data.rows[0]['course_end_period']);
-                $('#course_instructorshow').val(data.rows[0]['course_instructor']);
-
-                //$('#course_tags').val(data.rows[0]['course_tags']);
-                let choices = data.rows[0]['course_tags'];
-                const pieces = choices.split(',');
-                const result = pieces.join(', \n ');
-                $('#course_tagsshow').html(result);
-
-                let choices1 = data.rows[0]['course_skills_required'];
-                const pieces1 = choices.split(',');
-                const result1 = pieces.join(', \n ');
-                $('#course_skills_requiredshow').html(result);
-
-
-                let choices2 = data.rows[0]['course_gain_skills'];
-                const pieces2 = choices.split(',');
-                const result2 = pieces.join(', \n ');
-                $('#course_gain_skillsshow').html(result);
-
-                $('#course_cpt_pointsshow').val(data.rows[0]['course_cpt_points']);
-                // course_classesedit
-                $('.course_classesshow').val(data.rows[0]['course_classes'].split(', '));
-                $('#exam_nameshow').val(data.rows[0]['exam_id']);
-                $('#exam_dateshow').val(data.rows[0]['exam_date']);
-                $('#pass_percentageshow').val(data.rows[0]['pass_percentage']);
-
-                $('#course_categoryshow').prop('disabled', true);
-                $('#course_nameshow').prop('disabled', true);
-                $('#course_descriptionshow').prop('disabled', true);
-                $('.course_certificateshow').prop('disabled', true);
-                $('.course_examshow').prop('disabled', true);
-                $('#course_payshow').prop('disabled', true);
-                $('#course_priceshow').prop('disabled', true);
-                $('#exam_nameshow').prop('disabled', true);
-                $('#cetificate_template_show').prop('disabled', true);
-                $('#certificate_expiryyes_show').prop('disabled', true);
-                $('#certificate_expiryno_show').prop('disabled', true);
-                $('#course_expiry_period_show').prop('disabled', true);
-                $('#exam_dateshow').prop('disabled', true);
-                $('#pass_percentageshow').prop('disabled', true);
-
-                $('#course_start_periodshow').prop('disabled', true);
-                $('#course_end_periodshow').prop('disabled', true);
-                $('#course_instructorshow').prop('disabled', true);
-                $('#course_tagsshow').prop('disabled', true);
-                $('#course_skills_requiredshow').prop('disabled', true);
-
-                $('#course_gain_skillsshow').prop('disabled', true);
-                $('#course_cpt_pointsshow').prop('disabled', true);
-                $('#course_classesshow').prop('disabled', true);
-                $('.course_noperiodshow').prop('disabled', true);
-                $('#course_show').attr('action', '');
-                reinitializeSelect2(".js-select5");
-
+                reinitializeSelect2('.js-select5');
             }
         }
     });
-
 }
+
 $('#result').on('change', function() {
     //fetch_courseupdate_new();
     $('#courselist').css('display', 'none');
@@ -3019,7 +2992,7 @@ $(document).ready(function() {
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6" id="yes" style="display:none;">
+                        <div class="col-md-6" id="quiz_show" style="display:none;">
                             <div class="form-group">
                                 <label>Quiz Name:<span class="error-star" style="color:red;">*</span></label>
 
@@ -3038,7 +3011,7 @@ $(document).ready(function() {
                         <div class="col-lg-12 text-center">
 
                             <a class="btn btn-success btn-space classsavebutton" type="submit" onclick="gencre()"
-                                id="classsavebutton">Submit</a>
+                                id="classsavebutton" style="color:white">Submit</a>
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
                     </div>
@@ -3055,7 +3028,7 @@ $(document).ready(function() {
 </div>
 
 <!-- edit quiz -->
-<div class="modal fade" id="addModal4">
+<!-- <div class="modal fade" id="addModal4">
     <div class="modal-dialog modal-lg">
 
         <div class="modal-content">
@@ -3160,7 +3133,7 @@ $(document).ready(function() {
 
                     </div>
 
-                    <!-- <h style="color:black"><b>Address:</b></h> -->
+                  
 
 
                     <div class="row">
@@ -3177,6 +3150,193 @@ $(document).ready(function() {
 
 
     </div>
+</div> -->
+<div class="modal fade" id="addModal4">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="POST" action="{{route('elearning.class_update', 1)}}" id="edit_form"
+                enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="eid" class="eid" id="eid">
+                <input type="hidden" name="current_major_version" id="current_major_version" value="1">
+                <input type="hidden" name="current_minor_version" id="current_minor_version" value="0">
+                <input type="hidden" name="highest_major_version" id="highest_major_version" value="1">
+                <input type="hidden" name="existing_versions" id="existing_versions" value="">
+
+                <div class="modal-header mh">
+                    <h4 class="modal-title">Edit Class</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+
+                <div class="container edit longquestion">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Class Name:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default" id="class_nameedit"
+                                    name="class_nameedit" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="">Class Description<span class="error-star"
+                                        style="color:red;">*</span></label>
+                                <textarea class="form-control" id="class_descriptionedit" name="class_descriptionedit"
+                                    rows="5" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label>Class Resource:<span class="error-star" style="color:red;">*</span></label>
+                                <div class="col-md-10"
+                                    style="display: flex;justify-content: space-between;margin-bottom: 15px;">
+                                    <a class="btn btn-link btn-warning" onclick="changeimage(event);"
+                                        id="change_banner">Change Banner</a>
+                                    <a class="btn btn-link btn-warning" onclick="changeimage(event);" id="change_cancel"
+                                        style="display:none;">Cancel</a>
+                                </div>
+                                <input type="file" class="form-control default" id="resourse_nameedit"
+                                    name="resource_nameedit" style="display:none;" autocomplete="off"
+                                    accept=".pdf, .mp3,.mp4">
+                                <iframe class="img-fluid" alt="Banner Image" title=""></iframe>
+                            </div>
+                            <span style="color:red !important"><strong>Following files could be uploaded as
+                                    pdf,mp3,mp4</strong></span>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Class Duration:<span class="error-star" style="color:red;">*</span></label>
+                                <input type="text" class="form-control default" id="class_durationedit"
+                                    name="class_durationedit" autocomplete="off" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Class Quiz:<span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="class_quizedit" id="class_quizedit"
+                                    onchange="data(event);">
+                                    <option value="">---Select Quiz Type---</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="yesedit" style="display:none;">
+                            <div class="form-group">
+                                <label>Quiz Name:<span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="quiz_idedit" id="quiz_idedit">
+                                    <option value="">---Select Quiz---</option>
+                                    @foreach($rows1['quiz_dropdown'] as $key => $row)
+                                    <option value="{{ $row->quiz_id }}">{{ $row->quiz_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Version Control Section -->
+                    <div class="row mt-3" id="version_control">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Version Control</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Current Version: <span id="current_version_display">1.0</span></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Version Update Type:<span class="error-star"
+                                                style="color:red;">*</span></label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="version_type"
+                                                id="version_none" value="none" checked>
+                                            <label class="form-check-label" for="version_none">
+                                                No Version Update - Save changes without creating new version
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="version_type"
+                                                id="version_minor" value="minor">
+                                            <label class="form-check-label" for="version_minor">
+                                                Minor Update (e.g., 1.0 → 1.1) - Small changes, bug fixes
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="version_type"
+                                                id="version_major" value="major">
+                                            <label class="form-check-label" for="version_major">
+                                                Major Update (e.g., 1.0 → 2.0) - Significant changes
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="change_notes_group" style="display: none;">
+                                        <label>Change Notes:</label>
+                                        <textarea class="form-control" id="change_notes" name="change_notes" rows="3"
+                                            placeholder="Describe what changed in this version"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Version History -->
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header bg-secondary text-white">
+                                    <h5 class="card-title mb-0">Version History</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped"
+                                            id="class_version_history_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Version</th>
+                                                    <th>Class Name</th>
+                                                    <th>Duration</th>
+
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="class_version_history_body">
+                                                <tr>
+                                                    <td colspan="7" class="text-center">No version history available
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-lg-12 text-center">
+                            <button class="btn btn-success btn-space savebutton" type="button"
+                                onclick="submitClassVersion()" id="savebutton">
+                                <i class="fas fa-save"></i> Update with Version Control
+                            </button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- end -->
 
@@ -3185,39 +3345,73 @@ $(document).ready(function() {
 
 <div class="modal fade" id="addModal3">
     <div class="modal-dialog modal-lg">
-
         <div class="modal-content">
-
-
-
             <div class="modal-header mh">
                 <h4 class="modal-title">Edit Course</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
             </div>
-
-
-
-
-            <!-- Long question -->
 
             <div class="card longquestion" id="">
                 <h4 class="modal-title long">Edit Course:</h4>
-                <form method="POST" id="course_form_edit" action="{{url('/elearning/course/update/1')}}"
-                    enctype="multipart/form-data">
+                <form method="POST" id="course_form_edit" action="" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden" name="course_edit" class="course_edit" id="course_edit">
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label required">Course Category:<span class="error-star"
-                                        style="color:red;">*</span></label>
-                                <select class="form-control" name="course_category" id="course_categoryedit">
-                                    <option value="">Select User Category</option>
-                                    @foreach($rows2['course_category'] as $key => $row)
+                                <label>Catagory<span class="error-star" style="color:red;">*</span></label>
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                <select class="form-control" name="course_category_id" id="course_category_id_edit">
+                                    <option value="">---Select Category---</option>
+
+                                    @foreach($rows['course_catagory_name'] as $data)
+                                    <option value="{{$data->catagory_id}}" data-badge="">{{$data->catagory_name}}
+                                    </option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Role <span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="role_id" id="role_id_edit">
+                                    <option value="">---Select Role---</option>
+                                    @foreach($roles as $values)
+                                    <option value="{{ $values->role_id }}">{{ $values->role_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('role_id') {{-- corrected from roles_id --}}
+                                <div class="error">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Designation Selection -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Designation <span class="error-star" style="color:red;">*</span></label>
+                                <select class="form-control" name="designation_id" id="designation_id_edit">
+                                    <!-- <option value="">Please Select Designation</option> -->
+                                    @foreach( $rows['designation'] as $values)
+                                    <option value="{{ $values->designation_id }}">{{ $values->designation_name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('designation_id')
+                                <div class="error">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>User Name <span class="text-danger">*</span></label>
+                                <select style="height:100px" class="user_id_course form-control js-select5"
+                                    name="user_ids[]" id="user_ids_edit" multiple="multiple"
+                                    style="width:208px !important;">
+                                    @foreach($rows['users'] as $data)
+                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -3566,40 +3760,17 @@ $(document).ready(function() {
 
         <div class="modal-content">
 
-
-
             <div class="modal-header mh">
                 <h4 class="modal-title">Show Course</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
             </div>
-
-
-
-
-            <!-- Long question -->
-
             <div class="card longquestion" id="">
                 <h4 class="modal-title long">Show Course:</h4>
-                <form method="POST" id="course_form_show" action="{{url('/elearning/course/show/1')}}"
-                    enctype="multipart/form-data">
+                <form method="POST" id="course_form_show" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden" name="course_editshow" class="course_edit" id="course_editshow">
 
                     <div class="row">
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label required">Course Category:<span class="error-star"
-                                        style="color:red;">*</span></label>
-                                <select class="form-control" name="course_category" id="course_categoryshow">
-                                    <option value="">Select User Category</option>
-                                    @foreach($rows2['course_category'] as $key => $row)
-
-                                    <option value="{{ $row }}">{{ $key }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div> -->
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -3616,19 +3787,6 @@ $(document).ready(function() {
 
                             </div>
                         </div>
-                        <!-- <div class="col-md-6">
-                            <label>Sub Catagory<span class="error-star" style="color:red;">*</span></label>
-
-                            <select class="form-control" name="course_category" id="course_category" onchange="fetch_show(this.value, 'edit')">
-                                <option value="">---Select Category---</option>
-                                @foreach($rows['course_catagory_name'] as $data)
-                                <option value="{{ $data->catagory_id }}">{{ $data->sub_catagory }}</option>
-                                @endforeach
-                            </select>
-
-                        </div> -->
-
-
                         <!-- Role Selection -->
                         <div class="col-md-6">
                             <div class="form-group">
@@ -3778,7 +3936,7 @@ $(document).ready(function() {
                             </div>
                         </div>
 
-                        <div class=" col md-6" id="certificateFields_edit" style="display: none;">
+                        <div class=" col md-6" id="certificateFields_show" style="display: none;">
                             <!-- <div class="col-md"> -->
                             <div class="form-group">
                                 <label> Certificate Template:<span class="error-star"
@@ -3883,11 +4041,10 @@ $(document).ready(function() {
 
 
                         <div class="col-md-12 examnameshow">
-                            <div class="">
-                                <div class="col-md-3"><label class="course_period">Exam Details:<span class="error-star"
-                                            style="color:red;">*</span></label></div>
+                            <div class="row">
 
-                                <div class="col-md-5">
+
+                                <div class="col-md-6">
 
                                     <div class="form-group">
                                         <label class="control-label required">Exam Name:<span class="error-star"
@@ -3988,7 +4145,7 @@ $(document).ready(function() {
 
                                 <br>
                                 <select class="js-select5  course_classesshow" name="course_classes[]"
-                                    id="course_classesshow" multiple="multiple" style="width:208px !important;">
+                                    id="course_classesshow" multiple="multiple">
 
                                     @foreach($rows['elearning_classes'] as $key => $data)
                                     <option value="{{$data->class_id}}" data-badge="">{{$data->class_name}}</option>
@@ -4006,13 +4163,13 @@ $(document).ready(function() {
                         </div>
                 </form>
             </div>
-
-            <!-- end long-->
         </div>
     </div>
 </div>
 
-
+<link rel="stylesheet" href="https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <script>
 function handleExpiredCourse(course_id) {
@@ -4187,8 +4344,7 @@ function gencre() {
 
 }
 </script>
-<link rel="stylesheet" href="https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+
 
 <script>
 function resetSelect2() {
@@ -4199,7 +4355,7 @@ function resetSelect2() {
 $('.close').on('click', function() {
     resetSelect2();
 });
-}
+
 $('.close').on('click', function() {
     resetSelect2();
 });
@@ -4267,13 +4423,27 @@ function gencre1(id) {
 
 
     if (id == "1") {
-        var course_category = $("#course_category").val();
+        var course_category = $("#course_category_id").val();
 
         if (course_category == '') {
             swal.fire("Please Select the Course Category", "", "error");
             return false;
         }
-
+        var role_id = $("#role_id").val();
+        if (role_id == '') {
+            swal.fire("Please Select the Role", "", "error");
+            return false;
+        }
+        var designation_id = $("#designation_id").val();
+        if (designation_id == '') {
+            swal.fire("Please Select the Designation", "", "error");
+            return false;
+        }
+        var user_id = $("#user_id").val();
+        if (user_id == '') {
+            swal.fire("Please Select the Users", "", "error");
+            return false;
+        }
         var course_name = $("#course_name").val();
         if (course_name == '') {
             swal.fire("Please Enter the Course Name", "", "error");
@@ -4594,9 +4764,7 @@ function gencre1(id) {
 
 
 
-<!-- end create -->
-<!-- edit function -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
 <script>
 var $j = jQuery.noConflict();
@@ -4843,6 +5011,522 @@ function toggleButton() {
     } else {
         button.style.display = "none";
     }
+}
+</script>
+
+<script>
+jQuery(document).ready(function($) {
+    $(document).on('change', 'input[name="version_type"]', function() {
+        let versionType = $(this).val();
+        let currentMajor = parseInt($('#current_major_version').val()) || 1;
+        let currentMinor = parseInt($('#current_minor_version').val()) || 0;
+        let highestMajor = parseInt($('#highest_major_version').val()) || currentMajor;
+        let existingVersionsStr = $('#existing_versions').val() || '[]';
+
+        if (versionType === 'none') {
+            $('#change_notes_group').hide();
+            $('#change_notes').removeAttr('required');
+            $('#version_preview').hide();
+        } else {
+            $('#change_notes_group').show();
+            $('#change_notes').attr('required', true);
+
+            // Show version preview
+            let newVersion = calculateNextVersion(currentMajor, currentMinor, highestMajor,
+                existingVersionsStr, versionType);
+            let previewHtml = `<div class="alert alert-info mt-2" id="version_preview">
+            <strong>Version Preview:</strong> ${currentMajor}.${currentMinor} → ${newVersion.major}.${newVersion.minor}
+        </div>`;
+
+            if ($('#version_preview').length) {
+                $('#version_preview').html(
+                    `<strong>Version Preview:</strong> ${currentMajor}.${currentMinor} → ${newVersion.major}.${newVersion.minor}`
+                );
+            } else {
+                $('#change_notes_group').after(previewHtml);
+            }
+        }
+    });
+});
+// Function to open edit modal with class data
+function openClassEditModal(classId, disableFields = false) {
+    console.log('Opening edit modal for class:', classId);
+
+    // Reset form
+    $('#edit_form')[0].reset();
+    $('#change_notes_group').hide();
+    $('input[name="version_type"][value="none"]').prop('checked', true);
+
+    // Clear previous data
+    $('#class_version_history_body').html(
+        '<tr><td colspan="7" class="text-center">Loading version history...</td></tr>');
+    $('#current_version_display').text('Loading...');
+
+    // Show loading state
+    $('#savebutton').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Loading...');
+
+    // Load class data
+    $.ajax({
+        url: '/elearning/class/get-class-data/' + classId,
+        type: 'GET',
+        success: function(response) {
+            console.log('Class data response:', response);
+
+            if (response.success) {
+                // Check if data is nested or direct
+                let classData = response.data.Data || response;
+
+                // Populate form fields
+                $('#eid').val(classId);
+                $('#class_nameedit').val(classData.class_name || '');
+                $('#class_descriptionedit').val(classData.class_description || '');
+                $('#class_durationedit').val(classData.class_duration || '');
+
+                // Set quiz selection
+                if (classData.class_quiz) {
+                    $('#class_quizedit').val(classData.class_quiz).trigger('change');
+                    if (classData.class_quiz === 'yes' && classData.quiz_id) {
+                        setTimeout(() => {
+                            $('#quiz_idedit').val(classData.quiz_id);
+                        }, 100);
+                    }
+                }
+
+                // Set current version
+                let major = classData.version_major || 1;
+                let minor = classData.version_minor || 0;
+                $('#current_version_display').text(`${major}.${minor}`);
+                $('#current_major_version').val(major);
+                $('#current_minor_version').val(minor);
+
+                // Display current resource if exists
+                if (classData.resource_name && classData.resource_name !== '0') {
+                    let resourcePath = classData.resource_path ?
+                        classData.resource_path + '/' + classData.resource_name :
+                        '/uploads/class/126/' + classData.resource_name;
+                    $('.img-fluid').attr('src', resourcePath);
+                }
+
+                if (disableFields) {
+                    // Disable all input fields
+                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit')
+                        .prop('disabled', true);
+
+                    // Change background color to indicate readonly
+                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit, .select2-selection')
+                        .css('background-color', '#e9ecef');
+
+                    // Hide change banner button
+                    $('#change_banner').hide();
+
+                    // Hide version control and save button
+                    $('#version_control, #savebutton').hide();
+                } else {
+                    // Enable all input fields
+                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit')
+                        .prop('disabled', false);
+
+                    // Reset background color
+                    $('#class_nameedit, #class_descriptionedit, #class_durationedit, #class_quizedit, #quiz_idedit, .select2-selection')
+                        .css('background-color', '');
+
+                    // Show change banner button
+                    $('#change_banner').show();
+
+                    // Show version control and save button
+                    $('#version_control, #savebutton').show();
+                }
+
+                // Load version history
+                loadClassVersionHistory(classId);
+
+                // Open modal
+                $('#addModal4').modal('show');
+            } else {
+                alert('Failed to load class data: ' + (response.message || 'Unknown error'));
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error loading class:', error);
+            alert('Error loading class data. Please try again.');
+        },
+        complete: function() {
+            $('#savebutton').prop('disabled', false).html(
+                '<i class="fas fa-save"></i> Update with Version Control');
+        }
+    });
+}
+
+
+// Function to load class version history
+function loadClassVersionHistory(classId) {
+    console.log('Loading version history for class:', classId);
+
+    $('#class_version_history_body').html(
+        '<tr><td colspan="7" class="text-center">Loading version history...</td></tr>');
+
+    $.ajax({
+        url: '/elearning/class/versions/' + classId,
+        type: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            console.log('Version history raw response:', response);
+
+            if (response.success) {
+                let versionsData = [];
+                let existingVersions = [];
+
+                // Extract versions data correctly
+                if (response.versions && response.versions.Data) {
+                    versionsData = response.versions.Data;
+                } else if (Array.isArray(response.versions)) {
+                    versionsData = response.versions;
+                } else if (response.versions && Array.isArray(response.versions.versions)) {
+                    versionsData = response.versions.versions;
+                }
+
+                if (versionsData && versionsData.length > 0) {
+                    let html = '';
+                    let highestMajor = 1;
+
+                    // Store all versions for version checking
+                    existingVersions = versionsData.map(v => ({
+                        major: parseInt(v.version_major || 1),
+                        minor: parseInt(v.version_minor || 0)
+                    }));
+
+                    // Find highest major version
+                    highestMajor = Math.max(...existingVersions.map(v => v.major));
+
+                    // Store in hidden fields
+                    $('#highest_major_version').val(highestMajor);
+                    $('#existing_versions').val(JSON.stringify(existingVersions));
+
+                    // Sort versions by version number (newest first)
+                    versionsData.sort((a, b) => {
+                        if (b.version_major !== a.version_major) {
+                            return b.version_major - a.version_major;
+                        }
+                        return b.version_minor - a.version_minor;
+                    });
+
+                    // Determine if we're in view mode
+                    let isViewMode = $('#version_control').is(':visible') === false;
+                    console.log('Is View Mode:', isViewMode);
+
+                    versionsData.forEach(function(version) {
+                        // Version display with change notes
+                        let versionDisplay =
+                            `${version.version_major || 1}.${version.version_minor || 0}`;
+                        if (version.change_notes) {
+                            versionDisplay +=
+                                `<br><small class="text-muted" title="${version.change_notes}">${version.change_notes.substring(0, 30)}${version.change_notes.length > 30 ? '...' : ''}</small>`;
+                        }
+
+                        // Determine action button based on mode and version status
+                        let actionButton = '';
+
+                        if (version.is_active == 1) {
+                            // Current version
+                            actionButton =
+                                '<span class="text-muted">Current</span>';
+                        } else {
+                            // Archived version
+                            if (isViewMode) {
+                                // In view mode - show Archived text
+                                actionButton = '<span class="text-muted">Archived</span>';
+                            } else {
+                                // In edit mode - show Restore button
+                                actionButton = `<button class="btn btn-sm btn-warning restore-class-version" 
+                                                    data-id="${classId}" 
+                                                    data-version-id="${version.version_id || version.original_class_id}">
+                                                    <i class="fas fa-history"></i> Restore
+                                                </button>`;
+                            }
+                        }
+
+                        html += `<tr>
+                            <td><strong>${versionDisplay}</strong></td>
+                            <td>${version.class_name || 'N/A'}</td>
+                            <td>${version.class_duration || 'N/A'} Mins</td>
+                           
+                            <td>${actionButton}</td>
+                        </tr>`;
+                    });
+
+                    $('#class_version_history_body').html(html);
+                } else {
+                    $('#class_version_history_body').html(`
+                        <tr>
+                            <td colspan="7" class="text-center text-info">
+                                <i class="fas fa-info-circle"></i> No version history available.
+                            </td>
+                        </tr>
+                    `);
+                    $('#highest_major_version').val($('#current_major_version').val());
+                    $('#existing_versions').val('[]');
+                }
+            } else {
+                $('#class_version_history_body').html(`
+                    <tr>
+                        <td colspan="7" class="text-center text-danger">
+                            Failed to load version history: ${response.message || 'Unknown error'}
+                        </td>
+                    </tr>
+                `);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error loading version history:', error);
+            $('#class_version_history_body').html(`
+                <tr>
+                    <td colspan="7" class="text-center text-danger">
+                        <i class="fas fa-exclamation-triangle"></i> Error loading version history.
+                    </td>
+                </tr>
+            `);
+        }
+    });
+}
+
+// Updated submit function with correct version preview
+// Function to check if a version already exists
+function checkIfVersionExists(major, minor, existingVersionsStr) {
+    try {
+        let existingVersions = JSON.parse(existingVersionsStr || '[]');
+        return existingVersions.some(v => v.major === major && v.minor === minor);
+    } catch (e) {
+        console.error('Error parsing existing versions:', e);
+        return false;
+    }
+}
+
+// Function to calculate next version
+function calculateNextVersion(currentMajor, currentMinor, highestMajor, existingVersionsStr, updateType) {
+    let existingVersions = [];
+    try {
+        existingVersions = JSON.parse(existingVersionsStr || '[]');
+    } catch (e) {
+        console.error('Error parsing existing versions:', e);
+    }
+
+    if (updateType === 'major') {
+        // Find the highest major version and add 1
+        let nextMajor = highestMajor + 1;
+
+        // Check if this version already exists (shouldn't, but just in case)
+        while (checkIfVersionExists(nextMajor, 0, JSON.stringify(existingVersions))) {
+            nextMajor++;
+        }
+
+        return {
+            major: nextMajor,
+            minor: 0
+        };
+    } else if (updateType === 'minor') {
+        let nextMinor = currentMinor + 1;
+
+        // Check if this minor version already exists
+        while (checkIfVersionExists(currentMajor, nextMinor, JSON.stringify(existingVersions))) {
+            nextMinor++;
+        }
+
+        return {
+            major: currentMajor,
+            minor: nextMinor
+        };
+    } else {
+        // No version change
+        return {
+            major: currentMajor,
+            minor: currentMinor
+        };
+    }
+}
+
+// Updated submit function
+function submitClassVersion() {
+    // Validate required fields
+    if (!$('#class_nameedit').val().trim()) {
+        Swal.fire('Validation Error', 'Class Name is required', 'error');
+        return;
+    }
+
+    if (!$('#class_descriptionedit').val().trim()) {
+        Swal.fire('Validation Error', 'Class Description is required', 'error');
+        return;
+    }
+
+    if (!$('#class_durationedit').val().trim()) {
+        Swal.fire('Validation Error', 'Class Duration is required', 'error');
+        return;
+    }
+
+    if (!$('#class_quizedit').val()) {
+        Swal.fire('Validation Error', 'Please select if quiz is required or not', 'error');
+        return;
+    }
+
+    if ($('#class_quizedit').val() === 'yes' && !$('#quiz_idedit').val()) {
+        Swal.fire('Validation Error', 'Please select a quiz', 'error');
+        return;
+    }
+
+    let versionType = $('input[name="version_type"]:checked').val();
+    let currentMajor = parseInt($('#current_major_version').val()) || 1;
+    let currentMinor = parseInt($('#current_minor_version').val()) || 0;
+    let highestMajor = parseInt($('#highest_major_version').val()) || currentMajor;
+    let existingVersionsStr = $('#existing_versions').val() || '[]';
+
+    let newVersion;
+    let versionMessage = '';
+
+    if (versionType !== 'none') {
+        let changeNotes = $('#change_notes').val().trim();
+        if (!changeNotes) {
+            Swal.fire('Validation Error', 'Please provide change notes for ' + versionType + ' update', 'error');
+            return;
+        }
+
+        // Calculate new version
+        newVersion = calculateNextVersion(currentMajor, currentMinor, highestMajor, existingVersionsStr, versionType);
+
+        let currentVersion = `${currentMajor}.${currentMinor}`;
+        let newVersionStr = `${newVersion.major}.${newVersion.minor}`;
+
+        if (versionType === 'major') {
+            versionMessage =
+                `Current version: ${currentVersion}\nHighest major version: ${highestMajor}\nNew version will be: ${newVersionStr}`;
+        } else {
+            versionMessage = `Current version: ${currentVersion}\nNew version will be: ${newVersionStr}`;
+        }
+
+        // Confirm version update
+        Swal.fire({
+            title: 'Confirm Version Update',
+            text: versionMessage,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Proceed',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                proceedWithUpdate(versionType, newVersion);
+            }
+        });
+    } else {
+        // Confirm direct update without version change
+        Swal.fire({
+            title: 'Confirm Update',
+            text: 'You are about to update the class without creating a new version. The current version will be overwritten. Continue?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, update',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                proceedWithUpdate(versionType, {
+                    major: currentMajor,
+                    minor: currentMinor
+                });
+            }
+        });
+    }
+}
+
+function proceedWithUpdate(versionType, newVersion) {
+    // Add version data to form
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'version_type',
+        value: versionType
+    }).appendTo('#edit_form');
+
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'change_notes',
+        value: $('#change_notes').val()
+    }).appendTo('#edit_form');
+
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'new_major_version',
+        value: newVersion.major
+    }).appendTo('#edit_form');
+
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'new_minor_version',
+        value: newVersion.minor
+    }).appendTo('#edit_form');
+
+    // Submit form
+    $('#edit_form').submit();
+}
+
+
+// Restore version handler
+jQuery(document).ready(function($) {
+    $(document).on('click', '.restore-class-version', function(e) {
+
+        e.preventDefault();
+        let classId = $(this).data('id');
+        let versionId = $(this).data('version-id');
+        let button = $(this);
+
+        if (confirm(
+                'Are you sure you want to restore this version? The current version will be archived.'
+            )) {
+            button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Restoring...');
+
+            $.ajax({
+                url: '/elearning/class/restore-version',
+                type: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    class_id: classId,
+                    version_id: versionId
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message || 'Version restored successfully!');
+                        // Reload class data and version history
+                        openClassEditModal(classId);
+                    } else {
+                        alert(response.message || 'Failed to restore version');
+                        button.prop('disabled', false).html(
+                            '<i class="fas fa-history"></i> Restore');
+                    }
+                },
+                error: function() {
+                    alert('Error restoring version');
+                    button.prop('disabled', false).html(
+                        '<i class="fas fa-history"></i> Restore');
+                }
+            });
+        }
+    });
+});
+
+// Toggle quiz dropdown based on selection
+function data(event) {
+    let value = $(event.target).val();
+    if (value === 'yes') {
+        $('#yesedit').show();
+        $('#quiz_idedit').prop('required', true);
+    } else {
+        $('#yesedit').hide();
+        $('#quiz_idedit').prop('required', false);
+        $('#quiz_idedit').val('');
+    }
+}
+
+// File upload handler
+function changeimage(event) {
+    event.preventDefault();
+    $('#resourse_nameedit').click();
 }
 </script>
 

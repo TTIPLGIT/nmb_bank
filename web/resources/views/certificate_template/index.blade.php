@@ -38,7 +38,7 @@ thead th {
 
         <div class="section-body mt-2">
 
-        
+
             <style>
             .section {
                 margin-top: 20px;
@@ -56,7 +56,16 @@ thead th {
                                 <div class="col-lg-12 text-center">
                                     <h4>List of Certificate Template</h4>
                                 </div>
-
+                                <!-- <div class="row" style="justify-content:end">
+                                    <a type="button" href="{{route('certificate_template.create')}}"
+                                        class="btn btn-labeled btn-success mb-2" title="New Template"
+                                        style="border-color:#a9ca !important; color:white !important;margin: 0 0 2px 15px;">
+                                        <span class="btn-label"
+                                            style="font-size:15px !important; padding:8px !important"><i
+                                                class="fa fa-plus"></i></span><span
+                                            style="font-size:15px !important; padding:8px !important">New
+                                            Template</span></a>
+                                </div> -->
                             </div>
                             @if (session('success'))
 

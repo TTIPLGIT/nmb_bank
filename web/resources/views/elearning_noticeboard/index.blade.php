@@ -360,14 +360,7 @@
                                                     @foreach($rows['rows']['quiz_list'] as $data)
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
-                                                        @if($data['user_category']=="42")
-                                                        <td>Employee</td>
-                                                        @elseif($data['user_category']=="43")
-                                                        <td>Manager</td>
-                                                        @else
-                                                        <td>All</td>
-
-                                                        @endif
+                                                        <td>{{$data['role_name']}}</td>
                                                         <td class="ellipsis">{{$data['notice_name']}}</td>
                                                         <td><img src="uploads/notice/126/{{$data['notice_banner']}}" width="50px" height="50px" alt="Image" /></td>
                                                         <td>{{$data['notice_date']}}</td>
@@ -505,9 +498,9 @@
                                 <select class="form-control" name="user_category" id="user_category">
                                     <option value="">Select User Category</option>
 
-                                    @foreach($rows['rows']['user_category'] as $key=>$row)
+                                    @foreach($rows['rows']['user_category'] as $user_category)
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                    <option value="{{ $user_category['role_id'] }}">{{ $user_category['role_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -567,7 +560,7 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
 
-                            <a class="btn btn-success btn-space" onclick="gencre(1)" type="submit" id="savebutton">Submit</a>
+                            <a class="btn btn-success btn-space" onclick="gencre(1)" type="submit" id="savebutton" style="color:white">Submit</a>
                             <input type="submit" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                         </div>
 
@@ -848,9 +841,9 @@
                                 <label class="control-label required">Category:<span class="error-star" style="color:red;">*</span></label>
                                 <select class="form-control" name="user_category" id="user_categoryedit">
                                     <option value="">Select User Category</option>
-                                    @foreach($rows['rows']['user_category'] as $key=>$row)
+                                    @foreach($rows['rows']['user_category'] as $user_category)
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                    <option value="{{ $user_category['role_id'] }}">{{ $user_category['role_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -954,9 +947,9 @@
                                 <select class="form-control" name="user_category" id="user_categoryshow" style="background-color: #e9ecef !important;">
                                     <option value="">Select User Category</option>
 
-                                    @foreach($rows['rows']['user_category'] as $key=>$row)
+                                    @foreach($rows['rows']['user_category'] as $user_category)
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                    <option value="{{ $user_category['role_id'] }}">{{ $user_category['role_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>

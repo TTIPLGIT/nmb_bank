@@ -1,158 +1,137 @@
 @extends('layouts.app')
 
+<style>
+.loginname {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center !important;
+    color: white !important;
+    font-size: 19px !important;
+    font-weight: 800 !important;
+    padding-top: 5px;
+}
+
+.login-card {
+    position: relative;
+    border-radius: 20px;
+    width: 76%;
+    z-index: 1;
+}
+
+.man-overlay {
+    position: absolute;
+    top: 0;
+    margin-top: 165px;
+    right: -70px;
+    z-index: 2;
+}
+
+.man-overlay img {
+    width: 200px;
+}
+</style>
+
 @section('content')
-<div class="container_fluid ">
-    <div class="justify-content-center">
-        <div clas="col-10">
-            <h1 class="text-center fwcolor">
-                <a type="button" href="{{url('/')}}" class="btn btn-primary bg-243c92 font-weight-bold rounded-halfpill ml-3"><i class="fa fa-arrow-circle-left" aria-hidden="true" style="    font-size: 1.4rem; display: flex;align-items: center;"></i> </a>
-                <span class="mx-auto">VALUATION PROFESSIONAL PORTAL</span>
 
-            </h1>
-        </div>
+<div class="container_fluid">
+
+    {{-- Sweet Alert --}}
+    @if (session('success'))
+    <script>
+    window.onload = function() {
+        Swal.fire("Success", "{{ session('success') }}", "success");
+    }
+    </script>
+    @elseif(session('error'))
+    <script>
+    window.onload = function() {
+        Swal.fire("Error", "{{ session('error') }}", "error");
+    }
+    </script>
+    @endif
+
+    {{-- Background Image --}}
+    <div style="position:absolute">
+        <img src="{{asset('assets/images/login-image.PNG')}}" style="width:100%">
     </div>
-</div>
 
+    <div class="row login-card" style="display:flex;justify-content:flex-end;padding:6rem 9rem 0 0;">
 
-<div class="container-fluid mt-lg-4">
-    <div class="row justify-content-start">
-        <div class="col-10 offset-1 col-sm-7 col-md-6 col-lg-4 col-xl-3 col-xxl-3 col-2560">
-            <div class="card border border-4 border-243c92 rounded-3">
-                <div class="row justify-content-center">
-                    <img class="col-6 m-3 col-sm-6 col-md-6 col-lg-4 col-xl-5 col-xxl-5" src="{{asset('assets/images/TALENTRA-IMG (1).png')}}" alt="logo">
+        <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-5 col-xxl-3 d-flex justify-content-center">
+
+            <div class="card" style="border-radius:20px;width:76%;z-index:1">
+
+                <div class="login-head">
+                    <h4 class="loginname">Reset Password</h4>
                 </div>
 
-                @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-                @endif
-
-                @if (session('loginfail'))
-                <div class="alert alert-danger">
-                    {{ session('loginfail') }}
-                </div>
-                @endif
-
+                {{-- Errors --}}
                 @if ($errors->any())
                 <div class="alert alert-danger">
-
                     @foreach ($errors->all() as $error)
                     {{ $error }}
                     @endforeach
-
                 </div>
                 @endif
 
-
                 <div class="card-body">
-                    <form method="POST" action="{{ route('reset_password') }}" class="form-signin">
+
+                    <form method="POST" action="{{ route('reset_password') }}">
                         @csrf
-                        <div class="row mb-3">
 
-                            <!-- <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label> -->
-
-                            <div class="input-group form-label-group col-12">
-                                <input id="email" type="email" class="form-control border border-2 border-243c92 rounded-halfpillleftside @error('email') is-invalid @enderror" name="email" value="{{$email}}" placeholder="Email"  required autocomplete="off" autofocus readonly>
-
-                                <!-- <input id="email" type="email" class="form-control border border-2 border-243c92 rounded-halfpillleftside @error('email') is-invalid @enderror" name="email" placeholder="Email" value="{{ old('email') }}" required autocomplete="off" autofocus disabled> -->
-                                <div class="input-group-append">
-                                        <span class="input-group-text rounded-halfpillrightside" id="basic-addon1" style="background: transparent;">
-                                            <i class="bi bi-person-fill" style="color:black !important"></i>
-                                        </span>
-                                    </div>
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
+                        {{-- Email (Readonly) --}}
+                        <div class="mb-3">
+                            <input type="email" name="email" value="{{ $email }}" class="form-control" readonly
+                                style="border-radius:15px;background-color:white">
                         </div>
 
-                        <div class="row mb-3">
-                            <!-- <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label> -->
-
-                            <div class="input-group form-label-group col-12">
-                                <input id="password" type="password" class="form-control border border-2 border-243c92 rounded-halfpillleftside login_pass @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="off">
-                                <div class="input-group-append">
-                                    <span class="input-group-text rounded-halfpillrightside" id="basic-addon1" style="background: transparent;">
-                                        <i class="fa fa-lock login_pass_icon" id="toggle" onclick="passlock_show();"></i>
-
-                                    </span>
-                                </div>
-                                <sapn class="caplock-indicator invalid-warning" style="display: none;">WARNING! Caps lock is ON.</sapn>
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                        @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-
-
-
-
-                        <div class="form-label-group">
-
-                            <input type="password" id="c_password" name="c_password" class="form-control" placeholder="Confirm New Password">
-
+                        {{-- New Password --}}
+                        <div class="mb-3">
+                            <input type="password" name="password" id="password" class="form-control"
+                                placeholder="New Password" required style="border-radius:15px;background-color:white">
                         </div>
 
-                        @error('c_password')
-                        <div class="error">{{ $message }}</div><br>
-                        @enderror
-
-
-                        <div class="centerclass">
-                            <button class="btn btn-primary bg-243c92 mt-3 font-weight-bold rounded-halfpill" type="submit">Change Password</button>
+                        {{-- Confirm Password --}}
+                        <div class="mb-3">
+                            <input type="password" name="c_password" class="form-control" placeholder="Confirm Password"
+                                required style="border-radius:15px;background-color:white">
                         </div>
+
+                        {{-- Show Password --}}
+                        <!-- <div class="mb-3 text-center">
+                            <input type="checkbox" id="showPassword"> Show Password
+                        </div> -->
+
+                        {{-- Submit --}}
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary font-weight-bold">
+                                Change Password
+                            </button>
+                        </div>
+
                     </form>
                 </div>
             </div>
+
+            {{-- Overlay Image --}}
+            <div class="man-overlay">
+                <img src="{{ asset('assets/images/login_man.PNG') }}">
+            </div>
+
         </div>
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{{-- Scripts --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script> -->
 <script>
-    $(document).ready(function() {
+document.getElementById("showPassword").addEventListener("change", function() {
+    let pass = document.getElementById("password");
 
-        var remember = $.cookie('remember');
-        if (remember == 'true') {
-            var email = $.cookie('email');
-
-            // autofill the fields
-            $('#email').val(email);
-
-        }
-
-
-
-    });
+    pass.type = this.checked ? "text" : "password";
+});
 </script>
-<script>
-    function passlock_show() {
-        const pass = document.getElementById('password');
-        const toggle = document.getElementById('toggle');
-        if (pass.getAttribute('type') == "password") {
-            pass.setAttribute('type', 'text');
-            toggle.classList.remove('fa-lock');
-            toggle.classList.add('fa-unlock');
 
-        } else {
-            pass.setAttribute('type', 'password');
-            toggle.classList.remove('fa-unlock');
-            toggle.classList.add('fa-lock');
-
-
-        }
-    }
-</script>
 @endsection

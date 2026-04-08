@@ -611,7 +611,7 @@ class elearningEthnicTestController extends BaseController
     }
     public function class_quiz(Request $request)
     {
-       
+
         $method = 'Method => elearningEthnicTestController =>class_quiz';
         try {
 
@@ -689,7 +689,7 @@ class elearningEthnicTestController extends BaseController
     }
     public function quiz_store(Request $request)
     {
-        $this->WriteFileLog('testquiz1');
+       
         try {
             $method = 'Method => elearningEthnicTestController => quiz_store';
             $user_id = auth()->user()->id;
@@ -713,8 +713,12 @@ class elearningEthnicTestController extends BaseController
             $previousattemptcount = $attempt[0]->count;
             $attemptcount = $previousattemptcount + 1;
             $totalpoints = DB::select("SELECT points from elearning_practice_quiz where quiz_id=$quizId");
+            $passpercentage = DB::select("SELECT pass_percentage from elearning_courses where course_id=$course_id");
             $totalpoints = $totalpoints[0]->points;
-            $calc = (35 / 100) * intval($totalpoints);
+            // $pass_percentage = $passpercentage[0]->pass_percentage;
+            $pass_percentage = 35; // default pass percentage for class quiz as we are not fetching it from anywhere and it is not present in any table as of now
+            $calc = ($pass_percentage / 100) * intval($totalpoints);
+            
             if ($inputArray['score'] >= $calc) {
                 $result = "PASS";
                 DB::table('user_class_relation')
@@ -744,6 +748,32 @@ class elearningEthnicTestController extends BaseController
                     if ($progress == 100) {
 
                         $progress = $progress - 20;
+                        $coursecpt_points = DB::select("SELECT course_cpt_points from elearning_courses where course_id=$course_id and drop_course=0");
+
+                    $cpt_points = $coursecpt_points[0]->course_cpt_points;
+
+                    DB::table('user_cpt_points')
+                        ->insert([
+                            'course_id' => $course_id,
+                            'user_id' => $user_id,
+                            'cpt_points' => $cpt_points,
+                            'status' => '0',
+                            'created_by' => $user_id,
+                            'created_at' => NOW()
+
+                        ]);
+
+
+                    $userstable = DB::select("SELECT  total_cptpoints from users where id=$user_id and active_flag=0");
+                    $totalcpt_points = $userstable[0]->total_cptpoints;
+
+                    $sumofcpt = $totalcpt_points + $cpt_points;
+
+                    DB::table('users')
+                        ->where('id', $user_id)
+                        ->update([
+                            'total_cptpoints' => $sumofcpt,
+                        ]);
                     }
                     DB::table('user_course_relation')
                         ->where('course_id', $course_id)
@@ -751,6 +781,7 @@ class elearningEthnicTestController extends BaseController
                         ->update([
                             'course_progress' => $progress,
                         ]);
+                    
                 }
                 $is_completed = Db::select("SELECT * from user_class_relation where status=1 and status=0");
                 if ($is_completed == []) {
@@ -905,6 +936,7 @@ class elearningEthnicTestController extends BaseController
         try {
 
             $userID = auth()->user()->id;
+            // $inputArray =$request;
             $inputArray = $this->decryptData($request->requestData);
 
             $input = [
@@ -912,6 +944,7 @@ class elearningEthnicTestController extends BaseController
                 'class_id' => $inputArray['class_id'],
 
             ];
+
             $class_id = $input['class_id'];
             $course_id = $input['course_id'];
 
@@ -980,6 +1013,7 @@ class elearningEthnicTestController extends BaseController
     {
 
         try {
+
             $method = 'Method => elearningEthnicTestController => exam_store';
             $user_id = auth()->user()->id;
             //$inputArray = $this->decryptData($request->requestData);
@@ -1139,7 +1173,6 @@ class elearningEthnicTestController extends BaseController
                     //         'updated_at'      => now(),
                     //     ]);
                 }
-                Mail::to($data['email'])->send(new exammail($data));
             } else {
                 DB::table('user_course_relation')
                     ->where('course_id', $course_id)
@@ -1171,7 +1204,7 @@ class elearningEthnicTestController extends BaseController
                 //         'updated_at'      => now(),
                 //     ]);
 
-                Mail::to($data['email'])->send(new exammail2($data));
+
             }
 
             $response = [
@@ -1227,6 +1260,19 @@ class elearningEthnicTestController extends BaseController
 
 
             $rows['quiz_list'] = DB::select("SELECT uc.*,c.course_name from user_cpt_points as uc inner join elearning_courses as c on c.course_id=uc.course_id where c.drop_course=0 and uc.status=0 and uc.user_id=$user_id");
+            $rows['points'] = DB::select("SELECT ucr.*, ec.course_name, ec.course_cpt_points FROM user_course_relation AS ucr INNER JOIN elearning_courses AS ec ON ec.course_id = ucr.course_id WHERE ucr.user_id = ?
+               AND ucr.course_status = 'completed' AND FIND_IN_SET(?, ec.user_ids) ORDER BY ucr.course_id DESC", [$user_id, $user_id]);
+            $rows['total_cpd_points'] = DB::selectOne(
+                "SELECT 
+                        SUM(ec.course_cpt_points) AS total_points
+                    FROM user_course_relation AS ucr
+                    INNER JOIN elearning_courses AS ec
+                        ON ec.course_id = ucr.course_id
+                    WHERE ucr.user_id = ?
+                    AND ucr.course_status = 'completed'
+                    AND FIND_IN_SET(?, ec.user_ids)",
+                [$user_id, $user_id]
+            );
 
             $response = [
                 'rows' => $rows

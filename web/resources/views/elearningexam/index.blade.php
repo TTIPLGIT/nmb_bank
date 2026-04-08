@@ -198,17 +198,17 @@
 
                         }
                     </script>
-                    @elseif(session('error'))
+                    @endif
+                    @if(session('fail'))
 
                     <input type="hidden" name="session_data" id="session_data1" class="session_data"
                         value="{{ session('error') }}">
                     <script type="text/javascript">
                         window.onload = function() {
                             var message = $('#session_data1').val();
-                            swal.fire({
+                            swal({
                                 title: "Info",
-                                text: message,
-                                icon: "info",
+                                text: "{{ session('fail') }}",
                                 type: "info",
                             });
 
@@ -320,9 +320,9 @@
                                         style="color:red;">*</span></label>
                                 <select class="form-control default" name="user_category" id="user_category">
                                     <option value="">Select User Category</option>
-                                    @foreach($rows['rows']['user_category'] as $key => $row)
+                                    @foreach($rows['rows']['user_category'] as $user_category)
 
-                                    <option value="{{ $row }}">{{$key }}</option>
+                                    <option value="{{ $user_category['role_id'] }}">{{ $user_category['role_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -346,7 +346,7 @@
 
                                     <option value="{{ $row['quiz_id'] }}">{{ $row['quiz_name'] }}</option>
                                     @endforeach
-                                 
+
                                 </select>
                             </div>
                         </div>
@@ -399,9 +399,9 @@
                                         style="color:red;">*</span></label>
                                 <select class="form-control" name="user_category" id="user_categoryedit">
                                     <option value="">Select User Category</option>
-                                    @foreach($rows['rows']['user_category'] as $key => $row)
+                                    @foreach($rows['rows']['user_category'] as $user_category)
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                    <option value="{{ $user_category['role_id'] }}">{{ $user_category['role_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -475,9 +475,9 @@
                                         style="color:red;">*</span></label>
                                 <select class="form-control" name="user_category" id="user_categoryshow">
                                     <option value="">Select User Category</option>
-                                    @foreach($rows['rows']['user_category'] as $key => $row)
+                                    @foreach($rows['rows']['user_category'] as $user_category)
 
-                                    <option value="{{ $row }}">{{ $key }}</option>
+                                    <option value="{{ $user_category['role_id'] }}">{{ $user_category['role_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -547,12 +547,12 @@
     function gencre(id) {
 
         if (id == "1") {
-            var c_name = $("#user_categoryshow").val();
+            var c_name = $("#user_category").val();
 
-            // if (c_name == '') {
-            //     swal.fire("Please Select User Category", "", "error");
-            //     return false;
-            // }
+            if (c_name == '') {
+                swal.fire("Please Select User Category", "", "error");
+                return false;
+            }
             var t_name = $("#exam_name").val();
             if (t_name == '') {
                 swal.fire("Please Enter the Exam Name", "", "error");
@@ -684,13 +684,19 @@
 
                     success: function(data) {
                         console.log(data);
-                        if (result.value) {
+                        if (data.Code == 200) {
 
-                            Swal.fire("Success!", "Exam Deleted Successfully!", "success").then((result) => {
-                                location.replace(`/elearningexam`);
+                            Swal.fire("Success!", "Exam Deleted Successfully!", "success")
+                                .then(() => {
+                                    location.replace(`/elearningexam`);
+                                });
 
-                            })
+                        } else if (data.Code == 400) {
+
+                            Swal.fire("Error!", data.Message, "error");
+
                         }
+
 
                     }
                 });

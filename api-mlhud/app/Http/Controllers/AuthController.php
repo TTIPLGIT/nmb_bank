@@ -831,12 +831,26 @@ class AuthController extends BaseController
 
 
 
+			$userId = auth()->user()->id;
+
+			// 1. Close previous session if not logged out
+			DB::table('login_audit')
+				->where('user_id', $userId)
+				->whereNull('logout_time')
+				->where('status', 'Login')
+				->update([
+					'logout_time' => now(),
+					'status1' => 'Auto Logout',
+					
+				]);
+
+			// 2. Insert new login
 			$login_audit = DB::table('login_audit')
 				->insertGetId([
-
 					'status' => 'Login',
-					'user_id' => auth()->user()->id,
-
+					'user_id' => $userId,
+					'login_time' => now(),
+					
 				]);
 
 
@@ -919,7 +933,7 @@ class AuthController extends BaseController
 
 			->where([['user_id', '=', auth()->user()->id], ['audit_id', '=', $last_id]])
 			->update([
-				'status1' => 'logout'
+				'status1' => 'Manual Logout'
 
 			]);
 		//yash

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Credit Risk Management</title>
+
+<style>
+body{font-family:'Segoe UI',Arial;background:#f2f5f9;margin:0;}
+.header{background:linear-gradient(90deg,#0a2a43,#0d3b66);
+color:white;padding:25px;text-align:center;}
+.container{max-width:1000px;margin:auto;padding:40px 20px;}
+.card{background:white;padding:25px;margin-bottom:25px;
+border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.08);
+line-height:1.8;font-size:16px;}
+button{background:#0d3b66;color:white;border:none;
+padding:14px 35px;font-size:16px;border-radius:6px;cursor:pointer;}
+.result-box{
+background:#e8f0fe;
+padding:15px;
+margin-top:20px;
+border-radius:8px;
+font-weight:bold;
+text-align:center;
+}
+.footer{
+    text-align:center;
+    margin-top:25px;
+    font-size:13px;
+    color:#777;
+}
+</style>
+
+<script>
+var API=null;
+
+function findAPI(win){
+   while(win){
+      try{ if(win.API) return win.API; }
+      catch(e){}
+      win=win.parent;
+   }
+   return null;
+}
+
+function initSCORM(){
+   API=findAPI(window);
+   if(API){
+      API.LMSInitialize("");
+      API.LMSSetValue("cmi.core.lesson_status","incomplete");
+      API.LMSCommit("");
+      loadScore();
+   }
+}
+
+function loadScore(){
+   if(API){
+      var score = API.LMSGetValue("cmi.core.score.raw");
+      var status = API.LMSGetValue("cmi.core.lesson_status");
+
+      if(score){
+         score = Math.round(parseFloat(score));
+         document.getElementById("scoreDisplay").innerHTML =
+         "Latest Score: " + score + "% (" + status.toUpperCase() + ")";
+      }
+   }
+}
+
+function startQuiz(){
+   window.location.href="quiz.html";
+}
+
+window.onload=initSCORM;
+</script>
+</head>
+
+<body>
+
+<div class="header">
+<h1>Credit Risk Management</h1>
+<p>Risk Analysis & Lending Control Module</p>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<p><b>1.</b> Credit risk management is the process of identifying, assessing, and mitigating the risk of borrower default. It ensures financial institutions maintain asset quality and financial stability.</p>
+
+<p><b>2.</b> Banks evaluate borrower creditworthiness using financial statements, repayment history, and credit bureau reports before approving loans.</p>
+
+<p><b>3.</b> Probability of Default (PD) measures the likelihood that a borrower will fail to meet debt obligations within a specified period.</p>
+
+<p><b>4.</b> Loss Given Default (LGD) estimates the percentage of exposure that a bank may lose if a borrower defaults.</p>
+
+<p><b>5.</b> Exposure at Default (EAD) represents the total value a bank is exposed to at the time of default.</p>
+
+<p><b>6.</b> Non-Performing Assets (NPA) are loans where interest or principal payments are overdue beyond regulatory thresholds.</p>
+
+<p><b>7.</b> Collateral reduces credit risk by providing security against loan exposure.</p>
+
+<p><b>8.</b> Basel III norms require banks to maintain adequate capital buffers against credit risk.</p>
+
+<p><b>9.</b> Provisioning ensures that banks set aside funds to cover potential loan losses.</p>
+
+<p><b>10.</b> Effective credit monitoring and early warning systems help detect stress signals and prevent major defaults.</p>
+
+</div>
+
+<center>
+<button onclick="startQuiz()">Start Assessment</button>
+
+<div class="result-box" id="scoreDisplay">
+Complete the assessment to view your score.
+</div>
+<div class="footer">
+         Pass Percentage: 70%
+    </div>
+
+</center>
+
+</div>
+
+</body>
+</html>

@@ -80,6 +80,10 @@ use App\Http\Controllers\GamificationLevelController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Elearning_chartsController;
 
+
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ClassController;
+
 Route::get('/check-openssl', function () {
     if (extension_loaded('openssl')) {
         return 'OpenSSL is loaded.';
@@ -259,7 +263,7 @@ Route::resource('user', UserController::class);
 
 Route::get('list_index', [UamUserController::class, 'list_index'])->name('list_index');
 
-Route::get('/user/delete/{id}', [\App\Http\Controllers\UserController::class, 'delete'])->name('user.delete');
+Route::post('/user/delete/{id}', [\App\Http\Controllers\UserController::class, 'delete'])->name('user.delete');
 
 Route::post('update_user_data', [App\Http\Controllers\UserController::class, 'update_user_data'])->name('update_user_data');
 
@@ -301,6 +305,7 @@ Route::Post('/designation/update', [\App\Http\Controllers\DesignationController:
 Route::Post('/designation/store', [\App\Http\Controllers\DesignationController::class, 'store'])->name('designation.store');
 
 Route::get('/certificate_template', [\App\Http\Controllers\CertifcateTemplateController::class, 'index'])->name('certificate_template.index');
+Route::get('/certificate_template/create', [\App\Http\Controllers\CertifcateTemplateController::class, 'create'])->name('certificate_template.create');
 Route::get('/certificate_template/show/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'show'])->name('certificate_template.show');
 Route::get('/certificate_template/edit/{id}', [\App\Http\Controllers\CertifcateTemplateController::class, 'edit'])->name('certificate_template.edit');
 Route::Post('/certificate_template/store', [\App\Http\Controllers\CertifcateTemplateController::class, 'store'])->name('certificate_template.store');
@@ -322,9 +327,14 @@ Route::post('/uam_modules_screens/update_data', [\App\Http\Controllers\UamModule
 
 //auditlog
 Route::get('/auditlog', [auditlogController::class, 'login_index'])->name('login_index')->name('auditlog.view');
-Route::post('/auditlog/login', [\App\Http\Controllers\auditlogController::class, 'login_search'])->name('auditlog.login');
+Route::post('/auditlog', [\App\Http\Controllers\auditlogController::class, 'login_search'])->name('auditlog.login');
+Route::post('/auditlog/export', [\App\Http\Controllers\auditlogController::class, 'exportAuditLogs'])->name('auditlog.export');
+Route::post('/login-audit/export', [\App\Http\Controllers\auditlogController::class, 'exportLoginAudit'])->name('login.audit.export');
 Route::get('uamlog', [auditlogcontroller::class, 'uamlog'])->name('uamlog');
 Route::get('vreglog', [auditlogcontroller::class, 'vreglog'])->name('vreglog');
+Route::get('log_details', [auditlogcontroller::class, 'log_details'])->name('log_details');
+Route::post('/log_details', [\App\Http\Controllers\auditlogController::class, 'log_details_data'])->name('log_details_data');
+
 
 // DEEPIKA//
 // active/operation details
@@ -350,6 +360,8 @@ Route::get('/dashboardevents/fetch', [App\Http\Controllers\elearningdashboardgtC
 // Route::get('/view_list', [App\Http\Controllers\firmadministrationController::class, 'firm_admin_index'])->name('firm_admin_index');
 
 Route::get('/admincourse', [App\Http\Controllers\tryController::class, 'admincourse'])->name('admincourse');
+Route::get('/admin_course_show/{id}', [App\Http\Controllers\tryController::class, 'admin_course_show'])->name('admin_course_show');
+Route::get('/admin_course_edit/{id}', [App\Http\Controllers\tryController::class, 'admin_course_edit'])->name('admin_course_edit');
 //  Route::get('/adminquiz', [App\Http\Controllers\tryController::class, 'adminquiz'])->name('adminquiz');
 
 Route::post('/class_store', [App\Http\Controllers\tryController::class, 'class_store'])->name('class_store');
@@ -827,3 +839,72 @@ Route::post('/attendance/filter', [AttendanceController::class, 'filter'])->name
 
 Route::get('/show-all-tables', [AttendanceController::class, 'showAllTables']);
 Route::get('/charts', [Elearning_chartsController::class, 'index']);
+
+// AI ROUTES
+Route::get('/ai_course_list', [App\Http\Controllers\AIController::class, 'ai_course_list'])->name('ai_course_list');
+Route::get('/ai_course_create', [App\Http\Controllers\AIController::class, 'ai_course_create'])->name('ai_course_create');
+Route::post('/create_course', [App\Http\Controllers\AIController::class, 'ai_createcourse'])->name('create_course');
+Route::post('ai_course_store', [App\Http\Controllers\AIController::class, 'ai_course_store'])->name('ai_course_store');
+
+Route::post('/verify-course-pin',[App\Http\Controllers\tryController::class,'verifyPin'])->name('verify.course.pin');
+Route::get('/meeting_list', [App\Http\Controllers\MeetingController::class, 'meeting_list'])->name('meeting_list');
+Route::get('/virtual_meeting', [App\Http\Controllers\MeetingController::class, 'virtual_meeting'])->name('virtual_meeting');
+Route::post('/meeting_store',[App\Http\Controllers\MeetingController::class,'meeting_store'])->name('meeting_store');
+Route::get('lang/{lang}', [App\Http\Controllers\LanguageController::class, 'change'])->name('lang.change');
+Route::get('adaptive/learning/list', [App\Http\Controllers\AIController::class, 'adaptive_learning_list'])->name('adaptive_learning_list');
+Route::POST('adaptive/learning', [App\Http\Controllers\AIController::class, 'adaptive_learning'])->name('adaptive_learning');
+Route::get('predictive/analysis', [App\Http\Controllers\AIController::class, 'predictive_analysis'])->name('predictive_analysis');
+Route::get('/ai-courses/{encryptedId}', [App\Http\Controllers\AIController::class, 'ai_course_show'])->name('ai_course.show');
+Route::post('/course/publish/{id}', [App\Http\Controllers\AIController::class, 'course_publish'])->name('course_publish');
+Route::post('/get-designation-by-role', [App\Http\Controllers\AIController::class, 'getDesignationByRole'])
+    ->name('get.designation.by.role');
+
+Route::get('/text-to-audio', [App\Http\Controllers\AIController::class, 'text_to_audio'])->name('text_to_audio');
+Route::post('/text-to-audio', [App\Http\Controllers\AIController::class, 'text_to_audio']);
+Route::delete('/delete-audio/{id}', [App\Http\Controllers\AIController::class, 'delete_audio'])->name('delete_audio');
+
+// Add these routes
+Route::post('/elearning/quiz_update/{id}', [App\Http\Controllers\ElearningQuestionController::class, 'quiz_update'])->name('elearning.quiz_update');
+Route::get('/elearning/quiz/versions/{id}', [App\Http\Controllers\ElearningQuestionController::class, 'getQuizVersions']);
+Route::post('/elearning/quiz/restore-version', [App\Http\Controllers\ElearningQuestionController::class, 'restoreVersion']);
+Route::get('/elearning/quiz/get-quiz-data/{id}', [App\Http\Controllers\ElearningQuestionController::class, 'getQuizData']);
+
+Route::get('/elearning/class/get-class-data/{id}', [App\Http\Controllers\tryController::class, 'getClassData']);
+Route::get('/elearning/class/versions/{id}', [App\Http\Controllers\tryController::class, 'getClassVersions']);
+Route::post('/elearning/class/restore-version', [App\Http\Controllers\tryController::class, 'restoreClassVersion']);
+
+Route::post('/class/update/{class_id}', [App\Http\Controllers\tryController::class, 'class_update'])->name('elearning.class_update');
+
+Route::post('/global-chat', [App\Http\Controllers\AIController::class, 'globalChat'])->name('global.chat');
+
+
+    Route::get('/scorm_list', [App\Http\Controllers\ScormController::class, 'index'])->name('scorm.index');
+    Route::post('/scorm/upload', [App\Http\Controllers\ScormController::class, 'upload'])->name('scorm.upload');
+    Route::delete('/scorm/{id}', [App\Http\Controllers\ScormController::class, 'destroy'])->name('scorm.destroy');
+
+Route::get('/scorm/{id}/launch', [App\Http\Controllers\ScormController::class, 'launch'])
+    ->name('scorm.launch');
+
+    Route::get('/scorm/{id}/view', [App\Http\Controllers\ScormController::class, 'view'])
+    ->name('scorm.view');
+
+    Route::post('/scorm/commit', [App\Http\Controllers\ScormController::class, 'commit'])
+    ->name('scorm.commit');
+
+    Route::post('/scorm_course/publish/{id}', [App\Http\Controllers\ScormController::class, 'scorm_course_publish'])->name('scorm_course_publish');
+
+    Route::get('/certificate/view/{course_id}', [App\Http\Controllers\ScormController::class, 'certificate_view']);
+    Route::post('/scorm/validate-pin', [App\Http\Controllers\ScormController::class, 'validatePin']);
+
+    Route::get('/custom_filed', [App\Http\Controllers\DesignationController::class, 'custom_filed'])->name('custom_filed');
+Route::get('/custom_filed_create', [App\Http\Controllers\DesignationController::class, 'custom_filed_create'])->name('custom_filed_create');
+Route::post('/custom_filed_store', [App\Http\Controllers\DesignationController::class, 'custom_filed_store'])->name('custom_filed_store');
+Route::get('/custom_filed_fetch/{id}', [App\Http\Controllers\DesignationController::class, 'custom_filed_fetch'])->name('custom_filed_fetch');
+Route::post('/custom_field_update', [App\Http\Controllers\DesignationController::class, 'custom_field_update'])->name('custom_field_update');
+Route::post('/custom_filed_delete/{id}', [App\Http\Controllers\DesignationController::class, 'custom_filed_delete'])->name('custom_filed_delete');
+
+
+
+    Route::get('/courses', [App\Http\Controllers\CourseController::class, 'index'])->name('admin.courses.index');
+   Route::get('/admin/course/create', [App\Http\Controllers\tryController::class, 'course_create'])->name('admin.course.create');
+    

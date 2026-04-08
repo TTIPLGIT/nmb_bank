@@ -1,136 +1,127 @@
 @extends('layouts.app')
+
 <style>
-    .forgot {
-        display: flex;
-        justify-content: center;
-    }
+.loginname {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px;
+}
+
+.forgot-card {
+    border-radius: 20px;
+    width: 76%;
+    z-index: 1;
+}
+
+.overlay-img {
+    position: absolute;
+    right: -70px;
+    top: 150px;
+    z-index: 2;
+}
+
+.overlay-img img {
+    width: 180px;
+}
 </style>
+
 @section('content')
-<style>
-</style>
-<div class="col-md-12">
-    <div class="container_fluid">
-        <div class="justify-content-center">
-            <div clas="col-10">
-                <h1 class="text-center fwcolor">
-                    <a type="button" href="{{url('/')}}" class="btn btn-primary bg-243c92 font-weight-bold rounded-halfpill ml-3"><i class="fa fa-arrow-circle-left" aria-hidden="true" style="font-size: 1.4rem; display: flex;align-items: center;"></i> </a>
-                    <span class="mx-auto">TTIPL - Learning Management System</span>
 
-                </h1>
-            </div>
-        </div>
+<div class="container_fluid">
+
+    {{-- Background --}}
+    <div style="position:absolute">
+        <img src="{{ asset('assets/images/login-image.PNG') }}" style="width:100%">
     </div>
-   
 
+    {{-- Layout --}}
+    <div class="row" style="display:flex;justify-content:flex-end;padding:6rem 9rem 0 0;">
 
-    <div class="container-fluid mt-lg-4">
-        <div class="row justify-content-start">
-            <div class="col-lg-12 forgot">
-                <div class="card border border-4 border-243c92 rounded-3">
-                    <br>
-                    <div class="sidebar-brand" style="display:flex;align-items:center;text-align:center;justify-content:center;">
-                        <img src="{{asset('asset/image/Talentra-1.svg')}}" class="logo" style="width: 70% !important;">
-                        </a>
-                    </div>
-                    <br>
-                    @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                    @endif
+        <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-5 d-flex justify-content-center">
 
-                    @if (session('loginfail'))
-                    <div class="alert alert-danger">
-                        {{ session('loginfail') }}
-                    </div>
-                    @endif
+            <div class="card forgot-card shadow">
 
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
+                {{-- Header --}}
+                <div class="login-head">
+                    <h4 class="loginname">Forgot Password</h4>
+                </div>
 
-                        @foreach ($errors->all() as $error)
-                        {{ $error }}
-                        @endforeach
+                {{-- Logo --}}
+                <div class="text-center mt-3">
+                    <img src="{{asset('asset/image/Talentra-1.svg')}}" style="width:60%">
+                </div>
 
-                    </div>
-                    @endif
+                {{-- Alerts --}}
+                @if (session('success'))
+                <div class="alert alert-success m-2">
+                    {{ session('success') }}
+                </div>
+                @endif
 
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('forgot_password') }}" class="form-signin">
-                            @csrf
+                @if (session('loginfail'))
+                <div class="alert alert-danger m-2">
+                    {{ session('loginfail') }}
+                </div>
+                @endif
 
-                            <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-                                <div class="col-md-12">
-                                    <div class="form-label-group col-md-12">
-                                        <i class="bi bi-person-fill login_email_icon"></i>
-                                        <input id="email" type="email" class="form-control border border-2 border-243c92 rounded-halfpill @error('email') is-invalid @enderror" name="email" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                @if ($errors->any())
+                <div class="alert alert-danger m-2">
+                    @foreach ($errors->all() as $error)
+                    {{ $error }}
+                    @endforeach
+                </div>
+                @endif
 
-                                        @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
+                {{-- Form --}}
+                <div class="card-body">
+
+                    <form method="POST" action="{{ route('forgot_password') }}">
+                        @csrf
+
+                        {{-- Email --}}
+                        <div class="mb-3">
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                name="email" placeholder="Enter your Email" value="{{ old('email') }}" required
+                                style="border-radius:15px;background-color:white">
+
                             @error('email')
-                            <div class="error">{{ $message }}</div><br>
+                            <span class="invalid-feedback">
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
+                        </div>
 
-                            <div class="centerclass">
-                                <button class="btn btn-primary bg-243c92 font-weight-bold rounded-halfpill" type="submit">Send Password Reset Link</button>
-                            </div>
+                        {{-- Button --}}
+                        <div class="text-center">
+                            <button class="btn btn-primary font-weight-bold">
+                                Send Reset Link
+                            </button>
+                        </div>
 
-                        </form>
-                    </div>
+                        {{-- Back --}}
+                        <div class="text-center mt-3">
+                            <a href="{{ url('/') }}" class="btn btn-link">
+                                ← Back to Login
+                            </a>
+                        </div>
+
+                    </form>
+
                 </div>
             </div>
-        </div>
 
+            {{-- Overlay Image --}}
+            <div class="overlay-img">
+                <img src="{{ asset('assets/images/login_man.PNG') }}">
+            </div>
+
+        </div>
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<script>
-    $(document).ready(function() {
-
-        var remember = $.cookie('remember');
-        if (remember == 'true') {
-            var email = $.cookie('email');
-            var password = $.cookie('password');
-            // autofill the fields
-            $('#email').val(email);
-            $('#password').val(password);
-        }
-
-
-        $("#login").submit(function() {
-
-            if ($('#remember').is(':checked')) {
-
-                var email = $('#email').val();
-                var password = $('#password').val();
-
-                // set cookies to expire in 14 days
-                $.cookie('email', email, {
-                    expires: 14
-                });
-                $.cookie('password', password, {
-                    expires: 14
-                });
-                $.cookie('remember', true, {
-                    expires: 14
-                });
-            } else {
-                // reset cookies
-                $.cookie('email', null);
-                $.cookie('password', null);
-                $.cookie('remember', null);
-            }
-        });
-    });
-</script>
 @endsection

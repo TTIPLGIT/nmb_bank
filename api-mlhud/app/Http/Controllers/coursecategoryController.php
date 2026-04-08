@@ -277,6 +277,8 @@ class coursecategoryController extends BaseController
                 ->orderBy('catagory_id', 'DESC')
                 ->get();
 
+            $allRecords['icons'] = DB::table('icons')->get();
+
             $this->WriteFileLog($allRecords['categories']);
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
