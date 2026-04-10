@@ -671,7 +671,7 @@ class tryController extends BaseController
             $validator = Validator::make($request->all(), [
                 'resource_nameedit' => 'nullable|file|mimetypes:application/pdf,audio/mpeg,video/mp4',
             ]);
-
+            
             $data = array();
             $data['class_name'] = $request->class_nameedit;
             $data['class_description'] = $request->class_descriptionedit;
@@ -701,12 +701,15 @@ class tryController extends BaseController
 
                 $data['resourse_path'] = $storagepath_ursb;
                 $documentsb = $request['resource_nameedit'];
+                $extension = $documentsb->getClientOriginalExtension();
+               
                 $files = $documentsb->getClientOriginalName();
                 $findspace = array(' ', '&', "'", '"');
                 $replacewith = array('-', '-');
                 $proposal_files = str_replace($findspace, $replacewith, $files);
                 $documentsb->move($storagepath_ursb_old, $proposal_files);
                 $data['resource_name'] = $proposal_files;
+                $data['class_format'] = $extension;
             } else {
                 $data['resource_name'] = 0;
                 $data['resourse_path'] = 0;

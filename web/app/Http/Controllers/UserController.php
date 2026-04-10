@@ -377,12 +377,79 @@ class UserController extends BaseController
         }
     }
 
-
+public function bulkStore(Request $request)
+{
+    try {
+        $users = $request->users;
+        $createdCount = 0;
+        $failedCount = 0;
+        $errors = [];
+        
+        foreach ($users as $index => $userData) {
+            try {
+                // Create a new request object with only required fields
+                $userRequest = new Request();
+                $userRequest->merge([
+                    'name' => $userData['name'],
+                    'email' => $userData['email'],
+                    'roles_id' => $userData['roles_id'],
+                    'designation_id' => $userData['designation_id'],
+                    'user_type' => 'CP',
+                    'password' => $userData['password'],
+                    'confirm_password' => $userData['confirm_password'],
+                    // Optional fields set to null as they're not required
+                    'dashboard_list_id' => null,
+                    'custom_field_id' => null,
+                    'custom_field_value' => null,
+                    'gender' => null,
+                    'Mobile_no' => null,
+                    'client_user_id' => null,
+                ]);
+                
+                // Call your existing store method
+                $response = $this->store($userRequest);
+              
+                // Check if successful (redirect response with success session)
+                if ($response->getStatusCode() == 302) {
+                    $createdCount++;
+                } else {
+                    $failedCount++;
+                    $errors[] = "Row " . ($index + 1) . ": Failed for email " . $userData['email'];
+                }
+                
+            } catch (\Exception $e) {
+                $failedCount++;
+                $errors[] = "Row " . ($index + 1) . ": " . $e->getMessage();
+                \Log::error("Bulk user creation failed for row " . ($index + 1) . ": " . $e->getMessage());
+            }
+        }
+        
+        $message = $createdCount . " user(s) created successfully";
+        if ($failedCount > 0) {
+            $message .= ". " . $failedCount . " user(s) failed.";
+        }
+        
+        return response()->json([
+            'status' => $createdCount > 0 ? 'success' : 'error',
+            'message' => $message,
+            'created_count' => $createdCount,
+            'failed_count' => $failedCount,
+            'errors' => $errors
+        ]);
+        
+    } catch (\Exception $e) {
+        \Log::error("Bulk store error: " . $e->getMessage());
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage()
+        ], 500);
+    }
+}
 
     public function store(Request $request)
 
     {
-
+       
         try {
             $method = 'Method => UserController => store';
 
@@ -394,7 +461,7 @@ class UserController extends BaseController
                 'password' => 'required|string|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/',
                 'confirm_password' => 'required|same:password',
                 // 'directorate_department' => 'required',
-                'dashboard_list_id' => 'required',
+                // 'dashboard_list_id' => 'required',
                 'designation' => 'required',
             ];
 
@@ -405,7 +472,7 @@ class UserController extends BaseController
                 'password.required' => 'Password is required',
                 'confirm_password.required' => 'Please enter same password',
                 // 'directorate_department.required' => 'Directorate Department is required',
-                'dashboard_list_id.required' => 'Dashboard list is required ',
+                // 'dashboard_list_id.required' => 'Dashboard list is required ',
                 'designation.required' => 'Designation is required',
 
             ];
@@ -451,7 +518,7 @@ class UserController extends BaseController
                 $request1['requestData'] = $encryptArray;
 
                 $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request1), $method);
-              
+               
                 $response1 = json_decode($response);
               
                 if ($response1->Status == 200 && $response1->Success) {

@@ -1107,9 +1107,8 @@ window.onload = function() {
                             <div class="form-group">
                                 <label>Course Type:<span class="error-star" style="color:red;">*</span></label>
                                 <select class="form-control" name="course_pay" id="course_pay" required>
-                                    <option value="">---Select Course Type---</option>
-                                    <option value="paid" {{ $course->course_pay == 'paid' ? 'selected' : '' }}>Paid
-                                        Course</option>
+
+
                                     <option value="free" {{ $course->course_pay == 'free' ? 'selected' : '' }}>Free
                                         Course</option>
                                 </select>
@@ -1316,7 +1315,7 @@ window.onload = function() {
                             style="display: {{ $course->restricted_access == '1' ? 'block' : 'none' }};">
                             <div class="form-group">
                                 <label>Access PIN:<span class="error-star" style="color:red;">*</span></label>
-                                <input type="password" class="form-control default" name="course_pin" id="course_pin"
+                                <input type="text" class="form-control default" name="course_pin" id="course_pin"
                                     placeholder="Enter 4-6 digit PIN" value="{{ $course->course_pin }}"
                                     autocomplete="off" title="Enter 4-6 digit numeric PIN">
                             </div>

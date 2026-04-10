@@ -2369,6 +2369,38 @@ function notification_fetch() {
         }
     });
 }
+
+function notification(notificationid) {
+    //alert(notificationid);
+    var id = notificationid;
+
+
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: "{{ url('/user/notified')}}",
+        type: "POST",
+        dataType: "json",
+        async: false,
+        data: {
+            id: id,
+            _token: '{{csrf_token()}}'
+        },
+        success: function(data) {
+
+            var url = "/admindashboard";
+            window.location.href = url;
+
+        },
+    });
+
+
+}
 </script>
 
 <script>

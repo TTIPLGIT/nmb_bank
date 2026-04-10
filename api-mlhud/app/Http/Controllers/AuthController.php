@@ -393,121 +393,13 @@ class AuthController extends BaseController
 								'array_dashboard_list' => '',
 								'designation_id' => 1,
 								'role' => '',
-								'active_flag' => 0,
+								'active_flag' => 1,
 								'created_at' => NOW(),
 
 							]);
 
 
-						//   defind role_id
-						$stringuser_id = 42;
-						$update_id = DB::table('users')
-							->where('id', $user_id)
-							->update([
-								'array_roles' => $stringuser_id,
-							]);
-						$user_id = $user_id;
-						$uam_screen_id = DB::table('uam_user_roles')->insertGetId([
-							'user_id' => $user_id,
-							'role_id' => $stringuser_id,
-							'active_flag' => 1,
-							'created_by' => $user_id,
-							'created_date' => NOW()
-
-						]);
-
-
-						$user = DB::table('gt')
-							->insertGetId([
-								'user_id' => $user_id,
-								'active_flag' => 2,
-								'status' => 'Pending'
-
-							]);
-
-
-						$role_id = 35;
-						$parentrow = DB::select("select a.screen_id,a.module_screen_id,a.module_id from uam_role_screens as a where a.role_id = $role_id");
-						$parentidcounting = count($parentrow);
-
-						if ($parentrow != []) {
-							for ($j = 0; $j < $parentidcounting; $j++) {
-								$module_id = $parentrow[$j]->module_id;
-								$screen_id = $parentrow[$j]->screen_id;
-								$x = 0;
-								$modulesrows = DB::select("select * from uam_modules where module_id = $module_id");
-								if ($modulesrows != []) {
-									$parent_module_id = $modulesrows[$x]->parent_module_id;
-									$module_name = $modulesrows[$x]->module_name;
-								}
-
-								$screenrows = DB::select("select * from uam_screens where screen_id = $screen_id");
-								if ($screenrows != []) {
-									$screen_name = $screenrows[$x]->screen_name;
-									$screen_url = $screenrows[$x]->screen_url;
-									$route_url = $screenrows[$x]->route_url;
-									$class_name = $screenrows[$x]->class_name;
-									$display_order = $screenrows[$x]->display_order;
-								}
-
-								$check = DB::select("select * from uam_user_screens where module_id = $module_id and user_id = $user_id and screen_id = $screen_id ");
-								$checkcount = count($check);
-
-								if ($checkcount == '0') {
-									$screen_permission_id = DB::table('uam_user_screens')->insertGetId([
-										'screen_id' => $screen_id,
-										'module_id' => $module_id,
-										'parent_module_id' => $parent_module_id,
-										'module_name' => $module_name,
-										'screen_name' => $screen_name,
-										'screen_url' => $screen_url,
-										'route_url' => $route_url,
-										'class_name' => $class_name,
-										'display_order' => $display_order,
-										'user_id' => $user_id,
-										'active_flag' => 0,
-										'created_by' => $user_id,
-										'created_date' => NOW()
-									]);
-								} else {
-								}
-							};
-						};
-
-
-
-						$checking = DB::select("select a.user_screen_id,a.screen_id,a.module_id from uam_user_screens as a where  a.user_id = $user_id ");
-						$checkcounting = count($checking);
-						if ($checking != []) {
-							for ($k = 0; $k < $checkcounting; $k++) {
-								$screen_id = $checking[$k]->screen_id;
-								$user_screen_id = $checking[$k]->user_screen_id;
-
-								$permissioncheck = DB::select("select a.*,b.array_permission from uam_screen_permissions as a
-								inner join uam_role_screen_permissions as b on b.screen_permission_id = a.screen_permission_id
-								where a.screen_id  = '$screen_id' and b.role_id = '$role_id'");
-
-								$permissioncheckcount = count($permissioncheck);
-								for ($m = 0; $m < $permissioncheckcount; $m++) {
-									$screen_permission_id = $permissioncheck[$m]->screen_permission_id;
-									$permission_name = $permissioncheck[$m]->permission;
-									$description = $permissioncheck[$m]->description;
-									$active_flag = $permissioncheck[$m]->active_flag;
-									$array_permission = $permissioncheck[$m]->array_permission;
-									$role_screen_permissions_id = DB::table('uam_user_screen_permissions')->insertGetId([
-										'user_screen_id' => $user_screen_id,
-										'screen_permission_id' => $screen_permission_id,
-										'permission' => $permission_name,
-										'description' => $description,
-										'active_flag' => $active_flag,
-										'array_permission' => $array_permission,
-										'user_id' => $user_id,
-										'created_by' => $user_id,
-										'created_date' => NOW()
-									]);
-								};
-							};
-						};
+						
 
 						$base_url = config('setting.base_url');
 						$email = $input['email'];

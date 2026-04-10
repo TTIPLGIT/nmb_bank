@@ -92,7 +92,7 @@ class AIController extends BaseController
             $method = 'Method => AIController => get_data';
            
             $meeting = DB::table('virtual_meeting')
-                        ->select('topic','zoom_meeting_id','status','meeting_date','course_id','join_url')
+                        ->select('topic','zoom_meeting_id','status','meeting_date','course_id','join_url','id')
                         ->get();
             $response = [
                 'meeting' => $meeting

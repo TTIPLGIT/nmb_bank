@@ -67,7 +67,7 @@ class elearningController extends BaseController
                     $duration_parts = explode('.', $this_duration);
                     $minutes = intval($duration_parts[0]);
 
-                    $seconds = intval($duration_parts[1]);
+                    $seconds = intval(isset($duration_parts[1]) ? $duration_parts[1] : '0');
 
                     // Convert minutes and seconds to seconds
                     $total_seconds += $minutes * 60 + $seconds;
@@ -208,7 +208,7 @@ class elearningController extends BaseController
               AND ucrs.reward_name = course_catagory.badge_name
         ) AS unlocked
     FROM course_catagory
-    WHERE badge IS NOT NULL AND badge_name IS NOT NULL
+    WHERE badge IS NOT NULL AND badge_name IS NOT NULL and active_flag=0
 
     UNION ALL
 
@@ -225,7 +225,7 @@ class elearningController extends BaseController
               AND ucrs.reward_name = course_catagory.streak_name
         ) AS unlocked
     FROM course_catagory
-    WHERE streak_challenge IS NOT NULL AND streak_name IS NOT NULL
+    WHERE streak_challenge IS NOT NULL AND streak_name IS NOT NULL  and active_flag=0
 ", [$userId, $userId]);
 
 

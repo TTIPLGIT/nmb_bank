@@ -2043,7 +2043,7 @@ function notification_fetch() {
             // Append it to the container
             container.append(html);
             var count = data['Elearning_usernotifications_count'][0].countflow;
-            var count2 = data['Elearning_expiry_data_count'][0].countflow;
+            var count2 = 0;
             var totalCount = count + count2;
 
             if (count == 0) {
@@ -2077,28 +2077,28 @@ function notification_fetch() {
                 }
 
 
-                for (var count2 = 0; count2 < data['Elearning_expiry_data'].length; count2++) {
-                    var notification_id = data['Elearning_expiry_data'][count2].notification_id;
-                    var alert_meg = data['Elearning_expiry_data'][count2].alert_meg;
-                    var created_at = data['Elearning_expiry_data'][count2].created_at;
-                    var parts = created_at.split('-');
-                    var year = parts[0];
-                    var month = parts[1];
-                    var day = parts[2];
+                // for (var count2 = 0; count2 < data['Elearning_expiry_data'].length; count2++) {
+                //     var notification_id = data['Elearning_expiry_data'][count2].notification_id;
+                //     var alert_meg = data['Elearning_expiry_data'][count2].alert_meg;
+                //     var created_at = data['Elearning_expiry_data'][count2].created_at;
+                //     var parts = created_at.split('-');
+                //     var year = parts[0];
+                //     var month = parts[1];
+                //     var day = parts[2];
 
-                    // Create the formatted date in "dd-mm-yy" format
-                    var formatted_date = day + '-' + month + '-' + year;
+                //     // Create the formatted date in "dd-mm-yy" format
+                //     var formatted_date = day + '-' + month + '-' + year;
 
 
-                    var time_ago = formatDateDifference(formatted_date);
+                //     var time_ago = formatDateDifference(formatted_date);
 
-                    $('.user_alert_list_elearning').append(
-                        '<li class="hover_class" onclick="notification(' +
-                        notification_id +
-                        ')" class="notification-list-item"><p class="message p-1 m-0">' +
-                        alert_meg +
-                        " " + formatted_date + '<p></li>');
-                }
+                //     $('.user_alert_list_elearning').append(
+                //         '<li class="hover_class" onclick="notification(' +
+                //         notification_id +
+                //         ')" class="notification-list-item"><p class="message p-1 m-0">' +
+                //         alert_meg +
+                //         " " + formatted_date + '<p></li>');
+                // }
 
 
                 var usercount = count;
@@ -2146,7 +2146,7 @@ function notification(notificationid) {
         },
         success: function(data) {
 
-            var url = data['notify_link'][0].notification_url;
+            var url = "/elearning/allCourses?sorted=Recently%20Added&tag=false&progress=false&q=false";
             window.location.href = url;
 
         },

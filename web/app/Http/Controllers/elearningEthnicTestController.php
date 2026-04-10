@@ -528,7 +528,7 @@ class elearningEthnicTestController extends BaseController
                     }
                 }
             }
-
+  
             // Getting Currently Available Tags
             $tags1 = [];
             // getting tag column values into an array;
@@ -740,14 +740,7 @@ class elearningEthnicTestController extends BaseController
 
 
 
-            DB::table('cpt_points_hours_calculate')
-                ->where('user_id', $user_id)
-                ->where('course_id', $course_id)
-                ->whereNull('end_time')
-                ->update([
-                    'end_time'   => now(),
-                    'updated_at' => now(),
-                ]);
+           
           $today = now()->toDateString();
 
 $scormCourses = DB::table('scorm_courses as sc')
@@ -797,7 +790,7 @@ $scormCourses = DB::table('scorm_courses as sc')
         return $course;
     });
           
-            // dd($Courses);
+           
             return view('elearning.allCourses', compact('scormCourses', 'Courses', 'availableCourses', 'availableTags', 'search', 'sort', 'tagFilter', 'progressFilter', 'modules', 'screens', 'menus', 'courseProgress', 'wishlistedCourseIds', 'user_id'));
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);
@@ -2145,89 +2138,19 @@ $scormCourses = DB::table('scorm_courses as sc')
             $is_completed = Db::select("SELECT * from user_class_relation where (status=1 or status=0) and course_id=$course_id and user_id=$user_id");
             if ($is_completed == []) {
                 $is_examthere = DB::select("SELECT * from elearning_courses where (course_exam=1) and course_id=$course_id and drop_course=0");
-
+                // if course not having Exam , we are updating the course status to completed and awarding cpt points to user, if course having exam then we will update the course progress to 100% and awarding cpt points and updating the course status to completed when user passed the exam.
                 if ($is_examthere == []) {
-                    // DB::table('user_course_relation')
-                    //     ->where('course_id', $course_id)
-                    //     ->where('user_id', $user_id)
-                    //     ->update([
-                    //         'course_status' => "Completed",
-                    //         'status' => 2,
-                    //         'course_progress' => 100,
-                    //     ]);
-
-
-                    // $coursecpt_points = DB::select("SELECT course_cpt_points from elearning_courses where course_id=$course_id and drop_course=0");
-
-                    // $cpt_points = $coursecpt_points[0]->course_cpt_points;
-
-                    // DB::table('user_cpt_points')
-                    //     ->insert([
-                    //         'course_id' => $course_id,
-                    //         'user_id' => $user_id,
-                    //         'cpt_points' => $cpt_points,
-                    //         'status' => '0',
-                    //         'created_by' => $user_id,
-                    //         'created_at' => NOW()
-
-                    //     ]);
-
-
-                    // $userstable = DB::select("SELECT  total_cptpoints from users where id=$user_id and active_flag=0");
-                    // $totalcpt_points = $userstable[0]->total_cptpoints;
-
-                    // $sumofcpt = $totalcpt_points + $cpt_points;
-
-                    DB::table('users')
-                        ->where('id', $user_id)
+                    DB::table('user_course_relation')
+                        ->where('course_id', $course_id)
+                        ->where('user_id', $user_id)
                         ->update([
-                            'total_cptpoints' => $sumofcpt,
+                            'course_status' => "Completed",
+                            'status' => 2,
+                            'course_progress' => 100,
+                            'course_completion_date' => now(),
                         ]);
-                    $data['course_id'] = $course_id;
-                    $encryptArray = $this->encryptData($data);
-                    $request = array();
 
-                    $request['requestData'] = $encryptArray;
-
-                    $gatewayURL = config('setting.api_gateway_url') . '/cpt/mail';
-
-                    $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
-
-                    $response1 = json_decode($response);
-                    if ($response1->Status == 200 && $response1->Success) {
-                        $objData = json_decode($this->decryptData($response1->Data));
-
-
-                        if ($objData->Code == 200) {
-                            return "Success";
-                        }
-
-                        if ($objData->Code == 400) {
-                            return "failed";
-                        }
-                    }
-                }
-            } else {
-                $total_classes = DB::select("SELECT COUNT(*) as total_classes FROM user_class_relation where course_id=$course_id and user_id=$user_id");
-                $totalClasses = (int) $total_classes[0]->total_classes;
-                $total_classes_completed = DB::select("SELECT COUNT(*) AS total_classes
-            FROM user_class_relation AS cr
-            INNER JOIN elearning_classes AS c ON c.class_id = cr.class_id
-            WHERE cr.status = 2
-              AND cr.course_id = $course_id
-              AND cr.user_id = $user_id
-              AND (CASE WHEN c.class_quiz = 'yes' THEN cr.quiz_status = 1 ELSE 1 END)");
-                $this->WriteFileLog($total_classes_completed);
-                $totalClassesCount = (int) $total_classes_completed[0]->total_classes;
-                $this->WriteFileLog($totalClassesCount);
-                $progressPercentage = ($totalClassesCount / $totalClasses) * 100;
-                //dd($progressPercentage);
-                $progress = round($progressPercentage);
-                if ($progress == 100) {
-
-                    $progress = $progress - 20;
-                }
-                $coursecpt_points = DB::select("SELECT course_cpt_points from elearning_courses where course_id=$course_id and drop_course=0");
+                     $coursecpt_points = DB::select("SELECT course_cpt_points from elearning_courses where course_id=$course_id and drop_course=0");
 
                 $cpt_points = $coursecpt_points[0]->course_cpt_points;
                 DB::table('user_cpt_points')
@@ -2254,12 +2177,96 @@ $scormCourses = DB::table('scorm_courses as sc')
                 //dd($cpt_points);
 
 
-                DB::table('user_course_relation')
-                    ->where('course_id', $course_id)
-                    ->where('user_id', $user_id)
-                    ->update([
-                        'course_progress' => $progress,
-                    ]);
+               
+                  
+                    $data['course_id'] = $course_id;
+                    $encryptArray = $this->encryptData($data);
+                    $request = array();
+
+                    $request['requestData'] = $encryptArray;
+
+                    $gatewayURL = config('setting.api_gateway_url') . '/cpt/mail';
+
+                    $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
+
+                    $response1 = json_decode($response);
+                    if ($response1->Status == 200 && $response1->Success) {
+                        $objData = json_decode($this->decryptData($response1->Data));
+
+
+                        if ($objData->Code == 200) {
+                            return "Success";
+                        }
+
+                        if ($objData->Code == 400) {
+                            return "failed";
+                        }
+                    }
+                }
+                else
+                    {
+                    DB::table('user_course_relation')
+                        ->where('course_id', $course_id)
+                        ->where('user_id', $user_id)
+                        ->update([
+                            'course_progress' => 80,
+                            
+                        ]);
+                    }
+            } else {
+                $total_classes = DB::select("SELECT COUNT(*) as total_classes FROM user_class_relation where course_id=$course_id and user_id=$user_id");
+                $totalClasses = (int) $total_classes[0]->total_classes;
+                $total_classes_completed = DB::select("SELECT COUNT(*) AS total_classes
+            FROM user_class_relation AS cr
+            INNER JOIN elearning_classes AS c ON c.class_id = cr.class_id
+            WHERE cr.status = 2
+              AND cr.course_id = $course_id
+              AND cr.user_id = $user_id
+              AND (CASE WHEN c.class_quiz = 'yes' THEN cr.quiz_status = 1 ELSE 1 END)");
+               
+                $totalClassesCount = (int) $total_classes_completed[0]->total_classes;
+                
+                $progressPercentage = ($totalClassesCount / $totalClasses) * 100;
+                
+                $progress = round($progressPercentage);
+                if ($progress == 100) {
+
+                    $progress = $progress - 20;
+                }
+                // $coursecpt_points = DB::select("SELECT course_cpt_points from elearning_courses where course_id=$course_id and drop_course=0");
+
+                // $cpt_points = $coursecpt_points[0]->course_cpt_points;
+                // DB::table('user_cpt_points')
+                //     ->insert([
+                //         'course_id' => $course_id,
+                //         'user_id' => $user_id,
+                //         'cpt_points' => $cpt_points,
+                //         'status' => '0',
+                //         'created_by' => $user_id,
+                //         'created_at' => NOW()
+
+                //     ]);
+
+                // $userstable = DB::select("SELECT  total_cptpoints from users where id=$user_id and active_flag=0");
+                // $totalcpt_points = $userstable[0]->total_cptpoints;
+
+                // $sumofcpt = $totalcpt_points + $cpt_points;
+
+                // DB::table('users')
+                //     ->where('id', $user_id)
+                //     ->update([
+                //         'total_cptpoints' => $sumofcpt,
+                //     ]);
+                // //dd($cpt_points);
+
+
+                // DB::table('user_course_relation')
+                //     ->where('course_id', $course_id)
+                //     ->where('user_id', $user_id)
+                //     ->update([
+                //         'course_progress' => $progress,
+                //         'course_completion_date' => now(),
+                //     ]);
             }
             // }
             $data['course_id'] = $course_id;
@@ -2763,7 +2770,7 @@ $scormCourses = DB::table('scorm_courses as sc')
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
 
             $response1 = json_decode($response);
-
+           
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
 
