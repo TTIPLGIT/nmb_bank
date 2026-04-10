@@ -1079,14 +1079,12 @@ class tryController extends BaseController
 
             $encryptArray = $data;
 
-            $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
-
-            $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
+            $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; 
+            $storagepath_ursb = '/uploads/course/' . $user_id;
             // dd( $storagepath_ursb_old);
             if (!File::exists($storagepath_ursb_old)) {
-
-                File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
-            }
+    File::makeDirectory($storagepath_ursb_old, 0755, true);
+}
 
             $data['introduction_path'] = $storagepath_ursb;
 
