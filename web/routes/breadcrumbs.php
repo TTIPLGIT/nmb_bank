@@ -258,6 +258,8 @@ Breadcrumbs::for('meeting_list', function ($trail) {
     $trail->push('Virtual Meeting', route('meeting_list'));
 });
 
+
+
 Breadcrumbs::for('user.index', function ($trail) {
     $trail->parent('home');
     $trail->push('User', route('user.index'));
@@ -641,4 +643,9 @@ Breadcrumbs::for('text_to_audio', function ($trail) {
 Breadcrumbs::for('adaptive_learning_list', function ($trail) {
     $trail->parent('home');
     $trail->push('Adaptive Learning List', route('adaptive_learning_list'));
+});
+
+Breadcrumbs::for('meeting_create', function ($trail) {
+    $trail->parent('meeting_list');
+    $trail->push('Meeting Initiate', route('meeting_list'));
 });

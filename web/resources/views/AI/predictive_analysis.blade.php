@@ -1,4 +1,9 @@
-@extends('layouts.adminnav')
+@php
+$layout = ($user_id == 126) ? 'layouts.adminnav' : 'layouts.elearningmain';
+@endphp
+
+@extends($layout)
+@section('content')
 
 @section('content')
 <style>

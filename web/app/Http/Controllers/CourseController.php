@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -14,17 +15,31 @@ class CourseController extends BaseController
 {
     public function index(Request $request)
     {
+        
         try {
-         $courses = DB::table('elearning_courses as ec')
-                ->leftJoin('course_catagory as cc', 'ec.course_category', '=', 'cc.catagory_id')
-                ->Join('ai_course_response as ac', function ($join) {
-                    $join->on('ec.course_id', '=', 'ac.course_id')
-                        ->where('ac.is_published', 1);
-                })
-                ->select('ec.*', 'cc.catagory_name')
-                ->where('ec.drop_course', '0')
-                ->orderBy('ec.course_id', 'desc')
-                ->get();
+        $courses = DB::table('elearning_courses as ec')
+    ->leftJoin('course_catagory as cc', 'ec.course_category', '=', 'cc.catagory_id')
+    ->leftJoin('ai_course_response as ac', function ($join) {
+        $join->on('ec.course_id', '=', 'ac.course_id')
+            ->where('ac.is_published', 1);
+    })
+    ->leftJoin('user_course_relation as ucr', 'ec.course_id', '=', 'ucr.course_id')
+    ->select(
+        'ec.*', 
+        'cc.catagory_name',
+        DB::raw('COUNT(DISTINCT ucr.course_id) as user_started_count')
+    )
+    ->where('ec.drop_course', '0')
+    
+    ->groupBy('ec.course_id', 'cc.catagory_name')
+    ->orderBy('ec.course_id', 'desc')
+    ->get();
+
+// Mark courses where users have started
+        foreach ($courses as $course) {
+            $course->has_users_started = $course->user_started_count > 0;
+            $course->is_ai_course = !is_null($course->course_id); // Adjust based on your AI field
+        }
 
             $classes = DB::table('elearning_classes')
                 ->where('drop_class', '0')

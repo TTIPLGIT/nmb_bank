@@ -794,7 +794,7 @@ public function predictive_analysis(Request $request)
         $screens = $menus['screens'];
         $modules = $menus['modules'];
 
-        return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData'));
+        return view('AI.predictive_analysis', compact('menus', 'screens', 'modules', 'processedData','user_id'));
     } catch (\Exception $exc) {
         // Log the error
         $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTrace()[0]['line'], $exc->getTrace()[0]['file']);

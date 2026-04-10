@@ -2,66 +2,66 @@
 
 @section('content')
 <style>
-    .dt-buttons.btn-group {
-        display: none !important;
-    }
+.dt-buttons.btn-group {
+    display: none !important;
+}
 
-    .mystyle {
-        border: 2px solid red;
-    }
+.mystyle {
+    border: 2px solid red;
+}
 
-    .btn-check:checked+.btn-outline-primary {
-        background-color: #5065cc !important;
-        color: white !important;
-        border-color: #5065cc !important;
-    }
+.btn-check:checked+.btn-outline-primary {
+    background-color: #5065cc !important;
+    color: white !important;
+    border-color: #5065cc !important;
+}
 
-    .submit_category button {
-        display: flex;
-        justify-content: flex-end;
-    }
+.submit_category button {
+    display: flex;
+    justify-content: flex-end;
+}
 
-    .custom-dropdown {
-        position: relative;
-        width: 100%;
-        cursor: pointer;
-        border-radius: 5px;
-    }
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
-    .custom-dropdown .selected {
-        padding: 5px 10px;
-    }
+.custom-dropdown .selected {
+    padding: 5px 10px;
+}
 
-    .custom-dropdown .dropdown-list {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        border: 1px solid #ccc;
-        background: #fff;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: none;
-        max-height: 200px;
-        overflow-y: auto;
-        border-radius: 5px;
-        z-index: 999;
-    }
+.custom-dropdown .dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid #ccc;
+    background: #fff;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 5px;
+    z-index: 999;
+}
 
-    .custom-dropdown .dropdown-list li {
-        display: flex;
-        justify-content: space-between;
-        /* text left, icon right */
-        align-items: center;
-        padding: 8px 12px;
-        cursor: pointer;
-        gap: 8px;
-    }
+.custom-dropdown .dropdown-list li {
+    display: flex;
+    justify-content: space-between;
+    /* text left, icon right */
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    gap: 8px;
+}
 
-    .custom-dropdown .dropdown-list li:hover {
-        background: #f0f0f0;
-    }
+.custom-dropdown .dropdown-list li:hover {
+    background: #f0f0f0;
+}
 </style>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
@@ -84,20 +84,24 @@
                                 <div class="row">
                                     <div class="form-group col-6">
                                         <label>Category<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control default" id="catagory_name" name="catagory_name" required>
+                                        <input type="text" class="form-control default" id="catagory_name"
+                                            name="catagory_name" required>
                                     </div>
 
                                     <div class="form-group col-6">
                                         <label>Description<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control default" id="description" name="description" required>
+                                        <input type="text" class="form-control default" id="description"
+                                            name="description" required>
                                     </div>
 
                                     <div class="form-group col-4">
                                         <label>Badge<span class="text-danger">*</span></label><br>
-                                        <input type="radio" class="btn-check" name="badge" value="1" id="badge_yes" autocomplete="off" onclick="toggleBadgeFields()">
+                                        <input type="radio" class="btn-check" name="badge" value="1" id="badge_yes"
+                                            autocomplete="off" onclick="toggleBadgeFields()">
                                         <label class="btn btn-outline-primary" for="badge_yes">Yes</label>
 
-                                        <input type="radio" class="btn-check" name="badge" value="0" id="badge_no" autocomplete="off" onclick="toggleBadgeFields()">
+                                        <input type="radio" class="btn-check" name="badge" value="0" id="badge_no"
+                                            autocomplete="off" onclick="toggleBadgeFields()">
                                         <label class="btn btn-outline-primary" for="badge_no">No</label>
                                     </div>
 
@@ -111,8 +115,10 @@
                                         <input type="text" class="form-control" name="badge_name" id="badge_name">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Number of Course to achieve this Badge<span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" min="1" name="badge_count" id="badge_count">
+                                        <label>Number of Course to achieve this Badge<span
+                                                class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" min="1" name="badge_count"
+                                            id="badge_count">
                                     </div>
                                     <!-- <div class="form-group col-md-4">
                                         <label>Badge Icon<span class="text-danger">*</span></label>
@@ -130,7 +136,8 @@
                                                 @foreach($icons as $icon)
                                                 <li data-value="{{ $icon->icon }}">
                                                     <span>{{ $icon->icon_name }}</span>
-                                                    <i class="{{ $icon->icon }}" style="color:blue; font-size:20px;"></i>
+                                                    <i class="{{ $icon->icon }}"
+                                                        style="color:blue; font-size:20px;"></i>
                                                 </li>
                                                 @endforeach
                                             </ul>
@@ -144,10 +151,12 @@
                                 <div class="form-group col-6">
 
                                     <label>Streak Challenge<span class="text-danger">*</span></label><br>
-                                    <input type="radio" class="btn-check" name="streak_challenge" value=1 id="streak_challenge_yes" autocomplete="off" onclick="toggleBadgeFields()">
+                                    <input type="radio" class="btn-check" name="streak_challenge" value=1
+                                        id="streak_challenge_yes" autocomplete="off" onclick="toggleBadgeFields()">
                                     <label class="btn btn-outline-primary" for="streak_challenge_yes">Yes</label>
 
-                                    <input type="radio" class="btn-check" name="streak_challenge" value=0 id="streak_challenge_no" autocomplete="off" onclick="toggleBadgeFields()">
+                                    <input type="radio" class="btn-check" name="streak_challenge" value=0
+                                        id="streak_challenge_no" autocomplete="off" onclick="toggleBadgeFields()">
                                     <label class="btn btn-outline-primary" for="streak_challenge_no">No</label>
 
                                 </div>
@@ -158,12 +167,15 @@
                                         <input type="text" class="form-control" name="streak_name" id="streak_name">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Number of Course to achieve this Streak<span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" min="1" name="number_course_for_streak" id="streak_count">
+                                        <label>Number of Course to achieve this Streak<span
+                                                class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" min="1"
+                                            name="number_course_for_streak" id="streak_count">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Bonus Points<span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" min="1" name="bonus_point" id="streak_points">
+                                        <input type="number" class="form-control" min="1" name="bonus_point"
+                                            id="streak_points">
                                     </div>
 
 
@@ -174,18 +186,25 @@
                                         <div class="form-group d-flex align-items-center flex-wrap gap-10">
 
                                             <div>
-                                                <input type="radio" class="btn-check" name="complete_within" value="day" id="achieve_day" autocomplete="off" onclick="updatePlaceholder()">
-                                                <label class="btn btn-outline-primary" for="achieve_day" style="color:black">Day</label>
+                                                <input type="radio" class="btn-check" name="complete_within" value="Day"
+                                                    id="achieve_day" autocomplete="off" onclick="updatePlaceholder()">
+                                                <label class="btn btn-outline-primary" for="achieve_day"
+                                                    style="color:black">Day</label>
                                             </div>
 
 
                                             <div>
-                                                <input type="radio" class="btn-check" name="complete_within" value="hours" id="achieve_time" autocomplete="off" onclick="updatePlaceholder()">
-                                                <label class="btn btn-outline-primary" for="achieve_time" style="color:black">Hours</label>
+                                                <input type="radio" class="btn-check" name="complete_within"
+                                                    value="time" id="achieve_time" autocomplete="off"
+                                                    onclick="updatePlaceholder()">
+                                                <label class="btn btn-outline-primary" for="achieve_time"
+                                                    style="color:black">Hours</label>
                                             </div>
 
                                             <div style="flex-grow: 1; padding-left:30px; min-width: 150px;">
-                                                <input type="number" class="form-control" min="1" name="complete_within_type" id="achieve_value" placeholder="Enter Time or Day">
+                                                <input type="number" class="form-control" min="1"
+                                                    name="complete_within_type" id="achieve_value"
+                                                    placeholder="Enter Time or Day">
                                             </div>
                                         </div>
                                     </div>
@@ -207,7 +226,8 @@
                                                 @foreach($icons as $icon)
                                                 <li data-value="{{ $icon->icon }}">
                                                     <span>{{ $icon->icon_name }}</span>
-                                                    <i class="{{ $icon->icon }}" style="color:blue; font-size:20px;"></i>
+                                                    <i class="{{ $icon->icon }}"
+                                                        style="color:blue; font-size:20px;"></i>
                                                 </li>
                                                 @endforeach
                                             </ul>
@@ -216,26 +236,34 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label class="form-label">Course Locked</label><span class="text-danger">*</span><br>
-                                    <input type="radio" class="btn-check" name="course_locked" value=1 id="course_locked_yes" autocomplete="off" onclick="toggleUnlockPoints()">
-                                    <label class="btn btn-outline-primary" for="course_locked_yes" style="color:black" value=1>Yes</label>
+                                    <label class="form-label">Course Locked</label><span
+                                        class="text-danger">*</span><br>
+                                    <input type="radio" class="btn-check" name="course_locked" value=1
+                                        id="course_locked_yes" autocomplete="off" onclick="toggleUnlockPoints()">
+                                    <label class="btn btn-outline-primary" for="course_locked_yes" style="color:black"
+                                        value=1>Yes</label>
 
-                                    <input type="radio" class="btn-check" name="course_locked" value=0 id="course_locked_no" autocomplete="off" onclick="toggleUnlockPoints()">
-                                    <label class="btn btn-outline-primary" for="course_locked_no" style="color:black" value=0>No</label>
+                                    <input type="radio" class="btn-check" name="course_locked" value=0
+                                        id="course_locked_no" autocomplete="off" onclick="toggleUnlockPoints()">
+                                    <label class="btn btn-outline-primary" for="course_locked_no" style="color:black"
+                                        value=0>No</label>
 
 
                                 </div>
 
                                 <div class="form-group  col-6" id="unlockPointsDiv" style="display: none;">
                                     <label class="form-label">Points to Unlock<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="points_to_unlock" min="1" placeholder="Enter points" id="points_to_unlock">
+                                    <input type="number" class="form-control" name="points_to_unlock" min="1"
+                                        placeholder="Enter points" id="points_to_unlock">
 
 
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-12 d-flex justify-content-center gap-2">
-                                        <button style="margin-right:10px" class="btn btn-success" onclick="gencre(event)">Submit</button>
-                                        <a class="btn btn-danger" style="color:white;" href="{{ route('catagory_list') }}">Back</a>
+                                        <button style="margin-right:10px" class="btn btn-success"
+                                            onclick="gencre(event)">Submit</button>
+                                        <a class="btn btn-danger" style="color:white;"
+                                            href="{{ route('catagory_list') }}">Back</a>
                                     </div>
                                 </div>
                         </div>
@@ -258,176 +286,180 @@
 
 <!-- JS -->
 <script>
-    $(document).ready(function() {
-        $('.selectpicker').selectpicker();
-    });
+$(document).ready(function() {
+    $('.selectpicker').selectpicker();
+});
 
-    function gencre(event) {
-        event.preventDefault();
+function gencre(event) {
+    event.preventDefault();
 
-        var category = $("#catagory_name").val().trim();
-        var description = $("#description").val().trim();
-        var badgeYes = $("#badge_yes").is(":checked");
-        var badgeNo = $("#badge_no").is(":checked");
-        var streakChallenge = $("#streak_challenge_yes").is(":checked");
-        var streakNo = $("#streak_challenge_no").is(":checked");
-        var day = $("#achieve_day").is(":checked");
-        var time = $("#achieve_time").is(":checked");
-        var courseLocked = $("#course_locked_yes").is(":checked");
-        var courseLocked_no = $("#course_locked_no").is(":checked");
+    var category = $("#catagory_name").val().trim();
+    var description = $("#description").val().trim();
+    var badgeYes = $("#badge_yes").is(":checked");
+    var badgeNo = $("#badge_no").is(":checked");
+    var streakChallenge = $("#streak_challenge_yes").is(":checked");
+    var streakNo = $("#streak_challenge_no").is(":checked");
+    var day = $("#achieve_day").is(":checked");
+    var time = $("#achieve_time").is(":checked");
+    var courseLocked = $("#course_locked_yes").is(":checked");
+    var courseLocked_no = $("#course_locked_no").is(":checked");
 
-        // Category name
-        if (category === '') {
-            Swal.fire("Please Enter the Category", "", "error");
-            return false;
-        }
-
-        // Description
-        if (description === '') {
-            Swal.fire("Please Enter the Category Description", "", "error");
-            return false;
-        }
-
-        // Badge radio check
-        if (!badgeYes && !badgeNo) {
-            Swal.fire("Please select 'Yes' or 'No' for Badge.", "", "error");
-            return false;
-        }
-
-        // Badge details if yes
-        if (badgeYes) {
-            if ($("#badge_name").val().trim() === '') {
-                Swal.fire("Please Enter the Badge Name", "", "error");
-                return false;
-            }
-            if ($("#badge_count").val().trim() === '') {
-                Swal.fire("Please Enter the Badge Count", "", "error");
-                return false;
-            }
-            if ($("#badge_icon").val().trim() === '') {
-                Swal.fire("Please Enter the Badge Icon", "", "error");
-                return false;
-            }
-        }
-
-        // Streak challenge radio check
-        if (!streakChallenge && !streakNo) {
-            Swal.fire("Please select 'Yes' or 'No' for Streak Challenge.", "", "error");
-            return false;
-        }
-
-        // Streak challenge details if yes
-        if (streakChallenge) {
-            if ($("#streak_name").val().trim() === '') {
-                Swal.fire("Please Enter the Streak Name", "", "error");
-                return false;
-            }
-            if ($("#streak_count").val().trim() === '') {
-                Swal.fire("Please Enter the Number of Courses for Streak", "", "error");
-                return false;
-            }
-            if ($("#streak_points").val().trim() === '') {
-                Swal.fire("Please Enter the Bonus Points", "", "error");
-                return false;
-            }
-            if (!day && !time) {
-                Swal.fire("Please select either 'Day' or 'Hours' for Completion Type.", "", "error");
-                return false;
-            }
-            if ($("#achieve_value").val().trim() === '') {
-                let message = day ? "Please enter the Day" : time ? "Please enter the Hours" : "Please enter the Hours or Day";
-                Swal.fire(message, "", "error");
-                return false;
-            }
-            if ($("#achieve_icon").val().trim() === '') {
-                Swal.fire("Please Enter the Streak Icon", "", "error");
-                return false;
-            }
-        }
-
-
-
-        if (!courseLocked && !courseLocked_no) {
-            Swal.fire("Please select 'Yes' or 'No' for Course Locked.", "", "error");
-            return false;
-        }
-        if (courseLocked) {
-            if ($("#points_to_unlock").val().trim() === '') {
-                Swal.fire("Please Enter the Points to Unlock", "", "error");
-                return false;
-            }
-        }
-
-
-
-
-
-
-        // Submit if all validations pass
-        $("#catagory_submit").submit();
+    // Category name
+    if (category === '') {
+        Swal.fire("Please Enter the Category", "", "error");
+        return false;
     }
 
-    function toggleBadgeFields() {
-        document.getElementById("badgeFields").style.display = document.getElementById("badge_yes").checked ? "flex" : "none";
-        document.getElementById("StreakChallange").style.display = document.getElementById("streak_challenge_yes").checked ? "flex" : "none";
+    // Description
+    if (description === '') {
+        Swal.fire("Please Enter the Category Description", "", "error");
+        return false;
     }
 
-    $(document).ready(function() {
-        toggleBadgeFields();
-        $('input[name="badge"]').change(toggleBadgeFields);
-        $('input[name="streak_challenge"]').change(toggleBadgeFields);
-    });
+    // Badge radio check
+    if (!badgeYes && !badgeNo) {
+        Swal.fire("Please select 'Yes' or 'No' for Badge.", "", "error");
+        return false;
+    }
 
-
-    function updatePlaceholder() {
-        const input = document.getElementById("achieve_value");
-        const isDay = document.getElementById("achieve_day").checked;
-        const isTime = document.getElementById("achieve_time").checked;
-
-        if (isDay) {
-            input.placeholder = "Please enter the total number of days";
-        } else if (isTime) {
-            input.placeholder = "Please enter the time";
-        } else {
-            input.placeholder = "Please enter the day or time";
+    // Badge details if yes
+    if (badgeYes) {
+        if ($("#badge_name").val().trim() === '') {
+            Swal.fire("Please Enter the Badge Name", "", "error");
+            return false;
+        }
+        if ($("#badge_count").val().trim() === '') {
+            Swal.fire("Please Enter the Badge Count", "", "error");
+            return false;
+        }
+        if ($("#badge_icon").val().trim() === '') {
+            Swal.fire("Please Enter the Badge Icon", "", "error");
+            return false;
         }
     }
+
+    // Streak challenge radio check
+    if (!streakChallenge && !streakNo) {
+        Swal.fire("Please select 'Yes' or 'No' for Streak Challenge.", "", "error");
+        return false;
+    }
+
+    // Streak challenge details if yes
+    if (streakChallenge) {
+        if ($("#streak_name").val().trim() === '') {
+            Swal.fire("Please Enter the Streak Name", "", "error");
+            return false;
+        }
+        if ($("#streak_count").val().trim() === '') {
+            Swal.fire("Please Enter the Number of Courses for Streak", "", "error");
+            return false;
+        }
+        if ($("#streak_points").val().trim() === '') {
+            Swal.fire("Please Enter the Bonus Points", "", "error");
+            return false;
+        }
+        if (!day && !time) {
+            Swal.fire("Please select either 'Day' or 'Hours' for Completion Type.", "", "error");
+            return false;
+        }
+        if ($("#achieve_value").val().trim() === '') {
+            let message = day ? "Please enter the Day" : time ? "Please enter the Hours" :
+                "Please enter the Hours or Day";
+            Swal.fire(message, "", "error");
+            return false;
+        }
+        if ($("#achieve_icon").val().trim() === '') {
+            Swal.fire("Please Enter the Streak Icon", "", "error");
+            return false;
+        }
+    }
+
+
+
+    if (!courseLocked && !courseLocked_no) {
+        Swal.fire("Please select 'Yes' or 'No' for Course Locked.", "", "error");
+        return false;
+    }
+    if (courseLocked) {
+        if ($("#points_to_unlock").val().trim() === '') {
+            Swal.fire("Please Enter the Points to Unlock", "", "error");
+            return false;
+        }
+    }
+
+
+
+
+
+
+    // Submit if all validations pass
+    $("#catagory_submit").submit();
+}
+
+function toggleBadgeFields() {
+    document.getElementById("badgeFields").style.display = document.getElementById("badge_yes").checked ? "flex" :
+        "none";
+    document.getElementById("StreakChallange").style.display = document.getElementById("streak_challenge_yes").checked ?
+        "flex" : "none";
+}
+
+$(document).ready(function() {
+    toggleBadgeFields();
+    $('input[name="badge"]').change(toggleBadgeFields);
+    $('input[name="streak_challenge"]').change(toggleBadgeFields);
+});
+
+
+function updatePlaceholder() {
+    const input = document.getElementById("achieve_value");
+    const isDay = document.getElementById("achieve_day").checked;
+    const isTime = document.getElementById("achieve_time").checked;
+
+    if (isDay) {
+        input.placeholder = "Please enter the total number of days";
+    } else if (isTime) {
+        input.placeholder = "Please enter the time";
+    } else {
+        input.placeholder = "Please enter the day or time";
+    }
+}
 </script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll(".custom-dropdown").forEach(function(dropdown) {
-            const selected = dropdown.querySelector(".selected");
-            const list = dropdown.querySelector(".dropdown-list");
-            const hiddenInput = dropdown.nextElementSibling; // hidden input right after dropdown
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".custom-dropdown").forEach(function(dropdown) {
+        const selected = dropdown.querySelector(".selected");
+        const list = dropdown.querySelector(".dropdown-list");
+        const hiddenInput = dropdown.nextElementSibling; // hidden input right after dropdown
 
-            // Toggle dropdown
-            selected.addEventListener("click", () => {
-                list.style.display = list.style.display === "block" ? "none" : "block";
-            });
+        // Toggle dropdown
+        selected.addEventListener("click", () => {
+            list.style.display = list.style.display === "block" ? "none" : "block";
+        });
 
-            // Handle option click
-            list.querySelectorAll("li").forEach(item => {
-                item.addEventListener("click", function() {
-                    selected.innerHTML = this.innerHTML; // Show icon + text
-                    hiddenInput.value = this.dataset.value; // Save icon class
-                    list.style.display = "none"; // Close dropdown
-                });
-            });
-
-            // Close if clicked outside
-            document.addEventListener("click", (e) => {
-                if (!dropdown.contains(e.target)) {
-                    list.style.display = "none";
-                }
+        // Handle option click
+        list.querySelectorAll("li").forEach(item => {
+            item.addEventListener("click", function() {
+                selected.innerHTML = this.innerHTML; // Show icon + text
+                hiddenInput.value = this.dataset.value; // Save icon class
+                list.style.display = "none"; // Close dropdown
             });
         });
+
+        // Close if clicked outside
+        document.addEventListener("click", (e) => {
+            if (!dropdown.contains(e.target)) {
+                list.style.display = "none";
+            }
+        });
     });
+});
 </script>
 
 <script>
-    function toggleUnlockPoints() {
-        document.getElementById("unlockPointsDiv").style.display = document.getElementById("course_locked_yes").checked ? "block" : "none";
+function toggleUnlockPoints() {
+    document.getElementById("unlockPointsDiv").style.display = document.getElementById("course_locked_yes").checked ?
+        "block" : "none";
 
-    }
+}
 </script>
 @endsection

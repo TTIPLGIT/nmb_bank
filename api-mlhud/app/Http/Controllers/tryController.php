@@ -1785,6 +1785,7 @@ class tryController extends BaseController
                 DB::table('elearning_classes_versions')->insert([
                     'original_class_id' => $classId,
                     'class_name' => $currentClass->class_name,
+                    'class_format' => $currentClass->class_format,
                     'class_description' => $currentClass->class_description,
                     'resource_name' => $currentClass->resource_name,
                     'resource_path' => $currentClass->resource_path,
@@ -1799,10 +1800,11 @@ class tryController extends BaseController
                     'updated_at' => NOW()
                 ]);
             }
-
+         $this->WriteFileLog($inputArray);
             // Prepare update data
             $updateData = [
                 'class_name' => $inputArray['class_name'],
+                'class_format' => $inputArray['class_format'],
                 'class_description' => $inputArray['class_description'],
                 'class_duration' => $inputArray['class_duration'],
                 'class_quiz' => $inputArray['class_quiz'],
@@ -2024,6 +2026,7 @@ class tryController extends BaseController
                 DB::table('elearning_classes_versions')->insert([
                     'original_class_id' => $classId,
                     'class_name' => $currentClass->class_name,
+                    'class_format' => $currentClass->class_format,
                     'class_description' => $currentClass->class_description,
                     'resource_name' => $currentClass->resource_name,
                     'resource_path' => $currentClass->resource_path,
@@ -2037,12 +2040,13 @@ class tryController extends BaseController
                     'created_at' => NOW()
                 ]);
             }
-
+           
             // Restore selected version
             DB::table('elearning_classes')
                 ->where('class_id', $classId)
                 ->update([
                     'class_name' => $versionToRestore->class_name,
+                     'class_format' => $versionToRestore->class_format,
                     'class_description' => $versionToRestore->class_description,
                     'resource_name' => $versionToRestore->resource_name,
                     'resource_path' => $versionToRestore->resource_path,

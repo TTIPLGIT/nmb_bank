@@ -566,7 +566,7 @@ window.onload = function() {
                                                 style="color:red;">*</span></label>
                                         <div style="display:flex;align-items: baseline;">
                                             <input type="number" class="form-control default" id="pass_percentage"
-                                                name="pass_percentage" autocomplete="off">
+                                                name="pass_percentage" autocomplete="off" max='100' min='0'>
                                             <span class="col-md-6" style="color:red;"><strong>(in percentage
                                                     only)</strong></span>
                                         </div>
@@ -806,8 +806,7 @@ window.onload = function() {
                                         <input type="text" class="form-control default" name="course_pin"
                                             id="course_pin" placeholder="Enter 4-6 digit PIN" autocomplete="off"
                                             maxlength="6">
-                                        <small class="text-muted">4-6 digit numeric PIN (auto-generated if left
-                                            empty)</small>
+                                        <small class="text-muted">4-6 digit numeric PIN</small>
                                     </div>
                                 </div>
                             </div>
@@ -1373,7 +1372,9 @@ function gencre1() {
     if ($('input[name="restricted_access"]:checked').val() == '1') {
         var pin = $("#course_pin").val();
         if (pin == '') {
-            $("#course_pin").val(Math.floor(100000 + Math.random() * 900000));
+            Swal.fire("Error", "Please Add Pin", "error");
+            return false;
+            // $("#course_pin").val(Math.floor(100000 + Math.random() * 900000));
         } else if (!/^\d{4,6}$/.test(pin)) {
             Swal.fire("Error", "PIN must be 4-6 digits", "error");
             return false;

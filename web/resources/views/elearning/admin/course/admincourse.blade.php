@@ -2962,10 +2962,10 @@ $(document).ready(function() {
                             <div class="form-group">
                                 <label>Class Resource:<span class="error-star" style="color:red;">*</span></label>
                                 <input type="file" class="form-control default" id="cresource" required
-                                    name="resource_name" accept=".pdf,.mp3,.mp4">
+                                    name="resource_name" accept=".pdf,.mp4">
                                 <span class="input-Message" id="resourceerror" style="color:red;"></span>
                                 <span style="color:red !important"><strong>Following files could be uploaded as
-                                        pdf,mp3,mp4</strong></span>
+                                        pdf,mp4</strong></span>
 
                             </div>
                         </div>
@@ -3201,11 +3201,11 @@ $(document).ready(function() {
                                 </div>
                                 <input type="file" class="form-control default" id="resourse_nameedit"
                                     name="resource_nameedit" style="display:none;" autocomplete="off"
-                                    accept=".pdf, .mp3,.mp4">
+                                    accept=".pdf,.mp4">
                                 <iframe class="img-fluid" alt="Banner Image" title=""></iframe>
                             </div>
                             <span style="color:red !important"><strong>Following files could be uploaded as
-                                    pdf,mp3,mp4</strong></span>
+                                    pdf,mp4</strong></span>
                         </div>
 
                         <div class="col-md-5">

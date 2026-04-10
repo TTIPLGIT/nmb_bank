@@ -35,3 +35,9 @@ web/composer.json
 
 
 
+api-mlhud/composer.json
+api-mlhud/composer.lock
+api-mlhud/config/app.php
+web/composer.json
+web/public/scorm
+api-mlhud/public/images

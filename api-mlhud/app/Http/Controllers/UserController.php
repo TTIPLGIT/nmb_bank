@@ -573,7 +573,7 @@ class UserController extends BaseController
 							'user_type' => $input['user_type'],
 							'password' => $input['password'],
 							// 'array_dashboard_list' => $stringdashboard_list_id,
-							'total_cptpoints' => $input['total_cptpoints'] ?? 1000,
+							'total_cptpoints' => $input['total_cptpoints'] ?? 0,
 							'role_id' => $roles_data_id,
 							'designation_id' =>  $input['designation'],
 							'client_user_id' => $input['client_user_id']
@@ -1995,8 +1995,8 @@ class UserController extends BaseController
 			$Elearning_usernotifications_data = DB::select("select * from notifications where (notification_url LIKE '/elearning/quiz/view%'or notification_url LIKE '/ethic/quiz/list%' or notification_url LIKE '/elearningquestion%' or notification_url LIKE '/exam/quiz/list%' or notification_url LIKE '/localadaptation/quiz/list%' or notification_url LIKE '/elearningCourse/class%' or notification_url LIKE '/elearningCourse%' or notification_url LIKE '/elearningCourse/class%' ) and active='0'and  user_id =$id order by notification_id DESC;");
 			$Elearning_usernotifications_count = DB::select("select count(notification_url) as countflow from notifications WHERE (notification_url LIKE '/elearning/quiz/view%' or notification_url LIKE '/elearningquestion%' or notification_url LIKE '/ethic/quiz/list%' or notification_url LIKE '/exam/quiz/list%' or notification_url LIKE '/localadaptation/quiz/list%' or notification_url LIKE '/elearningCourse/class%' or notification_url LIKE '/elearningCourse%'  or notification_url LIKE '/elearningCourse/class%') and active='0'  and  user_id =$id;");
 
-			$Elearning_expiry_data = DB::select("select * from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id order by notification_id DESC;");
-			$Elearning_expiry_data_count = DB::select("select count(notification_url) as countflow from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id;");
+			// $Elearning_expiry_data = DB::select("select * from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id order by notification_id DESC;");
+			// $Elearning_expiry_data_count = DB::select("select count(notification_url) as countflow from notifications where notification_type = 'Certificate Expire' and active='0'and  user_id =$id;");
 			$row2['cpt_points'] = DB::select("SELECT total_cptpoints AS cpt_points  FROM users WHERE id=$id and active_flag=0");
 			$userPoints = DB::table('user_course_relation as ucr')
 							->join('elearning_courses as ec', 'ec.course_id', '=', 'ucr.course_id')
@@ -2036,8 +2036,8 @@ class UserController extends BaseController
 				'Elearning_notifications_count' => $Elearning_notifications_count,
 				'Elearning_usernotifications_data' => $Elearning_usernotifications_data,
 				'Elearning_usernotifications_count' => $Elearning_usernotifications_count,
-				'Elearning_expiry_data' => $Elearning_expiry_data,
-				'Elearning_expiry_data_count' => $Elearning_expiry_data_count,
+				// 'Elearning_expiry_data' => $Elearning_expiry_data,
+				// 'Elearning_expiry_data_count' => $Elearning_expiry_data_count,
 				'level_name' => $level_name,
 				'level_icon' => $level_icon
 			];

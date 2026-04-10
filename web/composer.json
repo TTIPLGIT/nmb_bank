@@ -12,6 +12,7 @@
         "bacon/bacon-qr-code": "*",
         "barryvdh/laravel-debugbar": "*",
         "barryvdh/laravel-dompdf": "*",
+        "devianl2/laravel-scorm": "^3.0",
         "diglactic/laravel-breadcrumbs": "^7.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -21,7 +22,8 @@
         "laravel/ui": "^3.4",
         "razorpay/razorpay": "^2.8",
         "simplesoftwareio/simple-qrcode": "^4.2",
-        "spatie/browsershot": "^3.61"
+        "spatie/browsershot": "^3.61",
+        "tymon/jwt-auth": "^1.0@dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

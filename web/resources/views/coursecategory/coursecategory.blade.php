@@ -2,55 +2,55 @@
 
 @section('content')
 <style type="text/css">
-    .dt-buttons.btn-group {
-        display: none !important;
-    }
+.dt-buttons.btn-group {
+    display: none !important;
+}
 
-    .mystyle {
-        border: 2px solid red;
-    }
+.mystyle {
+    border: 2px solid red;
+}
 
-    .custom-dropdown {
-        position: relative;
-        width: 100%;
-        cursor: pointer;
-        border-radius: 5px;
-    }
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
-    .custom-dropdown .selected {
-        padding: 5px 10px;
-    }
+.custom-dropdown .selected {
+    padding: 5px 10px;
+}
 
-    .custom-dropdown .dropdown-list {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        border: 1px solid #ccc;
-        background: #fff;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: none;
-        max-height: 200px;
-        overflow-y: auto;
-        border-radius: 5px;
-        z-index: 999;
-    }
+.custom-dropdown .dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid #ccc;
+    background: #fff;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 5px;
+    z-index: 999;
+}
 
-    .custom-dropdown .dropdown-list li {
-        display: flex;
-        justify-content: space-between;
-        /* text left, icon right */
-        align-items: center;
-        padding: 8px 12px;
-        cursor: pointer;
-        gap: 8px;
-    }
+.custom-dropdown .dropdown-list li {
+    display: flex;
+    justify-content: space-between;
+    /* text left, icon right */
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    gap: 8px;
+}
 
-    .custom-dropdown .dropdown-list li:hover {
-        background: #f0f0f0;
-    }
+.custom-dropdown .dropdown-list li:hover {
+    background: #f0f0f0;
+}
 </style>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
@@ -63,7 +63,8 @@
 
 
                     <div class="d-flex justify-content-start  ml-3 mb-3">
-                        <a href="{{ route('catagory_create') }}" class="btn btn-success " style="margin-right:100px">Create </a>
+                        <a href="{{ route('catagory_create') }}" class="btn btn-success "
+                            style="margin-right:100px">Create </a>
                     </div>
 
                     <div class="row">
@@ -156,29 +157,35 @@
 
             <div class="card-body">
                 <form method="POST" action="{{ url('/course/catagory_update') }}" id="catagory_Update">
-                    <button type="button" style="color:red;padding:20px" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <button type="button" style="color:red;padding:20px" class="close" data-dismiss="modal"
+                        aria-hidden="true">×</button>
                     @csrf
                     <input type="hidden" id="catagory_id" name="catagory_id">
-                    <h4 style="color:black;text-align:center;margin-bottom:20px" id="sub_title_name">Create Category</h4>
+                    <h4 style="color:black;text-align:center;margin-bottom:20px" id="sub_title_name">Create Category
+                    </h4>
 
 
                     <div class="row">
                         <div class="form-group col-6">
                             <label>Category<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control default" id="catagory_name" name="catagory_name" required>
+                            <input type="text" class="form-control default" id="catagory_name" name="catagory_name"
+                                required>
                         </div>
 
                         <div class="form-group col-6">
                             <label>Description<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control default" id="description" name="description" required>
+                            <input type="text" class="form-control default" id="description" name="description"
+                                required>
                         </div>
 
                         <div class="form-group col-4">
                             <label>Badge<span class="text-danger">*</span></label><br>
-                            <input type="radio" class="btn-check" name="badge" value="1" id="badge_yes" autocomplete="off" onclick="toggleBadgeFields()">
+                            <input type="radio" class="btn-check" name="badge" value="1" id="badge_yes"
+                                autocomplete="off" onclick="toggleBadgeFields()">
                             <label class="btn btn-outline-primary" for="badge_yes">Yes</label>
 
-                            <input type="radio" class="btn-check" name="badge" value="0" id="badge_no" autocomplete="off" onclick="toggleBadgeFields()">
+                            <input type="radio" class="btn-check" name="badge" value="0" id="badge_no"
+                                autocomplete="off" onclick="toggleBadgeFields()">
                             <label class="btn btn-outline-primary" for="badge_no">No</label>
                         </div>
 
@@ -220,10 +227,12 @@
                     <div class="form-group col-6">
 
                         <label>Streak Challenge<span class="text-danger">*</span></label><br>
-                        <input type="radio" class="btn-check" name="streak_challenge" value=1 id="streak_challenge_yes" autocomplete="off" onclick="toggleBadgeFields()">
+                        <input type="radio" class="btn-check" name="streak_challenge" value=1 id="streak_challenge_yes"
+                            autocomplete="off" onclick="toggleBadgeFields()">
                         <label class="btn btn-outline-primary" for="streak_challenge_yes">Yes</label>
 
-                        <input type="radio" class="btn-check" name="streak_challenge" value=0 id="streak_challenge_no" autocomplete="off" onclick="toggleBadgeFields()">
+                        <input type="radio" class="btn-check" name="streak_challenge" value=0 id="streak_challenge_no"
+                            autocomplete="off" onclick="toggleBadgeFields()">
                         <label class="btn btn-outline-primary" for="streak_challenge_no">No</label>
 
                     </div>
@@ -235,7 +244,8 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label>Number of Course to achieve this Streak<span class="text-danger">*</span></label>
-                            <input type="number" class="form-control" min="1" name="number_course_for_streak" id="streak_count">
+                            <input type="number" class="form-control" min="1" name="number_course_for_streak"
+                                id="streak_count">
                         </div>
                         <div class="form-group col-md-4">
                             <label>Bonus Points<span class="text-danger">*</span></label>
@@ -248,18 +258,23 @@
                             <div class="form-group d-flex align-items-center flex-wrap gap-10">
 
                                 <div>
-                                    <input type="radio" class="btn-check" name="complete_within_type" value="Day" id="achieve_day" autocomplete="off" onclick="toggleAchieveInput()">
-                                    <label class="btn btn-outline-primary" for="achieve_day" style="color:black">Day</label>
+                                    <input type="radio" class="btn-check" name="complete_within_type" value="Day"
+                                        id="achieve_day" autocomplete="off" onclick="toggleAchieveInput()">
+                                    <label class="btn btn-outline-primary" for="achieve_day"
+                                        style="color:black">Day</label>
                                 </div>
 
 
                                 <div>
-                                    <input type="radio" class="btn-check" name="complete_within_type" value="time" id="achieve_time" autocomplete="off" onclick="toggleAchieveInput()">
-                                    <label class="btn btn-outline-primary" for="achieve_time" style="color:black">Hours</label>
+                                    <input type="radio" class="btn-check" name="complete_within_type" value="time"
+                                        id="achieve_time" autocomplete="off" onclick="toggleAchieveInput()">
+                                    <label class="btn btn-outline-primary" for="achieve_time"
+                                        style="color:black">Hours</label>
                                 </div>
 
                                 <div style="flex-grow: 1; padding-left:30px; min-width: 150px;">
-                                    <input type="number" class="form-control" name="complete_within" min="1" id="achieve_value" placeholder="Enter Time or Day">
+                                    <input type="number" class="form-control" name="complete_within" min="1"
+                                        id="achieve_value" placeholder="Enter Time or Day">
                                 </div>
                             </div>
                         </div>
@@ -289,23 +304,27 @@
                     <div class="form-group col-12">
                         <label class="form-label">Course Locked <span class="text-danger">*</span></label><br>
 
-                        <input type="radio" class="btn-check" name="course_locked" value="1" id="course_locked_yes" autocomplete="off" onclick="toggleBadgeFields()">
+                        <input type="radio" class="btn-check" name="course_locked" value="1" id="course_locked_yes"
+                            autocomplete="off" onclick="toggleBadgeFields()">
                         <label class="btn btn-outline-primary" for="course_locked_yes" style="color:black">Yes</label>
 
-                        <input type="radio" class="btn-check" name="course_locked" value="0" id="course_locked_no" autocomplete="off" onclick="toggleBadgeFields()">
+                        <input type="radio" class="btn-check" name="course_locked" value="0" id="course_locked_no"
+                            autocomplete="off" onclick="toggleBadgeFields()">
                         <label class="btn btn-outline-primary" for="course_locked_no" style="color:black">No</label>
                     </div>
 
                     <div class="form-group  col-6" id="unlockPointsDiv" style="display: none;">
                         <label class="form-label">Points to Unlock<span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" name="points_to_unlock" min="1" placeholder="Enter points" id="points_to_unlock">
+                        <input type="number" class="form-control" name="points_to_unlock" min="1"
+                            placeholder="Enter points" id="points_to_unlock">
 
 
                     </div>
             </div>
             <div class="row mt-4">
                 <div class="col-12 mb-5 d-flex justify-content-center gap-2">
-                    <button style="margin-right:10px" class="btn btn-success" id="updateButton" onclick="gencre(event)">Update</button>
+                    <button style="margin-right:10px" class="btn btn-success" id="updateButton"
+                        onclick="gencre(event)">Update</button>
                     <a class="btn btn-danger" style="color:white;" href="{{ route('catagory_list') }}">Back</a>
                 </div>
             </div>
@@ -317,404 +336,408 @@
 
 
 <script>
-    function gencre(event) {
-        event.preventDefault();
+function gencre(event) {
+    event.preventDefault();
 
-        var category = $("#catagory_name").val().trim();
-        var description = $("#description").val().trim();
-        var badgeYes = $("#badge_yes").is(":checked");
-        var badgeNo = $("#badge_no").is(":checked");
-        var streakChallenge = $("#streak_challenge_yes").is(":checked");
-        var streakNo = $("#streak_challenge_no").is(":checked");
-        var day = $("#achieve_day").is(":checked");
-        var time = $("#achieve_time").is(":checked");
-        var courseLocked = $("#course_locked_yes").is(":checked") || $("#course_locked_no").is(":checked");
+    var category = $("#catagory_name").val().trim();
+    var description = $("#description").val().trim();
+    var badgeYes = $("#badge_yes").is(":checked");
+    var badgeNo = $("#badge_no").is(":checked");
+    var streakChallenge = $("#streak_challenge_yes").is(":checked");
+    var streakNo = $("#streak_challenge_no").is(":checked");
+    var day = $("#achieve_day").is(":checked");
+    var time = $("#achieve_time").is(":checked");
+    var courseLocked = $("#course_locked_yes").is(":checked") || $("#course_locked_no").is(":checked");
 
-        // Category name
-        if (category === '') {
-            Swal.fire("Please Enter the Category", "", "error");
-            return false;
-        }
-
-        // Description
-        if (description === '') {
-            Swal.fire("Please Enter the Category Description", "", "error");
-            return false;
-        }
-
-        // Badge radio check
-        if (!badgeYes && !badgeNo) {
-            Swal.fire("Please select 'Yes' or 'No' for Badge.", "", "error");
-            return false;
-        }
-
-        // Badge details if yes
-        if (badgeYes) {
-            if ($("#badge_name").val().trim() === '') {
-                Swal.fire("Please Enter the Badge Name", "", "error");
-                return false;
-            }
-            if ($("#badge_count").val().trim() === '') {
-                Swal.fire("Please Enter the Badge Count", "", "error");
-                return false;
-            }
-            if ($("#badge_icon").val().trim() === '') {
-                Swal.fire("Please Enter the Badge Icon", "", "error");
-                return false;
-            }
-        }
-
-        // Streak challenge radio check
-        if (!streakChallenge && !streakNo) {
-            Swal.fire("Please select 'Yes' or 'No' for Streak Challenge.", "", "error");
-            return false;
-        }
-
-        // Streak challenge details if yes
-        if (streakChallenge) {
-            if ($("#streak_name").val().trim() === '') {
-                Swal.fire("Please Enter the Streak Name", "", "error");
-                return false;
-            }
-            if ($("#streak_count").val().trim() === '') {
-                Swal.fire("Please Enter the Number of Courses for Streak", "", "error");
-                return false;
-            }
-            if ($("#streak_points").val().trim() === '') {
-                Swal.fire("Please Enter the Bonus Points", "", "error");
-                return false;
-            }
-            if (!day && !time) {
-                Swal.fire("Please select either 'Day' or 'Time' for Completion Type.", "", "error");
-                return false;
-            }
-            if ($("#achieve_value").val().trim() === '') {
-                let message = day ? "Please enter the Day" : time ? "Please enter the Time" : "Please enter the Time or Date";
-                Swal.fire(message, "", "error");
-                return false;
-            }
-            if ($("#achieve_icon").val().trim() === '') {
-                Swal.fire("Please Enter the Streak Icon", "", "error");
-                return false;
-            }
-        }
-
-
-        if (!courseLocked) {
-            Swal.fire("Please select 'Yes' or 'No' for Course Locked.", "", "error");
-            return false;
-        }
-        if ($("#points_to_unlock").val().trim() === '') {
-            Swal.fire("Please Enter the points to unlock", "error");
-            return false;
-        }
-
-        document.getElementById("catagory_Update").submit();
-
-        $(document).ready(function() {
-            toggleBadgeFields();
-            $('input[name="badge"]').change(toggleBadgeFields);
-
-        });
-
-
-
-    }
-</script>
-
-<style>
-    .btn-check:checked+.btn-outline-primary {
-        background-color: #1a73e8 !important;
-        color: black !important;
-    }
-</style>
-
-<script>
-    function fetch_show(catagory_id, type) {
-        $.ajax({
-            url: "{{ url('/course/catagory/fetch') }}",
-            type: 'GET',
-            data: {
-                'catagory_id': catagory_id,
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(data) {
-                console.log(data);
-
-                let row = data.rows[0];
-
-                $('#catagory_name').prop('disabled', false).val(row.catagory_name);
-                $('#sub_catagory').prop('disabled', false).val(row.sub_catagory);
-                $('#description').prop('disabled', false).val(row.description);
-                $('#badge_name').prop('disabled', false).val(row.badge_name);
-                $('#badge_count').prop('disabled', false).val(row.badge_count);
-                $('#badge_icon').prop('disabled', false).val(row.badge_icon);
-                $('#streak_name').prop('disabled', false).val(row.streak_name);
-                $('#streak_count').prop('disabled', false).val(row.number_course_for_streak);
-                $('#streak_points').prop('disabled', false).val(row.bonus_point);
-                $('#achieve_value').prop('disabled', false).val(row.complete_within);
-                $('#achieve_icon').prop('disabled', false).val(row.streak_icon);
-                $('#points_to_unlock').prop('disabled', false).val(row.points_to_unlock);
-                $('#catagory_id').val(catagory_id);
-
-                // Set badge radio buttons
-                if (row.badge === 1) {
-                    $('#badge_yes').prop('checked', true);
-                    $('#label_badge_yes').addClass('active');
-                    $('#label_badge_no').removeClass('active');
-                } else if (row.badge === 0) {
-                    $('#badge_no').prop('checked', true);
-                    $('#label_badge_no').addClass('active');
-                    $('#label_badge_yes').removeClass('active');
-                }
-                if (row.streak_challenge === 1) {
-                    $('#streak_challenge_yes').prop('checked', true);
-                } else {
-                    $('#streak_challenge_no').prop('checked', true);
-                }
-
-                if (row.course_locked === 1) {
-                    $('#course_locked_yes').prop('checked', true);
-                } else {
-                    $('#course_locked_no').prop('checked', true);
-                }
-
-                if (row.complete_within_type === "time") {
-                    $('#achieve_time').prop('checked', true);;
-                } else if (row.complete_within_type === "Day" || row.complete_within_type === "day") {
-                    $('#achieve_day').prop('checked', true);
-                }
-                // STREAK ICON
-                $('.streak-dropdown .selected i').remove();
-                $('.badge-dropdown .selected i').remove();
-                // BADGE ICON
-                $('#badge_icon').val(row.badge_icon);
-
-                if (row.badge_icon) {
-
-                    let badgeItem = $('.badge-dropdown .dropdown-list li[data-value="' + row.badge_icon + '"]');
-
-                    if (badgeItem.length) {
-
-                        let iconName = badgeItem.find('span').text();
-                        let iconHtml = badgeItem.find('i')[0].outerHTML;
-
-                        $('.badge-dropdown .selected').html(
-                            '<span>' + iconName + '</span><span>▼</span>'
-                        );
-
-                        $('.badge-dropdown .selected').prepend(iconHtml);
-                    }
-                }
-
-
-                // STREAK ICON
-                $('#achieve_icon').val(row.streak_icon);
-
-                if (row.streak_icon) {
-
-                    let streakItem = $('.streak-dropdown .dropdown-list li[data-value="' + row.streak_icon + '"]');
-
-                    if (streakItem.length) {
-
-                        let iconName = streakItem.find('span').text();
-                        let iconHtml = streakItem.find('i')[0].outerHTML;
-
-                        $('.streak-dropdown .selected').html(
-                            '<span>' + iconName + '</span><span>▼</span>'
-                        );
-
-                        $('.streak-dropdown .selected').prepend(iconHtml);
-                    }
-                }
-
-
-
-                toggleBadgeFields();
-
-                if (type === "show") {
-                    $('#catagory_name, #sub_catagory, #description, #badge_yes, #badge_no, #badge_name, #badge_count, #badge_icon,#streak_challenge_yes,#streak_challenge_no, #streak_name,#streak_count,#streak_points,#achieve_day,#achieve_time,#achieve_value,#achieve_icon,#course_locked_yes,#course_locked_no,#points_to_unlock').prop('disabled', true);
-                     $('.custom-dropdown').css({
-                        'pointer-events': 'none',
-                        'background-color': '#e9ecef'
-                    });
-
-                    $('#updateButton').hide();
-                    $('#sub_title_name').html("Category");
-                    $('#title_name').html("Category");
-                } else {
-                    $('#catagory_name, #sub_catagory, #description, #badge_yes, #badge_no, #badge_name, #badge_count, #badge_icon,#streak_challenge_yes,#streak_challenge_no, #streak_name,#streak_count,#streak_points,#achieve_day,#achieve_time,#achieve_value,#achieve_icon,#course_locked_yes,#course_locked_no,#points_to_unlock').prop('disabled', false);
-                    $('#updateButton').show();
-                    $('#sub_title_name').html("Edit Category");
-                    $('#title_name').html("Edit Category");
-                }
-            }
-        });
+    // Category name
+    if (category === '') {
+        Swal.fire("Please Enter the Category", "", "error");
+        return false;
     }
 
-    function toggleBadgeFields() {
-
-        if ($('#badge_yes').is(':checked')) {
-            $('#badge_name, #badge_count, #badge_icon').closest('.form-group').show();
-        } else {
-            $('#badge_name, #badge_count, #badge_icon').closest('.form-group').hide();
-        }
-        if ($('#streak_challenge_yes').is(':checked')) {
-            $('#streak_name, #streak_count, #streak_points,#achieve_value,#achieve_icon').closest('.form-group').show();
-        } else {
-            $('#streak_name, #streak_count, #streak_points,#achieve_value,#achieve_icon').closest('.form-group').hide();
-        }
-
-
-
+    // Description
+    if (description === '') {
+        Swal.fire("Please Enter the Category Description", "", "error");
+        return false;
     }
+
+    // Badge radio check
+    if (!badgeYes && !badgeNo) {
+        Swal.fire("Please select 'Yes' or 'No' for Badge.", "", "error");
+        return false;
+    }
+
+    // Badge details if yes
+    if (badgeYes) {
+        if ($("#badge_name").val().trim() === '') {
+            Swal.fire("Please Enter the Badge Name", "", "error");
+            return false;
+        }
+        if ($("#badge_count").val().trim() === '') {
+            Swal.fire("Please Enter the Badge Count", "", "error");
+            return false;
+        }
+        if ($("#badge_icon").val().trim() === '') {
+            Swal.fire("Please Enter the Badge Icon", "", "error");
+            return false;
+        }
+    }
+
+    // Streak challenge radio check
+    if (!streakChallenge && !streakNo) {
+        Swal.fire("Please select 'Yes' or 'No' for Streak Challenge.", "", "error");
+        return false;
+    }
+
+    // Streak challenge details if yes
+    if (streakChallenge) {
+        if ($("#streak_name").val().trim() === '') {
+            Swal.fire("Please Enter the Streak Name", "", "error");
+            return false;
+        }
+        if ($("#streak_count").val().trim() === '') {
+            Swal.fire("Please Enter the Number of Courses for Streak", "", "error");
+            return false;
+        }
+        if ($("#streak_points").val().trim() === '') {
+            Swal.fire("Please Enter the Bonus Points", "", "error");
+            return false;
+        }
+        if (!day && !time) {
+            Swal.fire("Please select either 'Day' or 'Time' for Completion Type.", "", "error");
+            return false;
+        }
+        if ($("#achieve_value").val().trim() === '') {
+            let message = day ? "Please enter the Day" : time ? "Please enter the Time" :
+                "Please enter the Time or Date";
+            Swal.fire(message, "", "error");
+            return false;
+        }
+        if ($("#achieve_icon").val().trim() === '') {
+            Swal.fire("Please Enter the Streak Icon", "", "error");
+            return false;
+        }
+    }
+
+
+    if (!courseLocked) {
+        Swal.fire("Please select 'Yes' or 'No' for Course Locked.", "", "error");
+        return false;
+    }
+    if ($("#points_to_unlock").val().trim() === '' && $("#course_locked_yes").is(":checked")) {
+        Swal.fire("Please Enter the points to unlock", "error");
+        return false;
+    }
+
+    document.getElementById("catagory_Update").submit();
 
     $(document).ready(function() {
         toggleBadgeFields();
+        $('input[name="badge"]').change(toggleBadgeFields);
+
     });
-</script>
-<script>
-    function toggleAchieveInput() {
-        const isDay = document.getElementById("achieve_day").checked;
-        const isTime = document.getElementById("achieve_time").checked;
-        const achieveInput = document.getElementById("achieve_value");
 
-        if (isDay) {
 
-            achieveInput.value = "";
-            achieveInput.placeholder = "Please enter days";
-        } else if (isTime) {
-            achieveInput.value = "";
-            achieveInput.placeholder = "Please enter the time";
-        }
-    }
+
+}
 </script>
 
+<style>
+.btn-check:checked+.btn-outline-primary {
+    background-color: #1a73e8 !important;
+    color: black !important;
+}
+</style>
 
 <script>
-    function fetch_update_edit(catagory_id, type) {
-        $.ajax({
-            url: "{{ url('/course/catagory/fetch') }}",
-            type: 'GET',
-            data: {
-                catagory_id: catagory_id,
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(data) {
-                $('#catagory_name').val(data.rows[0]['catagory_name']);
-                $('#sub_catagory').val(data.rows[0]['sub_catagory']);
-                $('#description').val(data.rows[0]['description']);
-                $('#catagory_id').val(data.rows[0]['catagory_id']);
+function fetch_show(catagory_id, type) {
+    $.ajax({
+        url: "{{ url('/course/catagory/fetch') }}",
+        type: 'GET',
+        data: {
+            'catagory_id': catagory_id,
+            _token: '{{ csrf_token() }}'
+        },
+        success: function(data) {
+            console.log(data);
 
-                c
-                $('#catagory_name, #sub_catagory, #description').prop('disabled', false);
-                $('#updateButton').show();
+            let row = data.rows[0];
 
-                $('#addModal4').modal('show');
+            $('#catagory_name').prop('disabled', false).val(row.catagory_name);
+            $('#sub_catagory').prop('disabled', false).val(row.sub_catagory);
+            $('#description').prop('disabled', false).val(row.description);
+            $('#badge_name').prop('disabled', false).val(row.badge_name);
+            $('#badge_count').prop('disabled', false).val(row.badge_count);
+            $('#badge_icon').prop('disabled', false).val(row.badge_icon);
+            $('#streak_name').prop('disabled', false).val(row.streak_name);
+            $('#streak_count').prop('disabled', false).val(row.number_course_for_streak);
+            $('#streak_points').prop('disabled', false).val(row.bonus_point);
+            $('#achieve_value').prop('disabled', false).val(row.complete_within);
+            $('#achieve_icon').prop('disabled', false).val(row.streak_icon);
+            $('#points_to_unlock').prop('disabled', false).val(row.points_to_unlock);
+            $('#catagory_id').val(catagory_id);
+
+            // Set badge radio buttons
+            if (row.badge === 1) {
+                $('#badge_yes').prop('checked', true);
+                $('#label_badge_yes').addClass('active');
+                $('#label_badge_no').removeClass('active');
+            } else if (row.badge === 0) {
+                $('#badge_no').prop('checked', true);
+                $('#label_badge_no').addClass('active');
+                $('#label_badge_yes').removeClass('active');
             }
-        });
-        document.getElementById("catagory_Update").submit();
+            if (row.streak_challenge === 1) {
+                $('#streak_challenge_yes').prop('checked', true);
+            } else {
+                $('#streak_challenge_no').prop('checked', true);
+            }
+
+            if (row.course_locked === 1) {
+                $('#course_locked_yes').prop('checked', true);
+            } else {
+                $('#course_locked_no').prop('checked', true);
+            }
+
+            if (row.complete_within_type === "time") {
+                $('#achieve_time').prop('checked', true);;
+            } else if (row.complete_within_type === "Day" || row.complete_within_type === "day") {
+                $('#achieve_day').prop('checked', true);
+            }
+            // STREAK ICON
+            $('.streak-dropdown .selected i').remove();
+            $('.badge-dropdown .selected i').remove();
+            // BADGE ICON
+            $('#badge_icon').val(row.badge_icon);
+
+            if (row.badge_icon) {
+
+                let badgeItem = $('.badge-dropdown .dropdown-list li[data-value="' + row.badge_icon + '"]');
+
+                if (badgeItem.length) {
+
+                    let iconName = badgeItem.find('span').text();
+                    let iconHtml = badgeItem.find('i')[0].outerHTML;
+
+                    $('.badge-dropdown .selected').html(
+                        '<span>' + iconName + '</span><span>▼</span>'
+                    );
+
+                    $('.badge-dropdown .selected').prepend(iconHtml);
+                }
+            }
+
+
+            // STREAK ICON
+            $('#achieve_icon').val(row.streak_icon);
+
+            if (row.streak_icon) {
+
+                let streakItem = $('.streak-dropdown .dropdown-list li[data-value="' + row.streak_icon +
+                    '"]');
+
+                if (streakItem.length) {
+
+                    let iconName = streakItem.find('span').text();
+                    let iconHtml = streakItem.find('i')[0].outerHTML;
+
+                    $('.streak-dropdown .selected').html(
+                        '<span>' + iconName + '</span><span>▼</span>'
+                    );
+
+                    $('.streak-dropdown .selected').prepend(iconHtml);
+                }
+            }
+
+
+
+            toggleBadgeFields();
+
+            if (type === "show") {
+                $('#catagory_name, #sub_catagory, #description, #badge_yes, #badge_no, #badge_name, #badge_count, #badge_icon,#streak_challenge_yes,#streak_challenge_no, #streak_name,#streak_count,#streak_points,#achieve_day,#achieve_time,#achieve_value,#achieve_icon,#course_locked_yes,#course_locked_no,#points_to_unlock')
+                    .prop('disabled', true);
+                $('.custom-dropdown').css({
+                    'pointer-events': 'none',
+                    'background-color': '#e9ecef'
+                });
+
+                $('#updateButton').hide();
+                $('#sub_title_name').html("Category");
+                $('#title_name').html("Category");
+            } else {
+                $('#catagory_name, #sub_catagory, #description, #badge_yes, #badge_no, #badge_name, #badge_count, #badge_icon,#streak_challenge_yes,#streak_challenge_no, #streak_name,#streak_count,#streak_points,#achieve_day,#achieve_time,#achieve_value,#achieve_icon,#course_locked_yes,#course_locked_no,#points_to_unlock')
+                    .prop('disabled', false);
+                $('#updateButton').show();
+                $('#sub_title_name').html("Edit Category");
+                $('#title_name').html("Edit Category");
+            }
+        }
+    });
+}
+
+function toggleBadgeFields() {
+
+    if ($('#badge_yes').is(':checked')) {
+        $('#badge_name, #badge_count, #badge_icon').closest('.form-group').show();
+    } else {
+        $('#badge_name, #badge_count, #badge_icon').closest('.form-group').hide();
     }
+    if ($('#streak_challenge_yes').is(':checked')) {
+        $('#streak_name, #streak_count, #streak_points,#achieve_value,#achieve_icon').closest('.form-group').show();
+    } else {
+        $('#streak_name, #streak_count, #streak_points,#achieve_value,#achieve_icon').closest('.form-group').hide();
+    }
+
+
+
+}
+
+$(document).ready(function() {
+    toggleBadgeFields();
+});
 </script>
 <script>
-    function toggleBadgeFields() {
-        const isBadgeYes = document.getElementById("badge_yes").checked;
-        const badgeFields = document.getElementById("badgeFields");
-        const streakCheck = document.getElementById("streak_challenge_yes").checked;
-        const streakField = document.getElementById("StreakChallange");
-        const points = document.getElementById("course_locked_yes").checked;
-        const pointscheck = document.getElementById("unlockPointsDiv");
+function toggleAchieveInput() {
+    const isDay = document.getElementById("achieve_day").checked;
+    const isTime = document.getElementById("achieve_time").checked;
+    const achieveInput = document.getElementById("achieve_value");
 
+    if (isDay) {
 
-        if (isBadgeYes) {
-            badgeFields.style.display = "flex";
-        } else {
-            badgeFields.style.display = "none";
-        }
-        if (streakCheck) {
-            streakField.style.display = "flex";
-        } else {
-            streakField.style.display = "none";
-        }
-        if (points) {
-            pointscheck.style.display = "block";
-        } else {
-            pointscheck.style.display = "none";
-        }
+        achieveInput.value = "";
+        achieveInput.placeholder = "Please enter days";
+    } else if (isTime) {
+        achieveInput.value = "";
+        achieveInput.placeholder = "Please enter the time";
     }
+}
+</script>
+
+
+<script>
+function fetch_update_edit(catagory_id, type) {
+    $.ajax({
+        url: "{{ url('/course/catagory/fetch') }}",
+        type: 'GET',
+        data: {
+            catagory_id: catagory_id,
+            _token: '{{ csrf_token() }}'
+        },
+        success: function(data) {
+            $('#catagory_name').val(data.rows[0]['catagory_name']);
+            $('#sub_catagory').val(data.rows[0]['sub_catagory']);
+            $('#description').val(data.rows[0]['description']);
+            $('#catagory_id').val(data.rows[0]['catagory_id']);
+
+            c
+            $('#catagory_name, #sub_catagory, #description').prop('disabled', false);
+            $('#updateButton').show();
+
+            $('#addModal4').modal('show');
+        }
+    });
+    document.getElementById("catagory_Update").submit();
+}
+</script>
+<script>
+function toggleBadgeFields() {
+    const isBadgeYes = document.getElementById("badge_yes").checked;
+    const badgeFields = document.getElementById("badgeFields");
+    const streakCheck = document.getElementById("streak_challenge_yes").checked;
+    const streakField = document.getElementById("StreakChallange");
+    const points = document.getElementById("course_locked_yes").checked;
+    const pointscheck = document.getElementById("unlockPointsDiv");
+
+
+    if (isBadgeYes) {
+        badgeFields.style.display = "flex";
+    } else {
+        badgeFields.style.display = "none";
+    }
+    if (streakCheck) {
+        streakField.style.display = "flex";
+    } else {
+        streakField.style.display = "none";
+    }
+    if (points) {
+        pointscheck.style.display = "block";
+    } else {
+        pointscheck.style.display = "none";
+    }
+}
 </script>
 
 <!-- delete -->
 <script>
-    function fetch_delete(catagory_id, type) {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "{{ url('/course_catagory_delete') }}",
-                    type: 'POST',
-                    data: {
-                        catagory_id: catagory_id,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    error: function() {
-                        Swal.fire("Error!", "Something went wrong.", "error");
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "Course Category Deleted Successfully.",
-                            icon: "success"
-                        }).then(() => {
+function fetch_delete(catagory_id, type) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "{{ url('/course_catagory_delete') }}",
+                type: 'POST',
+                data: {
+                    catagory_id: catagory_id,
+                    _token: '{{ csrf_token() }}'
+                },
+                error: function() {
+                    Swal.fire("Error!", "Something went wrong.", "error");
+                },
+                success: function(data) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Course Category Deleted Successfully.",
+                        icon: "success"
+                    }).then(() => {
 
-                            window.location.href = "{{ route('catagory_list') }}";
-                        });
-                    }
-                });
-            }
-        });
+                        window.location.href = "{{ route('catagory_list') }}";
+                    });
+                }
+            });
+        }
+    });
 
-    }
+}
 </script>
 
 <!-- dropdown -->
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll(".custom-dropdown").forEach(function(dropdown) {
-            const selected = dropdown.querySelector(".selected");
-            const list = dropdown.querySelector(".dropdown-list");
-            const hiddenInput = dropdown.nextElementSibling; // hidden input right after dropdown
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".custom-dropdown").forEach(function(dropdown) {
+        const selected = dropdown.querySelector(".selected");
+        const list = dropdown.querySelector(".dropdown-list");
+        const hiddenInput = dropdown.nextElementSibling; // hidden input right after dropdown
 
-            // Toggle dropdown
-            selected.addEventListener("click", () => {
-                list.style.display = list.style.display === "block" ? "none" : "block";
-            });
+        // Toggle dropdown
+        selected.addEventListener("click", () => {
+            list.style.display = list.style.display === "block" ? "none" : "block";
+        });
 
-            // Handle option click
-            list.querySelectorAll("li").forEach(item => {
-                item.addEventListener("click", function() {
-                    selected.innerHTML = this.innerHTML; // Show icon + text
-                    hiddenInput.value = this.dataset.value; // Save icon class
-                    list.style.display = "none"; // Close dropdown
-                });
-            });
-
-            // Close if clicked outside
-            document.addEventListener("click", (e) => {
-                if (!dropdown.contains(e.target)) {
-                    list.style.display = "none";
-                }
+        // Handle option click
+        list.querySelectorAll("li").forEach(item => {
+            item.addEventListener("click", function() {
+                selected.innerHTML = this.innerHTML; // Show icon + text
+                hiddenInput.value = this.dataset.value; // Save icon class
+                list.style.display = "none"; // Close dropdown
             });
         });
+
+        // Close if clicked outside
+        document.addEventListener("click", (e) => {
+            if (!dropdown.contains(e.target)) {
+                list.style.display = "none";
+            }
+        });
     });
+});
 </script>
 
 @endsection

@@ -2259,8 +2259,8 @@ label:hover~input:checked~label
                 </div>
                 <div class="col-md-12 rating_comments" style="display: none !important;">
                     <div class="form-group">
-                        <label class="form-label">Comments</label>
-                        <textarea class="form-control" id="rating_comments" name="rating_comments"></textarea>
+                        <label class="form-label">Comments<span class="error-star" style="color:red;">*</span></label>
+                        <textarea class="form-control" id="rating_comments" name="rating_comments" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -2538,15 +2538,9 @@ function saveNotes(e) {
                 _token: '{{csrf_token()}}'
             },
             success: function(data) {
-                if (data == "Success") {
-                    document.querySelector('.addNoteCallerTip').style.display = "none";
-                    addNoteCaller.classList.add('success');
-                    notepadArea.value = "";
-                    notepadHolderWrapper.classList.remove('active');
-                    setTimeout(function() {
-                        document.querySelector('.addNoteCallerTip').style.display = "flex";
-                        addNoteCaller.classList.remove('success');
-                    }, 3000);
+                console.log(data.trim() == "Success");
+                if (data.trim() == "Success") {
+
                     // window.location.reload();
                     Swal.fire({
                         title: 'Success!',
@@ -3137,6 +3131,14 @@ function rating_store(e) {
     // handleRatingClick();
     var course_id = document.getElementById('course_id').value;
     var comments = document.getElementById('rating_comments').value;
+
+    if (comments == '') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Please enter comments'
+        });
+        return;
+    }
     var ratings = $('#ratings_point').val();
 
     if (e.target.id == "ratings") {

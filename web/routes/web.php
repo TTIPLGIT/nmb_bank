@@ -261,6 +261,8 @@ Route::resource('uam_roles', UamRolesController::class);
 
 Route::resource('user', UserController::class);
 
+Route::post('/user/bulk-store', [UserController::class, 'bulkStore'])->name('user.bulk.store');
+
 Route::get('list_index', [UamUserController::class, 'list_index'])->name('list_index');
 
 Route::post('/user/delete/{id}', [\App\Http\Controllers\UserController::class, 'delete'])->name('user.delete');
@@ -849,6 +851,7 @@ Route::post('ai_course_store', [App\Http\Controllers\AIController::class, 'ai_co
 Route::post('/verify-course-pin',[App\Http\Controllers\tryController::class,'verifyPin'])->name('verify.course.pin');
 Route::get('/meeting_list', [App\Http\Controllers\MeetingController::class, 'meeting_list'])->name('meeting_list');
 Route::get('/virtual_meeting', [App\Http\Controllers\MeetingController::class, 'virtual_meeting'])->name('virtual_meeting');
+Route::put('/meeting/update-status', [App\Http\Controllers\MeetingController::class, 'meeting_update_status'])->name('meeting_update_status');
 Route::post('/meeting_store',[App\Http\Controllers\MeetingController::class,'meeting_store'])->name('meeting_store');
 Route::get('lang/{lang}', [App\Http\Controllers\LanguageController::class, 'change'])->name('lang.change');
 Route::get('adaptive/learning/list', [App\Http\Controllers\AIController::class, 'adaptive_learning_list'])->name('adaptive_learning_list');
@@ -907,4 +910,5 @@ Route::post('/custom_filed_delete/{id}', [App\Http\Controllers\DesignationContro
 
     Route::get('/courses', [App\Http\Controllers\CourseController::class, 'index'])->name('admin.courses.index');
    Route::get('/admin/course/create', [App\Http\Controllers\tryController::class, 'course_create'])->name('admin.course.create');
+   Route::get('/my-meetings', [App\Http\Controllers\MeetingController::class, 'myMeetings'])->name('my.meetings');
     
