@@ -291,7 +291,7 @@
 }
 
 #dycalendar table tr td:first-child {
-    color: #FF8B4F;
+    color: #ffff;
 }
 
 .dycalendar-today-date,
@@ -979,7 +979,8 @@
                                 src="{{asset('asset/image/trophy.png')}}" alt="Credits Earned" width="40%">
                         </div>
                         <div class="justify-content-between align-items-center">
-                            <span class="overview_count">{{ $total_cpd_points['total_points'] ?? 0 }}</span><br>
+                            
+                            <span class="overview_count">{{ $total_cpd_points ?? 0 }}</span><br>
                             <span class="card-span">Credits Earned</span>
                         </div>
                     </div>
@@ -1177,7 +1178,7 @@
             <div class="modal-body" style="background: white; border-radius: 0 0 20px 20px; padding: 20px;"
                 id="fancyWrapper">
                 <div id="fancyControls" class="carousel slide">
-                    <button class="carousel-control-prev" type="button" data-bs-target="#fancyControls"
+                    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#fancyControls"
                         data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"
                             style="background-color: #680EDA; border-radius: 50%; padding: 20px;"></span>
@@ -1186,7 +1187,7 @@
                         data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"
                             style="background-color: #680EDA; border-radius: 50%; padding: 20px;"></span>
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </div>

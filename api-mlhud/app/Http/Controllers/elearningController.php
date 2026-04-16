@@ -129,19 +129,22 @@ class elearningController extends BaseController
                 $row2['level_icon'] = null;
             }
 
-            $total_cpd_points = DB::selectOne(
-                "
-    SELECT 
-        SUM(ec.course_cpt_points) AS total_points
-    FROM user_course_relation AS ucr
-    INNER JOIN elearning_courses AS ec
-        ON ec.course_id = ucr.course_id
-    WHERE ucr.user_id = ?
-      AND ucr.course_status = 'completed'
-      AND FIND_IN_SET(?, ec.user_ids)
-    ",
-                [$userID, $userID]
-            );
+    //         $total_cpd_points = DB::selectOne(
+    //             "
+    // SELECT 
+    //     SUM(ec.course_cpt_points) AS total_points
+    // FROM user_course_relation AS ucr
+    // left JOIN elearning_courses AS ec
+    //     ON ec.course_id = ucr.course_id
+    // WHERE ucr.user_id = ?
+    //   AND ucr.course_status = 'completed'
+    //   AND FIND_IN_SET(?, ec.user_ids)
+    // ",
+    //             [$userID, $userID]
+    //         );
+    $total_cpd_points = DB::table('users')
+    ->where('id', $userID)
+    ->value('total_cptpoints');
             $completed_courses = DB::select(
     "
     SELECT 

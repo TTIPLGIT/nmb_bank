@@ -2293,6 +2293,7 @@ class tryController extends BaseController
 
         $rows['users'] = DB::table('users')
             ->select('*')
+            ->where('active_flag', '0')
             ->orderBy('id', 'desc')
             ->get();
 

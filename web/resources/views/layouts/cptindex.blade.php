@@ -235,8 +235,9 @@
                                     </div>
                                     <div class="table-wrapper">
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="align1">
+                                            <table class="table table-bordered" id="align">
                                                 <thead>
+
                                                     <tr>
                                                         <th>S.No</th>
                                                         <th>Course Name</th>
@@ -258,6 +259,58 @@
                                                         </td>
                                                     </tr>
 
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </br></br>
+                    <div class="row">
+                        <div class="col-12">
+                            @php
+                            $totalBonusPoints = collect($rows['rows']['quiz_list'])->sum('cpt_points');
+                            @endphp
+                            <h6>Total Bonus CPD Points:{{$totalBonusPoints}}</h6>
+                            <div class="card mt-0">
+                                <div class="card-body">
+                                    <div class="col-lg-12 text-center">
+                                        <h4>Bonus CPD Points</h4>
+                                    </div>
+                                    <div class="table-wrapper">
+                                        <div class="table-responsive">
+
+
+                                            <table class="table table-bordered" id="align1">
+                                                <thead>
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Reward Name</th>
+                                                        <th>CPD Points</th>
+                                                        <th>Claimed at</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="background-color: #cfe0e8;">
+
+
+
+
+                                                    @foreach($rows['rows']['quiz_list'] as $id => $data)
+                                                    <tr>
+
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $data['reward_name'] }}</td>
+                                                        <td>{{ $data['cpt_points'] }}</td>
+                                                        <td>{{ date('d-m-Y', strtotime($data['created_at'])) }}
+                                                        </td>
+                                                    </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>

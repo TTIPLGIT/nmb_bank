@@ -80,11 +80,11 @@
 
 
 
-                                <div class="col-md-1" style="margin-top:2rem">
+                                <!-- <div class="col-md-1" style="margin-top:2rem">
                                     <label>&nbsp;</label>
                                     <button type="button" class="btn btn-danger btn-remove"
                                         style="{{ count($entries) > 1 ? '' : 'display:none' }}">X</button>
-                                </div>
+                                </div> -->
                             </div>
                             @endforeach
                             <div class="col-md-3">

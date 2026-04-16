@@ -265,13 +265,13 @@ foreach ($categories as $category) {
         }
         
         // Log for debugging
-        \Log::info('Category: ' . $category->catagory_name, [
-            'user_id' => $userId,
-            'total_completed' => $totalCompleted,
-            'completed_in_time' => $completedInTime,
-            'required_for_streak' => $category->number_course_for_streak,
-            'course_details' => $courseDetails
-        ]);
+        // \Log::info('Category: ' . $category->catagory_name, [
+        //     'user_id' => $userId,
+        //     'total_completed' => $totalCompleted,
+        //     'completed_in_time' => $completedInTime,
+        //     'required_for_streak' => $category->number_course_for_streak,
+        //     'course_details' => $courseDetails
+        // ]);
 
         // Badge logic
         if (
@@ -293,11 +293,11 @@ foreach ($categories as $category) {
                 'awarded_at' => now()
             ]);
             
-            \Log::info('Badge awarded', [
-                'user_id' => $userId,
-                'category' => $category->catagory_name,
-                'badge_name' => $category->badge_name
-            ]);
+            // \Log::info('Badge awarded', [
+            //     'user_id' => $userId,
+            //     'category' => $category->catagory_name,
+            //     'badge_name' => $category->badge_name
+            // ]);
         }
 
         // Streak logic - must complete required number of courses within allowed time
@@ -316,6 +316,8 @@ foreach ($categories as $category) {
                 'user_id' => $userId,
                 'course_id' => 0,
                 'cpt_points' => $category->bonus_point,
+                 'reward_type' => 'streak',
+                'reward_name' => $category->streak_name,
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
@@ -338,13 +340,13 @@ foreach ($categories as $category) {
                 'awarded_at' => now()
             ]);
             
-            \Log::info('Streak awarded', [
-                'user_id' => $userId,
-                'category' => $category->catagory_name,
-                'bonus_points' => $category->bonus_point,
-                'courses_completed' => $totalCompleted,
-                'completed_in_time' => $completedInTime
-            ]);
+            // \Log::info('Streak awarded', [
+            //     'user_id' => $userId,
+            //     'category' => $category->catagory_name,
+            //     'bonus_points' => $category->bonus_point,
+            //     'courses_completed' => $totalCompleted,
+            //     'completed_in_time' => $completedInTime
+            // ]);
         }
     }
 }foreach ($categories as $category) {
@@ -444,7 +446,9 @@ foreach ($categories as $category) {
              DB::table('user_cpt_points')->insert([
                 'user_id' => $userId,
                 'course_id' => 0,
-                'cpt_points' => $category->bonus_point
+                'cpt_points' => $category->bonus_point,
+                'reward_type' => 'streak',
+                'reward_name' => $category->streak_name,
             ]);
            DB::table('users')
             ->where('id', $userId)
@@ -495,7 +499,7 @@ foreach ($categories as $category) {
     }
 }
 
-\Log::info('✅ Badge & Streak logic executed based on actual time units without conversion.');
+// \Log::info('✅ Badge & Streak logic executed based on actual time units without conversion.');
 
 
 }

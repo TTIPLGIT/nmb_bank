@@ -620,9 +620,14 @@ Breadcrumbs::for('catagory_create', function (BreadcrumbTrail $trail) {
     $trail->push('Category Create', route('catagory_create'));
 });
 
-Breadcrumbs::for('custom_field.index', function ($trail) {
+Breadcrumbs::for('custom_filed', function ($trail) {
     $trail->parent('home');
     $trail->push('Custom Field List', route('custom_filed'));
+});
+
+Breadcrumbs::for('custom_filed_create', function ($trail) {
+    $trail->parent('custom_filed');
+    $trail->push('Create', route('custom_filed_create'));
 });
 
 Breadcrumbs::for('ai_course_list', function ($trail) {

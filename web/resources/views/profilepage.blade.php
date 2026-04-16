@@ -159,8 +159,12 @@
                                                 Update </button>&nbsp;
                                             <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo
                                             </button>&nbsp;
+                                            @php
+$layout = ($user_id == 126) ? 'admindashboard' : 'elearningDashboard';
+@endphp
+<input type="hidden" value= {{$user_id}} id="user_id">
                                             <a class="btn btn-danger footer_btn_cancel footer_btn_top"
-                                                href="{{ route('elearningDashboard') }}"><i class="fa fa-times"
+                                                href="{{ route($layout) }}"><i class="fa fa-times"
                                                     aria-hidden="true"></i> Cancel
                                             </a>&nbsp;
                                         </div>
@@ -310,9 +314,10 @@ $('#upload-image-form').submit(function(e) {
                     showLoaderOnConfirm: true,
                     width: '850px'
                 }).then((result) => {
-
+                   
                     if (result.isConfirmed) {
-                        if (response.user_id == 126) {
+                        var user_id = document.getElementById('user_id').value;
+                        if (user_id == 126) {
                             window.location.href = '/admindashboard';
                         } else {
                             window.location.href = '/elearningDashboard';
