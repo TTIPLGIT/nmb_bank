@@ -496,8 +496,8 @@ class LoginController extends BaseController
                 'user_id' => $user_id
             ];
 
-            $recommendations = 'http://20.164.0.23:3300/ai/recommendations/run';
-            $predictive_analysis = 'http://20.164.0.23:3300/ai/predictive-analysis/run';
+            $recommendations = 'http://104.43.254.72:3300/ai/recommendations/run';
+            $predictive_analysis = 'http://104.43.254.72:3300/ai/predictive-analysis/run';
             
               $response2 = $this->AIserviceRequest($recommendations, 'POST', ['user_id' => $user_id], $method);
               $recommendation = json_decode($response2, true);
@@ -582,14 +582,15 @@ class LoginController extends BaseController
     return view('faq', compact('modules', 'screens'));
   }
 
-  public function profilepage()
+  public function profilepage(Request $request)
   {
     try {
       $method = 'Method => LoginController => profilepage';
 
       $userRow = array();
       $userRow['email'] = "sdsfs";
-
+      $user_id = $request->session()->get("userID");
+     
       $gatewayURL = config('setting.api_gateway_url') . '/user/profilepage';
       $encryptArray = $this->encryptData($userRow);
       $request = array();
@@ -608,7 +609,7 @@ class LoginController extends BaseController
           $menus = $this->FillMenu();
           $screens = $menus['screens'];
           $modules = $menus['modules'];
-          return view('profilepage', compact('one_row', 'modules', 'screens','menus'));
+          return view('profilepage', compact('one_row', 'modules', 'screens','menus','user_id'));
         }
       } else {
         $objData = json_decode($this->decryptData($response->Data));

@@ -204,7 +204,7 @@
 
                                                     <!-- Audio Player -->
                                                     <audio controls style="width: 250px;">
-                                                        <source src="http://20.164.0.23:3300{{ $audio->audio_url }}"
+                                                        <source src="http://104.43.254.72:3300{{ $audio->audio_url }}"
                                                             type="audio/mpeg">
                                                         Your browser does not support the audio element.
                                                     </audio>

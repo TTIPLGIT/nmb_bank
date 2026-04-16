@@ -87,6 +87,7 @@ class MeetingController extends BaseController
         $ZOOM_CLIENT_ID = config('setting.zoom.client_id');
         $ZOOM_CLIENT_SECRET = config('setting.zoom.client_secret');
         $ZOOM_ACCOUNT_ID = config('setting.zoom.account_id');
+        
         $response = Http::withBasicAuth(
             $ZOOM_CLIENT_ID,
             $ZOOM_CLIENT_SECRET

@@ -1800,11 +1800,11 @@ class tryController extends BaseController
                     'updated_at' => NOW()
                 ]);
             }
-         $this->WriteFileLog($inputArray);
+        //  $this->WriteFileLog($inputArray);
             // Prepare update data
             $updateData = [
                 'class_name' => $inputArray['class_name'],
-                'class_format' => $inputArray['class_format'],
+                // 'class_format' => $inputArray['class_format'],
                 'class_description' => $inputArray['class_description'],
                 'class_duration' => $inputArray['class_duration'],
                 'class_quiz' => $inputArray['class_quiz'],

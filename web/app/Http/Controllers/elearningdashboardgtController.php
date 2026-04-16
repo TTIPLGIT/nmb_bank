@@ -31,7 +31,7 @@ class elearningdashboardgtController extends BaseController
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
 
-            $recommendations_data = 'http://20.164.0.23:3300/ai/recommendations/run';
+            $recommendations_data = 'http://104.43.254.72:3300/ai/recommendations/run';
             $response2 = $this->AIserviceRequest($recommendations_data, 'POST', ['user_id' => $request['mlhud_id']], $method);
               $recommendations = json_decode($response2, true);
            

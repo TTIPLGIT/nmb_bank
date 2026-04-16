@@ -1132,7 +1132,7 @@
 
                                 <img class="img-fluid" alt="Event Image" title="">
                             </div>
-                            <span style="color:red !important"><strong>Following files could be uploaded such as jpeg,png,jpg,gif</strong></span>
+                            <!-- <span style="color:red !important"><strong>Following files could be uploaded such as jpeg,png,jpg,gif</strong></span> -->
 
                         </div>
 

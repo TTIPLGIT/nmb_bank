@@ -1279,17 +1279,28 @@ class elearningEthnicTestController extends BaseController
             $rows['quiz_list'] = DB::select("SELECT uc.*,c.course_name from user_cpt_points as uc inner join elearning_courses as c on c.course_id=uc.course_id where c.drop_course=0 and uc.status=0 and uc.user_id=$user_id");
             $rows['points'] = DB::select("SELECT ucr.*, ec.course_name, ec.course_cpt_points FROM user_course_relation AS ucr INNER JOIN elearning_courses AS ec ON ec.course_id = ucr.course_id WHERE ucr.user_id = ?
                AND ucr.course_status = 'completed' AND FIND_IN_SET(?, ec.user_ids) ORDER BY ucr.course_id DESC", [$user_id, $user_id]);
-            $rows['total_cpd_points'] = DB::selectOne(
+           $rows['total_cpd_points'] = DB::selectOne(
                 "SELECT 
                         SUM(ec.course_cpt_points) AS total_points
                     FROM user_course_relation AS ucr
-                    INNER JOIN elearning_courses AS ec
+                    left JOIN elearning_courses AS ec
                         ON ec.course_id = ucr.course_id
                     WHERE ucr.user_id = ?
                     AND ucr.course_status = 'completed'
                     AND FIND_IN_SET(?, ec.user_ids)",
                 [$user_id, $user_id]
             );
+
+            $rows['quiz_list'] = DB::select(
+    "SELECT uc.*, c.course_name 
+     FROM user_cpt_points as uc 
+     LEFT JOIN elearning_courses as c 
+        ON c.course_id = uc.course_id
+     WHERE (uc.course_id = 0)
+     AND uc.status = 0 
+     AND uc.user_id = ?",
+    [$user_id]
+);
 
             $response = [
                 'rows' => $rows

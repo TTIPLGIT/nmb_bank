@@ -487,14 +487,17 @@ i#font-color {
 
 
 
-                    @php
-                    function getProfileImage($user) {
-                    return !empty($user['profile_image'])
-                    ? config('setting.profile_url') . $user['profile_image']
-                    : asset('images/empty.jpg');
-                    }
+                  @php
+$profile_image = DB::table('users')
+    ->where('id', $rows['user_id'])
+    ->value('profile_image');
 
-                    @endphp
+$profile_image_url = !empty($profile_image)
+    ? config('setting.profile_url') . $profile_image
+    : asset('images/empty.jpg');
+@endphp
+
+
 
 
                     <div class="podium d-flex justify-content-center">
@@ -508,10 +511,10 @@ i#font-color {
                             data-id="{{ $user['id'] ?? 'N/A' }}" data-name="{{ $user['name'] ?? 'N/A' }}"
                             data-points="{{ $user['total_points'] ?? 0 }}" data-hours="{{ $user['total_hours'] ?? 0 }}"
                             data-userid="{{ $user['id'] ?? '' }}" data-level_name="{{ $user['level_name'] ?? 'N/A' }}"
-                            data-level_icon="{{ $user['level_icon'] ?? '' }}" data-img="{{ $user['profile_image']}}"
+                            data-level_icon="{{ $user['level_icon'] ?? '' }}" data-img="{{ $profile_image_url}}"
                             data-streak='@json($user["streaks"] ?? [])' data-badge='@json($user["badges"] ?? [])'>
 
-                            <img id="second-img" src="{{ getProfileImage($user) }}" class="profile-img" />
+                            <img id="second-img" src="{{ $profile_image_url }}" class="profile-img" />
                             <h6 id="second-name">{{ $user['name'] }}</h6>
                             <span class="score" id="second-points">{{ $user['total_points'] ?? 0 }}</span> Points<br>
 
@@ -546,11 +549,11 @@ i#font-color {
                             data-points="{{ $user['total_points'] ?? 0 }}" data-hours="{{ $user['total_hours'] ?? 0 }}"
                             data-userid="{{ $user['id'] ?? '' }}" data-level_name="{{ $user['level_name'] ?? 'N/A' }}"
                             data-level_icon="{{ $user['level_icon'] ?? '' }}"
-                            data-profile_image="{{ getProfileImage($user) }}"
+                            data-profile_image="{{ $profile_image_url }}"
                             data-streak='@json($user["streaks"] ?? [])' data-badge='@json($user["badges"] ?? [])'>
 
                             <img src="/images/leaderboard/crown.png" class="crown" />
-                            <img id="first-img" src="{{ getProfileImage($user) }}" class="profile-img" />
+                            <img id="first-img" src="{{ $profile_image_url }}" class="profile-img" />
                             <h6 id="first-name">{{ $user['name'] }}</h6>
                             <span class="score" id="first-points">{{ $user['total_points'] ?? 0 }}</span> Points<br>
 
@@ -583,10 +586,10 @@ i#font-color {
                             data-points="{{ $user['total_points'] ?? 0 }}" data-hours="{{ $user['total_hours'] ?? 0 }}"
                             data-userid="{{ $user['id'] ?? '' }}" data-level_name="{{ $user['level_name'] ?? 'N/A' }}"
                             data-level_icon="{{ $user['level_icon'] ?? '' }}"
-                            data-profile_image="{{ getProfileImage($user) }}"
+                            data-profile_image="{{ $profile_image_url }}"
                             data-streak='@json($user["streaks"] ?? [])' data-badge='@json($user["badges"] ?? [])'>
 
-                            <img id="third-img" src="{{ getProfileImage($user) }}" class="profile-img" />
+                            <img id="third-img" src="{{ $profile_image_url }}" class="profile-img" />
                             <h6 id="third-name">{{ $user['name'] }}</h6>
                             <span class="score" id="third-points">{{ $user['total_points'] ?? 0 }}</span> Points<br>
 
@@ -646,10 +649,10 @@ i#font-color {
                                 data-name="{{ $value['name'] ?? 'N/A' }}"
                                 data-points="{{ $value['total_points'] ?? 0 }}"
                                 data-hours="{{ $value['total_hours'] ?? 0 }}"
-                                data-img="{{ $value['profile_image'] ? config('setting.profile_url') . $value['profile_image'] : config('setting.profile_url') . 'images/empty.jpg' }}"
+                                data-img="{{ $profile_image_url}}"
                                 data-level_name="{{ $value['level_name'] ?? 'N/A' }}"
                                 data-level_icon="{{ $value['level_icon'] ?? '' }}"
-                                data-profile_image="{{ getProfileImage($user) }}"
+                                data-profile_image="{{ $profile_image_url }}"
                                 data-streak='@json($value["streaks"] ?? [])' data-badge='@json($value["badges"] ?? [])'>
 
                                 <th style="padding-left: 20px; width: 70px;">{{ $key + 4 }}</th>
@@ -701,7 +704,7 @@ i#font-color {
                 <!-- User Profile Content -->
 
                 <div class="text-center" style="margin-top:-50px;border-radius:10px; background-color: #f2f2f2;">
-                    <img id="modal-profile-img" src="config('setting.profile_url')images/empty.jpg" class=""
+                    <img id="modal-profile-img" src="{{$profile_image_url}}" class=""
                         style="width: 100px; height: 100px;margin-top:-50px; object-fit: cover; border: 4px solid #fff;;border-radius:20px" />
                     <h1 class="mt-3 fw-semibold" id="modal-name"></h1>
 
