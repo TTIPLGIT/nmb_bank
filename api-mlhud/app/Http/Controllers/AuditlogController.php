@@ -67,7 +67,7 @@ class AuditLogController extends BaseController
       // ->get();
       $rows1 = DB::table('users as a')
         ->select('a.*',)
-
+        ->where('a.active_flag',0)
         ->get();
       $rows = [];
       $response = [
@@ -105,7 +105,7 @@ class AuditLogController extends BaseController
       // ->get();
       $rows1 = DB::table('users as a')
         ->select('a.*',)
-
+        ->where('a.active_flag',0)
         ->get();
       $rows = [];
       $response = [
@@ -271,7 +271,7 @@ class AuditLogController extends BaseController
 
       $rows1 = DB::table('users as a')
         ->select('a.*',)
-
+        ->where('a.active_flag',0)
         ->get();
 
       $response = [
@@ -351,6 +351,7 @@ class AuditLogController extends BaseController
       }
       $rows1 = DB::table('users as a')
         ->select('a.*',)
+        ->where('a.active_flag',0)
         ->get();
 
       $response = [
@@ -443,7 +444,7 @@ class AuditLogController extends BaseController
       // ->get();
       $rows1 = DB::table('users as a')
         ->select('a.*',)
-
+        ->where('a.active_flag',0)
         ->get();
       $rows = [];
       $response = [
@@ -522,6 +523,7 @@ class AuditLogController extends BaseController
 
       $rows1 = DB::table('users as a')
         ->select('a.*',)
+        ->where('a.active_flag',0)
         ->get();
       $response = [
         'rows' => $rows,
