@@ -372,7 +372,7 @@ class AuthController extends BaseController
 
 
 
-				$email_check = DB::select("select * from users where email = '$email' and active_flag='0'");
+				$email_check = DB::select("select * from users where email = '$email' and delete_status='0'");
 
 				if (json_encode($email_check) == '[]') {
 
