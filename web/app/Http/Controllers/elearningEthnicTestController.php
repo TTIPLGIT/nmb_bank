@@ -2776,11 +2776,11 @@ $scormCourses = DB::table('scorm_courses as sc')
 
 
                 if ($objData->Code == 200) {
-                    return redirect(route('ethictest.index'))->with('success', 'Ethic Test Created Successfully');
+                    return redirect()->back()->with('success', 'Ethic Test Created Successfully');
                 }
 
                 if ($objData->Code == 400) {
-                    return redirect(route('ethictest.index'))->with('fail', 'Ethic Test Failed');
+                    return redirect()->back()->with('fail', 'Ethic Test Failed');
                 }
             }
         } catch (\Exception $exc) {

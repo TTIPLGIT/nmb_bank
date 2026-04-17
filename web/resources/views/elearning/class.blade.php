@@ -2260,7 +2260,7 @@ label:hover~input:checked~label
                 <div class="col-md-12 rating_comments" style="display: none !important;">
                     <div class="form-group">
                         <label class="form-label">Comments<span class="error-star" style="color:red;">*</span></label>
-                        <textarea class="form-control" id="rating_comments" name="rating_comments" required></textarea>
+                        <textarea class="form-control" id="rating_comments" name="rating_comments"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -3161,14 +3161,14 @@ function rating_store(e) {
                         _token: '{{csrf_token()}}'
                     },
                     success: function(data) {
-                        // alert('feef');
+                        alert('feef');
                         if (result.value) {
                             Swal.fire({
                                 title: 'Success!',
                                 text: 'Ratings Added Successfully!',
                                 icon: 'success'
                             }).then((result) => {
-                                localStorage.setItem('activeTabKey', 'rating');
+
                                 location.reload(); // Handle the success action
                                 // This code will execute when the user clicks the "OK" button in the Swal modal
                                 // You can put your success-related code here

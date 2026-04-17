@@ -487,15 +487,15 @@ i#font-color {
 
 
 
-                  @php
-$profile_image = DB::table('users')
-    ->where('id', $rows['user_id'])
-    ->value('profile_image');
+                    @php
+                    $profile_image = DB::table('users')
+                    ->where('id', $rows['user_id'])
+                    ->value('profile_image');
 
-$profile_image_url = !empty($profile_image)
-    ? config('setting.profile_url') . $profile_image
-    : asset('images/empty.jpg');
-@endphp
+                    $profile_image_url = !empty($profile_image)
+                    ? config('setting.profile_url') . $profile_image
+                    : asset('images/empty.jpg');
+                    @endphp
 
 
 
@@ -548,9 +548,9 @@ $profile_image_url = !empty($profile_image)
                             data-id="{{ $user['id'] ?? 'N/A' }}" data-name="{{ $user['name'] ?? 'N/A' }}"
                             data-points="{{ $user['total_points'] ?? 0 }}" data-hours="{{ $user['total_hours'] ?? 0 }}"
                             data-userid="{{ $user['id'] ?? '' }}" data-level_name="{{ $user['level_name'] ?? 'N/A' }}"
-                            data-level_icon="{{ $user['level_icon'] ?? '' }}"
-                            data-profile_image="{{ $profile_image_url }}"
-                            data-streak='@json($user["streaks"] ?? [])' data-badge='@json($user["badges"] ?? [])'>
+                            data-level_icon="{{ $user['level_icon'] ?? '' }}" data-img="{{ $profile_image_url}}"
+                            data-profile_image="{{ $profile_image_url }}" data-streak='@json($user["streaks"] ?? [])'
+                            data-badge='@json($user["badges"] ?? [])'>
 
                             <img src="/images/leaderboard/crown.png" class="crown" />
                             <img id="first-img" src="{{ $profile_image_url }}" class="profile-img" />
@@ -586,8 +586,8 @@ $profile_image_url = !empty($profile_image)
                             data-points="{{ $user['total_points'] ?? 0 }}" data-hours="{{ $user['total_hours'] ?? 0 }}"
                             data-userid="{{ $user['id'] ?? '' }}" data-level_name="{{ $user['level_name'] ?? 'N/A' }}"
                             data-level_icon="{{ $user['level_icon'] ?? '' }}"
-                            data-profile_image="{{ $profile_image_url }}"
-                            data-streak='@json($user["streaks"] ?? [])' data-badge='@json($user["badges"] ?? [])'>
+                            data-profile_image="{{ $profile_image_url }}" data-streak='@json($user["streaks"] ?? [])'
+                            data-badge='@json($user["badges"] ?? [])'>
 
                             <img id="third-img" src="{{ $profile_image_url }}" class="profile-img" />
                             <h6 id="third-name">{{ $user['name'] }}</h6>
@@ -648,8 +648,7 @@ $profile_image_url = !empty($profile_image)
                                 style="cursor: pointer;" data-id="{{ $value['id'] ?? 'N/A' }}"
                                 data-name="{{ $value['name'] ?? 'N/A' }}"
                                 data-points="{{ $value['total_points'] ?? 0 }}"
-                                data-hours="{{ $value['total_hours'] ?? 0 }}"
-                                data-img="{{ $profile_image_url}}"
+                                data-hours="{{ $value['total_hours'] ?? 0 }}" data-img="{{ $profile_image_url}}"
                                 data-level_name="{{ $value['level_name'] ?? 'N/A' }}"
                                 data-level_icon="{{ $value['level_icon'] ?? '' }}"
                                 data-profile_image="{{ $profile_image_url }}"
