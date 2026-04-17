@@ -3161,7 +3161,7 @@ function rating_store(e) {
                         _token: '{{csrf_token()}}'
                     },
                     success: function(data) {
-                        alert('feef');
+                        // alert('feef');
                         if (result.value) {
                             Swal.fire({
                                 title: 'Success!',
