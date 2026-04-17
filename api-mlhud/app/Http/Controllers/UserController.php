@@ -539,7 +539,7 @@ class UserController extends BaseController
 			$email =  $input['email'];
 
 
-			$rowsemail =  DB::select("select * from users where email ='$email'");
+			$rowsemail =  DB::select("select * from users where email ='$email' and delete_status = 0");
 
 			if (json_encode($rowsemail) != '[]') {
 
@@ -1681,7 +1681,7 @@ class UserController extends BaseController
 
 			// $user_check = DB::select("select * from work_flow_level_user where user_id = '$id'");
 			// if ($user_check == []) { 
-			$user_check = DB::select("select * from users where id ='$id' AND active_flag=0 AND delete_status = 0");
+			$user_check = DB::select("select * from users where id ='$id' AND delete_status = 0");
 
 			if ($user_check != []) {
 
@@ -1747,6 +1747,7 @@ class UserController extends BaseController
 				$serviceResponse['Code'] = config('setting.status_code.success');
 				$serviceResponse['Message'] = config('setting.status_message.success');
 				$serviceResponse['Data'] = 1;
+					
 				$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
 				$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
 				return $sendServiceResponse;
