@@ -741,46 +741,47 @@ class elearningEthnicTestController extends BaseController
               AND cr.user_id = $user_id
               AND (CASE WHEN c.class_quiz = 'yes' THEN cr.quiz_status = 1 ELSE 1 END)");
                 $totalClassesCount = (int) $total_classes_completed[0]->total_classes;
+                 
                 if ($total_classes_completed != []) {
                     $progressPercentage = ($totalClassesCount / $totalClasses) * 100;
-                    //dd($progressPercentage);
+                   
                     $progress = round($progressPercentage);
                     if ($progress == 100) {
 
                         $progress = $progress - 20;
-                        $coursecpt_points = DB::select("SELECT course_cpt_points from elearning_courses where course_id=$course_id and drop_course=0");
+                    //     $coursecpt_points = DB::select("SELECT course_cpt_points from elearning_courses where course_id=$course_id and drop_course=0");
 
-                    $cpt_points = $coursecpt_points[0]->course_cpt_points;
+                    // $cpt_points = $coursecpt_points[0]->course_cpt_points;
 
-                    DB::table('user_cpt_points')
-                        ->insert([
-                            'course_id' => $course_id,
-                            'user_id' => $user_id,
-                            'cpt_points' => $cpt_points,
-                            'status' => '0',
-                            'created_by' => $user_id,
-                            'created_at' => NOW()
+                    // DB::table('user_cpt_points')
+                    //     ->insert([
+                    //         'course_id' => $course_id,
+                    //         'user_id' => $user_id,
+                    //         'cpt_points' => $cpt_points,
+                    //         'status' => '0',
+                    //         'created_by' => $user_id,
+                    //         'created_at' => NOW()
 
-                        ]);
+                    //     ]);
 
 
-                    $userstable = DB::select("SELECT  total_cptpoints from users where id=$user_id and active_flag=0");
-                    $totalcpt_points = $userstable[0]->total_cptpoints;
+                    // $userstable = DB::select("SELECT  total_cptpoints from users where id=$user_id and active_flag=0");
+                    // $totalcpt_points = $userstable[0]->total_cptpoints;
 
-                    $sumofcpt = $totalcpt_points + $cpt_points;
+                    // $sumofcpt = $totalcpt_points + $cpt_points;
 
-                    DB::table('users')
-                        ->where('id', $user_id)
-                        ->update([
-                            'total_cptpoints' => $sumofcpt,
-                        ]);
-                    }
-                    DB::table('user_course_relation')
-                        ->where('course_id', $course_id)
-                        ->where('user_id', $user_id)
-                        ->update([
-                            'course_progress' => $progress,
-                        ]);
+                    // DB::table('users')
+                    //     ->where('id', $user_id)
+                    //     ->update([
+                    //         'total_cptpoints' => $sumofcpt,
+                    //     ]);
+                    // }
+                    // DB::table('user_course_relation')
+                    //     ->where('course_id', $course_id)
+                    //     ->where('user_id', $user_id)
+                    //     ->update([
+                    //         'course_progress' => $progress,
+                    //     ]);
                     
                 }
                 $is_completed = Db::select("SELECT * from user_class_relation where status=1 and status=0");
@@ -801,6 +802,9 @@ class elearningEthnicTestController extends BaseController
             } else {
                 $result = "FAIL";
             }
+            }
+
+            
 
             $input = [
                 'quiz_id' => $quizId,
@@ -1115,28 +1119,35 @@ class elearningEthnicTestController extends BaseController
                             'course_progress' => $add_examprogress + 20,
                             'exam_status' => 2,
                             'course_status' => 'Completed',
+                            'course_completion_date' => now(),
                         ]);
 
-                    // $results = DB::table('users')
-                    //     ->where('id', $user_id)
-                    //     ->select('total_cptpoints')
-                    //     ->get();
-                    // $courseDetailslist = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
+                          $coursecpt_points = DB::select("SELECT course_cpt_points from elearning_courses where course_id=$course_id and drop_course=0");
 
+                $cpt_points = $coursecpt_points[0]->course_cpt_points;
+                DB::table('user_cpt_points')
+                    ->insert([
+                        'course_id' => $course_id,
+                        'user_id' => $user_id,
+                        'cpt_points' => $cpt_points,
+                        'status' => '0',
+                        'created_by' => $user_id,
+                        'created_at' => NOW()
 
+                    ]);
 
-                    // $old_cptPoints = $results[0]->total_cptpoints;
+                $userstable = DB::select("SELECT  total_cptpoints from users where id=$user_id and active_flag=0");
+                $totalcpt_points = $userstable[0]->total_cptpoints;
 
-                    // $new_cptPoints = $courseDetailslist[0]->course_cpt_points;
+                $sumofcpt = $totalcpt_points + $cpt_points;
 
-                    // $updated_points = $old_cptPoints + $new_cptPoints;
+                DB::table('users')
+                    ->where('id', $user_id)
+                    ->update([
+                        'total_cptpoints' => $sumofcpt,
+                    ]);
 
-                    // DB::table('users')
-                    //     ->where('id', $user_id)
-                    //     ->update([
-                    //         'total_cptpoints' => $updated_points,
-                    //         'updated_at'      => now(),
-                    //     ]);
+                  
                 } else {
                     // update progress to 100
 
@@ -1150,28 +1161,33 @@ class elearningEthnicTestController extends BaseController
                             'exam_status' => 2,
                             'course_status' => 'Completed',
                             'get_certified' => 0,
+                            'course_completion_date' => now(),
                         ]);
 
-                    // $results = DB::table('users')
-                    //     ->where('id', $user_id)
-                    //     ->select('total_cptpoints')
-                    //     ->get();
-                    // $courseDetailslist = DB::select("SELECT * FROM elearning_courses WHERE drop_course=0 AND course_id=$id");
+                    $coursecpt_points = DB::select("SELECT course_cpt_points from elearning_courses where course_id=$course_id and drop_course=0");
 
+                $cpt_points = $coursecpt_points[0]->course_cpt_points;
+                DB::table('user_cpt_points')
+                    ->insert([
+                        'course_id' => $course_id,
+                        'user_id' => $user_id,
+                        'cpt_points' => $cpt_points,
+                        'status' => '0',
+                        'created_by' => $user_id,
+                        'created_at' => NOW()
 
+                    ]);
 
-                    // $old_cptPoints = $results[0]->total_cptpoints;
+                $userstable = DB::select("SELECT  total_cptpoints from users where id=$user_id and active_flag=0");
+                $totalcpt_points = $userstable[0]->total_cptpoints;
 
-                    // $new_cptPoints = $courseDetailslist[0]->course_cpt_points;
+                $sumofcpt = $totalcpt_points + $cpt_points;
 
-                    // $updated_points = $old_cptPoints + $new_cptPoints;
-
-                    // DB::table('users')
-                    //     ->where('id', $user_id)
-                    //     ->update([
-                    //         'total_cptpoints' => $updated_points,
-                    //         'updated_at'      => now(),
-                    //     ]);
+                DB::table('users')
+                    ->where('id', $user_id)
+                    ->update([
+                        'total_cptpoints' => $sumofcpt,
+                    ]);
                 }
             } else {
                 DB::table('user_course_relation')
@@ -1182,6 +1198,7 @@ class elearningEthnicTestController extends BaseController
                         'exam_status' => 2,
                         'course_status' => 'Completed',
                         'get_certified' => 3,
+                        'course_completion_date' => now(),
                     ]);
                 // $results = DB::table('users')
                 //     ->where('id', $user_id)
@@ -1262,17 +1279,28 @@ class elearningEthnicTestController extends BaseController
             $rows['quiz_list'] = DB::select("SELECT uc.*,c.course_name from user_cpt_points as uc inner join elearning_courses as c on c.course_id=uc.course_id where c.drop_course=0 and uc.status=0 and uc.user_id=$user_id");
             $rows['points'] = DB::select("SELECT ucr.*, ec.course_name, ec.course_cpt_points FROM user_course_relation AS ucr INNER JOIN elearning_courses AS ec ON ec.course_id = ucr.course_id WHERE ucr.user_id = ?
                AND ucr.course_status = 'completed' AND FIND_IN_SET(?, ec.user_ids) ORDER BY ucr.course_id DESC", [$user_id, $user_id]);
-            $rows['total_cpd_points'] = DB::selectOne(
+           $rows['total_cpd_points'] = DB::selectOne(
                 "SELECT 
                         SUM(ec.course_cpt_points) AS total_points
                     FROM user_course_relation AS ucr
-                    INNER JOIN elearning_courses AS ec
+                    left JOIN elearning_courses AS ec
                         ON ec.course_id = ucr.course_id
                     WHERE ucr.user_id = ?
                     AND ucr.course_status = 'completed'
                     AND FIND_IN_SET(?, ec.user_ids)",
                 [$user_id, $user_id]
             );
+
+            $rows['quiz_list'] = DB::select(
+    "SELECT uc.*, c.course_name 
+     FROM user_cpt_points as uc 
+     LEFT JOIN elearning_courses as c 
+        ON c.course_id = uc.course_id
+     WHERE (uc.course_id = 0)
+     AND uc.status = 0 
+     AND uc.user_id = ?",
+    [$user_id]
+);
 
             $response = [
                 'rows' => $rows
@@ -1388,7 +1416,8 @@ class elearningEthnicTestController extends BaseController
             // $this->notifications_insert(null, auth()->user()->id, "Ethic Test Created Successfully", "/ethictest");
             $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
             $role_name_fetch = $role_name[0]->role_name;
-            $this->auditLog('elearning_ratings', $update_id, 'Create', 'Ratings Added', auth()->user()->id, NOW(), $role_name_fetch);
+            $this->auditLog('elearning_ratings', 0, 'Create', 'Ratings Added', auth()->user()->id, NOW(), $role_name_fetch);
+           
 
 
             $serviceResponse = array();

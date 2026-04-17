@@ -1,29 +1,38 @@
-<Strong>Meeting Title :</Strong>
-        <h3>{{ $meeting['topic'] }}</h3>
+<strong>Meeting Title :</strong>
+<h3>{{ $meeting->topic }}</h3>
 
 <br>
 <br>
 <strong>Meeting Agenda:</strong>
-        <p>{{ $meeting['agenda'] ?? '' }}</p>
+<p>{{ $meeting->agenda ?? 'No agenda provided' }}</p>
 
 <br>
 <br>
 
 <p>
     <strong>Join URL:</strong><br>
-    <a href="{{ $meeting['join_url'] }}">{{ $meeting['join_url'] }}</a>
+    <a href="{{ $meeting->join_url }}">{{ $meeting->join_url }}</a>
 </p>
+
 <br>
+
 <p>
-    <strong>Meeting ID:</strong> {{ $meeting['id'] }}
+    <strong>Start Time:</strong> {{ date('d-m-Y h:i A', strtotime($meeting->start_time)) }}
 </p>
 
 <br>
+
 <p>
-    <strong>Start Time:</strong> {{ $meeting['start_time'] }}
+    <strong>Duration:</strong> {{ $meeting->duration }} minutes
 </p>
 
 <br>
 
-Thanks & Regards
-NMB Bank
+<p>
+    <strong>Platform:</strong> {{ ucfirst($meeting->platform) }}
+</p>
+
+<br>
+
+Thanks & Regards<br>
+<strong>NMB Bank</strong>

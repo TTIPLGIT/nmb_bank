@@ -1283,7 +1283,6 @@ form.longqustionsform {
                                     <option value="ShortAnswer">Short Question</option>
                                     <option value="True/False">True/False</option>
                                 </select>
-
                             </div>
                         </div>
                         <div class="col-md-1"></div>
@@ -2614,14 +2613,31 @@ function gencre(id) {
             swal.fire("Please Enter the Question Description", "", "error");
             return false;
         }
-        var keyword_mcq = $("#keyword_mcq").val();
-        if (keyword_mcq == '') {
-            swal.fire("Please Enter the Choices", "", "error");
+        var mcqChoiceInputs = document.querySelectorAll('#mcq_body input[name="keyword_mcq[]"]');
+        var mcqFilledChoices = [];
+        for (var ci = 0; ci < mcqChoiceInputs.length; ci++) {
+            var cv = (mcqChoiceInputs[ci].value || '').trim();
+            if (cv === '') {
+                swal.fire("Please fill in all choice fields", "", "error");
+                return false;
+            }
+            mcqFilledChoices.push(cv);
+        }
+        if (mcqFilledChoices.length < 2) {
+            swal.fire("Please enter at least 2 choices", "", "error");
             return false;
         }
         var mcq_correct_choices = $("#mcq_correct_choices").val();
-        if (mcq_correct_choices == '') {
-            swal.fire("Please Select the Choices", "", "error");
+        var mcqHasCorrect = false;
+        if (Array.isArray(mcq_correct_choices)) {
+            mcqHasCorrect = mcq_correct_choices.filter(function (v) {
+                return v !== null && v !== undefined && String(v).trim() !== '';
+            }).length > 0;
+        } else {
+            mcqHasCorrect = mcq_correct_choices != null && String(mcq_correct_choices).trim() !== '';
+        }
+        if (!mcqHasCorrect) {
+            swal.fire("Please Select the Correct Choices", "", "error");
             return false;
         }
 
@@ -2637,9 +2653,31 @@ function gencre(id) {
         }
     }
     if (id == "mcqedit") {
-        var keyword_mcqedit = $("#keyword_mcqedit").val();
-        if (keyword_mcqedit == '') {
-            swal.fire("Please Enter the Choices", "", "error");
+        var mcqEditInputs = document.querySelectorAll('#table_mcq_edit input[name="keyword_mcqedit[]"]');
+        var mcqEditFilled = [];
+        for (var ei = 0; ei < mcqEditInputs.length; ei++) {
+            var ev = (mcqEditInputs[ei].value || '').trim();
+            if (ev === '') {
+                swal.fire("Please fill in all choice fields", "", "error");
+                return false;
+            }
+            mcqEditFilled.push(ev);
+        }
+        if (mcqEditFilled.length < 2) {
+            swal.fire("Please enter at least 2 choices", "", "error");
+            return false;
+        }
+        var mcqCorrectEdit = $("#mcq_correct_choicesedit").val();
+        var mcqEditHasCorrect = false;
+        if (Array.isArray(mcqCorrectEdit)) {
+            mcqEditHasCorrect = mcqCorrectEdit.filter(function (v) {
+                return v !== null && v !== undefined && String(v).trim() !== '';
+            }).length > 0;
+        } else {
+            mcqEditHasCorrect = mcqCorrectEdit != null && String(mcqCorrectEdit).trim() !== '';
+        }
+        if (!mcqEditHasCorrect) {
+            swal.fire("Please Select the Correct Choices", "", "error");
             return false;
         }
         document.getElementById('mcqedit_form').submit();

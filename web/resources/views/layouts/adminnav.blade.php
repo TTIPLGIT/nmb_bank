@@ -71,7 +71,7 @@
 
     <!-- loading gif -->
     <!-- Ck editor -->
-    <script src="https://cdn.tiny.cloud/1/3r7kjxhafm9hbckihumdmitzncsve258qw14txq1wqt2jo50/tinymce/5/tinymce.min.js"
+    <script src="https://cdn.tiny.cloud/1/wxhwmyetiv72i2jzb4z2jrmz18n1l7bm1krvlgn3k1uf5kn8/tinymce/5/tinymce.min.js"
         referrerpolicy="origin"></script>
     <!-- <link rel="stylesheet" href="{{asset('asset/css/owl.carousel.css')}}"> -->
     <!-- <link rel="stylesheet" href="{{asset('asset/css/owl.theme.default.css')}}"> -->
@@ -2368,6 +2368,38 @@ function notification_fetch() {
             }
         }
     });
+}
+
+function notification(notificationid) {
+    //alert(notificationid);
+    var id = notificationid;
+
+
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: "{{ url('/user/notified')}}",
+        type: "POST",
+        dataType: "json",
+        async: false,
+        data: {
+            id: id,
+            _token: '{{csrf_token()}}'
+        },
+        success: function(data) {
+
+            var url = "/admindashboard";
+            window.location.href = url;
+
+        },
+    });
+
+
 }
 </script>
 

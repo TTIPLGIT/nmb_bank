@@ -12,7 +12,7 @@
                     <th>S.No</th>
                     <th>Course Name</th>
                     <th>Category</th>
-
+                    <th>Users Started</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -22,83 +22,59 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $data->course_name }}</td>
                     <td>{{ $data->catagory_name ?? 'N/A' }}</td>
+                    <td>
+                        @if($data->user_started_count > 0)
 
-                    <!-- <td>
-                        @php
-                        $expiryDate = !empty($data->course_expiry_period) ?
-                        \Carbon\Carbon::parse($data->course_expiry_period) : null;
-                        $twoMonthsBefore = $expiryDate ? $expiryDate->copy()->subMonths(2) : null;
-                        $today = \Carbon\Carbon::today();
-                        $needsAttention = ($data->certificate_expiry == 1 && $expiryDate &&
-                        $today->gte($twoMonthsBefore));
-                        @endphp
+                        {{ $data->user_started_count }} user(s) started
 
-                    </td> -->
+                        @else
+                        No users started
+                        @endif
+                    </td>
                     <td>
                         @php
-                        $showHandleButton = false;
-                        $showReplacedMessage = false;
-                        $replacementMessage = '';
-
-                        $expiryDate = !empty($data->course_expiry_period) ?
-                        \Carbon\Carbon::parse($data->course_expiry_period) : null;
-                        $twoMonthsBefore = $expiryDate ?
-                        $expiryDate->copy()->subMonths(2) : null;
-                        $today = \Carbon\Carbon::today();
-
-
-                        $courseIsReplaced =
-                        collect(($courses))->contains(function
-                        ($c) use
-                        ($data) {
-                        return $c->expired_course_id == $data->course_id;
-                        });
-
-                        if ($data->certificate_expiry == 1) {
-                        if ($courseIsReplaced) {
-                        $showReplacedMessage = true;
-                        $replacementMessage = 'This course has been replaced with a
-                        new or copied course.';
-                        } elseif (is_null($data->expired_course_id) && $expiryDate
-                        && $today->gte($twoMonthsBefore)) {
-                        $showHandleButton = true;
-                        }
-                        }
+                        $disableEdit = ($data->user_started_count > 0) || !empty($data->ai_course_response_id);
+                        $disableDelete = ($data->user_started_count > 0);
+                        $editTitle = $disableEdit ? 'Cannot edit - ' . ($data->user_started_count > 0 ? 'Users have
+                        started this course' : 'AI course cannot be edited') : 'Edit';
+                        $deleteTitle = $disableDelete ? 'Cannot delete - Users have started this course' : 'Delete';
                         @endphp
 
-
-
-
-
-                        <!-- <a class="" title="Edit" id="gcb" href="" data-toggle="modal" data-target="#addModal3" onclick="fetch_courseupdate_new({{$data->course_id}},'edit')"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a> -->
-                        <a class="btn btn-link" title="Edit"
+                        @if(!$disableEdit)
+                        <a class="btn btn-link" title="{{ $editTitle }}"
                             href="{{ route('admin_course_edit', \Crypt::encrypt($data->course_id)) }}">
-                            <i class="fas fa-pencil-alt" style="color:blue"></i></a>
-                        <a class="btn btn-link" title="show"
+                            <i class="fas fa-pencil-alt" style="color:blue"></i>
+                        </a>
+                        @else
+                        <a class="btn btn-link disabled" title="{{ $editTitle }}" href="javascript:void(0)"
+                            style="opacity:0.5; cursor:not-allowed;">
+                            <i class="fas fa-pencil-alt" style="color:gray"></i>
+                        </a>
+                        @endif
+
+                        <!-- Show button always enabled -->
+                        <a class="btn btn-link" title="Show"
                             href="{{ route('admin_course_show', \Crypt::encrypt($data->course_id)) }}">
-                            <i class="fas fa-eye" style="color:green"></i></a>
-
-                        <a type="button" title="Delete" onclick="course_delete(<?php echo $data->course_id ?>)"
-                            class="btn btn-link"><i class="far fa-trash-alt" style="color:red"></i></a>
-                        <!-- @if($showHandleButton)
-                        <a class="btn btn-link" title="Handle Expired Course"
-                            onclick="handleExpiredCourse({{ $data->course_id }})">
-                            <i class="fas fa-exclamation-circle" style="color:orange"></i>
+                            <i class="fas fa-eye" style="color:green"></i>
                         </a>
-                        @elseif($showReplacedMessage)
-                        <a class="btn btn-link" title="Course Replaced"
-                            onclick="showReplacementMessage({{ $data->course_id }})">
-                            <i class="fas fa-info-circle" style="color:gray"></i>
+
+                        @if(!$disableDelete)
+                        <a type="button" title="{{ $deleteTitle }}" onclick="course_delete({{ $data->course_id }})"
+                            class="btn btn-link">
+                            <i class="far fa-trash-alt" style="color:red"></i>
                         </a>
-                        @endif -->
-
-
-
+                        @else
+                        <a type="button" title="{{ $deleteTitle }}" href="javascript:void(0)"
+                            class="btn btn-link disabled" style="opacity:0.5; cursor:not-allowed;"
+                            onclick="return false;">
+                            <i class="far fa-trash-alt" style="color:gray"></i>
+                        </a>
+                        @endif
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" class="text-center">No courses found</td>
+                    <td colspan="5" class="text-center">No courses found</td>
                 </tr>
                 @endforelse
             </tbody>

@@ -671,7 +671,7 @@ class tryController extends BaseController
             $validator = Validator::make($request->all(), [
                 'resource_nameedit' => 'nullable|file|mimetypes:application/pdf,audio/mpeg,video/mp4',
             ]);
-
+            
             $data = array();
             $data['class_name'] = $request->class_nameedit;
             $data['class_description'] = $request->class_descriptionedit;
@@ -701,12 +701,15 @@ class tryController extends BaseController
 
                 $data['resourse_path'] = $storagepath_ursb;
                 $documentsb = $request['resource_nameedit'];
+                $extension = $documentsb->getClientOriginalExtension();
+               
                 $files = $documentsb->getClientOriginalName();
                 $findspace = array(' ', '&', "'", '"');
                 $replacewith = array('-', '-');
                 $proposal_files = str_replace($findspace, $replacewith, $files);
                 $documentsb->move($storagepath_ursb_old, $proposal_files);
                 $data['resource_name'] = $proposal_files;
+                $data['class_format'] = $extension;
             } else {
                 $data['resource_name'] = 0;
                 $data['resourse_path'] = 0;
@@ -1076,14 +1079,12 @@ class tryController extends BaseController
 
             $encryptArray = $data;
 
-            $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; //system_store_pdf
-
-            $storagepath_ursb = '/uploads/course/' . $user_id; //database_location
+            $storagepath_ursb_old = public_path() . '/uploads/course/' . $user_id; 
+            $storagepath_ursb = '/uploads/course/' . $user_id;
             // dd( $storagepath_ursb_old);
             if (!File::exists($storagepath_ursb_old)) {
-
-                File::makeDirectory($storagepath_ursb_old); //folder_creation_when_folder_doesn't_esist
-            }
+    File::makeDirectory($storagepath_ursb_old, 0755, true);
+}
 
             $data['introduction_path'] = $storagepath_ursb;
 
@@ -2292,6 +2293,7 @@ class tryController extends BaseController
 
         $rows['users'] = DB::table('users')
             ->select('*')
+            ->where('active_flag', '0')
             ->orderBy('id', 'desc')
             ->get();
 

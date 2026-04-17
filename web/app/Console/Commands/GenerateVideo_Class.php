@@ -56,7 +56,7 @@ class GenerateVideo_Class extends Command
         return Command::SUCCESS;
     }
 
-    $url = 'http://20.164.0.23:3300/batch-status';
+    $url = 'http://104.43.254.72:3300/batch-status';
 
     foreach ($aiResponseClasses as $class) {
 

@@ -551,7 +551,7 @@
                                 <input type="text" class="form-control default" name="course_pin" id="course_pin"
                                     placeholder="Enter 4-6 digit PIN" autocomplete="off" maxlength="6"
                                     value="{{ $course->course_pin ?? '' }}">
-                                <small class="text-muted">4-6 digit numeric PIN (auto-generated if left empty)</small>
+                                <small class="text-muted">4-6 digit numeric PIN</small>
                             </div>
                         </div>
                     </div>

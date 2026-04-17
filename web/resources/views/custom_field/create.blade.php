@@ -3,7 +3,7 @@
 @section('content')
 <div class="main-content">
     <h5 class="text-center" style="color:darkblue">Create Custom Field</h5>
-    {{ Breadcrumbs::render('custom_field.index') }}
+    {{ Breadcrumbs::render('custom_filed_create') }}
     <section class="section">
         <div class="section-body mt-1">
 

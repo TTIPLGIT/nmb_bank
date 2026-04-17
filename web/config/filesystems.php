@@ -53,6 +53,12 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
 
+        'scorm-local' => [
+        'driver' => 'local',
+        'root' => env('SCORM_ROOT_DIR', '/var/www/scorm-content'), // MUST be outside Laravel root
+        'visibility' => 'public',
+    ],
+
     ],
 
     /*

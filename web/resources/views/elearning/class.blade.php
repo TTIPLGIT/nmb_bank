@@ -2259,7 +2259,7 @@ label:hover~input:checked~label
                 </div>
                 <div class="col-md-12 rating_comments" style="display: none !important;">
                     <div class="form-group">
-                        <label class="form-label">Comments</label>
+                        <label class="form-label">Comments<span class="error-star" style="color:red;">*</span></label>
                         <textarea class="form-control" id="rating_comments" name="rating_comments"></textarea>
                     </div>
                 </div>
@@ -2538,15 +2538,9 @@ function saveNotes(e) {
                 _token: '{{csrf_token()}}'
             },
             success: function(data) {
-                if (data == "Success") {
-                    document.querySelector('.addNoteCallerTip').style.display = "none";
-                    addNoteCaller.classList.add('success');
-                    notepadArea.value = "";
-                    notepadHolderWrapper.classList.remove('active');
-                    setTimeout(function() {
-                        document.querySelector('.addNoteCallerTip').style.display = "flex";
-                        addNoteCaller.classList.remove('success');
-                    }, 3000);
+                console.log(data.trim() == "Success");
+                if (data.trim() == "Success") {
+
                     // window.location.reload();
                     Swal.fire({
                         title: 'Success!',
@@ -3137,6 +3131,14 @@ function rating_store(e) {
     // handleRatingClick();
     var course_id = document.getElementById('course_id').value;
     var comments = document.getElementById('rating_comments').value;
+
+    if (comments == '') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Please enter comments'
+        });
+        return;
+    }
     var ratings = $('#ratings_point').val();
 
     if (e.target.id == "ratings") {
@@ -3166,7 +3168,7 @@ function rating_store(e) {
                                 text: 'Ratings Added Successfully!',
                                 icon: 'success'
                             }).then((result) => {
-                                localStorage.setItem('activeTabKey', 'rating');
+
                                 location.reload(); // Handle the success action
                                 // This code will execute when the user clicks the "OK" button in the Swal modal
                                 // You can put your success-related code here

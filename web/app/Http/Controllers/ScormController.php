@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Crypt;
 use PDF;
+use App\Mail\coursecreationmail;
+use Illuminate\Support\Facades\Mail;
 
 
 class ScormController extends BaseController
@@ -46,6 +48,7 @@ class ScormController extends BaseController
         // Get users for dropdown
         $users = DB::table('users')
             ->select('*')
+            ->where('active_flag', 0)
             ->orderBy('id', 'desc')
             ->get();
           $certificate_templates = DB::table('certificate_templates')
@@ -453,6 +456,27 @@ public function scorm_course_publish(Request $request, $id)
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ];
+        
+          $users = DB::table('users')
+                ->whereIn('id', $userIds)
+                ->select('id', 'email', 'name')
+                ->get();
+               
+            foreach ($users as $user) {
+                   
+
+                Mail::to($user->email)->send(
+                    new coursecreationmail([
+                        'name'       => $user->name,
+                        'course_pin' => $request->access_pin,
+                        'course_name' => $request->course_name,
+                    ])
+                );
+
+              
+            $this->notifications_insert(null, $user->id, "{$request->course_name} SCORM course has been allocated to you.", "/elearningquestion");
+            }
+ 
 
         // Remove null/empty values
         $insertData = array_filter($insertData, function($value) {

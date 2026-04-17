@@ -19,10 +19,16 @@ class ZoomMeetingMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Zoom Meeting Invitation')
-            ->view('email.ZoomMeetingMail')
-            ->with([
-                'meeting' => $this->meeting
-            ]);
+        // Check if email configuration exists
+        $fromEmail = config('setting.email_id');
+        
+        if (!$fromEmail) {
+            \Log::error('Email configuration missing: setting.email_id is not set');
+        }
+        
+        return $this
+            ->from($fromEmail, config('app.name', 'LMS System'))
+            ->subject('Meeting Invitation: ' . ($this->meeting->topic ?? 'New Meeting'))
+            ->view('email.ZoomMeetingMail');
     }
 }

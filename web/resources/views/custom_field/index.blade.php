@@ -35,7 +35,7 @@ thead th {
 
 
 
-    {{ Breadcrumbs::render('custom_field.index') }}
+    {{ Breadcrumbs::render('custom_filed') }}
 
     <section class="section">
 
